@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
@@ -50,28 +51,23 @@ import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.OAuth2FlowType;
 import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
-import io.vertx.ext.bridge.BridgeEventType;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailConfig;
-import io.vertx.ext.mail.StartTLSOptions;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
-import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
-import io.vertx.ext.web.handler.UserSessionHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
-import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 
 /**
@@ -180,15 +176,15 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	}
 
 	/**
-	 * Param1.var.enUS: startFuture
+	 * Param1.var.enUS: startPromise
 	 * r: SiteContexteFrFR
 	 * r.enUS: SiteContextEnUS
 	 * r: siteContexteFrFR
 	 * r.enUS: siteContextEnUS
 	 * r: initLoin
 	 * r.enUS: initDeep
-	 * r: demarrerFuture
-	 * r.enUS: startFuture
+	 * r: demarrerPromise
+	 * r.enUS: startPromise
 	 * r: configurerDonnees
 	 * r.enUS: configureData
 	 * r: configurerCluster
@@ -205,28 +201,28 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureEmail
 	 * r: demarrerServeur
 	 * r.enUS: startServer
-	 * r: etapesFutures
-	 * r.enUS: futureSteps
+	 * r: etapesPromises
+	 * r.enUS: promiseSteps
 	 * 
 	 * enUS: This is called by Vert.x when the verticle instance is deployed. 
 	 * enUS: Initialize a new site context object for storing information about the entire site in English. 
-	 * enUS: Setup the startFuture to handle the configuration steps and starting the server. 
+	 * enUS: Setup the startPromise to handle the configuration steps and starting the server. 
 	 */
 	@Override
-	public void start(Future<Void> demarrerFuture) throws Exception {
+	public void start(Promise<Void> demarrerPromise) throws Exception {
 
 		siteContexteFrFR = new SiteContexteFrFR();
 		siteContexteFrFR.setVertx(vertx);
 		siteContexteFrFR.initLoinSiteContexteFrFR();
 
-		Future<Void> etapesFutures = configurerDonnees().compose(a -> 
-			configurerCluster().compose(b -> 
-				configurerOpenApi().compose(c -> 
-					configurerControlesSante().compose(d -> 
-						configurerExecuteurTravailleurPartage().compose(e -> 
-							configurerWebsockets().compose(f -> 
-								configurerMail().compose(g -> 
-									demarrerServeur()
+		Future<Void> etapesPromises = configurerDonnees().future().compose(a -> 
+			configurerCluster().future().compose(b -> 
+				configurerOpenApi().future().compose(c -> 
+					configurerControlesSante().future().compose(d -> 
+						configurerExecuteurTravailleurPartage().future().compose(e -> 
+							configurerWebsockets().future().compose(f -> 
+								configurerMail().future().compose(g -> 
+									demarrerServeur().future()
 								)
 							)
 						)
@@ -234,7 +230,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				)
 			)
 		);
-		etapesFutures.setHandler(demarrerFuture.completer());
+		etapesPromises.setHandler(demarrerPromise);
 	}
 
 	/**
@@ -251,7 +247,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * Val.SuccesInit.frFR:Les tables de base de données ont été créées avec succès. 
 	 * 
 	 * enUS: Configure shared database connections across the cluster for massive scaling of the application. 
-	 * enUS: Return a future that configures a shared database client connection. 
+	 * enUS: Return a promise that configures a shared database client connection. 
 	 * enUS: Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
 	 * enUS: Initialize the database tables if not already created for the first time. 
 	 * 
@@ -294,9 +290,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: ClientSql
 	 * r.enUS: SqlClient
 	 */
-	private Future<Void> configurerDonnees() {
+	private Promise<Void> configurerDonnees() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 
 		JsonObject jdbcConfig = new JsonObject();
 		if (StringUtils.isNotEmpty(configSite.getJdbcUrl()))
@@ -330,7 +326,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		jdbcClient.getConnection(a -> {
 			if (a.failed()) {
 				LOGGER.error(configurerDonneesErreurConnexion, a.cause());
-				future.fail(a.cause());
+				promise.fail(a.cause());
 			} else {
 				LOGGER.info(configurerDonneesSuccesConnexion);
 				SQLConnection connection = a.result();
@@ -338,16 +334,16 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					connection.close();
 					if (create.failed()) {
 						LOGGER.error(configurerDonneesErreurInit, create.cause());
-						future.fail(create.cause());
+						promise.fail(create.cause());
 					} else {
 						LOGGER.info(configurerDonneesSuccesInit);
-						future.complete();
+						promise.complete();
 					}
 				});
 			}
 		});
 
-		return future;
+		return promise;
 	}
 
 	/**  
@@ -376,11 +372,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: DataSuccess
 	 * 
 	 * enUS: Configure shared data across the cluster for massive scaling of the application. 
-	 * enUS: Return a future that configures a shared cluster data. 
+	 * enUS: Return a promise that configures a shared cluster data. 
 	 */
-	private Future<Void> configurerCluster() {
+	private Promise<Void> configurerCluster() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 		SharedData donneesPartagees = vertx.sharedData();
 		donneesPartagees.getClusterWideMap("donneesCluster", res -> {
 			if (res.succeeded()) {
@@ -388,18 +384,18 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				donneesCluster.put("configSite", configSite, resPut -> {
 					if (resPut.succeeded()) {
 						LOGGER.info(configurerClusterSuccesDonnees);
-						future.complete();
+						promise.complete();
 					} else {
 						LOGGER.error(configurerClusterErreurDonnees, res.cause());
-						future.fail(res.cause());
+						promise.fail(res.cause());
 					}
 				});
 			} else {
 				LOGGER.error(configurerClusterErreurDonnees, res.cause());
-				future.fail(res.cause());
+				promise.fail(res.cause());
 			}
 		});
-		return future;
+		return promise;
 	}
 
 	/**
@@ -408,7 +404,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * enUS: Configure the connection to the auth server and setup the routes based on the OpenAPI definition. 
 	 * enUS: Setup a callback route when returning from the auth server after successful authentication. 
 	 * enUS: Setup a logout route for logging out completely of the application. 
-	 * enUS: Return a future that configures the authentication server and OpenAPI. 
+	 * enUS: Return a promise that configures the authentication server and OpenAPI. 
 	 * 
 	 * Val.Error.enUS:Could not configure the auth server and API. 
 	 * Val.Erreur.frFR:Impossible de configurer le serveur auth et le API.
@@ -452,9 +448,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: "computate-scolaire-frFR-session"
 	 * r.enUS: "computate-scolaire-enUS-session"
 	 */
-	private Future<Void> configurerOpenApi() {
+	private Promise<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 		Router routeur = Router.router(vertx);
 
 		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3-frFR.yaml", ar -> {
@@ -514,20 +510,20 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				usineRouteur.initRouter();
 
 				LOGGER.info(configurerOpenApiSucces);
-				future.complete();
+				promise.complete();
 			} else {
 				LOGGER.error(configurerOpenApiErreur, ar.cause());
-				future.fail(ar.cause());
+				promise.fail(ar.cause());
 			}
 		});
-		return future;
+		return promise;
 	}
 
 	/**
 	 * Var.enUS: configureSharedWorkerExecutor
 	 * 
 	 * enUS: Configure a shared worker executor for running blocking tasks in the background. 
-	 * enUS: Return a future that configures the shared worker executor. 
+	 * enUS: Return a promise that configures the shared worker executor. 
 	 * 
 	 * r: executeurTravailleur
 	 * r.enUS: workerExecutor
@@ -536,13 +532,13 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: siteContexteFrFR
 	 * r.enUS: siteContextEnUS
 	 */
-	private Future<Void> configurerExecuteurTravailleurPartage() {
-		Future<Void> future = Future.future();
+	private Promise<Void> configurerExecuteurTravailleurPartage() {
+		Promise<Void> promise = Promise.promise();
 
 		WorkerExecutor executeurTravailleur = vertx.createSharedWorkerExecutor("WorkerExecutor");
 		siteContexteFrFR.setExecuteurTravailleur(executeurTravailleur);
-		future.complete();
-		return future;
+		promise.complete();
+		return promise;
 	}
 
 	/**
@@ -561,7 +557,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * Val.ErreurVertx.frFR:L'application Vert.x n'est pas configuré correctement. 
 	 * 
 	 * enUS: Configure health checks for the status of the website and it's dependent services. 
-	 * enUS: Return a future that configures the health checks. 
+	 * enUS: Return a promise that configures the health checks. 
 	 * 
 	 * r: siteContexteFrFR
 	 * r.enUS: siteContextEnUS
@@ -584,8 +580,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: ClientSql
 	 * r.enUS: SqlClient
 	 */
-	private Future<Void> configurerControlesSante() {
-		Future<Void> future = Future.future();
+	private Promise<Void> configurerControlesSante() {
+		Promise<Void> promise = Promise.promise();
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 		HealthCheckHandler gestionnaireControlesSante = HealthCheckHandler.create(vertx);
 
@@ -597,8 +593,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				if(selectCAsync.succeeded()) {
 					a.complete(Status.OK());
 				} else {
-					LOGGER.error(configurerControlesSanteErreurBaseDeDonnees, a.cause());
-					future.fail(a.cause());
+					LOGGER.error(configurerControlesSanteErreurBaseDeDonnees, a.future().cause());
+					promise.fail(a.future().cause());
 				}
 			});
 		});
@@ -610,17 +606,17 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				if(r.getResults().size() > 0)
 					a.complete(Status.OK());
 				else {
-					LOGGER.error(configurerControlesSanteVideSolr, a.cause());
-					future.fail(a.cause());
+					LOGGER.error(configurerControlesSanteVideSolr, a.future().cause());
+					promise.fail(a.future().cause());
 				}
 			} catch (SolrServerException | IOException e) {
-				LOGGER.error(configurerControlesSanteErreurSolr, a.cause());
-				future.fail(a.cause());
+				LOGGER.error(configurerControlesSanteErreurSolr, a.future().cause());
+				promise.fail(a.future().cause());
 			}
 		});
 		siteRouteur.get("/health").handler(gestionnaireControlesSante);
-		future.complete();
-		return future;
+		promise.complete();
+		return promise;
 	}
 
 	/**
@@ -641,15 +637,16 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: UsineRouteur
 	 * r.enUS: RouterFactory
 	 */
-	private Future<Void> configurerWebsockets() {
-		Future<Void> future = Future.future();
+	private Promise<Void> configurerWebsockets() {
+		Promise<Void> promise = Promise.promise();
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 		BridgeOptions options = new BridgeOptions()
 				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
-		SockJSHandler gestionnaireSockJs = SockJSHandler.create(vertx).bridge(options);
+		SockJSHandler gestionnaireSockJs = SockJSHandler.create(vertx);
+		gestionnaireSockJs.bridge(options);
 		siteRouteur.route("/eventbus/*").handler(gestionnaireSockJs);
-		future.complete();
-		return future;
+		promise.complete();
+		return promise;
 	}
 
 	/**
@@ -674,9 +671,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: MailMotDePasse
 	 * r.enUS: EmailPassword
 	 */
-	private Future<Void> configurerMail() {
+	private Promise<Void> configurerMail() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 		MailConfig config = new MailConfig();
 		config.setHostname(configSite.getMailHote());
 		config.setPort(configSite.getMailPort());
@@ -685,8 +682,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		config.setPassword(configSite.getMailMotDePasse());
 		MailClient mailClient = MailClient.createShared(vertx, config);
 		siteContexteFrFR.setMailClient(mailClient);
-		future.complete();
-		return future;
+		promise.complete();
+		return promise;
 	}
 
 	/**
@@ -763,9 +760,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: enregistrerService
 	 * r.enUS: registerService
 	 */   
-	private Future<Void> demarrerServeur() {
+	private Promise<Void> demarrerServeur() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 
 		ClusterFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		EcoleFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
@@ -812,38 +809,38 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		vertx.createHttpServer(options).requestHandler(siteRouteur).listen(ar -> {
 			if (ar.succeeded()) {
 				LOGGER.info(String.format(demarrerServeurSuccesServeur, "*", sitePort));
-				future.complete();
+				promise.complete();
 			} else {
 				LOGGER.error(demarrerServeurErreurServeur, ar.cause());
-				future.fail(ar.cause());
+				promise.fail(ar.cause());
 			}
 		});
 
-		return future;
+		return promise;
 	}
 
 	/**
-	 * Param1.var.enUS: stopFuture
+	 * Param1.var.enUS: stopPromise
 	 * r: SiteContexteFrFR
 	 * r.enUS: SiteContextEnUS
 	 * r: siteContexteFrFR
 	 * r.enUS: siteContextEnUS
 	 * r: initLoin
 	 * r.enUS: initDeep
-	 * r: arreterFuture
-	 * r.enUS: stopFuture
+	 * r: arreterPromise
+	 * r.enUS: stopPromise
 	 * r: fermerDonnees
 	 * r.enUS: closeData
-	 * r: etapesFutures
-	 * r.enUS: futureSteps
+	 * r: etapesPromises
+	 * r.enUS: promiseSteps
 	 * 
 	 * enUS: This is called by Vert.x when the verticle instance is undeployed. 
-	 * enUS: Setup the stopFuture to handle tearing down the server. 
+	 * enUS: Setup the stopPromise to handle tearing down the server. 
 	 */
 	@Override
-	public void stop(Future<Void> arreterFuture) throws Exception {
-		Future<Void> etapesFutures = fermerDonnees();
-		etapesFutures.setHandler(arreterFuture.completer());
+	public void stop(Promise<Void> arreterPromise) throws Exception {
+		Promise<Void> etapesPromises = fermerDonnees();
+		etapesPromises.future().setHandler(arreterPromise);
 	}
 
 	/**
@@ -861,23 +858,23 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: ClientSql
 	 * r.enUS: SqlClient
 	 * 
-	 * enUS: Return a future to close the database client connection. 
+	 * enUS: Return a promise to close the database client connection. 
 	 */        
-	private Future<Void> fermerDonnees() {
-		Future<Void> future = Future.future();
+	private Promise<Void> fermerDonnees() {
+		Promise<Void> promise = Promise.promise();
 		SQLClient clientSql = siteContexteFrFR.getClientSql();
 
 		if(clientSql != null) {
 			clientSql.close(a -> {
 				if (a.failed()) {
 					LOGGER.error(fermerDonneesErreur, a.cause());
-					future.fail(a.cause());
+					promise.fail(a.cause());
 				} else {
 					LOGGER.error(fermerDonneesSucces, a.cause());
-					future.complete();
+					promise.complete();
 				}
 			});
 		}
-		return future;
+		return promise;
 	}
 }

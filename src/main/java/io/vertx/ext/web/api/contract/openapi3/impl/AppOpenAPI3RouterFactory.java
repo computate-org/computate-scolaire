@@ -1,4 +1,4 @@
-package io.vertx.ext.web.api.contract.openapi3.impl; 
+package io.vertx.ext.web.api.contract.openapi3.impl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
@@ -44,6 +45,8 @@ public class AppOpenAPI3RouterFactory extends BaseRouterFactory<OpenAPI> impleme
 	private final static String OPENAPI_EXTENSION_ADDRESS = "address";
 	private final static String OPENAPI_EXTENSION_METHOD_NAME = "method";
 
+	private final static Handler<RoutingContext> NOT_IMPLEMENTED_HANDLER = rc -> rc.fail(501);
+
 	// This map is fullfilled when spec is loaded in memory
 	Map<String, OperationValue> operations;
 	ResolverCache refsCache;
@@ -51,83 +54,6 @@ public class AppOpenAPI3RouterFactory extends BaseRouterFactory<OpenAPI> impleme
 	SecurityHandlersStore securityHandlers;
 
 	Router router;
-
-	/**
-	 * Create a new OpenAPI3RouterFactory
-	 *
-	 * @param vertx
-	 * @param url
-	 *            location of your spec. It can be an absolute path, a local path or
-	 *            remote url (with HTTP protocol)
-	 * @param handler
-	 *            When specification is loaded, this handler will be called with
-	 *            AsyncResult<OpenAPI3RouterFactory>
-	 */
-	public static void create(Vertx vertx, Router router, String url, Handler<AsyncResult<AppOpenAPI3RouterFactory>> handler) {
-		create(vertx, router, url, Collections.emptyList(), handler);
-	}
-
-	/**
-	 * Create a new OpenAPI3RouterFactory
-	 *
-	 * @param vertx
-	 * @param url
-	 *            location of your spec. It can be an absolute path, a local path or
-	 *            remote url (with HTTP protocol)
-	 * @param auth
-	 *            list of authorization values needed to access the remote url. Each
-	 *            item should be json representation of an
-	 *            {@link AuthorizationValue}
-	 * @param handler
-	 *            When specification is loaded, this handler will be called with
-	 *            AsyncResult<OpenAPI3RouterFactory>
-	 */
-	public static void create(Vertx vertx, Router router, String url, List<JsonObject> auth,
-			Handler<AsyncResult<AppOpenAPI3RouterFactory>> handler) {
-		List<AuthorizationValue> authorizationValues = auth.stream().map(obj -> obj.mapTo(AuthorizationValue.class))
-				.collect(Collectors.toList());
-		vertx.executeBlocking((Future<AppOpenAPI3RouterFactory> future) -> {
-			SwaggerParseResult swaggerParseResult = new OpenAPIV3Parser().readLocation(url, authorizationValues,
-					OpenApi3Utils.getParseOptions());
-			if (swaggerParseResult.getMessages().isEmpty()) {
-				future.complete(new AppOpenAPI3RouterFactory(vertx, router, swaggerParseResult.getOpenAPI(),
-						new ResolverCache(swaggerParseResult.getOpenAPI(), null, url)));
-			} else {
-				if (swaggerParseResult.getMessages().size() == 1 && swaggerParseResult.getMessages().get(0)
-						.matches("unable to read location `?\\Q" + url + "\\E`?"))
-					future.fail(RouterFactoryException.createSpecNotExistsException(url));
-				else
-					future.fail(RouterFactoryException
-							.createSpecInvalidException(StringUtils.join(swaggerParseResult.getMessages(), ", ")));
-			}
-		}, handler);
-	}
-
-	public AppOpenAPI3RouterFactory(Vertx vertx, Router router, OpenAPI spec, ResolverCache refsCache) {
-		super(vertx, spec);
-		setRouter(router);
-		this.refsCache = refsCache;
-		this.operations = new LinkedHashMap<>();
-		this.securityHandlers = new SecurityHandlersStore();
-
-		/* --- Initialization of all arrays and maps --- */
-		for (Map.Entry<String, ? extends PathItem> pathEntry : spec.getPaths().entrySet()) {
-			for (Map.Entry<PathItem.HttpMethod, ? extends Operation> opEntry : pathEntry.getValue().readOperationsMap()
-					.entrySet()) {
-				this.operations.put(opEntry.getValue().getOperationId(),
-						new OperationValue(HttpMethod.valueOf(opEntry.getKey().name()), pathEntry.getKey(),
-								opEntry.getValue(), pathEntry.getValue()));
-			}
-		}
-	}
-
-	public Router getRouter() {
-		return router;
-	}
-
-	public void setRouter(Router router) {
-		this.router = router;
-	}
 
 	private class OperationValue {
 		private HttpMethod method;
@@ -239,6 +165,84 @@ public class AppOpenAPI3RouterFactory extends BaseRouterFactory<OpenAPI> impleme
 		public JsonObject getEbServiceDeliveryOptions() {
 			return ebServiceDeliveryOptions;
 		}
+	}
+
+	/**
+	 * Create a new OpenAPI3RouterFactory
+	 *
+	 * @param vertx
+	 * @param url
+	 *            location of your spec. It can be an absolute path, a local path or
+	 *            remote url (with HTTP protocol)
+	 * @param handler
+	 *            When specification is loaded, this handler will be called with
+	 *            AsyncResult<OpenAPI3RouterFactory>
+	 */
+	public static void create(Vertx vertx, Router router, String url,
+			Handler<AsyncResult<AppOpenAPI3RouterFactory>> handler) {
+		create(vertx, router, url, Collections.emptyList(), handler);
+	}
+
+	/**
+	 * Create a new OpenAPI3RouterFactory
+	 *
+	 * @param vertx
+	 * @param url
+	 *            location of your spec. It can be an absolute path, a local path or
+	 *            remote url (with HTTP protocol)
+	 * @param auth
+	 *            list of authorization values needed to access the remote url. Each
+	 *            item should be json representation of an
+	 *            {@link AuthorizationValue}
+	 * @param handler
+	 *            When specification is loaded, this handler will be called with
+	 *            AsyncResult<OpenAPI3RouterFactory>
+	 */
+	public static void create(Vertx vertx, Router router, String url, List<JsonObject> auth,
+			Handler<AsyncResult<AppOpenAPI3RouterFactory>> handler) {
+		List<AuthorizationValue> authorizationValues = auth.stream().map(obj -> obj.mapTo(AuthorizationValue.class))
+				.collect(Collectors.toList());
+		vertx.executeBlocking((Promise<AppOpenAPI3RouterFactory> future) -> {
+			SwaggerParseResult swaggerParseResult = new OpenAPIV3Parser().readLocation(url, authorizationValues,
+					OpenApi3Utils.getParseOptions());
+			if (swaggerParseResult.getMessages().isEmpty()) {
+				future.complete(new AppOpenAPI3RouterFactory(vertx, router, swaggerParseResult.getOpenAPI(),
+						new ResolverCache(swaggerParseResult.getOpenAPI(), null, url)));
+			} else {
+				if (swaggerParseResult.getMessages().size() == 1 && swaggerParseResult.getMessages().get(0)
+						.matches("unable to read location `?\\Q" + url + "\\E`?"))
+					future.fail(RouterFactoryException.createSpecNotExistsException(url));
+				else
+					future.fail(RouterFactoryException
+							.createSpecInvalidException(StringUtils.join(swaggerParseResult.getMessages(), ", ")));
+			}
+		}, handler);
+	}
+
+	public AppOpenAPI3RouterFactory(Vertx vertx, Router router, OpenAPI spec, ResolverCache refsCache) {
+		super(vertx, spec);
+		setRouter(router);
+		this.refsCache = refsCache;
+		this.operations = new LinkedHashMap<>();
+		this.securityHandlers = new SecurityHandlersStore();
+
+		/* --- Initialization of all arrays and maps --- */
+		for (Map.Entry<String, ? extends PathItem> pathEntry : spec.getPaths().entrySet()) {
+			for (Map.Entry<PathItem.HttpMethod, ? extends Operation> opEntry : pathEntry.getValue().readOperationsMap()
+					.entrySet()) {
+				this.operations.put(opEntry.getValue().getOperationId(),
+						new OperationValue(HttpMethod.valueOf(opEntry.getKey().name()), pathEntry.getKey(),
+								opEntry.getValue(), pathEntry.getValue()));
+			}
+		}
+	}
+
+	public Router getRouter() {
+		return router;
+	}
+
+	public void setRouter(Router router) {
+		this.router = router;
 	}
 
 	@Override
@@ -381,10 +385,6 @@ public class AppOpenAPI3RouterFactory extends BaseRouterFactory<OpenAPI> impleme
 					operation.getOperationModel(), operation.getParameters(), this.spec, refsCache);
 			handlersToLoad.add(validationHandler);
 
-			// Check validation failure handler
-			if (this.options.isMountValidationFailureHandler())
-				failureHandlersToLoad.add(this.getValidationFailureHandler());
-
 			// Check if path is set by user
 			if (operation.isConfigured()) {
 				handlersToLoad.addAll(operation.getUserHandlers());
@@ -398,7 +398,7 @@ public class AppOpenAPI3RouterFactory extends BaseRouterFactory<OpenAPI> impleme
 									operation.getEbServiceMethodName(), this.getExtraOperationContextPayloadMapper()));
 				}
 			} else {
-				handlersToLoad.add(this.getNotImplementedFailureHandler());
+				handlersToLoad.add(NOT_IMPLEMENTED_HANDLER);
 			}
 
 			// Now add all handlers to route
@@ -442,6 +442,11 @@ public class AppOpenAPI3RouterFactory extends BaseRouterFactory<OpenAPI> impleme
 			for (Handler failureHandler : failureHandlersToLoad)
 				route.failureHandler(failureHandler);
 		}
+		// Check validation failure handler
+		if (this.options.isMountValidationFailureHandler())
+			router.errorHandler(400, this.getValidationFailureHandler());
+		if (this.options.isMountNotImplementedHandler())
+			router.errorHandler(501, this.getNotImplementedFailureHandler());
 		return router;
 	}
 
