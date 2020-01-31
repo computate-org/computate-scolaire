@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.mom;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 			sqlSchoolMom(siteRequest, a -> {
 				if(a.succeeded()) {
-					createPOSTSchoolMom(siteRequest, b -> {
+					createSchoolMom(siteRequest, b -> {
 						if(b.succeeded()) {
 						ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
@@ -163,28 +163,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			});
 		} catch(Exception e) {
 			errorSchoolMom(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void createPOSTSchoolMom(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolMom>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(SchoolMom.class.getCanonicalName(), userId))
-					, createAsync
-			-> {
-				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-				Long pk = createLine.getLong(0);
-				SchoolMom o = new SchoolMom();
-				o.setPk(pk);
-				o.setSiteRequest_(siteRequest);
-				eventHandler.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -404,20 +382,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		});
 	}
 
-	public void apiRequestSchoolMom(SchoolMom o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-			for(Long pk : o.getEnrollmentKeys()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("SchoolEnrollment");
-				}
-			}
-		}
-	}
-
 	public Future<SchoolMom> futurePATCHSchoolMom(SchoolMom o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
 		Future<SchoolMom> future = Future.future();
 		try {
@@ -471,6 +435,16 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.mom.SchoolMom"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -499,16 +473,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
-						}
-						break;
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "addEnrollmentKeys":
@@ -939,6 +903,42 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	}
 
 	// Partagé //
+
+	public void createSchoolMom(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolMom>> eventHandler) {
+		try {
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_create
+					, new JsonArray(Arrays.asList(SchoolMom.class.getCanonicalName(), userId))
+					, createAsync
+			-> {
+				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Long pk = createLine.getLong(0);
+				SchoolMom o = new SchoolMom();
+				o.setPk(pk);
+				o.setSiteRequest_(siteRequest);
+				eventHandler.handle(Future.succeededFuture(o));
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void apiRequestSchoolMom(SchoolMom o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
+			for(Long pk : o.getEnrollmentKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("SchoolEnrollment");
+				}
+			}
+		}
+	}
 
 	public void errorSchoolMom(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();

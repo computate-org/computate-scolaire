@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.html.part;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.lang.Double;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -11,6 +12,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -72,6 +74,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlPartKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long htmlPartKey;
 	@JsonIgnore
 	public Wrap<Long> htmlPartKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("htmlPartKey").o(htmlPartKey);
@@ -139,6 +142,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDesignKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long enrollmentDesignKey;
 	@JsonIgnore
 	public Wrap<Long> enrollmentDesignKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentDesignKey").o(enrollmentDesignKey);
@@ -221,7 +225,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestHtmlPartEnrollmentDesignKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+							{ e("a").a("href", "/enrollment-design?fq=htmlPartKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
 								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
 								sx("enrollment design");
 							} g("a");
@@ -1974,6 +1978,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort1;
 	@JsonIgnore
 	public Wrap<Double> sort1Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort1").o(sort1);
@@ -2095,6 +2100,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort2;
 	@JsonIgnore
 	public Wrap<Double> sort2Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort2").o(sort2);
@@ -2216,6 +2222,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort3;
 	@JsonIgnore
 	public Wrap<Double> sort3Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort3").o(sort3);
@@ -2337,6 +2344,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort4 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort4;
 	@JsonIgnore
 	public Wrap<Double> sort4Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort4").o(sort4);
@@ -2458,6 +2466,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort5 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort5;
 	@JsonIgnore
 	public Wrap<Double> sort5Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort5").o(sort5);
@@ -2579,6 +2588,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort6 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort6;
 	@JsonIgnore
 	public Wrap<Double> sort6Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort6").o(sort6);
@@ -2700,6 +2710,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort7 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort7;
 	@JsonIgnore
 	public Wrap<Double> sort7Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort7").o(sort7);
@@ -2821,6 +2832,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort8 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort8;
 	@JsonIgnore
 	public Wrap<Double> sort8Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort8").o(sort8);
@@ -2942,6 +2954,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort9 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort9;
 	@JsonIgnore
 	public Wrap<Double> sort9Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort9").o(sort9);
@@ -3063,6 +3076,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « sort10 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double sort10;
 	@JsonIgnore
 	public Wrap<Double> sort10Wrap = new Wrap<Double>().p(this).c(Double.class).var("sort10").o(sort10);

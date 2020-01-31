@@ -3,6 +3,7 @@ package org.computate.scolaire.enUS.enrollment;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.math.BigDecimal;
@@ -12,14 +13,11 @@ import java.time.LocalTime;
 import org.computate.scolaire.enUS.season.SchoolSeason;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
-
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.mom.SchoolMom;
-
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -36,12 +34,14 @@ import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import java.lang.String;
@@ -91,6 +91,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long enrollmentKey;
 	@JsonIgnore
 	public Wrap<Long> enrollmentKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentKey").o(enrollmentKey);
@@ -158,6 +159,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « yearKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long yearKey;
 	@JsonIgnore
 	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
@@ -400,7 +402,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolEnrollmentBlockKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+							{ e("a").a("href", "/block?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
 								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
 								sx("blocks");
 							} g("a");
@@ -615,6 +617,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long schoolKey;
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
@@ -682,6 +685,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « seasonKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long seasonKey;
 	@JsonIgnore
 	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
@@ -749,6 +753,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « sessionKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long sessionKey;
 	@JsonIgnore
 	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
@@ -816,6 +821,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « ageKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long ageKey;
 	@JsonIgnore
 	public Wrap<Long> ageKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("ageKey").o(ageKey);
@@ -883,6 +889,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long blockKey;
 	@JsonIgnore
 	public Wrap<Long> blockKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("blockKey").o(blockKey);
@@ -950,6 +957,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long childKey;
 	@JsonIgnore
 	public Wrap<Long> childKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("childKey").o(childKey);
@@ -1032,7 +1040,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolEnrollmentChildKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/child?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
 								sx("children");
 							} g("a");
@@ -1176,7 +1184,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolEnrollmentMomKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+							{ e("a").a("href", "/mom?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
 								e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
 								sx("moms");
 							} g("a");
@@ -1320,7 +1328,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolEnrollmentDadKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
+							{ e("a").a("href", "/dad?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
 								e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
 								sx("dads");
 							} g("a");
@@ -1464,7 +1472,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolEnrollmentGuardianKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+							{ e("a").a("href", "/guardian?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
 								e("i").a("class", "far fa-phone w3-padding-small ").f().g("i");
 								sx("guardians");
 							} g("a");
@@ -1608,7 +1616,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolEnrollmentPaymentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/payment?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
 								sx("payments");
 							} g("a");
@@ -1652,6 +1660,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentFormKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long enrollmentFormKey;
 	@JsonIgnore
 	public Wrap<Long> enrollmentFormKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentFormKey").o(enrollmentFormKey);
@@ -1745,6 +1754,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « educationSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer educationSort;
 	@JsonIgnore
 	public Wrap<Integer> educationSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("educationSort").o(educationSort);
@@ -1812,6 +1822,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer schoolSort;
 	@JsonIgnore
 	public Wrap<Integer> schoolSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolSort").o(schoolSort);
@@ -1879,6 +1890,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « yearSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearSort;
 	@JsonIgnore
 	public Wrap<Integer> yearSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearSort").o(yearSort);
@@ -1946,6 +1958,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « seasonSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer seasonSort;
 	@JsonIgnore
 	public Wrap<Integer> seasonSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("seasonSort").o(seasonSort);
@@ -2013,6 +2026,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « sessionSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer sessionSort;
 	@JsonIgnore
 	public Wrap<Integer> sessionSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sessionSort").o(sessionSort);
@@ -2080,6 +2094,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « ageSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ageSort;
 	@JsonIgnore
 	public Wrap<Integer> ageSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageSort").o(ageSort);
@@ -2595,6 +2610,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childBirthDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate childBirthDate;
 	@JsonIgnore
 	public Wrap<LocalDate> childBirthDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("childBirthDate").o(childBirthDate);
@@ -3137,6 +3153,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « yearStart »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearStart;
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
@@ -3204,6 +3221,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « yearEnd »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearEnd;
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
@@ -3271,6 +3289,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « seasonStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);
@@ -3480,6 +3499,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « yearEnrollmentFee »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal yearEnrollmentFee;
 	@JsonIgnore
 	public Wrap<BigDecimal> yearEnrollmentFeeWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("yearEnrollmentFee").o(yearEnrollmentFee);
@@ -3619,6 +3639,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « sessionStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate sessionStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> sessionStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionStartDate").o(sessionStartDate);
@@ -3696,6 +3717,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « sessionEndDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate sessionEndDate;
 	@JsonIgnore
 	public Wrap<LocalDate> sessionEndDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionEndDate").o(sessionEndDate);
@@ -3834,6 +3856,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « ageStart »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ageStart;
 	@JsonIgnore
 	public Wrap<Integer> ageStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageStart").o(ageStart);
@@ -3901,6 +3924,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « ageEnd »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ageEnd;
 	@JsonIgnore
 	public Wrap<Integer> ageEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageEnd").o(ageEnd);
@@ -3968,6 +3992,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockStartTime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalTime blockStartTime;
 	@JsonIgnore
 	public Wrap<LocalTime> blockStartTimeWrap = new Wrap<LocalTime>().p(this).c(LocalTime.class).var("blockStartTime").o(blockStartTime);
@@ -4038,6 +4063,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockEndTime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalTime blockEndTime;
 	@JsonIgnore
 	public Wrap<LocalTime> blockEndTimeWrap = new Wrap<LocalTime>().p(this).c(LocalTime.class).var("blockEndTime").o(blockEndTime);
@@ -4108,6 +4134,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockPricePerMonth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal blockPricePerMonth;
 	@JsonIgnore
 	public Wrap<BigDecimal> blockPricePerMonthWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockPricePerMonth").o(blockPricePerMonth);
@@ -4648,6 +4675,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockTotalPrice »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal blockTotalPrice;
 	@JsonIgnore
 	public Wrap<BigDecimal> blockTotalPriceWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockTotalPrice").o(blockTotalPrice);
@@ -8090,6 +8118,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate1;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate1Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate1").o(enrollmentDate1);
@@ -8209,6 +8238,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate2;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate2Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate2").o(enrollmentDate2);
@@ -8328,6 +8358,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate3;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate3Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate3").o(enrollmentDate3);
@@ -8447,6 +8478,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate4 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate4;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate4Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate4").o(enrollmentDate4);
@@ -8566,6 +8598,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate5 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate5;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate5Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate5").o(enrollmentDate5);
@@ -8685,6 +8718,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate6 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate6;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate6Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate6").o(enrollmentDate6);
@@ -8804,6 +8838,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate7 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate7;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate7Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate7").o(enrollmentDate7);
@@ -8923,6 +8958,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate8 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate8;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate8Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate8").o(enrollmentDate8);
@@ -9042,6 +9078,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate9 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate9;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate9Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate9").o(enrollmentDate9);
@@ -9161,6 +9198,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDate10 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate enrollmentDate10;
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate10Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate10").o(enrollmentDate10);
@@ -9326,6 +9364,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer enrollmentNumber;
 	@JsonIgnore
 	public Wrap<Integer> enrollmentNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("enrollmentNumber").o(enrollmentNumber);

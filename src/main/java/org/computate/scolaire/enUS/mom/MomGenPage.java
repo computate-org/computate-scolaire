@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -95,18 +96,20 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	@Override public void htmlScriptMomGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "suggestSchoolMomEnrollmentKeys([{'name':'fq','value':'momKeys:' + pk}], $('#listSchoolMomEnrollmentKeys_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggestSchoolMomEnrollmentKeys([{'name':'fq','value':'momKeys:' + pk}], $('#listSchoolMomEnrollmentKeys_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketSchoolMom(websocketSchoolMomInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Page");
 			o.htmPk("Page");
-			o.htmObjectId("Page");
+			o.htmCreated("Page");
 			o.htmModified("Page");
+			o.htmObjectId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -135,10 +138,10 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("POST");
 			o.htmPk("POST");
-			o.htmObjectId("POST");
+			o.htmCreated("POST");
 			o.htmModified("POST");
+			o.htmObjectId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -165,11 +168,39 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTSchoolMom(SchoolMom o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCreated("PUT");
+			o.htmModified("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchived("PUT");
+			o.htmDeleted("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPersonFirstName("PUT");
+			o.htmFamilyName("PUT");
+			o.htmPersonFirstNamePreferred("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPersonEmail("PUT");
+			o.htmPersonPhoneNumber("PUT");
+			o.htmPersonOccupation("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPersonSms("PUT");
+			o.htmPersonReceiveEmail("PUT");
+			o.htmPersonEmergencyContact("PUT");
+			o.htmPersonPickup("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmCreated("PATCH");
-			o.htmPk("PATCH");
-			o.htmObjectId("PATCH");
 			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -195,17 +226,14 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmMomCompleteName("PATCH");
-		} g("div");
 	}
 
 	public void htmlFormSearchSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmCreated("Recherche");
 			o.htmModified("Recherche");
+			o.htmObjectId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");
@@ -231,6 +259,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjectTitle("Recherche");
 			o.htmMomCompleteName("Recherche");
 		} g("div");
 	}
@@ -285,13 +314,13 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/mom").a("class", "w3-bar-item w3-btn w3-center w3-block w3-pink w3-hover-pink ").f();
-						if(contextIconCssClasses != null)
-							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/mom").a("class", "w3-bar-item w3-btn w3-center w3-block w3-pink w3-hover-pink ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listSchoolMom.getQueryResponse().getResults().getNumFound();
@@ -338,6 +367,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("name").g("th");
 						e("th").f().sx("created").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -360,6 +390,14 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCreated());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjectTitle());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -453,17 +491,6 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 				{ e("div").a("class", "w3-container ").f();
 					SchoolMom o = new SchoolMom();
 					o.setSiteRequest_(siteRequest_);
-
-					// FormFilters PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolMomFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormSearchSchoolMom(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-						.a("onclick", "aSearchSchoolMom($('#patchSchoolMomFormFilters')); ")
-						.f().sx("Search the a mom")
-					.g("button");
-
 
 					// FormValues PATCH
 					{ e("form").a("action", "").a("id", "patchSchoolMomFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();

@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.enrollment;
 
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
@@ -9,6 +10,7 @@ import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.String;
@@ -17,6 +19,7 @@ import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.enrollment.EnrollmentFormGenPage;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.year.SchoolYear;
@@ -35,7 +38,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -406,6 +408,7 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	/**	L'entité « schoolKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long schoolKey;
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
@@ -839,6 +842,7 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	/**	L'entité « yearStart »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearStart;
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
@@ -906,6 +910,7 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	/**	L'entité « yearEnd »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearEnd;
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
@@ -973,6 +978,7 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	/**	L'entité « seasonStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);

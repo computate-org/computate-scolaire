@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -96,19 +97,21 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptAgeGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk); ");
-		tl(1, "suggestSchoolAgeBlockKeys([{'name':'fq','value':'ageKey:' + pk}], $('#listSchoolAgeBlockKeys_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk); ");
+		tl(2, "suggestSchoolAgeBlockKeys([{'name':'fq','value':'ageKey:' + pk}], $('#listSchoolAgeBlockKeys_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketSchoolAge(websocketSchoolAgeInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Page");
 			o.htmPk("Page");
-			o.htmObjectId("Page");
+			o.htmCreated("Page");
 			o.htmModified("Page");
+			o.htmObjectId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -126,10 +129,10 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("POST");
 			o.htmPk("POST");
-			o.htmObjectId("POST");
+			o.htmCreated("POST");
 			o.htmModified("POST");
+			o.htmObjectId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -145,11 +148,31 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTSchoolAge(SchoolAge o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCreated("PUT");
+			o.htmModified("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchived("PUT");
+			o.htmDeleted("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeStart("PUT");
+			o.htmAgeEnd("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionKey("PUT");
+			o.htmBlockKeys("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmCreated("PATCH");
-			o.htmPk("PATCH");
-			o.htmObjectId("PATCH");
 			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -166,16 +189,15 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAddress("PATCH");
-			o.htmAgeCompleteName("PATCH");
 		} g("div");
 	}
 
 	public void htmlFormSearchSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmCreated("Recherche");
 			o.htmModified("Recherche");
+			o.htmObjectId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");
@@ -190,6 +212,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlockKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjectTitle("Recherche");
 			o.htmSchoolAddress("Recherche");
 			o.htmAgeCompleteName("Recherche");
 		} g("div");
@@ -245,13 +268,13 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/age").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue w3-hover-blue ").f();
-						if(contextIconCssClasses != null)
-							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/age").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue w3-hover-blue ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listSchoolAge.getQueryResponse().getResults().getNumFound();
@@ -298,6 +321,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("name").g("th");
 						e("th").f().sx("created").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -320,6 +344,14 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCreated());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjectTitle());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -413,17 +445,6 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 				{ e("div").a("class", "w3-container ").f();
 					SchoolAge o = new SchoolAge();
 					o.setSiteRequest_(siteRequest_);
-
-					// FormFilters PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolAgeFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormSearchSchoolAge(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-						.a("onclick", "aSearchSchoolAge($('#patchSchoolAgeFormFilters')); ")
-						.f().sx("Search the an age")
-					.g("button");
-
 
 					// FormValues PATCH
 					{ e("form").a("action", "").a("id", "patchSchoolAgeFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();

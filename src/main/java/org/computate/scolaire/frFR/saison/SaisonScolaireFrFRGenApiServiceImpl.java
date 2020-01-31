@@ -2,9 +2,9 @@ package org.computate.scolaire.frFR.saison;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSaisonScolaire(siteContexte, operationRequete, body);
 			sqlSaisonScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerPOSTSaisonScolaire(requeteSite, b -> {
+					creerSaisonScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
 						RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
@@ -163,28 +163,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			});
 		} catch(Exception e) {
 			erreurSaisonScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void creerPOSTSaisonScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<SaisonScolaire>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_creer
-					, new JsonArray(Arrays.asList(SaisonScolaire.class.getCanonicalName(), utilisateurId))
-					, creerAsync
-			-> {
-				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-				Long pk = creerLigne.getLong(0);
-				SaisonScolaire o = new SaisonScolaire();
-				o.setPk(pk);
-				o.setRequeteSite_(requeteSite);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -382,26 +360,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				erreurSaisonScolaire(listeSaisonScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void requeteApiSaisonScolaire(SaisonScolaire o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			for(Long pk : o.getSessionCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("SessionScolaire");
-				}
-			}
-			if(o.getAnneeCle() != null) {
-				if(!pks.contains(o.getAnneeCle())) {
-					pks.add(o.getAnneeCle());
-					classes.add("AnneeScolaire");
-				}
-			}
-		}
 	}
 
 	public Future<SaisonScolaire> futurePATCHSaisonScolaire(SaisonScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -875,6 +833,48 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	}
 
 	// Partagé //
+
+	public void creerSaisonScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<SaisonScolaire>> gestionnaireEvenements) {
+		try {
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			String utilisateurId = requeteSite.getUtilisateurId();
+
+			connexionSql.queryWithParams(
+					SiteContexteFrFR.SQL_creer
+					, new JsonArray(Arrays.asList(SaisonScolaire.class.getCanonicalName(), utilisateurId))
+					, creerAsync
+			-> {
+				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Long pk = creerLigne.getLong(0);
+				SaisonScolaire o = new SaisonScolaire();
+				o.setPk(pk);
+				o.setRequeteSite_(requeteSite);
+				gestionnaireEvenements.handle(Future.succeededFuture(o));
+			});
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void requeteApiSaisonScolaire(SaisonScolaire o) {
+		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
+		if(requeteApi != null) {
+			List<Long> pks = requeteApi.getPks();
+			List<String> classes = requeteApi.getClasses();
+			for(Long pk : o.getSessionCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("SessionScolaire");
+				}
+			}
+			if(o.getAnneeCle() != null) {
+				if(!pks.contains(o.getAnneeCle())) {
+					pks.add(o.getAnneeCle());
+					classes.add("AnneeScolaire");
+				}
+			}
+		}
+	}
 
 	public void erreurSaisonScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();

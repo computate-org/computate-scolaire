@@ -1,9 +1,9 @@
-package org.computate.scolaire.frFR.html.part;     
+package org.computate.scolaire.frFR.html.part;       
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 
-/**   
+/**      
  * NomCanonique.enUS: org.computate.scolaire.enUS.html.part.HtmlPart
  * Modele: true
  * Api: true
@@ -53,7 +53,10 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri10
  * Rows: 1000000
  * 
-*/          
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
+ * 
+*/             
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -65,7 +68,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Description.enUS: The primary key of the season in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */          
+	 */        
 	protected void _partHtmlCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -292,7 +295,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 10
 	 * HtmlCelulle: 2
-	 */            
+	 */         
 	protected void _htmlExclure(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -392,7 +395,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 12
 	 * HtmlCelulle: 6
-	 */               
+	 */              
 	protected void _tri6(Couverture<Double> c) {
 	}
 

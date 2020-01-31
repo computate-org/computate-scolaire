@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;       
+package org.computate.scolaire.frFR.cluster;      
 
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
@@ -30,6 +30,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * ApiUri.enUS: /api/cluster
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -241,6 +242,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
+	 * HtmlColonne: 2
 	 */        
 	protected void _objetTitre(Couverture<String> c) {
 	}

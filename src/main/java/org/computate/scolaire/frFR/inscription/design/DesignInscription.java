@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription.design;                                  
+package org.computate.scolaire.frFR.inscription.design;                                    
 
 import java.util.List;
 
@@ -46,6 +46,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * NomVar.frFR: design-inscription
  * NomVar.enUS: enrollment-design
  * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */            
 public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
@@ -75,11 +77,11 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * r.enUS: YearKey
 	 * r: annee
 	 * r.enUS: year
-	*/      
+	*/        
 	protected void _anneeCle(Couverture<Long> c) {
 	}
 
-	/**
+	/**  
 	 * {@inheritDoc}
 	 * Var.enUS: htmlPartKeys
 	 * Indexe: true
@@ -89,7 +91,7 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
-	 */             
+	 */            
 	protected void _partHtmlCles(List<Long> o) {}
 
 	/**

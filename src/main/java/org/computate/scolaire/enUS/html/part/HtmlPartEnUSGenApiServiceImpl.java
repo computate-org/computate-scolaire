@@ -398,56 +398,61 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	public void listPUTHtmlPart(ApiRequest apiRequest, SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-		listHtmlPart.getList().forEach(o -> {
-			futures.add(
-				futurePUTHtmlPart(siteRequest, JsonObject.mapFrom(o), a -> {
-					if(a.succeeded()) {
+		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		if(jsonArray.size() == 0) {
+			listHtmlPart.getList().forEach(o -> {
+				futures.add(
+					futurePUTHtmlPart(siteRequest, JsonObject.mapFrom(o), a -> {
+						if(a.succeeded()) {
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listHtmlPart.size());
+					if(listHtmlPart.next()) {
+						siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+						listPUTHtmlPart(apiRequest, listHtmlPart, eventHandler);
 					} else {
-						errorHtmlPart(siteRequest, eventHandler, a);
+						response200PUTHtmlPart(apiRequest, eventHandler);
 					}
-				})
-			);
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listHtmlPart.size());
-				if(listHtmlPart.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
-					listPUTHtmlPart(apiRequest, listHtmlPart, eventHandler);
 				} else {
-					response200PUTHtmlPart(apiRequest, eventHandler);
+					errorHtmlPart(listHtmlPart.getSiteRequest_(), eventHandler, a);
 				}
-			} else {
-				errorHtmlPart(listHtmlPart.getSiteRequest_(), eventHandler, a);
-			}
-		});
-	}
-
-	public void listPUTHtmlPart(ApiRequest apiRequest, JsonArray jsonArray, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				futurePUTHtmlPart(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, a);
-					}
-				})
-			);
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTHtmlPart(apiRequest, eventHandler);
-			} else {
-				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+		} else {
+			jsonArray.forEach(o -> {
+				JsonObject jsonObject = (JsonObject)o;
+				futures.add(
+					futurePUTHtmlPart(siteRequest, jsonObject, a -> {
+						if(a.succeeded()) {
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+					response200PUTHtmlPart(apiRequest, eventHandler);
+				} else {
+					errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		}
 	}
 
 	public Future<HtmlPart> futurePUTHtmlPart(SiteRequestEnUS siteRequest, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+		jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+		JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+		jsonPatch.stream().forEach(o -> {
+			jsonObject.put(o.getKey(), o.getValue());
+			jsonObject.getJsonArray("saves").add(o.getKey());
+		});
 		Future<HtmlPart> future = Future.future();
 		try {
 			createHtmlPart(siteRequest, a -> {
@@ -498,7 +503,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			Long pk = siteRequest.getRequestPk();
 
 			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_vider
+					SiteContextEnUS.SQL_clear
 					, new JsonArray(Arrays.asList(pk, HtmlPart.class.getCanonicalName(), pk, pk, pk))
 					, remplacerAsync
 			-> {

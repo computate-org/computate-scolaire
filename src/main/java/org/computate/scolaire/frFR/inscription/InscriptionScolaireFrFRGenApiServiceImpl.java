@@ -2,9 +2,9 @@ package org.computate.scolaire.frFR.inscription;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerPOSTInscriptionScolaire(requeteSite, b -> {
+					creerInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
 						RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
@@ -163,28 +163,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			});
 		} catch(Exception e) {
 			erreurInscriptionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void creerPOSTInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_creer
-					, new JsonArray(Arrays.asList(InscriptionScolaire.class.getCanonicalName(), utilisateurId))
-					, creerAsync
-			-> {
-				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-				Long pk = creerLigne.getLong(0);
-				InscriptionScolaire o = new InscriptionScolaire();
-				o.setPk(pk);
-				o.setRequeteSite_(requeteSite);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -554,56 +532,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				erreurInscriptionScolaire(listeInscriptionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void requeteApiInscriptionScolaire(InscriptionScolaire o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			if(o.getAnneeCle() != null) {
-				if(!pks.contains(o.getAnneeCle())) {
-					pks.add(o.getAnneeCle());
-					classes.add("AnneeScolaire");
-				}
-			}
-			for(Long pk : o.getBlocCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("BlocScolaire");
-				}
-			}
-			if(o.getEnfantCle() != null) {
-				if(!pks.contains(o.getEnfantCle())) {
-					pks.add(o.getEnfantCle());
-					classes.add("EnfantScolaire");
-				}
-			}
-			for(Long pk : o.getMereCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("MereScolaire");
-				}
-			}
-			for(Long pk : o.getPereCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("PereScolaire");
-				}
-			}
-			for(Long pk : o.getGardienCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("GardienScolaire");
-				}
-			}
-			for(Long pk : o.getPaiementCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("PaiementScolaire");
-				}
-			}
-		}
 	}
 
 	public Future<InscriptionScolaire> futurePATCHInscriptionScolaire(InscriptionScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -1799,6 +1727,78 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 	// Partagé //
 
+	public void creerInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
+		try {
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			String utilisateurId = requeteSite.getUtilisateurId();
+
+			connexionSql.queryWithParams(
+					SiteContexteFrFR.SQL_creer
+					, new JsonArray(Arrays.asList(InscriptionScolaire.class.getCanonicalName(), utilisateurId))
+					, creerAsync
+			-> {
+				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Long pk = creerLigne.getLong(0);
+				InscriptionScolaire o = new InscriptionScolaire();
+				o.setPk(pk);
+				o.setRequeteSite_(requeteSite);
+				gestionnaireEvenements.handle(Future.succeededFuture(o));
+			});
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void requeteApiInscriptionScolaire(InscriptionScolaire o) {
+		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
+		if(requeteApi != null) {
+			List<Long> pks = requeteApi.getPks();
+			List<String> classes = requeteApi.getClasses();
+			if(o.getAnneeCle() != null) {
+				if(!pks.contains(o.getAnneeCle())) {
+					pks.add(o.getAnneeCle());
+					classes.add("AnneeScolaire");
+				}
+			}
+			for(Long pk : o.getBlocCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("BlocScolaire");
+				}
+			}
+			if(o.getEnfantCle() != null) {
+				if(!pks.contains(o.getEnfantCle())) {
+					pks.add(o.getEnfantCle());
+					classes.add("EnfantScolaire");
+				}
+			}
+			for(Long pk : o.getMereCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("MereScolaire");
+				}
+			}
+			for(Long pk : o.getPereCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("PereScolaire");
+				}
+			}
+			for(Long pk : o.getGardienCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("GardienScolaire");
+				}
+			}
+			for(Long pk : o.getPaiementCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("PaiementScolaire");
+				}
+			}
+		}
+	}
+
 	public void erreurInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2000,6 +2000,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+			}
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

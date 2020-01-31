@@ -1,9 +1,11 @@
 package org.computate.scolaire.frFR.paiement;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -12,17 +14,15 @@ import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import java.math.BigDecimal;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.requete.api.RequeteApi;
-
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -694,7 +694,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggerePaiementScolaireInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+							{ e("a").a("href", "?fq=paiementCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
 								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 								sx("inscriptions");
 							} g("a");
@@ -738,6 +738,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long paiementCle;
 	@JsonIgnore
 	public Couverture<Long> paiementCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("paiementCle").o(paiementCle);
@@ -1421,6 +1422,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate paiementDate;
 	@JsonIgnore
 	public Couverture<LocalDate> paiementDateCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementDate").o(paiementDate);
@@ -1544,6 +1546,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementMontant »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal paiementMontant;
 	@JsonIgnore
 	public Couverture<BigDecimal> paiementMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("paiementMontant").o(paiementMontant);

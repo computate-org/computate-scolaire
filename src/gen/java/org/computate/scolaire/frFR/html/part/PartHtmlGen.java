@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.html.part;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.lang.Double;
 import java.util.Date;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -11,6 +12,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -73,6 +75,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « partHtmlCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long partHtmlCle;
 	@JsonIgnore
 	public Couverture<Long> partHtmlCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("partHtmlCle").o(partHtmlCle);
@@ -140,6 +143,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « designInscriptionCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long designInscriptionCle;
 	@JsonIgnore
 	public Couverture<Long> designInscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("designInscriptionCle").o(designInscriptionCle);
@@ -222,7 +226,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggerePartHtmlDesignInscriptionCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
 								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
 								sx("design d'inscription");
 							} g("a");
@@ -1975,6 +1979,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri1;
 	@JsonIgnore
 	public Couverture<Double> tri1Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri1").o(tri1);
@@ -2096,6 +2101,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri2;
 	@JsonIgnore
 	public Couverture<Double> tri2Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri2").o(tri2);
@@ -2217,6 +2223,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri3;
 	@JsonIgnore
 	public Couverture<Double> tri3Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri3").o(tri3);
@@ -2338,6 +2345,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri4 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri4;
 	@JsonIgnore
 	public Couverture<Double> tri4Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri4").o(tri4);
@@ -2459,6 +2467,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri5 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri5;
 	@JsonIgnore
 	public Couverture<Double> tri5Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri5").o(tri5);
@@ -2580,6 +2589,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri6 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri6;
 	@JsonIgnore
 	public Couverture<Double> tri6Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri6").o(tri6);
@@ -2701,6 +2711,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri7 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri7;
 	@JsonIgnore
 	public Couverture<Double> tri7Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri7").o(tri7);
@@ -2822,6 +2833,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri8 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri8;
 	@JsonIgnore
 	public Couverture<Double> tri8Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri8").o(tri8);
@@ -2943,6 +2955,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri9 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri9;
 	@JsonIgnore
 	public Couverture<Double> tri9Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri9").o(tri9);
@@ -3064,6 +3077,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « tri10 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Double tri10;
 	@JsonIgnore
 	public Couverture<Double> tri10Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri10").o(tri10);

@@ -1,25 +1,25 @@
 package org.computate.scolaire.frFR.saison;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
-
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.requete.api.RequeteApi;
-
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
@@ -86,6 +86,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long saisonCle;
 	@JsonIgnore
 	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
@@ -339,7 +340,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggereSaisonScolaireSessionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "?fq=saisonCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
 								sx("sessions");
 							} g("a");
@@ -383,6 +384,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « scolaireTri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer scolaireTri;
 	@JsonIgnore
 	public Couverture<Integer> scolaireTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("scolaireTri").o(scolaireTri);
@@ -450,6 +452,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleTri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ecoleTri;
 	@JsonIgnore
 	public Couverture<Integer> ecoleTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ecoleTri").o(ecoleTri);
@@ -517,6 +520,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeTri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer anneeTri;
 	@JsonIgnore
 	public Couverture<Integer> anneeTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeTri").o(anneeTri);
@@ -584,6 +588,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonTri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer saisonTri;
 	@JsonIgnore
 	public Couverture<Integer> saisonTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("saisonTri").o(saisonTri);
@@ -651,6 +656,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long anneeCle;
 	@JsonIgnore
 	public Couverture<Long> anneeCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("anneeCle").o(anneeCle);
@@ -734,7 +740,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggereSaisonScolaireAnneeCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "?fq=saisonCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
 								sx("année");
 							} g("a");
@@ -853,6 +859,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long ecoleCle;
 	@JsonIgnore
 	public Couverture<Long> ecoleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ecoleCle").o(ecoleCle);
@@ -1286,6 +1293,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeDebut »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer anneeDebut;
 	@JsonIgnore
 	public Couverture<Integer> anneeDebutCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeDebut").o(anneeDebut);
@@ -1353,6 +1361,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeFin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer anneeFin;
 	@JsonIgnore
 	public Couverture<Integer> anneeFinCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeFin").o(anneeFin);
@@ -1420,6 +1429,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeFraisInscription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal anneeFraisInscription;
 	@JsonIgnore
 	public Couverture<BigDecimal> anneeFraisInscriptionCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("anneeFraisInscription").o(anneeFraisInscription);
@@ -1498,6 +1508,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonJourDebut »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate saisonJourDebut;
 	@JsonIgnore
 	public Couverture<LocalDate> saisonJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonJourDebut").o(saisonJourDebut);

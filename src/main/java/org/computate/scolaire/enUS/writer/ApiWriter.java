@@ -591,7 +591,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		if(!wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 			wPaths.tl(3, "parameters:");
 			wPaths.s(wRequestHeaders);
-			if(id || "GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod)) {
+			if(id || "GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod)) {
 				wPaths.tl(4, "- name: id");
 				wPaths.tl(5, "in: path");
 				wPaths.t(5, "description: ").yamlStr(6, "");
@@ -599,7 +599,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: string");
 			}
-			if(classApiMethod.contains("Search") || classApiMethod.contains("PATCH")) {
+			if(classApiMethod.contains("Search") || classApiMethod.contains("PATCH") || "PUT".equals(classApiMethodMethod)) {
 				wPaths.tl(4, "- in: query");
 				wPaths.tl(5, "name: q");
 				wPaths.tl(5, "description: ''");

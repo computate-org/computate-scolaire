@@ -49,6 +49,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
+ * RoleSession: true
 */    
 public class PereScolaire extends PereScolaireGen<Cluster> {
 

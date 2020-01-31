@@ -87,10 +87,10 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * IconeGroupe: solid
  * IconeNom: edit
  * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
+ * RoleSession: true
 */        
-// * Role.frFR: SiteAdmin
-// * Role.enUS: SiteAdmin
-// * RoleSession: true
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**

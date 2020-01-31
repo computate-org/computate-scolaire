@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -96,18 +97,20 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	@Override public void htmlScriptPaiementGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
-		tl(1, "suggerePaiementScolaireInscriptionCles([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCles_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggerePaiementScolaireInscriptionCles([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCles_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketPaiementScolaire(websocketPaiementScolaireInner);");
 		l("});");
 	}
 
 	public void htmlFormPagePaiementScolaire(PaiementScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Page");
 			o.htmPk("Page");
-			o.htmObjetId("Page");
+			o.htmCree("Page");
 			o.htmModifie("Page");
+			o.htmObjetId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -129,10 +132,10 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTPaiementScolaire(PaiementScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("POST");
 			o.htmPk("POST");
-			o.htmObjetId("POST");
+			o.htmCree("POST");
 			o.htmModifie("POST");
+			o.htmObjetId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -152,11 +155,32 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTPaiementScolaire(PaiementScolaire o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCree("PUT");
+			o.htmModifie("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchive("PUT");
+			o.htmSupprime("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDate("PUT");
+			o.htmPaiementMontant("PUT");
+			o.htmPaiementEspeces("PUT");
+			o.htmPaiementCheque("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDescription("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionCles("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHPaiementScolaire(PaiementScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmCree("PATCH");
-			o.htmPk("PATCH");
-			o.htmObjetId("PATCH");
 			o.htmModifie("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -175,17 +199,14 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaiementNomComplet("PATCH");
-		} g("div");
 	}
 
 	public void htmlFormRecherchePaiementScolaire(PaiementScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjetId("Recherche");
+			o.htmCree("Recherche");
 			o.htmModifie("Recherche");
+			o.htmObjetId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");
@@ -204,6 +225,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjetTitre("Recherche");
 			o.htmPaiementNomComplet("Recherche");
 		} g("div");
 	}
@@ -258,13 +280,13 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/paiement").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
-						if(contexteIconeClassesCss != null)
-							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/paiement").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+					if(contexteIconeClassesCss != null)
+						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listePaiementScolaire.getQueryResponse().getResults().getNumFound();
@@ -311,6 +333,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -333,6 +356,14 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCree());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjetTitre());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -426,17 +457,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 				{ e("div").a("class", "w3-container ").f();
 					PaiementScolaire o = new PaiementScolaire();
 					o.setRequeteSite_(requeteSite_);
-
-					// FormulaireFiltres PATCH
-					{ e("form").a("action", "").a("id", "patchPaiementScolaireFormulaireFiltres").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormRecherchePaiementScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "recherchePaiementScolaire($('#patchPaiementScolaireFormulaireFiltres')); ")
-						.f().sx("Rechercher des un paiement")
-					.g("button");
-
 
 					// FormulaireValeurs PATCH
 					{ e("form").a("action", "").a("id", "patchPaiementScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();

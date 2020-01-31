@@ -71,7 +71,7 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		Long start = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getStart()).orElse(0L);
 		Integer rows = Optional.ofNullable(getRows()).orElse(0);
 		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
-		if(numFound > 0) {
+		if((start + rows) < numFound) {
 			try {
 				setStart(start.intValue() + rows);
 				setQueryResponse(siteRequest_.getSiteContext_().getSolrClient().query(solrQuery));

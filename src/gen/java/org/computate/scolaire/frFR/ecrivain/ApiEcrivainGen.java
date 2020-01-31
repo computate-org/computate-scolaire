@@ -7,6 +7,7 @@ import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.vertx.AppliSwagger2;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -18,6 +19,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -2782,6 +2784,17 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiApiEcrivain() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		ApiEcrivain original = (ApiEcrivain)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 

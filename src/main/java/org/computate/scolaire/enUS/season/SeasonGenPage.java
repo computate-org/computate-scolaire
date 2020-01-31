@@ -152,12 +152,31 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTSchoolSeason(SchoolSeason o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCreated("PUT");
+			o.htmModified("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchived("PUT");
+			o.htmDeleted("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSeasonStartDate("PUT");
+			o.htmSeasonSummer("PUT");
+			o.htmSeasonWinter("PUT");
+			o.htmSeasonFuture("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionKeys("PUT");
+			o.htmYearKey("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHSchoolSeason(SchoolSeason o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCreated("PATCH");
 			o.htmModified("PATCH");
-			o.htmObjectId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -172,9 +191,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionKeys("PATCH");
 			o.htmYearKey("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSeasonCompleteName("PATCH");
 		} g("div");
 	}
 
@@ -200,6 +216,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmYearKey("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjectTitle("Recherche");
 			o.htmSeasonCompleteName("Recherche");
 		} g("div");
 	}
@@ -254,13 +271,13 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/season").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
-						if(contextIconCssClasses != null)
-							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/season").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listSchoolSeason.getQueryResponse().getResults().getNumFound();
@@ -307,6 +324,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("name").g("th");
 						e("th").f().sx("created").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -329,6 +347,14 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCreated());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjectTitle());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -422,17 +448,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("div").a("class", "w3-container ").f();
 					SchoolSeason o = new SchoolSeason();
 					o.setSiteRequest_(siteRequest_);
-
-					// FormFilters PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolSeasonFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormSearchSchoolSeason(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-						.a("onclick", "aSearchSchoolSeason($('#patchSchoolSeasonFormFilters')); ")
-						.f().sx("Search the a season")
-					.g("button");
-
 
 					// FormValues PATCH
 					{ e("form").a("action", "").a("id", "patchSchoolSeasonFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();

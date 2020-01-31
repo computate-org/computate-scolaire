@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -94,18 +95,20 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 	@Override public void htmlScriptGuardianGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "suggestSchoolGuardianEnrollmentKeys([{'name':'fq','value':'guardianKeys:' + pk}], $('#listSchoolGuardianEnrollmentKeys_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggestSchoolGuardianEnrollmentKeys([{'name':'fq','value':'guardianKeys:' + pk}], $('#listSchoolGuardianEnrollmentKeys_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketSchoolGuardian(websocketSchoolGuardianInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSchoolGuardian(SchoolGuardian o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Page");
 			o.htmPk("Page");
-			o.htmObjectId("Page");
+			o.htmCreated("Page");
 			o.htmModified("Page");
+			o.htmObjectId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -129,10 +132,10 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolGuardian(SchoolGuardian o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("POST");
 			o.htmPk("POST");
-			o.htmObjectId("POST");
+			o.htmCreated("POST");
 			o.htmModified("POST");
+			o.htmObjectId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -154,11 +157,34 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTSchoolGuardian(SchoolGuardian o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCreated("PUT");
+			o.htmModified("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchived("PUT");
+			o.htmDeleted("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPersonFirstName("PUT");
+			o.htmFamilyName("PUT");
+			o.htmPersonFirstNamePreferred("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPersonPhoneNumber("PUT");
+			o.htmPersonRelation("PUT");
+			o.htmPersonEmergencyContact("PUT");
+			o.htmPersonPickup("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHSchoolGuardian(SchoolGuardian o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmCreated("PATCH");
-			o.htmPk("PATCH");
-			o.htmObjectId("PATCH");
 			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -179,17 +205,14 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmGuardianCompleteName("PATCH");
-		} g("div");
 	}
 
 	public void htmlFormSearchSchoolGuardian(SchoolGuardian o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmCreated("Recherche");
 			o.htmModified("Recherche");
+			o.htmObjectId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");
@@ -210,6 +233,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjectTitle("Recherche");
 			o.htmGuardianCompleteName("Recherche");
 		} g("div");
 	}
@@ -264,13 +288,13 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/guardian").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
-						if(contextIconCssClasses != null)
-							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/guardian").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listSchoolGuardian.getQueryResponse().getResults().getNumFound();
@@ -317,6 +341,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("").g("th");
 						e("th").f().sx("created").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -339,6 +364,14 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCreated());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "far fa-phone w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjectTitle());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -432,17 +465,6 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 				{ e("div").a("class", "w3-container ").f();
 					SchoolGuardian o = new SchoolGuardian();
 					o.setSiteRequest_(siteRequest_);
-
-					// FormFilters PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolGuardianFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormSearchSchoolGuardian(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-						.a("onclick", "aSearchSchoolGuardian($('#patchSchoolGuardianFormFilters')); ")
-						.f().sx("Search the a guardian")
-					.g("button");
-
 
 					// FormValues PATCH
 					{ e("form").a("action", "").a("id", "patchSchoolGuardianFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();

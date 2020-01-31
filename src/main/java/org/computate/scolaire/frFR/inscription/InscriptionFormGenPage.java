@@ -312,12 +312,87 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		} g("div");
 	}
 
+	public void htmlFormPUTInscriptionScolaire(InscriptionScolaire o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCree("PUT");
+			o.htmModifie("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchive("PUT");
+			o.htmSupprime("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionApprouve("PUT");
+			o.htmInscriptionImmunisations("PUT");
+			o.htmInscriptionNomGroupe("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionPaimentComplet("PUT");
+			o.htmEnfantPropre("PUT");
+			o.htmInscriptionPaimentChaqueMois("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmFamilleMarie("PUT");
+			o.htmFamilleSepare("PUT");
+			o.htmFamilleDivorce("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmFamilleAddresse("PUT");
+			o.htmInscriptionConsiderationsSpeciales("PUT");
+			o.htmFamilleCommentVousConnaissezEcole("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocCles("PUT");
+			o.htmEnfantConditionsMedicales("PUT");
+			o.htmEnfantEcolesPrecedemmentFrequentees("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnfantDescription("PUT");
+			o.htmEnfantObjectifs("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnfantCle("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmMereCles("PUT");
+			o.htmPereCles("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmGardienCles("PUT");
+			o.htmPaiementCles("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnfantNomComplet("PUT");
+			o.htmEnfantDateNaissance("PUT");
+			o.htmEcoleAddresse("PUT");
+			o.htmInscriptionNomsParents("PUT");
+			o.htmInscriptionSignature1("PUT");
+			o.htmInscriptionSignature2("PUT");
+			o.htmInscriptionSignature3("PUT");
+			o.htmInscriptionSignature4("PUT");
+			o.htmInscriptionSignature5("PUT");
+			o.htmInscriptionSignature6("PUT");
+			o.htmInscriptionSignature7("PUT");
+			o.htmInscriptionSignature8("PUT");
+			o.htmInscriptionSignature9("PUT");
+			o.htmInscriptionSignature10("PUT");
+			o.htmInscriptionDate1("PUT");
+			o.htmInscriptionDate2("PUT");
+			o.htmInscriptionDate3("PUT");
+			o.htmInscriptionDate4("PUT");
+			o.htmInscriptionDate5("PUT");
+			o.htmInscriptionDate6("PUT");
+			o.htmInscriptionDate7("PUT");
+			o.htmInscriptionDate8("PUT");
+			o.htmInscriptionDate9("PUT");
+			o.htmInscriptionDate10("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCree("PATCH");
 			o.htmModifie("PATCH");
-			o.htmObjetId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -358,7 +433,6 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMereCles("PATCH");
 			o.htmPereCles("PATCH");
-			o.htmFormInscriptionCle("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGardienCles("PATCH");
@@ -389,7 +463,6 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			o.htmInscriptionDate8("PATCH");
 			o.htmInscriptionDate9("PATCH");
 			o.htmInscriptionDate10("PATCH");
-			o.htmInscriptionNomComplet("PATCH");
 		} g("div");
 	}
 
@@ -446,6 +519,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			o.htmPaiementCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjetTitre("Recherche");
 			o.htmEnfantNomComplet("Recherche");
 			o.htmEnfantDateNaissance("Recherche");
 			o.htmEcoleAddresse("Recherche");
@@ -514,13 +588,13 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
-						if(contexteIconeClassesCss != null)
-							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+					if(contexteIconeClassesCss != null)
+						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeInscriptionScolaire.getQueryResponse().getResults().getNumFound();
@@ -567,6 +641,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 					{ e("tr").f();
 						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -589,6 +664,14 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCree());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjetTitre());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -682,17 +765,6 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 				{ e("div").a("class", "w3-container ").f();
 					InscriptionScolaire o = new InscriptionScolaire();
 					o.setRequeteSite_(requeteSite_);
-
-					// FormulaireFiltres PATCH
-					{ e("form").a("action", "").a("id", "patchInscriptionScolaireFormulaireFiltres").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormRechercheInscriptionScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-						.a("onclick", "rechercheInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres')); ")
-						.f().sx("Rechercher des une inscription")
-					.g("button");
-
 
 					// FormulaireValeurs PATCH
 					{ e("form").a("action", "").a("id", "patchInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();

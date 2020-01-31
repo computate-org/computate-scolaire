@@ -312,12 +312,87 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTSchoolEnrollment(SchoolEnrollment o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCreated("PUT");
+			o.htmModified("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchived("PUT");
+			o.htmDeleted("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentApproved("PUT");
+			o.htmEnrollmentImmunizations("PUT");
+			o.htmEnrollmentGroupName("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentPaymentComplete("PUT");
+			o.htmChildPottyTrained("PUT");
+			o.htmEnrollmentPaymentEachMonth("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmFamilyMarried("PUT");
+			o.htmFamilySeparated("PUT");
+			o.htmFamilyDivorced("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmFamilyAddress("PUT");
+			o.htmEnrollmentSpecialConsiderations("PUT");
+			o.htmFamilyHowDoYouKnowTheSchool("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlockKeys("PUT");
+			o.htmChildMedicalConditions("PUT");
+			o.htmChildPreviousSchoolsAttended("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmChildDescription("PUT");
+			o.htmChildObjectives("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmChildKey("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmMomKeys("PUT");
+			o.htmDadKeys("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmGuardianKeys("PUT");
+			o.htmPaymentKeys("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmChildCompleteName("PUT");
+			o.htmChildBirthDate("PUT");
+			o.htmSchoolAddress("PUT");
+			o.htmEnrollmentParentNames("PUT");
+			o.htmEnrollmentSignature1("PUT");
+			o.htmEnrollmentSignature2("PUT");
+			o.htmEnrollmentSignature3("PUT");
+			o.htmEnrollmentSignature4("PUT");
+			o.htmEnrollmentSignature5("PUT");
+			o.htmEnrollmentSignature6("PUT");
+			o.htmEnrollmentSignature7("PUT");
+			o.htmEnrollmentSignature8("PUT");
+			o.htmEnrollmentSignature9("PUT");
+			o.htmEnrollmentSignature10("PUT");
+			o.htmEnrollmentDate1("PUT");
+			o.htmEnrollmentDate2("PUT");
+			o.htmEnrollmentDate3("PUT");
+			o.htmEnrollmentDate4("PUT");
+			o.htmEnrollmentDate5("PUT");
+			o.htmEnrollmentDate6("PUT");
+			o.htmEnrollmentDate7("PUT");
+			o.htmEnrollmentDate8("PUT");
+			o.htmEnrollmentDate9("PUT");
+			o.htmEnrollmentDate10("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCreated("PATCH");
 			o.htmModified("PATCH");
-			o.htmObjectId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -358,7 +433,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMomKeys("PATCH");
 			o.htmDadKeys("PATCH");
-			o.htmEnrollmentFormKey("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGuardianKeys("PATCH");
@@ -389,7 +463,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmEnrollmentDate8("PATCH");
 			o.htmEnrollmentDate9("PATCH");
 			o.htmEnrollmentDate10("PATCH");
-			o.htmEnrollmentCompleteName("PATCH");
 		} g("div");
 	}
 
@@ -446,6 +519,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmPaymentKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjectTitle("Recherche");
 			o.htmChildCompleteName("Recherche");
 			o.htmChildBirthDate("Recherche");
 			o.htmSchoolAddress("Recherche");
@@ -514,13 +588,13 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/enrollment").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
-						if(contextIconCssClasses != null)
-							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/enrollment").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listSchoolEnrollment.getQueryResponse().getResults().getNumFound();
@@ -567,6 +641,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("name").g("th");
 						e("th").f().sx("created").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -589,6 +664,14 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCreated());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strObjectTitle());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -682,17 +765,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				{ e("div").a("class", "w3-container ").f();
 					SchoolEnrollment o = new SchoolEnrollment();
 					o.setSiteRequest_(siteRequest_);
-
-					// FormFilters PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolEnrollmentFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormSearchSchoolEnrollment(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-						.a("onclick", "aSearchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters')); ")
-						.f().sx("Search the an enrollment")
-					.g("button");
-
 
 					// FormValues PATCH
 					{ e("form").a("action", "").a("id", "patchSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();

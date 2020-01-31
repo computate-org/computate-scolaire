@@ -1,9 +1,11 @@
 package org.computate.scolaire.frFR.gardien;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
@@ -12,15 +14,13 @@ import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.requete.api.RequeteApi;
-
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -76,6 +76,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	/**	L'entité « gardienCle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long gardienCle;
 	@JsonIgnore
 	public Couverture<Long> gardienCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("gardienCle").o(gardienCle);
@@ -243,7 +244,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggereGardienScolaireInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+							{ e("a").a("href", "?fq=gardienCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
 								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 								sx("inscriptions");
 							} g("a");
@@ -287,6 +288,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleTri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer familleTri;
 	@JsonIgnore
 	public Couverture<Integer> familleTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("familleTri").o(familleTri);
@@ -354,6 +356,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	/**	L'entité « gardienTri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer gardienTri;
 	@JsonIgnore
 	public Couverture<Integer> gardienTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("gardienTri").o(gardienTri);

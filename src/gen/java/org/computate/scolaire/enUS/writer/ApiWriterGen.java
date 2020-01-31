@@ -7,6 +7,7 @@ import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.vertx.AppSwagger2;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -2782,6 +2784,17 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// apiRequest //
+	//////////////////
+
+	public void apiRequestApiWriter() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		ApiWriter original = (ApiWriter)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 

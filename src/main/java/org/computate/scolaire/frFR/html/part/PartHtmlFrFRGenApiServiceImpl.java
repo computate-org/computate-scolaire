@@ -398,56 +398,61 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void listePUTPartHtml(RequeteApi requeteApi, ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
-		listePartHtml.getList().forEach(o -> {
-			futures.add(
-				futurePUTPartHtml(requeteSite, JsonObject.mapFrom(o), a -> {
-					if(a.succeeded()) {
+		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		if(jsonArray.size() == 0) {
+			listePartHtml.getList().forEach(o -> {
+				futures.add(
+					futurePUTPartHtml(requeteSite, JsonObject.mapFrom(o), a -> {
+						if(a.succeeded()) {
+						} else {
+							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						}
+					})
+				);
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listePartHtml.size());
+					if(listePartHtml.next()) {
+						requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+						listePUTPartHtml(requeteApi, listePartHtml, gestionnaireEvenements);
 					} else {
-						erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
 					}
-				})
-			);
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listePartHtml.size());
-				if(listePartHtml.next()) {
-					requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
-					listePUTPartHtml(requeteApi, listePartHtml, gestionnaireEvenements);
 				} else {
-					reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
+					erreurPartHtml(listePartHtml.getRequeteSite_(), gestionnaireEvenements, a);
 				}
-			} else {
-				erreurPartHtml(listePartHtml.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
-	}
-
-	public void listePUTPartHtml(RequeteApi requeteApi, JsonArray jsonArray, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		List<Future> futures = new ArrayList<>();
-		RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				futurePUTPartHtml(requeteSite, jsonObject, a -> {
-					if(a.succeeded()) {
-					} else {
-						erreurPartHtml(requeteSite, gestionnaireEvenements, a);
-					}
-				})
-			);
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
-				reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
-			} else {
-				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+		} else {
+			jsonArray.forEach(o -> {
+				JsonObject jsonObject = (JsonObject)o;
+				futures.add(
+					futurePUTPartHtml(requeteSite, jsonObject, a -> {
+						if(a.succeeded()) {
+						} else {
+							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						}
+					})
+				);
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
+					reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
+				} else {
+					erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		}
 	}
 
 	public Future<PartHtml> futurePUTPartHtml(RequeteSiteFrFR requeteSite, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
+		JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+		jsonPatch.stream().forEach(o -> {
+			jsonObject.put(o.getKey(), o.getValue());
+			jsonObject.getJsonArray("sauvegardes").add(o.getKey());
+		});
 		Future<PartHtml> future = Future.future();
 		try {
 			creerPartHtml(requeteSite, a -> {
