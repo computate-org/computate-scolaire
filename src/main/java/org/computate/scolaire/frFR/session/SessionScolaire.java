@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.session;              
+package org.computate.scolaire.frFR.session;               
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +26,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiUri.enUS: /api/session
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -568,7 +569,6 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: sessionEte

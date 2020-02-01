@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.user;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -56,6 +56,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
@@ -220,16 +221,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 	}
 
-	public void apiRequestSiteUser(SiteUser o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-		}
-	}
-
 	public Future<SiteUser> futurePATCHSiteUser(SiteUser o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		Future<SiteUser> future = Future.future();
+		Promise<SiteUser> promise = Promise.promise();
 		try {
 			sqlPATCHSiteUser(o, a -> {
 				if(a.succeeded()) {
@@ -242,7 +235,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 										if(d.succeeded()) {
 											apiRequestSiteUser(siteUser);
 											siteUser.apiRequestSiteUser();
-											future.complete(o);
+											promise.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
@@ -260,7 +253,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -281,6 +274,16 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.user.SiteUser"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -309,16 +312,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
-						}
-						break;
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setUserReceiveEmails":
@@ -468,6 +461,36 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	}
 
 	// Partagé //
+
+	public void createSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<SiteUser>> eventHandler) {
+		try {
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_create
+					, new JsonArray(Arrays.asList(SiteUser.class.getCanonicalName(), userId))
+					, createAsync
+			-> {
+				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Long pk = createLine.getLong(0);
+				SiteUser o = new SiteUser();
+				o.setPk(pk);
+				o.setSiteRequest_(siteRequest);
+				eventHandler.handle(Future.succeededFuture(o));
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void apiRequestSiteUser(SiteUser o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
+		}
+	}
 
 	public void errorSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();

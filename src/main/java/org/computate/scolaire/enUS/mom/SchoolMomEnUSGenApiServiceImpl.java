@@ -56,6 +56,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
@@ -254,6 +255,296 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		}
 	}
 
+	// PUT //
+
+	@Override
+	public void putSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
+			sqlSchoolMom(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolMom(siteRequest, b -> {
+						if(b.succeeded()) {
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchoolMom(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolMom> listSchoolMom = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolMom.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolMom.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolMom.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolMom(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTSchoolMom(apiRequest, listSchoolMom, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
+																		if(sqlConnection2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			sqlConnection2.commit(g -> {
+																				if(f.succeeded()) {
+																					sqlConnection2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
+																		}
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+											response200PUTSchoolMom(apiRequest, eventHandler);
+										} else {
+											errorSchoolMom(siteRequest, eventHandler, c);
+										}
+									});
+								} else {
+									errorSchoolMom(siteRequest, eventHandler, b);
+								}
+							});
+						} else {
+							errorSchoolMom(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolMom(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolMom(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void listPUTSchoolMom(ApiRequest apiRequest, SearchList<SchoolMom> listSchoolMom, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolMom.getSiteRequest_();
+		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		if(jsonArray.size() == 0) {
+			listSchoolMom.getList().forEach(o -> {
+				futures.add(
+					futurePUTSchoolMom(siteRequest, JsonObject.mapFrom(o), a -> {
+						if(a.succeeded()) {
+						} else {
+							errorSchoolMom(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolMom.size());
+					if(listSchoolMom.next()) {
+						siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+						listPUTSchoolMom(apiRequest, listSchoolMom, eventHandler);
+					} else {
+						response200PUTSchoolMom(apiRequest, eventHandler);
+					}
+				} else {
+					errorSchoolMom(listSchoolMom.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} else {
+			jsonArray.forEach(o -> {
+				JsonObject jsonObject = (JsonObject)o;
+				futures.add(
+					futurePUTSchoolMom(siteRequest, jsonObject, a -> {
+						if(a.succeeded()) {
+						} else {
+							errorSchoolMom(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+					response200PUTSchoolMom(apiRequest, eventHandler);
+				} else {
+					errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		}
+	}
+
+	public Future<SchoolMom> futurePUTSchoolMom(SiteRequestEnUS siteRequest, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+		jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+		JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+		jsonPatch.stream().forEach(o -> {
+			jsonObject.put(o.getKey(), o.getValue());
+			jsonObject.getJsonArray("saves").add(o.getKey());
+		});
+		Future<SchoolMom> future = Future.future();
+		try {
+			createSchoolMom(siteRequest, a -> {
+				if(a.succeeded()) {
+					SchoolMom schoolMom = a.result();
+					sqlPUTSchoolMom(schoolMom, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchoolMom(schoolMom, c -> {
+								if(c.succeeded()) {
+									attributeSchoolMom(schoolMom, d -> {
+										if(d.succeeded()) {
+											indexSchoolMom(schoolMom, e -> {
+												if(e.succeeded()) {
+													apiRequestSchoolMom(schoolMom);
+													schoolMom.apiRequestSchoolMom();
+													future.complete(schoolMom);
+													eventHandler.handle(Future.succeededFuture(e.result()));
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void remplacerPUTSchoolMom(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolMom>> eventHandler) {
+		try {
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+			Long pk = siteRequest.getRequestPk();
+
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_clear
+					, new JsonArray(Arrays.asList(pk, SchoolMom.class.getCanonicalName(), pk, pk, pk))
+					, remplacerAsync
+			-> {
+				SchoolMom o = new SchoolMom();
+				o.setPk(pk);
+				eventHandler.handle(Future.succeededFuture(o));
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlPUTSchoolMom(SchoolMom o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder postSql = new StringBuilder();
+			List<Object> postSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "momKeys", l));
+						}
+						break;
+					case "personFirstName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personFirstNamePreferred":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						break;
+					case "familyName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personOccupation":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personOccupation", jsonObject.getString(entityVar), pk));
+						break;
+					case "personPhoneNumber":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "personEmail":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personEmail", jsonObject.getString(entityVar), pk));
+						break;
+					case "personSms":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personSms", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personReceiveEmail":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personReceiveEmail", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personEmergencyContact":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personEmergencyContact", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personPickup":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personPickup", jsonObject.getBoolean(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					postSql.toString()
+					, new JsonArray(postSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void response200PUTSchoolMom(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// PATCH //
 
 	@Override
@@ -383,7 +674,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	}
 
 	public Future<SchoolMom> futurePATCHSchoolMom(SchoolMom o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		Future<SchoolMom> future = Future.future();
+		Promise<SchoolMom> promise = Promise.promise();
 		try {
 			sqlPATCHSchoolMom(o, a -> {
 				if(a.succeeded()) {
@@ -396,7 +687,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 										if(d.succeeded()) {
 											apiRequestSchoolMom(schoolMom);
 											schoolMom.apiRequestSchoolMom();
-											future.complete(o);
+											promise.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
@@ -414,7 +705,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}

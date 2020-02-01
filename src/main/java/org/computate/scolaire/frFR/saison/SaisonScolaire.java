@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison;             
+package org.computate.scolaire.frFR.saison;              
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,6 +27,7 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * ApiUri.enUS: /api/season
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -77,6 +78,22 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 */
 	protected void _inscriptionCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: AnneeScolaire.saisonCles
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 1
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	*/            
+	protected void _anneeCle(Couverture<Long> c) {
+	}
 
 	/** 
 	 * {@inheritDoc}
@@ -131,22 +148,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 */
 	protected void _saisonTri(Couverture<Integer> c) {
 		c.o(3);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: yearKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: AnneeScolaire.saisonCles
-	 * HtmlLigne: 4
-	 * HtmlCelulle: 1
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	*/            
-	protected void _anneeCle(Couverture<Long> c) {
 	}
 
 	/**
@@ -477,7 +478,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: saisonEte

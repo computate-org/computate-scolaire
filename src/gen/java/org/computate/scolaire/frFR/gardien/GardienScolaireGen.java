@@ -245,7 +245,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=gardienCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("inscriptions");
 							} g("a");
 						} g("div");
@@ -2217,29 +2217,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String htmGardienNomComplet() {
 		return gardienNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strGardienNomComplet());
-	}
-
-	public void inputGardienNomComplet(String classeApiMethodeMethode) {
-		GardienScolaire s = (GardienScolaire)this;
-	}
-
-	public void htmGardienNomComplet(String classeApiMethodeMethode) {
-		GardienScolaire s = (GardienScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strGardienNomComplet()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

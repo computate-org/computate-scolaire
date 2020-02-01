@@ -693,7 +693,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/enrollment?fq=paymentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("enrollments");
 							} g("a");
 						} g("div");
@@ -2013,32 +2013,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String htmPaymentCompleteName() {
 		return paymentCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentCompleteName());
-	}
-
-	public void inputPaymentCompleteName(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-	}
-
-	public void htmPaymentCompleteName(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("class", "").f().sx("name").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strPaymentCompleteName()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

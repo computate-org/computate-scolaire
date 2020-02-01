@@ -23,6 +23,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/year
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -384,7 +385,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * r: anneeDebut
 	 * r.enUS: yearStart
 	 * r: anneeFin

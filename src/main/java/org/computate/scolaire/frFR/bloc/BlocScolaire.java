@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;                    
+package org.computate.scolaire.frFR.bloc;                     
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,6 +27,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/block
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -678,7 +679,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: dimanche
 	 * NomAffichage.enUS: sunday
-	 * Definir: true
 	 */                   
 	protected void _blocDimanche(Couverture<Boolean> c) {
 		c.o(false);
@@ -766,7 +766,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: samedi
 	 * NomAffichage.enUS: saturday
-	 * Definir: true
 	 */                   
 	protected void _blocSamedi(Couverture<Boolean> c) {
 		c.o(false);
@@ -940,14 +939,13 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**    
+	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: blockCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: %s - %s %s (%s€ par mois) %s

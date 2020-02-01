@@ -405,7 +405,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
-								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-bell ").f().g("i");
 								sx("blocs");
 							} g("a");
 						} g("div");
@@ -1044,7 +1044,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
-								e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-child ").f().g("i");
 								sx("enfants");
 							} g("a");
 						} g("div");
@@ -1189,7 +1189,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-								e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-female ").f().g("i");
 								sx("mères");
 							} g("a");
 						} g("div");
@@ -1334,7 +1334,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
-								e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-male ").f().g("i");
 								sx("pères");
 							} g("a");
 						} g("div");
@@ -1479,7 +1479,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-phone w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-phone ").f().g("i");
 								sx("gardiens");
 							} g("a");
 						} g("div");
@@ -1624,7 +1624,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
-								e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-search-dollar ").f().g("i");
 								sx("paiements");
 							} g("a");
 						} g("div");
@@ -1726,32 +1726,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmFormInscriptionCle() {
 		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
-	}
-
-	public void inputFormInscriptionCle(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-	}
-
-	public void htmFormInscriptionCle(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("formulaire d'inscription").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strFormInscriptionCle()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	/////////////////
@@ -5008,24 +4982,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionApprouve(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionApprouve inputInscriptionScolaire", pk, "InscriptionApprouve w3-input w3-border ");
-				a("name", "setInscriptionApprouve");
-			} else {
-				a("class", "valeurInscriptionApprouve inputInscriptionScolaire", pk, "InscriptionApprouve w3-input w3-border ");
-				a("name", "inscriptionApprouve");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionApprouve', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionApprouve')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionApprouve')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_inscriptionApprouve")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_inscriptionApprouve");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setInscriptionApprouve inputInscriptionScolaire", pk, "InscriptionApprouve w3-input w3-border ");
+			a("name", "setInscriptionApprouve");
+		} else {
+			a("class", "valeurInscriptionApprouve inputInscriptionScolaire", pk, "InscriptionApprouve w3-input w3-border ");
+			a("name", "inscriptionApprouve");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionApprouve', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionApprouve')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionApprouve')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getInscriptionApprouve() != null && getInscriptionApprouve())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -5118,24 +5104,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionImmunisations(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_inscriptionImmunisations")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionImmunisations inputInscriptionScolaire", pk, "InscriptionImmunisations w3-input w3-border ");
-				a("name", "setInscriptionImmunisations");
-			} else {
-				a("class", "valeurInscriptionImmunisations inputInscriptionScolaire", pk, "InscriptionImmunisations w3-input w3-border ");
-				a("name", "inscriptionImmunisations");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionImmunisations', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionImmunisations')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionImmunisations')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_inscriptionImmunisations")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_inscriptionImmunisations");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setInscriptionImmunisations inputInscriptionScolaire", pk, "InscriptionImmunisations w3-input w3-border ");
+			a("name", "setInscriptionImmunisations");
+		} else {
+			a("class", "valeurInscriptionImmunisations inputInscriptionScolaire", pk, "InscriptionImmunisations w3-input w3-border ");
+			a("name", "inscriptionImmunisations");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionImmunisations', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionImmunisations')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionImmunisations')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getInscriptionImmunisations() != null && getInscriptionImmunisations())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -5228,24 +5226,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputFamilleMarie(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_familleMarie")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleMarie inputInscriptionScolaire", pk, "FamilleMarie w3-input w3-border ");
-				a("name", "setFamilleMarie");
-			} else {
-				a("class", "valeurFamilleMarie inputInscriptionScolaire", pk, "FamilleMarie w3-input w3-border ");
-				a("name", "familleMarie");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleMarie', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleMarie')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleMarie')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_familleMarie")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_familleMarie");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setFamilleMarie inputInscriptionScolaire", pk, "FamilleMarie w3-input w3-border ");
+			a("name", "setFamilleMarie");
+		} else {
+			a("class", "valeurFamilleMarie inputInscriptionScolaire", pk, "FamilleMarie w3-input w3-border ");
+			a("name", "familleMarie");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleMarie', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleMarie')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleMarie')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getFamilleMarie() != null && getFamilleMarie())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -5338,24 +5348,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputFamilleSepare(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_familleSepare")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleSepare inputInscriptionScolaire", pk, "FamilleSepare w3-input w3-border ");
-				a("name", "setFamilleSepare");
-			} else {
-				a("class", "valeurFamilleSepare inputInscriptionScolaire", pk, "FamilleSepare w3-input w3-border ");
-				a("name", "familleSepare");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleSepare', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleSepare')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleSepare')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_familleSepare")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_familleSepare");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setFamilleSepare inputInscriptionScolaire", pk, "FamilleSepare w3-input w3-border ");
+			a("name", "setFamilleSepare");
+		} else {
+			a("class", "valeurFamilleSepare inputInscriptionScolaire", pk, "FamilleSepare w3-input w3-border ");
+			a("name", "familleSepare");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleSepare', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleSepare')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleSepare')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getFamilleSepare() != null && getFamilleSepare())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -5448,24 +5470,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputFamilleDivorce(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_familleDivorce")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleDivorce inputInscriptionScolaire", pk, "FamilleDivorce w3-input w3-border ");
-				a("name", "setFamilleDivorce");
-			} else {
-				a("class", "valeurFamilleDivorce inputInscriptionScolaire", pk, "FamilleDivorce w3-input w3-border ");
-				a("name", "familleDivorce");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleDivorce', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleDivorce')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleDivorce')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_familleDivorce")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_familleDivorce");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setFamilleDivorce inputInscriptionScolaire", pk, "FamilleDivorce w3-input w3-border ");
+			a("name", "setFamilleDivorce");
+		} else {
+			a("class", "valeurFamilleDivorce inputInscriptionScolaire", pk, "FamilleDivorce w3-input w3-border ");
+			a("name", "familleDivorce");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleDivorce', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleDivorce')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleDivorce')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getFamilleDivorce() != null && getFamilleDivorce())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -5895,8 +5929,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantConditionsMedicales(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "text")
+		e("textarea")
 			.a("placeholder", "conditions médicales")
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantConditionsMedicales");
@@ -5911,8 +5944,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				a("onclick", "enleverLueur($(this)); ");
 				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantConditionsMedicales', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }); ");
 			}
-			a("value", strEnfantConditionsMedicales())
-		.fg();
+		f().sx(strEnfantConditionsMedicales()).g("textarea");
 
 	}
 
@@ -6011,8 +6043,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "text")
+		e("textarea")
 			.a("placeholder", "écoles précedemment fréqentées")
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees");
@@ -6027,8 +6058,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				a("onclick", "enleverLueur($(this)); ");
 				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantEcolesPrecedemmentFrequentees', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }); ");
 			}
-			a("value", strEnfantEcolesPrecedemmentFrequentees())
-		.fg();
+		f().sx(strEnfantEcolesPrecedemmentFrequentees()).g("textarea");
 
 	}
 
@@ -6360,24 +6390,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantPropre(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_enfantPropre")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantPropre inputInscriptionScolaire", pk, "EnfantPropre w3-input w3-border ");
-				a("name", "setEnfantPropre");
-			} else {
-				a("class", "valeurEnfantPropre inputInscriptionScolaire", pk, "EnfantPropre w3-input w3-border ");
-				a("name", "enfantPropre");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantPropre', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantPropre')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantPropre')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_enfantPropre")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_enfantPropre");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setEnfantPropre inputInscriptionScolaire", pk, "EnfantPropre w3-input w3-border ");
+			a("name", "setEnfantPropre");
+		} else {
+			a("class", "valeurEnfantPropre inputInscriptionScolaire", pk, "EnfantPropre w3-input w3-border ");
+			a("name", "enfantPropre");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantPropre', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantPropre')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantPropre')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getEnfantPropre() != null && getEnfantPropre())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -6586,24 +6628,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentChaqueMois inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
-				a("name", "setInscriptionPaimentChaqueMois");
-			} else {
-				a("class", "valeurInscriptionPaimentChaqueMois inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
-				a("name", "inscriptionPaimentChaqueMois");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentChaqueMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setInscriptionPaimentChaqueMois inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
+			a("name", "setInscriptionPaimentChaqueMois");
+		} else {
+			a("class", "valeurInscriptionPaimentChaqueMois inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
+			a("name", "inscriptionPaimentChaqueMois");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentChaqueMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getInscriptionPaimentChaqueMois() != null && getInscriptionPaimentChaqueMois())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -6696,24 +6750,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionPaimentComplet(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentComplet inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-				a("name", "setInscriptionPaimentComplet");
-			} else {
-				a("class", "valeurInscriptionPaimentComplet inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-				a("name", "inscriptionPaimentComplet");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setInscriptionPaimentComplet inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
+			a("name", "setInscriptionPaimentComplet");
+		} else {
+			a("class", "valeurInscriptionPaimentComplet inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
+			a("name", "inscriptionPaimentComplet");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getInscriptionPaimentComplet() != null && getInscriptionPaimentComplet())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -9513,32 +9579,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmInscriptionNomComplet() {
 		return inscriptionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomComplet());
-	}
-
-	public void inputInscriptionNomComplet(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-	}
-
-	public void htmInscriptionNomComplet(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("nom").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strInscriptionNomComplet()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

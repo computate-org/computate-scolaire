@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.age;                
+package org.computate.scolaire.frFR.age;                 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +24,7 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * ApiUri.enUS: /api/age
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -594,7 +595,6 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: ageEte

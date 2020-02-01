@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.pere;                 
+package org.computate.scolaire.frFR.pere;                  
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -25,6 +25,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/dad
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -461,7 +462,6 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: personneNomComplet

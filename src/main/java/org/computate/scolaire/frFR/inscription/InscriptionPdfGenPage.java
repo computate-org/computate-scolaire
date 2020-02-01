@@ -233,24 +233,23 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("Page");
 			o.htmInscriptionConsiderationsSpeciales("Page");
-			o.htmFamilleCommentVousConnaissezEcole("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlocCles("Page");
 			o.htmEnfantConditionsMedicales("Page");
 			o.htmEnfantEcolesPrecedemmentFrequentees("Page");
+			o.htmFamilleCommentVousConnaissezEcole("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("Page");
 			o.htmEnfantObjectifs("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocCles("Page");
 			o.htmEnfantCle("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMereCles("Page");
 			o.htmPereCles("Page");
-			o.htmFormInscriptionCle("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGardienCles("Page");
@@ -287,24 +286,23 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("POST");
 			o.htmInscriptionConsiderationsSpeciales("POST");
-			o.htmFamilleCommentVousConnaissezEcole("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlocCles("POST");
 			o.htmEnfantConditionsMedicales("POST");
 			o.htmEnfantEcolesPrecedemmentFrequentees("POST");
+			o.htmFamilleCommentVousConnaissezEcole("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("POST");
 			o.htmEnfantObjectifs("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocCles("POST");
 			o.htmEnfantCle("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMereCles("POST");
 			o.htmPereCles("POST");
-			o.htmFormInscriptionCle("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGardienCles("POST");
@@ -339,18 +337,18 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("PUT");
 			o.htmInscriptionConsiderationsSpeciales("PUT");
-			o.htmFamilleCommentVousConnaissezEcole("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlocCles("PUT");
 			o.htmEnfantConditionsMedicales("PUT");
 			o.htmEnfantEcolesPrecedemmentFrequentees("PUT");
+			o.htmFamilleCommentVousConnaissezEcole("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("PUT");
 			o.htmEnfantObjectifs("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocCles("PUT");
 			o.htmEnfantCle("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -416,18 +414,18 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("PATCH");
 			o.htmInscriptionConsiderationsSpeciales("PATCH");
-			o.htmFamilleCommentVousConnaissezEcole("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlocCles("PATCH");
 			o.htmEnfantConditionsMedicales("PATCH");
 			o.htmEnfantEcolesPrecedemmentFrequentees("PATCH");
+			o.htmFamilleCommentVousConnaissezEcole("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("PATCH");
 			o.htmEnfantObjectifs("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocCles("PATCH");
 			o.htmEnfantCle("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -495,24 +493,23 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("Recherche");
 			o.htmInscriptionConsiderationsSpeciales("Recherche");
-			o.htmFamilleCommentVousConnaissezEcole("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlocCles("Recherche");
 			o.htmEnfantConditionsMedicales("Recherche");
 			o.htmEnfantEcolesPrecedemmentFrequentees("Recherche");
+			o.htmFamilleCommentVousConnaissezEcole("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("Recherche");
 			o.htmEnfantObjectifs("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocCles("Recherche");
 			o.htmEnfantCle("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMereCles("Recherche");
 			o.htmPereCles("Recherche");
-			o.htmFormInscriptionCle("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGardienCles("Recherche");
@@ -534,7 +531,6 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			o.htmInscriptionDate8("Recherche");
 			o.htmInscriptionDate9("Recherche");
 			o.htmInscriptionDate10("Recherche");
-			o.htmInscriptionNomComplet("Recherche");
 		} g("div");
 	}
 
@@ -639,7 +635,6 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").a("class", "w3-purple w3-hover-purple ").f();
 					{ e("tr").f();
-						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
 						e("th").f().sx("").g("th");
 					} g("tr");
@@ -654,14 +649,6 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-									{ e("span").f();
-										sx(o.strInscriptionNomComplet());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCree());
 									} g("span");
@@ -669,7 +656,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+									e("i").a("class", "fas fa-edit ").f().g("i");
 									{ e("span").f();
 										sx(o.strObjetTitre());
 									} g("span");
@@ -717,7 +704,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
 				.a("id", "rechargerCetteInscriptionPdfGenPage")
 				.a("onclick", "patchInscriptionScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteInscriptionPdfGenPage')); }, function() { ajouterErreur($('#rechargerCetteInscriptionPdfGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+				e("i").a("class", "fas fa-sync-alt ").f().g("i");
 			sx("recharger cette inscription");
 		} g("button");
 
@@ -726,26 +713,60 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			.a("onclick", "$('#postInscriptionScolaireModale').show(); ")
 			.f().sx("Créer une inscription")
 		.g("button");
-		{ e("div").a("id", "postInscriptionScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-purple ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Créer une inscription").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					InscriptionScolaire o = new InscriptionScolaire();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "postInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-purple ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Créer une inscription").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						InscriptionScolaire o = new InscriptionScolaire();
+						o.setRequeteSite_(requeteSite_);
 
-					// Form POST
-					{ e("div").a("id", "postInscriptionScolaireForm").f();
-						htmlFormPOSTInscriptionScolaire(o);
+						// Form POST
+						{ e("div").a("id", "postInscriptionScolaireForm").f();
+							htmlFormPOSTInscriptionScolaire(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+							.a("onclick", "postInscriptionScolaire($('#postInscriptionScolaireForm')); ")
+							.f().sx("Créer une inscription")
+						.g("button");
+
 					} g("div");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-						.a("onclick", "postInscriptionScolaire($('#postInscriptionScolaireForm')); ")
-						.f().sx("Créer une inscription")
-					.g("button");
+				} g("div");
+			} g("div");
+		} g("div");
 
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+			.a("onclick", "$('#putInscriptionScolaireModale').show(); ")
+			.f().sx("Dupliquer des inscriptions")
+		.g("button");
+		{ e("div").a("id", "putInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-purple ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des inscriptions").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						InscriptionScolaire o = new InscriptionScolaire();
+						o.setRequeteSite_(requeteSite_);
+
+						// FormulaireValeurs PUT
+						{ e("form").a("action", "").a("id", "putInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPUTInscriptionScolaire(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+							.a("onclick", "putInscriptionScolaire($('#putInscriptionScolaireFormulaireValeurs')); ")
+							.f().sx("Dupliquer des inscriptions")
+						.g("button");
+
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -756,26 +777,28 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			.a("onclick", "$('#patchInscriptionScolaireModale').show(); ")
 			.f().sx("Modifier des inscriptions")
 		.g("button");
-		{ e("div").a("id", "patchInscriptionScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-purple ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Modifier des inscriptions").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					InscriptionScolaire o = new InscriptionScolaire();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "patchInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-purple ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Modifier des inscriptions").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						InscriptionScolaire o = new InscriptionScolaire();
+						o.setRequeteSite_(requeteSite_);
 
-					// FormulaireValeurs PATCH
-					{ e("form").a("action", "").a("id", "patchInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHInscriptionScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-						.a("onclick", "patchInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres'), $('#patchInscriptionScolaireFormulaireValeurs'), function() {}, function() {}); ")
-						.f().sx("Modifier des inscriptions")
-					.g("button");
+						// FormulaireValeurs PATCH
+						{ e("form").a("action", "").a("id", "patchInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPATCHInscriptionScolaire(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+							.a("onclick", "patchInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres'), $('#patchInscriptionScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.f().sx("Modifier des inscriptions")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -787,26 +810,28 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 				.a("onclick", "$('#deleteInscriptionScolaireModale').show(); ")
 				.f().sx("Supprimer des inscriptions")
 			.g("button");
-			{ e("div").a("id", "deleteInscriptionScolaireModale").a("class", "w3-modal ").f();
-				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-purple ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Supprimer des inscriptions").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						InscriptionScolaire o = new InscriptionScolaire();
-						o.setRequeteSite_(requeteSite_);
+			{ e("div").a("id", "deleteInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-purple ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Supprimer des inscriptions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							InscriptionScolaire o = new InscriptionScolaire();
+							o.setRequeteSite_(requeteSite_);
 
-						// Form DELETE
-						{ e("div").a("id", "deleteInscriptionScolaireForm").f();
-							htmlFormPATCHInscriptionScolaire(o);
+							// Form DELETE
+							{ e("div").a("id", "deleteInscriptionScolaireForm").f();
+								htmlFormPATCHInscriptionScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+								.a("onclick", "deleteInscriptionScolaire(", o.getPk(), "); ")
+								.f().sx("Supprimer des inscriptions")
+							.g("button");
+
 						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-							.a("onclick", "deleteInscriptionScolaire(", o.getPk(), "); ")
-							.f().sx("Supprimer des inscriptions")
-						.g("button");
-
 					} g("div");
 				} g("div");
 			} g("div");
@@ -819,47 +844,43 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 	**/
 	public static void htmlSuggereInscriptionPdfGenPage(MiseEnPage p, String id) {
 		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("href", "/inscription-pdf").a("class", "").f();
-					p.e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+					p.e("i").a("class", "fas fa-edit ").f().g("i");
 					p.sx("voir toutes les inscriptions");
 				} p.g("a");
 			} p.g("div");
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("id", "rechargerToutesInscriptionPdfGenPage", id).a("href", "/inscription-pdf").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionPdfGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionPdfGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("recharger toutes les inscriptions");
 				} p.g("a");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();
 					p.sx("rechercher inscriptions : ");
 				} p.g("span");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("div").a("class", "w3-cell-row ").f();
+		{ p.e("div").a("class", "w3-bar ").f();
 
-					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormInscriptionScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/inscription-pdf?q=objetSuggere:' + encodeURIComponent($('#suggereInscriptionScolaire", id, "').val()); return false; ").f();
-						p.e("input")
-							.a("type", "text")
-							.a("placeholder", "rechercher inscriptions")
-							.a("class", "suggereInscriptionScolaire w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggereInscriptionScolaire")
-							.a("id", "suggereInscriptionScolaire", id)
-							.a("autocomplete", "off")
-							.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-							.fg();
+			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
+				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
+			} p.g("span");
+			p.e("input")
+				.a("type", "text")
+				.a("placeholder", "rechercher inscriptions")
+				.a("class", "suggereInscriptionScolaire w3-input w3-border w3-bar-item w3-padding-small ")
+				.a("name", "suggereInscriptionScolaire")
+				.a("id", "suggereInscriptionScolaire", id)
+				.a("autocomplete", "off")
+				.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+				.fg();
 
-					} p.g("form");
-				} p.g("div");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListInscriptionScolaire", id).f();
 				} p.g("ul");

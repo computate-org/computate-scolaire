@@ -519,7 +519,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+									e("i").a("class", "far fa-sun ").f().g("i");
 									{ e("span").f();
 										sx(o.strObjectTitle());
 									} g("span");
@@ -567,7 +567,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 				.a("id", "refreshThisHtmlPartGenPage")
 				.a("onclick", "patchHtmlPartVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisHtmlPartGenPage')); }, function() { addError($('#refreshThisHtmlPartGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+				e("i").a("class", "fas fa-sync-alt ").f().g("i");
 			sx("refresh this HTML part");
 		} g("button");
 
@@ -701,44 +701,34 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("a").a("href", "/html-part").a("class", "").f();
-					p.e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+					p.e("i").a("class", "far fa-sun ").f().g("i");
 					p.sx("see all the HTML parts");
 				} p.g("a");
 			} p.g("div");
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("a").a("id", "refreshAllHtmlPartGenPage", id).a("href", "/html-part").a("class", "").a("onclick", "patchHtmlPartVals([], {}, function() { addGlow($('#refreshAllHtmlPartGenPage", id, "')); }, function() { addError($('#refreshAllHtmlPartGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
-					p.sx("refresh all the HTML parts");
-				} p.g("a");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();
 					p.sx("search HTML parts: ");
 				} p.g("span");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("div").a("class", "w3-cell-row ").f();
+		{ p.e("div").a("class", "w3-bar ").f();
 
-					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggestFormHtmlPart", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/html-part?q=objectSuggest:' + encodeURIComponent($('#suggestHtmlPart", id, "').val()); return false; ").f();
-						p.e("input")
-							.a("type", "text")
-							.a("class", "suggestHtmlPart w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggestHtmlPart")
-							.a("id", "suggestHtmlPart", id)
-							.a("autocomplete", "off")
-							.a("oninput", "suggestHtmlPartObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListHtmlPart", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-							.fg();
+			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
+				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
+			} p.g("span");
+			p.e("input")
+				.a("type", "text")
+				.a("class", "suggestHtmlPart w3-input w3-border w3-bar-item w3-padding-small ")
+				.a("name", "suggestHtmlPart")
+				.a("id", "suggestHtmlPart", id)
+				.a("autocomplete", "off")
+				.a("oninput", "suggestHtmlPartObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListHtmlPart", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+				.fg();
 
-					} p.g("form");
-				} p.g("div");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListHtmlPart", id).f();
 				} p.g("ul");

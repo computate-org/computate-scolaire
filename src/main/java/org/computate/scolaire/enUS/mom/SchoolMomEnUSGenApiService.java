@@ -34,6 +34,7 @@ public interface SchoolMomEnUSGenApiService {
 	}
 
 	public void postSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void putSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void patchSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void getSchoolMom(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void deleteSchoolMom(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);

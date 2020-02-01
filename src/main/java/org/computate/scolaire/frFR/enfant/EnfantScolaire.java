@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;                                   
+package org.computate.scolaire.frFR.enfant;                                    
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -29,6 +29,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/child
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -398,7 +399,6 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: personneNomComplet

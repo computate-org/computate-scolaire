@@ -56,6 +56,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
@@ -789,7 +790,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	}
 
 	public Future<PartHtml> futurePATCHPartHtml(PartHtml o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		Future<PartHtml> future = Future.future();
+		Promise<PartHtml> promise = Promise.promise();
 		try {
 			sqlPATCHPartHtml(o, a -> {
 				if(a.succeeded()) {
@@ -802,7 +803,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 										if(d.succeeded()) {
 											requeteApiPartHtml(partHtml);
 											partHtml.requeteApiPartHtml();
-											future.complete(o);
+											promise.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
@@ -820,7 +821,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}

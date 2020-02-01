@@ -339,7 +339,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=sessionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
-								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+								e("i").a("class", "fad fa-birthday-cake ").f().g("i");
 								sx("âges");
 							} g("a");
 						} g("div");
@@ -807,7 +807,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=sessionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("saison");
 							} g("a");
 						} g("div");
@@ -2390,32 +2390,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public String htmSessionNomComplet() {
 		return sessionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strSessionNomComplet());
-	}
-
-	public void inputSessionNomComplet(String classeApiMethodeMethode) {
-		SessionScolaire s = (SessionScolaire)this;
-	}
-
-	public void htmSessionNomComplet(String classeApiMethodeMethode) {
-		SessionScolaire s = (SessionScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("class", "").f().sx("nom").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strSessionNomComplet()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

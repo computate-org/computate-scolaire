@@ -162,7 +162,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=anneeCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-								e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-school ").f().g("i");
 								sx("école");
 							} g("a");
 						} g("div");
@@ -460,7 +460,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=anneeCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("saisons");
 							} g("a");
 						} g("div");
@@ -1772,29 +1772,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public String htmAnneeNomComplet() {
 		return anneeNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeNomComplet());
-	}
-
-	public void inputAnneeNomComplet(String classeApiMethodeMethode) {
-		AnneeScolaire s = (AnneeScolaire)this;
-	}
-
-	public void htmAnneeNomComplet(String classeApiMethodeMethode) {
-		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strAnneeNomComplet()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

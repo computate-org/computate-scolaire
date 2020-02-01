@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.cluster;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -165,6 +167,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long pk;
 	@JsonIgnore
 	public Wrap<Long> pkWrap = new Wrap<Long>().p(this).c(Long.class).var("pk").o(pk);
@@ -258,6 +261,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « inheritPk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long inheritPk;
 	@JsonIgnore
 	public Wrap<Long> inheritPkWrap = new Wrap<Long>().p(this).c(Long.class).var("inheritPk").o(inheritPk);
@@ -386,6 +390,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « created »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected ZonedDateTime created;
 	@JsonIgnore
 	public Wrap<ZonedDateTime> createdWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("created").o(created);
@@ -489,6 +494,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « modified »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected ZonedDateTime modified;
 	@JsonIgnore
 	public Wrap<ZonedDateTime> modifiedWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modified").o(modified);
@@ -653,24 +659,36 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputArchived(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_archived")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				s.a("class", "setArchived inputCluster", pk, "Archived w3-input w3-border ");
-				s.a("name", "setArchived");
-			} else {
-				s.a("class", "valueArchived inputCluster", pk, "Archived w3-input w3-border ");
-				s.a("name", "archived");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			s.e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_archived")
+				.a("value", "true");
+		} else {
+			s.e("select")
+				.a("id", classApiMethodMethod, "_archived");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			s.a("class", "setArchived inputCluster", pk, "Archived w3-input w3-border ");
+			s.a("name", "setArchived");
+		} else {
+			s.a("class", "valueArchived inputCluster", pk, "Archived w3-input w3-border ");
+			s.a("name", "archived");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getArchived() != null && getArchived())
 				s.a("checked", "checked");
-		s.fg();
+			s.fg();
+		} else {
+			s.f();
+			s.e("option").a("value", "").a("selected", "selected").f().g("option");
+			s.e("option").a("value", "true").f().sx("true").g("option");
+			s.e("option").a("value", "false").f().sx("false").g("option");
+			s.g("select");
+		}
 
 	}
 
@@ -763,24 +781,36 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputDeleted(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_deleted")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				s.a("class", "setDeleted inputCluster", pk, "Deleted w3-input w3-border ");
-				s.a("name", "setDeleted");
-			} else {
-				s.a("class", "valueDeleted inputCluster", pk, "Deleted w3-input w3-border ");
-				s.a("name", "deleted");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			s.e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_deleted")
+				.a("value", "true");
+		} else {
+			s.e("select")
+				.a("id", classApiMethodMethod, "_deleted");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			s.a("class", "setDeleted inputCluster", pk, "Deleted w3-input w3-border ");
+			s.a("name", "setDeleted");
+		} else {
+			s.a("class", "valueDeleted inputCluster", pk, "Deleted w3-input w3-border ");
+			s.a("name", "deleted");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getDeleted() != null && getDeleted())
 				s.a("checked", "checked");
-		s.fg();
+			s.fg();
+		} else {
+			s.f();
+			s.e("option").a("value", "").a("selected", "selected").f().g("option");
+			s.e("option").a("value", "true").f().sx("true").g("option");
+			s.e("option").a("value", "false").f().sx("false").g("option");
+			s.g("select");
+		}
 
 	}
 

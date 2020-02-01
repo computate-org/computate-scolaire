@@ -3,52 +3,52 @@ package org.computate.scolaire.enUS.block;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.math.BigDecimal;
-import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalTime;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
-
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.enUS.age.SchoolAge;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -85,6 +85,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « blockKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long blockKey;
 	@JsonIgnore
 	public Wrap<Long> blockKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("blockKey").o(blockKey);
@@ -152,6 +153,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « childKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long childKey;
 	@JsonIgnore
 	public Wrap<Long> childKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("childKey").o(childKey);
@@ -319,8 +321,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolBlockEnrollmentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+							{ e("a").a("href", "/enrollment?fq=blockKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("enrollments");
 							} g("a");
 						} g("div");
@@ -363,6 +365,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long enrollmentKey;
 	@JsonIgnore
 	public Wrap<Long> enrollmentKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentKey").o(enrollmentKey);
@@ -496,6 +499,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « educationSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer educationSort;
 	@JsonIgnore
 	public Wrap<Integer> educationSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("educationSort").o(educationSort);
@@ -563,6 +567,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « schoolSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer schoolSort;
 	@JsonIgnore
 	public Wrap<Integer> schoolSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolSort").o(schoolSort);
@@ -630,6 +635,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « yearSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearSort;
 	@JsonIgnore
 	public Wrap<Integer> yearSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearSort").o(yearSort);
@@ -697,6 +703,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « seasonSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer seasonSort;
 	@JsonIgnore
 	public Wrap<Integer> seasonSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("seasonSort").o(seasonSort);
@@ -764,6 +771,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « sessionSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer sessionSort;
 	@JsonIgnore
 	public Wrap<Integer> sessionSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sessionSort").o(sessionSort);
@@ -831,6 +839,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « ageSort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ageSort;
 	@JsonIgnore
 	public Wrap<Integer> ageSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageSort").o(ageSort);
@@ -898,6 +907,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « ageKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long ageKey;
 	@JsonIgnore
 	public Wrap<Long> ageKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("ageKey").o(ageKey);
@@ -980,8 +990,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggestSchoolBlockAgeKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
-								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+							{ e("a").a("href", "/age?fq=blockKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+								e("i").a("class", "fad fa-birthday-cake ").f().g("i");
 								sx("age");
 							} g("a");
 						} g("div");
@@ -1099,6 +1109,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « schoolKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long schoolKey;
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
@@ -1166,6 +1177,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « yearKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long yearKey;
 	@JsonIgnore
 	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
@@ -1233,6 +1245,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « seasonKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long seasonKey;
 	@JsonIgnore
 	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
@@ -1300,6 +1313,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « sessionKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long sessionKey;
 	@JsonIgnore
 	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
@@ -1787,6 +1801,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « yearStart »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearStart;
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
@@ -1854,6 +1869,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « yearEnd »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer yearEnd;
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
@@ -1921,6 +1937,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « seasonStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);
@@ -2130,6 +2147,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « yearEnrollmentFee »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal yearEnrollmentFee;
 	@JsonIgnore
 	public Wrap<BigDecimal> yearEnrollmentFeeWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("yearEnrollmentFee").o(yearEnrollmentFee);
@@ -2330,6 +2348,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « sessionStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate sessionStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> sessionStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionStartDate").o(sessionStartDate);
@@ -2407,6 +2426,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « sessionEndDate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDate sessionEndDate;
 	@JsonIgnore
 	public Wrap<LocalDate> sessionEndDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionEndDate").o(sessionEndDate);
@@ -2606,6 +2626,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « ageStart »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ageStart;
 	@JsonIgnore
 	public Wrap<Integer> ageStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageStart").o(ageStart);
@@ -2673,6 +2694,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « ageEnd »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer ageEnd;
 	@JsonIgnore
 	public Wrap<Integer> ageEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageEnd").o(ageEnd);
@@ -2740,6 +2762,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « blockStartTime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalTime blockStartTime;
 	@JsonIgnore
 	public Wrap<LocalTime> blockStartTimeWrap = new Wrap<LocalTime>().p(this).c(LocalTime.class).var("blockStartTime").o(blockStartTime);
@@ -2854,6 +2877,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « blockEndTime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalTime blockEndTime;
 	@JsonIgnore
 	public Wrap<LocalTime> blockEndTimeWrap = new Wrap<LocalTime>().p(this).c(LocalTime.class).var("blockEndTime").o(blockEndTime);
@@ -2968,6 +2992,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « blockPricePerMonth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal blockPricePerMonth;
 	@JsonIgnore
 	public Wrap<BigDecimal> blockPricePerMonthWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockPricePerMonth").o(blockPricePerMonth);
@@ -3159,50 +3184,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return blockSunday == null ? "" : StringEscapeUtils.escapeHtml4(strBlockSunday());
 	}
 
-	public void inputBlockSunday(String classApiMethodMethod) {
-		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockSunday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockSunday inputSchoolBlock", pk, "BlockSunday w3-input w3-border ");
-				a("name", "setBlockSunday");
-			} else {
-				a("class", "valueBlockSunday inputSchoolBlock", pk, "BlockSunday w3-input w3-border ");
-				a("name", "blockSunday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockSunday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockSunday')); }, function() { addError($('#", classApiMethodMethod, "_blockSunday')); }); ");
-			}
-			;
-			if(getBlockSunday() != null && getBlockSunday())
-				a("checked", "checked");
-		fg();
-
-	}
-
-	public void htmBlockSunday(String classApiMethodMethod) {
-		SchoolBlock s = (SchoolBlock)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockSunday").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", classApiMethodMethod, "_blockSunday").a("class", "").f().sx("sunday").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputBlockSunday(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////
 	// blockMonday //
 	/////////////////
@@ -3271,24 +3252,36 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockMonday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockMonday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
-				a("name", "setBlockMonday");
-			} else {
-				a("class", "valueBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
-				a("name", "blockMonday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockMonday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockMonday')); }, function() { addError($('#", classApiMethodMethod, "_blockMonday')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_blockMonday")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_blockMonday");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
+			a("name", "setBlockMonday");
+		} else {
+			a("class", "valueBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
+			a("name", "blockMonday");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockMonday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockMonday')); }, function() { addError($('#", classApiMethodMethod, "_blockMonday')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getBlockMonday() != null && getBlockMonday())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -3381,24 +3374,36 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockTuesday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockTuesday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
-				a("name", "setBlockTuesday");
-			} else {
-				a("class", "valueBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
-				a("name", "blockTuesday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockTuesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockTuesday')); }, function() { addError($('#", classApiMethodMethod, "_blockTuesday')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_blockTuesday")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_blockTuesday");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
+			a("name", "setBlockTuesday");
+		} else {
+			a("class", "valueBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
+			a("name", "blockTuesday");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockTuesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockTuesday')); }, function() { addError($('#", classApiMethodMethod, "_blockTuesday')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getBlockTuesday() != null && getBlockTuesday())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -3491,24 +3496,36 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockWednesday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockWednesday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
-				a("name", "setBlockWednesday");
-			} else {
-				a("class", "valueBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
-				a("name", "blockWednesday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockWednesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockWednesday')); }, function() { addError($('#", classApiMethodMethod, "_blockWednesday')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_blockWednesday")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_blockWednesday");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
+			a("name", "setBlockWednesday");
+		} else {
+			a("class", "valueBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
+			a("name", "blockWednesday");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockWednesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockWednesday')); }, function() { addError($('#", classApiMethodMethod, "_blockWednesday')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getBlockWednesday() != null && getBlockWednesday())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -3601,24 +3618,36 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockThursday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockThursday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
-				a("name", "setBlockThursday");
-			} else {
-				a("class", "valueBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
-				a("name", "blockThursday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockThursday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockThursday')); }, function() { addError($('#", classApiMethodMethod, "_blockThursday')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_blockThursday")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_blockThursday");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
+			a("name", "setBlockThursday");
+		} else {
+			a("class", "valueBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
+			a("name", "blockThursday");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockThursday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockThursday')); }, function() { addError($('#", classApiMethodMethod, "_blockThursday')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getBlockThursday() != null && getBlockThursday())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -3711,24 +3740,36 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockFriday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockFriday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
-				a("name", "setBlockFriday");
-			} else {
-				a("class", "valueBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
-				a("name", "blockFriday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockFriday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockFriday')); }, function() { addError($('#", classApiMethodMethod, "_blockFriday')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_blockFriday")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_blockFriday");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
+			a("name", "setBlockFriday");
+		} else {
+			a("class", "valueBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
+			a("name", "blockFriday");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockFriday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockFriday')); }, function() { addError($('#", classApiMethodMethod, "_blockFriday')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getBlockFriday() != null && getBlockFriday())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -3819,50 +3860,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return blockSaturday == null ? "" : StringEscapeUtils.escapeHtml4(strBlockSaturday());
 	}
 
-	public void inputBlockSaturday(String classApiMethodMethod) {
-		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_blockSaturday")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockSaturday inputSchoolBlock", pk, "BlockSaturday w3-input w3-border ");
-				a("name", "setBlockSaturday");
-			} else {
-				a("class", "valueBlockSaturday inputSchoolBlock", pk, "BlockSaturday w3-input w3-border ");
-				a("name", "blockSaturday");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockSaturday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockSaturday')); }, function() { addError($('#", classApiMethodMethod, "_blockSaturday')); }); ");
-			}
-			;
-			if(getBlockSaturday() != null && getBlockSaturday())
-				a("checked", "checked");
-		fg();
-
-	}
-
-	public void htmBlockSaturday(String classApiMethodMethod) {
-		SchoolBlock s = (SchoolBlock)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockSaturday").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", classApiMethodMethod, "_blockSaturday").a("class", "").f().sx("saturday").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputBlockSaturday(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////////
 	// blockTotalPrice //
 	/////////////////////
@@ -3870,6 +3867,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/**	L'entité « blockTotalPrice »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected BigDecimal blockTotalPrice;
 	@JsonIgnore
 	public Wrap<BigDecimal> blockTotalPriceWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockTotalPrice").o(blockTotalPrice);
@@ -4262,32 +4260,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return blockCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strBlockCompleteName());
 	}
 
-	public void inputBlockCompleteName(String classApiMethodMethod) {
-		SchoolBlock s = (SchoolBlock)this;
-	}
-
-	public void htmBlockCompleteName(String classApiMethodMethod) {
-		SchoolBlock s = (SchoolBlock)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("name").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strBlockCompleteName()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -4587,10 +4559,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				setBlockPricePerMonth(val);
 				savesSchoolBlock.add(var);
 				return val;
-			case "blockSunday":
-				setBlockSunday(val);
-				savesSchoolBlock.add(var);
-				return val;
 			case "blockMonday":
 				setBlockMonday(val);
 				savesSchoolBlock.add(var);
@@ -4609,10 +4577,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				return val;
 			case "blockFriday":
 				setBlockFriday(val);
-				savesSchoolBlock.add(var);
-				return val;
-			case "blockSaturday":
-				setBlockSaturday(val);
 				savesSchoolBlock.add(var);
 				return val;
 			default:
@@ -5550,8 +5514,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				apiRequest.addVars("blockEndTime");
 			if(!Objects.equals(blockPricePerMonth, original.getBlockPricePerMonth()))
 				apiRequest.addVars("blockPricePerMonth");
-			if(!Objects.equals(blockSunday, original.getBlockSunday()))
-				apiRequest.addVars("blockSunday");
 			if(!Objects.equals(blockMonday, original.getBlockMonday()))
 				apiRequest.addVars("blockMonday");
 			if(!Objects.equals(blockTuesday, original.getBlockTuesday()))
@@ -5562,8 +5524,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				apiRequest.addVars("blockThursday");
 			if(!Objects.equals(blockFriday, original.getBlockFriday()))
 				apiRequest.addVars("blockFriday");
-			if(!Objects.equals(blockSaturday, original.getBlockSaturday()))
-				apiRequest.addVars("blockSaturday");
 			super.apiRequestCluster();
 		}
 	}
@@ -5573,7 +5533,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, ageKey, schoolAddress, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday);
+		return Objects.hash(super.hashCode(), enrollmentKeys, ageKey, schoolAddress, blockStartTime, blockEndTime, blockPricePerMonth, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday);
 	}
 
 	////////////
@@ -5593,13 +5553,11 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				&& Objects.equals( blockStartTime, that.blockStartTime )
 				&& Objects.equals( blockEndTime, that.blockEndTime )
 				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth )
-				&& Objects.equals( blockSunday, that.blockSunday )
 				&& Objects.equals( blockMonday, that.blockMonday )
 				&& Objects.equals( blockTuesday, that.blockTuesday )
 				&& Objects.equals( blockWednesday, that.blockWednesday )
 				&& Objects.equals( blockThursday, that.blockThursday )
-				&& Objects.equals( blockFriday, that.blockFriday )
-				&& Objects.equals( blockSaturday, that.blockSaturday );
+				&& Objects.equals( blockFriday, that.blockFriday );
 	}
 
 	//////////////
@@ -5616,13 +5574,11 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		sb.append( ", blockStartTime: " ).append(blockStartTime);
 		sb.append( ", blockEndTime: " ).append(blockEndTime);
 		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);
-		sb.append( ", blockSunday: " ).append(blockSunday);
 		sb.append( ", blockMonday: " ).append(blockMonday);
 		sb.append( ", blockTuesday: " ).append(blockTuesday);
 		sb.append( ", blockWednesday: " ).append(blockWednesday);
 		sb.append( ", blockThursday: " ).append(blockThursday);
 		sb.append( ", blockFriday: " ).append(blockFriday);
-		sb.append( ", blockSaturday: " ).append(blockSaturday);
 		sb.append(" }");
 		return sb.toString();
 	}

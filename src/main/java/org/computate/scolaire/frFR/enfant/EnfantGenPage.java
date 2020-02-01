@@ -224,7 +224,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");
-			o.htmEnfantNomComplet("Recherche");
 		} g("div");
 	}
 
@@ -329,7 +328,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").a("class", "w3-green w3-hover-green ").f();
 					{ e("tr").f();
-						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
 						e("th").f().sx("").g("th");
 					} g("tr");
@@ -344,14 +342,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
-									{ e("span").f();
-										sx(o.strEnfantNomComplet());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCree());
 									} g("span");
@@ -359,7 +349,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+									e("i").a("class", "far fa-child ").f().g("i");
 									{ e("span").f();
 										sx(o.strObjetTitre());
 									} g("span");
@@ -407,7 +397,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("id", "rechargerCeEnfantGenPage")
 				.a("onclick", "patchEnfantScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeEnfantGenPage')); }, function() { ajouterErreur($('#rechargerCeEnfantGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+				e("i").a("class", "fas fa-sync-alt ").f().g("i");
 			sx("recharger cet enfant");
 		} g("button");
 
@@ -416,26 +406,60 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			.a("onclick", "$('#postEnfantScolaireModale').show(); ")
 			.f().sx("Créer un enfant")
 		.g("button");
-		{ e("div").a("id", "postEnfantScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Créer un enfant").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					EnfantScolaire o = new EnfantScolaire();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "postEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-green ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Créer un enfant").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						EnfantScolaire o = new EnfantScolaire();
+						o.setRequeteSite_(requeteSite_);
 
-					// Form POST
-					{ e("div").a("id", "postEnfantScolaireForm").f();
-						htmlFormPOSTEnfantScolaire(o);
+						// Form POST
+						{ e("div").a("id", "postEnfantScolaireForm").f();
+							htmlFormPOSTEnfantScolaire(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+							.a("onclick", "postEnfantScolaire($('#postEnfantScolaireForm')); ")
+							.f().sx("Créer un enfant")
+						.g("button");
+
 					} g("div");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "postEnfantScolaire($('#postEnfantScolaireForm')); ")
-						.f().sx("Créer un enfant")
-					.g("button");
+				} g("div");
+			} g("div");
+		} g("div");
 
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+			.a("onclick", "$('#putEnfantScolaireModale').show(); ")
+			.f().sx("Dupliquer des enfants")
+		.g("button");
+		{ e("div").a("id", "putEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-green ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des enfants").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						EnfantScolaire o = new EnfantScolaire();
+						o.setRequeteSite_(requeteSite_);
+
+						// FormulaireValeurs PUT
+						{ e("form").a("action", "").a("id", "putEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPUTEnfantScolaire(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+							.a("onclick", "putEnfantScolaire($('#putEnfantScolaireFormulaireValeurs')); ")
+							.f().sx("Dupliquer des enfants")
+						.g("button");
+
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -446,26 +470,28 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			.a("onclick", "$('#patchEnfantScolaireModale').show(); ")
 			.f().sx("Modifier des enfants")
 		.g("button");
-		{ e("div").a("id", "patchEnfantScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Modifier des enfants").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					EnfantScolaire o = new EnfantScolaire();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "patchEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-green ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Modifier des enfants").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						EnfantScolaire o = new EnfantScolaire();
+						o.setRequeteSite_(requeteSite_);
 
-					// FormulaireValeurs PATCH
-					{ e("form").a("action", "").a("id", "patchEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHEnfantScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchEnfantScolaire($('#patchEnfantScolaireFormulaireFiltres'), $('#patchEnfantScolaireFormulaireValeurs'), function() {}, function() {}); ")
-						.f().sx("Modifier des enfants")
-					.g("button");
+						// FormulaireValeurs PATCH
+						{ e("form").a("action", "").a("id", "patchEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPATCHEnfantScolaire(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+							.a("onclick", "patchEnfantScolaire($('#patchEnfantScolaireFormulaireFiltres'), $('#patchEnfantScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.f().sx("Modifier des enfants")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -477,26 +503,28 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				.a("onclick", "$('#deleteEnfantScolaireModale').show(); ")
 				.f().sx("Supprimer des enfants")
 			.g("button");
-			{ e("div").a("id", "deleteEnfantScolaireModale").a("class", "w3-modal ").f();
-				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Supprimer des enfants").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						EnfantScolaire o = new EnfantScolaire();
-						o.setRequeteSite_(requeteSite_);
+			{ e("div").a("id", "deleteEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Supprimer des enfants").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							EnfantScolaire o = new EnfantScolaire();
+							o.setRequeteSite_(requeteSite_);
 
-						// Form DELETE
-						{ e("div").a("id", "deleteEnfantScolaireForm").f();
-							htmlFormPATCHEnfantScolaire(o);
+							// Form DELETE
+							{ e("div").a("id", "deleteEnfantScolaireForm").f();
+								htmlFormPATCHEnfantScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "deleteEnfantScolaire(", o.getPk(), "); ")
+								.f().sx("Supprimer des enfants")
+							.g("button");
+
 						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-							.a("onclick", "deleteEnfantScolaire(", o.getPk(), "); ")
-							.f().sx("Supprimer des enfants")
-						.g("button");
-
 					} g("div");
 				} g("div");
 			} g("div");
@@ -544,47 +572,43 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	**/
 	public static void htmlSuggereEnfantGenPage(MiseEnPage p, String id) {
 		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("href", "/enfant").a("class", "").f();
-					p.e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+					p.e("i").a("class", "far fa-child ").f().g("i");
 					p.sx("voir tous les enfants");
 				} p.g("a");
 			} p.g("div");
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("id", "rechargerTousEnfantGenPage", id).a("href", "/enfant").a("class", "").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousEnfantGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousEnfantGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("recharger tous les enfants");
 				} p.g("a");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();
 					p.sx("rechercher enfants : ");
 				} p.g("span");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("div").a("class", "w3-cell-row ").f();
+		{ p.e("div").a("class", "w3-bar ").f();
 
-					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormEnfantScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/enfant?q=objetSuggere:' + encodeURIComponent($('#suggereEnfantScolaire", id, "').val()); return false; ").f();
-						p.e("input")
-							.a("type", "text")
-							.a("placeholder", "rechercher enfants")
-							.a("class", "suggereEnfantScolaire w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggereEnfantScolaire")
-							.a("id", "suggereEnfantScolaire", id)
-							.a("autocomplete", "off")
-							.a("oninput", "suggereEnfantScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEnfantScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-							.fg();
+			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
+				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
+			} p.g("span");
+			p.e("input")
+				.a("type", "text")
+				.a("placeholder", "rechercher enfants")
+				.a("class", "suggereEnfantScolaire w3-input w3-border w3-bar-item w3-padding-small ")
+				.a("name", "suggereEnfantScolaire")
+				.a("id", "suggereEnfantScolaire", id)
+				.a("autocomplete", "off")
+				.a("oninput", "suggereEnfantScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEnfantScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+				.fg();
 
-					} p.g("form");
-				} p.g("div");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListEnfantScolaire", id).f();
 				} p.g("ul");

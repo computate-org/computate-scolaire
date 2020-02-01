@@ -67,7 +67,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	public static final String DesignInscription_NomAdjectifPluriel = "design d'inscriptions";
 	public static final String DesignInscription_Couleur = "indigo";
 	public static final String DesignInscription_IconeGroupe = "regular";
-	public static final String DesignInscription_IconeNom = "bell";
+	public static final String DesignInscription_IconeNom = "drafting-compass";
 
 	//////////////////////////
 	// designInscriptionCle //
@@ -313,7 +313,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=designInscriptionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("parts");
 							} g("a");
 						} g("div");

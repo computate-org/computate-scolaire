@@ -81,7 +81,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	}
 
 	@Override protected void _contexteIconeNom(Couverture<String> c) {
-			c.o("bell");
+			c.o("drafting-compass");
 	}
 
 	@Override public void initLoinDesignInscriptionGenPage() {
@@ -300,7 +300,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").a("class", "w3-indigo w3-hover-indigo ").f();
 					{ e("tr").f();
-						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
 						e("th").f().sx("").g("th");
 					} g("tr");
@@ -315,14 +314,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
-									{ e("span").f();
-										sx(o.strDesignInscriptionNomComplet());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strCree());
 									} g("span");
@@ -330,7 +321,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+									e("i").a("class", "far fa-drafting-compass ").f().g("i");
 									{ e("span").f();
 										sx(o.strObjetTitre());
 									} g("span");
@@ -378,7 +369,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
 				.a("id", "rechargerCeDesignInscriptionGenPage")
 				.a("onclick", "patchDesignInscriptionVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeDesignInscriptionGenPage')); }, function() { ajouterErreur($('#rechargerCeDesignInscriptionGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+				e("i").a("class", "fas fa-sync-alt ").f().g("i");
 			sx("recharger ce design d'inscription");
 		} g("button");
 
@@ -387,26 +378,60 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			.a("onclick", "$('#postDesignInscriptionModale').show(); ")
 			.f().sx("Créer un design d'inscription")
 		.g("button");
-		{ e("div").a("id", "postDesignInscriptionModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-indigo ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postDesignInscriptionModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Créer un design d'inscription").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					DesignInscription o = new DesignInscription();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "postDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-indigo ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Créer un design d'inscription").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						DesignInscription o = new DesignInscription();
+						o.setRequeteSite_(requeteSite_);
 
-					// Form POST
-					{ e("div").a("id", "postDesignInscriptionForm").f();
-						htmlFormPOSTDesignInscription(o);
+						// Form POST
+						{ e("div").a("id", "postDesignInscriptionForm").f();
+							htmlFormPOSTDesignInscription(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+							.a("onclick", "postDesignInscription($('#postDesignInscriptionForm')); ")
+							.f().sx("Créer un design d'inscription")
+						.g("button");
+
 					} g("div");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-						.a("onclick", "postDesignInscription($('#postDesignInscriptionForm')); ")
-						.f().sx("Créer un design d'inscription")
-					.g("button");
+				} g("div");
+			} g("div");
+		} g("div");
 
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+			.a("onclick", "$('#putDesignInscriptionModale').show(); ")
+			.f().sx("Dupliquer des design d'inscriptions")
+		.g("button");
+		{ e("div").a("id", "putDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-indigo ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des design d'inscriptions").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						DesignInscription o = new DesignInscription();
+						o.setRequeteSite_(requeteSite_);
+
+						// FormulaireValeurs PUT
+						{ e("form").a("action", "").a("id", "putDesignInscriptionFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPUTDesignInscription(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+							.a("onclick", "putDesignInscription($('#putDesignInscriptionFormulaireValeurs')); ")
+							.f().sx("Dupliquer des design d'inscriptions")
+						.g("button");
+
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -417,26 +442,28 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			.a("onclick", "$('#patchDesignInscriptionModale').show(); ")
 			.f().sx("Modifier des design d'inscriptions")
 		.g("button");
-		{ e("div").a("id", "patchDesignInscriptionModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-indigo ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchDesignInscriptionModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Modifier des design d'inscriptions").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					DesignInscription o = new DesignInscription();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "patchDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-indigo ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Modifier des design d'inscriptions").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						DesignInscription o = new DesignInscription();
+						o.setRequeteSite_(requeteSite_);
 
-					// FormulaireValeurs PATCH
-					{ e("form").a("action", "").a("id", "patchDesignInscriptionFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHDesignInscription(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-						.a("onclick", "patchDesignInscription($('#patchDesignInscriptionFormulaireFiltres'), $('#patchDesignInscriptionFormulaireValeurs'), function() {}, function() {}); ")
-						.f().sx("Modifier des design d'inscriptions")
-					.g("button");
+						// FormulaireValeurs PATCH
+						{ e("form").a("action", "").a("id", "patchDesignInscriptionFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPATCHDesignInscription(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+							.a("onclick", "patchDesignInscription($('#patchDesignInscriptionFormulaireFiltres'), $('#patchDesignInscriptionFormulaireValeurs'), function() {}, function() {}); ")
+							.f().sx("Modifier des design d'inscriptions")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -448,26 +475,28 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 				.a("onclick", "$('#deleteDesignInscriptionModale').show(); ")
 				.f().sx("Supprimer des design d'inscriptions")
 			.g("button");
-			{ e("div").a("id", "deleteDesignInscriptionModale").a("class", "w3-modal ").f();
-				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-indigo ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteDesignInscriptionModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Supprimer des design d'inscriptions").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						DesignInscription o = new DesignInscription();
-						o.setRequeteSite_(requeteSite_);
+			{ e("div").a("id", "deleteDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-indigo ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Supprimer des design d'inscriptions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							DesignInscription o = new DesignInscription();
+							o.setRequeteSite_(requeteSite_);
 
-						// Form DELETE
-						{ e("div").a("id", "deleteDesignInscriptionForm").f();
-							htmlFormPATCHDesignInscription(o);
+							// Form DELETE
+							{ e("div").a("id", "deleteDesignInscriptionForm").f();
+								htmlFormPATCHDesignInscription(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("onclick", "deleteDesignInscription(", o.getPk(), "); ")
+								.f().sx("Supprimer des design d'inscriptions")
+							.g("button");
+
 						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-							.a("onclick", "deleteDesignInscription(", o.getPk(), "); ")
-							.f().sx("Supprimer des design d'inscriptions")
-						.g("button");
-
 					} g("div");
 				} g("div");
 			} g("div");
@@ -515,47 +544,43 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	**/
 	public static void htmlSuggereDesignInscriptionGenPage(MiseEnPage p, String id) {
 		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("href", "/design-inscription").a("class", "").f();
-					p.e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+					p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
 					p.sx("voir tous les design d'inscriptions");
 				} p.g("a");
 			} p.g("div");
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("id", "rechargerTousDesignInscriptionGenPage", id).a("href", "/design-inscription").a("class", "").a("onclick", "patchDesignInscriptionVals([], {}, function() { ajouterLueur($('#rechargerTousDesignInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignInscriptionGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("recharger tous les design d'inscriptions");
 				} p.g("a");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();
 					p.sx("rechercher design d'inscriptions : ");
 				} p.g("span");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("div").a("class", "w3-cell-row ").f();
+		{ p.e("div").a("class", "w3-bar ").f();
 
-					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormDesignInscription", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/design-inscription?q=objetSuggere:' + encodeURIComponent($('#suggereDesignInscription", id, "').val()); return false; ").f();
-						p.e("input")
-							.a("type", "text")
-							.a("placeholder", "rechercher design d'inscriptions")
-							.a("class", "suggereDesignInscription w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggereDesignInscription")
-							.a("id", "suggereDesignInscription", id)
-							.a("autocomplete", "off")
-							.a("oninput", "suggereDesignInscriptionObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListDesignInscription", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-							.fg();
+			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
+				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
+			} p.g("span");
+			p.e("input")
+				.a("type", "text")
+				.a("placeholder", "rechercher design d'inscriptions")
+				.a("class", "suggereDesignInscription w3-input w3-border w3-bar-item w3-padding-small ")
+				.a("name", "suggereDesignInscription")
+				.a("id", "suggereDesignInscription", id)
+				.a("autocomplete", "off")
+				.a("oninput", "suggereDesignInscriptionObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListDesignInscription", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+				.fg();
 
-					} p.g("form");
-				} p.g("div");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListDesignInscription", id).f();
 				} p.g("ul");

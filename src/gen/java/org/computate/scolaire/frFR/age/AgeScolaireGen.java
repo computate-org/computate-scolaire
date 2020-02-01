@@ -339,7 +339,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=ageCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
-								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-bell ").f().g("i");
 								sx("blocs");
 							} g("a");
 						} g("div");
@@ -807,7 +807,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=ageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
-								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+								e("i").a("class", "fad fa-graduation-cap ").f().g("i");
 								sx("session");
 							} g("a");
 						} g("div");
@@ -2673,32 +2673,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmAgeNomComplet() {
 		return ageNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strAgeNomComplet());
-	}
-
-	public void inputAgeNomComplet(String classeApiMethodeMethode) {
-		AgeScolaire s = (AgeScolaire)this;
-	}
-
-	public void htmAgeNomComplet(String classeApiMethodeMethode) {
-		AgeScolaire s = (AgeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-blue ").f();
-							e("label").a("class", "").f().sx("nom").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strAgeNomComplet()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

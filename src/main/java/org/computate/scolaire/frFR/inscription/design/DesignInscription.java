@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription.design;                                    
+package org.computate.scolaire.frFR.inscription.design;                                     
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/enrollment-design
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -42,7 +43,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.enUS: an enrollment design
  * Couleur: indigo
  * IconeGroupe: regular
- * IconeNom: bell
+ * IconeNom: drafting-compass
  * NomVar.frFR: design-inscription
  * NomVar.enUS: enrollment-design
  * 
@@ -294,7 +295,6 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCelulle: 1
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: %s - %s %s %s par mois %s

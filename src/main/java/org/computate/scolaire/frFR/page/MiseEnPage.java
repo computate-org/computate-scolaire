@@ -29,6 +29,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.enfant.EnfantGenPage;
 import org.computate.scolaire.frFR.gardien.GardienGenPage;
 import org.computate.scolaire.frFR.inscription.InscriptionGenPage;
+import org.computate.scolaire.frFR.inscription.design.DesignInscriptionGenPage;
 import org.computate.scolaire.frFR.mere.MereGenPage;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.paiement.PaiementGenPage;
@@ -676,10 +677,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: htmlPageLayout
 	 * r: pageTitre
 	 * r.enUS: pageTitle
-	 * r: Ce site est open source.
-	 * r.enUS: This site is open source. 
-	 * r: Voir le code source ici. 
-	 * r.enUS: View the source code here. 
+	 * r: Ce site est open source
+	 * r.enUS: This site is open source
+	 * r: Voir le code source ici
+	 * r.enUS: View the source code here
 	 */
 	@Override public void htmlMiseEnPage() {
 		e("html").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
@@ -725,8 +726,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								htmlBody();
 
 								e("footer").a("class", "w3-center w3-black w3-padding-48 w3-margin-top ").f();
-									e("div").a("class", "w3-xxlarge ").f();
-										sx("Ce site est open source. ");
+									e("div").f();
+										e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-xlarge ").f();
+											sx("Ce site est open source");
+										g("a");
+									g("div");
+									e("div").f();
+										e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-large ").f();
+											sx("Voir le code source ici");
+										g("a");
 									g("div");
 								g("footer");
 							g("div");
@@ -824,6 +832,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: "guardians"
 	 * r: "enfants"
 	 * r.enUS: "children"
+	 * r: "designs"
+	 * r.enUS: "designs"
 	 * r: EcoleGenPage.htmlSuggereEcoleGenPage
 	 * r.enUS: SchoolGenPage.htmlSuggestSchoolGenPage
 	 * r: AnneeGenPage.htmlSuggereAnneeGenPage
@@ -848,6 +858,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: GuardianGenPage.htmlSuggestGuardianGenPage
 	 * r: EnfantGenPage.htmlSuggereEnfantGenPage
 	 * r.enUS: ChildGenPage.htmlSuggestChildGenPage
+	 * r: DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage
+	 * r.enUS: EnrollmentDesignGenPage.htmlSuggestEnrollmentDesignGenPage
 	 */ 
 	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
@@ -861,7 +873,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-pink ").f();
-						e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-school ").f().g("i");
 						sx("écoles");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -871,7 +883,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-orange ").f();
-						e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-calendar-check ").f().g("i");
 						sx("années");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -881,7 +893,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
-						e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-sun ").f().g("i");
 						sx("saisons");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -891,7 +903,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+						e("i").a("class", "fad fa-graduation-cap ").f().g("i");
 						sx("sessions");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -901,7 +913,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-blue ").f();
-						e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+						e("i").a("class", "fad fa-birthday-cake ").f().g("i");
 						sx("âges");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -911,7 +923,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-indigo ").f();
-						e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-bell ").f().g("i");
 						sx("blocs");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -921,7 +933,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-purple ").f();
-						e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+						e("i").a("class", "fas fa-edit ").f().g("i");
 						sx("inscriptions");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -931,17 +943,17 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
-						sx("paiements");
+						e("i").a("class", "far fa-child ").f().g("i");
+						sx("enfants");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					PaiementGenPage.htmlSuggerePaiementGenPage(this, id);
+					EnfantGenPage.htmlSuggereEnfantGenPage(this, id);
 				} g("div");
 			} g("div");
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-pink ").f();
-						e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-female ").f().g("i");
 						sx("mères");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -951,7 +963,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
-						e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-male ").f().g("i");
 						sx("pères");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -961,7 +973,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-orange ").f();
-						e("i").a("class", "far fa-phone w3-padding-small ").f().g("i");
+						e("i").a("class", "far fa-phone ").f().g("i");
 						sx("gardiens");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
@@ -971,13 +983,24 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
-						sx("enfants");
+						e("i").a("class", "fas fa-search-dollar ").f().g("i");
+						sx("paiements");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					EnfantGenPage.htmlSuggereEnfantGenPage(this, id);
+					PaiementGenPage.htmlSuggerePaiementGenPage(this, id);
 				} g("div");
 			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "far fa-drafting-compass ").f().g("i");
+						sx("designs");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id);
+				} g("div");
+			} g("div");
+
 			if(requeteSite_.getUtilisateurId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
@@ -991,7 +1014,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-green ").f();
-							e("i").a("class", "far fa-user-cog w3-padding-small ").f().g("i");
+							e("i").a("class", "far fa-user-cog ").f().g("i");
 							sx(requeteSite_.getUtilisateurNom());
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();

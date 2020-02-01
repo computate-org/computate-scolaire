@@ -231,6 +231,133 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return enrollmentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentKeys());
 	}
 
+	/////////////
+	// yearKey //
+	/////////////
+
+	/**	L'entité « yearKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	protected Long yearKey;
+	@JsonIgnore
+	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
+
+	/**	<br/>L'entité « yearKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearKey(Wrap<Long> c);
+
+	public Long getYearKey() {
+		return yearKey;
+	}
+
+	public void setYearKey(Long yearKey) {
+		this.yearKey = yearKey;
+		this.yearKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolSeason setYearKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearKey = Long.parseLong(o);
+		this.yearKeyWrap.alreadyInitialized = true;
+		return (SchoolSeason)this;
+	}
+	protected SchoolSeason yearKeyInit() {
+		if(!yearKeyWrap.alreadyInitialized) {
+			_yearKey(yearKeyWrap);
+			if(yearKey == null)
+				setYearKey(yearKeyWrap.o);
+		}
+		yearKeyWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public Long solrYearKey() {
+		return yearKey;
+	}
+
+	public String strYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String jsonYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String nomAffichageYearKey() {
+		return "year";
+	}
+
+	public String htmTooltipYearKey() {
+		return null;
+	}
+
+	public String htmYearKey() {
+		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
+	public void inputYearKey(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "year")
+				.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setYearKey")
+				.a("id", classApiMethodMethod, "_yearKey")
+				.a("autocomplete", "off")
+				.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggestSchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmYearKey(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonYearKey").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/year?fq=seasonKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check ").f().g("i");
+								sx("year");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate a year to this season");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputYearKey(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postSchoolYearVals({ seasonKeys: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+										.f().sx("add a year")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////
 	// sessionKeys //
 	/////////////////
@@ -339,7 +466,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/session?fq=seasonKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
-								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+								e("i").a("class", "fad fa-graduation-cap ").f().g("i");
 								sx("sessions");
 							} g("a");
 						} g("div");
@@ -363,7 +490,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolSessionVals({ seasonKey: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
+										.a("onclick", "postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
 										.f().sx("add a session")
 									.g("button");
 								} g("div");
@@ -645,133 +772,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmSeasonSort() {
 		return seasonSort == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonSort());
-	}
-
-	/////////////
-	// yearKey //
-	/////////////
-
-	/**	L'entité « yearKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	protected Long yearKey;
-	@JsonIgnore
-	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
-
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearKey(Wrap<Long> c);
-
-	public Long getYearKey() {
-		return yearKey;
-	}
-
-	public void setYearKey(Long yearKey) {
-		this.yearKey = yearKey;
-		this.yearKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolSeason setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
-		this.yearKeyWrap.alreadyInitialized = true;
-		return (SchoolSeason)this;
-	}
-	protected SchoolSeason yearKeyInit() {
-		if(!yearKeyWrap.alreadyInitialized) {
-			_yearKey(yearKeyWrap);
-			if(yearKey == null)
-				setYearKey(yearKeyWrap.o);
-		}
-		yearKeyWrap.alreadyInitialized(true);
-		return (SchoolSeason)this;
-	}
-
-	public Long solrYearKey() {
-		return yearKey;
-	}
-
-	public String strYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String jsonYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String nomAffichageYearKey() {
-		return "year";
-	}
-
-	public String htmTooltipYearKey() {
-		return null;
-	}
-
-	public String htmYearKey() {
-		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
-	}
-
-	public void inputYearKey(String classApiMethodMethod) {
-		SchoolSeason s = (SchoolSeason)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "year")
-				.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setYearKey")
-				.a("id", classApiMethodMethod, "_yearKey")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggestSchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
-
-	}
-
-	public void htmYearKey(String classApiMethodMethod) {
-		SchoolSeason s = (SchoolSeason)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonYearKey").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/year?fq=seasonKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
-								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
-								sx("year");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relate a year to this season");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputYearKey(classApiMethodMethod);
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey_", classApiMethodMethod).f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
-										.f().sx("add a year")
-									.g("button");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
 	}
 
 	////////////////
@@ -1689,24 +1689,36 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonSummer(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_seasonSummer")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
-				a("name", "setSeasonSummer");
-			} else {
-				a("class", "valueSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
-				a("name", "seasonSummer");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonSummer', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonSummer')); }, function() { addError($('#", classApiMethodMethod, "_seasonSummer')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_seasonSummer")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_seasonSummer");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
+			a("name", "setSeasonSummer");
+		} else {
+			a("class", "valueSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
+			a("name", "seasonSummer");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonSummer', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonSummer')); }, function() { addError($('#", classApiMethodMethod, "_seasonSummer')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getSeasonSummer() != null && getSeasonSummer())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -1799,24 +1811,36 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonWinter(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_seasonWinter")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
-				a("name", "setSeasonWinter");
-			} else {
-				a("class", "valueSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
-				a("name", "seasonWinter");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonWinter', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonWinter')); }, function() { addError($('#", classApiMethodMethod, "_seasonWinter')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_seasonWinter")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_seasonWinter");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
+			a("name", "setSeasonWinter");
+		} else {
+			a("class", "valueSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
+			a("name", "seasonWinter");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonWinter', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonWinter')); }, function() { addError($('#", classApiMethodMethod, "_seasonWinter')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getSeasonWinter() != null && getSeasonWinter())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -1909,24 +1933,36 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonFuture(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_seasonFuture")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
-				a("name", "setSeasonFuture");
-			} else {
-				a("class", "valueSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
-				a("name", "seasonFuture");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonFuture', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonFuture')); }, function() { addError($('#", classApiMethodMethod, "_seasonFuture')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_seasonFuture")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_seasonFuture");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
+			a("name", "setSeasonFuture");
+		} else {
+			a("class", "valueSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
+			a("name", "seasonFuture");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonFuture', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonFuture')); }, function() { addError($('#", classApiMethodMethod, "_seasonFuture')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getSeasonFuture() != null && getSeasonFuture())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2073,32 +2109,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonCompleteName());
 	}
 
-	public void inputSeasonCompleteName(String classApiMethodMethod) {
-		SchoolSeason s = (SchoolSeason)this;
-	}
-
-	public void htmSeasonCompleteName(String classApiMethodMethod) {
-		SchoolSeason s = (SchoolSeason)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("class", "").f().sx("name").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strSeasonCompleteName()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -2122,12 +2132,12 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public void initSchoolSeason() {
 		seasonKeyInit();
 		enrollmentKeysInit();
+		yearKeyInit();
 		sessionKeysInit();
 		educationSortInit();
 		schoolSortInit();
 		yearSortInit();
 		seasonSortInit();
-		yearKeyInit();
 		yearSearchInit();
 		year_Init();
 		schoolKeyInit();
@@ -2190,6 +2200,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.seasonKey;
 			case "enrollmentKeys":
 				return oSchoolSeason.enrollmentKeys;
+			case "yearKey":
+				return oSchoolSeason.yearKey;
 			case "sessionKeys":
 				return oSchoolSeason.sessionKeys;
 			case "educationSort":
@@ -2200,8 +2212,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.yearSort;
 			case "seasonSort":
 				return oSchoolSeason.seasonSort;
-			case "yearKey":
-				return oSchoolSeason.yearKey;
 			case "yearSearch":
 				return oSchoolSeason.yearSearch;
 			case "year_":
@@ -2263,11 +2273,11 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public Object attributeSchoolSeason(String var, Object val) {
 		SchoolSeason oSchoolSeason = (SchoolSeason)this;
 		switch(var) {
-			case "sessionKeys":
-				oSchoolSeason.addSessionKeys((Long)val);
-				return val;
 			case "yearKey":
 				oSchoolSeason.setYearKey((Long)val);
+				return val;
+			case "sessionKeys":
+				oSchoolSeason.addSessionKeys((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -2346,6 +2356,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					oSchoolSeason.enrollmentKeys.addAll(enrollmentKeys);
 			}
 
+			Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+			if(yearKey != null)
+				oSchoolSeason.setYearKey(yearKey);
+
 			List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
 			if(sessionKeys != null)
 				oSchoolSeason.sessionKeys.addAll(sessionKeys);
@@ -2373,10 +2387,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				if(seasonSort != null)
 					oSchoolSeason.setSeasonSort(seasonSort);
 			}
-
-			Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-			if(yearKey != null)
-				oSchoolSeason.setYearKey(yearKey);
 
 			if(savesSchoolSeason.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
@@ -2555,6 +2565,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				document.addField("enrollmentKeys_stored_longs", o);
 			}
 		}
+		if(yearKey != null) {
+			document.addField("yearKey_indexed_long", yearKey);
+			document.addField("yearKey_stored_long", yearKey);
+		}
 		if(sessionKeys != null) {
 			for(java.lang.Long o : sessionKeys) {
 				document.addField("sessionKeys_indexed_longs", o);
@@ -2578,10 +2592,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		if(seasonSort != null) {
 			document.addField("seasonSort_indexed_int", seasonSort);
 			document.addField("seasonSort_stored_int", seasonSort);
-		}
-		if(yearKey != null) {
-			document.addField("yearKey_indexed_long", yearKey);
-			document.addField("yearKey_stored_long", yearKey);
 		}
 		if(schoolKey != null) {
 			document.addField("schoolKey_indexed_long", schoolKey);
@@ -2674,6 +2684,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return "seasonKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
+			case "yearKey":
+				return "yearKey_indexed_long";
 			case "sessionKeys":
 				return "sessionKeys_indexed_longs";
 			case "educationSort":
@@ -2684,8 +2696,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return "yearSort_indexed_int";
 			case "seasonSort":
 				return "seasonSort_indexed_int";
-			case "yearKey":
-				return "yearKey_indexed_long";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "schoolName":
@@ -2755,6 +2765,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		if(enrollmentKeys != null)
 			oSchoolSeason.enrollmentKeys.addAll(enrollmentKeys);
 
+		Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+		if(yearKey != null)
+			oSchoolSeason.setYearKey(yearKey);
+
 		List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
 		if(sessionKeys != null)
 			oSchoolSeason.sessionKeys.addAll(sessionKeys);
@@ -2774,10 +2788,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		Integer seasonSort = (Integer)solrDocument.get("seasonSort_stored_int");
 		if(seasonSort != null)
 			oSchoolSeason.setSeasonSort(seasonSort);
-
-		Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-		if(yearKey != null)
-			oSchoolSeason.setYearKey(yearKey);
 
 		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 		if(schoolKey != null)
@@ -2854,10 +2864,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
 		SchoolSeason original = (SchoolSeason)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
-			if(!Objects.equals(sessionKeys, original.getSessionKeys()))
-				apiRequest.addVars("sessionKeys");
 			if(!Objects.equals(yearKey, original.getYearKey()))
 				apiRequest.addVars("yearKey");
+			if(!Objects.equals(sessionKeys, original.getSessionKeys()))
+				apiRequest.addVars("sessionKeys");
 			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
 				apiRequest.addVars("seasonStartDate");
 			if(!Objects.equals(seasonSummer, original.getSeasonSummer()))
@@ -2875,7 +2885,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), sessionKeys, yearKey, seasonStartDate, seasonSummer, seasonWinter, seasonFuture);
+		return Objects.hash(super.hashCode(), yearKey, sessionKeys, seasonStartDate, seasonSummer, seasonWinter, seasonFuture);
 	}
 
 	////////////
@@ -2889,8 +2899,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			return false;
 		SchoolSeason that = (SchoolSeason)o;
 		return super.equals(o)
-				&& Objects.equals( sessionKeys, that.sessionKeys )
 				&& Objects.equals( yearKey, that.yearKey )
+				&& Objects.equals( sessionKeys, that.sessionKeys )
 				&& Objects.equals( seasonStartDate, that.seasonStartDate )
 				&& Objects.equals( seasonSummer, that.seasonSummer )
 				&& Objects.equals( seasonWinter, that.seasonWinter )
@@ -2905,8 +2915,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolSeason { ");
-		sb.append( "sessionKeys: " ).append(sessionKeys);
-		sb.append( ", yearKey: " ).append(yearKey);
+		sb.append( "yearKey: " ).append(yearKey);
+		sb.append( ", sessionKeys: " ).append(sessionKeys);
 		sb.append( ", seasonStartDate: " ).append(seasonStartDate);
 		sb.append( ", seasonSummer: " ).append(seasonSummer);
 		sb.append( ", seasonWinter: " ).append(seasonWinter);

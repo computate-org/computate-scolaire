@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;                   
+package org.computate.scolaire.frFR.ecole;                                
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiUri.enUS: /api/school
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -274,7 +275,6 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
-	 * HtmlColonne: 1
 	 * r: ecoleNom
 	 * r.enUS: schoolName
 	 * VarH2: true

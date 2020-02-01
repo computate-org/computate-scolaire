@@ -66,7 +66,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	public static final String EnrollmentDesign_NomAdjectifPluriel = "enrollment designs";
 	public static final String EnrollmentDesign_Couleur = "indigo";
 	public static final String EnrollmentDesign_IconeGroupe = "regular";
-	public static final String EnrollmentDesign_IconeNom = "bell";
+	public static final String EnrollmentDesign_IconeNom = "drafting-compass";
 
 	/////////////////////////
 	// enrollmentDesignKey //
@@ -312,7 +312,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/html-part?fq=enrollmentDesignKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("parts");
 							} g("a");
 						} g("div");

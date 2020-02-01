@@ -244,7 +244,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/enrollment?fq=momKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("enrollments");
 							} g("a");
 						} g("div");
@@ -2358,32 +2358,6 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public String htmMomCompleteName() {
 		return momCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strMomCompleteName());
-	}
-
-	public void inputMomCompleteName(String classApiMethodMethod) {
-		SchoolMom s = (SchoolMom)this;
-	}
-
-	public void htmMomCompleteName(String classApiMethodMethod) {
-		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("class", "").f().sx("name").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strMomCompleteName()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

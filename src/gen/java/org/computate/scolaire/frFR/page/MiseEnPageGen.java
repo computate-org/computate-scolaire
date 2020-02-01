@@ -1,19 +1,20 @@
 package org.computate.scolaire.frFR.page;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.requete.api.RequeteApi;
-
 import java.lang.String;
 import java.time.ZoneOffset;
 import java.math.MathContext;
@@ -1447,6 +1448,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageImageLargeur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer pageImageLargeur;
 	@JsonIgnore
 	public Couverture<Integer> pageImageLargeurCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("pageImageLargeur").o(pageImageLargeur);
@@ -1514,6 +1516,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageImageHauteur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer pageImageHauteur;
 	@JsonIgnore
 	public Couverture<Integer> pageImageHauteurCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("pageImageHauteur").o(pageImageHauteur);
@@ -1703,6 +1706,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageCree »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDateTime pageCree;
 	@JsonIgnore
 	public Couverture<LocalDateTime> pageCreeCouverture = new Couverture<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageCree").o(pageCree);
@@ -1780,6 +1784,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageModifiee »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDateTime pageModifiee;
 	@JsonIgnore
 	public Couverture<LocalDateTime> pageModifieeCouverture = new Couverture<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageModifiee").o(pageModifiee);

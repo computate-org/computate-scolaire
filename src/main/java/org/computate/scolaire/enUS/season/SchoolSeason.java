@@ -20,6 +20,9 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _enrollmentKeys(List<Long> o) {}
 
+	protected void _yearKey(Wrap<Long> c) {
+	}
+
 	protected void _sessionKeys(List<Long> o) {}
 
 	protected void _educationSort(Wrap<Integer> c) {
@@ -36,9 +39,6 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _seasonSort(Wrap<Integer> c) {
 		c.o(3);
-	}
-
-	protected void _yearKey(Wrap<Long> c) {
 	}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {

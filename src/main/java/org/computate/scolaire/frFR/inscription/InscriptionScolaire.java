@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                  
+package org.computate.scolaire.frFR.inscription;                   
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -31,6 +31,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiUri.enUS: /api/enrollment
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -162,7 +163,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: BlocScolaire.inscriptionCles
-	 * HtmlLigne: 7
+	 * HtmlLigne: 9
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des blocs dans la base de données. 
 	 * Description.enUS: The primary key of the school blocks in the database. 
@@ -405,8 +406,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: FormInscription.partFormCles
-	 * HtmlLigne: 10
-	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: formulaire d'inscription
 	 * NomAffichage.enUS: enrollment form
 	*/           
@@ -1280,7 +1279,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: how do you know the school? 
 	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 6
+	 * HtmlLigne: 7
 	 * HtmlCellule: 3
 	 */                   
 	protected void _familleCommentVousConnaissezEcole(Couverture<String> c) {
@@ -1308,6 +1307,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: conditions médicales
 	 * NomAffichage.enUS: medical conditions
+	 * Multiligne: true
 	 * Definir: true
 	 * HtmlLigne: 7
 	 * HtmlCellule: 1
@@ -1322,6 +1322,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: écoles précedemment fréqentées
 	 * NomAffichage.enUS: schools previously attended
+	 * Multiligne: true
 	 * Definir: true
 	 * HtmlLigne: 7
 	 * HtmlCellule: 2
@@ -1667,7 +1668,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: "inscription pour l'enfant %s"

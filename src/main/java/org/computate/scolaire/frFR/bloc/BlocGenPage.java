@@ -165,12 +165,40 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
+	public void htmlFormPUTBlocScolaire(BlocScolaire o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmCree("PUT");
+			o.htmModifie("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmArchive("PUT");
+			o.htmSupprime("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocHeureDebut("PUT");
+			o.htmBlocHeureFin("PUT");
+			o.htmBlocPrixParMois("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmBlocLundi("PUT");
+			o.htmBlocMardi("PUT");
+			o.htmBlocMercredi("PUT");
+			o.htmBlocJeudi("PUT");
+			o.htmBlocVendredi("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeCle("PUT");
+			o.htmInscriptionCles("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("PUT");
+		} g("div");
+	}
+
 	public void htmlFormPATCHBlocScolaire(BlocScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCree("PATCH");
 			o.htmModifie("PATCH");
-			o.htmObjetId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -194,9 +222,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAddresse("PATCH");
-			o.htmBlocDimanche("PATCH");
-			o.htmBlocSamedi("PATCH");
-			o.htmBlocNomComplet("PATCH");
 		} g("div");
 	}
 
@@ -228,10 +253,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmObjetTitre("Recherche");
 			o.htmEcoleAddresse("Recherche");
-			o.htmBlocDimanche("Recherche");
-			o.htmBlocSamedi("Recherche");
-			o.htmBlocNomComplet("Recherche");
 		} g("div");
 	}
 
@@ -285,13 +308,13 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			}
 		} else {
 
-				{ e("h1").f();
-					{ e("a").a("href", "/bloc").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
-						if(contexteIconeClassesCss != null)
-							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-						e("span").a("class", " ").f().sx(pageH1).g("span");
-					} g("a");
-				} g("h1");
+			{ e("h1").f();
+				{ e("a").a("href", "/bloc").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+					if(contexteIconeClassesCss != null)
+						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
+				} g("a");
+			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeBlocScolaire.getQueryResponse().getResults().getNumFound();
@@ -336,8 +359,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").a("class", "w3-indigo w3-hover-indigo ").f();
 					{ e("tr").f();
-						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -350,16 +373,16 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.strBlocNomComplet());
+										sx(o.strCree());
 									} g("span");
 								} g("a");
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
+									e("i").a("class", "far fa-bell ").f().g("i");
 									{ e("span").f();
-										sx(o.strCree());
+										sx(o.strObjetTitre());
 									} g("span");
 								} g("a");
 							} g("td");
@@ -405,7 +428,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
 				.a("id", "rechargerCeBlocGenPage")
 				.a("onclick", "patchBlocScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeBlocGenPage')); }, function() { ajouterErreur($('#rechargerCeBlocGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+				e("i").a("class", "fas fa-sync-alt ").f().g("i");
 			sx("recharger ce bloc");
 		} g("button");
 
@@ -414,26 +437,60 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			.a("onclick", "$('#postBlocScolaireModale').show(); ")
 			.f().sx("Créer un bloc")
 		.g("button");
-		{ e("div").a("id", "postBlocScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-indigo ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postBlocScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Créer un bloc").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					BlocScolaire o = new BlocScolaire();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "postBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-indigo ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postBlocScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Créer un bloc").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						BlocScolaire o = new BlocScolaire();
+						o.setRequeteSite_(requeteSite_);
 
-					// Form POST
-					{ e("div").a("id", "postBlocScolaireForm").f();
-						htmlFormPOSTBlocScolaire(o);
+						// Form POST
+						{ e("div").a("id", "postBlocScolaireForm").f();
+							htmlFormPOSTBlocScolaire(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+							.a("onclick", "postBlocScolaire($('#postBlocScolaireForm')); ")
+							.f().sx("Créer un bloc")
+						.g("button");
+
 					} g("div");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-						.a("onclick", "postBlocScolaire($('#postBlocScolaireForm')); ")
-						.f().sx("Créer un bloc")
-					.g("button");
+				} g("div");
+			} g("div");
+		} g("div");
 
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+			.a("onclick", "$('#putBlocScolaireModale').show(); ")
+			.f().sx("Dupliquer des blocs")
+		.g("button");
+		{ e("div").a("id", "putBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-indigo ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putBlocScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des blocs").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						BlocScolaire o = new BlocScolaire();
+						o.setRequeteSite_(requeteSite_);
+
+						// FormulaireValeurs PUT
+						{ e("form").a("action", "").a("id", "putBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPUTBlocScolaire(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+							.a("onclick", "putBlocScolaire($('#putBlocScolaireFormulaireValeurs')); ")
+							.f().sx("Dupliquer des blocs")
+						.g("button");
+
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -444,37 +501,28 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			.a("onclick", "$('#patchBlocScolaireModale').show(); ")
 			.f().sx("Modifier des blocs")
 		.g("button");
-		{ e("div").a("id", "patchBlocScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-indigo ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchBlocScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Modifier des blocs").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					BlocScolaire o = new BlocScolaire();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "patchBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-indigo ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchBlocScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Modifier des blocs").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						BlocScolaire o = new BlocScolaire();
+						o.setRequeteSite_(requeteSite_);
 
-					// FormulaireFiltres PATCH
-					{ e("form").a("action", "").a("id", "patchBlocScolaireFormulaireFiltres").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormRechercheBlocScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-						.a("onclick", "rechercheBlocScolaire($('#patchBlocScolaireFormulaireFiltres')); ")
-						.f().sx("Rechercher des un bloc")
-					.g("button");
+						// FormulaireValeurs PATCH
+						{ e("form").a("action", "").a("id", "patchBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPATCHBlocScolaire(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+							.a("onclick", "patchBlocScolaire($('#patchBlocScolaireFormulaireFiltres'), $('#patchBlocScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.f().sx("Modifier des blocs")
+						.g("button");
 
-
-					// FormulaireValeurs PATCH
-					{ e("form").a("action", "").a("id", "patchBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHBlocScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-						.a("onclick", "patchBlocScolaire($('#patchBlocScolaireFormulaireFiltres'), $('#patchBlocScolaireFormulaireValeurs'), function() {}, function() {}); ")
-						.f().sx("Modifier des blocs")
-					.g("button");
-
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -486,26 +534,28 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				.a("onclick", "$('#deleteBlocScolaireModale').show(); ")
 				.f().sx("Supprimer des blocs")
 			.g("button");
-			{ e("div").a("id", "deleteBlocScolaireModale").a("class", "w3-modal ").f();
-				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-indigo ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteBlocScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Supprimer des blocs").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						BlocScolaire o = new BlocScolaire();
-						o.setRequeteSite_(requeteSite_);
+			{ e("div").a("id", "deleteBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-indigo ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteBlocScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Supprimer des blocs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							BlocScolaire o = new BlocScolaire();
+							o.setRequeteSite_(requeteSite_);
 
-						// Form DELETE
-						{ e("div").a("id", "deleteBlocScolaireForm").f();
-							htmlFormPATCHBlocScolaire(o);
+							// Form DELETE
+							{ e("div").a("id", "deleteBlocScolaireForm").f();
+								htmlFormPATCHBlocScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("onclick", "deleteBlocScolaire(", o.getPk(), "); ")
+								.f().sx("Supprimer des blocs")
+							.g("button");
+
 						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-							.a("onclick", "deleteBlocScolaire(", o.getPk(), "); ")
-							.f().sx("Supprimer des blocs")
-						.g("button");
-
 					} g("div");
 				} g("div");
 			} g("div");
@@ -553,47 +603,43 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	**/
 	public static void htmlSuggereBlocGenPage(MiseEnPage p, String id) {
 		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("href", "/bloc").a("class", "").f();
-					p.e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+					p.e("i").a("class", "far fa-bell ").f().g("i");
 					p.sx("voir tous les blocs");
 				} p.g("a");
 			} p.g("div");
-			{ p.e("div").a("class", "w3-cell ").f();
+			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("id", "rechargerTousBlocGenPage", id).a("href", "/bloc").a("class", "").a("onclick", "patchBlocScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousBlocGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousBlocGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("recharger tous les blocs");
 				} p.g("a");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();
 					p.sx("rechercher blocs : ");
 				} p.g("span");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("div").a("class", "w3-cell-row ").f();
+		{ p.e("div").a("class", "w3-bar ").f();
 
-					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormBlocScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/bloc?q=objetSuggere:' + encodeURIComponent($('#suggereBlocScolaire", id, "').val()); return false; ").f();
-						p.e("input")
-							.a("type", "text")
-							.a("placeholder", "rechercher blocs")
-							.a("class", "suggereBlocScolaire w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggereBlocScolaire")
-							.a("id", "suggereBlocScolaire", id)
-							.a("autocomplete", "off")
-							.a("oninput", "suggereBlocScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListBlocScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-							.fg();
+			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
+				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
+			} p.g("span");
+			p.e("input")
+				.a("type", "text")
+				.a("placeholder", "rechercher blocs")
+				.a("class", "suggereBlocScolaire w3-input w3-border w3-bar-item w3-padding-small ")
+				.a("name", "suggereBlocScolaire")
+				.a("id", "suggereBlocScolaire", id)
+				.a("autocomplete", "off")
+				.a("oninput", "suggereBlocScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListBlocScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+				.fg();
 
-					} p.g("form");
-				} p.g("div");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListBlocScolaire", id).f();
 				} p.g("ul");

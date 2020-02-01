@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.gardien;                 
+package org.computate.scolaire.frFR.gardien;                  
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -25,6 +25,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/guardian
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -441,7 +442,6 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * r: personneNomComplet
 	 * r.enUS: personCompleteName
 	 */  

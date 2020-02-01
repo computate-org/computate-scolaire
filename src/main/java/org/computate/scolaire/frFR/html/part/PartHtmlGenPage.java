@@ -520,7 +520,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+									e("i").a("class", "far fa-sun ").f().g("i");
 									{ e("span").f();
 										sx(o.strObjetTitre());
 									} g("span");
@@ -568,7 +568,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 				.a("id", "rechargerCePartHtmlGenPage")
 				.a("onclick", "patchPartHtmlVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCePartHtmlGenPage')); }, function() { ajouterErreur($('#rechargerCePartHtmlGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+				e("i").a("class", "fas fa-sync-alt ").f().g("i");
 			sx("recharger ce part de HTML");
 		} g("button");
 
@@ -737,45 +737,35 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("a").a("href", "/part-html").a("class", "").f();
-					p.e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+					p.e("i").a("class", "far fa-sun ").f().g("i");
 					p.sx("voir tous les part de HTMLs");
 				} p.g("a");
 			} p.g("div");
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("a").a("id", "rechargerTousPartHtmlGenPage", id).a("href", "/part-html").a("class", "").a("onclick", "patchPartHtmlVals([], {}, function() { ajouterLueur($('#rechargerTousPartHtmlGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPartHtmlGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
-					p.sx("recharger tous les part de HTMLs");
-				} p.g("a");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();
 					p.sx("rechercher part de HTMLs : ");
 				} p.g("span");
 			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("div").a("class", "w3-cell-row ").f();
+		{ p.e("div").a("class", "w3-bar ").f();
 
-					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormPartHtml", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/part-html?q=objetSuggere:' + encodeURIComponent($('#suggerePartHtml", id, "').val()); return false; ").f();
-						p.e("input")
-							.a("type", "text")
-							.a("placeholder", "rechercher part de HTMLs")
-							.a("class", "suggerePartHtml w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggerePartHtml")
-							.a("id", "suggerePartHtml", id)
-							.a("autocomplete", "off")
-							.a("oninput", "suggerePartHtmlObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartHtml", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-							.fg();
+			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
+				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
+			} p.g("span");
+			p.e("input")
+				.a("type", "text")
+				.a("placeholder", "rechercher part de HTMLs")
+				.a("class", "suggerePartHtml w3-input w3-border w3-bar-item w3-padding-small ")
+				.a("name", "suggerePartHtml")
+				.a("id", "suggerePartHtml", id)
+				.a("autocomplete", "off")
+				.a("oninput", "suggerePartHtmlObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartHtml", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+				.fg();
 
-					} p.g("form");
-				} p.g("div");
-			} p.g("div");
 		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPartHtml", id).f();
 				} p.g("ul");

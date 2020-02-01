@@ -160,7 +160,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/school?fq=yearKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-								e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-school ").f().g("i");
 								sx("school");
 							} g("a");
 						} g("div");
@@ -457,7 +457,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/season?fq=yearKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("seasons");
 							} g("a");
 						} g("div");
@@ -1766,29 +1766,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public String htmYearCompleteName() {
 		return yearCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strYearCompleteName());
-	}
-
-	public void inputYearCompleteName(String classApiMethodMethod) {
-		SchoolYear s = (SchoolYear)this;
-	}
-
-	public void htmYearCompleteName(String classApiMethodMethod) {
-		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strYearCompleteName()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

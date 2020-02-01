@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.cluster;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -166,6 +168,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long pk;
 	@JsonIgnore
 	public Couverture<Long> pkCouverture = new Couverture<Long>().p(this).c(Long.class).var("pk").o(pk);
@@ -259,6 +262,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « inheritPk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long inheritPk;
 	@JsonIgnore
 	public Couverture<Long> inheritPkCouverture = new Couverture<Long>().p(this).c(Long.class).var("inheritPk").o(inheritPk);
@@ -387,6 +391,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « cree »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected ZonedDateTime cree;
 	@JsonIgnore
 	public Couverture<ZonedDateTime> creeCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("cree").o(cree);
@@ -490,6 +495,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « modifie »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected ZonedDateTime modifie;
 	@JsonIgnore
 	public Couverture<ZonedDateTime> modifieCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modifie").o(modifie);
@@ -654,24 +660,36 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputArchive(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_archive")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				s.a("class", "setArchive inputCluster", pk, "Archive w3-input w3-border ");
-				s.a("name", "setArchive");
-			} else {
-				s.a("class", "valeurArchive inputCluster", pk, "Archive w3-input w3-border ");
-				s.a("name", "archive");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_archive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_archive')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			s.e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_archive")
+				.a("value", "true");
+		} else {
+			s.e("select")
+				.a("id", classeApiMethodeMethode, "_archive");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			s.a("class", "setArchive inputCluster", pk, "Archive w3-input w3-border ");
+			s.a("name", "setArchive");
+		} else {
+			s.a("class", "valeurArchive inputCluster", pk, "Archive w3-input w3-border ");
+			s.a("name", "archive");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_archive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_archive')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getArchive() != null && getArchive())
 				s.a("checked", "checked");
-		s.fg();
+			s.fg();
+		} else {
+			s.f();
+			s.e("option").a("value", "").a("selected", "selected").f().g("option");
+			s.e("option").a("value", "true").f().sx("true").g("option");
+			s.e("option").a("value", "false").f().sx("false").g("option");
+			s.g("select");
+		}
 
 	}
 
@@ -764,24 +782,36 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputSupprime(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_supprime")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				s.a("class", "setSupprime inputCluster", pk, "Supprime w3-input w3-border ");
-				s.a("name", "setSupprime");
-			} else {
-				s.a("class", "valeurSupprime inputCluster", pk, "Supprime w3-input w3-border ");
-				s.a("name", "supprime");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_supprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_supprime')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			s.e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_supprime")
+				.a("value", "true");
+		} else {
+			s.e("select")
+				.a("id", classeApiMethodeMethode, "_supprime");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			s.a("class", "setSupprime inputCluster", pk, "Supprime w3-input w3-border ");
+			s.a("name", "setSupprime");
+		} else {
+			s.a("class", "valeurSupprime inputCluster", pk, "Supprime w3-input w3-border ");
+			s.a("name", "supprime");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_supprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_supprime')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getSupprime() != null && getSupprime())
 				s.a("checked", "checked");
-		s.fg();
+			s.fg();
+		} else {
+			s.f();
+			s.e("option").a("value", "").a("selected", "selected").f().g("option");
+			s.e("option").a("value", "true").f().sx("true").g("option");
+			s.e("option").a("value", "false").f().sx("false").g("option");
+			s.g("select");
+		}
 
 	}
 

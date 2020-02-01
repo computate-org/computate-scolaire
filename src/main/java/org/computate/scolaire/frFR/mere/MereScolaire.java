@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mere;                     
+package org.computate.scolaire.frFR.mere;                      
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +22,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/mom
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -452,7 +453,6 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: personneNomComplet

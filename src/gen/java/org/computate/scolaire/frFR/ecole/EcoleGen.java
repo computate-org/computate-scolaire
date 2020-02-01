@@ -243,7 +243,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=ecoleCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
-								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-calendar-check ").f().g("i");
 								sx("années");
 							} g("a");
 						} g("div");
@@ -1538,32 +1538,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmEcoleNomComplet() {
 		return ecoleNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNomComplet());
-	}
-
-	public void inputEcoleNomComplet(String classeApiMethodeMethode) {
-		Ecole s = (Ecole)this;
-	}
-
-	public void htmEcoleNomComplet(String classeApiMethodeMethode) {
-		Ecole s = (Ecole)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("class", "").f().sx("nom").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strEcoleNomComplet()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
 	}
 
 	//////////////

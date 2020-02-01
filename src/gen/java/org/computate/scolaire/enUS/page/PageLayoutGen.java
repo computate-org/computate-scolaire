@@ -1,19 +1,20 @@
 package org.computate.scolaire.enUS.page;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
-
 import java.lang.String;
 import java.time.ZoneOffset;
 import java.math.MathContext;
@@ -1447,6 +1448,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageImageWidth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer pageImageWidth;
 	@JsonIgnore
 	public Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().p(this).c(Integer.class).var("pageImageWidth").o(pageImageWidth);
@@ -1514,6 +1516,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageImageHeight »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer pageImageHeight;
 	@JsonIgnore
 	public Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().p(this).c(Integer.class).var("pageImageHeight").o(pageImageHeight);
@@ -1703,6 +1706,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageCreated »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDateTime pageCreated;
 	@JsonIgnore
 	public Wrap<LocalDateTime> pageCreatedWrap = new Wrap<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageCreated").o(pageCreated);
@@ -1780,6 +1784,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageModified »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected LocalDateTime pageModified;
 	@JsonIgnore
 	public Wrap<LocalDateTime> pageModifiedWrap = new Wrap<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageModified").o(pageModified);
