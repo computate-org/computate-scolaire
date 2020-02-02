@@ -843,19 +843,11 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestEnrollmentGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/enrollment").a("class", "").f();
-					p.e("i").a("class", "fas fa-edit ").f().g("i");
-					p.sx("see all the enrollments");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllEnrollmentGenPage", id).a("href", "/enrollment").a("class", "").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the enrollments");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllEnrollmentGenPage", id).a("href", "/enrollment").a("class", "").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the enrollments");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -884,6 +876,12 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolEnrollment", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/enrollment").a("class", "").f();
+				p.e("i").a("class", "fas fa-edit ").f().g("i");
+				p.sx("see all the enrollments");
+			} p.g("a");
 		} p.g("div");
 	}
 

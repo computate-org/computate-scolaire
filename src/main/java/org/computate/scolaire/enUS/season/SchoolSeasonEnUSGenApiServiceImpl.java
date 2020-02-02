@@ -298,11 +298,11 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											);
 											response200PUTSchoolSeason(apiRequest, eventHandler);
 										} else {
-											errorSchoolSeason(siteRequest, eventHandler, c);
+											errorSchoolSeason(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSeason(siteRequest, eventHandler, b);
+									errorSchoolSeason(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -585,11 +585,11 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											);
 											response200PATCHSchoolSeason(apiRequest, eventHandler);
 										} else {
-											errorSchoolSeason(siteRequest, eventHandler, c);
+											errorSchoolSeason(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSeason(siteRequest, eventHandler, b);
+									errorSchoolSeason(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -686,6 +686,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.season.SchoolSeason"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -714,16 +724,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
-						}
-						break;
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setYearKey":

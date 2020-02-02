@@ -294,11 +294,11 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 											);
 											response200PUTSchoolYear(apiRequest, eventHandler);
 										} else {
-											errorSchoolYear(siteRequest, eventHandler, c);
+											errorSchoolYear(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolYear(siteRequest, eventHandler, b);
+									errorSchoolYear(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -577,11 +577,11 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 											);
 											response200PATCHSchoolYear(apiRequest, eventHandler);
 										} else {
-											errorSchoolYear(siteRequest, eventHandler, c);
+											errorSchoolYear(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolYear(siteRequest, eventHandler, b);
+									errorSchoolYear(siteRequest, eventHandler, c);
 								}
 							});
 						} else {

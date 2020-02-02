@@ -294,11 +294,11 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 											);
 											reponse200PUTAnneeScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -577,11 +577,11 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 											);
 											reponse200PATCHAnneeScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {

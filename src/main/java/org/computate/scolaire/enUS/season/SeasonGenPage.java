@@ -119,8 +119,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonStartDate("Page");
-			o.htmSeasonSummer("Page");
-			o.htmSeasonWinter("Page");
 			o.htmSeasonFuture("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -142,8 +140,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonStartDate("POST");
-			o.htmSeasonSummer("POST");
-			o.htmSeasonWinter("POST");
 			o.htmSeasonFuture("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -163,13 +159,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonStartDate("PUT");
-			o.htmSeasonSummer("PUT");
-			o.htmSeasonWinter("PUT");
 			o.htmSeasonFuture("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("PUT");
 			o.htmSessionKeys("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSeasonSummer("PUT");
+			o.htmSeasonWinter("PUT");
 		} g("div");
 	}
 
@@ -184,13 +182,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonStartDate("PATCH");
-			o.htmSeasonSummer("PATCH");
-			o.htmSeasonWinter("PATCH");
 			o.htmSeasonFuture("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("PATCH");
 			o.htmSessionKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSeasonSummer("PATCH");
+			o.htmSeasonWinter("PATCH");
 		} g("div");
 	}
 
@@ -207,8 +207,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonStartDate("Recherche");
-			o.htmSeasonSummer("Recherche");
-			o.htmSeasonWinter("Recherche");
 			o.htmSeasonFuture("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -217,6 +215,8 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Recherche");
+			o.htmSeasonSummer("Recherche");
+			o.htmSeasonWinter("Recherche");
 		} g("div");
 	}
 
@@ -529,19 +529,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestSeasonGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/season").a("class", "").f();
-					p.e("i").a("class", "far fa-sun ").f().g("i");
-					p.sx("see all the seasons");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllSeasonGenPage", id).a("href", "/season").a("class", "").a("onclick", "patchSchoolSeasonVals([], {}, function() { addGlow($('#refreshAllSeasonGenPage", id, "')); }, function() { addError($('#refreshAllSeasonGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the seasons");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllSeasonGenPage", id).a("href", "/season").a("class", "").a("onclick", "patchSchoolSeasonVals([], {}, function() { addGlow($('#refreshAllSeasonGenPage", id, "')); }, function() { addError($('#refreshAllSeasonGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the seasons");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -570,6 +562,12 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolSeason", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/season").a("class", "").f();
+				p.e("i").a("class", "far fa-sun ").f().g("i");
+				p.sx("see all the seasons");
+			} p.g("a");
 		} p.g("div");
 	}
 

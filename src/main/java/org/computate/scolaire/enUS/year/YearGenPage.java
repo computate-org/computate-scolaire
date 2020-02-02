@@ -125,7 +125,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("Page");
 			o.htmSeasonKeys("Page");
-			o.htmEnrollmentFormKey("Page");
 		} g("div");
 	}
 
@@ -148,7 +147,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("POST");
 			o.htmSeasonKeys("POST");
-			o.htmEnrollmentFormKey("POST");
 		} g("div");
 	}
 
@@ -211,7 +209,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("Recherche");
 			o.htmSeasonKeys("Recherche");
-			o.htmEnrollmentFormKey("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Recherche");
@@ -527,19 +524,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestYearGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/year").a("class", "").f();
-					p.e("i").a("class", "far fa-calendar-check ").f().g("i");
-					p.sx("see all the years");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllYearGenPage", id).a("href", "/year").a("class", "").a("onclick", "patchSchoolYearVals([], {}, function() { addGlow($('#refreshAllYearGenPage", id, "')); }, function() { addError($('#refreshAllYearGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the years");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllYearGenPage", id).a("href", "/year").a("class", "").a("onclick", "patchSchoolYearVals([], {}, function() { addGlow($('#refreshAllYearGenPage", id, "')); }, function() { addError($('#refreshAllYearGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the years");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -568,6 +557,12 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolYear", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/year").a("class", "").f();
+				p.e("i").a("class", "far fa-calendar-check ").f().g("i");
+				p.sx("see all the years");
+			} p.g("a");
 		} p.g("div");
 	}
 

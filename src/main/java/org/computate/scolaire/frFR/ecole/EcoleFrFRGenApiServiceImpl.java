@@ -298,11 +298,11 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 											);
 											reponse200PUTEcole(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurEcole(requeteSite, gestionnaireEvenements, c);
+											erreurEcole(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurEcole(requeteSite, gestionnaireEvenements, b);
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -585,11 +585,11 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 											);
 											reponse200PATCHEcole(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurEcole(requeteSite, gestionnaireEvenements, c);
+											erreurEcole(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurEcole(requeteSite, gestionnaireEvenements, b);
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {

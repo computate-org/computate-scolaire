@@ -298,11 +298,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 											);
 											response200PUTSchool(apiRequest, eventHandler);
 										} else {
-											errorSchool(siteRequest, eventHandler, c);
+											errorSchool(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchool(siteRequest, eventHandler, b);
+									errorSchool(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -585,11 +585,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 											);
 											response200PATCHSchool(apiRequest, eventHandler);
 										} else {
-											errorSchool(siteRequest, eventHandler, c);
+											errorSchool(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchool(siteRequest, eventHandler, b);
+									errorSchool(siteRequest, eventHandler, c);
 								}
 							});
 						} else {

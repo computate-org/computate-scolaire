@@ -391,8 +391,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: été
 	 * NomAffichage.enUS: summer
 	 */                   
@@ -404,8 +402,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: hiver
 	 * NomAffichage.enUS: winter
 	 */                   
@@ -461,7 +457,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		
 		if(BooleanUtils.isTrue(saisonFuture))
 			o = String.format("Classes supplimentaires pendant l'année scolaire %s-%s à %s", anneeDebut, anneeFin, ecoleNom);
-		if(BooleanUtils.isTrue(saisonEte))
+		else if(BooleanUtils.isTrue(saisonEte))
 			o = String.format("Classes de la saison d'été (frais d'inscription singulaire $%s)", strAnneeFraisInscription());
 		else if(BooleanUtils.isTrue(saisonHiver))
 			o = String.format("Classes de la saison scolaire (frais d'inscription singulaire $%s)", strAnneeFraisInscription());
@@ -508,7 +504,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		
 		if(BooleanUtils.isTrue(saisonFuture))
 			o = String.format("Classes supplimentaires pendant l'année scolaire %s-%s à %s", anneeDebut, anneeFin, ecoleNomComplet);
-		if(BooleanUtils.isTrue(saisonEte))
+		else if(BooleanUtils.isTrue(saisonEte))
 			o = String.format("%s saison d'été à %s", anneeFin, ecoleNomComplet);
 		else if(BooleanUtils.isTrue(saisonHiver))
 			o = String.format("%s-%s saison scolaire à %s", anneeDebut, anneeFin, ecoleNomComplet);

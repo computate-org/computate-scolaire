@@ -843,19 +843,11 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 	/**
 	**/
 	public static void htmlSuggereInscriptionMailGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/inscription-mail").a("class", "").f();
-					p.e("i").a("class", "fas fa-edit ").f().g("i");
-					p.sx("voir toutes les inscriptions");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerToutesInscriptionMailGenPage", id).a("href", "/inscription-mail").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionMailGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionMailGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger toutes les inscriptions");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerToutesInscriptionMailGenPage", id).a("href", "/inscription-mail").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionMailGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionMailGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger toutes les inscriptions");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -885,6 +877,12 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListInscriptionScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/inscription-mail").a("class", "").f();
+				p.e("i").a("class", "fas fa-edit ").f().g("i");
+				p.sx("voir toutes les inscriptions");
+			} p.g("a");
 		} p.g("div");
 	}
 

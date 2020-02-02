@@ -879,19 +879,11 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolEnrollment"
 	**/
 	public static void htmlSuggereInscriptionGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/inscription").a("class", "").f();
-					p.e("i").a("class", "fas fa-edit ").f().g("i");
-					p.sx("voir toutes les inscriptions");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerToutesInscriptionGenPage", id).a("href", "/inscription").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger toutes les inscriptions");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerToutesInscriptionGenPage", id).a("href", "/inscription").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger toutes les inscriptions");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -921,6 +913,12 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListInscriptionScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/inscription").a("class", "").f();
+				p.e("i").a("class", "fas fa-edit ").f().g("i");
+				p.sx("voir toutes les inscriptions");
+			} p.g("a");
 		} p.g("div");
 	}
 

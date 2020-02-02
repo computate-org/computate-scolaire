@@ -470,11 +470,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											);
 											reponse200PUTInscriptionScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -929,11 +929,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											);
 											reponse200PATCHInscriptionScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -1030,6 +1030,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.InscriptionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+						}
+						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -1058,16 +1068,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
-						}
-						break;
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setAnneeCle":

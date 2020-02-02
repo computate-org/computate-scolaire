@@ -276,8 +276,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: FormInscription.anneeCle
-	 * HtmlLigne: 4
-	 * HtmlCelulle: 2
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: formulaire d'inscription

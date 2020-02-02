@@ -126,7 +126,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("Page");
 			o.htmSaisonCles("Page");
-			o.htmFormInscriptionCle("Page");
 		} g("div");
 	}
 
@@ -149,7 +148,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("POST");
 			o.htmSaisonCles("POST");
-			o.htmFormInscriptionCle("POST");
 		} g("div");
 	}
 
@@ -212,7 +210,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("Recherche");
 			o.htmSaisonCles("Recherche");
-			o.htmFormInscriptionCle("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");
@@ -563,19 +560,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolYear"
 	**/
 	public static void htmlSuggereAnneeGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/annee").a("class", "").f();
-					p.e("i").a("class", "far fa-calendar-check ").f().g("i");
-					p.sx("voir toutes les années");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerToutesAnneeGenPage", id).a("href", "/annee").a("class", "").a("onclick", "patchAnneeScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesAnneeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesAnneeGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger toutes les années");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerToutesAnneeGenPage", id).a("href", "/annee").a("class", "").a("onclick", "patchAnneeScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesAnneeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesAnneeGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger toutes les années");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -605,6 +594,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListAnneeScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/annee").a("class", "").f();
+				p.e("i").a("class", "far fa-calendar-check ").f().g("i");
+				p.sx("voir toutes les années");
+			} p.g("a");
 		} p.g("div");
 	}
 

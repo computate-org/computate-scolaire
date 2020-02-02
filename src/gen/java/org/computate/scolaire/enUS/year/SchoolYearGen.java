@@ -1206,32 +1206,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return enrollmentFormKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentFormKey());
 	}
 
-	public void inputEnrollmentFormKey(String classApiMethodMethod) {
-		SchoolYear s = (SchoolYear)this;
-	}
-
-	public void htmEnrollmentFormKey(String classApiMethodMethod) {
-		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-orange ").f();
-							e("label").a("class", "").f().sx("enrollment form").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strEnrollmentFormKey()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	//////////////////////////
 	// enrollmentFormSearch //
 	//////////////////////////

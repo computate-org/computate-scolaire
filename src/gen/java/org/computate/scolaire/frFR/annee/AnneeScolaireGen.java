@@ -1209,32 +1209,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
 	}
 
-	public void inputFormInscriptionCle(String classeApiMethodeMethode) {
-		AnneeScolaire s = (AnneeScolaire)this;
-	}
-
-	public void htmFormInscriptionCle(String classeApiMethodeMethode) {
-		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-orange ").f();
-							e("label").a("class", "").f().sx("formulaire d'inscription").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strFormInscriptionCle()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	//////////////////////////////
 	// formInscriptionRecherche //
 	//////////////////////////////

@@ -298,11 +298,11 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 											);
 											reponse200PUTSaisonScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -585,11 +585,11 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 											);
 											reponse200PATCHSaisonScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -686,6 +686,16 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.saison.SaisonScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+						}
+						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -714,16 +724,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
-						}
-						break;
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setAnneeCle":
