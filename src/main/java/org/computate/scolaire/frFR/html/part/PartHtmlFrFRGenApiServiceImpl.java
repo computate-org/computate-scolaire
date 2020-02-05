@@ -307,7 +307,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -376,11 +376,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 											);
 											reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -741,11 +741,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 											);
 											reponse200PATCHPartHtml(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -1167,7 +1167,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1179,12 +1179,41 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void getPartHtml(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
-			recherchePartHtml(requeteSite, false, true, null, a -> {
+			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<PartHtml> listePartHtml = a.result();
-					reponse200GETPartHtml(listePartHtml, b -> {
+					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							recherchePartHtml(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<PartHtml> listePartHtml = c.result();
+									reponse200GETPartHtml(listePartHtml, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurPartHtml(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurPartHtml(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1203,8 +1232,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 			SolrDocumentList documentsSolr = listePartHtml.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listePartHtml.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listePartHtml.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1285,7 +1314,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void reponse200DELETEPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1297,12 +1326,41 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void recherchePartHtml(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
-			recherchePartHtml(requeteSite, false, true, null, a -> {
+			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<PartHtml> listePartHtml = a.result();
-					reponse200RecherchePartHtml(listePartHtml, b -> {
+					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							recherchePartHtml(requeteSite, false, true, "/api/part-html", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<PartHtml> listePartHtml = c.result();
+									reponse200RecherchePartHtml(listePartHtml, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurPartHtml(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurPartHtml(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1354,7 +1412,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

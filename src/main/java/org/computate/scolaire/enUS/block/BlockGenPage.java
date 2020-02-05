@@ -566,19 +566,11 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestBlockGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/block").a("class", "").f();
-					p.e("i").a("class", "far fa-bell ").f().g("i");
-					p.sx("see all the blocks");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllBlockGenPage", id).a("href", "/block").a("class", "").a("onclick", "patchSchoolBlockVals([], {}, function() { addGlow($('#refreshAllBlockGenPage", id, "')); }, function() { addError($('#refreshAllBlockGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the blocks");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllBlockGenPage", id).a("href", "/block").a("class", "").a("onclick", "patchSchoolBlockVals([], {}, function() { addGlow($('#refreshAllBlockGenPage", id, "')); }, function() { addError($('#refreshAllBlockGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the blocks");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -607,6 +599,12 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolBlock", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/block").a("class", "").f();
+				p.e("i").a("class", "far fa-bell ").f().g("i");
+				p.sx("see all the blocks");
+			} p.g("a");
 		} p.g("div");
 	}
 

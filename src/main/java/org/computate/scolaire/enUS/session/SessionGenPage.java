@@ -526,19 +526,11 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestSessionGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/session").a("class", "").f();
-					p.e("i").a("class", "fad fa-graduation-cap ").f().g("i");
-					p.sx("see all the sessions");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllSessionGenPage", id).a("href", "/session").a("class", "").a("onclick", "patchSchoolSessionVals([], {}, function() { addGlow($('#refreshAllSessionGenPage", id, "')); }, function() { addError($('#refreshAllSessionGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the sessions");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllSessionGenPage", id).a("href", "/session").a("class", "").a("onclick", "patchSchoolSessionVals([], {}, function() { addGlow($('#refreshAllSessionGenPage", id, "')); }, function() { addError($('#refreshAllSessionGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the sessions");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -567,6 +559,12 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolSession", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/session").a("class", "").f();
+				p.e("i").a("class", "fad fa-graduation-cap ").f().g("i");
+				p.sx("see all the sessions");
+			} p.g("a");
 		} p.g("div");
 	}
 

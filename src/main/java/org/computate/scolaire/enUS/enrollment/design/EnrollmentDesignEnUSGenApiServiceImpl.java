@@ -213,7 +213,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -282,11 +282,11 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 											);
 											response200PUTEnrollmentDesign(apiRequest, eventHandler);
 										} else {
-											errorEnrollmentDesign(siteRequest, eventHandler, c);
+											errorEnrollmentDesign(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorEnrollmentDesign(siteRequest, eventHandler, b);
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -553,11 +553,11 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 											);
 											response200PATCHEnrollmentDesign(apiRequest, eventHandler);
 										} else {
-											errorEnrollmentDesign(siteRequest, eventHandler, c);
+											errorEnrollmentDesign(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorEnrollmentDesign(siteRequest, eventHandler, b);
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -753,7 +753,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -765,12 +765,41 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void getEnrollmentDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
-			aSearchEnrollmentDesign(siteRequest, false, true, null, a -> {
+			sqlEnrollmentDesign(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<EnrollmentDesign> listEnrollmentDesign = a.result();
-					response200GETEnrollmentDesign(listEnrollmentDesign, b -> {
+					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchEnrollmentDesign(siteRequest, false, true, null, c -> {
+								if(c.succeeded()) {
+									SearchList<EnrollmentDesign> listEnrollmentDesign = c.result();
+									response200GETEnrollmentDesign(listEnrollmentDesign, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorEnrollmentDesign(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorEnrollmentDesign(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
@@ -789,8 +818,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
 			SolrDocumentList solrDocuments = listEnrollmentDesign.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listEnrollmentDesign.get(0));
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listEnrollmentDesign.getList().stream().findFirst().orElse(null));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -871,7 +900,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void response200DELETEEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -883,12 +912,41 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void searchEnrollmentDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
-			aSearchEnrollmentDesign(siteRequest, false, true, null, a -> {
+			sqlEnrollmentDesign(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<EnrollmentDesign> listEnrollmentDesign = a.result();
-					response200SearchEnrollmentDesign(listEnrollmentDesign, b -> {
+					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design", c -> {
+								if(c.succeeded()) {
+									SearchList<EnrollmentDesign> listEnrollmentDesign = c.result();
+									response200SearchEnrollmentDesign(listEnrollmentDesign, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorEnrollmentDesign(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorEnrollmentDesign(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
@@ -940,7 +998,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			if(exceptionSearch != null) {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

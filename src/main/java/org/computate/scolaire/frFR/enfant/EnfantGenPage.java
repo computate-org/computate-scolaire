@@ -571,19 +571,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolChild"
 	**/
 	public static void htmlSuggereEnfantGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/enfant").a("class", "").f();
-					p.e("i").a("class", "far fa-child ").f().g("i");
-					p.sx("voir tous les enfants");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerTousEnfantGenPage", id).a("href", "/enfant").a("class", "").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousEnfantGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousEnfantGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les enfants");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerTousEnfantGenPage", id).a("href", "/enfant").a("class", "").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousEnfantGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousEnfantGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger tous les enfants");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -613,6 +605,12 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListEnfantScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/enfant").a("class", "").f();
+				p.e("i").a("class", "far fa-child ").f().g("i");
+				p.sx("voir tous les enfants");
+			} p.g("a");
 		} p.g("div");
 	}
 

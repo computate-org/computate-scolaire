@@ -275,7 +275,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					}
 				};
 
-				String siteNomHote = siteConfig.getSiteHostName();
+				String siteHostName = siteConfig.getSiteHostName();
 				Integer sitePort = siteConfig.getSitePort();
 				String siteUrlBase = siteConfig.getSiteBaseUrl();
 				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
@@ -445,7 +445,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		module.addSerializer(LocalTime.class, new LocalTimeSerializer());
 		Json.mapper.registerModule(module);
 
-		String siteNomHote = siteConfig.getSiteHostName();
+		String siteHostName = siteConfig.getSiteHostName();
 		Integer sitePort = siteConfig.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
 		if(new File(siteConfig.getSslJksPath()).exists()) {
@@ -454,7 +454,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		}
 		options.setPort(sitePort);
 
-		LOGGER.info(String.format(startServerBeforeServer, "https", siteNomHote, sitePort));
+		LOGGER.info(String.format(startServerBeforeServer, "https", siteHostName, sitePort));
 		vertx.createHttpServer(options).requestHandler(siteRouter).listen(ar -> {
 			if (ar.succeeded()) {
 				LOGGER.info(String.format(startServerSuccessServer, "*", sitePort));

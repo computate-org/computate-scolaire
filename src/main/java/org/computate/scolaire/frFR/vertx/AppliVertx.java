@@ -417,6 +417,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteConfig
 	 * r: configSite
 	 * r.enUS: siteConfig
+	 * r: siteNomHote
+	 * r.enUS: siteHostName
 	 * r: routeur
 	 * r.enUS: router
 	 * r: usineRouteur
@@ -711,6 +713,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: siteRouter
 	 * r: gestionnaireStatic
 	 * r.enUS: staticHandler
+	 * r: siteNomHote
+	 * r.enUS: siteHostName
 	 * r: demarrerServeurErreurServeur
 	 * r.enUS: startServerErrorServer
 	 * r: demarrerServeurSuccesServeur

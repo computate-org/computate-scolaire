@@ -573,19 +573,11 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolPayment"
 	**/
 	public static void htmlSuggerePaiementGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/paiement").a("class", "").f();
-					p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
-					p.sx("voir tous les paiements");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerTousPaiementGenPage", id).a("href", "/paiement").a("class", "").a("onclick", "patchPaiementScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPaiementGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPaiementGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les paiements");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerTousPaiementGenPage", id).a("href", "/paiement").a("class", "").a("onclick", "patchPaiementScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPaiementGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPaiementGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger tous les paiements");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -615,6 +607,12 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPaiementScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/paiement").a("class", "").f();
+				p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
+				p.sx("voir tous les paiements");
+			} p.g("a");
 		} p.g("div");
 	}
 

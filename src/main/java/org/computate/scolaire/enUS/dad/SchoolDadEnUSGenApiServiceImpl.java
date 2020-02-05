@@ -249,7 +249,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -318,11 +318,11 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											);
 											response200PUTSchoolDad(apiRequest, eventHandler);
 										} else {
-											errorSchoolDad(siteRequest, eventHandler, c);
+											errorSchoolDad(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolDad(siteRequest, eventHandler, b);
+									errorSchoolDad(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -625,11 +625,11 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											);
 											response200PATCHSchoolDad(apiRequest, eventHandler);
 										} else {
-											errorSchoolDad(siteRequest, eventHandler, c);
+											errorSchoolDad(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolDad(siteRequest, eventHandler, b);
+									errorSchoolDad(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -915,7 +915,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		try {
 			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -927,12 +927,41 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	public void getSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
-			aSearchSchoolDad(siteRequest, false, true, null, a -> {
+			sqlSchoolDad(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolDad> listSchoolDad = a.result();
-					response200GETSchoolDad(listSchoolDad, b -> {
+					userSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchSchoolDad(siteRequest, false, true, null, c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolDad> listSchoolDad = c.result();
+									response200GETSchoolDad(listSchoolDad, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolDad(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolDad(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
@@ -951,8 +980,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
 			SolrDocumentList solrDocuments = listSchoolDad.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listSchoolDad.get(0));
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listSchoolDad.getList().stream().findFirst().orElse(null));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1033,7 +1062,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	public void response200DELETESchoolDad(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1045,12 +1074,41 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	public void searchSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
-			aSearchSchoolDad(siteRequest, false, true, null, a -> {
+			sqlSchoolDad(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolDad> listSchoolDad = a.result();
-					response200SearchSchoolDad(listSchoolDad, b -> {
+					userSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchSchoolDad(siteRequest, false, true, "/api/dad", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolDad> listSchoolDad = c.result();
+									response200SearchSchoolDad(listSchoolDad, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolDad(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolDad(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
@@ -1102,7 +1160,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			if(exceptionSearch != null) {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

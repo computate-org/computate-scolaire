@@ -559,24 +559,36 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputUserReceiveEmails(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_userReceiveEmails")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
-				a("name", "setUserReceiveEmails");
-			} else {
-				a("class", "valueUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
-				a("name", "userReceiveEmails");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserReceiveEmails', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_userReceiveEmails')); }, function() { addError($('#", classApiMethodMethod, "_userReceiveEmails')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_userReceiveEmails")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_userReceiveEmails");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
+			a("name", "setUserReceiveEmails");
+		} else {
+			a("class", "valueUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
+			a("name", "userReceiveEmails");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserReceiveEmails', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_userReceiveEmails')); }, function() { addError($('#", classApiMethodMethod, "_userReceiveEmails')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getUserReceiveEmails() != null && getUserReceiveEmails())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -669,24 +681,36 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputSeeArchived(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_seeArchived")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
-				a("name", "setSeeArchived");
-			} else {
-				a("class", "valueSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
-				a("name", "seeArchived");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeArchived')); }, function() { addError($('#", classApiMethodMethod, "_seeArchived')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_seeArchived")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_seeArchived");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
+			a("name", "setSeeArchived");
+		} else {
+			a("class", "valueSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
+			a("name", "seeArchived");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeArchived')); }, function() { addError($('#", classApiMethodMethod, "_seeArchived')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getSeeArchived() != null && getSeeArchived())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -779,24 +803,36 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputSeeDeleted(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_seeDeleted")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
-				a("name", "setSeeDeleted");
-			} else {
-				a("class", "valueSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
-				a("name", "seeDeleted");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeDeleted')); }, function() { addError($('#", classApiMethodMethod, "_seeDeleted')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_seeDeleted")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_seeDeleted");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
+			a("name", "setSeeDeleted");
+		} else {
+			a("class", "valueSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
+			a("name", "seeDeleted");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeDeleted')); }, function() { addError($('#", classApiMethodMethod, "_seeDeleted')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getSeeDeleted() != null && getSeeDeleted())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

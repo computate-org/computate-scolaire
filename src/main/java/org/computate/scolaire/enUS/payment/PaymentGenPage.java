@@ -537,19 +537,11 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestPaymentGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/payment").a("class", "").f();
-					p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
-					p.sx("see all the payments");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllPaymentGenPage", id).a("href", "/payment").a("class", "").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the payments");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllPaymentGenPage", id).a("href", "/payment").a("class", "").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the payments");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -578,6 +570,12 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolPayment", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/payment").a("class", "").f();
+				p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
+				p.sx("see all the payments");
+			} p.g("a");
 		} p.g("div");
 	}
 

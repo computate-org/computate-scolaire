@@ -229,7 +229,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -298,11 +298,11 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 											);
 											reponse200PUTPaiementScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -585,11 +585,11 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 											);
 											reponse200PATCHPaiementScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -825,7 +825,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -837,12 +837,41 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void getPaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
-			recherchePaiementScolaire(requeteSite, false, true, null, a -> {
+			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<PaiementScolaire> listePaiementScolaire = a.result();
-					reponse200GETPaiementScolaire(listePaiementScolaire, b -> {
+					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							recherchePaiementScolaire(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
+									reponse200GETPaiementScolaire(listePaiementScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurPaiementScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -861,8 +890,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			RequeteSiteFrFR requeteSite = listePaiementScolaire.getRequeteSite_();
 			SolrDocumentList documentsSolr = listePaiementScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listePaiementScolaire.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listePaiementScolaire.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -943,7 +972,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void reponse200DELETEPaiementScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -955,12 +984,41 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void recherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
-			recherchePaiementScolaire(requeteSite, false, true, null, a -> {
+			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<PaiementScolaire> listePaiementScolaire = a.result();
-					reponse200RecherchePaiementScolaire(listePaiementScolaire, b -> {
+					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
+									reponse200RecherchePaiementScolaire(listePaiementScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurPaiementScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1012,7 +1070,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

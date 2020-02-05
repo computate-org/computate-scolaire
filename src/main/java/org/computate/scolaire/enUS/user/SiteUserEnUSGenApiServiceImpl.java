@@ -173,11 +173,11 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 											);
 											response200PATCHSiteUser(apiRequest, eventHandler);
 										} else {
-											errorSiteUser(siteRequest, eventHandler, c);
+											errorSiteUser(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSiteUser(siteRequest, eventHandler, b);
+									errorSiteUser(siteRequest, eventHandler, c);
 								}
 							});
 						} else {

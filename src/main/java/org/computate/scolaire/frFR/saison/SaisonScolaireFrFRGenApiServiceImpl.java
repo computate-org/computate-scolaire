@@ -229,7 +229,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -825,7 +825,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -837,12 +837,41 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void getSaisonScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSaisonScolaire(siteContexte, operationRequete);
-			rechercheSaisonScolaire(requeteSite, false, true, null, a -> {
+			sqlSaisonScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<SaisonScolaire> listeSaisonScolaire = a.result();
-					reponse200GETSaisonScolaire(listeSaisonScolaire, b -> {
+					utilisateurSaisonScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheSaisonScolaire(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
+									reponse200GETSaisonScolaire(listeSaisonScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurSaisonScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -861,8 +890,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			RequeteSiteFrFR requeteSite = listeSaisonScolaire.getRequeteSite_();
 			SolrDocumentList documentsSolr = listeSaisonScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeSaisonScolaire.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listeSaisonScolaire.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -943,7 +972,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void reponse200DELETESaisonScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -955,12 +984,41 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void rechercheSaisonScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSaisonScolaire(siteContexte, operationRequete);
-			rechercheSaisonScolaire(requeteSite, false, true, null, a -> {
+			sqlSaisonScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<SaisonScolaire> listeSaisonScolaire = a.result();
-					reponse200RechercheSaisonScolaire(listeSaisonScolaire, b -> {
+					utilisateurSaisonScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
+									reponse200RechercheSaisonScolaire(listeSaisonScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurSaisonScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1012,7 +1070,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

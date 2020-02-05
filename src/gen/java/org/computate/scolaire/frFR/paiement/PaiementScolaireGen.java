@@ -1741,24 +1741,36 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementEspeces(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_paiementEspeces")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
-				a("name", "setPaiementEspeces");
-			} else {
-				a("class", "valeurPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
-				a("name", "paiementEspeces");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementEspeces', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementEspeces')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementEspeces')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_paiementEspeces")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_paiementEspeces");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
+			a("name", "setPaiementEspeces");
+		} else {
+			a("class", "valeurPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
+			a("name", "paiementEspeces");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementEspeces', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementEspeces')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementEspeces')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPaiementEspeces() != null && getPaiementEspeces())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -1851,24 +1863,36 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementCheque(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_paiementCheque")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
-				a("name", "setPaiementCheque");
-			} else {
-				a("class", "valeurPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
-				a("name", "paiementCheque");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementCheque', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementCheque')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementCheque')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_paiementCheque")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_paiementCheque");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
+			a("name", "setPaiementCheque");
+		} else {
+			a("class", "valeurPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
+			a("name", "paiementCheque");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementCheque', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementCheque')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementCheque')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPaiementCheque() != null && getPaiementCheque())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

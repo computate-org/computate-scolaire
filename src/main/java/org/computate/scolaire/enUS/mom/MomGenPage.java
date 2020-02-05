@@ -572,19 +572,11 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestMomGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/mom").a("class", "").f();
-					p.e("i").a("class", "far fa-female ").f().g("i");
-					p.sx("see all the moms");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllMomGenPage", id).a("href", "/mom").a("class", "").a("onclick", "patchSchoolMomVals([], {}, function() { addGlow($('#refreshAllMomGenPage", id, "')); }, function() { addError($('#refreshAllMomGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the moms");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllMomGenPage", id).a("href", "/mom").a("class", "").a("onclick", "patchSchoolMomVals([], {}, function() { addGlow($('#refreshAllMomGenPage", id, "')); }, function() { addError($('#refreshAllMomGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the moms");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -613,6 +605,12 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolMom", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/mom").a("class", "").f();
+				p.e("i").a("class", "far fa-female ").f().g("i");
+				p.sx("see all the moms");
+			} p.g("a");
 		} p.g("div");
 	}
 

@@ -2006,24 +2006,36 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneContactUrgence(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_personneContactUrgence")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-				a("name", "setPersonneContactUrgence");
-			} else {
-				a("class", "valeurPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-				a("name", "personneContactUrgence");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_personneContactUrgence")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_personneContactUrgence");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+			a("name", "setPersonneContactUrgence");
+		} else {
+			a("class", "valeurPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+			a("name", "personneContactUrgence");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2116,24 +2128,36 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneChercher(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_personneChercher")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
-				a("name", "setPersonneChercher");
-			} else {
-				a("class", "valeurPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
-				a("name", "personneChercher");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_personneChercher")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_personneChercher");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
+			a("name", "setPersonneChercher");
+		} else {
+			a("class", "valeurPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
+			a("name", "personneChercher");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPersonneChercher() != null && getPersonneChercher())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

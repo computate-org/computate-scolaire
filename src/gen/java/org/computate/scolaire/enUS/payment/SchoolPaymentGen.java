@@ -1736,24 +1736,36 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentCash(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_paymentCash")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
-				a("name", "setPaymentCash");
-			} else {
-				a("class", "valuePaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
-				a("name", "paymentCash");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCash', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCash')); }, function() { addError($('#", classApiMethodMethod, "_paymentCash')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_paymentCash")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_paymentCash");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
+			a("name", "setPaymentCash");
+		} else {
+			a("class", "valuePaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
+			a("name", "paymentCash");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCash', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCash')); }, function() { addError($('#", classApiMethodMethod, "_paymentCash')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getPaymentCash() != null && getPaymentCash())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -1846,24 +1858,36 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentCheck(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_paymentCheck")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
-				a("name", "setPaymentCheck");
-			} else {
-				a("class", "valuePaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
-				a("name", "paymentCheck");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCheck', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCheck')); }, function() { addError($('#", classApiMethodMethod, "_paymentCheck')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_paymentCheck")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_paymentCheck");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
+			a("name", "setPaymentCheck");
+		} else {
+			a("class", "valuePaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
+			a("name", "paymentCheck");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCheck', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCheck')); }, function() { addError($('#", classApiMethodMethod, "_paymentCheck')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getPaymentCheck() != null && getPaymentCheck())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

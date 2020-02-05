@@ -560,24 +560,36 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputUtilisateurRecevoirCourriels(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
-				a("name", "setUtilisateurRecevoirCourriels");
-			} else {
-				a("class", "valeurUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
-				a("name", "utilisateurRecevoirCourriels");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurRecevoirCourriels', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
+			a("name", "setUtilisateurRecevoirCourriels");
+		} else {
+			a("class", "valeurUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
+			a("name", "utilisateurRecevoirCourriels");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurRecevoirCourriels', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getUtilisateurRecevoirCourriels() != null && getUtilisateurRecevoirCourriels())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -670,24 +682,36 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputVoirArchive(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_voirArchive")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
-				a("name", "setVoirArchive");
-			} else {
-				a("class", "valeurVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
-				a("name", "voirArchive");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirArchive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirArchive')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_voirArchive")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_voirArchive");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
+			a("name", "setVoirArchive");
+		} else {
+			a("class", "valeurVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
+			a("name", "voirArchive");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirArchive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirArchive')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getVoirArchive() != null && getVoirArchive())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -780,24 +804,36 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputVoirSupprime(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_voirSupprime")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
-				a("name", "setVoirSupprime");
-			} else {
-				a("class", "valeurVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
-				a("name", "voirSupprime");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirSupprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirSupprime')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_voirSupprime")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_voirSupprime");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
+			a("name", "setVoirSupprime");
+		} else {
+			a("class", "valeurVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
+			a("name", "voirSupprime");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirSupprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirSupprime')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getVoirSupprime() != null && getVoirSupprime())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

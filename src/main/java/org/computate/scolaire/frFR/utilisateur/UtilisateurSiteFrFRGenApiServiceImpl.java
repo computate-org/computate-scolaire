@@ -173,11 +173,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 											);
 											reponse200PATCHUtilisateurSite(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {

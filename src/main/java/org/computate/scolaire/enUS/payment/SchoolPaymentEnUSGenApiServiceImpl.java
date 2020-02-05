@@ -229,7 +229,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -298,11 +298,11 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 											);
 											response200PUTSchoolPayment(apiRequest, eventHandler);
 										} else {
-											errorSchoolPayment(siteRequest, eventHandler, c);
+											errorSchoolPayment(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolPayment(siteRequest, eventHandler, b);
+									errorSchoolPayment(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -585,11 +585,11 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 											);
 											response200PATCHSchoolPayment(apiRequest, eventHandler);
 										} else {
-											errorSchoolPayment(siteRequest, eventHandler, c);
+											errorSchoolPayment(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolPayment(siteRequest, eventHandler, b);
+									errorSchoolPayment(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -825,7 +825,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -837,12 +837,41 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void getSchoolPayment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
-			aSearchSchoolPayment(siteRequest, false, true, null, a -> {
+			sqlSchoolPayment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolPayment> listSchoolPayment = a.result();
-					response200GETSchoolPayment(listSchoolPayment, b -> {
+					userSchoolPayment(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchSchoolPayment(siteRequest, false, true, null, c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolPayment> listSchoolPayment = c.result();
+									response200GETSchoolPayment(listSchoolPayment, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolPayment(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolPayment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolPayment(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorSchoolPayment(siteRequest, eventHandler, b);
 						}
@@ -861,8 +890,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 			SolrDocumentList solrDocuments = listSchoolPayment.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listSchoolPayment.get(0));
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listSchoolPayment.getList().stream().findFirst().orElse(null));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -943,7 +972,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void response200DELETESchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -955,12 +984,41 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void searchSchoolPayment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
-			aSearchSchoolPayment(siteRequest, false, true, null, a -> {
+			sqlSchoolPayment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolPayment> listSchoolPayment = a.result();
-					response200SearchSchoolPayment(listSchoolPayment, b -> {
+					userSchoolPayment(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchSchoolPayment(siteRequest, false, true, "/api/payment", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolPayment> listSchoolPayment = c.result();
+									response200SearchSchoolPayment(listSchoolPayment, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolPayment(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolPayment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolPayment(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorSchoolPayment(siteRequest, eventHandler, b);
 						}
@@ -1012,7 +1070,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			if(exceptionSearch != null) {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

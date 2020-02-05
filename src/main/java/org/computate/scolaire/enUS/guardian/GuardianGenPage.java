@@ -546,19 +546,11 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestGuardianGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/guardian").a("class", "").f();
-					p.e("i").a("class", "far fa-phone ").f().g("i");
-					p.sx("see all the guardians");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllGuardianGenPage", id).a("href", "/guardian").a("class", "").a("onclick", "patchSchoolGuardianVals([], {}, function() { addGlow($('#refreshAllGuardianGenPage", id, "')); }, function() { addError($('#refreshAllGuardianGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the guardians");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllGuardianGenPage", id).a("href", "/guardian").a("class", "").a("onclick", "patchSchoolGuardianVals([], {}, function() { addGlow($('#refreshAllGuardianGenPage", id, "')); }, function() { addError($('#refreshAllGuardianGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the guardians");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -587,6 +579,12 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolGuardian", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/guardian").a("class", "").f();
+				p.e("i").a("class", "far fa-phone ").f().g("i");
+				p.sx("see all the guardians");
+			} p.g("a");
 		} p.g("div");
 	}
 

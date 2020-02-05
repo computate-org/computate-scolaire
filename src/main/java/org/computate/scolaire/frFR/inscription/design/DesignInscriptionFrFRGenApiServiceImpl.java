@@ -213,7 +213,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -282,11 +282,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 											);
 											reponse200PUTDesignInscription(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
+											erreurDesignInscription(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurDesignInscription(requeteSite, gestionnaireEvenements, b);
+									erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -553,11 +553,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 											);
 											reponse200PATCHDesignInscription(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
+											erreurDesignInscription(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurDesignInscription(requeteSite, gestionnaireEvenements, b);
+									erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -753,7 +753,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -765,12 +765,41 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void getDesignInscription(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete);
-			rechercheDesignInscription(requeteSite, false, true, null, a -> {
+			sqlDesignInscription(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<DesignInscription> listeDesignInscription = a.result();
-					reponse200GETDesignInscription(listeDesignInscription, b -> {
+					utilisateurDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheDesignInscription(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<DesignInscription> listeDesignInscription = c.result();
+									reponse200GETDesignInscription(listeDesignInscription, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurDesignInscription(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurDesignInscription(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurDesignInscription(requeteSite, gestionnaireEvenements, b);
 						}
@@ -789,8 +818,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			RequeteSiteFrFR requeteSite = listeDesignInscription.getRequeteSite_();
 			SolrDocumentList documentsSolr = listeDesignInscription.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeDesignInscription.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listeDesignInscription.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -871,7 +900,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void reponse200DELETEDesignInscription(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -883,12 +912,41 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void rechercheDesignInscription(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete);
-			rechercheDesignInscription(requeteSite, false, true, null, a -> {
+			sqlDesignInscription(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<DesignInscription> listeDesignInscription = a.result();
-					reponse200RechercheDesignInscription(listeDesignInscription, b -> {
+					utilisateurDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheDesignInscription(requeteSite, false, true, "/api/design-inscription", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<DesignInscription> listeDesignInscription = c.result();
+									reponse200RechercheDesignInscription(listeDesignInscription, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurDesignInscription(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurDesignInscription(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurDesignInscription(requeteSite, gestionnaireEvenements, b);
 						}
@@ -940,7 +998,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

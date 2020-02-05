@@ -1927,24 +1927,36 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void inputPersonSms(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_personSms")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonSms inputSchoolMom", pk, "PersonSms w3-input w3-border ");
-				a("name", "setPersonSms");
-			} else {
-				a("class", "valuePersonSms inputSchoolMom", pk, "PersonSms w3-input w3-border ");
-				a("name", "personSms");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonSms', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personSms')); }, function() { addError($('#", classApiMethodMethod, "_personSms')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_personSms")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_personSms");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPersonSms inputSchoolMom", pk, "PersonSms w3-input w3-border ");
+			a("name", "setPersonSms");
+		} else {
+			a("class", "valuePersonSms inputSchoolMom", pk, "PersonSms w3-input w3-border ");
+			a("name", "personSms");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonSms', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personSms')); }, function() { addError($('#", classApiMethodMethod, "_personSms')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getPersonSms() != null && getPersonSms())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2037,24 +2049,36 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void inputPersonReceiveEmail(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_personReceiveEmail")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonReceiveEmail inputSchoolMom", pk, "PersonReceiveEmail w3-input w3-border ");
-				a("name", "setPersonReceiveEmail");
-			} else {
-				a("class", "valuePersonReceiveEmail inputSchoolMom", pk, "PersonReceiveEmail w3-input w3-border ");
-				a("name", "personReceiveEmail");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonReceiveEmail', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personReceiveEmail')); }, function() { addError($('#", classApiMethodMethod, "_personReceiveEmail')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_personReceiveEmail")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_personReceiveEmail");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPersonReceiveEmail inputSchoolMom", pk, "PersonReceiveEmail w3-input w3-border ");
+			a("name", "setPersonReceiveEmail");
+		} else {
+			a("class", "valuePersonReceiveEmail inputSchoolMom", pk, "PersonReceiveEmail w3-input w3-border ");
+			a("name", "personReceiveEmail");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonReceiveEmail', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personReceiveEmail')); }, function() { addError($('#", classApiMethodMethod, "_personReceiveEmail')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getPersonReceiveEmail() != null && getPersonReceiveEmail())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2147,24 +2171,36 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void inputPersonEmergencyContact(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_personEmergencyContact")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonEmergencyContact inputSchoolMom", pk, "PersonEmergencyContact w3-input w3-border ");
-				a("name", "setPersonEmergencyContact");
-			} else {
-				a("class", "valuePersonEmergencyContact inputSchoolMom", pk, "PersonEmergencyContact w3-input w3-border ");
-				a("name", "personEmergencyContact");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmergencyContact', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personEmergencyContact')); }, function() { addError($('#", classApiMethodMethod, "_personEmergencyContact')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_personEmergencyContact")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_personEmergencyContact");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPersonEmergencyContact inputSchoolMom", pk, "PersonEmergencyContact w3-input w3-border ");
+			a("name", "setPersonEmergencyContact");
+		} else {
+			a("class", "valuePersonEmergencyContact inputSchoolMom", pk, "PersonEmergencyContact w3-input w3-border ");
+			a("name", "personEmergencyContact");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmergencyContact', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personEmergencyContact')); }, function() { addError($('#", classApiMethodMethod, "_personEmergencyContact')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getPersonEmergencyContact() != null && getPersonEmergencyContact())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2257,24 +2293,36 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void inputPersonPickup(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_personPickup")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonPickup inputSchoolMom", pk, "PersonPickup w3-input w3-border ");
-				a("name", "setPersonPickup");
-			} else {
-				a("class", "valuePersonPickup inputSchoolMom", pk, "PersonPickup w3-input w3-border ");
-				a("name", "personPickup");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPickup', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personPickup')); }, function() { addError($('#", classApiMethodMethod, "_personPickup')); }); ");
-			}
-			;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_personPickup")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_personPickup");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPersonPickup inputSchoolMom", pk, "PersonPickup w3-input w3-border ");
+			a("name", "setPersonPickup");
+		} else {
+			a("class", "valuePersonPickup inputSchoolMom", pk, "PersonPickup w3-input w3-border ");
+			a("name", "personPickup");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPickup', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personPickup')); }, function() { addError($('#", classApiMethodMethod, "_personPickup')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
 			if(getPersonPickup() != null && getPersonPickup())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

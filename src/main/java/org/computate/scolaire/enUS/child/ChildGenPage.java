@@ -535,19 +535,11 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	/**
 	**/
 	public static void htmlSuggestChildGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/child").a("class", "").f();
-					p.e("i").a("class", "far fa-child ").f().g("i");
-					p.sx("see all the children");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllChildGenPage", id).a("href", "/child").a("class", "").a("onclick", "patchSchoolChildVals([], {}, function() { addGlow($('#refreshAllChildGenPage", id, "')); }, function() { addError($('#refreshAllChildGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the children");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllChildGenPage", id).a("href", "/child").a("class", "").a("onclick", "patchSchoolChildVals([], {}, function() { addGlow($('#refreshAllChildGenPage", id, "')); }, function() { addError($('#refreshAllChildGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the children");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -576,6 +568,12 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolChild", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/child").a("class", "").f();
+				p.e("i").a("class", "far fa-child ").f().g("i");
+				p.sx("see all the children");
+			} p.g("a");
 		} p.g("div");
 	}
 

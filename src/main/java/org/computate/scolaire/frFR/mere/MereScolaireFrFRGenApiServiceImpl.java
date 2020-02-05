@@ -249,7 +249,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -318,11 +318,11 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 											);
 											reponse200PUTMereScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -625,11 +625,11 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 											);
 											reponse200PATCHMereScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -915,7 +915,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -927,12 +927,41 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void getMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
-			rechercheMereScolaire(requeteSite, false, true, null, a -> {
+			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<MereScolaire> listeMereScolaire = a.result();
-					reponse200GETMereScolaire(listeMereScolaire, b -> {
+					utilisateurMereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheMereScolaire(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+									reponse200GETMereScolaire(listeMereScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -951,8 +980,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
 			SolrDocumentList documentsSolr = listeMereScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeMereScolaire.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listeMereScolaire.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1033,7 +1062,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void reponse200DELETEMereScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1045,12 +1074,41 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void rechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
-			rechercheMereScolaire(requeteSite, false, true, null, a -> {
+			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<MereScolaire> listeMereScolaire = a.result();
-					reponse200RechercheMereScolaire(listeMereScolaire, b -> {
+					utilisateurMereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheMereScolaire(requeteSite, false, true, "/api/mere", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+									reponse200RechercheMereScolaire(listeMereScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1102,7 +1160,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

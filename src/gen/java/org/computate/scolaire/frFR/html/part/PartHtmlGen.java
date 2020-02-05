@@ -227,7 +227,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
-								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-drafting-compass ").f().g("i");
 								sx("design d'inscription");
 							} g("a");
 						} g("div");
@@ -1820,24 +1820,36 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlExclure(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_htmlExclure")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setHtmlExclure inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
-				a("name", "setHtmlExclure");
-			} else {
-				a("class", "valeurHtmlExclure inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
-				a("name", "htmlExclure");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlExclure', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlExclure')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlExclure')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_htmlExclure")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_htmlExclure");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setHtmlExclure inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
+			a("name", "setHtmlExclure");
+		} else {
+			a("class", "valeurHtmlExclure inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
+			a("name", "htmlExclure");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlExclure', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlExclure')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlExclure')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getHtmlExclure() != null && getHtmlExclure())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -1930,24 +1942,36 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputPdfExclure(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_pdfExclure")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPdfExclure inputPartHtml", pk, "PdfExclure w3-input w3-border ");
-				a("name", "setPdfExclure");
-			} else {
-				a("class", "valeurPdfExclure inputPartHtml", pk, "PdfExclure w3-input w3-border ");
-				a("name", "pdfExclure");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPdfExclure', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_pdfExclure')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pdfExclure')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_pdfExclure")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_pdfExclure");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPdfExclure inputPartHtml", pk, "PdfExclure w3-input w3-border ");
+			a("name", "setPdfExclure");
+		} else {
+			a("class", "valeurPdfExclure inputPartHtml", pk, "PdfExclure w3-input w3-border ");
+			a("name", "pdfExclure");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPdfExclure', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_pdfExclure')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pdfExclure')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPdfExclure() != null && getPdfExclure())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

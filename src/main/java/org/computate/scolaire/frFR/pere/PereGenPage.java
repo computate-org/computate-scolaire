@@ -608,19 +608,11 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolDad"
 	**/
 	public static void htmlSuggerePereGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/pere").a("class", "").f();
-					p.e("i").a("class", "far fa-male ").f().g("i");
-					p.sx("voir tous les pères");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerTousPereGenPage", id).a("href", "/pere").a("class", "").a("onclick", "patchPereScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPereGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPereGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les pères");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerTousPereGenPage", id).a("href", "/pere").a("class", "").a("onclick", "patchPereScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPereGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPereGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger tous les pères");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -650,6 +642,12 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPereScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/pere").a("class", "").f();
+				p.e("i").a("class", "far fa-male ").f().g("i");
+				p.sx("voir tous les pères");
+			} p.g("a");
 		} p.g("div");
 	}
 

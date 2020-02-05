@@ -562,19 +562,11 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolAge"
 	**/
 	public static void htmlSuggereAgeGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/age").a("class", "").f();
-					p.e("i").a("class", "fad fa-birthday-cake ").f().g("i");
-					p.sx("voir tous les âges");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerTousAgeGenPage", id).a("href", "/age").a("class", "").a("onclick", "patchAgeScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousAgeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousAgeGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les âges");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerTousAgeGenPage", id).a("href", "/age").a("class", "").a("onclick", "patchAgeScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousAgeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousAgeGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger tous les âges");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -604,6 +596,12 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListAgeScolaire", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/age").a("class", "").f();
+				p.e("i").a("class", "fad fa-birthday-cake ").f().g("i");
+				p.sx("voir tous les âges");
+			} p.g("a");
 		} p.g("div");
 	}
 

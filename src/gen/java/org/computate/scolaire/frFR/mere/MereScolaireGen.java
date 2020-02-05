@@ -1928,24 +1928,36 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneSms(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_personneSms")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
-				a("name", "setPersonneSms");
-			} else {
-				a("class", "valeurPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
-				a("name", "personneSms");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneSms', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneSms')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneSms')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_personneSms")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_personneSms");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
+			a("name", "setPersonneSms");
+		} else {
+			a("class", "valeurPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
+			a("name", "personneSms");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneSms', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneSms')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneSms')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPersonneSms() != null && getPersonneSms())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2038,24 +2050,36 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneRecevoirMail(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_personneRecevoirMail")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
-				a("name", "setPersonneRecevoirMail");
-			} else {
-				a("class", "valeurPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
-				a("name", "personneRecevoirMail");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRecevoirMail', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_personneRecevoirMail")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_personneRecevoirMail");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
+			a("name", "setPersonneRecevoirMail");
+		} else {
+			a("class", "valeurPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
+			a("name", "personneRecevoirMail");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRecevoirMail', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPersonneRecevoirMail() != null && getPersonneRecevoirMail())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2148,24 +2172,36 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneContactUrgence(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_personneContactUrgence")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-				a("name", "setPersonneContactUrgence");
-			} else {
-				a("class", "valeurPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-				a("name", "personneContactUrgence");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_personneContactUrgence")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_personneContactUrgence");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+			a("name", "setPersonneContactUrgence");
+		} else {
+			a("class", "valeurPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+			a("name", "personneContactUrgence");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 
@@ -2258,24 +2294,36 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneChercher(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_personneChercher")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
-				a("name", "setPersonneChercher");
-			} else {
-				a("class", "valeurPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
-				a("name", "personneChercher");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
-			}
-			;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_personneChercher")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_personneChercher");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
+			a("name", "setPersonneChercher");
+		} else {
+			a("class", "valeurPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
+			a("name", "personneChercher");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
 			if(getPersonneChercher() != null && getPersonneChercher())
 				a("checked", "checked");
-		fg();
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
 
 	}
 

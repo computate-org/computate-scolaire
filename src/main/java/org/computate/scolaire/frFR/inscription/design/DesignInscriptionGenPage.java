@@ -543,19 +543,11 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	 * r.enUS: "suggestListEnrollmentDesign"
 	**/
 	public static void htmlSuggereDesignInscriptionGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/design-inscription").a("class", "").f();
-					p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
-					p.sx("voir tous les design d'inscriptions");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "rechargerTousDesignInscriptionGenPage", id).a("href", "/design-inscription").a("class", "").a("onclick", "patchDesignInscriptionVals([], {}, function() { ajouterLueur($('#rechargerTousDesignInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignInscriptionGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les design d'inscriptions");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerTousDesignInscriptionGenPage", id).a("href", "/design-inscription").a("class", "").a("onclick", "patchDesignInscriptionVals([], {}, function() { ajouterLueur($('#rechargerTousDesignInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignInscriptionGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger tous les design d'inscriptions");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -585,6 +577,12 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListDesignInscription", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/design-inscription").a("class", "").f();
+				p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
+				p.sx("voir tous les design d'inscriptions");
+			} p.g("a");
 		} p.g("div");
 	}
 

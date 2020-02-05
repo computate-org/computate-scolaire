@@ -373,26 +373,28 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			.a("onclick", "$('#patchUtilisateurSiteModale').show(); ")
 			.f().sx("Modifier des utilisateurs du site")
 		.g("button");
-		{ e("div").a("id", "patchUtilisateurSiteModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-gray ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "w3-padding ").f().sx("Modifier des utilisateurs du site").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					UtilisateurSite o = new UtilisateurSite();
-					o.setRequeteSite_(requeteSite_);
+		{ e("div").a("id", "patchUtilisateurSiteModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-gray ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Modifier des utilisateurs du site").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						UtilisateurSite o = new UtilisateurSite();
+						o.setRequeteSite_(requeteSite_);
 
-					// FormulaireValeurs PATCH
-					{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHUtilisateurSite(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), function() {}, function() {}); ")
-						.f().sx("Modifier des utilisateurs du site")
-					.g("button");
+						// FormulaireValeurs PATCH
+						{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+							htmlFormPATCHUtilisateurSite(o);
+						} g("form");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+							.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), function() {}, function() {}); ")
+							.f().sx("Modifier des utilisateurs du site")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -438,13 +440,11 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	 * r.enUS: "suggestListSiteUser"
 	**/
 	public static void htmlSuggereUtilisateurSiteGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("a").a("href", "/utilisateur").a("class", "").f();
-					p.e("i").a("class", "far fa-user-cog ").f().g("i");
-					p.sx("voir tous les utilisateurs du site");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "rechargerTousUtilisateurSiteGenPage", id).a("href", "/utilisateur").a("class", "").a("onclick", "patchUtilisateurSiteVals([], {}, function() { ajouterLueur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("recharger tous les utilisateurs du site");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -474,6 +474,12 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListUtilisateurSite", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/utilisateur").a("class", "").f();
+				p.e("i").a("class", "far fa-user-cog ").f().g("i");
+				p.sx("voir tous les utilisateurs du site");
+			} p.g("a");
 		} p.g("div");
 	}
 

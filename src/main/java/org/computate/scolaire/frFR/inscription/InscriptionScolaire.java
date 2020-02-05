@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                   
+package org.computate.scolaire.frFR.inscription;                          
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -382,7 +382,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school gardians in the database. 
 	 * NomAffichage.frFR: gardiens
 	 * NomAffichage.enUS: guardians
-	 */               
+	 */              
 	protected void _gardienCles(List<Long> o) {}
 
 	/**

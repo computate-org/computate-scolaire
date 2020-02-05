@@ -237,7 +237,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -306,11 +306,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											);
 											reponse200PUTGardienScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -601,11 +601,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											);
 											reponse200PATCHGardienScolaire(requeteApi, gestionnaireEvenements);
 										} else {
-											erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
@@ -861,7 +861,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -873,12 +873,41 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void getGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
-			rechercheGardienScolaire(requeteSite, false, true, null, a -> {
+			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<GardienScolaire> listeGardienScolaire = a.result();
-					reponse200GETGardienScolaire(listeGardienScolaire, b -> {
+					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheGardienScolaire(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+									reponse200GETGardienScolaire(listeGardienScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurGardienScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -897,8 +926,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
 			SolrDocumentList documentsSolr = listeGardienScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeGardienScolaire.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listeGardienScolaire.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -979,7 +1008,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void reponse200DELETEGardienScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -991,12 +1020,41 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void rechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
-			rechercheGardienScolaire(requeteSite, false, true, null, a -> {
+			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<GardienScolaire> listeGardienScolaire = a.result();
-					reponse200RechercheGardienScolaire(listeGardienScolaire, b -> {
+					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+									reponse200RechercheGardienScolaire(listeGardienScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurGardienScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1048,7 +1106,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

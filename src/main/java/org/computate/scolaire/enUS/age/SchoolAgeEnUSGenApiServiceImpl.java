@@ -225,7 +225,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -294,11 +294,11 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 											);
 											response200PUTSchoolAge(apiRequest, eventHandler);
 										} else {
-											errorSchoolAge(siteRequest, eventHandler, c);
+											errorSchoolAge(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolAge(siteRequest, eventHandler, b);
+									errorSchoolAge(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -577,11 +577,11 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 											);
 											response200PATCHSchoolAge(apiRequest, eventHandler);
 										} else {
-											errorSchoolAge(siteRequest, eventHandler, c);
+											errorSchoolAge(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolAge(siteRequest, eventHandler, b);
+									errorSchoolAge(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
@@ -807,7 +807,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		try {
 			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -819,12 +819,41 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 	public void getSchoolAge(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest);
-			aSearchSchoolAge(siteRequest, false, true, null, a -> {
+			sqlSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolAge> listSchoolAge = a.result();
-					response200GETSchoolAge(listSchoolAge, b -> {
+					userSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchSchoolAge(siteRequest, false, true, null, c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolAge> listSchoolAge = c.result();
+									response200GETSchoolAge(listSchoolAge, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolAge(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolAge(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolAge(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorSchoolAge(siteRequest, eventHandler, b);
 						}
@@ -843,8 +872,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 			SolrDocumentList solrDocuments = listSchoolAge.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listSchoolAge.get(0));
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listSchoolAge.getList().stream().findFirst().orElse(null));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -925,7 +954,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 	public void response200DELETESchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -937,12 +966,41 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 	public void searchSchoolAge(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest);
-			aSearchSchoolAge(siteRequest, false, true, null, a -> {
+			sqlSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolAge> listSchoolAge = a.result();
-					response200SearchSchoolAge(listSchoolAge, b -> {
+					userSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
+							aSearchSchoolAge(siteRequest, false, true, "/api/age", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolAge> listSchoolAge = c.result();
+									response200SearchSchoolAge(listSchoolAge, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolAge(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolAge(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolAge(siteRequest, eventHandler, c);
+								}
+							});
 						} else {
 							errorSchoolAge(siteRequest, eventHandler, b);
 						}
@@ -994,7 +1052,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			if(exceptionSearch != null) {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

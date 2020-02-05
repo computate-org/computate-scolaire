@@ -507,19 +507,11 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 	/**
 	**/
 	public static void htmlSuggestEnrollmentDesignGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/enrollment-design").a("class", "").f();
-					p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
-					p.sx("see all the enrollment designs");
-				} p.g("a");
-			} p.g("div");
-			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("id", "refreshAllEnrollmentDesignGenPage", id).a("href", "/enrollment-design").a("class", "").a("onclick", "patchEnrollmentDesignVals([], {}, function() { addGlow($('#refreshAllEnrollmentDesignGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentDesignGenPage", id, "')); }); return false; ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the enrollment designs");
-				} p.g("a");
-			} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("id", "refreshAllEnrollmentDesignGenPage", id).a("href", "/enrollment-design").a("class", "").a("onclick", "patchEnrollmentDesignVals([], {}, function() { addGlow($('#refreshAllEnrollmentDesignGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentDesignGenPage", id, "')); }); return false; ").f();
+				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				p.sx("refresh all the enrollment designs");
+			} p.g("a");
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
@@ -548,6 +540,12 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListEnrollmentDesign", id).f();
 				} p.g("ul");
 			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "").f();
+			{ p.e("a").a("href", "/enrollment-design").a("class", "").f();
+				p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
+				p.sx("see all the enrollment designs");
+			} p.g("a");
 		} p.g("div");
 	}
 

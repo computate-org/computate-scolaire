@@ -401,7 +401,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1635,7 +1635,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1647,12 +1647,41 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void getInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-			rechercheInscriptionScolaire(requeteSite, false, true, null, a -> {
+			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = a.result();
-					reponse200GETInscriptionScolaire(listeInscriptionScolaire, b -> {
+					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheInscriptionScolaire(requeteSite, false, true, null, c -> {
+								if(c.succeeded()) {
+									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+									reponse200GETInscriptionScolaire(listeInscriptionScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1671,8 +1700,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 			SolrDocumentList documentsSolr = listeInscriptionScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeInscriptionScolaire.get(0));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			JsonObject json = JsonObject.mapFrom(listeInscriptionScolaire.getList().stream().findFirst().orElse(null));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1753,7 +1782,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void reponse200DELETEInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1765,12 +1794,41 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void rechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-			rechercheInscriptionScolaire(requeteSite, false, true, null, a -> {
+			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = a.result();
-					reponse200RechercheInscriptionScolaire(listeInscriptionScolaire, b -> {
+					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+									reponse200RechercheInscriptionScolaire(listeInscriptionScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
 						} else {
 							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
@@ -1822,7 +1880,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
