@@ -234,6 +234,178 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		return (EnrollmentPdfPage)this;
 	}
 
+	/////////////////
+	// enrollments //
+	/////////////////
+
+	/**	L'entité « enrollments »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected List<SchoolEnrollment> enrollments;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
+
+	/**	<br/>L'entité « enrollments »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments">Trouver l'entité enrollments dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollments(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollments() {
+		return enrollments;
+	}
+
+	public void setEnrollments(List<SchoolEnrollment> enrollments) {
+		this.enrollments = enrollments;
+		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public EnrollmentPdfPage addEnrollments(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollments(o);
+		}
+		return (EnrollmentPdfPage)this;
+	}
+	public EnrollmentPdfPage addEnrollments(SchoolEnrollment o) {
+		if(o != null && !enrollments.contains(o))
+			this.enrollments.add(o);
+		return (EnrollmentPdfPage)this;
+	}
+	protected EnrollmentPdfPage enrollmentsInit() {
+		if(!enrollmentsWrap.alreadyInitialized) {
+			_enrollments(enrollmentsWrap);
+			if(enrollments == null)
+				setEnrollments(enrollmentsWrap.o);
+		}
+		enrollmentsWrap.alreadyInitialized(true);
+		return (EnrollmentPdfPage)this;
+	}
+
+	//////////////////////
+	// enrollmentBlocks //
+	//////////////////////
+
+	/**	L'entité « enrollmentBlocks »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 */
+	protected List<SchoolEnrollment> enrollmentBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentBlocksWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentBlocks").o(enrollmentBlocks);
+
+	/**	<br/>L'entité « enrollmentBlocks »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlocks">Trouver l'entité enrollmentBlocks dans Solr</a>
+	 * <br/>
+	 * @param enrollmentBlocks est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentBlocks(List<SchoolEnrollment> c);
+
+	public List<SchoolEnrollment> getEnrollmentBlocks() {
+		return enrollmentBlocks;
+	}
+
+	public void setEnrollmentBlocks(List<SchoolEnrollment> enrollmentBlocks) {
+		this.enrollmentBlocks = enrollmentBlocks;
+		this.enrollmentBlocksWrap.alreadyInitialized = true;
+	}
+	public EnrollmentPdfPage addEnrollmentBlocks(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentBlocks(o);
+		}
+		return (EnrollmentPdfPage)this;
+	}
+	public EnrollmentPdfPage addEnrollmentBlocks(SchoolEnrollment o) {
+		if(o != null && !enrollmentBlocks.contains(o))
+			this.enrollmentBlocks.add(o);
+		return (EnrollmentPdfPage)this;
+	}
+	protected EnrollmentPdfPage enrollmentBlocksInit() {
+		if(!enrollmentBlocksWrap.alreadyInitialized) {
+			_enrollmentBlocks(enrollmentBlocks);
+		}
+		enrollmentBlocksWrap.alreadyInitialized(true);
+		return (EnrollmentPdfPage)this;
+	}
+
+	/////////////////////
+	// enrollmentBlock //
+	/////////////////////
+
+	/**	L'entité « enrollmentBlock »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolEnrollment enrollmentBlock;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentBlockWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentBlock").o(enrollmentBlock);
+
+	/**	<br/>L'entité « enrollmentBlock »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlock">Trouver l'entité enrollmentBlock dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentBlock(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentBlock() {
+		return enrollmentBlock;
+	}
+
+	public void setEnrollmentBlock(SchoolEnrollment enrollmentBlock) {
+		this.enrollmentBlock = enrollmentBlock;
+		this.enrollmentBlockWrap.alreadyInitialized = true;
+	}
+	protected EnrollmentPdfPage enrollmentBlockInit() {
+		if(!enrollmentBlockWrap.alreadyInitialized) {
+			_enrollmentBlock(enrollmentBlockWrap);
+			if(enrollmentBlock == null)
+				setEnrollmentBlock(enrollmentBlockWrap.o);
+		}
+		if(enrollmentBlock != null)
+			enrollmentBlock.initDeepForClass(siteRequest_);
+		enrollmentBlockWrap.alreadyInitialized(true);
+		return (EnrollmentPdfPage)this;
+	}
+
+	//////////////////////////
+	// enrollmentEnrollment //
+	//////////////////////////
+
+	/**	L'entité « enrollmentEnrollment »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolEnrollment enrollmentEnrollment;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentEnrollment").o(enrollmentEnrollment);
+
+	/**	<br/>L'entité « enrollmentEnrollment »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollment">Trouver l'entité enrollmentEnrollment dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentEnrollment(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentEnrollment() {
+		return enrollmentEnrollment;
+	}
+
+	public void setEnrollmentEnrollment(SchoolEnrollment enrollmentEnrollment) {
+		this.enrollmentEnrollment = enrollmentEnrollment;
+		this.enrollmentEnrollmentWrap.alreadyInitialized = true;
+	}
+	protected EnrollmentPdfPage enrollmentEnrollmentInit() {
+		if(!enrollmentEnrollmentWrap.alreadyInitialized) {
+			_enrollmentEnrollment(enrollmentEnrollmentWrap);
+			if(enrollmentEnrollment == null)
+				setEnrollmentEnrollment(enrollmentEnrollmentWrap.o);
+		}
+		if(enrollmentEnrollment != null)
+			enrollmentEnrollment.initDeepForClass(siteRequest_);
+		enrollmentEnrollmentWrap.alreadyInitialized(true);
+		return (EnrollmentPdfPage)this;
+	}
+
 	////////////////
 	// yearSearch //
 	////////////////
@@ -1462,6 +1634,10 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		listEnrollmentDesignInit();
 		enrollmentDesignInit();
 		enrollmentSearchInit();
+		enrollmentsInit();
+		enrollmentBlocksInit();
+		enrollmentBlockInit();
+		enrollmentEnrollmentInit();
 		yearSearchInit();
 		year_Init();
 		schoolKeyInit();
@@ -1508,6 +1684,10 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 			enrollmentDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
+		if(enrollmentBlock != null)
+			enrollmentBlock.setSiteRequest_(siteRequest_);
+		if(enrollmentEnrollment != null)
+			enrollmentEnrollment.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
@@ -1558,6 +1738,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 				return oEnrollmentPdfPage.enrollmentDesign;
 			case "enrollmentSearch":
 				return oEnrollmentPdfPage.enrollmentSearch;
+			case "enrollments":
+				return oEnrollmentPdfPage.enrollments;
+			case "enrollmentBlocks":
+				return oEnrollmentPdfPage.enrollmentBlocks;
+			case "enrollmentBlock":
+				return oEnrollmentPdfPage.enrollmentBlock;
+			case "enrollmentEnrollment":
+				return oEnrollmentPdfPage.enrollmentEnrollment;
 			case "yearSearch":
 				return oEnrollmentPdfPage.yearSearch;
 			case "year_":

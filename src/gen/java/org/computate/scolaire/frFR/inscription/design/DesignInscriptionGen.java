@@ -300,7 +300,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				.a("name", "setPartHtmlCles")
 				.a("id", classeApiMethodeMethode, "_partHtmlCles")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggereDesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -309,7 +309,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereDesignInscriptionPartHtmlCles").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=designInscriptionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -1130,7 +1130,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereDesignInscriptionDesignInscriptionNomComplet").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionDesignInscriptionNomComplet").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classeApiMethodeMethode, "_designInscriptionNomComplet").a("class", "").f().sx("nom").g("label");

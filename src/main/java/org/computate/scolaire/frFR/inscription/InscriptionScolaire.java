@@ -623,6 +623,26 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: childCompleteNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: enfant_
+	 * r.enUS: child_
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 */  
+	protected void _enfantNomCompletPrefere(Couverture<String> c) {
+		if(enfant_ != null)
+			c.o(enfant_.getPersonneNomCompletPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: childBirthDate
 	 * Indexe: true
 	 * Stocke: true
@@ -1451,6 +1471,128 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		c.o(b.toString());
 	}
 
+	/**
+	 * Var.enUS: enrollmentParentNameLines
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * Stocke: true
+	 */
+	protected void _inscriptionNomParentLignes(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(meres.size() == 0 && peres.size() == 0) {
+			gardiens.stream().forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append("\n"));
+		}
+		else {
+			meres.stream().forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append("\n"));
+			peres.stream().forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append("\n"));
+		}
+		c.o(b.toString().trim());
+	}
+
+	/**
+	 * Var.enUS: enrollmentParentEmailLines
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonneMail
+	 * r.enUS: PersonEmail
+	 * Stocke: true
+	 */
+	protected void _inscriptionMailParentLignes(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(meres.size() == 0 && peres.size() == 0) {
+			gardiens.stream().forEach(o -> b.append(o.getPersonneMail()).append("\n"));
+		}
+		else {
+			meres.stream().forEach(o -> b.append(o.getPersonneMail()).append("\n"));
+			peres.stream().forEach(o -> b.append(o.getPersonneMail()).append("\n"));
+		}
+		c.o(b.toString().trim());
+	}
+
+	/**
+	 * Var.enUS: enrollmentParentDetailLines
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 * Stocke: true
+	 */
+	protected void _inscriptionDetailParentLignes(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(meres.size() == 0 && peres.size() == 0) {
+			gardiens.stream().forEach(o -> b.append("G- ").append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		}
+		else {
+			meres.stream().forEach(o -> b.append("M- ").append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+			peres.stream().forEach(o -> b.append("D- ").append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		}
+		c.o(b.toString().trim());
+	}
+
+	/**
+	 * Var.enUS: enrollmentPickupDetailLines
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 * r: PersonneChercher
+	 * r.enUS: PersonPickup
+	 * Stocke: true
+	 */
+	protected void _inscriptionChercherParentLignes(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		meres.stream().filter(o -> o.getPersonneChercher()).forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		peres.stream().filter(o -> o.getPersonneChercher()).forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		gardiens.stream().filter(o -> o.getPersonneChercher()).forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		c.o(b.toString().trim());
+	}
+
+	/**
+	 * Var.enUS: enrollmentEmergencyContactDetailLines
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 * r: PersonneContactUrgence
+	 * r.enUS: PersonEmergencyContact
+	 * Stocke: true
+	 */
+	protected void _inscriptionContactUrgenceParentLignes(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		meres.stream().filter(o -> o.getPersonneContactUrgence()).forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		peres.stream().filter(o -> o.getPersonneContactUrgence()).forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		gardiens.stream().filter(o -> o.getPersonneContactUrgence()).forEach(o -> b.append(o.getPersonneNomCompletPrefere()).append(" ").append(o.getPersonneNumeroTelephone()).append("\n"));
+		c.o(b.toString().trim());
+	}
+
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature1
@@ -1657,9 +1799,40 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _inscriptionsInscription(List<InscriptionScolaire> l) {}
 
 	/**
+	 * Var.enUS: childImmunizationsReceived
+	 * r: inscriptionImmunisations
+	 * r.enUS: enrollmentImmunizations
+	 * r: "oui"
+	 * r.enUS: "yes"
+	 * r: "non"
+	 * r.enUS: "no"
+	 * Indexe: true
+	 * Stocke: true
+	 */
+	protected void _enfantImmunisationsRecu(Couverture<String> c) {
+		c.o(inscriptionImmunisations ? "oui" : "non");
+	}
+
+	/**
+	 * Var.enUS: childPhotosApproved
+	 * r: inscriptionDate9
+	 * r.enUS: enrollmentDate9
+	 * r: "oui"
+	 * r.enUS: "yes"
+	 * r: "non"
+	 * r.enUS: "no"
+	 * Indexe: true
+	 * Stocke: true
+	 */
+	protected void _enfantPhotosApprouve(Couverture<String> c) {
+		c.o(inscriptionDate9 != null ? "oui" : "non");
+	}
+
+
+	/**
 	 * Var.enUS: enrollmentNumber
 	 */
-	protected void _inscriptionNumero(Couverture<Integer> l) {}
+	protected void _inscriptionNumero(Couverture<Integer> c) {}
 
 	/**           
 	 * {@inheritDoc}

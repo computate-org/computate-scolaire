@@ -2,9 +2,11 @@ package org.computate.scolaire.enUS.enrollment;
 
 import java.net.URLDecoder;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -52,6 +54,14 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		l.addFilterQuery("enrollmentDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(design));
 		l.setC(EnrollmentDesign.class);
 		l.setStore(true);
+
+		List<String> roles = Arrays.asList("SiteAdmin");
+		if(
+				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+				) {
+			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
+		}
 	}
 
 	/**
@@ -69,6 +79,14 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		l.setQuery("*:*");
 		l.setC(SchoolEnrollment.class);
 		l.setRows(1000);
+
+		List<String> roles = Arrays.asList("SiteAdmin");
+		if(
+				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+				) {
+			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
+		}
 
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
 		l.addSort("sessionEndDate_indexed_date", ORDER.asc);
@@ -189,6 +207,14 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		l.setStore(true);
 		l.setQuery("*:*");
 		l.setC(SchoolYear.class);
+
+		List<String> roles = Arrays.asList("SiteAdmin");
+		if(
+				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+				) {
+			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
+		}
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
 		if(yearKey != null)
@@ -341,6 +367,14 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		l.addSort("ageStart_indexed_int", ORDER.asc);
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
+
+		List<String> roles = Arrays.asList("SiteAdmin");
+		if(
+				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+				) {
+			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
+		}
 	}
 
 	protected void _blocks(Wrap<List<SchoolBlock>> c) {
@@ -352,8 +386,6 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		LocalDate sessionStartDateCurrent = null;
 		Integer ageStartBefore = null;
 		Integer ageStartCurrent = null;
-		SchoolSeason season = null;
-		SchoolSession session = null;
 		SchoolBlock block = null;
 		List<SchoolBlock> sessionBlocks = null;
 		List<SchoolBlock> ageBlocks = null;
@@ -451,6 +483,14 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 			l.addSort("sort9_indexed_double", ORDER.asc);
 			l.addSort("sort10_indexed_double", ORDER.asc);
 			l.setRows(100000);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+					) {
+				l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
+			}
 		}
 	}
 

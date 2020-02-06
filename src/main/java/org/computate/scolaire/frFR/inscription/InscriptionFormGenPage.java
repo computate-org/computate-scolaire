@@ -361,6 +361,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantNomComplet("PUT");
+			o.htmEnfantNomCompletPrefere("PUT");
 			o.htmEnfantDateNaissance("PUT");
 			o.htmEcoleAddresse("PUT");
 			o.htmInscriptionNomsParents("PUT");
@@ -438,6 +439,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantNomComplet("PATCH");
+			o.htmEnfantNomCompletPrefere("PATCH");
 			o.htmEnfantDateNaissance("PATCH");
 			o.htmEcoleAddresse("PATCH");
 			o.htmInscriptionNomsParents("PATCH");
@@ -518,6 +520,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");
 			o.htmEnfantNomComplet("Recherche");
+			o.htmEnfantNomCompletPrefere("Recherche");
 			o.htmEnfantDateNaissance("Recherche");
 			o.htmEcoleAddresse("Recherche");
 			o.htmInscriptionNomsParents("Recherche");
@@ -762,7 +765,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "putInscriptionScolaire($('#putInscriptionScolaireFormulaireValeurs')); ")
+							.a("onclick", "putInscriptionScolaire($('#putInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des inscriptions")
 						.g("button");
 
@@ -794,7 +797,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "patchInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres'), $('#patchInscriptionScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres'), $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des inscriptions")
 						.g("button");
 

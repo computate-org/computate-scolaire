@@ -361,6 +361,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildCompleteName("PUT");
+			o.htmChildCompleteNamePreferred("PUT");
 			o.htmChildBirthDate("PUT");
 			o.htmSchoolAddress("PUT");
 			o.htmEnrollmentParentNames("PUT");
@@ -438,6 +439,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildCompleteName("PATCH");
+			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
 			o.htmSchoolAddress("PATCH");
 			o.htmEnrollmentParentNames("PATCH");
@@ -518,6 +520,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Recherche");
 			o.htmChildCompleteName("Recherche");
+			o.htmChildCompleteNamePreferred("Recherche");
 			o.htmChildBirthDate("Recherche");
 			o.htmSchoolAddress("Recherche");
 			o.htmEnrollmentParentNames("Recherche");
@@ -762,7 +765,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "putSchoolEnrollment($('#putSchoolEnrollmentFormValues')); ")
+							.a("onclick", "putSchoolEnrollment($('#putSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the enrollments")
 						.g("button");
 
@@ -794,7 +797,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "patchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters'), $('#patchSchoolEnrollmentFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters'), $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the enrollments")
 						.g("button");
 

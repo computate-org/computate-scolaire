@@ -188,6 +188,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(child_.getPersonCompleteName());
 	}
 
+	protected void _childCompleteNamePreferred(Wrap<String> c) {
+		if(child_ != null)
+			c.o(child_.getPersonCompleteNamePreferred());
+	}
+
 	protected void _childBirthDate(Wrap<LocalDate> c) {
 		if(child_ != null)
 			c.o(child_.getPersonBirthDate());
@@ -424,6 +429,58 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(b.toString());
 	}
 
+	protected void _enrollmentParentNameLines(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(moms.size() == 0 && dads.size() == 0) {
+			guardians.stream().forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append("\n"));
+		}
+		else {
+			moms.stream().forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append("\n"));
+			dads.stream().forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append("\n"));
+		}
+		c.o(b.toString().trim());
+	}
+
+	protected void _enrollmentParentEmailLines(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(moms.size() == 0 && dads.size() == 0) {
+			guardians.stream().forEach(o -> b.append(o.getPersonEmail()).append("\n"));
+		}
+		else {
+			moms.stream().forEach(o -> b.append(o.getPersonEmail()).append("\n"));
+			dads.stream().forEach(o -> b.append(o.getPersonEmail()).append("\n"));
+		}
+		c.o(b.toString().trim());
+	}
+
+	protected void _enrollmentParentDetailLines(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(moms.size() == 0 && dads.size() == 0) {
+			guardians.stream().forEach(o -> b.append("G- ").append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		}
+		else {
+			moms.stream().forEach(o -> b.append("M- ").append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+			dads.stream().forEach(o -> b.append("D- ").append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		}
+		c.o(b.toString().trim());
+	}
+
+	protected void _enrollmentPickupDetailLines(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		moms.stream().filter(o -> o.getPersonPickup()).forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		dads.stream().filter(o -> o.getPersonPickup()).forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		guardians.stream().filter(o -> o.getPersonPickup()).forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		c.o(b.toString().trim());
+	}
+
+	protected void _enrollmentEmergencyContactDetailLines(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		moms.stream().filter(o -> o.getPersonEmergencyContact()).forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		dads.stream().filter(o -> o.getPersonEmergencyContact()).forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		guardians.stream().filter(o -> o.getPersonEmergencyContact()).forEach(o -> b.append(o.getPersonCompleteNamePreferred()).append(" ").append(o.getPersonPhoneNumber()).append("\n"));
+		c.o(b.toString().trim());
+	}
+
 	protected void _enrollmentSignature1(Wrap<String> c) {
 	}
 
@@ -486,7 +543,15 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentEnrollments(List<SchoolEnrollment> l) {}
 
-	protected void _enrollmentNumber(Wrap<Integer> l) {}
+	protected void _childImmunizationsReceived(Wrap<String> c) {
+		c.o(enrollmentImmunizations ? "yes" : "no");
+	}
+
+	protected void _childPhotosApproved(Wrap<String> c) {
+		c.o(enrollmentDate9 != null ? "yes" : "no");
+	}
+
+	protected void _enrollmentNumber(Wrap<Integer> c) {}
 
 	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;

@@ -214,7 +214,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("name", "setDesignInscriptionCle")
 				.a("id", classeApiMethodeMethode, "_designInscriptionCle")
 				.a("autocomplete", "off")
-				.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggerePartHtmlDesignInscriptionCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -223,7 +223,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlDesignInscriptionCle").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
@@ -350,7 +350,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlLien").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlLien").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlLien").a("class", "").f().sx("lien").g("label");
@@ -465,7 +465,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlElement").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlElement").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlElement").a("class", "").f().sx("HTML élément").g("label");
@@ -580,7 +580,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlId").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlId").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlId").a("class", "").f().sx("HTML ID").g("label");
@@ -695,7 +695,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlClasses").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlClasses").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlClasses").a("class", "").f().sx("HTML classes").g("label");
@@ -810,7 +810,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlStyle").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlStyle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlStyle").a("class", "").f().sx("HTML style").g("label");
@@ -923,7 +923,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlAvant").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlAvant").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlAvant").a("class", "").f().sx("HTML avant").g("label");
@@ -1036,7 +1036,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlApres").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlApres").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlApres").a("class", "").f().sx("HTML après").g("label");
@@ -1149,7 +1149,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlTexte").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlTexte").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlTexte").a("class", "").f().sx("texte").g("label");
@@ -1264,7 +1264,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlVar").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVar").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVar").a("class", "").f().sx("var").g("label");
@@ -1379,7 +1379,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlVarSpan").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarSpan").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarSpan").a("class", "").f().sx("var span").g("label");
@@ -1494,7 +1494,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlVarForm").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarForm").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarForm").a("class", "").f().sx("var form").g("label");
@@ -1609,7 +1609,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlVarInput").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarInput").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarInput").a("class", "").f().sx("var input").g("label");
@@ -1724,7 +1724,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlVarForEach").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarForEach").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarForEach").a("class", "").f().sx("var for each").g("label");
@@ -1857,7 +1857,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlHtmlExclure").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlExclure").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlExclure").a("class", "").f().sx("HTML exclure").g("label");
@@ -1979,7 +1979,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlPdfExclure").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlPdfExclure").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_pdfExclure").a("class", "").f().sx("PDF exclure").g("label");
@@ -2090,7 +2090,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri1").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri1").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri1").a("class", "").f().sx("tri1").g("label");
@@ -2212,7 +2212,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri2").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri2").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri2").a("class", "").f().sx("tri2").g("label");
@@ -2334,7 +2334,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri3").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri3").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri3").a("class", "").f().sx("tri3").g("label");
@@ -2456,7 +2456,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri4").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri4").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri4").a("class", "").f().sx("tri4").g("label");
@@ -2578,7 +2578,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri5").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri5").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri5").a("class", "").f().sx("tri5").g("label");
@@ -2700,7 +2700,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri6").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri6").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri6").a("class", "").f().sx("tri6").g("label");
@@ -2822,7 +2822,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri7").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri7").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri7").a("class", "").f().sx("tri7").g("label");
@@ -2944,7 +2944,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri8").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri8").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri8").a("class", "").f().sx("tri8").g("label");
@@ -3066,7 +3066,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri9").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri9").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri9").a("class", "").f().sx("tri9").g("label");
@@ -3188,7 +3188,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePartHtmlTri10").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri10").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri10").a("class", "").f().sx("tri10").g("label");

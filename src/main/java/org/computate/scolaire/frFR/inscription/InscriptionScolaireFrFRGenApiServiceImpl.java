@@ -222,6 +222,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantNomComplet", jsonObject.getString(entiteVar), pk));
 						break;
+					case "enfantNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
 					case "enfantDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", jsonObject.getString(entiteVar), pk));
@@ -665,6 +669,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "enfantNomComplet":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantNomComplet", jsonObject.getString(entiteVar), pk));
+						break;
+					case "enfantNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", jsonObject.getString(entiteVar), pk));
 						break;
 					case "enfantDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -1218,6 +1226,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setEnfantNomComplet(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantNomComplet", o2.jsonEnfantNomComplet(), pk));
+						}
+						break;
+					case "setEnfantNomCompletPrefere":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomCompletPrefere"));
+						} else {
+							o2.setEnfantNomCompletPrefere(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere(), pk));
 						}
 						break;
 					case "setEnfantDateNaissance":

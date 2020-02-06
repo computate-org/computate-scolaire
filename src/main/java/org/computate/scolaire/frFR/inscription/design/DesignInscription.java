@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription.design;                                       
+package org.computate.scolaire.frFR.inscription.design;                                         
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/            
+*/                       
 public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
 	/**

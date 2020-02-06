@@ -299,7 +299,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				.a("name", "setHtmlPartKeys")
 				.a("id", classApiMethodMethod, "_htmlPartKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggestEnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -308,7 +308,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestEnrollmentDesignHtmlPartKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/html-part?fq=enrollmentDesignKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -1129,7 +1129,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestEnrollmentDesignEnrollmentDesignCompleteName").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignEnrollmentDesignCompleteName").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_enrollmentDesignCompleteName").a("class", "").f().sx("name").g("label");

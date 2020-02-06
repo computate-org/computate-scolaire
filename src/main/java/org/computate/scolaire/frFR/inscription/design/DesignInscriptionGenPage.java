@@ -427,7 +427,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "putDesignInscription($('#putDesignInscriptionFormulaireValeurs')); ")
+							.a("onclick", "putDesignInscription($('#putDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des design d'inscriptions")
 						.g("button");
 
@@ -459,7 +459,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "patchDesignInscription($('#patchDesignInscriptionFormulaireFiltres'), $('#patchDesignInscriptionFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchDesignInscription($('#patchDesignInscriptionFormulaireFiltres'), $('#patchDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des design d'inscriptions")
 						.g("button");
 

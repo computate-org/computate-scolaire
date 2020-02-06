@@ -625,7 +625,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "putHtmlPart($('#putHtmlPartFormValues')); ")
+							.a("onclick", "putHtmlPart($('#putHtmlPartFormValues'), ", Optional.ofNullable(htmlPart).map(HtmlPart::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the HTML parts")
 						.g("button");
 
@@ -657,7 +657,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "patchHtmlPart($('#patchHtmlPartFormFilters'), $('#patchHtmlPartFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchHtmlPart($('#patchHtmlPartFormFilters'), $('#patchHtmlPartFormValues'), ", Optional.ofNullable(htmlPart).map(HtmlPart::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the HTML parts")
 						.g("button");
 
