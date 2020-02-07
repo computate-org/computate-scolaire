@@ -597,7 +597,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite s = (UtilisateurSite)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereUtilisateurSiteUtilisateurRecevoirCourriels").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurRecevoirCourriels").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
 							e("label").a("for", classeApiMethodeMethode, "_utilisateurRecevoirCourriels").a("class", "").f().sx("recevoir des courriels").g("label");
@@ -719,7 +719,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite s = (UtilisateurSite)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereUtilisateurSiteVoirArchive").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteVoirArchive").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
 							e("label").a("for", classeApiMethodeMethode, "_voirArchive").a("class", "").f().sx("voir archivé").g("label");
@@ -841,7 +841,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite s = (UtilisateurSite)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereUtilisateurSiteVoirSupprime").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteVoirSupprime").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
 							e("label").a("for", classeApiMethodeMethode, "_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");

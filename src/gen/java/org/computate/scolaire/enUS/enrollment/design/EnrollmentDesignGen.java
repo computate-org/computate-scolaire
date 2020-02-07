@@ -16,6 +16,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -1157,6 +1158,128 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////
+	// designHidden //
+	//////////////////
+
+	/**	L'entité « designHidden »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean designHidden;
+	@JsonIgnore
+	public Wrap<Boolean> designHiddenWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designHidden").o(designHidden);
+
+	/**	<br/>L'entité « designHidden »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designHidden">Trouver l'entité designHidden dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _designHidden(Wrap<Boolean> c);
+
+	public Boolean getDesignHidden() {
+		return designHidden;
+	}
+
+	public void setDesignHidden(Boolean designHidden) {
+		this.designHidden = designHidden;
+		this.designHiddenWrap.alreadyInitialized = true;
+	}
+	public EnrollmentDesign setDesignHidden(String o) {
+		this.designHidden = Boolean.parseBoolean(o);
+		this.designHiddenWrap.alreadyInitialized = true;
+		return (EnrollmentDesign)this;
+	}
+	protected EnrollmentDesign designHiddenInit() {
+		if(!designHiddenWrap.alreadyInitialized) {
+			_designHidden(designHiddenWrap);
+			if(designHidden == null)
+				setDesignHidden(designHiddenWrap.o);
+		}
+		designHiddenWrap.alreadyInitialized(true);
+		return (EnrollmentDesign)this;
+	}
+
+	public Boolean solrDesignHidden() {
+		return designHidden;
+	}
+
+	public String strDesignHidden() {
+		return designHidden == null ? "" : designHidden.toString();
+	}
+
+	public String jsonDesignHidden() {
+		return designHidden == null ? "" : designHidden.toString();
+	}
+
+	public String nomAffichageDesignHidden() {
+		return "hidden";
+	}
+
+	public String htmTooltipDesignHidden() {
+		return null;
+	}
+
+	public String htmDesignHidden() {
+		return designHidden == null ? "" : StringEscapeUtils.escapeHtml4(strDesignHidden());
+	}
+
+	public void inputDesignHidden(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_designHidden")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_designHidden");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
+			a("name", "setDesignHidden");
+		} else {
+			a("class", "valueDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
+			a("name", "designHidden");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignHidden', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designHidden')); }, function() { addError($('#", classApiMethodMethod, "_designHidden')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			if(getDesignHidden() != null && getDesignHidden())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmDesignHidden(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignDesignHidden").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", classApiMethodMethod, "_designHidden").a("class", "").f().sx("hidden").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignHidden(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -1194,6 +1317,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		yearShortNameInit();
 		yearCompleteNameInit();
 		enrollmentDesignCompleteNameInit();
+		designHiddenInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -1268,6 +1392,8 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				return oEnrollmentDesign.yearCompleteName;
 			case "enrollmentDesignCompleteName":
 				return oEnrollmentDesign.enrollmentDesignCompleteName;
+			case "designHidden":
+				return oEnrollmentDesign.designHidden;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -1324,6 +1450,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentDesignCompleteName":
 				setEnrollmentDesignCompleteName(val);
+				savesEnrollmentDesign.add(var);
+				return val;
+			case "designHidden":
+				setDesignHidden(val);
 				savesEnrollmentDesign.add(var);
 				return val;
 			default:
@@ -1417,6 +1547,12 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				String enrollmentDesignCompleteName = (String)solrDocument.get("enrollmentDesignCompleteName_stored_string");
 				if(enrollmentDesignCompleteName != null)
 					oEnrollmentDesign.setEnrollmentDesignCompleteName(enrollmentDesignCompleteName);
+			}
+
+			if(savesEnrollmentDesign.contains("designHidden")) {
+				Boolean designHidden = (Boolean)solrDocument.get("designHidden_stored_boolean");
+				if(designHidden != null)
+					oEnrollmentDesign.setDesignHidden(designHidden);
 			}
 		}
 
@@ -1544,6 +1680,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			document.addField("enrollmentDesignCompleteName_indexed_string", enrollmentDesignCompleteName);
 			document.addField("enrollmentDesignCompleteName_stored_string", enrollmentDesignCompleteName);
 		}
+		if(designHidden != null) {
+			document.addField("designHidden_indexed_boolean", designHidden);
+			document.addField("designHidden_stored_boolean", designHidden);
+		}
 		super.indexCluster(document);
 
 	}
@@ -1591,6 +1731,8 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				return "yearCompleteName_indexed_string";
 			case "enrollmentDesignCompleteName":
 				return "enrollmentDesignCompleteName_indexed_string";
+			case "designHidden":
+				return "designHidden_indexed_boolean";
 			default:
 				return Cluster.varIndexedCluster(entityVar);
 		}
@@ -1668,6 +1810,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		if(enrollmentDesignCompleteName != null)
 			oEnrollmentDesign.setEnrollmentDesignCompleteName(enrollmentDesignCompleteName);
 
+		Boolean designHidden = (Boolean)solrDocument.get("designHidden_stored_boolean");
+		if(designHidden != null)
+			oEnrollmentDesign.setDesignHidden(designHidden);
+
 		super.storeCluster(solrDocument);
 	}
 
@@ -1683,6 +1829,8 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				apiRequest.addVars("htmlPartKeys");
 			if(!Objects.equals(enrollmentDesignCompleteName, original.getEnrollmentDesignCompleteName()))
 				apiRequest.addVars("enrollmentDesignCompleteName");
+			if(!Objects.equals(designHidden, original.getDesignHidden()))
+				apiRequest.addVars("designHidden");
 			super.apiRequestCluster();
 		}
 	}
@@ -1692,7 +1840,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), htmlPartKeys, enrollmentDesignCompleteName);
+		return Objects.hash(super.hashCode(), htmlPartKeys, enrollmentDesignCompleteName, designHidden);
 	}
 
 	////////////
@@ -1707,7 +1855,8 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		EnrollmentDesign that = (EnrollmentDesign)o;
 		return super.equals(o)
 				&& Objects.equals( htmlPartKeys, that.htmlPartKeys )
-				&& Objects.equals( enrollmentDesignCompleteName, that.enrollmentDesignCompleteName );
+				&& Objects.equals( enrollmentDesignCompleteName, that.enrollmentDesignCompleteName )
+				&& Objects.equals( designHidden, that.designHidden );
 	}
 
 	//////////////
@@ -1720,6 +1869,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		sb.append("EnrollmentDesign { ");
 		sb.append( "htmlPartKeys: " ).append(htmlPartKeys);
 		sb.append( ", enrollmentDesignCompleteName: \"" ).append(enrollmentDesignCompleteName).append( "\"" );
+		sb.append( ", designHidden: " ).append(designHidden);
 		sb.append(" }");
 		return sb.toString();
 	}

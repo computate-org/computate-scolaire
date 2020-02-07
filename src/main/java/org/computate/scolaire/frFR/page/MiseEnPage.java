@@ -834,6 +834,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: "children"
 	 * r: "designs"
 	 * r.enUS: "designs"
+	 * r: "/utilisateur"
+	 * r.enUS: "/user"
+	 * r: "ma page utilisateur"
+	 * r.enUS: "my user page"
 	 * r: EcoleGenPage.htmlSuggereEcoleGenPage
 	 * r.enUS: SchoolGenPage.htmlSuggestSchoolGenPage
 	 * r: AnneeGenPage.htmlSuggereAnneeGenPage
@@ -1019,6 +1023,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 						UtilisateurSite o = requeteSite_.getUtilisateurSite();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/utilisateur").a("class", "").f();
+								e("i").a("class", "far fa-user ").f().g("i");
+								sx("ma page utilisateur");
+							} g("a");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
 							e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
 							e("input")

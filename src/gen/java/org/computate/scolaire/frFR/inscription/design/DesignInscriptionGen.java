@@ -16,6 +16,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -41,7 +42,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.design.DesignInscription&fq=classeEtendGen_indexed_boolean:true">Trouver la classe enrollmentDesignCompleteName dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.design.DesignInscription&fq=classeEtendGen_indexed_boolean:true">Trouver la classe designHidden dans Solr</a>
  * <br/>
  **/
 public abstract class DesignInscriptionGen<DEV> extends Cluster {
@@ -1158,6 +1159,128 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////
+	// designCache //
+	/////////////////
+
+	/**	L'entité « designCache »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean designCache;
+	@JsonIgnore
+	public Couverture<Boolean> designCacheCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("designCache").o(designCache);
+
+	/**	<br/>L'entité « designCache »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.design.DesignInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designCache">Trouver l'entité designCache dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _designCache(Couverture<Boolean> c);
+
+	public Boolean getDesignCache() {
+		return designCache;
+	}
+
+	public void setDesignCache(Boolean designCache) {
+		this.designCache = designCache;
+		this.designCacheCouverture.dejaInitialise = true;
+	}
+	public DesignInscription setDesignCache(String o) {
+		this.designCache = Boolean.parseBoolean(o);
+		this.designCacheCouverture.dejaInitialise = true;
+		return (DesignInscription)this;
+	}
+	protected DesignInscription designCacheInit() {
+		if(!designCacheCouverture.dejaInitialise) {
+			_designCache(designCacheCouverture);
+			if(designCache == null)
+				setDesignCache(designCacheCouverture.o);
+		}
+		designCacheCouverture.dejaInitialise(true);
+		return (DesignInscription)this;
+	}
+
+	public Boolean solrDesignCache() {
+		return designCache;
+	}
+
+	public String strDesignCache() {
+		return designCache == null ? "" : designCache.toString();
+	}
+
+	public String jsonDesignCache() {
+		return designCache == null ? "" : designCache.toString();
+	}
+
+	public String nomAffichageDesignCache() {
+		return "caché";
+	}
+
+	public String htmTooltipDesignCache() {
+		return null;
+	}
+
+	public String htmDesignCache() {
+		return designCache == null ? "" : StringEscapeUtils.escapeHtml4(strDesignCache());
+	}
+
+	public void inputDesignCache(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_designCache")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_designCache");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
+			a("name", "setDesignCache");
+		} else {
+			a("class", "valeurDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
+			a("name", "designCache");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchDesignInscriptionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignCache', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designCache')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designCache')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getDesignCache() != null && getDesignCache())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmDesignCache(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionDesignCache").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", classeApiMethodeMethode, "_designCache").a("class", "").f().sx("caché").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignCache(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -1195,6 +1318,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		anneeNomCourtInit();
 		anneeNomCompletInit();
 		designInscriptionNomCompletInit();
+		designCacheInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1269,6 +1393,8 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				return oDesignInscription.anneeNomComplet;
 			case "designInscriptionNomComplet":
 				return oDesignInscription.designInscriptionNomComplet;
+			case "designCache":
+				return oDesignInscription.designCache;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -1325,6 +1451,10 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		switch(var) {
 			case "designInscriptionNomComplet":
 				setDesignInscriptionNomComplet(val);
+				sauvegardesDesignInscription.add(var);
+				return val;
+			case "designCache":
+				setDesignCache(val);
 				sauvegardesDesignInscription.add(var);
 				return val;
 			default:
@@ -1418,6 +1548,12 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				String designInscriptionNomComplet = (String)solrDocument.get("designInscriptionNomComplet_stored_string");
 				if(designInscriptionNomComplet != null)
 					oDesignInscription.setDesignInscriptionNomComplet(designInscriptionNomComplet);
+			}
+
+			if(sauvegardesDesignInscription.contains("designCache")) {
+				Boolean designCache = (Boolean)solrDocument.get("designCache_stored_boolean");
+				if(designCache != null)
+					oDesignInscription.setDesignCache(designCache);
 			}
 		}
 
@@ -1545,6 +1681,10 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			document.addField("designInscriptionNomComplet_indexed_string", designInscriptionNomComplet);
 			document.addField("designInscriptionNomComplet_stored_string", designInscriptionNomComplet);
 		}
+		if(designCache != null) {
+			document.addField("designCache_indexed_boolean", designCache);
+			document.addField("designCache_stored_boolean", designCache);
+		}
 		super.indexerCluster(document);
 
 	}
@@ -1592,6 +1732,8 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				return "anneeNomComplet_indexed_string";
 			case "designInscriptionNomComplet":
 				return "designInscriptionNomComplet_indexed_string";
+			case "designCache":
+				return "designCache_indexed_boolean";
 			default:
 				return Cluster.varIndexeCluster(entiteVar);
 		}
@@ -1669,6 +1811,10 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		if(designInscriptionNomComplet != null)
 			oDesignInscription.setDesignInscriptionNomComplet(designInscriptionNomComplet);
 
+		Boolean designCache = (Boolean)solrDocument.get("designCache_stored_boolean");
+		if(designCache != null)
+			oDesignInscription.setDesignCache(designCache);
+
 		super.stockerCluster(solrDocument);
 	}
 
@@ -1684,6 +1830,8 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				requeteApi.addVars("partHtmlCles");
 			if(!Objects.equals(designInscriptionNomComplet, original.getDesignInscriptionNomComplet()))
 				requeteApi.addVars("designInscriptionNomComplet");
+			if(!Objects.equals(designCache, original.getDesignCache()))
+				requeteApi.addVars("designCache");
 			super.requeteApiCluster();
 		}
 	}
@@ -1693,7 +1841,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), partHtmlCles, designInscriptionNomComplet);
+		return Objects.hash(super.hashCode(), partHtmlCles, designInscriptionNomComplet, designCache);
 	}
 
 	////////////
@@ -1708,7 +1856,8 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		DesignInscription that = (DesignInscription)o;
 		return super.equals(o)
 				&& Objects.equals( partHtmlCles, that.partHtmlCles )
-				&& Objects.equals( designInscriptionNomComplet, that.designInscriptionNomComplet );
+				&& Objects.equals( designInscriptionNomComplet, that.designInscriptionNomComplet )
+				&& Objects.equals( designCache, that.designCache );
 	}
 
 	//////////////
@@ -1721,6 +1870,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		sb.append("DesignInscription { ");
 		sb.append( "partHtmlCles: " ).append(partHtmlCles);
 		sb.append( ", designInscriptionNomComplet: \"" ).append(designInscriptionNomComplet).append( "\"" );
+		sb.append( ", designCache: " ).append(designCache);
 		sb.append(" }");
 		return sb.toString();
 	}

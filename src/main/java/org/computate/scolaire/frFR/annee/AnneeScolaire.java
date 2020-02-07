@@ -348,6 +348,11 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {}
 
 	/**
+	 * Var.enUS: yearYears
+	 */ 
+	protected void _anneesAnnee(List<AnneeScolaire> l) {}
+
+	/**
 	 * {@inheritDoc}
 	 * Var.enUS: yearShortName
 	 * Indexe: true

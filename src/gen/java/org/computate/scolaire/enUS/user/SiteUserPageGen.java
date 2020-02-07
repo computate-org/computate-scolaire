@@ -7,12 +7,16 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.user.SiteUserGenPage;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
+import java.util.List;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
@@ -23,6 +27,220 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  * <br/>
  **/
 public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
+
+	////////////////////////////
+	// enrollmentDesignSearch //
+	////////////////////////////
+
+	/**	L'entité « enrollmentDesignSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
+	 */
+	protected SearchList<EnrollmentDesign> enrollmentDesignSearch = new SearchList<EnrollmentDesign>();
+	@JsonIgnore
+	public Wrap<SearchList<EnrollmentDesign>> enrollmentDesignSearchWrap = new Wrap<SearchList<EnrollmentDesign>>().p(this).c(SearchList.class).var("enrollmentDesignSearch").o(enrollmentDesignSearch);
+
+	/**	<br/>L'entité « enrollmentDesignSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDesignSearch">Trouver l'entité enrollmentDesignSearch dans Solr</a>
+	 * <br/>
+	 * @param enrollmentDesignSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentDesignSearch(SearchList<EnrollmentDesign> l);
+
+	public SearchList<EnrollmentDesign> getEnrollmentDesignSearch() {
+		return enrollmentDesignSearch;
+	}
+
+	public void setEnrollmentDesignSearch(SearchList<EnrollmentDesign> enrollmentDesignSearch) {
+		this.enrollmentDesignSearch = enrollmentDesignSearch;
+		this.enrollmentDesignSearchWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage enrollmentDesignSearchInit() {
+		if(!enrollmentDesignSearchWrap.alreadyInitialized) {
+			_enrollmentDesignSearch(enrollmentDesignSearch);
+		}
+		enrollmentDesignSearch.initDeepForClass(siteRequest_);
+		enrollmentDesignSearchWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	///////////////////////
+	// enrollmentDesigns //
+	///////////////////////
+
+	/**	L'entité « enrollmentDesigns »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected List<EnrollmentDesign> enrollmentDesigns;
+	@JsonIgnore
+	public Wrap<List<EnrollmentDesign>> enrollmentDesignsWrap = new Wrap<List<EnrollmentDesign>>().p(this).c(List.class).var("enrollmentDesigns").o(enrollmentDesigns);
+
+	/**	<br/>L'entité « enrollmentDesigns »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDesigns">Trouver l'entité enrollmentDesigns dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentDesigns(Wrap<List<EnrollmentDesign>> c);
+
+	public List<EnrollmentDesign> getEnrollmentDesigns() {
+		return enrollmentDesigns;
+	}
+
+	public void setEnrollmentDesigns(List<EnrollmentDesign> enrollmentDesigns) {
+		this.enrollmentDesigns = enrollmentDesigns;
+		this.enrollmentDesignsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addEnrollmentDesigns(EnrollmentDesign...objets) {
+		for(EnrollmentDesign o : objets) {
+			addEnrollmentDesigns(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addEnrollmentDesigns(EnrollmentDesign o) {
+		if(o != null && !enrollmentDesigns.contains(o))
+			this.enrollmentDesigns.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage enrollmentDesignsInit() {
+		if(!enrollmentDesignsWrap.alreadyInitialized) {
+			_enrollmentDesigns(enrollmentDesignsWrap);
+			if(enrollmentDesigns == null)
+				setEnrollmentDesigns(enrollmentDesignsWrap.o);
+		}
+		enrollmentDesignsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	////////////////
+	// yearSearch //
+	////////////////
+
+	/**	L'entité « yearSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 */
+	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
+
+	/**	<br/>L'entité « yearSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	 * <br/>
+	 * @param yearSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _yearSearch(SearchList<SchoolYear> l);
+
+	public SearchList<SchoolYear> getYearSearch() {
+		return yearSearch;
+	}
+
+	public void setYearSearch(SearchList<SchoolYear> yearSearch) {
+		this.yearSearch = yearSearch;
+		this.yearSearchWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage yearSearchInit() {
+		if(!yearSearchWrap.alreadyInitialized) {
+			_yearSearch(yearSearch);
+		}
+		yearSearch.initDeepForClass(siteRequest_);
+		yearSearchWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	///////////
+	// years //
+	///////////
+
+	/**	L'entité « years »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected List<SchoolYear> years;
+	@JsonIgnore
+	public Wrap<List<SchoolYear>> yearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("years").o(years);
+
+	/**	<br/>L'entité « years »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:years">Trouver l'entité years dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _years(Wrap<List<SchoolYear>> c);
+
+	public List<SchoolYear> getYears() {
+		return years;
+	}
+
+	public void setYears(List<SchoolYear> years) {
+		this.years = years;
+		this.yearsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addYears(SchoolYear...objets) {
+		for(SchoolYear o : objets) {
+			addYears(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addYears(SchoolYear o) {
+		if(o != null && !years.contains(o))
+			this.years.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage yearsInit() {
+		if(!yearsWrap.alreadyInitialized) {
+			_years(yearsWrap);
+			if(years == null)
+				setYears(yearsWrap.o);
+		}
+		yearsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	/////////////////
+	// schoolYears //
+	/////////////////
+
+	/**	L'entité « schoolYears »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
+	 */
+	protected List<SchoolYear> schoolYears = new java.util.ArrayList<org.computate.scolaire.enUS.year.SchoolYear>();
+	@JsonIgnore
+	public Wrap<List<SchoolYear>> schoolYearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("schoolYears").o(schoolYears);
+
+	/**	<br/>L'entité « schoolYears »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolYears">Trouver l'entité schoolYears dans Solr</a>
+	 * <br/>
+	 * @param schoolYears est l'entité déjà construit. 
+	 **/
+	protected abstract void _schoolYears(List<SchoolYear> l);
+
+	public List<SchoolYear> getSchoolYears() {
+		return schoolYears;
+	}
+
+	public void setSchoolYears(List<SchoolYear> schoolYears) {
+		this.schoolYears = schoolYears;
+		this.schoolYearsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addSchoolYears(SchoolYear...objets) {
+		for(SchoolYear o : objets) {
+			addSchoolYears(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addSchoolYears(SchoolYear o) {
+		if(o != null && !schoolYears.contains(o))
+			this.schoolYears.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage schoolYearsInit() {
+		if(!schoolYearsWrap.alreadyInitialized) {
+			_schoolYears(schoolYears);
+		}
+		schoolYearsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
 
 	//////////////
 	// initDeep //
@@ -45,6 +263,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	}
 
 	public void initSiteUserPage() {
+		enrollmentDesignSearchInit();
+		enrollmentDesignsInit();
+		yearSearchInit();
+		yearsInit();
+		schoolYearsInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -57,6 +280,10 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 
 	public void siteRequestSiteUserPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestSiteUserGenPage(siteRequest_);
+		if(enrollmentDesignSearch != null)
+			enrollmentDesignSearch.setSiteRequest_(siteRequest_);
+		if(yearSearch != null)
+			yearSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -83,6 +310,16 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public Object obtainSiteUserPage(String var) {
 		SiteUserPage oSiteUserPage = (SiteUserPage)this;
 		switch(var) {
+			case "enrollmentDesignSearch":
+				return oSiteUserPage.enrollmentDesignSearch;
+			case "enrollmentDesigns":
+				return oSiteUserPage.enrollmentDesigns;
+			case "yearSearch":
+				return oSiteUserPage.yearSearch;
+			case "years":
+				return oSiteUserPage.years;
+			case "schoolYears":
+				return oSiteUserPage.schoolYears;
 			default:
 				return super.obtainSiteUserGenPage(var);
 		}

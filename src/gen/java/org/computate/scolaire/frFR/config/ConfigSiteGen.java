@@ -1,18 +1,22 @@
 package org.computate.scolaire.frFR.config;
 
 import org.apache.commons.configuration2.INIConfiguration;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -557,6 +561,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « sitePort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer sitePort;
 	@JsonIgnore
 	public Couverture<Integer> sitePortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
@@ -1478,6 +1483,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcTailleMaxPiscine »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcTailleMaxPiscine;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTailleMaxPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMaxPiscine").o(jdbcTailleMaxPiscine);
@@ -1545,6 +1551,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcTailleInitialePiscine »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcTailleInitialePiscine;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTailleInitialePiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
@@ -1612,6 +1619,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcTailleMinPiscine »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcTailleMinPiscine;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTailleMinPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMinPiscine").o(jdbcTailleMinPiscine);
@@ -1679,6 +1687,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcMaxDeclarations »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMaxDeclarations;
 	@JsonIgnore
 	public Couverture<Integer> jdbcMaxDeclarationsCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarations").o(jdbcMaxDeclarations);
@@ -1746,6 +1755,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcMaxDeclarationsParConnexion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMaxDeclarationsParConnexion;
 	@JsonIgnore
 	public Couverture<Integer> jdbcMaxDeclarationsParConnexionCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarationsParConnexion").o(jdbcMaxDeclarationsParConnexion);
@@ -1813,6 +1823,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcTempsInactiviteMax »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcTempsInactiviteMax;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTempsInactiviteMaxCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTempsInactiviteMax").o(jdbcTempsInactiviteMax);
@@ -2551,6 +2562,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « nombreExecuteurs »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer nombreExecuteurs;
 	@JsonIgnore
 	public Couverture<Integer> nombreExecuteursCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
@@ -3350,6 +3362,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailPort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer mailPort;
 	@JsonIgnore
 	public Couverture<Integer> mailPortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("mailPort").o(mailPort);

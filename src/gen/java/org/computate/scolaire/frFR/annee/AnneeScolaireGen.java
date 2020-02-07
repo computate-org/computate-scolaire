@@ -21,6 +21,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -149,7 +150,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				.a("name", "setEcoleCle")
 				.a("id", classeApiMethodeMethode, "_ecoleCle")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereAnneeScolaireEcoleCle($(this).val() ? rechercherEcoleFiltres($('#suggereAnneeScolaireEcoleCle')) : [{'name':'fq','value':'anneeCles:", pk, "'}], $('#listAnneeScolaireEcoleCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereAnneeScolaireEcoleCle($(this).val() ? rechercherEcoleFiltres($('#suggere", classeApiMethodeMethode, "AnneeScolaireEcoleCle')) : [{'name':'fq','value':'anneeCles:", pk, "'}], $('#listAnneeScolaireEcoleCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -158,7 +159,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereAnneeScolaireEcoleCle").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireEcoleCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=anneeCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
@@ -447,7 +448,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				.a("name", "setSaisonCles")
 				.a("id", classeApiMethodeMethode, "_saisonCles")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereAnneeScolaireSaisonCles($(this).val() ? rechercherSaisonScolaireFiltres($('#suggereAnneeScolaireSaisonCles')) : [{'name':'fq','value':'anneeCle:", pk, "'}], $('#listAnneeScolaireSaisonCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereAnneeScolaireSaisonCles($(this).val() ? rechercherSaisonScolaireFiltres($('#suggere", classeApiMethodeMethode, "AnneeScolaireSaisonCles')) : [{'name':'fq','value':'anneeCle:", pk, "'}], $('#listAnneeScolaireSaisonCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -456,7 +457,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereAnneeScolaireSaisonCles").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSaisonCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=anneeCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -1341,7 +1342,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereAnneeScolaireAnneeDebut").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAnneeDebut").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_anneeDebut").a("class", "").f().sx("début de l'année").g("label");
@@ -1464,7 +1465,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereAnneeScolaireAnneeFin").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAnneeFin").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_anneeFin").a("class", "").f().sx("le fin de l'année").g("label");
@@ -1598,7 +1599,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereAnneeScolaireAnneeFraisInscription").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAnneeFraisInscription").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_anneeFraisInscription").a("class", "").f().sx("frais d'inscription").g("label");
@@ -1624,6 +1625,52 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	/////////////////
+	// anneesAnnee //
+	/////////////////
+
+	/**	L'entité « anneesAnnee »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<AnneeScolaire>(). 
+	 */
+	protected List<AnneeScolaire> anneesAnnee = new java.util.ArrayList<org.computate.scolaire.frFR.annee.AnneeScolaire>();
+	@JsonIgnore
+	public Couverture<List<AnneeScolaire>> anneesAnneeCouverture = new Couverture<List<AnneeScolaire>>().p(this).c(List.class).var("anneesAnnee").o(anneesAnnee);
+
+	/**	<br/>L'entité « anneesAnnee »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<AnneeScolaire>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneesAnnee">Trouver l'entité anneesAnnee dans Solr</a>
+	 * <br/>
+	 * @param anneesAnnee est l'entité déjà construit. 
+	 **/
+	protected abstract void _anneesAnnee(List<AnneeScolaire> l);
+
+	public List<AnneeScolaire> getAnneesAnnee() {
+		return anneesAnnee;
+	}
+
+	public void setAnneesAnnee(List<AnneeScolaire> anneesAnnee) {
+		this.anneesAnnee = anneesAnnee;
+		this.anneesAnneeCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire addAnneesAnnee(AnneeScolaire...objets) {
+		for(AnneeScolaire o : objets) {
+			addAnneesAnnee(o);
+		}
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire addAnneesAnnee(AnneeScolaire o) {
+		if(o != null && !anneesAnnee.contains(o))
+			this.anneesAnnee.add(o);
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire anneesAnneeInit() {
+		if(!anneesAnneeCouverture.dejaInitialise) {
+			_anneesAnnee(anneesAnnee);
+		}
+		anneesAnneeCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
 	}
 
 	///////////////////
@@ -1789,6 +1836,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		anneeDebutInit();
 		anneeFinInit();
 		anneeFraisInscriptionInit();
+		anneesAnneeInit();
 		anneeNomCourtInit();
 		anneeNomCompletInit();
 	}
@@ -1873,6 +1921,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.anneeFin;
 			case "anneeFraisInscription":
 				return oAnneeScolaire.anneeFraisInscription;
+			case "anneesAnnee":
+				return oAnneeScolaire.anneesAnnee;
 			case "anneeNomCourt":
 				return oAnneeScolaire.anneeNomCourt;
 			case "anneeNomComplet":

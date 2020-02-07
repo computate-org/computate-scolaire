@@ -118,6 +118,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("Page");
+			o.htmDesignCache("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Page");
@@ -137,6 +138,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("POST");
+			o.htmDesignCache("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("POST");
@@ -154,6 +156,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("PUT");
+			o.htmDesignCache("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PUT");
@@ -171,6 +174,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("PATCH");
+			o.htmDesignCache("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PATCH");
@@ -190,6 +194,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("Recherche");
+			o.htmDesignCache("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Recherche");

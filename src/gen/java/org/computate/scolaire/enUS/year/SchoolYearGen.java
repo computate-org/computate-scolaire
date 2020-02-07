@@ -21,6 +21,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -147,7 +148,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				.a("name", "setSchoolKey")
 				.a("id", classApiMethodMethod, "_schoolKey")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($('#suggestSchoolYearSchoolKey')) : [{'name':'fq','value':'yearKeys:", pk, "'}], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($('#suggest", classApiMethodMethod, "SchoolYearSchoolKey')) : [{'name':'fq','value':'yearKeys:", pk, "'}], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -156,7 +157,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolYearSchoolKey").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearSchoolKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/school?fq=yearKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
@@ -444,7 +445,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				.a("name", "setSeasonKeys")
 				.a("id", classApiMethodMethod, "_seasonKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($('#suggestSchoolYearSeasonKeys')) : [{'name':'fq','value':'yearKey:", pk, "'}], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolYearSeasonKeys')) : [{'name':'fq','value':'yearKey:", pk, "'}], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -453,7 +454,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolYearSeasonKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearSeasonKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/season?fq=yearKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -1337,7 +1338,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolYearYearStart").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearYearStart").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classApiMethodMethod, "_yearStart").a("class", "").f().sx("start of year").g("label");
@@ -1459,7 +1460,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolYearYearEnd").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearYearEnd").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classApiMethodMethod, "_yearEnd").a("class", "").f().sx("end of year").g("label");
@@ -1592,7 +1593,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolYearYearEnrollmentFee").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearYearEnrollmentFee").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classApiMethodMethod, "_yearEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
@@ -1618,6 +1619,52 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	///////////////
+	// yearYears //
+	///////////////
+
+	/**	L'entité « yearYears »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
+	 */
+	protected List<SchoolYear> yearYears = new java.util.ArrayList<org.computate.scolaire.enUS.year.SchoolYear>();
+	@JsonIgnore
+	public Wrap<List<SchoolYear>> yearYearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("yearYears").o(yearYears);
+
+	/**	<br/>L'entité « yearYears »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearYears">Trouver l'entité yearYears dans Solr</a>
+	 * <br/>
+	 * @param yearYears est l'entité déjà construit. 
+	 **/
+	protected abstract void _yearYears(List<SchoolYear> l);
+
+	public List<SchoolYear> getYearYears() {
+		return yearYears;
+	}
+
+	public void setYearYears(List<SchoolYear> yearYears) {
+		this.yearYears = yearYears;
+		this.yearYearsWrap.alreadyInitialized = true;
+	}
+	public SchoolYear addYearYears(SchoolYear...objets) {
+		for(SchoolYear o : objets) {
+			addYearYears(o);
+		}
+		return (SchoolYear)this;
+	}
+	public SchoolYear addYearYears(SchoolYear o) {
+		if(o != null && !yearYears.contains(o))
+			this.yearYears.add(o);
+		return (SchoolYear)this;
+	}
+	protected SchoolYear yearYearsInit() {
+		if(!yearYearsWrap.alreadyInitialized) {
+			_yearYears(yearYears);
+		}
+		yearYearsWrap.alreadyInitialized(true);
+		return (SchoolYear)this;
 	}
 
 	///////////////////
@@ -1783,6 +1830,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		yearStartInit();
 		yearEndInit();
 		yearEnrollmentFeeInit();
+		yearYearsInit();
 		yearShortNameInit();
 		yearCompleteNameInit();
 	}
@@ -1867,6 +1915,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.yearEnd;
 			case "yearEnrollmentFee":
 				return oSchoolYear.yearEnrollmentFee;
+			case "yearYears":
+				return oSchoolYear.yearYears;
 			case "yearShortName":
 				return oSchoolYear.yearShortName;
 			case "yearCompleteName":

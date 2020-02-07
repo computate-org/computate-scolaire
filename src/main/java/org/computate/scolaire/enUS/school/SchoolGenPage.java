@@ -456,7 +456,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "putSchool($('#putSchoolFormValues')); ")
+							.a("onclick", "putSchool($('#putSchoolFormValues'), ", Optional.ofNullable(school).map(School::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the schools")
 						.g("button");
 
@@ -488,7 +488,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "patchSchool($('#patchSchoolFormFilters'), $('#patchSchoolFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchool($('#patchSchoolFormFilters'), $('#patchSchoolFormValues'), ", Optional.ofNullable(school).map(School::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the schools")
 						.g("button");
 

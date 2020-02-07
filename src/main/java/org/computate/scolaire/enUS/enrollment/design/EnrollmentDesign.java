@@ -88,6 +88,10 @@ public class EnrollmentDesign extends EnrollmentDesignGen<Cluster> {
 		c.o(o);
 	}
 
+	protected void _designHidden(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(enrollmentDesignCompleteName);

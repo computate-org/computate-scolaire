@@ -443,7 +443,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-							.a("onclick", "putSchoolYear($('#putSchoolYearFormValues')); ")
+							.a("onclick", "putSchoolYear($('#putSchoolYearFormValues'), ", Optional.ofNullable(schoolYear).map(SchoolYear::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the years")
 						.g("button");
 
@@ -475,7 +475,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-							.a("onclick", "patchSchoolYear($('#patchSchoolYearFormFilters'), $('#patchSchoolYearFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolYear($('#patchSchoolYearFormFilters'), $('#patchSchoolYearFormValues'), ", Optional.ofNullable(schoolYear).map(SchoolYear::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the years")
 						.g("button");
 

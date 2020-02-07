@@ -596,7 +596,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		SiteUser s = (SiteUser)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSiteUserUserReceiveEmails").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserUserReceiveEmails").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
 							e("label").a("for", classApiMethodMethod, "_userReceiveEmails").a("class", "").f().sx("receive email").g("label");
@@ -718,7 +718,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		SiteUser s = (SiteUser)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSiteUserSeeArchived").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserSeeArchived").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
 							e("label").a("for", classApiMethodMethod, "_seeArchived").a("class", "").f().sx("see archived").g("label");
@@ -840,7 +840,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		SiteUser s = (SiteUser)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSiteUserSeeDeleted").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserSeeDeleted").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
 							e("label").a("for", classApiMethodMethod, "_seeDeleted").a("class", "").f().sx("see deleted").g("label");

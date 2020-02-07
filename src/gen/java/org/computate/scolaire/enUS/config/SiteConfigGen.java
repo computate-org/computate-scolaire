@@ -1,18 +1,22 @@
 package org.computate.scolaire.enUS.config;
 
 import org.apache.commons.configuration2.INIConfiguration;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -576,6 +580,7 @@ The host name of the site.
 The port of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer sitePort;
 	@JsonIgnore
 	public Wrap<Integer> sitePortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
@@ -1527,6 +1532,7 @@ The password for the database.
 The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMaxPoolSize;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxPoolSize").o(jdbcMaxPoolSize);
@@ -1596,6 +1602,7 @@ The max pool size for the database.
 The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcInitialPoolSize;
 	@JsonIgnore
 	public Wrap<Integer> jdbcInitialPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcInitialPoolSize").o(jdbcInitialPoolSize);
@@ -1665,6 +1672,7 @@ The max pool size for the database.
 The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMinPoolSize;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMinPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMinPoolSize").o(jdbcMinPoolSize);
@@ -1734,6 +1742,7 @@ The max pool size for the database.
 The max statements for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMaxStatements;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatements").o(jdbcMaxStatements);
@@ -1803,6 +1812,7 @@ The max statements for the database.
 The max statements per connection for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMaxStatementsPerConnection;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsPerConnectionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatementsPerConnection").o(jdbcMaxStatementsPerConnection);
@@ -1872,6 +1882,7 @@ The max statements per connection for the database.
 The max idle time for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer jdbcMaxIdleTime;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxIdleTimeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxIdleTime").o(jdbcMaxIdleTime);
@@ -2634,6 +2645,7 @@ The email address for the administrator of the site for the error reports.
 The number of executors for executing background tasks in the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer numberExecutors;
 	@JsonIgnore
 	public Wrap<Integer> numberExecutorsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("numberExecutors").o(numberExecutors);
@@ -3456,6 +3468,7 @@ The base URL of your static files.
 	/**	L'entité « emailPort »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Integer emailPort;
 	@JsonIgnore
 	public Wrap<Integer> emailPortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("emailPort").o(emailPort);

@@ -95,6 +95,8 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {}
 
+	protected void _yearYears(List<SchoolYear> l) {}
+
 	protected void _yearShortName(Wrap<String> c) {
 		String o = "year";
 

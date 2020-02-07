@@ -317,6 +317,21 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: designHidden
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 2
+	 * NomAffichage.frFR: caché
+	 * NomAffichage.enUS: hidden
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designCache(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: _objectTitle
 	 * r: designInscriptionNomComplet
 	 * r.enUS: enrollmentDesignCompleteName

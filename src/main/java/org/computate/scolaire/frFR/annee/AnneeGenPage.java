@@ -444,7 +444,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-							.a("onclick", "putAnneeScolaire($('#putAnneeScolaireFormulaireValeurs')); ")
+							.a("onclick", "putAnneeScolaire($('#putAnneeScolaireFormulaireValeurs'), ", Optional.ofNullable(anneeScolaire).map(AnneeScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des années")
 						.g("button");
 
@@ -476,7 +476,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-							.a("onclick", "patchAnneeScolaire($('#patchAnneeScolaireFormulaireFiltres'), $('#patchAnneeScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchAnneeScolaire($('#patchAnneeScolaireFormulaireFiltres'), $('#patchAnneeScolaireFormulaireValeurs'), ", Optional.ofNullable(anneeScolaire).map(AnneeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des années")
 						.g("button");
 

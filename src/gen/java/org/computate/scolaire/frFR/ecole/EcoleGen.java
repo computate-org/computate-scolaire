@@ -230,7 +230,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				.a("name", "setAnneeCles")
 				.a("id", classeApiMethodeMethode, "_anneeCles")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($('#suggereEcoleAnneeCles')) : [{'name':'fq','value':'ecoleCle:", pk, "'}], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($('#suggere", classeApiMethodeMethode, "EcoleAnneeCles')) : [{'name':'fq','value':'ecoleCle:", pk, "'}], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -239,7 +239,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEcoleAnneeCles").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleAnneeCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=ecoleCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
@@ -928,7 +928,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEcoleEcoleNom").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleNom").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
 							e("label").a("for", classeApiMethodeMethode, "_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
@@ -1044,7 +1044,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEcoleEcoleNumeroTelephone").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleNumeroTelephone").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
 							e("label").a("for", classeApiMethodeMethode, "_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
@@ -1160,7 +1160,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEcoleEcoleAdministrateurNom").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleAdministrateurNom").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
 							e("label").a("for", classeApiMethodeMethode, "_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
@@ -1276,7 +1276,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEcoleEcoleEmplacement").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleEmplacement").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
 							e("label").a("for", classeApiMethodeMethode, "_ecoleEmplacement").a("class", "").f().sx("l'emplacement").g("label");
@@ -1390,7 +1390,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEcoleEcoleAddresse").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleAddresse").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
 							e("label").a("for", classeApiMethodeMethode, "_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
