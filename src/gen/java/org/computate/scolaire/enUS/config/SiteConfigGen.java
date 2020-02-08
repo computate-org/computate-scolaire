@@ -3907,6 +3907,128 @@ The default timezone of the site.
 		return siteZone == null ? "" : StringEscapeUtils.escapeHtml4(strSiteZone());
 	}
 
+	/////////////////////////
+	// authorizeApiLoginId //
+	/////////////////////////
+
+	/**	L'entité « authorizeApiLoginId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String authorizeApiLoginId;
+	@JsonIgnore
+	public Wrap<String> authorizeApiLoginIdWrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId").o(authorizeApiLoginId);
+
+	/**	<br/>L'entité « authorizeApiLoginId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId">Trouver l'entité authorizeApiLoginId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeApiLoginId(Wrap<String> c);
+
+	public String getAuthorizeApiLoginId() {
+		return authorizeApiLoginId;
+	}
+
+	public void setAuthorizeApiLoginId(String authorizeApiLoginId) {
+		this.authorizeApiLoginId = authorizeApiLoginId;
+		this.authorizeApiLoginIdWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig authorizeApiLoginIdInit() {
+		if(!authorizeApiLoginIdWrap.alreadyInitialized) {
+			_authorizeApiLoginId(authorizeApiLoginIdWrap);
+			if(authorizeApiLoginId == null)
+				setAuthorizeApiLoginId(authorizeApiLoginIdWrap.o);
+		}
+		authorizeApiLoginIdWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrAuthorizeApiLoginId() {
+		return authorizeApiLoginId;
+	}
+
+	public String strAuthorizeApiLoginId() {
+		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
+	}
+
+	public String jsonAuthorizeApiLoginId() {
+		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
+	}
+
+	public String nomAffichageAuthorizeApiLoginId() {
+		return null;
+	}
+
+	public String htmTooltipAuthorizeApiLoginId() {
+		return null;
+	}
+
+	public String htmAuthorizeApiLoginId() {
+		return authorizeApiLoginId == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeApiLoginId());
+	}
+
+	/////////////////////////////
+	// authorizeTransactionKey //
+	/////////////////////////////
+
+	/**	L'entité « authorizeTransactionKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String authorizeTransactionKey;
+	@JsonIgnore
+	public Wrap<String> authorizeTransactionKeyWrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey").o(authorizeTransactionKey);
+
+	/**	<br/>L'entité « authorizeTransactionKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey">Trouver l'entité authorizeTransactionKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeTransactionKey(Wrap<String> c);
+
+	public String getAuthorizeTransactionKey() {
+		return authorizeTransactionKey;
+	}
+
+	public void setAuthorizeTransactionKey(String authorizeTransactionKey) {
+		this.authorizeTransactionKey = authorizeTransactionKey;
+		this.authorizeTransactionKeyWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig authorizeTransactionKeyInit() {
+		if(!authorizeTransactionKeyWrap.alreadyInitialized) {
+			_authorizeTransactionKey(authorizeTransactionKeyWrap);
+			if(authorizeTransactionKey == null)
+				setAuthorizeTransactionKey(authorizeTransactionKeyWrap.o);
+		}
+		authorizeTransactionKeyWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrAuthorizeTransactionKey() {
+		return authorizeTransactionKey;
+	}
+
+	public String strAuthorizeTransactionKey() {
+		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
+	}
+
+	public String jsonAuthorizeTransactionKey() {
+		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
+	}
+
+	public String nomAffichageAuthorizeTransactionKey() {
+		return null;
+	}
+
+	public String htmTooltipAuthorizeTransactionKey() {
+		return null;
+	}
+
+	public String htmAuthorizeTransactionKey() {
+		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -3987,6 +4109,8 @@ The default timezone of the site.
 		emailAuthInit();
 		emailSslInit();
 		siteZoneInit();
+		authorizeApiLoginIdInit();
+		authorizeTransactionKeyInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -4135,6 +4259,10 @@ The default timezone of the site.
 				return oSiteConfig.emailSsl;
 			case "siteZone":
 				return oSiteConfig.siteZone;
+			case "authorizeApiLoginId":
+				return oSiteConfig.authorizeApiLoginId;
+			case "authorizeTransactionKey":
+				return oSiteConfig.authorizeTransactionKey;
 			default:
 				return null;
 		}

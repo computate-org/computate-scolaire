@@ -83,6 +83,18 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _paymentBy(Wrap<String> c) {
+	}
+
+	protected void _transactionId(Wrap<String> c) {
+	}
+
+	protected void _customerProfileId(Wrap<String> c) {
+	}
+
+	protected void _transactionStatus(Wrap<String> c) {
+	}
+
 	protected void _paymentCompleteName(Wrap<String> c) {
 		NumberFormat f = NumberFormat.getCurrencyInstance(Locale.US);
 		f.setMaximumFractionDigits(0);

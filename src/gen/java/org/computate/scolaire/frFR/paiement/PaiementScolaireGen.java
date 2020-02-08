@@ -48,7 +48,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe paymentCompleteName dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe paymentDate dans Solr</a>
  * <br/>
  **/
 public abstract class PaiementScolaireGen<DEV> extends Cluster {
@@ -682,7 +682,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				.a("name", "setInscriptionCles")
 				.a("id", classeApiMethodeMethode, "_inscriptionCles")
 				.a("autocomplete", "off")
-				.a("oninput", "suggerePaiementScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggerePaiementScolaireInscriptionCles')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggerePaiementScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCles')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -691,7 +691,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePaiementScolaireInscriptionCles").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=paiementCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
@@ -1387,7 +1387,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePaiementScolairePaiementDescription").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementDescription").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_paiementDescription").a("class", "").f().sx("description").g("label");
@@ -1512,7 +1512,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePaiementScolairePaiementDate").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_paiementDate").a("class", "").f().sx("date de paiement").g("label");
@@ -1645,7 +1645,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePaiementScolairePaiementMontant").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementMontant").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_paiementMontant").a("class", "").f().sx("montant").g("label");
@@ -1778,7 +1778,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePaiementScolairePaiementEspeces").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementEspeces").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_paiementEspeces").a("class", "").f().sx("espèces").g("label");
@@ -1900,7 +1900,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggerePaiementScolairePaiementCheque").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementCheque").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_paiementCheque").a("class", "").f().sx("chèque").g("label");
@@ -1972,7 +1972,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaiementSysteme() {
-		return "authorisé";
+		return "authorize.net";
 	}
 
 	public String htmTooltipPaiementSysteme() {
@@ -1981,6 +1981,526 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public String htmPaiementSysteme() {
 		return paiementSysteme == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementSysteme());
+	}
+
+	public void inputPaiementSysteme(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_paiementSysteme")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_paiementSysteme");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setPaiementSysteme inputPaiementScolaire", pk, "PaiementSysteme w3-input w3-border ");
+			a("name", "setPaiementSysteme");
+		} else {
+			a("class", "valeurPaiementSysteme inputPaiementScolaire", pk, "PaiementSysteme w3-input w3-border ");
+			a("name", "paiementSysteme");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementSysteme', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementSysteme')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementSysteme')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getPaiementSysteme() != null && getPaiementSysteme())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmPaiementSysteme(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementSysteme").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_paiementSysteme").a("class", "").f().sx("authorize.net").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaiementSysteme(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// paiementPar //
+	/////////////////
+
+	/**	L'entité « paiementPar »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String paiementPar;
+	@JsonIgnore
+	public Couverture<String> paiementParCouverture = new Couverture<String>().p(this).c(String.class).var("paiementPar").o(paiementPar);
+
+	/**	<br/>L'entité « paiementPar »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementPar">Trouver l'entité paiementPar dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementPar(Couverture<String> c);
+
+	public String getPaiementPar() {
+		return paiementPar;
+	}
+
+	public void setPaiementPar(String paiementPar) {
+		this.paiementPar = paiementPar;
+		this.paiementParCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire paiementParInit() {
+		if(!paiementParCouverture.dejaInitialise) {
+			_paiementPar(paiementParCouverture);
+			if(paiementPar == null)
+				setPaiementPar(paiementParCouverture.o);
+		}
+		paiementParCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrPaiementPar() {
+		return paiementPar;
+	}
+
+	public String strPaiementPar() {
+		return paiementPar == null ? "" : paiementPar;
+	}
+
+	public String jsonPaiementPar() {
+		return paiementPar == null ? "" : paiementPar;
+	}
+
+	public String nomAffichagePaiementPar() {
+		return "paiement par";
+	}
+
+	public String htmTooltipPaiementPar() {
+		return null;
+	}
+
+	public String htmPaiementPar() {
+		return paiementPar == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementPar());
+	}
+
+	public void inputPaiementPar(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "paiement par")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_paiementPar");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementPar inputPaiementScolaire", pk, "PaiementPar w3-input w3-border ");
+				a("name", "setPaiementPar");
+			} else {
+				a("class", "valeurPaiementPar w3-input w3-border inputPaiementScolaire", pk, "PaiementPar w3-input w3-border ");
+				a("name", "paiementPar");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementPar', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementPar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementPar')); }); ");
+			}
+			a("value", strPaiementPar())
+		.fg();
+
+	}
+
+	public void htmPaiementPar(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementPar").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_paiementPar").a("class", "").f().sx("paiement par").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaiementPar(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementPar')); $('#", classeApiMethodeMethode, "_paiementPar').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementPar', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementPar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementPar')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////
+	// transactionId //
+	///////////////////
+
+	/**	L'entité « transactionId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String transactionId;
+	@JsonIgnore
+	public Couverture<String> transactionIdCouverture = new Couverture<String>().p(this).c(String.class).var("transactionId").o(transactionId);
+
+	/**	<br/>L'entité « transactionId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:transactionId">Trouver l'entité transactionId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _transactionId(Couverture<String> c);
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+		this.transactionIdCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire transactionIdInit() {
+		if(!transactionIdCouverture.dejaInitialise) {
+			_transactionId(transactionIdCouverture);
+			if(transactionId == null)
+				setTransactionId(transactionIdCouverture.o);
+		}
+		transactionIdCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrTransactionId() {
+		return transactionId;
+	}
+
+	public String strTransactionId() {
+		return transactionId == null ? "" : transactionId;
+	}
+
+	public String jsonTransactionId() {
+		return transactionId == null ? "" : transactionId;
+	}
+
+	public String nomAffichageTransactionId() {
+		return "transaction ID";
+	}
+
+	public String htmTooltipTransactionId() {
+		return null;
+	}
+
+	public String htmTransactionId() {
+		return transactionId == null ? "" : StringEscapeUtils.escapeHtml4(strTransactionId());
+	}
+
+	public void inputTransactionId(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "transaction ID")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_transactionId");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTransactionId inputPaiementScolaire", pk, "TransactionId w3-input w3-border ");
+				a("name", "setTransactionId");
+			} else {
+				a("class", "valeurTransactionId w3-input w3-border inputPaiementScolaire", pk, "TransactionId w3-input w3-border ");
+				a("name", "transactionId");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionId')); }); ");
+			}
+			a("value", strTransactionId())
+		.fg();
+
+	}
+
+	public void htmTransactionId(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireTransactionId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_transactionId").a("class", "").f().sx("transaction ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputTransactionId(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_transactionId')); $('#", classeApiMethodeMethode, "_transactionId').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setTransactionId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
+	// customerProfileId //
+	///////////////////////
+
+	/**	L'entité « customerProfileId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String customerProfileId;
+	@JsonIgnore
+	public Couverture<String> customerProfileIdCouverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+
+	/**	<br/>L'entité « customerProfileId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId(Couverture<String> c);
+
+	public String getCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public void setCustomerProfileId(String customerProfileId) {
+		this.customerProfileId = customerProfileId;
+		this.customerProfileIdCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire customerProfileIdInit() {
+		if(!customerProfileIdCouverture.dejaInitialise) {
+			_customerProfileId(customerProfileIdCouverture);
+			if(customerProfileId == null)
+				setCustomerProfileId(customerProfileIdCouverture.o);
+		}
+		customerProfileIdCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public String strCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String jsonCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String nomAffichageCustomerProfileId() {
+		return "customer profile ID";
+	}
+
+	public String htmTooltipCustomerProfileId() {
+		return null;
+	}
+
+	public String htmCustomerProfileId() {
+		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	}
+
+	public void inputCustomerProfileId(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "customer profile ID")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_customerProfileId");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setCustomerProfileId inputPaiementScolaire", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "setCustomerProfileId");
+			} else {
+				a("class", "valeurCustomerProfileId w3-input w3-border inputPaiementScolaire", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "customerProfileId");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
+			}
+			a("value", strCustomerProfileId())
+		.fg();
+
+	}
+
+	public void htmCustomerProfileId(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireCustomerProfileId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
+	// transactionStatus //
+	///////////////////////
+
+	/**	L'entité « transactionStatus »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String transactionStatus;
+	@JsonIgnore
+	public Couverture<String> transactionStatusCouverture = new Couverture<String>().p(this).c(String.class).var("transactionStatus").o(transactionStatus);
+
+	/**	<br/>L'entité « transactionStatus »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:transactionStatus">Trouver l'entité transactionStatus dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _transactionStatus(Couverture<String> c);
+
+	public String getTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public void setTransactionStatus(String transactionStatus) {
+		this.transactionStatus = transactionStatus;
+		this.transactionStatusCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire transactionStatusInit() {
+		if(!transactionStatusCouverture.dejaInitialise) {
+			_transactionStatus(transactionStatusCouverture);
+			if(transactionStatus == null)
+				setTransactionStatus(transactionStatusCouverture.o);
+		}
+		transactionStatusCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public String strTransactionStatus() {
+		return transactionStatus == null ? "" : transactionStatus;
+	}
+
+	public String jsonTransactionStatus() {
+		return transactionStatus == null ? "" : transactionStatus;
+	}
+
+	public String nomAffichageTransactionStatus() {
+		return "état de transaction";
+	}
+
+	public String htmTooltipTransactionStatus() {
+		return null;
+	}
+
+	public String htmTransactionStatus() {
+		return transactionStatus == null ? "" : StringEscapeUtils.escapeHtml4(strTransactionStatus());
+	}
+
+	public void inputTransactionStatus(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "état de transaction")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_transactionStatus");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTransactionStatus inputPaiementScolaire", pk, "TransactionStatus w3-input w3-border ");
+				a("name", "setTransactionStatus");
+			} else {
+				a("class", "valeurTransactionStatus w3-input w3-border inputPaiementScolaire", pk, "TransactionStatus w3-input w3-border ");
+				a("name", "transactionStatus");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionStatus', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionStatus')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionStatus')); }); ");
+			}
+			a("value", strTransactionStatus())
+		.fg();
+
+	}
+
+	public void htmTransactionStatus(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireTransactionStatus").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_transactionStatus").a("class", "").f().sx("état de transaction").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputTransactionStatus(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_transactionStatus')); $('#", classeApiMethodeMethode, "_transactionStatus').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setTransactionStatus', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionStatus')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionStatus')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////////////
@@ -2086,6 +2606,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		paiementEspecesInit();
 		paiementChequeInit();
 		paiementSystemeInit();
+		paiementParInit();
+		transactionIdInit();
+		customerProfileIdInit();
+		transactionStatusInit();
 		paiementNomCompletInit();
 	}
 
@@ -2169,6 +2693,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementCheque;
 			case "paiementSysteme":
 				return oPaiementScolaire.paiementSysteme;
+			case "paiementPar":
+				return oPaiementScolaire.paiementPar;
+			case "transactionId":
+				return oPaiementScolaire.transactionId;
+			case "customerProfileId":
+				return oPaiementScolaire.customerProfileId;
+			case "transactionStatus":
+				return oPaiementScolaire.transactionStatus;
 			case "paiementNomComplet":
 				return oPaiementScolaire.paiementNomComplet;
 			default:
@@ -2243,6 +2775,26 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return val;
 			case "paiementCheque":
 				setPaiementCheque(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementSysteme":
+				setPaiementSysteme(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementPar":
+				setPaiementPar(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "transactionId":
+				setTransactionId(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "customerProfileId":
+				setCustomerProfileId(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "transactionStatus":
+				setTransactionStatus(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			default:
@@ -2372,6 +2924,30 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Boolean paiementSysteme = (Boolean)solrDocument.get("paiementSysteme_stored_boolean");
 				if(paiementSysteme != null)
 					oPaiementScolaire.setPaiementSysteme(paiementSysteme);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("paiementPar")) {
+				String paiementPar = (String)solrDocument.get("paiementPar_stored_string");
+				if(paiementPar != null)
+					oPaiementScolaire.setPaiementPar(paiementPar);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("transactionId")) {
+				String transactionId = (String)solrDocument.get("transactionId_stored_string");
+				if(transactionId != null)
+					oPaiementScolaire.setTransactionId(transactionId);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("customerProfileId")) {
+				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+				if(customerProfileId != null)
+					oPaiementScolaire.setCustomerProfileId(customerProfileId);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("transactionStatus")) {
+				String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
+				if(transactionStatus != null)
+					oPaiementScolaire.setTransactionStatus(transactionStatus);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("paiementNomComplet")) {
@@ -2565,6 +3141,22 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementSysteme_indexed_boolean", paiementSysteme);
 			document.addField("paiementSysteme_stored_boolean", paiementSysteme);
 		}
+		if(paiementPar != null) {
+			document.addField("paiementPar_indexed_string", paiementPar);
+			document.addField("paiementPar_stored_string", paiementPar);
+		}
+		if(transactionId != null) {
+			document.addField("transactionId_indexed_string", transactionId);
+			document.addField("transactionId_stored_string", transactionId);
+		}
+		if(customerProfileId != null) {
+			document.addField("customerProfileId_indexed_string", customerProfileId);
+			document.addField("customerProfileId_stored_string", customerProfileId);
+		}
+		if(transactionStatus != null) {
+			document.addField("transactionStatus_indexed_string", transactionStatus);
+			document.addField("transactionStatus_stored_string", transactionStatus);
+		}
 		if(paiementNomComplet != null) {
 			document.addField("paiementNomComplet_indexed_string", paiementNomComplet);
 			document.addField("paiementNomComplet_stored_string", paiementNomComplet);
@@ -2628,6 +3220,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementCheque_indexed_boolean";
 			case "paiementSysteme":
 				return "paiementSysteme_indexed_boolean";
+			case "paiementPar":
+				return "paiementPar_indexed_string";
+			case "transactionId":
+				return "transactionId_indexed_string";
+			case "customerProfileId":
+				return "customerProfileId_indexed_string";
+			case "transactionStatus":
+				return "transactionStatus_indexed_string";
 			case "paiementNomComplet":
 				return "paiementNomComplet_indexed_string";
 			default:
@@ -2731,6 +3331,22 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementSysteme != null)
 			oPaiementScolaire.setPaiementSysteme(paiementSysteme);
 
+		String paiementPar = (String)solrDocument.get("paiementPar_stored_string");
+		if(paiementPar != null)
+			oPaiementScolaire.setPaiementPar(paiementPar);
+
+		String transactionId = (String)solrDocument.get("transactionId_stored_string");
+		if(transactionId != null)
+			oPaiementScolaire.setTransactionId(transactionId);
+
+		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+		if(customerProfileId != null)
+			oPaiementScolaire.setCustomerProfileId(customerProfileId);
+
+		String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
+		if(transactionStatus != null)
+			oPaiementScolaire.setTransactionStatus(transactionStatus);
+
 		String paiementNomComplet = (String)solrDocument.get("paiementNomComplet_stored_string");
 		if(paiementNomComplet != null)
 			oPaiementScolaire.setPaiementNomComplet(paiementNomComplet);
@@ -2758,6 +3374,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("paiementEspeces");
 			if(!Objects.equals(paiementCheque, original.getPaiementCheque()))
 				requeteApi.addVars("paiementCheque");
+			if(!Objects.equals(paiementSysteme, original.getPaiementSysteme()))
+				requeteApi.addVars("paiementSysteme");
+			if(!Objects.equals(paiementPar, original.getPaiementPar()))
+				requeteApi.addVars("paiementPar");
+			if(!Objects.equals(transactionId, original.getTransactionId()))
+				requeteApi.addVars("transactionId");
+			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
+				requeteApi.addVars("customerProfileId");
+			if(!Objects.equals(transactionStatus, original.getTransactionStatus()))
+				requeteApi.addVars("transactionStatus");
 			super.requeteApiCluster();
 		}
 	}
@@ -2767,7 +3393,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque);
+		return Objects.hash(super.hashCode(), inscriptionCles, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus);
 	}
 
 	////////////
@@ -2786,7 +3412,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( paiementDate, that.paiementDate )
 				&& Objects.equals( paiementMontant, that.paiementMontant )
 				&& Objects.equals( paiementEspeces, that.paiementEspeces )
-				&& Objects.equals( paiementCheque, that.paiementCheque );
+				&& Objects.equals( paiementCheque, that.paiementCheque )
+				&& Objects.equals( paiementSysteme, that.paiementSysteme )
+				&& Objects.equals( paiementPar, that.paiementPar )
+				&& Objects.equals( transactionId, that.transactionId )
+				&& Objects.equals( customerProfileId, that.customerProfileId )
+				&& Objects.equals( transactionStatus, that.transactionStatus );
 	}
 
 	//////////////
@@ -2803,6 +3434,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", paiementMontant: " ).append(paiementMontant);
 		sb.append( ", paiementEspeces: " ).append(paiementEspeces);
 		sb.append( ", paiementCheque: " ).append(paiementCheque);
+		sb.append( ", paiementSysteme: " ).append(paiementSysteme);
+		sb.append( ", paiementPar: \"" ).append(paiementPar).append( "\"" );
+		sb.append( ", transactionId: \"" ).append(transactionId).append( "\"" );
+		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
+		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

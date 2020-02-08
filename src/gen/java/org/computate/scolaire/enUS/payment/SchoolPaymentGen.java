@@ -680,7 +680,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("name", "setEnrollmentKeys")
 				.a("id", classApiMethodMethod, "_enrollmentKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolPaymentEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggestSchoolPaymentEnrollmentKeys')) : [{'name':'fq','value':'paymentKeys:", pk, "'}], $('#listSchoolPaymentEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolPaymentEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKeys')) : [{'name':'fq','value':'paymentKeys:", pk, "'}], $('#listSchoolPaymentEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -689,7 +689,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolPaymentEnrollmentKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/enrollment?fq=paymentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
@@ -1384,7 +1384,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolPaymentPaymentDescription").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentDescription").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_paymentDescription").a("class", "").f().sx("description").g("label");
@@ -1508,7 +1508,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolPaymentPaymentDate").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_paymentDate").a("class", "").f().sx("payment date").g("label");
@@ -1640,7 +1640,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolPaymentPaymentAmount").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentAmount").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_paymentAmount").a("class", "").f().sx("amount").g("label");
@@ -1773,7 +1773,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolPaymentPaymentCash").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentCash").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_paymentCash").a("class", "").f().sx("cash").g("label");
@@ -1895,7 +1895,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolPaymentPaymentCheck").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentCheck").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_paymentCheck").a("class", "").f().sx("check").g("label");
@@ -1967,7 +1967,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaymentSystem() {
-		return "authorized";
+		return "authorize.net";
 	}
 
 	public String htmTooltipPaymentSystem() {
@@ -1976,6 +1976,522 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String htmPaymentSystem() {
 		return paymentSystem == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentSystem());
+	}
+
+	public void inputPaymentSystem(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_paymentSystem")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_paymentSystem");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPaymentSystem inputSchoolPayment", pk, "PaymentSystem w3-input w3-border ");
+			a("name", "setPaymentSystem");
+		} else {
+			a("class", "valuePaymentSystem inputSchoolPayment", pk, "PaymentSystem w3-input w3-border ");
+			a("name", "paymentSystem");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentSystem', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentSystem')); }, function() { addError($('#", classApiMethodMethod, "_paymentSystem')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			if(getPaymentSystem() != null && getPaymentSystem())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmPaymentSystem(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentSystem").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_paymentSystem").a("class", "").f().sx("authorize.net").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaymentSystem(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////
+	// paymentBy //
+	///////////////
+
+	/**	L'entité « paymentBy »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String paymentBy;
+	@JsonIgnore
+	public Wrap<String> paymentByWrap = new Wrap<String>().p(this).c(String.class).var("paymentBy").o(paymentBy);
+
+	/**	<br/>L'entité « paymentBy »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentBy">Trouver l'entité paymentBy dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paymentBy(Wrap<String> c);
+
+	public String getPaymentBy() {
+		return paymentBy;
+	}
+
+	public void setPaymentBy(String paymentBy) {
+		this.paymentBy = paymentBy;
+		this.paymentByWrap.alreadyInitialized = true;
+	}
+	protected SchoolPayment paymentByInit() {
+		if(!paymentByWrap.alreadyInitialized) {
+			_paymentBy(paymentByWrap);
+			if(paymentBy == null)
+				setPaymentBy(paymentByWrap.o);
+		}
+		paymentByWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public String solrPaymentBy() {
+		return paymentBy;
+	}
+
+	public String strPaymentBy() {
+		return paymentBy == null ? "" : paymentBy;
+	}
+
+	public String jsonPaymentBy() {
+		return paymentBy == null ? "" : paymentBy;
+	}
+
+	public String nomAffichagePaymentBy() {
+		return "payment by";
+	}
+
+	public String htmTooltipPaymentBy() {
+		return null;
+	}
+
+	public String htmPaymentBy() {
+		return paymentBy == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentBy());
+	}
+
+	public void inputPaymentBy(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "payment by")
+			.a("id", classApiMethodMethod, "_paymentBy");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPaymentBy inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
+				a("name", "setPaymentBy");
+			} else {
+				a("class", "valuePaymentBy w3-input w3-border inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
+				a("name", "paymentBy");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentBy', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentBy')); }, function() { addError($('#", classApiMethodMethod, "_paymentBy')); }); ");
+			}
+			a("value", strPaymentBy())
+		.fg();
+
+	}
+
+	public void htmPaymentBy(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentBy").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_paymentBy").a("class", "").f().sx("payment by").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaymentBy(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_paymentBy')); $('#", classApiMethodMethod, "_paymentBy').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setPaymentBy', null, function() { addGlow($('#", classApiMethodMethod, "_paymentBy')); }, function() { addError($('#", classApiMethodMethod, "_paymentBy')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////
+	// transactionId //
+	///////////////////
+
+	/**	L'entité « transactionId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String transactionId;
+	@JsonIgnore
+	public Wrap<String> transactionIdWrap = new Wrap<String>().p(this).c(String.class).var("transactionId").o(transactionId);
+
+	/**	<br/>L'entité « transactionId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:transactionId">Trouver l'entité transactionId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _transactionId(Wrap<String> c);
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+		this.transactionIdWrap.alreadyInitialized = true;
+	}
+	protected SchoolPayment transactionIdInit() {
+		if(!transactionIdWrap.alreadyInitialized) {
+			_transactionId(transactionIdWrap);
+			if(transactionId == null)
+				setTransactionId(transactionIdWrap.o);
+		}
+		transactionIdWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public String solrTransactionId() {
+		return transactionId;
+	}
+
+	public String strTransactionId() {
+		return transactionId == null ? "" : transactionId;
+	}
+
+	public String jsonTransactionId() {
+		return transactionId == null ? "" : transactionId;
+	}
+
+	public String nomAffichageTransactionId() {
+		return "transaction ID";
+	}
+
+	public String htmTooltipTransactionId() {
+		return null;
+	}
+
+	public String htmTransactionId() {
+		return transactionId == null ? "" : StringEscapeUtils.escapeHtml4(strTransactionId());
+	}
+
+	public void inputTransactionId(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "transaction ID")
+			.a("id", classApiMethodMethod, "_transactionId");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setTransactionId inputSchoolPayment", pk, "TransactionId w3-input w3-border ");
+				a("name", "setTransactionId");
+			} else {
+				a("class", "valueTransactionId w3-input w3-border inputSchoolPayment", pk, "TransactionId w3-input w3-border ");
+				a("name", "transactionId");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_transactionId')); }, function() { addError($('#", classApiMethodMethod, "_transactionId')); }); ");
+			}
+			a("value", strTransactionId())
+		.fg();
+
+	}
+
+	public void htmTransactionId(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentTransactionId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_transactionId").a("class", "").f().sx("transaction ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputTransactionId(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_transactionId')); $('#", classApiMethodMethod, "_transactionId').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setTransactionId', null, function() { addGlow($('#", classApiMethodMethod, "_transactionId')); }, function() { addError($('#", classApiMethodMethod, "_transactionId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
+	// customerProfileId //
+	///////////////////////
+
+	/**	L'entité « customerProfileId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String customerProfileId;
+	@JsonIgnore
+	public Wrap<String> customerProfileIdWrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+
+	/**	<br/>L'entité « customerProfileId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId(Wrap<String> c);
+
+	public String getCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public void setCustomerProfileId(String customerProfileId) {
+		this.customerProfileId = customerProfileId;
+		this.customerProfileIdWrap.alreadyInitialized = true;
+	}
+	protected SchoolPayment customerProfileIdInit() {
+		if(!customerProfileIdWrap.alreadyInitialized) {
+			_customerProfileId(customerProfileIdWrap);
+			if(customerProfileId == null)
+				setCustomerProfileId(customerProfileIdWrap.o);
+		}
+		customerProfileIdWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public String solrCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public String strCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String jsonCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String nomAffichageCustomerProfileId() {
+		return "customer profile ID";
+	}
+
+	public String htmTooltipCustomerProfileId() {
+		return null;
+	}
+
+	public String htmCustomerProfileId() {
+		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	}
+
+	public void inputCustomerProfileId(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "customer profile ID")
+			.a("id", classApiMethodMethod, "_customerProfileId");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setCustomerProfileId inputSchoolPayment", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "setCustomerProfileId");
+			} else {
+				a("class", "valueCustomerProfileId w3-input w3-border inputSchoolPayment", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "customerProfileId");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
+			}
+			a("value", strCustomerProfileId())
+		.fg();
+
+	}
+
+	public void htmCustomerProfileId(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentCustomerProfileId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
+	// transactionStatus //
+	///////////////////////
+
+	/**	L'entité « transactionStatus »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String transactionStatus;
+	@JsonIgnore
+	public Wrap<String> transactionStatusWrap = new Wrap<String>().p(this).c(String.class).var("transactionStatus").o(transactionStatus);
+
+	/**	<br/>L'entité « transactionStatus »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:transactionStatus">Trouver l'entité transactionStatus dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _transactionStatus(Wrap<String> c);
+
+	public String getTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public void setTransactionStatus(String transactionStatus) {
+		this.transactionStatus = transactionStatus;
+		this.transactionStatusWrap.alreadyInitialized = true;
+	}
+	protected SchoolPayment transactionStatusInit() {
+		if(!transactionStatusWrap.alreadyInitialized) {
+			_transactionStatus(transactionStatusWrap);
+			if(transactionStatus == null)
+				setTransactionStatus(transactionStatusWrap.o);
+		}
+		transactionStatusWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public String solrTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public String strTransactionStatus() {
+		return transactionStatus == null ? "" : transactionStatus;
+	}
+
+	public String jsonTransactionStatus() {
+		return transactionStatus == null ? "" : transactionStatus;
+	}
+
+	public String nomAffichageTransactionStatus() {
+		return "transaction status";
+	}
+
+	public String htmTooltipTransactionStatus() {
+		return null;
+	}
+
+	public String htmTransactionStatus() {
+		return transactionStatus == null ? "" : StringEscapeUtils.escapeHtml4(strTransactionStatus());
+	}
+
+	public void inputTransactionStatus(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "transaction status")
+			.a("id", classApiMethodMethod, "_transactionStatus");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setTransactionStatus inputSchoolPayment", pk, "TransactionStatus w3-input w3-border ");
+				a("name", "setTransactionStatus");
+			} else {
+				a("class", "valueTransactionStatus w3-input w3-border inputSchoolPayment", pk, "TransactionStatus w3-input w3-border ");
+				a("name", "transactionStatus");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionStatus', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_transactionStatus')); }, function() { addError($('#", classApiMethodMethod, "_transactionStatus')); }); ");
+			}
+			a("value", strTransactionStatus())
+		.fg();
+
+	}
+
+	public void htmTransactionStatus(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentTransactionStatus").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_transactionStatus").a("class", "").f().sx("transaction status").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputTransactionStatus(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_transactionStatus')); $('#", classApiMethodMethod, "_transactionStatus').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setTransactionStatus', null, function() { addGlow($('#", classApiMethodMethod, "_transactionStatus')); }, function() { addError($('#", classApiMethodMethod, "_transactionStatus')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////////
@@ -2081,6 +2597,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		paymentCashInit();
 		paymentCheckInit();
 		paymentSystemInit();
+		paymentByInit();
+		transactionIdInit();
+		customerProfileIdInit();
+		transactionStatusInit();
 		paymentCompleteNameInit();
 	}
 
@@ -2164,6 +2684,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.paymentCheck;
 			case "paymentSystem":
 				return oSchoolPayment.paymentSystem;
+			case "paymentBy":
+				return oSchoolPayment.paymentBy;
+			case "transactionId":
+				return oSchoolPayment.transactionId;
+			case "customerProfileId":
+				return oSchoolPayment.customerProfileId;
+			case "transactionStatus":
+				return oSchoolPayment.transactionStatus;
 			case "paymentCompleteName":
 				return oSchoolPayment.paymentCompleteName;
 			default:
@@ -2238,6 +2766,26 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return val;
 			case "paymentCheck":
 				setPaymentCheck(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentSystem":
+				setPaymentSystem(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentBy":
+				setPaymentBy(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "transactionId":
+				setTransactionId(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "customerProfileId":
+				setCustomerProfileId(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "transactionStatus":
+				setTransactionStatus(val);
 				savesSchoolPayment.add(var);
 				return val;
 			default:
@@ -2367,6 +2915,30 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				Boolean paymentSystem = (Boolean)solrDocument.get("paymentSystem_stored_boolean");
 				if(paymentSystem != null)
 					oSchoolPayment.setPaymentSystem(paymentSystem);
+			}
+
+			if(savesSchoolPayment.contains("paymentBy")) {
+				String paymentBy = (String)solrDocument.get("paymentBy_stored_string");
+				if(paymentBy != null)
+					oSchoolPayment.setPaymentBy(paymentBy);
+			}
+
+			if(savesSchoolPayment.contains("transactionId")) {
+				String transactionId = (String)solrDocument.get("transactionId_stored_string");
+				if(transactionId != null)
+					oSchoolPayment.setTransactionId(transactionId);
+			}
+
+			if(savesSchoolPayment.contains("customerProfileId")) {
+				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+				if(customerProfileId != null)
+					oSchoolPayment.setCustomerProfileId(customerProfileId);
+			}
+
+			if(savesSchoolPayment.contains("transactionStatus")) {
+				String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
+				if(transactionStatus != null)
+					oSchoolPayment.setTransactionStatus(transactionStatus);
 			}
 
 			if(savesSchoolPayment.contains("paymentCompleteName")) {
@@ -2560,6 +3132,22 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("paymentSystem_indexed_boolean", paymentSystem);
 			document.addField("paymentSystem_stored_boolean", paymentSystem);
 		}
+		if(paymentBy != null) {
+			document.addField("paymentBy_indexed_string", paymentBy);
+			document.addField("paymentBy_stored_string", paymentBy);
+		}
+		if(transactionId != null) {
+			document.addField("transactionId_indexed_string", transactionId);
+			document.addField("transactionId_stored_string", transactionId);
+		}
+		if(customerProfileId != null) {
+			document.addField("customerProfileId_indexed_string", customerProfileId);
+			document.addField("customerProfileId_stored_string", customerProfileId);
+		}
+		if(transactionStatus != null) {
+			document.addField("transactionStatus_indexed_string", transactionStatus);
+			document.addField("transactionStatus_stored_string", transactionStatus);
+		}
 		if(paymentCompleteName != null) {
 			document.addField("paymentCompleteName_indexed_string", paymentCompleteName);
 			document.addField("paymentCompleteName_stored_string", paymentCompleteName);
@@ -2623,6 +3211,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentCheck_indexed_boolean";
 			case "paymentSystem":
 				return "paymentSystem_indexed_boolean";
+			case "paymentBy":
+				return "paymentBy_indexed_string";
+			case "transactionId":
+				return "transactionId_indexed_string";
+			case "customerProfileId":
+				return "customerProfileId_indexed_string";
+			case "transactionStatus":
+				return "transactionStatus_indexed_string";
 			case "paymentCompleteName":
 				return "paymentCompleteName_indexed_string";
 			default:
@@ -2726,6 +3322,22 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(paymentSystem != null)
 			oSchoolPayment.setPaymentSystem(paymentSystem);
 
+		String paymentBy = (String)solrDocument.get("paymentBy_stored_string");
+		if(paymentBy != null)
+			oSchoolPayment.setPaymentBy(paymentBy);
+
+		String transactionId = (String)solrDocument.get("transactionId_stored_string");
+		if(transactionId != null)
+			oSchoolPayment.setTransactionId(transactionId);
+
+		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+		if(customerProfileId != null)
+			oSchoolPayment.setCustomerProfileId(customerProfileId);
+
+		String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
+		if(transactionStatus != null)
+			oSchoolPayment.setTransactionStatus(transactionStatus);
+
 		String paymentCompleteName = (String)solrDocument.get("paymentCompleteName_stored_string");
 		if(paymentCompleteName != null)
 			oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
@@ -2753,6 +3365,16 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("paymentCash");
 			if(!Objects.equals(paymentCheck, original.getPaymentCheck()))
 				apiRequest.addVars("paymentCheck");
+			if(!Objects.equals(paymentSystem, original.getPaymentSystem()))
+				apiRequest.addVars("paymentSystem");
+			if(!Objects.equals(paymentBy, original.getPaymentBy()))
+				apiRequest.addVars("paymentBy");
+			if(!Objects.equals(transactionId, original.getTransactionId()))
+				apiRequest.addVars("transactionId");
+			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
+				apiRequest.addVars("customerProfileId");
+			if(!Objects.equals(transactionStatus, original.getTransactionStatus()))
+				apiRequest.addVars("transactionStatus");
 			super.apiRequestCluster();
 		}
 	}
@@ -2762,7 +3384,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck);
+		return Objects.hash(super.hashCode(), enrollmentKeys, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus);
 	}
 
 	////////////
@@ -2781,7 +3403,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( paymentDate, that.paymentDate )
 				&& Objects.equals( paymentAmount, that.paymentAmount )
 				&& Objects.equals( paymentCash, that.paymentCash )
-				&& Objects.equals( paymentCheck, that.paymentCheck );
+				&& Objects.equals( paymentCheck, that.paymentCheck )
+				&& Objects.equals( paymentSystem, that.paymentSystem )
+				&& Objects.equals( paymentBy, that.paymentBy )
+				&& Objects.equals( transactionId, that.transactionId )
+				&& Objects.equals( customerProfileId, that.customerProfileId )
+				&& Objects.equals( transactionStatus, that.transactionStatus );
 	}
 
 	//////////////
@@ -2798,6 +3425,11 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", paymentAmount: " ).append(paymentAmount);
 		sb.append( ", paymentCash: " ).append(paymentCash);
 		sb.append( ", paymentCheck: " ).append(paymentCheck);
+		sb.append( ", paymentSystem: " ).append(paymentSystem);
+		sb.append( ", paymentBy: \"" ).append(paymentBy).append( "\"" );
+		sb.append( ", transactionId: \"" ).append(transactionId).append( "\"" );
+		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
+		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

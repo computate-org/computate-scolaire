@@ -728,4 +728,22 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), ZoneId.systemDefault().getId());
 		c.o(o);
 	}
+
+	protected void _authorizeApiLoginId(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _authorizeTransactionKey(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
 }

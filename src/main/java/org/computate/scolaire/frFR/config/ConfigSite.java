@@ -997,4 +997,30 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), ZoneId.systemDefault().getId());
 		c.o(o);
 	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeApiLoginId(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeTransactionKey(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
 }

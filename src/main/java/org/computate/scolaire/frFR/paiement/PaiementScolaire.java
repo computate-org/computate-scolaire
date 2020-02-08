@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;                 
+package org.computate.scolaire.frFR.paiement;                  
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -140,7 +140,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: InscriptionScolaire.paiementCles
-	 * HtmlLigne: 5
+	 * HtmlLigne: 6
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
 	 * Description.enUS: The primary key of the school children in the database. 
@@ -332,11 +332,70 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: paymentSystem
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: authorisé
-	 * NomAffichage.enUS: authorized
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 5
+	 * NomAffichage.frFR: authorize.net
+	 * NomAffichage.enUS: authorize.net
 	 */                     
 	protected void _paiementSysteme(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: paymentBy
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 * NomAffichage.frFR: paiement par
+	 * NomAffichage.enUS: payment by
+	 */                  
+	protected void _paiementPar(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: transactionId
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: transaction ID
+	 * NomAffichage.enUS: transaction ID
+	 */                     
+	protected void _transactionId(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: customerProfileId
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 2
+	 * NomAffichage.frFR: customer profile ID
+	 * NomAffichage.enUS: customer profile ID
+	 */                
+	protected void _customerProfileId(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: transactionStatus
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 3
+	 * NomAffichage.frFR: état de transaction
+	 * NomAffichage.enUS: transaction status
+	 */                  
+	protected void _transactionStatus(Couverture<String> c) {
 	}
 
 	/**    

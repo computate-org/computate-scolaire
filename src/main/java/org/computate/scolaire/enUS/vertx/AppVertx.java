@@ -4,12 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.Optional;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiService;
 import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
 import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiService;
@@ -26,8 +33,11 @@ import org.computate.scolaire.enUS.java.LocalDateSerializer;
 import org.computate.scolaire.enUS.java.LocalTimeSerializer;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
 import org.computate.scolaire.enUS.mom.SchoolMomEnUSGenApiService;
+import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiService;
 import org.computate.scolaire.enUS.dad.SchoolDadEnUSGenApiService;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiService;
 import org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiService;
 import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiService;
@@ -66,6 +76,23 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
+import net.authorize.Environment;
+import net.authorize.api.contract.v1.ArrayOfTransactionSummaryType;
+import net.authorize.api.contract.v1.BatchDetailsType;
+import net.authorize.api.contract.v1.CustomerProfileIdType;
+import net.authorize.api.contract.v1.GetSettledBatchListRequest;
+import net.authorize.api.contract.v1.GetSettledBatchListResponse;
+import net.authorize.api.contract.v1.GetTransactionListRequest;
+import net.authorize.api.contract.v1.GetTransactionListResponse;
+import net.authorize.api.contract.v1.MerchantAuthenticationType;
+import net.authorize.api.contract.v1.MessageTypeEnum;
+import net.authorize.api.contract.v1.Paging;
+import net.authorize.api.contract.v1.TransactionListOrderFieldEnum;
+import net.authorize.api.contract.v1.TransactionListSorting;
+import net.authorize.api.contract.v1.TransactionSummaryType;
+import net.authorize.api.controller.GetSettledBatchListController;
+import net.authorize.api.controller.GetTransactionListController;
+import net.authorize.api.controller.base.ApiOperationBase;
 
 /**	
  *	A Java class to start the Vert.x application as a main method. 
@@ -138,7 +165,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						configureSharedWorkerExecutor().future().compose(e -> 
 							configureWebsockets().future().compose(f -> 
 								configureEmail().future().compose(g -> 
-									startServer().future()
+									configureAuthorizeNet().future().compose(h -> 
+										startServer().future()
+									)
 								)
 							)
 						)
@@ -401,6 +430,125 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		config.setPassword(siteConfig.getEmailPassword());
 		MailClient mailClient = MailClient.createShared(vertx, config);
 		siteContextEnUS.setMailClient(mailClient);
+		promise.complete();
+		return promise;
+	}
+
+	/**	
+	 *	Configure payments with Authorize.net. 
+	 **/
+	private Promise<Void> configureAuthorizeNet() {
+		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
+		Promise<Void> promise = Promise.promise();
+
+		vertx.setPeriodic(1000 * 60 * 60 * 24, a -> {
+			WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();
+			executeurTravailleur.executeBlocking(
+				blockingCodeHandler -> {
+					LOGGER.info("Start to populate the new transactions. ");
+					try {
+						SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+						siteRequest.setVertx(vertx);
+						siteRequest.setSiteContext_(siteContextEnUS);
+						siteRequest.setSiteConfig_(siteContextEnUS.getSiteConfig());
+						siteRequest.initDeepSiteRequestEnUS(siteRequest);
+		
+						SchoolPaymentEnUSGenApiService service = new org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl(siteContextEnUS);
+					
+						ApiOperationBase.setEnvironment(Environment.PRODUCTION);
+		
+						MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+						String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
+						String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
+						merchantAuthenticationType.setName(authorizeApiLoginId);
+						merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+						ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+		
+						Paging paging = new Paging();
+						paging.setLimit(100);
+						paging.setOffset(1);
+						DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+		
+						GetSettledBatchListRequest batchRequest = new GetSettledBatchListRequest();
+						batchRequest.setMerchantAuthentication(merchantAuthenticationType);
+						batchRequest.setFirstSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now().minusDays(7).atStartOfDay(ZoneId.of("America/Denver")))));
+						batchRequest.setLastSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now().plusDays(1).atStartOfDay(ZoneId.of("America/Denver")))));
+		
+						GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);
+						GetSettledBatchListController.setEnvironment(Environment.PRODUCTION);
+						batchController.execute();
+		
+						GetSettledBatchListResponse batchResponse = batchController.getApiResponse();
+		
+						for(BatchDetailsType batch : batchResponse.getBatchList().getBatch()) {
+							
+							GetTransactionListRequest getRequest = new GetTransactionListRequest();
+							getRequest.setMerchantAuthentication(merchantAuthenticationType);
+							getRequest.setBatchId(batch.getBatchId());
+			
+							getRequest.setPaging(paging);
+			
+							TransactionListSorting sorting = new TransactionListSorting();
+							sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
+							sorting.setOrderDescending(true);
+			
+							getRequest.setSorting(sorting);
+			
+							GetTransactionListController controller = new GetTransactionListController(getRequest);
+							GetTransactionListController.setEnvironment(Environment.PRODUCTION);
+							controller.execute();
+			
+							GetTransactionListResponse getResponse = controller.getApiResponse();
+							if (getResponse != null) {
+			
+								if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
+									for(TransactionSummaryType transaction : Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList())) {
+			
+										transaction.getProfile().getCustomerProfileId();
+										XMLGregorianCalendar submitTimeLocal = transaction.getSubmitTimeLocal();
+										SchoolPayment payment = new SchoolPayment();
+										payment.setSiteRequest_(siteRequest);
+										payment.setPaymentAmount(transaction.getSettleAmount());
+										payment.setPaymentDate(submitTimeLocal.toGregorianCalendar().getTime());
+										payment.setPaymentSystem(true);
+										payment.setTransactionId(transaction.getTransId());
+										payment.setCustomerProfileId(Optional.ofNullable(transaction.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
+										payment.setTransactionStatus(transaction.getTransactionStatus());
+										payment.setPaymentBy(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
+			
+										if(transaction.getTransId() != null) {
+											SearchList<SchoolPayment> listeRecherche = new SearchList<SchoolPayment>();
+											listeRecherche.setPopulate(true);
+											listeRecherche.setQuery("*:*");
+											listeRecherche.setC(SchoolPayment.class);
+											listeRecherche.addFilterQuery("transactionId_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getTransId()));
+											listeRecherche.initDeepSearchList(siteRequest);
+			
+											if(listeRecherche.size() == 0) {
+												service.postSchoolPayment(JsonObject.mapFrom(payment), null, handler -> {
+													if(handler.succeeded()) {
+														LOGGER.info("payment créé. ");
+													} else {
+														LOGGER.error(handler.cause());
+													}
+												});
+											}
+										}
+										break;
+									}
+								}
+							}
+							break;
+						}
+					} catch (Exception e) {
+						ExceptionUtils.rethrow(e);
+					}
+					LOGGER.info("Finish populating the new transactions. ");
+				}, resultHandler -> {
+				}
+			);
+		});
+
 		promise.complete();
 		return promise;
 	}

@@ -3799,6 +3799,128 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return siteZone == null ? "" : StringEscapeUtils.escapeHtml4(strSiteZone());
 	}
 
+	/////////////////////////
+	// authorizeApiLoginId //
+	/////////////////////////
+
+	/**	L'entité « authorizeApiLoginId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String authorizeApiLoginId;
+	@JsonIgnore
+	public Couverture<String> authorizeApiLoginIdCouverture = new Couverture<String>().p(this).c(String.class).var("authorizeApiLoginId").o(authorizeApiLoginId);
+
+	/**	<br/>L'entité « authorizeApiLoginId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeApiLoginId">Trouver l'entité authorizeApiLoginId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeApiLoginId(Couverture<String> c);
+
+	public String getAuthorizeApiLoginId() {
+		return authorizeApiLoginId;
+	}
+
+	public void setAuthorizeApiLoginId(String authorizeApiLoginId) {
+		this.authorizeApiLoginId = authorizeApiLoginId;
+		this.authorizeApiLoginIdCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite authorizeApiLoginIdInit() {
+		if(!authorizeApiLoginIdCouverture.dejaInitialise) {
+			_authorizeApiLoginId(authorizeApiLoginIdCouverture);
+			if(authorizeApiLoginId == null)
+				setAuthorizeApiLoginId(authorizeApiLoginIdCouverture.o);
+		}
+		authorizeApiLoginIdCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrAuthorizeApiLoginId() {
+		return authorizeApiLoginId;
+	}
+
+	public String strAuthorizeApiLoginId() {
+		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
+	}
+
+	public String jsonAuthorizeApiLoginId() {
+		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
+	}
+
+	public String nomAffichageAuthorizeApiLoginId() {
+		return null;
+	}
+
+	public String htmTooltipAuthorizeApiLoginId() {
+		return null;
+	}
+
+	public String htmAuthorizeApiLoginId() {
+		return authorizeApiLoginId == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeApiLoginId());
+	}
+
+	/////////////////////////////
+	// authorizeTransactionKey //
+	/////////////////////////////
+
+	/**	L'entité « authorizeTransactionKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String authorizeTransactionKey;
+	@JsonIgnore
+	public Couverture<String> authorizeTransactionKeyCouverture = new Couverture<String>().p(this).c(String.class).var("authorizeTransactionKey").o(authorizeTransactionKey);
+
+	/**	<br/>L'entité « authorizeTransactionKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeTransactionKey">Trouver l'entité authorizeTransactionKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeTransactionKey(Couverture<String> c);
+
+	public String getAuthorizeTransactionKey() {
+		return authorizeTransactionKey;
+	}
+
+	public void setAuthorizeTransactionKey(String authorizeTransactionKey) {
+		this.authorizeTransactionKey = authorizeTransactionKey;
+		this.authorizeTransactionKeyCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite authorizeTransactionKeyInit() {
+		if(!authorizeTransactionKeyCouverture.dejaInitialise) {
+			_authorizeTransactionKey(authorizeTransactionKeyCouverture);
+			if(authorizeTransactionKey == null)
+				setAuthorizeTransactionKey(authorizeTransactionKeyCouverture.o);
+		}
+		authorizeTransactionKeyCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrAuthorizeTransactionKey() {
+		return authorizeTransactionKey;
+	}
+
+	public String strAuthorizeTransactionKey() {
+		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
+	}
+
+	public String jsonAuthorizeTransactionKey() {
+		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
+	}
+
+	public String nomAffichageAuthorizeTransactionKey() {
+		return null;
+	}
+
+	public String htmTooltipAuthorizeTransactionKey() {
+		return null;
+	}
+
+	public String htmAuthorizeTransactionKey() {
+		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -3879,6 +4001,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		mailAuthInit();
 		mailSslInit();
 		siteZoneInit();
+		authorizeApiLoginIdInit();
+		authorizeTransactionKeyInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -4027,6 +4151,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.mailSsl;
 			case "siteZone":
 				return oConfigSite.siteZone;
+			case "authorizeApiLoginId":
+				return oConfigSite.authorizeApiLoginId;
+			case "authorizeTransactionKey":
+				return oConfigSite.authorizeTransactionKey;
 			default:
 				return null;
 		}

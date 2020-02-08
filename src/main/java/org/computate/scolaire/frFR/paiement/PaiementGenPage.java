@@ -121,9 +121,16 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("Page");
 			o.htmPaiementEspeces("Page");
 			o.htmPaiementCheque("Page");
+			o.htmPaiementSysteme("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("Page");
+			o.htmPaiementPar("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("Page");
+			o.htmCustomerProfileId("Page");
+			o.htmTransactionStatus("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Page");
@@ -146,9 +153,16 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("POST");
 			o.htmPaiementEspeces("POST");
 			o.htmPaiementCheque("POST");
+			o.htmPaiementSysteme("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("POST");
+			o.htmPaiementPar("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("POST");
+			o.htmCustomerProfileId("POST");
+			o.htmTransactionStatus("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("POST");
@@ -169,9 +183,16 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("PUT");
 			o.htmPaiementEspeces("PUT");
 			o.htmPaiementCheque("PUT");
+			o.htmPaiementSysteme("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("PUT");
+			o.htmPaiementPar("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("PUT");
+			o.htmCustomerProfileId("PUT");
+			o.htmTransactionStatus("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PUT");
@@ -192,9 +213,16 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("PATCH");
 			o.htmPaiementEspeces("PATCH");
 			o.htmPaiementCheque("PATCH");
+			o.htmPaiementSysteme("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("PATCH");
+			o.htmPaiementPar("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("PATCH");
+			o.htmCustomerProfileId("PATCH");
+			o.htmTransactionStatus("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
@@ -217,9 +245,16 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("Recherche");
 			o.htmPaiementEspeces("Recherche");
 			o.htmPaiementCheque("Recherche");
+			o.htmPaiementSysteme("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("Recherche");
+			o.htmPaiementPar("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("Recherche");
+			o.htmCustomerProfileId("Recherche");
+			o.htmTransactionStatus("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Recherche");
@@ -457,7 +492,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putPaiementScolaire($('#putPaiementScolaireFormulaireValeurs')); ")
+							.a("onclick", "putPaiementScolaire($('#putPaiementScolaireFormulaireValeurs'), ", Optional.ofNullable(paiementScolaire).map(PaiementScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des paiements")
 						.g("button");
 
@@ -489,7 +524,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchPaiementScolaire($('#patchPaiementScolaireFormulaireFiltres'), $('#patchPaiementScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchPaiementScolaire($('#patchPaiementScolaireFormulaireFiltres'), $('#patchPaiementScolaireFormulaireValeurs'), ", Optional.ofNullable(paiementScolaire).map(PaiementScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des paiements")
 						.g("button");
 

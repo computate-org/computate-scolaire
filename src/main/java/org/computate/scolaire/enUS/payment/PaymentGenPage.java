@@ -120,9 +120,16 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("Page");
 			o.htmPaymentCash("Page");
 			o.htmPaymentCheck("Page");
+			o.htmPaymentSystem("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("Page");
+			o.htmPaymentBy("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("Page");
+			o.htmCustomerProfileId("Page");
+			o.htmTransactionStatus("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Page");
@@ -145,9 +152,16 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("POST");
 			o.htmPaymentCash("POST");
 			o.htmPaymentCheck("POST");
+			o.htmPaymentSystem("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("POST");
+			o.htmPaymentBy("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("POST");
+			o.htmCustomerProfileId("POST");
+			o.htmTransactionStatus("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("POST");
@@ -168,9 +182,16 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("PUT");
 			o.htmPaymentCash("PUT");
 			o.htmPaymentCheck("PUT");
+			o.htmPaymentSystem("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("PUT");
+			o.htmPaymentBy("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("PUT");
+			o.htmCustomerProfileId("PUT");
+			o.htmTransactionStatus("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUT");
@@ -191,9 +212,16 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("PATCH");
 			o.htmPaymentCash("PATCH");
 			o.htmPaymentCheck("PATCH");
+			o.htmPaymentSystem("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("PATCH");
+			o.htmPaymentBy("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("PATCH");
+			o.htmCustomerProfileId("PATCH");
+			o.htmTransactionStatus("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
@@ -216,9 +244,16 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("Recherche");
 			o.htmPaymentCash("Recherche");
 			o.htmPaymentCheck("Recherche");
+			o.htmPaymentSystem("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("Recherche");
+			o.htmPaymentBy("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmTransactionId("Recherche");
+			o.htmCustomerProfileId("Recherche");
+			o.htmTransactionStatus("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Recherche");
@@ -456,7 +491,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putSchoolPayment($('#putSchoolPaymentFormValues')); ")
+							.a("onclick", "putSchoolPayment($('#putSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the payments")
 						.g("button");
 
@@ -488,7 +523,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchSchoolPayment($('#patchSchoolPaymentFormFilters'), $('#patchSchoolPaymentFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolPayment($('#patchSchoolPaymentFormFilters'), $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the payments")
 						.g("button");
 
