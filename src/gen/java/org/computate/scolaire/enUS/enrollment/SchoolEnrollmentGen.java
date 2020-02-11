@@ -2462,6 +2462,433 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return (SchoolEnrollment)this;
 	}
 
+	////////////////////
+	// childFirstName //
+	////////////////////
+
+	/**	L'entité « childFirstName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String childFirstName;
+	@JsonIgnore
+	public Wrap<String> childFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("childFirstName").o(childFirstName);
+
+	/**	<br/>L'entité « childFirstName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFirstName">Trouver l'entité childFirstName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _childFirstName(Wrap<String> c);
+
+	public String getChildFirstName() {
+		return childFirstName;
+	}
+
+	public void setChildFirstName(String childFirstName) {
+		this.childFirstName = childFirstName;
+		this.childFirstNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment childFirstNameInit() {
+		if(!childFirstNameWrap.alreadyInitialized) {
+			_childFirstName(childFirstNameWrap);
+			if(childFirstName == null)
+				setChildFirstName(childFirstNameWrap.o);
+		}
+		childFirstNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrChildFirstName() {
+		return childFirstName;
+	}
+
+	public String strChildFirstName() {
+		return childFirstName == null ? "" : childFirstName;
+	}
+
+	public String jsonChildFirstName() {
+		return childFirstName == null ? "" : childFirstName;
+	}
+
+	public String nomAffichageChildFirstName() {
+		return null;
+	}
+
+	public String htmTooltipChildFirstName() {
+		return null;
+	}
+
+	public String htmChildFirstName() {
+		return childFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strChildFirstName());
+	}
+
+	/////////////////////////////
+	// childFirstNamePreferred //
+	/////////////////////////////
+
+	/**	L'entité « childFirstNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String childFirstNamePreferred;
+	@JsonIgnore
+	public Wrap<String> childFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("childFirstNamePreferred").o(childFirstNamePreferred);
+
+	/**	<br/>L'entité « childFirstNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFirstNamePreferred">Trouver l'entité childFirstNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _childFirstNamePreferred(Wrap<String> c);
+
+	public String getChildFirstNamePreferred() {
+		return childFirstNamePreferred;
+	}
+
+	public void setChildFirstNamePreferred(String childFirstNamePreferred) {
+		this.childFirstNamePreferred = childFirstNamePreferred;
+		this.childFirstNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment childFirstNamePreferredInit() {
+		if(!childFirstNamePreferredWrap.alreadyInitialized) {
+			_childFirstNamePreferred(childFirstNamePreferredWrap);
+			if(childFirstNamePreferred == null)
+				setChildFirstNamePreferred(childFirstNamePreferredWrap.o);
+		}
+		childFirstNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrChildFirstNamePreferred() {
+		return childFirstNamePreferred;
+	}
+
+	public String strChildFirstNamePreferred() {
+		return childFirstNamePreferred == null ? "" : childFirstNamePreferred;
+	}
+
+	public String jsonChildFirstNamePreferred() {
+		return childFirstNamePreferred == null ? "" : childFirstNamePreferred;
+	}
+
+	public String nomAffichageChildFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmTooltipChildFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmChildFirstNamePreferred() {
+		return childFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strChildFirstNamePreferred());
+	}
+
+	/////////////////////
+	// childFamilyName //
+	/////////////////////
+
+	/**	L'entité « childFamilyName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String childFamilyName;
+	@JsonIgnore
+	public Wrap<String> childFamilyNameWrap = new Wrap<String>().p(this).c(String.class).var("childFamilyName").o(childFamilyName);
+
+	/**	<br/>L'entité « childFamilyName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFamilyName">Trouver l'entité childFamilyName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _childFamilyName(Wrap<String> c);
+
+	public String getChildFamilyName() {
+		return childFamilyName;
+	}
+
+	public void setChildFamilyName(String childFamilyName) {
+		this.childFamilyName = childFamilyName;
+		this.childFamilyNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment childFamilyNameInit() {
+		if(!childFamilyNameWrap.alreadyInitialized) {
+			_childFamilyName(childFamilyNameWrap);
+			if(childFamilyName == null)
+				setChildFamilyName(childFamilyNameWrap.o);
+		}
+		childFamilyNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrChildFamilyName() {
+		return childFamilyName;
+	}
+
+	public String strChildFamilyName() {
+		return childFamilyName == null ? "" : childFamilyName;
+	}
+
+	public String jsonChildFamilyName() {
+		return childFamilyName == null ? "" : childFamilyName;
+	}
+
+	public String nomAffichageChildFamilyName() {
+		return null;
+	}
+
+	public String htmTooltipChildFamilyName() {
+		return null;
+	}
+
+	public String htmChildFamilyName() {
+		return childFamilyName == null ? "" : StringEscapeUtils.escapeHtml4(strChildFamilyName());
+	}
+
+	//////////////////
+	// momFirstName //
+	//////////////////
+
+	/**	L'entité « momFirstName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String momFirstName;
+	@JsonIgnore
+	public Wrap<String> momFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("momFirstName").o(momFirstName);
+
+	/**	<br/>L'entité « momFirstName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFirstName">Trouver l'entité momFirstName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _momFirstName(Wrap<String> c);
+
+	public String getMomFirstName() {
+		return momFirstName;
+	}
+
+	public void setMomFirstName(String momFirstName) {
+		this.momFirstName = momFirstName;
+		this.momFirstNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment momFirstNameInit() {
+		if(!momFirstNameWrap.alreadyInitialized) {
+			_momFirstName(momFirstNameWrap);
+			if(momFirstName == null)
+				setMomFirstName(momFirstNameWrap.o);
+		}
+		momFirstNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrMomFirstName() {
+		return momFirstName;
+	}
+
+	public String strMomFirstName() {
+		return momFirstName == null ? "" : momFirstName;
+	}
+
+	public String jsonMomFirstName() {
+		return momFirstName == null ? "" : momFirstName;
+	}
+
+	public String nomAffichageMomFirstName() {
+		return null;
+	}
+
+	public String htmTooltipMomFirstName() {
+		return null;
+	}
+
+	public String htmMomFirstName() {
+		return momFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strMomFirstName());
+	}
+
+	///////////////////////////
+	// momFirstNamePreferred //
+	///////////////////////////
+
+	/**	L'entité « momFirstNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String momFirstNamePreferred;
+	@JsonIgnore
+	public Wrap<String> momFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("momFirstNamePreferred").o(momFirstNamePreferred);
+
+	/**	<br/>L'entité « momFirstNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFirstNamePreferred">Trouver l'entité momFirstNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _momFirstNamePreferred(Wrap<String> c);
+
+	public String getMomFirstNamePreferred() {
+		return momFirstNamePreferred;
+	}
+
+	public void setMomFirstNamePreferred(String momFirstNamePreferred) {
+		this.momFirstNamePreferred = momFirstNamePreferred;
+		this.momFirstNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment momFirstNamePreferredInit() {
+		if(!momFirstNamePreferredWrap.alreadyInitialized) {
+			_momFirstNamePreferred(momFirstNamePreferredWrap);
+			if(momFirstNamePreferred == null)
+				setMomFirstNamePreferred(momFirstNamePreferredWrap.o);
+		}
+		momFirstNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrMomFirstNamePreferred() {
+		return momFirstNamePreferred;
+	}
+
+	public String strMomFirstNamePreferred() {
+		return momFirstNamePreferred == null ? "" : momFirstNamePreferred;
+	}
+
+	public String jsonMomFirstNamePreferred() {
+		return momFirstNamePreferred == null ? "" : momFirstNamePreferred;
+	}
+
+	public String nomAffichageMomFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmTooltipMomFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmMomFirstNamePreferred() {
+		return momFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strMomFirstNamePreferred());
+	}
+
+	//////////////////
+	// dadFirstName //
+	//////////////////
+
+	/**	L'entité « dadFirstName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String dadFirstName;
+	@JsonIgnore
+	public Wrap<String> dadFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("dadFirstName").o(dadFirstName);
+
+	/**	<br/>L'entité « dadFirstName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFirstName">Trouver l'entité dadFirstName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _dadFirstName(Wrap<String> c);
+
+	public String getDadFirstName() {
+		return dadFirstName;
+	}
+
+	public void setDadFirstName(String dadFirstName) {
+		this.dadFirstName = dadFirstName;
+		this.dadFirstNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment dadFirstNameInit() {
+		if(!dadFirstNameWrap.alreadyInitialized) {
+			_dadFirstName(dadFirstNameWrap);
+			if(dadFirstName == null)
+				setDadFirstName(dadFirstNameWrap.o);
+		}
+		dadFirstNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrDadFirstName() {
+		return dadFirstName;
+	}
+
+	public String strDadFirstName() {
+		return dadFirstName == null ? "" : dadFirstName;
+	}
+
+	public String jsonDadFirstName() {
+		return dadFirstName == null ? "" : dadFirstName;
+	}
+
+	public String nomAffichageDadFirstName() {
+		return null;
+	}
+
+	public String htmTooltipDadFirstName() {
+		return null;
+	}
+
+	public String htmDadFirstName() {
+		return dadFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strDadFirstName());
+	}
+
+	///////////////////////////
+	// dadFirstNamePreferred //
+	///////////////////////////
+
+	/**	L'entité « dadFirstNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String dadFirstNamePreferred;
+	@JsonIgnore
+	public Wrap<String> dadFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("dadFirstNamePreferred").o(dadFirstNamePreferred);
+
+	/**	<br/>L'entité « dadFirstNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFirstNamePreferred">Trouver l'entité dadFirstNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _dadFirstNamePreferred(Wrap<String> c);
+
+	public String getDadFirstNamePreferred() {
+		return dadFirstNamePreferred;
+	}
+
+	public void setDadFirstNamePreferred(String dadFirstNamePreferred) {
+		this.dadFirstNamePreferred = dadFirstNamePreferred;
+		this.dadFirstNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment dadFirstNamePreferredInit() {
+		if(!dadFirstNamePreferredWrap.alreadyInitialized) {
+			_dadFirstNamePreferred(dadFirstNamePreferredWrap);
+			if(dadFirstNamePreferred == null)
+				setDadFirstNamePreferred(dadFirstNamePreferredWrap.o);
+		}
+		dadFirstNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrDadFirstNamePreferred() {
+		return dadFirstNamePreferred;
+	}
+
+	public String strDadFirstNamePreferred() {
+		return dadFirstNamePreferred == null ? "" : dadFirstNamePreferred;
+	}
+
+	public String jsonDadFirstNamePreferred() {
+		return dadFirstNamePreferred == null ? "" : dadFirstNamePreferred;
+	}
+
+	public String nomAffichageDadFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmTooltipDadFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmDadFirstNamePreferred() {
+		return dadFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strDadFirstNamePreferred());
+	}
+
 	///////////////////////
 	// childCompleteName //
 	///////////////////////
@@ -10149,6 +10576,13 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		dadsInit();
 		guardianSearchInit();
 		guardiansInit();
+		childFirstNameInit();
+		childFirstNamePreferredInit();
+		childFamilyNameInit();
+		momFirstNameInit();
+		momFirstNamePreferredInit();
+		dadFirstNameInit();
+		dadFirstNamePreferredInit();
 		childCompleteNameInit();
 		childCompleteNamePreferredInit();
 		childBirthDateInit();
@@ -10349,6 +10783,20 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.guardianSearch;
 			case "guardians":
 				return oSchoolEnrollment.guardians;
+			case "childFirstName":
+				return oSchoolEnrollment.childFirstName;
+			case "childFirstNamePreferred":
+				return oSchoolEnrollment.childFirstNamePreferred;
+			case "childFamilyName":
+				return oSchoolEnrollment.childFamilyName;
+			case "momFirstName":
+				return oSchoolEnrollment.momFirstName;
+			case "momFirstNamePreferred":
+				return oSchoolEnrollment.momFirstNamePreferred;
+			case "dadFirstName":
+				return oSchoolEnrollment.dadFirstName;
+			case "dadFirstNamePreferred":
+				return oSchoolEnrollment.dadFirstNamePreferred;
 			case "childCompleteName":
 				return oSchoolEnrollment.childCompleteName;
 			case "childCompleteNamePreferred":
@@ -10876,6 +11324,48 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				Integer ageSort = (Integer)solrDocument.get("ageSort_stored_int");
 				if(ageSort != null)
 					oSchoolEnrollment.setAgeSort(ageSort);
+			}
+
+			if(savesSchoolEnrollment.contains("childFirstName")) {
+				String childFirstName = (String)solrDocument.get("childFirstName_stored_string");
+				if(childFirstName != null)
+					oSchoolEnrollment.setChildFirstName(childFirstName);
+			}
+
+			if(savesSchoolEnrollment.contains("childFirstNamePreferred")) {
+				String childFirstNamePreferred = (String)solrDocument.get("childFirstNamePreferred_stored_string");
+				if(childFirstNamePreferred != null)
+					oSchoolEnrollment.setChildFirstNamePreferred(childFirstNamePreferred);
+			}
+
+			if(savesSchoolEnrollment.contains("childFamilyName")) {
+				String childFamilyName = (String)solrDocument.get("childFamilyName_stored_string");
+				if(childFamilyName != null)
+					oSchoolEnrollment.setChildFamilyName(childFamilyName);
+			}
+
+			if(savesSchoolEnrollment.contains("momFirstName")) {
+				String momFirstName = (String)solrDocument.get("momFirstName_stored_string");
+				if(momFirstName != null)
+					oSchoolEnrollment.setMomFirstName(momFirstName);
+			}
+
+			if(savesSchoolEnrollment.contains("momFirstNamePreferred")) {
+				String momFirstNamePreferred = (String)solrDocument.get("momFirstNamePreferred_stored_string");
+				if(momFirstNamePreferred != null)
+					oSchoolEnrollment.setMomFirstNamePreferred(momFirstNamePreferred);
+			}
+
+			if(savesSchoolEnrollment.contains("dadFirstName")) {
+				String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
+				if(dadFirstName != null)
+					oSchoolEnrollment.setDadFirstName(dadFirstName);
+			}
+
+			if(savesSchoolEnrollment.contains("dadFirstNamePreferred")) {
+				String dadFirstNamePreferred = (String)solrDocument.get("dadFirstNamePreferred_stored_string");
+				if(dadFirstNamePreferred != null)
+					oSchoolEnrollment.setDadFirstNamePreferred(dadFirstNamePreferred);
 			}
 
 			if(savesSchoolEnrollment.contains("childCompleteName")) {
@@ -11527,6 +12017,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("ageSort_indexed_int", ageSort);
 			document.addField("ageSort_stored_int", ageSort);
 		}
+		if(childFirstName != null) {
+			document.addField("childFirstName_indexed_string", childFirstName);
+			document.addField("childFirstName_stored_string", childFirstName);
+		}
+		if(childFirstNamePreferred != null) {
+			document.addField("childFirstNamePreferred_indexed_string", childFirstNamePreferred);
+			document.addField("childFirstNamePreferred_stored_string", childFirstNamePreferred);
+		}
+		if(childFamilyName != null) {
+			document.addField("childFamilyName_indexed_string", childFamilyName);
+			document.addField("childFamilyName_stored_string", childFamilyName);
+		}
+		if(momFirstName != null) {
+			document.addField("momFirstName_indexed_string", momFirstName);
+			document.addField("momFirstName_stored_string", momFirstName);
+		}
+		if(momFirstNamePreferred != null) {
+			document.addField("momFirstNamePreferred_indexed_string", momFirstNamePreferred);
+			document.addField("momFirstNamePreferred_stored_string", momFirstNamePreferred);
+		}
+		if(dadFirstName != null) {
+			document.addField("dadFirstName_indexed_string", dadFirstName);
+			document.addField("dadFirstName_stored_string", dadFirstName);
+		}
+		if(dadFirstNamePreferred != null) {
+			document.addField("dadFirstNamePreferred_indexed_string", dadFirstNamePreferred);
+			document.addField("dadFirstNamePreferred_stored_string", dadFirstNamePreferred);
+		}
 		if(childCompleteName != null) {
 			document.addField("childCompleteName_indexed_string", childCompleteName);
 			document.addField("childCompleteName_stored_string", childCompleteName);
@@ -11895,6 +12413,20 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "sessionSort_indexed_int";
 			case "ageSort":
 				return "ageSort_indexed_int";
+			case "childFirstName":
+				return "childFirstName_indexed_string";
+			case "childFirstNamePreferred":
+				return "childFirstNamePreferred_indexed_string";
+			case "childFamilyName":
+				return "childFamilyName_indexed_string";
+			case "momFirstName":
+				return "momFirstName_indexed_string";
+			case "momFirstNamePreferred":
+				return "momFirstNamePreferred_indexed_string";
+			case "dadFirstName":
+				return "dadFirstName_indexed_string";
+			case "dadFirstNamePreferred":
+				return "dadFirstNamePreferred_indexed_string";
 			case "childCompleteName":
 				return "childCompleteName_indexed_string";
 			case "childCompleteNamePreferred":
@@ -12133,6 +12665,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		Integer ageSort = (Integer)solrDocument.get("ageSort_stored_int");
 		if(ageSort != null)
 			oSchoolEnrollment.setAgeSort(ageSort);
+
+		String childFirstName = (String)solrDocument.get("childFirstName_stored_string");
+		if(childFirstName != null)
+			oSchoolEnrollment.setChildFirstName(childFirstName);
+
+		String childFirstNamePreferred = (String)solrDocument.get("childFirstNamePreferred_stored_string");
+		if(childFirstNamePreferred != null)
+			oSchoolEnrollment.setChildFirstNamePreferred(childFirstNamePreferred);
+
+		String childFamilyName = (String)solrDocument.get("childFamilyName_stored_string");
+		if(childFamilyName != null)
+			oSchoolEnrollment.setChildFamilyName(childFamilyName);
+
+		String momFirstName = (String)solrDocument.get("momFirstName_stored_string");
+		if(momFirstName != null)
+			oSchoolEnrollment.setMomFirstName(momFirstName);
+
+		String momFirstNamePreferred = (String)solrDocument.get("momFirstNamePreferred_stored_string");
+		if(momFirstNamePreferred != null)
+			oSchoolEnrollment.setMomFirstNamePreferred(momFirstNamePreferred);
+
+		String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
+		if(dadFirstName != null)
+			oSchoolEnrollment.setDadFirstName(dadFirstName);
+
+		String dadFirstNamePreferred = (String)solrDocument.get("dadFirstNamePreferred_stored_string");
+		if(dadFirstNamePreferred != null)
+			oSchoolEnrollment.setDadFirstNamePreferred(dadFirstNamePreferred);
 
 		String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 		if(childCompleteName != null)

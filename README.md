@@ -1,4 +1,6 @@
 
+### You can watch a video and learn more about this project here: https://devpost.com/software/computate-scolaire
+
 # Prerequisites
 
 ## What is the first step to creating my own website?

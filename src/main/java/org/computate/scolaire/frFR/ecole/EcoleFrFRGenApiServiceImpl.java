@@ -92,7 +92,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public EcoleFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
-		EcoleFrFRGenApiService service = EcoleFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -1218,11 +1217,11 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
 		MailClient mailClient = siteContexte.getMailClient();
 		MailMessage message = new MailMessage();
-		message.setFrom(siteConfig.getMailDe());
-		message.setTo(siteConfig.getMailAdmin());
+		message.setFrom(configSite.getMailDe());
+		message.setTo(configSite.getMailAdmin());
 		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(configSite.getSiteBaseUrl() + " " + e.getMessage()));
-		WorkerExecutor workerExecutor = siteContexte.getWorkerExecutor();
+		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
 				mailClient.sendMail(message, result -> {

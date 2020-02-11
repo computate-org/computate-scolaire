@@ -183,6 +183,41 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(guardianSearch.getList());
 	}
 
+	protected void _childFirstName(Wrap<String> c) {
+		if(child_ != null)
+			c.o(child_.getPersonFirstName());
+	}
+
+	protected void _childFirstNamePreferred(Wrap<String> c) {
+		if(child_ != null)
+			c.o(child_.getPersonFirstNamePreferred());
+	}
+
+	protected void _childFamilyName(Wrap<String> c) {
+		if(child_ != null)
+			c.o(child_.getFamilyName());
+	}
+
+	protected void _momFirstName(Wrap<String> c) {
+		if(moms.size() > 0)
+			c.o(moms.get(0).getPersonFirstName());
+	}
+
+	protected void _momFirstNamePreferred(Wrap<String> c) {
+		if(moms.size() > 0)
+			c.o(moms.get(0).getPersonFirstNamePreferred());
+	}
+
+	protected void _dadFirstName(Wrap<String> c) {
+		if(dads.size() > 0)
+			c.o(dads.get(0).getPersonFirstName());
+	}
+
+	protected void _dadFirstNamePreferred(Wrap<String> c) {
+		if(dads.size() > 0)
+			c.o(dads.get(0).getPersonFirstNamePreferred());
+	}
+
 	protected void _childCompleteName(Wrap<String> c) {
 		if(child_ != null)
 			c.o(child_.getPersonCompleteName());

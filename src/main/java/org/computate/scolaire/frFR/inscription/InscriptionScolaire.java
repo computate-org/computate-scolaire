@@ -601,6 +601,111 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: childFirstName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfant_
+	 * r.enUS: child_
+	 * r: PersonnePrenom
+	 * r.enUS: PersonFirstName
+	 */   
+	protected void _enfantPrenom(Couverture<String> c) {
+		if(enfant_ != null)
+			c.o(enfant_.getPersonnePrenom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childFirstNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfant_
+	 * r.enUS: child_
+	 * r: PersonnePrenomPrefere
+	 * r.enUS: PersonFirstNamePreferred
+	 */   
+	protected void _enfantPrenomPrefere(Couverture<String> c) {
+		if(enfant_ != null)
+			c.o(enfant_.getPersonnePrenomPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childFamilyName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfant_
+	 * r.enUS: child_
+	 * r: FamilleNom
+	 * r.enUS: FamilyName
+	 */   
+	protected void _enfantFamilleNom(Couverture<String> c) {
+		if(enfant_ != null)
+			c.o(enfant_.getFamilleNom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: momFirstName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: meres
+	 * r.enUS: moms
+	 * r: PersonnePrenom
+	 * r.enUS: PersonFirstName
+	 */   
+	protected void _merePrenom(Couverture<String> c) {
+		if(meres.size() > 0)
+			c.o(meres.get(0).getPersonnePrenom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: momFirstNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * r: meres
+	 * r.enUS: moms
+	 * r: PersonnePrenomPrefere
+	 * r.enUS: PersonFirstNamePreferred
+	 */   
+	protected void _merePrenomPrefere(Couverture<String> c) {
+		if(meres.size() > 0)
+			c.o(meres.get(0).getPersonnePrenomPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadFirstName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: peres
+	 * r.enUS: dads
+	 * r: PersonnePrenom
+	 * r.enUS: PersonFirstName
+	 */   
+	protected void _perePrenom(Couverture<String> c) {
+		if(peres.size() > 0)
+			c.o(peres.get(0).getPersonnePrenom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadFirstNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * r: peres
+	 * r.enUS: dads
+	 * r: PersonnePrenomPrefere
+	 * r.enUS: PersonFirstNamePreferred
+	 */   
+	protected void _perePrenomPrefere(Couverture<String> c) {
+		if(peres.size() > 0)
+			c.o(peres.get(0).getPersonnePrenomPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: childCompleteName
 	 * Indexe: true
 	 * Stocke: true

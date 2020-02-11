@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -27,6 +29,7 @@ import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
 import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiService;
 import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSGenApiService;
 import org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiService;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiService;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
@@ -43,7 +46,10 @@ import org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiService;
 import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiService;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
+import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.http.HttpServerOptions;
@@ -68,6 +74,7 @@ import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
+import io.vertx.ext.web.api.OperationResponse;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
@@ -77,6 +84,7 @@ import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import net.authorize.Environment;
+import net.authorize.api.contract.v1.ArrayOfBatchDetailsType;
 import net.authorize.api.contract.v1.ArrayOfTransactionSummaryType;
 import net.authorize.api.contract.v1.BatchDetailsType;
 import net.authorize.api.contract.v1.CustomerProfileIdType;
@@ -441,108 +449,226 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Promise<Void> promise = Promise.promise();
 
-		vertx.setPeriodic(1000 * 60 * 60 * 24, a -> {
+		vertx.setPeriodic(1000 * 60 * 60, a -> {
 			WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
-					LOGGER.info("Start to populate the new transactions. ");
-					try {
-						SiteRequestEnUS siteRequest = new SiteRequestEnUS();
-						siteRequest.setVertx(vertx);
-						siteRequest.setSiteContext_(siteContextEnUS);
-						siteRequest.setSiteConfig_(siteContextEnUS.getSiteConfig());
-						siteRequest.initDeepSiteRequestEnUS(siteRequest);
+					SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+					siteRequest.setVertx(vertx);
+					siteRequest.setSiteContext_(siteContextEnUS);
+					siteRequest.setSiteConfig_(siteContextEnUS.getSiteConfig());
+					siteRequest.initDeepSiteRequestEnUS(siteRequest);
+					siteRequest.setJsonObject(new JsonObject());
 		
-						SchoolPaymentEnUSGenApiService service = new org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl(siteContextEnUS);
-					
-						ApiOperationBase.setEnvironment(Environment.PRODUCTION);
-		
-						MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-						String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-						String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-						merchantAuthenticationType.setName(authorizeApiLoginId);
-						merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-						ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-		
-						Paging paging = new Paging();
-						paging.setLimit(100);
-						paging.setOffset(1);
-						DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
-		
-						GetSettledBatchListRequest batchRequest = new GetSettledBatchListRequest();
-						batchRequest.setMerchantAuthentication(merchantAuthenticationType);
-						batchRequest.setFirstSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now().minusDays(7).atStartOfDay(ZoneId.of("America/Denver")))));
-						batchRequest.setLastSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now().plusDays(1).atStartOfDay(ZoneId.of("America/Denver")))));
-		
-						GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);
-						GetSettledBatchListController.setEnvironment(Environment.PRODUCTION);
-						batchController.execute();
-		
-						GetSettledBatchListResponse batchResponse = batchController.getApiResponse();
-		
-						for(BatchDetailsType batch : batchResponse.getBatchList().getBatch()) {
+					sqlInit(siteRequest, b -> {
+						if(b.succeeded()) {
+							LOGGER.info("Start to populate the new transactions. ");
+							try {
+								org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl paymentService = new org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl(siteContextEnUS);
+								org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiServiceImpl enrollmentService = new org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiServiceImpl(siteContextEnUS);
 							
-							GetTransactionListRequest getRequest = new GetTransactionListRequest();
-							getRequest.setMerchantAuthentication(merchantAuthenticationType);
-							getRequest.setBatchId(batch.getBatchId());
-			
-							getRequest.setPaging(paging);
-			
-							TransactionListSorting sorting = new TransactionListSorting();
-							sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
-							sorting.setOrderDescending(true);
-			
-							getRequest.setSorting(sorting);
-			
-							GetTransactionListController controller = new GetTransactionListController(getRequest);
-							GetTransactionListController.setEnvironment(Environment.PRODUCTION);
-							controller.execute();
-			
-							GetTransactionListResponse getResponse = controller.getApiResponse();
-							if (getResponse != null) {
-			
-								if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
-									for(TransactionSummaryType transaction : Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList())) {
-			
-										transaction.getProfile().getCustomerProfileId();
-										XMLGregorianCalendar submitTimeLocal = transaction.getSubmitTimeLocal();
-										SchoolPayment payment = new SchoolPayment();
-										payment.setSiteRequest_(siteRequest);
-										payment.setPaymentAmount(transaction.getSettleAmount());
-										payment.setPaymentDate(submitTimeLocal.toGregorianCalendar().getTime());
-										payment.setPaymentSystem(true);
-										payment.setTransactionId(transaction.getTransId());
-										payment.setCustomerProfileId(Optional.ofNullable(transaction.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
-										payment.setTransactionStatus(transaction.getTransactionStatus());
-										payment.setPaymentBy(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
-			
-										if(transaction.getTransId() != null) {
-											SearchList<SchoolPayment> listeRecherche = new SearchList<SchoolPayment>();
-											listeRecherche.setPopulate(true);
-											listeRecherche.setQuery("*:*");
-											listeRecherche.setC(SchoolPayment.class);
-											listeRecherche.addFilterQuery("transactionId_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getTransId()));
-											listeRecherche.initDeepSearchList(siteRequest);
-			
-											if(listeRecherche.size() == 0) {
-												service.postSchoolPayment(JsonObject.mapFrom(payment), null, handler -> {
-													if(handler.succeeded()) {
-														LOGGER.info("payment créé. ");
-													} else {
-														LOGGER.error(handler.cause());
+								ApiOperationBase.setEnvironment(Environment.PRODUCTION);
+				
+								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+								String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
+								String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
+								merchantAuthenticationType.setName(authorizeApiLoginId);
+								merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+								ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+				
+								Paging paging = new Paging();
+								paging.setLimit(100);
+								paging.setOffset(1);
+								DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+				
+								GetSettledBatchListRequest batchRequest = new GetSettledBatchListRequest();
+								batchRequest.setMerchantAuthentication(merchantAuthenticationType);
+								batchRequest.setFirstSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now().minusDays(10).atStartOfDay(ZoneId.of("America/Denver")))));
+								batchRequest.setLastSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now().plusDays(1).atStartOfDay(ZoneId.of("America/Denver")))));
+				
+								GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);
+								GetSettledBatchListController.setEnvironment(Environment.PRODUCTION);
+								batchController.execute();
+								if(batchController.getErrorResponse() != null)
+									throw new RuntimeException(batchController.getResults().toString());
+				
+								GetSettledBatchListResponse batchResponse = batchController.getApiResponse();
+								List<Long> enrollmentKeys = new ArrayList<>();
+								List<Long> paymentCles = new ArrayList<>();
+				
+								for(BatchDetailsType batch : Optional.ofNullable(batchResponse.getBatchList()).map(ArrayOfBatchDetailsType::getBatch).orElse(Arrays.asList())) {
+									
+									GetTransactionListRequest getRequest = new GetTransactionListRequest();
+									getRequest.setMerchantAuthentication(merchantAuthenticationType);
+									getRequest.setBatchId(batch.getBatchId());
+					
+									getRequest.setPaging(paging);
+					
+									TransactionListSorting sorting = new TransactionListSorting();
+									sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
+									sorting.setOrderDescending(true);
+					
+									getRequest.setSorting(sorting);
+					
+									GetTransactionListController controller = new GetTransactionListController(getRequest);
+									GetTransactionListController.setEnvironment(Environment.PRODUCTION);
+									controller.execute();
+									if(controller.getErrorResponse() != null)
+										throw new RuntimeException(batchController.getResults().toString());
+					
+									GetTransactionListResponse getResponse = controller.getApiResponse();
+									if (getResponse != null) {
+					
+										if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
+											for(TransactionSummaryType transaction : Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList())) {
+					
+												XMLGregorianCalendar submitTimeLocal = transaction.getSubmitTimeLocal();
+												SchoolPayment payment = new SchoolPayment();
+												payment.setSiteRequest_(siteRequest);
+												payment.setPaymentAmount(transaction.getSettleAmount());
+												payment.setPaymentDate(submitTimeLocal.toGregorianCalendar().getTime());
+												payment.setPaymentSystem(true);
+												payment.setTransactionId(transaction.getTransId());
+												payment.setCustomerProfileId(Optional.ofNullable(transaction.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
+												payment.setTransactionStatus(transaction.getTransactionStatus());
+												payment.setPaymentBy(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
+					
+												if(transaction.getTransId() != null) {
+													SearchList<SchoolPayment> listeRecherche = new SearchList<SchoolPayment>();
+													listeRecherche.setPopulate(true);
+													listeRecherche.setQuery("*:*");
+													listeRecherche.setC(SchoolPayment.class);
+													listeRecherche.addFilterQuery("transactionId_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getTransId()));
+													listeRecherche.initDeepSearchList(siteRequest);
+					
+													if(listeRecherche.size() == 0) {
+														SearchList<SchoolEnrollment> searchListEnrollment = new SearchList<SchoolEnrollment>();
+														searchListEnrollment.setPopulate(true);
+														searchListEnrollment.setQuery("*:*");
+														searchListEnrollment.setC(SchoolEnrollment.class);
+														searchListEnrollment.addFilterQuery(
+																"(childFirstName_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getFirstName()) 
+																+ " OR childFirstNamePreferred_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getFirstName()) 
+																+ " OR momFirstNamePreferred_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getFirstName()) 
+																+ " OR dadFirstNamePreferred_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getFirstName()) 
+																+ ")");
+														searchListEnrollment.addFilterQuery("childFamilyName_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getLastName()));
+														searchListEnrollment.initDeepSearchList(siteRequest);
+		
+														if(searchListEnrollment.getList().size() == 1) {
+															Long enrollmentKey = searchListEnrollment.getList().get(0).getPk();
+															enrollmentKeys.add(enrollmentKey);
+															payment.addEnrollmentKeys(enrollmentKey);
+														}
+					
+														paymentService.postSchoolPayment(JsonObject.mapFrom(payment), null, c -> {
+															if(c.succeeded()) {
+																paymentCles.add(Long.parseLong(c.result().getPayload().toJsonObject().getString("pk")));
+																LOGGER.info("payment créé. ");
+															} else {
+																LOGGER.error(c.cause());
+																blockingCodeHandler.handle(Future.failedFuture(c.cause()));
+															}
+														});
 													}
-												});
+												}
 											}
 										}
-										break;
 									}
 								}
+
+								List<Future> futures = new ArrayList<>();
+								for(Long enrollmentKey : enrollmentKeys) {
+									SchoolEnrollment inscriptionScolaire = new SchoolEnrollment();
+									inscriptionScolaire.setPk(enrollmentKey);
+									inscriptionScolaire.setSiteRequest_(siteRequest);
+									futures.add(
+										enrollmentService.futurePATCHSchoolEnrollment(inscriptionScolaire, c -> {
+											if(c.succeeded()) {
+												LOGGER.info(String.format("enrollment %s refreshed. ", enrollmentKey));
+											} else {
+												LOGGER.error(c.cause());
+												blockingCodeHandler.handle(Future.failedFuture(c.cause()));
+											}
+										})
+									);
+								}
+								CompositeFuture.all(futures).setHandler( c -> {
+									if(c.succeeded()) {
+
+										List<Future> futures2 = new ArrayList<>();
+										for(Long paymentCle : paymentCles) {
+											SchoolPayment paymentScolaire = new SchoolPayment();
+											paymentScolaire.setPk(paymentCle);
+											paymentScolaire.setSiteRequest_(siteRequest);
+											futures2.add(
+												paymentService.futurePATCHSchoolPayment(paymentScolaire, d -> {
+													if(c.succeeded()) {
+														LOGGER.info(String.format("payment %s refreshed. ", paymentCle));
+													} else {
+														LOGGER.error(c.cause());
+														blockingCodeHandler.handle(Future.failedFuture(c.cause()));
+													}
+												})
+											);
+										}
+										CompositeFuture.all(futures2).setHandler( d -> {
+											if(d.succeeded()) {
+											} else {
+												LOGGER.error(d.cause());
+												blockingCodeHandler.handle(Future.failedFuture(d.cause()));
+											}
+										});
+									} else {
+										LOGGER.error(c.cause());
+										blockingCodeHandler.handle(Future.failedFuture(c.cause()));
+									}
+								});
+							} catch (Exception e) {
+								LOGGER.error(ExceptionUtils.getStackTrace(e));
+								ExceptionUtils.rethrow(e);
 							}
-							break;
+						} else {
+							blockingCodeHandler.handle(Future.failedFuture(b.cause()));
 						}
-					} catch (Exception e) {
-						ExceptionUtils.rethrow(e);
-					}
+					});
+//						for(Long enrollmentKey : enrollmentKeys) {
+//							OperationRequest operationRequest = new OperationRequest();
+//							operationRequest.setParams(new JsonObject().put("query", new JsonObject().put("fq", new JsonArray().add("pk:" + enrollmentKey))));
+//							operationRequest.getParams().put("path", new JsonObject());
+//							enrollmentService.patchSchoolEnrollment(new JsonObject(), operationRequest, handler -> {
+//								if(handler.succeeded()) {
+//									LOGGER.info(String.format("enrollment %s refreshed. ", enrollmentKey));
+//								} else {
+//									LOGGER.error(handler.cause());
+//								}
+//							});
+//						}
+
+
+
+
+
+
+
+
+//						for(Long paymentCle : paymentCles) {
+//
+//							OperationRequest operationRequest = new OperationRequest();
+//							operationRequest.setParams(new JsonObject().put("query", new JsonObject().put("fq", new JsonArray().add("pk:" + paymentCle))));
+//							operationRequest.getParams().put("path", new JsonObject());
+//							paymentService.patchSchoolPayment(new JsonObject(), operationRequest, handler -> {
+//								if(handler.succeeded()) {
+//									LOGGER.info(String.format("payment %s refreshed. ", paymentCle));
+//								} else {
+//									LOGGER.error(handler.cause());
+//								}
+//							});
+//						}
+//					} catch (Exception e) {
+//						LOGGER.error(ExceptionUtils.getStackTrace(e));
+//						ExceptionUtils.rethrow(e);
+//					}
 					LOGGER.info("Finish populating the new transactions. ");
 				}, resultHandler -> {
 				}
@@ -551,6 +677,34 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 
 		promise.complete();
 		return promise;
+	}
+
+	public void  sqlInit(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
+
+			if(sqlClient == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				sqlClient.getConnection(sqlAsync -> {
+					if(sqlAsync.succeeded()) {
+						SQLConnection sqlConnection = sqlAsync.result();
+						sqlConnection.setAutoCommit(false, a -> {
+							if(a.succeeded()) {
+								siteRequest.setSqlConnection(sqlConnection);
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						});
+					} else {
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
+					}
+				});
+			}
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	/**	

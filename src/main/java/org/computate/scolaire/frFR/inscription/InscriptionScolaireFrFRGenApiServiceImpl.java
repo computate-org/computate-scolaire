@@ -7,6 +7,8 @@ import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailMessage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -90,7 +92,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 	public InscriptionScolaireFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
-		InscriptionScolaireFrFRGenApiService service = InscriptionScolaireFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -228,7 +229,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "enfantDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "ecoleAddresse":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -344,43 +345,43 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "inscriptionDate1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate1", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate2":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate2", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate3":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate3", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate4":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate4", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate5":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate5", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate6":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate6", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate7":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate7", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate8":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate8", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate9":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate9", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate10":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate10", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					}
 				}
@@ -676,7 +677,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "enfantDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "ecoleAddresse":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -792,43 +793,43 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "inscriptionDate1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate1", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate2":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate2", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate3":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate3", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate4":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate4", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate5":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate5", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate6":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate6", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate7":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate7", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate8":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate8", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate9":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate9", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionDate10":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate10", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					}
 				}
@@ -2331,6 +2332,27 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			)
 			, new CaseInsensitiveHeaders()
 		);
+		ConfigSite configSite = requeteSite.getConfigSite_();
+		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
+		MailClient mailClient = siteContexte.getMailClient();
+		MailMessage message = new MailMessage();
+		message.setFrom(configSite.getMailDe());
+		message.setTo(configSite.getMailAdmin());
+		message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
+		workerExecutor.executeBlocking(
+			blockingCodeHandler -> {
+				mailClient.sendMail(message, result -> {
+					if (result.succeeded()) {
+						LOGGER.info(result.result());
+					} else {
+						LOGGER.error(result.cause());
+					}
+				});
+			}, resultHandler -> {
+			}
+		);
 		if(requeteSite != null) {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			if(connexionSql != null) {
@@ -2470,23 +2492,27 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									, definirAsync
 							-> {
 								if(definirAsync.succeeded()) {
-									for(JsonArray definition : definirAsync.result().getResults()) {
-										utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+									try {
+										for(JsonArray definition : definirAsync.result().getResults()) {
+											utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+										}
+										JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+										JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+										utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+										utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+										utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+										utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
+										utilisateurSite.initLoinPourClasse(requeteSite);
+										utilisateurSite.indexerPourClasse();
+										requeteSite.setUtilisateurSite(utilisateurSite);
+										requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+										requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+										requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+										requeteSite.setUtilisateurId(principalJson.getString("sub"));
+										gestionnaireEvenements.handle(Future.succeededFuture());
+									} catch(Exception e) {
+										gestionnaireEvenements.handle(Future.failedFuture(e));
 									}
-									JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-									JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-									utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-									utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-									utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-									utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-									utilisateurSite.initLoinPourClasse(requeteSite);
-									utilisateurSite.indexerPourClasse();
-									requeteSite.setUtilisateurSite(utilisateurSite);
-									requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-									requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-									requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-									requeteSite.setUtilisateurId(principalJson.getString("sub"));
-									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
 									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}

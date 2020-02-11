@@ -2469,6 +2469,433 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
+	//////////////////
+	// enfantPrenom //
+	//////////////////
+
+	/**	L'entité « enfantPrenom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantPrenom;
+	@JsonIgnore
+	public Couverture<String> enfantPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("enfantPrenom").o(enfantPrenom);
+
+	/**	<br/>L'entité « enfantPrenom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantPrenom">Trouver l'entité enfantPrenom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantPrenom(Couverture<String> c);
+
+	public String getEnfantPrenom() {
+		return enfantPrenom;
+	}
+
+	public void setEnfantPrenom(String enfantPrenom) {
+		this.enfantPrenom = enfantPrenom;
+		this.enfantPrenomCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantPrenomInit() {
+		if(!enfantPrenomCouverture.dejaInitialise) {
+			_enfantPrenom(enfantPrenomCouverture);
+			if(enfantPrenom == null)
+				setEnfantPrenom(enfantPrenomCouverture.o);
+		}
+		enfantPrenomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantPrenom() {
+		return enfantPrenom;
+	}
+
+	public String strEnfantPrenom() {
+		return enfantPrenom == null ? "" : enfantPrenom;
+	}
+
+	public String jsonEnfantPrenom() {
+		return enfantPrenom == null ? "" : enfantPrenom;
+	}
+
+	public String nomAffichageEnfantPrenom() {
+		return null;
+	}
+
+	public String htmTooltipEnfantPrenom() {
+		return null;
+	}
+
+	public String htmEnfantPrenom() {
+		return enfantPrenom == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantPrenom());
+	}
+
+	/////////////////////////
+	// enfantPrenomPrefere //
+	/////////////////////////
+
+	/**	L'entité « enfantPrenomPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantPrenomPrefere;
+	@JsonIgnore
+	public Couverture<String> enfantPrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("enfantPrenomPrefere").o(enfantPrenomPrefere);
+
+	/**	<br/>L'entité « enfantPrenomPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantPrenomPrefere">Trouver l'entité enfantPrenomPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantPrenomPrefere(Couverture<String> c);
+
+	public String getEnfantPrenomPrefere() {
+		return enfantPrenomPrefere;
+	}
+
+	public void setEnfantPrenomPrefere(String enfantPrenomPrefere) {
+		this.enfantPrenomPrefere = enfantPrenomPrefere;
+		this.enfantPrenomPrefereCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantPrenomPrefereInit() {
+		if(!enfantPrenomPrefereCouverture.dejaInitialise) {
+			_enfantPrenomPrefere(enfantPrenomPrefereCouverture);
+			if(enfantPrenomPrefere == null)
+				setEnfantPrenomPrefere(enfantPrenomPrefereCouverture.o);
+		}
+		enfantPrenomPrefereCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantPrenomPrefere() {
+		return enfantPrenomPrefere;
+	}
+
+	public String strEnfantPrenomPrefere() {
+		return enfantPrenomPrefere == null ? "" : enfantPrenomPrefere;
+	}
+
+	public String jsonEnfantPrenomPrefere() {
+		return enfantPrenomPrefere == null ? "" : enfantPrenomPrefere;
+	}
+
+	public String nomAffichageEnfantPrenomPrefere() {
+		return null;
+	}
+
+	public String htmTooltipEnfantPrenomPrefere() {
+		return null;
+	}
+
+	public String htmEnfantPrenomPrefere() {
+		return enfantPrenomPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantPrenomPrefere());
+	}
+
+	//////////////////////
+	// enfantFamilleNom //
+	//////////////////////
+
+	/**	L'entité « enfantFamilleNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantFamilleNom;
+	@JsonIgnore
+	public Couverture<String> enfantFamilleNomCouverture = new Couverture<String>().p(this).c(String.class).var("enfantFamilleNom").o(enfantFamilleNom);
+
+	/**	<br/>L'entité « enfantFamilleNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantFamilleNom">Trouver l'entité enfantFamilleNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantFamilleNom(Couverture<String> c);
+
+	public String getEnfantFamilleNom() {
+		return enfantFamilleNom;
+	}
+
+	public void setEnfantFamilleNom(String enfantFamilleNom) {
+		this.enfantFamilleNom = enfantFamilleNom;
+		this.enfantFamilleNomCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantFamilleNomInit() {
+		if(!enfantFamilleNomCouverture.dejaInitialise) {
+			_enfantFamilleNom(enfantFamilleNomCouverture);
+			if(enfantFamilleNom == null)
+				setEnfantFamilleNom(enfantFamilleNomCouverture.o);
+		}
+		enfantFamilleNomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantFamilleNom() {
+		return enfantFamilleNom;
+	}
+
+	public String strEnfantFamilleNom() {
+		return enfantFamilleNom == null ? "" : enfantFamilleNom;
+	}
+
+	public String jsonEnfantFamilleNom() {
+		return enfantFamilleNom == null ? "" : enfantFamilleNom;
+	}
+
+	public String nomAffichageEnfantFamilleNom() {
+		return null;
+	}
+
+	public String htmTooltipEnfantFamilleNom() {
+		return null;
+	}
+
+	public String htmEnfantFamilleNom() {
+		return enfantFamilleNom == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantFamilleNom());
+	}
+
+	////////////////
+	// merePrenom //
+	////////////////
+
+	/**	L'entité « merePrenom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String merePrenom;
+	@JsonIgnore
+	public Couverture<String> merePrenomCouverture = new Couverture<String>().p(this).c(String.class).var("merePrenom").o(merePrenom);
+
+	/**	<br/>L'entité « merePrenom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:merePrenom">Trouver l'entité merePrenom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _merePrenom(Couverture<String> c);
+
+	public String getMerePrenom() {
+		return merePrenom;
+	}
+
+	public void setMerePrenom(String merePrenom) {
+		this.merePrenom = merePrenom;
+		this.merePrenomCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire merePrenomInit() {
+		if(!merePrenomCouverture.dejaInitialise) {
+			_merePrenom(merePrenomCouverture);
+			if(merePrenom == null)
+				setMerePrenom(merePrenomCouverture.o);
+		}
+		merePrenomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrMerePrenom() {
+		return merePrenom;
+	}
+
+	public String strMerePrenom() {
+		return merePrenom == null ? "" : merePrenom;
+	}
+
+	public String jsonMerePrenom() {
+		return merePrenom == null ? "" : merePrenom;
+	}
+
+	public String nomAffichageMerePrenom() {
+		return null;
+	}
+
+	public String htmTooltipMerePrenom() {
+		return null;
+	}
+
+	public String htmMerePrenom() {
+		return merePrenom == null ? "" : StringEscapeUtils.escapeHtml4(strMerePrenom());
+	}
+
+	///////////////////////
+	// merePrenomPrefere //
+	///////////////////////
+
+	/**	L'entité « merePrenomPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String merePrenomPrefere;
+	@JsonIgnore
+	public Couverture<String> merePrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("merePrenomPrefere").o(merePrenomPrefere);
+
+	/**	<br/>L'entité « merePrenomPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:merePrenomPrefere">Trouver l'entité merePrenomPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _merePrenomPrefere(Couverture<String> c);
+
+	public String getMerePrenomPrefere() {
+		return merePrenomPrefere;
+	}
+
+	public void setMerePrenomPrefere(String merePrenomPrefere) {
+		this.merePrenomPrefere = merePrenomPrefere;
+		this.merePrenomPrefereCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire merePrenomPrefereInit() {
+		if(!merePrenomPrefereCouverture.dejaInitialise) {
+			_merePrenomPrefere(merePrenomPrefereCouverture);
+			if(merePrenomPrefere == null)
+				setMerePrenomPrefere(merePrenomPrefereCouverture.o);
+		}
+		merePrenomPrefereCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrMerePrenomPrefere() {
+		return merePrenomPrefere;
+	}
+
+	public String strMerePrenomPrefere() {
+		return merePrenomPrefere == null ? "" : merePrenomPrefere;
+	}
+
+	public String jsonMerePrenomPrefere() {
+		return merePrenomPrefere == null ? "" : merePrenomPrefere;
+	}
+
+	public String nomAffichageMerePrenomPrefere() {
+		return null;
+	}
+
+	public String htmTooltipMerePrenomPrefere() {
+		return null;
+	}
+
+	public String htmMerePrenomPrefere() {
+		return merePrenomPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strMerePrenomPrefere());
+	}
+
+	////////////////
+	// perePrenom //
+	////////////////
+
+	/**	L'entité « perePrenom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String perePrenom;
+	@JsonIgnore
+	public Couverture<String> perePrenomCouverture = new Couverture<String>().p(this).c(String.class).var("perePrenom").o(perePrenom);
+
+	/**	<br/>L'entité « perePrenom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:perePrenom">Trouver l'entité perePrenom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _perePrenom(Couverture<String> c);
+
+	public String getPerePrenom() {
+		return perePrenom;
+	}
+
+	public void setPerePrenom(String perePrenom) {
+		this.perePrenom = perePrenom;
+		this.perePrenomCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire perePrenomInit() {
+		if(!perePrenomCouverture.dejaInitialise) {
+			_perePrenom(perePrenomCouverture);
+			if(perePrenom == null)
+				setPerePrenom(perePrenomCouverture.o);
+		}
+		perePrenomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrPerePrenom() {
+		return perePrenom;
+	}
+
+	public String strPerePrenom() {
+		return perePrenom == null ? "" : perePrenom;
+	}
+
+	public String jsonPerePrenom() {
+		return perePrenom == null ? "" : perePrenom;
+	}
+
+	public String nomAffichagePerePrenom() {
+		return null;
+	}
+
+	public String htmTooltipPerePrenom() {
+		return null;
+	}
+
+	public String htmPerePrenom() {
+		return perePrenom == null ? "" : StringEscapeUtils.escapeHtml4(strPerePrenom());
+	}
+
+	///////////////////////
+	// perePrenomPrefere //
+	///////////////////////
+
+	/**	L'entité « perePrenomPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String perePrenomPrefere;
+	@JsonIgnore
+	public Couverture<String> perePrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("perePrenomPrefere").o(perePrenomPrefere);
+
+	/**	<br/>L'entité « perePrenomPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:perePrenomPrefere">Trouver l'entité perePrenomPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _perePrenomPrefere(Couverture<String> c);
+
+	public String getPerePrenomPrefere() {
+		return perePrenomPrefere;
+	}
+
+	public void setPerePrenomPrefere(String perePrenomPrefere) {
+		this.perePrenomPrefere = perePrenomPrefere;
+		this.perePrenomPrefereCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire perePrenomPrefereInit() {
+		if(!perePrenomPrefereCouverture.dejaInitialise) {
+			_perePrenomPrefere(perePrenomPrefereCouverture);
+			if(perePrenomPrefere == null)
+				setPerePrenomPrefere(perePrenomPrefereCouverture.o);
+		}
+		perePrenomPrefereCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrPerePrenomPrefere() {
+		return perePrenomPrefere;
+	}
+
+	public String strPerePrenomPrefere() {
+		return perePrenomPrefere == null ? "" : perePrenomPrefere;
+	}
+
+	public String jsonPerePrenomPrefere() {
+		return perePrenomPrefere == null ? "" : perePrenomPrefere;
+	}
+
+	public String nomAffichagePerePrenomPrefere() {
+		return null;
+	}
+
+	public String htmTooltipPerePrenomPrefere() {
+		return null;
+	}
+
+	public String htmPerePrenomPrefere() {
+		return perePrenomPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strPerePrenomPrefere());
+	}
+
 	//////////////////////
 	// enfantNomComplet //
 	//////////////////////
@@ -10179,6 +10606,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		peresInit();
 		gardienRechercheInit();
 		gardiensInit();
+		enfantPrenomInit();
+		enfantPrenomPrefereInit();
+		enfantFamilleNomInit();
+		merePrenomInit();
+		merePrenomPrefereInit();
+		perePrenomInit();
+		perePrenomPrefereInit();
 		enfantNomCompletInit();
 		enfantNomCompletPrefereInit();
 		enfantDateNaissanceInit();
@@ -10379,6 +10813,20 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.gardienRecherche;
 			case "gardiens":
 				return oInscriptionScolaire.gardiens;
+			case "enfantPrenom":
+				return oInscriptionScolaire.enfantPrenom;
+			case "enfantPrenomPrefere":
+				return oInscriptionScolaire.enfantPrenomPrefere;
+			case "enfantFamilleNom":
+				return oInscriptionScolaire.enfantFamilleNom;
+			case "merePrenom":
+				return oInscriptionScolaire.merePrenom;
+			case "merePrenomPrefere":
+				return oInscriptionScolaire.merePrenomPrefere;
+			case "perePrenom":
+				return oInscriptionScolaire.perePrenom;
+			case "perePrenomPrefere":
+				return oInscriptionScolaire.perePrenomPrefere;
 			case "enfantNomComplet":
 				return oInscriptionScolaire.enfantNomComplet;
 			case "enfantNomCompletPrefere":
@@ -10906,6 +11354,48 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				Integer ageTri = (Integer)solrDocument.get("ageTri_stored_int");
 				if(ageTri != null)
 					oInscriptionScolaire.setAgeTri(ageTri);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantPrenom")) {
+				String enfantPrenom = (String)solrDocument.get("enfantPrenom_stored_string");
+				if(enfantPrenom != null)
+					oInscriptionScolaire.setEnfantPrenom(enfantPrenom);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantPrenomPrefere")) {
+				String enfantPrenomPrefere = (String)solrDocument.get("enfantPrenomPrefere_stored_string");
+				if(enfantPrenomPrefere != null)
+					oInscriptionScolaire.setEnfantPrenomPrefere(enfantPrenomPrefere);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantFamilleNom")) {
+				String enfantFamilleNom = (String)solrDocument.get("enfantFamilleNom_stored_string");
+				if(enfantFamilleNom != null)
+					oInscriptionScolaire.setEnfantFamilleNom(enfantFamilleNom);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("merePrenom")) {
+				String merePrenom = (String)solrDocument.get("merePrenom_stored_string");
+				if(merePrenom != null)
+					oInscriptionScolaire.setMerePrenom(merePrenom);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("merePrenomPrefere")) {
+				String merePrenomPrefere = (String)solrDocument.get("merePrenomPrefere_stored_string");
+				if(merePrenomPrefere != null)
+					oInscriptionScolaire.setMerePrenomPrefere(merePrenomPrefere);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("perePrenom")) {
+				String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
+				if(perePrenom != null)
+					oInscriptionScolaire.setPerePrenom(perePrenom);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("perePrenomPrefere")) {
+				String perePrenomPrefere = (String)solrDocument.get("perePrenomPrefere_stored_string");
+				if(perePrenomPrefere != null)
+					oInscriptionScolaire.setPerePrenomPrefere(perePrenomPrefere);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("enfantNomComplet")) {
@@ -11557,6 +12047,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("ageTri_indexed_int", ageTri);
 			document.addField("ageTri_stored_int", ageTri);
 		}
+		if(enfantPrenom != null) {
+			document.addField("enfantPrenom_indexed_string", enfantPrenom);
+			document.addField("enfantPrenom_stored_string", enfantPrenom);
+		}
+		if(enfantPrenomPrefere != null) {
+			document.addField("enfantPrenomPrefere_indexed_string", enfantPrenomPrefere);
+			document.addField("enfantPrenomPrefere_stored_string", enfantPrenomPrefere);
+		}
+		if(enfantFamilleNom != null) {
+			document.addField("enfantFamilleNom_indexed_string", enfantFamilleNom);
+			document.addField("enfantFamilleNom_stored_string", enfantFamilleNom);
+		}
+		if(merePrenom != null) {
+			document.addField("merePrenom_indexed_string", merePrenom);
+			document.addField("merePrenom_stored_string", merePrenom);
+		}
+		if(merePrenomPrefere != null) {
+			document.addField("merePrenomPrefere_indexed_string", merePrenomPrefere);
+			document.addField("merePrenomPrefere_stored_string", merePrenomPrefere);
+		}
+		if(perePrenom != null) {
+			document.addField("perePrenom_indexed_string", perePrenom);
+			document.addField("perePrenom_stored_string", perePrenom);
+		}
+		if(perePrenomPrefere != null) {
+			document.addField("perePrenomPrefere_indexed_string", perePrenomPrefere);
+			document.addField("perePrenomPrefere_stored_string", perePrenomPrefere);
+		}
 		if(enfantNomComplet != null) {
 			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
 			document.addField("enfantNomComplet_stored_string", enfantNomComplet);
@@ -11925,6 +12443,20 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "sessionTri_indexed_int";
 			case "ageTri":
 				return "ageTri_indexed_int";
+			case "enfantPrenom":
+				return "enfantPrenom_indexed_string";
+			case "enfantPrenomPrefere":
+				return "enfantPrenomPrefere_indexed_string";
+			case "enfantFamilleNom":
+				return "enfantFamilleNom_indexed_string";
+			case "merePrenom":
+				return "merePrenom_indexed_string";
+			case "merePrenomPrefere":
+				return "merePrenomPrefere_indexed_string";
+			case "perePrenom":
+				return "perePrenom_indexed_string";
+			case "perePrenomPrefere":
+				return "perePrenomPrefere_indexed_string";
 			case "enfantNomComplet":
 				return "enfantNomComplet_indexed_string";
 			case "enfantNomCompletPrefere":
@@ -12163,6 +12695,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Integer ageTri = (Integer)solrDocument.get("ageTri_stored_int");
 		if(ageTri != null)
 			oInscriptionScolaire.setAgeTri(ageTri);
+
+		String enfantPrenom = (String)solrDocument.get("enfantPrenom_stored_string");
+		if(enfantPrenom != null)
+			oInscriptionScolaire.setEnfantPrenom(enfantPrenom);
+
+		String enfantPrenomPrefere = (String)solrDocument.get("enfantPrenomPrefere_stored_string");
+		if(enfantPrenomPrefere != null)
+			oInscriptionScolaire.setEnfantPrenomPrefere(enfantPrenomPrefere);
+
+		String enfantFamilleNom = (String)solrDocument.get("enfantFamilleNom_stored_string");
+		if(enfantFamilleNom != null)
+			oInscriptionScolaire.setEnfantFamilleNom(enfantFamilleNom);
+
+		String merePrenom = (String)solrDocument.get("merePrenom_stored_string");
+		if(merePrenom != null)
+			oInscriptionScolaire.setMerePrenom(merePrenom);
+
+		String merePrenomPrefere = (String)solrDocument.get("merePrenomPrefere_stored_string");
+		if(merePrenomPrefere != null)
+			oInscriptionScolaire.setMerePrenomPrefere(merePrenomPrefere);
+
+		String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
+		if(perePrenom != null)
+			oInscriptionScolaire.setPerePrenom(perePrenom);
+
+		String perePrenomPrefere = (String)solrDocument.get("perePrenomPrefere_stored_string");
+		if(perePrenomPrefere != null)
+			oInscriptionScolaire.setPerePrenomPrefere(perePrenomPrefere);
 
 		String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
 		if(enfantNomComplet != null)
