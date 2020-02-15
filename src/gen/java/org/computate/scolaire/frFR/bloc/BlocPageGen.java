@@ -229,7 +229,7 @@ public abstract class BlocPageGen<DEV> extends BlocGenPage {
 
 	public void requeteApiBlocPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (BlocPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof BlocPage) {
 			BlocPage original = (BlocPage)o;
 			super.requeteApiBlocGenPage();

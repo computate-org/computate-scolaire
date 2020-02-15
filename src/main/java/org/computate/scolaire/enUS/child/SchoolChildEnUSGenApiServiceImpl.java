@@ -77,6 +77,7 @@ import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -1555,7 +1556,9 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			if(!siteRequest.getApiRequest_().getEmpty()) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(null))) {
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
 				searchList.setPopulate(true);
 				searchList.setQuery("*:*");
@@ -1563,16 +1566,16 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				searchList.add("json.facet", "{enrollmentKeys:{terms:{field:enrollmentKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
-				searchList.initDeepSearchList(siteRequest);
+				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
 				{
-					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					for(Long pk : o.getEnrollmentKeys()) {
 						SchoolEnrollment o2 = new SchoolEnrollment();
 
 						o2.setPk(pk);
-						o2.setSiteRequest_(siteRequest);
+						o2.setSiteRequest_(siteRequest2);
 						futures.add(
 							service.futurePATCHSchoolEnrollment(o2, a -> {
 								if(a.succeeded()) {
@@ -1589,7 +1592,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Refresh relations succeeded. ");
-						SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolChild o2 : searchList.getList()) {
 							futures2.add(
@@ -1610,12 +1613,12 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								eventHandler.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Refresh relations failed. ", b.cause());
-								errorSchoolChild(siteRequest, eventHandler, b);
+								errorSchoolChild(siteRequest2, eventHandler, b);
 							}
 						});
 					} else {
 						LOGGER.error("Refresh relations failed. ", a.cause());
-						errorSchoolChild(siteRequest, eventHandler, a);
+						errorSchoolChild(siteRequest2, eventHandler, a);
 					}
 				});
 			} else {

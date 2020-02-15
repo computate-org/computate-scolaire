@@ -1832,7 +1832,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void requeteApiDesignInscription() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (DesignInscription)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof DesignInscription) {
 			DesignInscription original = (DesignInscription)o;
 			if(!Objects.equals(partHtmlCles, original.getPartHtmlCles()))

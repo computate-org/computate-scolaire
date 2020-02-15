@@ -79,6 +79,7 @@ import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -1555,7 +1556,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(!requeteSite.getRequeteApi_().getEmpty()) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
 				listeRecherche.setPeupler(true);
 				listeRecherche.setQuery("*:*");
@@ -1564,16 +1567,16 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				listeRecherche.add("json.facet", "{ecoleCle:{terms:{field:ecoleCle_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{saisonCles:{terms:{field:saisonCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
-				listeRecherche.initLoinListeRecherche(requeteSite);
+				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
 				{
 					Ecole o2 = new Ecole();
-					EcoleFrFRGenApiServiceImpl service = new EcoleFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					EcoleFrFRGenApiServiceImpl service = new EcoleFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getEcoleCle();
 
 					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite);
+					o2.setRequeteSite_(requeteSite2);
 					futures.add(
 						service.futurePATCHEcole(o2, a -> {
 							if(a.succeeded()) {
@@ -1587,12 +1590,12 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				}
 
 				{
-					SaisonScolaireFrFRGenApiServiceImpl service = new SaisonScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					SaisonScolaireFrFRGenApiServiceImpl service = new SaisonScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getSaisonCles()) {
 						SaisonScolaire o2 = new SaisonScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHSaisonScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -1609,7 +1612,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Recharger relations a réussi. ");
-						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(AnneeScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
@@ -1630,12 +1633,12 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Recharger relations a échoué. ", b.cause());
-								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+								erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, b);
 							}
 						});
 					} else {
 						LOGGER.error("Recharger relations a échoué. ", a.cause());
-						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, a);
+						erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 					}
 				});
 			} else {

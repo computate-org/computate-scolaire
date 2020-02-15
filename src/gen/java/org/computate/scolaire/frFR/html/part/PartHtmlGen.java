@@ -4093,7 +4093,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void requeteApiPartHtml() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (PartHtml)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof PartHtml) {
 			PartHtml original = (PartHtml)o;
 			if(!Objects.equals(designInscriptionCle, original.getDesignInscriptionCle()))

@@ -2158,7 +2158,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void apiRequestSchool() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (School)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof School) {
 			School original = (School)o;
 			if(!Objects.equals(yearKeys, original.getYearKeys()))

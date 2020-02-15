@@ -79,6 +79,7 @@ import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -1663,7 +1664,9 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			if(!siteRequest.getApiRequest_().getEmpty()) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(null))) {
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolBlock(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
 				searchList.setPopulate(true);
 				searchList.setQuery("*:*");
@@ -1672,16 +1675,16 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				searchList.add("json.facet", "{enrollmentKeys:{terms:{field:enrollmentKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{ageKey:{terms:{field:ageKey_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
-				searchList.initDeepSearchList(siteRequest);
+				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
 				{
-					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					for(Long pk : o.getEnrollmentKeys()) {
 						SchoolEnrollment o2 = new SchoolEnrollment();
 
 						o2.setPk(pk);
-						o2.setSiteRequest_(siteRequest);
+						o2.setSiteRequest_(siteRequest2);
 						futures.add(
 							service.futurePATCHSchoolEnrollment(o2, a -> {
 								if(a.succeeded()) {
@@ -1697,11 +1700,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 				{
 					SchoolAge o2 = new SchoolAge();
-					SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getAgeKey();
 
 					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest);
+					o2.setSiteRequest_(siteRequest2);
 					futures.add(
 						service.futurePATCHSchoolAge(o2, a -> {
 							if(a.succeeded()) {
@@ -1717,7 +1720,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Refresh relations succeeded. ");
-						SchoolBlockEnUSGenApiServiceImpl service = new SchoolBlockEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						SchoolBlockEnUSGenApiServiceImpl service = new SchoolBlockEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolBlock o2 : searchList.getList()) {
 							futures2.add(
@@ -1738,12 +1741,12 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								eventHandler.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Refresh relations failed. ", b.cause());
-								errorSchoolBlock(siteRequest, eventHandler, b);
+								errorSchoolBlock(siteRequest2, eventHandler, b);
 							}
 						});
 					} else {
 						LOGGER.error("Refresh relations failed. ", a.cause());
-						errorSchoolBlock(siteRequest, eventHandler, a);
+						errorSchoolBlock(siteRequest2, eventHandler, a);
 					}
 				});
 			} else {

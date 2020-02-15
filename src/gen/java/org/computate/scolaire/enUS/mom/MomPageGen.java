@@ -229,7 +229,7 @@ public abstract class MomPageGen<DEV> extends MomGenPage {
 
 	public void apiRequestMomPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (MomPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof MomPage) {
 			MomPage original = (MomPage)o;
 			super.apiRequestMomGenPage();

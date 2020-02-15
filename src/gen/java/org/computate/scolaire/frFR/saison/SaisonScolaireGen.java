@@ -2879,7 +2879,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiSaisonScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (SaisonScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof SaisonScolaire) {
 			SaisonScolaire original = (SaisonScolaire)o;
 			if(!Objects.equals(anneeCle, original.getAnneeCle()))

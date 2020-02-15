@@ -77,6 +77,7 @@ import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -802,26 +803,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
 						}
 						break;
-					case "setPersonneContactUrgence":
-						if(requeteJson.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneContactUrgence"));
-						} else {
-							o2.setPersonneContactUrgence(requeteJson.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneContactUrgence", o2.jsonPersonneContactUrgence(), pk));
-						}
-						break;
-					case "setPersonneChercher":
-						if(requeteJson.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneChercher"));
-						} else {
-							o2.setPersonneChercher(requeteJson.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneChercher", o2.jsonPersonneChercher(), pk));
-						}
-						break;
 					case "setPersonneNumeroTelephone":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -840,6 +821,26 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							o2.setPersonneRelation(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneRelation", o2.jsonPersonneRelation(), pk));
+						}
+						break;
+					case "setPersonneContactUrgence":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneContactUrgence"));
+						} else {
+							o2.setPersonneContactUrgence(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneContactUrgence", o2.jsonPersonneContactUrgence(), pk));
+						}
+						break;
+					case "setPersonneChercher":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneChercher"));
+						} else {
+							o2.setPersonneChercher(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneChercher", o2.jsonPersonneChercher(), pk));
 						}
 						break;
 				}
@@ -1609,7 +1610,9 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(!requeteSite.getRequeteApi_().getEmpty()) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
 				listeRecherche.setPeupler(true);
 				listeRecherche.setQuery("*:*");
@@ -1617,16 +1620,16 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
-				listeRecherche.initLoinListeRecherche(requeteSite);
+				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
 				{
-					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getInscriptionCles()) {
 						InscriptionScolaire o2 = new InscriptionScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHInscriptionScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -1643,7 +1646,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Recharger relations a réussi. ");
-						GardienScolaireFrFRGenApiServiceImpl service = new GardienScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						GardienScolaireFrFRGenApiServiceImpl service = new GardienScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(GardienScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
@@ -1664,12 +1667,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Recharger relations a échoué. ", b.cause());
-								erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+								erreurGardienScolaire(requeteSite2, gestionnaireEvenements, b);
 							}
 						});
 					} else {
 						LOGGER.error("Recharger relations a échoué. ", a.cause());
-						erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+						erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 					}
 				});
 			} else {

@@ -229,7 +229,7 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 
 	public void apiRequestBlockPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (BlockPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof BlockPage) {
 			BlockPage original = (BlockPage)o;
 			super.apiRequestBlockGenPage();

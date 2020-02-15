@@ -3222,7 +3222,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiMereScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (MereScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof MereScolaire) {
 			MereScolaire original = (MereScolaire)o;
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))

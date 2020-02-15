@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;             
+package org.computate.scolaire.frFR.paiement;              
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -53,7 +53,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/ 
+*/              
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**

@@ -2875,7 +2875,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolSeason() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolSeason)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolSeason) {
 			SchoolSeason original = (SchoolSeason)o;
 			if(!Objects.equals(yearKey, original.getYearKey()))

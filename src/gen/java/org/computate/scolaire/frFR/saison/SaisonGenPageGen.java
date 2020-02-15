@@ -319,7 +319,7 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiSaisonGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (SaisonGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof SaisonGenPage) {
 			SaisonGenPage original = (SaisonGenPage)o;
 			super.requeteApiClusterPage();

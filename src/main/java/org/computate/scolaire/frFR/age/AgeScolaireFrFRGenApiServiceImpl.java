@@ -79,6 +79,7 @@ import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -1555,7 +1556,9 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(!requeteSite.getRequeteApi_().getEmpty()) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAgeScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 				listeRecherche.setPeupler(true);
 				listeRecherche.setQuery("*:*");
@@ -1564,16 +1567,16 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				listeRecherche.add("json.facet", "{blocCles:{terms:{field:blocCles_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{sessionCle:{terms:{field:sessionCle_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
-				listeRecherche.initLoinListeRecherche(requeteSite);
+				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
 				{
-					BlocScolaireFrFRGenApiServiceImpl service = new BlocScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					BlocScolaireFrFRGenApiServiceImpl service = new BlocScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getBlocCles()) {
 						BlocScolaire o2 = new BlocScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHBlocScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -1589,11 +1592,11 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 
 				{
 					SessionScolaire o2 = new SessionScolaire();
-					SessionScolaireFrFRGenApiServiceImpl service = new SessionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					SessionScolaireFrFRGenApiServiceImpl service = new SessionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getSessionCle();
 
 					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite);
+					o2.setRequeteSite_(requeteSite2);
 					futures.add(
 						service.futurePATCHSessionScolaire(o2, a -> {
 							if(a.succeeded()) {
@@ -1609,7 +1612,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Recharger relations a réussi. ");
-						AgeScolaireFrFRGenApiServiceImpl service = new AgeScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						AgeScolaireFrFRGenApiServiceImpl service = new AgeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(AgeScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
@@ -1630,12 +1633,12 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Recharger relations a échoué. ", b.cause());
-								erreurAgeScolaire(requeteSite, gestionnaireEvenements, b);
+								erreurAgeScolaire(requeteSite2, gestionnaireEvenements, b);
 							}
 						});
 					} else {
 						LOGGER.error("Recharger relations a échoué. ", a.cause());
-						erreurAgeScolaire(requeteSite, gestionnaireEvenements, a);
+						erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 					}
 				});
 			} else {

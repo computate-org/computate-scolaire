@@ -5500,7 +5500,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolBlock() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolBlock)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolBlock) {
 			SchoolBlock original = (SchoolBlock)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))

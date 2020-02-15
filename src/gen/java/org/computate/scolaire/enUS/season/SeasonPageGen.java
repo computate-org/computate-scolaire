@@ -229,7 +229,7 @@ public abstract class SeasonPageGen<DEV> extends SeasonGenPage {
 
 	public void apiRequestSeasonPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SeasonPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SeasonPage) {
 			SeasonPage original = (SeasonPage)o;
 			super.apiRequestSeasonGenPage();

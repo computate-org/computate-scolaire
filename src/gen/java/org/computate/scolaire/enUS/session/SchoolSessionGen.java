@@ -3230,7 +3230,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolSession() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolSession)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolSession) {
 			SchoolSession original = (SchoolSession)o;
 			if(!Objects.equals(ageKeys, original.getAgeKeys()))

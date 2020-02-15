@@ -319,7 +319,7 @@ public abstract class EnrollmentDesignGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestEnrollmentDesignGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (EnrollmentDesignGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof EnrollmentDesignGenPage) {
 			EnrollmentDesignGenPage original = (EnrollmentDesignGenPage)o;
 			super.apiRequestClusterPage();

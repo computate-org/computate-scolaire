@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                              
+package org.computate.scolaire.frFR.inscription;                               
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -1928,7 +1928,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: "no"
 	 * Indexe: true
 	 * Stocke: true
-	 */
+	 */  
 	protected void _enfantPhotosApprouve(Couverture<String> c) {
 		c.o(inscriptionDate9 != null ? "oui" : "non");
 	}

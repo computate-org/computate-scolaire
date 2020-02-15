@@ -696,7 +696,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ s.e("div").a("class", "w3-padding ").f();
-				{ s.e("div").a("id", "suggestClusterArchived").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterArchived").f();
 					{ s.e("div").a("class", "w3-card ").f();
 						{ s.e("div").a("class", "w3-cell-row w3-gray ").f();
 							s.e("label").a("for", classApiMethodMethod, "_archived").a("class", "").f().sx("archived").g("label");
@@ -818,7 +818,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ s.e("div").a("class", "w3-padding ").f();
-				{ s.e("div").a("id", "suggestClusterDeleted").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterDeleted").f();
 					{ s.e("div").a("class", "w3-card ").f();
 						{ s.e("div").a("class", "w3-cell-row w3-gray ").f();
 							s.e("label").a("for", classApiMethodMethod, "_deleted").a("class", "").f().sx("deleted").g("label");
@@ -2260,8 +2260,9 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void apiRequestCluster() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Cluster original = (Cluster)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof Cluster) {
+			Cluster original = (Cluster)o;
 			if(!Objects.equals(created, original.getCreated()))
 				apiRequest.addVars("created");
 			if(!Objects.equals(modified, original.getModified()))

@@ -229,7 +229,7 @@ public abstract class AgePageGen<DEV> extends AgeGenPage {
 
 	public void requeteApiAgePage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (AgePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof AgePage) {
 			AgePage original = (AgePage)o;
 			super.requeteApiAgeGenPage();

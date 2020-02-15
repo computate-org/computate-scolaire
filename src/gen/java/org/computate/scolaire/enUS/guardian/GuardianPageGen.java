@@ -229,7 +229,7 @@ public abstract class GuardianPageGen<DEV> extends GuardianGenPage {
 
 	public void apiRequestGuardianPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (GuardianPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof GuardianPage) {
 			GuardianPage original = (GuardianPage)o;
 			super.apiRequestGuardianGenPage();

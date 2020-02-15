@@ -319,7 +319,7 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestBlockGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (BlockGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof BlockGenPage) {
 			BlockGenPage original = (BlockGenPage)o;
 			super.apiRequestClusterPage();

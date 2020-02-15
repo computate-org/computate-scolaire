@@ -4092,7 +4092,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void apiRequestHtmlPart() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (HtmlPart)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof HtmlPart) {
 			HtmlPart original = (HtmlPart)o;
 			if(!Objects.equals(enrollmentDesignKey, original.getEnrollmentDesignKey()))

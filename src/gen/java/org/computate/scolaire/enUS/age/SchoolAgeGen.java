@@ -3589,7 +3589,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolAge() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolAge)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolAge) {
 			SchoolAge original = (SchoolAge)o;
 			if(!Objects.equals(blockKeys, original.getBlockKeys()))

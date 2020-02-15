@@ -5505,7 +5505,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiBlocScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (BlocScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof BlocScolaire) {
 			BlocScolaire original = (BlocScolaire)o;
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))

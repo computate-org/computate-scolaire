@@ -392,7 +392,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "putCluster($('#putClusterFormValues')); ")
+							.a("onclick", "putCluster($('#putClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the clusters")
 						.g("button");
 
@@ -424,7 +424,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "patchCluster($('#patchClusterFormFilters'), $('#patchClusterFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchCluster($('#patchClusterFormFilters'), $('#patchClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the clusters")
 						.g("button");
 

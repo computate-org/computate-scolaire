@@ -229,8 +229,9 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 
 	public void apiRequestClusterPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		ClusterPage original = (ClusterPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof ClusterPage) {
+			ClusterPage original = (ClusterPage)o;
 			super.apiRequestClusterGenPage();
 		}
 	}

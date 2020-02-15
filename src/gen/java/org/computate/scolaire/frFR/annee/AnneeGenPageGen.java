@@ -319,7 +319,7 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiAnneeGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (AnneeGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof AnneeGenPage) {
 			AnneeGenPage original = (AnneeGenPage)o;
 			super.requeteApiClusterPage();

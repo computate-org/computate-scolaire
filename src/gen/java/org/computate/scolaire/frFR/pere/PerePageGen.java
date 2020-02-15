@@ -229,7 +229,7 @@ public abstract class PerePageGen<DEV> extends PereGenPage {
 
 	public void requeteApiPerePage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (PerePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof PerePage) {
 			PerePage original = (PerePage)o;
 			super.requeteApiPereGenPage();

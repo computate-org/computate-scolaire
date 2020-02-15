@@ -2468,7 +2468,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiAnneeScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (AnneeScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof AnneeScolaire) {
 			AnneeScolaire original = (AnneeScolaire)o;
 			if(!Objects.equals(ecoleCle, original.getEcoleCle()))

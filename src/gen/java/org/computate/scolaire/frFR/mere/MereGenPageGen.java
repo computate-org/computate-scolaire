@@ -319,7 +319,7 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiMereGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (MereGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof MereGenPage) {
 			MereGenPage original = (MereGenPage)o;
 			super.requeteApiClusterPage();

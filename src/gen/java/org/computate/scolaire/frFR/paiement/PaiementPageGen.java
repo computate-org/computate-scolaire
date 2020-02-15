@@ -229,8 +229,9 @@ public abstract class PaiementPageGen<DEV> extends PaiementGenPage {
 
 	public void requeteApiPaiementPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		PaiementPage original = (PaiementPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof PaiementPage) {
+			PaiementPage original = (PaiementPage)o;
 			super.requeteApiPaiementGenPage();
 		}
 	}

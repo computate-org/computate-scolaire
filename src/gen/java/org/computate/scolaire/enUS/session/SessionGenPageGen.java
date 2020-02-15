@@ -319,7 +319,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestSessionGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SessionGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SessionGenPage) {
 			SessionGenPage original = (SessionGenPage)o;
 			super.apiRequestClusterPage();

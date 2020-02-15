@@ -319,7 +319,7 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestYearGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (YearGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof YearGenPage) {
 			YearGenPage original = (YearGenPage)o;
 			super.apiRequestClusterPage();

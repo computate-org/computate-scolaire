@@ -3372,8 +3372,9 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolPayment() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolPayment original = (SchoolPayment)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolPayment) {
+			SchoolPayment original = (SchoolPayment)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
 				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(paymentDescription, original.getPaymentDescription()))

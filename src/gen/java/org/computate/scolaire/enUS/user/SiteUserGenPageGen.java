@@ -321,7 +321,7 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestSiteUserGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SiteUserGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SiteUserGenPage) {
 			SiteUserGenPage original = (SiteUserGenPage)o;
 			super.apiRequestClusterPage();

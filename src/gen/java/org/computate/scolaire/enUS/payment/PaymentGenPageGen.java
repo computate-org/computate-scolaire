@@ -319,8 +319,9 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestPaymentGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		PaymentGenPage original = (PaymentGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof PaymentGenPage) {
+			PaymentGenPage original = (PaymentGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

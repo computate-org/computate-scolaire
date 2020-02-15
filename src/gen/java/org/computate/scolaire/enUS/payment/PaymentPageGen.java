@@ -229,8 +229,9 @@ public abstract class PaymentPageGen<DEV> extends PaymentGenPage {
 
 	public void apiRequestPaymentPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		PaymentPage original = (PaymentPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof PaymentPage) {
+			PaymentPage original = (PaymentPage)o;
 			super.apiRequestPaymentGenPage();
 		}
 	}

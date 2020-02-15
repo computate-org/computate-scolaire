@@ -1318,7 +1318,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void requeteApiUtilisateurSite() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (UtilisateurSite)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof UtilisateurSite) {
 			UtilisateurSite original = (UtilisateurSite)o;
 			if(!Objects.equals(utilisateurRecevoirCourriels, original.getUtilisateurRecevoirCourriels()))

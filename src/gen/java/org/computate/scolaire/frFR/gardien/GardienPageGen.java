@@ -229,7 +229,7 @@ public abstract class GardienPageGen<DEV> extends GardienGenPage {
 
 	public void requeteApiGardienPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (GardienPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof GardienPage) {
 			GardienPage original = (GardienPage)o;
 			super.requeteApiGardienGenPage();

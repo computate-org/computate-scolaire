@@ -41,7 +41,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe personRelation dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe guardianCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class GardienScolaireGen<DEV> extends Cluster {
@@ -3044,7 +3044,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiGardienScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (GardienScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof GardienScolaire) {
 			GardienScolaire original = (GardienScolaire)o;
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))

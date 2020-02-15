@@ -3043,7 +3043,7 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolGuardian() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolGuardian)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolGuardian) {
 			SchoolGuardian original = (SchoolGuardian)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))

@@ -3236,7 +3236,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiSessionScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (SessionScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof SessionScolaire) {
 			SessionScolaire original = (SessionScolaire)o;
 			if(!Objects.equals(ageCles, original.getAgeCles()))

@@ -3221,7 +3221,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolMom() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolMom)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolMom) {
 			SchoolMom original = (SchoolMom)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))

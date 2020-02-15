@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison;                 
+package org.computate.scolaire.frFR.saison;                    
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

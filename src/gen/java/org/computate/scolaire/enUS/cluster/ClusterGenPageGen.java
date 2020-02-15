@@ -318,8 +318,9 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 
 	public void apiRequestClusterGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		ClusterGenPage original = (ClusterGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof ClusterGenPage) {
+			ClusterGenPage original = (ClusterGenPage)o;
 			super.apiRequestPageLayout();
 		}
 	}

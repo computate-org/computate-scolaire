@@ -318,8 +318,9 @@ public abstract class ClusterGenPageGen<DEV> extends MiseEnPage {
 
 	public void requeteApiClusterGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		ClusterGenPage original = (ClusterGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof ClusterGenPage) {
+			ClusterGenPage original = (ClusterGenPage)o;
 			super.requeteApiMiseEnPage();
 		}
 	}

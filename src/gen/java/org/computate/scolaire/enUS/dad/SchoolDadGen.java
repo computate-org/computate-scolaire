@@ -3221,7 +3221,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolDad() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (SchoolDad)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolDad) {
 			SchoolDad original = (SchoolDad)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))

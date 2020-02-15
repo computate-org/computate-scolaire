@@ -319,7 +319,7 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestMomGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (MomGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof MomGenPage) {
 			MomGenPage original = (MomGenPage)o;
 			super.apiRequestClusterPage();

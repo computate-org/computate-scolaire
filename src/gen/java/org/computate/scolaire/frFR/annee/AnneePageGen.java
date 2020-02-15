@@ -229,7 +229,7 @@ public abstract class AnneePageGen<DEV> extends AnneeGenPage {
 
 	public void requeteApiAnneePage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		Object o = (AnneePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof AnneePage) {
 			AnneePage original = (AnneePage)o;
 			super.requeteApiAnneeGenPage();

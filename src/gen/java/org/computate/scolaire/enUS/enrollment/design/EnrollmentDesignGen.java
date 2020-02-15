@@ -1831,7 +1831,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public void apiRequestEnrollmentDesign() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		Object o = (EnrollmentDesign)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof EnrollmentDesign) {
 			EnrollmentDesign original = (EnrollmentDesign)o;
 			if(!Objects.equals(htmlPartKeys, original.getHtmlPartKeys()))

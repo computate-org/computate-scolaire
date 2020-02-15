@@ -319,8 +319,9 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiPaiementGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		PaiementGenPage original = (PaiementGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof PaiementGenPage) {
+			PaiementGenPage original = (PaiementGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

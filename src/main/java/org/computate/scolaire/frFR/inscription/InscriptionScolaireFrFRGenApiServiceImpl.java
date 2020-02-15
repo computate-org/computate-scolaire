@@ -89,6 +89,7 @@ import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -2704,7 +2705,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(!requeteSite.getRequeteApi_().getEmpty()) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
 				listeRecherche.setPeupler(true);
 				listeRecherche.setQuery("*:*");
@@ -2718,16 +2721,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				listeRecherche.add("json.facet", "{gardienCles:{terms:{field:gardienCles_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{paiementCles:{terms:{field:paiementCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
-				listeRecherche.initLoinListeRecherche(requeteSite);
+				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
 				{
 					AnneeScolaire o2 = new AnneeScolaire();
-					AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getAnneeCle();
 
 					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite);
+					o2.setRequeteSite_(requeteSite2);
 					futures.add(
 						service.futurePATCHAnneeScolaire(o2, a -> {
 							if(a.succeeded()) {
@@ -2741,12 +2744,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 
 				{
-					BlocScolaireFrFRGenApiServiceImpl service = new BlocScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					BlocScolaireFrFRGenApiServiceImpl service = new BlocScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getBlocCles()) {
 						BlocScolaire o2 = new BlocScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHBlocScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -2762,11 +2765,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 				{
 					EnfantScolaire o2 = new EnfantScolaire();
-					EnfantScolaireFrFRGenApiServiceImpl service = new EnfantScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					EnfantScolaireFrFRGenApiServiceImpl service = new EnfantScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getEnfantCle();
 
 					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite);
+					o2.setRequeteSite_(requeteSite2);
 					futures.add(
 						service.futurePATCHEnfantScolaire(o2, a -> {
 							if(a.succeeded()) {
@@ -2780,12 +2783,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 
 				{
-					MereScolaireFrFRGenApiServiceImpl service = new MereScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					MereScolaireFrFRGenApiServiceImpl service = new MereScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getMereCles()) {
 						MereScolaire o2 = new MereScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHMereScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -2800,12 +2803,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 
 				{
-					PereScolaireFrFRGenApiServiceImpl service = new PereScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					PereScolaireFrFRGenApiServiceImpl service = new PereScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getPereCles()) {
 						PereScolaire o2 = new PereScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHPereScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -2820,12 +2823,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 
 				{
-					GardienScolaireFrFRGenApiServiceImpl service = new GardienScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					GardienScolaireFrFRGenApiServiceImpl service = new GardienScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getGardienCles()) {
 						GardienScolaire o2 = new GardienScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHGardienScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -2840,12 +2843,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 
 				{
-					PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getPaiementCles()) {
 						PaiementScolaire o2 = new PaiementScolaire();
 
 						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite);
+						o2.setRequeteSite_(requeteSite2);
 						futures.add(
 							service.futurePATCHPaiementScolaire(o2, a -> {
 								if(a.succeeded()) {
@@ -2862,7 +2865,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Recharger relations a réussi. ");
-						InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(InscriptionScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
@@ -2883,12 +2886,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Recharger relations a échoué. ", b.cause());
-								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, b);
 							}
 						});
 					} else {
 						LOGGER.error("Recharger relations a échoué. ", a.cause());
-						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+						erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 					}
 				});
 			} else {
