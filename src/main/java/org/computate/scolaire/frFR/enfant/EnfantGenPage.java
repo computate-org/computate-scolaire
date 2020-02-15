@@ -455,7 +455,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putEnfantScolaire($('#putEnfantScolaireFormulaireValeurs')); ")
+							.a("onclick", "putEnfantScolaire($('#putEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des enfants")
 						.g("button");
 
@@ -487,7 +487,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchEnfantScolaire($('#patchEnfantScolaireFormulaireFiltres'), $('#patchEnfantScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchEnfantScolaire($('#patchEnfantScolaireFormulaireFiltres'), $('#patchEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des enfants")
 						.g("button");
 

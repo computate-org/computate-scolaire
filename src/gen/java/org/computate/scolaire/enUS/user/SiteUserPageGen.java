@@ -466,8 +466,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 
 	public void apiRequestSiteUserPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SiteUserPage original = (SiteUserPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SiteUserPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SiteUserPage) {
+			SiteUserPage original = (SiteUserPage)o;
 			super.apiRequestSiteUserGenPage();
 		}
 	}

@@ -229,8 +229,9 @@ public abstract class ChildPageGen<DEV> extends ChildGenPage {
 
 	public void apiRequestChildPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		ChildPage original = (ChildPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof ChildPage) {
+			ChildPage original = (ChildPage)o;
 			super.apiRequestChildGenPage();
 		}
 	}

@@ -229,8 +229,9 @@ public abstract class HtmlPartPageGen<DEV> extends HtmlPartGenPage {
 
 	public void apiRequestHtmlPartPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		HtmlPartPage original = (HtmlPartPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (HtmlPartPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof HtmlPartPage) {
+			HtmlPartPage original = (HtmlPartPage)o;
 			super.apiRequestHtmlPartGenPage();
 		}
 	}

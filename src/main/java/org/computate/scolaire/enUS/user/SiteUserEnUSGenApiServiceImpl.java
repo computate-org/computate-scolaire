@@ -81,6 +81,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl
  **/
 public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService {
 
@@ -92,7 +93,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public SiteUserEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SiteUserEnUSGenApiService service = SiteUserEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// PATCH //
@@ -854,7 +854,51 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SiteUser.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SiteUserEnUSGenApiServiceImpl service = new SiteUserEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SiteUser o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSiteUser(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SiteUser %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SiteUser %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SiteUser succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSiteUser(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSiteUser(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

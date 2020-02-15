@@ -486,7 +486,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "putBlocScolaire($('#putBlocScolaireFormulaireValeurs')); ")
+							.a("onclick", "putBlocScolaire($('#putBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des blocs")
 						.g("button");
 
@@ -518,7 +518,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "patchBlocScolaire($('#patchBlocScolaireFormulaireFiltres'), $('#patchBlocScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchBlocScolaire($('#patchBlocScolaireFormulaireFiltres'), $('#patchBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des blocs")
 						.g("button");
 

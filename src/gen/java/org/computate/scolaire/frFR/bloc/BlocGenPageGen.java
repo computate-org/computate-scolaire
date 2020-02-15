@@ -319,8 +319,9 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiBlocGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		BlocGenPage original = (BlocGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof BlocGenPage) {
+			BlocGenPage original = (BlocGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

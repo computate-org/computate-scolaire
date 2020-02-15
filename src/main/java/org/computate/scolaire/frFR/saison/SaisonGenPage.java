@@ -449,7 +449,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "putSaisonScolaire($('#putSaisonScolaireFormulaireValeurs')); ")
+							.a("onclick", "putSaisonScolaire($('#putSaisonScolaireFormulaireValeurs'), ", Optional.ofNullable(saisonScolaire).map(SaisonScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des saisons")
 						.g("button");
 
@@ -481,7 +481,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "patchSaisonScolaire($('#patchSaisonScolaireFormulaireFiltres'), $('#patchSaisonScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchSaisonScolaire($('#patchSaisonScolaireFormulaireFiltres'), $('#patchSaisonScolaireFormulaireValeurs'), ", Optional.ofNullable(saisonScolaire).map(SaisonScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des saisons")
 						.g("button");
 

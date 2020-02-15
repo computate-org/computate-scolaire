@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.session;                 
+package org.computate.scolaire.frFR.session;                  
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,5 +1,7 @@
 package org.computate.scolaire.frFR.enfant;
 
+import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -7,6 +9,8 @@ import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailMessage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -79,6 +83,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
+ * classeNomCanonique.enUS: org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiServiceImpl
  **/
 public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGenApiService {
 
@@ -90,7 +95,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 
 	public EnfantScolaireFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
-		EnfantScolaireFrFRGenApiService service = EnfantScolaireFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -124,6 +128,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteApiEnfantScolaire(enfantScolaire);
+																					enfantScolaire.requeteApiEnfantScolaire();
 																					requeteSite.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -200,7 +206,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						break;
 					case "personneDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneDateNaissance", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					}
 				}
@@ -372,7 +378,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 		});
-		Future<EnfantScolaire> future = Future.future();
+		Promise<EnfantScolaire> promise = Promise.promise();
 		try {
 			creerEnfantScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
@@ -387,7 +393,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 												if(e.succeeded()) {
 													requeteApiEnfantScolaire(enfantScolaire);
 													enfantScolaire.requeteApiEnfantScolaire();
-													future.complete(enfantScolaire);
+													promise.complete(enfantScolaire);
 													gestionnaireEvenements.handle(Future.succeededFuture(e.result()));
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
@@ -409,7 +415,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -468,7 +474,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						break;
 					case "personneDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneDateNaissance", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					}
 				}
@@ -1194,6 +1200,27 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			)
 			, new CaseInsensitiveHeaders()
 		);
+		ConfigSite configSite = requeteSite.getConfigSite_();
+		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
+		MailClient mailClient = siteContexte.getMailClient();
+		MailMessage message = new MailMessage();
+		message.setFrom(configSite.getMailDe());
+		message.setTo(configSite.getMailAdmin());
+		message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
+		workerExecutor.executeBlocking(
+			blockingCodeHandler -> {
+				mailClient.sendMail(message, result -> {
+					if (result.succeeded()) {
+						LOGGER.info(result.result());
+					} else {
+						LOGGER.error(result.cause());
+					}
+				});
+			}, resultHandler -> {
+			}
+		);
 		if(requeteSite != null) {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			if(connexionSql != null) {
@@ -1333,23 +1360,27 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 									, definirAsync
 							-> {
 								if(definirAsync.succeeded()) {
-									for(JsonArray definition : definirAsync.result().getResults()) {
-										utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+									try {
+										for(JsonArray definition : definirAsync.result().getResults()) {
+											utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+										}
+										JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+										JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+										utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+										utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+										utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+										utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
+										utilisateurSite.initLoinPourClasse(requeteSite);
+										utilisateurSite.indexerPourClasse();
+										requeteSite.setUtilisateurSite(utilisateurSite);
+										requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+										requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+										requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+										requeteSite.setUtilisateurId(principalJson.getString("sub"));
+										gestionnaireEvenements.handle(Future.succeededFuture());
+									} catch(Exception e) {
+										gestionnaireEvenements.handle(Future.failedFuture(e));
 									}
-									JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-									JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-									utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-									utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-									utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-									utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-									utilisateurSite.initLoinPourClasse(requeteSite);
-									utilisateurSite.indexerPourClasse();
-									requeteSite.setUtilisateurSite(utilisateurSite);
-									requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-									requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-									requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-									requeteSite.setUtilisateurId(principalJson.getString("sub"));
-									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
 									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
@@ -1524,7 +1555,72 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			gestionnaireEvenements.handle(Future.succeededFuture());
+			if(!requeteSite.getRequeteApi_().getEmpty()) {
+				ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
+				listeRecherche.setPeupler(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(EnfantScolaire.class);
+				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+				listeRecherche.setRows(1000);
+				listeRecherche.initLoinListeRecherche(requeteSite);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					for(Long pk : o.getInscriptionCles()) {
+						InscriptionScolaire o2 = new InscriptionScolaire();
+
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite);
+						futures.add(
+							service.futurePATCHInscriptionScolaire(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Recharger relations a réussi. ");
+						EnfantScolaireFrFRGenApiServiceImpl service = new EnfantScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						List<Future> futures2 = new ArrayList<>();
+						for(EnfantScolaire o2 : listeRecherche.getList()) {
+							futures2.add(
+								service.futurePATCHEnfantScolaire(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("EnfantScolaire %s rechargé. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("EnfantScolaire %s a échoué. ", o2.getPk()));
+										gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Recharger EnfantScolaire a réussi. ");
+								gestionnaireEvenements.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Recharger relations a échoué. ", b.cause());
+								erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
+							}
+						});
+					} else {
+						LOGGER.error("Recharger relations a échoué. ", a.cause());
+						erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				});
+			} else {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

@@ -491,7 +491,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "putSchoolDad($('#putSchoolDadFormValues')); ")
+							.a("onclick", "putSchoolDad($('#putSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the dads")
 						.g("button");
 
@@ -523,7 +523,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "patchSchoolDad($('#patchSchoolDadFormFilters'), $('#patchSchoolDadFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolDad($('#patchSchoolDadFormFilters'), $('#patchSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the dads")
 						.g("button");
 

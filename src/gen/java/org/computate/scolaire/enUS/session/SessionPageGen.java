@@ -229,8 +229,9 @@ public abstract class SessionPageGen<DEV> extends SessionGenPage {
 
 	public void apiRequestSessionPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SessionPage original = (SessionPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SessionPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SessionPage) {
+			SessionPage original = (SessionPage)o;
 			super.apiRequestSessionGenPage();
 		}
 	}

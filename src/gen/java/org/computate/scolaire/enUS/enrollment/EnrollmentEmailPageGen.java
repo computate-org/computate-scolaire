@@ -1752,8 +1752,9 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 
 	public void apiRequestEnrollmentEmailPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		EnrollmentEmailPage original = (EnrollmentEmailPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof EnrollmentEmailPage) {
+			EnrollmentEmailPage original = (EnrollmentEmailPage)o;
 			super.apiRequestEnrollmentEmailGenPage();
 		}
 	}

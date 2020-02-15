@@ -1,5 +1,19 @@
 package org.computate.scolaire.enUS.enrollment;
 
+import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.year.SchoolYear;
+import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.block.SchoolBlock;
+import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.child.SchoolChild;
+import org.computate.scolaire.enUS.mom.SchoolMomEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.dad.SchoolDadEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.dad.SchoolDad;
+import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
+import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -81,6 +95,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEnUSGenApiService {
 
@@ -125,6 +140,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestSchoolEnrollment(schoolEnrollment);
+																					schoolEnrollment.apiRequestSchoolEnrollment();
 																					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -553,7 +570,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<SchoolEnrollment> future = Future.future();
+		Promise<SchoolEnrollment> promise = Promise.promise();
 		try {
 			createSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -568,7 +585,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												if(e.succeeded()) {
 													apiRequestSchoolEnrollment(schoolEnrollment);
 													schoolEnrollment.apiRequestSchoolEnrollment();
-													future.complete(schoolEnrollment);
+													promise.complete(schoolEnrollment);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -590,7 +607,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -2687,7 +2704,196 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolEnrollment.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{yearKey:{terms:{field:yearKey_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{blockKeys:{terms:{field:blockKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{childKey:{terms:{field:childKey_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{momKeys:{terms:{field:momKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{dadKeys:{terms:{field:dadKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{guardianKeys:{terms:{field:guardianKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{paymentKeys:{terms:{field:paymentKeys_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					SchoolYear o2 = new SchoolYear();
+					SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					Long pk = o.getYearKey();
+
+					o2.setPk(pk);
+					o2.setSiteRequest_(siteRequest);
+					futures.add(
+						service.futurePATCHSchoolYear(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
+							} else {
+								LOGGER.info(String.format("SchoolYear %s failed. ", pk));
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				{
+					SchoolBlockEnUSGenApiServiceImpl service = new SchoolBlockEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getBlockKeys()) {
+						SchoolBlock o2 = new SchoolBlock();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolBlock(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolBlock %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolBlock %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SchoolChild o2 = new SchoolChild();
+					SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					Long pk = o.getChildKey();
+
+					o2.setPk(pk);
+					o2.setSiteRequest_(siteRequest);
+					futures.add(
+						service.futurePATCHSchoolChild(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("SchoolChild %s refreshed. ", pk));
+							} else {
+								LOGGER.info(String.format("SchoolChild %s failed. ", pk));
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				{
+					SchoolMomEnUSGenApiServiceImpl service = new SchoolMomEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getMomKeys()) {
+						SchoolMom o2 = new SchoolMom();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolMom(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolMom %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolMom %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SchoolDadEnUSGenApiServiceImpl service = new SchoolDadEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getDadKeys()) {
+						SchoolDad o2 = new SchoolDad();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolDad(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolDad %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolDad %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SchoolGuardianEnUSGenApiServiceImpl service = new SchoolGuardianEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getGuardianKeys()) {
+						SchoolGuardian o2 = new SchoolGuardian();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolGuardian(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolGuardian %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolGuardian %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getPaymentKeys()) {
+						SchoolPayment o2 = new SchoolPayment();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolPayment(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolPayment %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SchoolEnrollment o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchoolEnrollment(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SchoolEnrollment %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SchoolEnrollment succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchoolEnrollment(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchoolEnrollment(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

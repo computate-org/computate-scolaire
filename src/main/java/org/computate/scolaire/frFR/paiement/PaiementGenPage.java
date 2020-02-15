@@ -367,6 +367,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("crée").g("th");
 						e("th").f().sx("").g("th");
+						e("th").f().sx("date de paiement").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -389,6 +390,13 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 									e("i").a("class", "fas fa-search-dollar ").f().g("i");
 									{ e("span").f();
 										sx(o.strObjetTitre());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									{ e("span").f();
+										sx(o.strPaiementDate());
 									} g("span");
 								} g("a");
 							} g("td");

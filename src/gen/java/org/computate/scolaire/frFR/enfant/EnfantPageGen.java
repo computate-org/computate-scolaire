@@ -229,8 +229,9 @@ public abstract class EnfantPageGen<DEV> extends EnfantGenPage {
 
 	public void requeteApiEnfantPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		EnfantPage original = (EnfantPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof EnfantPage) {
+			EnfantPage original = (EnfantPage)o;
 			super.requeteApiEnfantGenPage();
 		}
 	}

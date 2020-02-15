@@ -485,7 +485,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "putSchoolBlock($('#putSchoolBlockFormValues')); ")
+							.a("onclick", "putSchoolBlock($('#putSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the blocks")
 						.g("button");
 
@@ -517,7 +517,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "patchSchoolBlock($('#patchSchoolBlockFormFilters'), $('#patchSchoolBlockFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolBlock($('#patchSchoolBlockFormFilters'), $('#patchSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the blocks")
 						.g("button");
 

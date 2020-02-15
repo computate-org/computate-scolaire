@@ -229,8 +229,9 @@ public abstract class SaisonPageGen<DEV> extends SaisonGenPage {
 
 	public void requeteApiSaisonPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		SaisonPage original = (SaisonPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SaisonPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof SaisonPage) {
+			SaisonPage original = (SaisonPage)o;
 			super.requeteApiSaisonGenPage();
 		}
 	}

@@ -229,8 +229,9 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 
 	public void requeteApiDesignInscriptionPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		DesignInscriptionPage original = (DesignInscriptionPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (DesignInscriptionPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof DesignInscriptionPage) {
+			DesignInscriptionPage original = (DesignInscriptionPage)o;
 			super.requeteApiDesignInscriptionGenPage();
 		}
 	}

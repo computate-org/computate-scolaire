@@ -1,5 +1,7 @@
 package org.computate.scolaire.enUS.school;
 
+import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -81,6 +83,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiServiceImpl
  **/
 public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
@@ -125,6 +128,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestSchool(school);
+																					school.apiRequestSchool();
 																					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -377,7 +382,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<School> future = Future.future();
+		Promise<School> promise = Promise.promise();
 		try {
 			createSchool(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -392,7 +397,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												if(e.succeeded()) {
 													apiRequestSchool(school);
 													school.apiRequestSchool();
-													future.complete(school);
+													promise.complete(school);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -414,7 +419,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -1560,7 +1565,72 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<School> searchList = new SearchList<School>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(School.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{yearKeys:{terms:{field:yearKeys_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getYearKeys()) {
+						SchoolYear o2 = new SchoolYear();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolYear(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolYear %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolEnUSGenApiServiceImpl service = new SchoolEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(School o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchool(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("School %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("School %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh School succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchool(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchool(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

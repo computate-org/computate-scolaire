@@ -491,7 +491,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "putSchoolMom($('#putSchoolMomFormValues')); ")
+							.a("onclick", "putSchoolMom($('#putSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the moms")
 						.g("button");
 
@@ -523,7 +523,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "patchSchoolMom($('#patchSchoolMomFormFilters'), $('#patchSchoolMomFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolMom($('#patchSchoolMomFormFilters'), $('#patchSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the moms")
 						.g("button");
 

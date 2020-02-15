@@ -2101,7 +2101,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaymentBy() {
-		return "payment by";
+		return "payment by/for";
 	}
 
 	public String htmTooltipPaymentBy() {
@@ -2116,7 +2116,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "text")
-			.a("placeholder", "payment by")
+			.a("placeholder", "payment by/for")
 			.a("id", classApiMethodMethod, "_paymentBy");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 				a("class", "setPaymentBy inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
@@ -2141,7 +2141,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentBy").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_paymentBy").a("class", "").f().sx("payment by").g("label");
+							e("label").a("for", classApiMethodMethod, "_paymentBy").a("class", "").f().sx("payment by/for").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();

@@ -153,6 +153,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
@@ -309,7 +310,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				.a("name", "setYearKey")
 				.a("id", classApiMethodMethod, "_yearKey")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggestSchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -318,7 +319,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonYearKey").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSeasonYearKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/year?fq=seasonKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
@@ -365,6 +366,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « sessionKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
@@ -453,7 +455,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				.a("name", "setSessionKeys")
 				.a("id", classApiMethodMethod, "_sessionKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($('#suggestSchoolSeasonSessionKeys')) : [{'name':'fq','value':'seasonKey:", pk, "'}], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolSeasonSessionKeys')) : [{'name':'fq','value':'seasonKey:", pk, "'}], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -462,7 +464,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonSessionKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSeasonSessionKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/session?fq=seasonKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
@@ -924,6 +926,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « schoolName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolName;
 	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
@@ -985,6 +988,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolCompleteName;
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
@@ -1046,6 +1050,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « schoolLocation »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolLocation;
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
@@ -1107,6 +1112,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « schoolAddress »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolAddress;
 	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
@@ -1168,6 +1174,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « schoolPhoneNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolPhoneNumber;
 	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
@@ -1229,6 +1236,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « schoolAdministratorName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolAdministratorName;
 	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
@@ -1594,7 +1602,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonSeasonStartDate").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSeasonSeasonStartDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classApiMethodMethod, "_seasonStartDate").a("class", "").f().sx("start of the season").g("label");
@@ -1628,6 +1636,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « seasonSummer »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean seasonSummer;
 	@JsonIgnore
 	public Wrap<Boolean> seasonSummerWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonSummer").o(seasonSummer);
@@ -1726,7 +1735,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonSeasonSummer").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSeasonSeasonSummer").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classApiMethodMethod, "_seasonSummer").a("class", "").f().sx("summer").g("label");
@@ -1750,6 +1759,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « seasonWinter »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean seasonWinter;
 	@JsonIgnore
 	public Wrap<Boolean> seasonWinterWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonWinter").o(seasonWinter);
@@ -1848,7 +1858,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonSeasonWinter").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSeasonSeasonWinter").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classApiMethodMethod, "_seasonWinter").a("class", "").f().sx("winter").g("label");
@@ -1872,6 +1882,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « seasonFuture »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean seasonFuture;
 	@JsonIgnore
 	public Wrap<Boolean> seasonFutureWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonFuture").o(seasonFuture);
@@ -1970,7 +1981,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSeasonSeasonFuture").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSeasonSeasonFuture").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", classApiMethodMethod, "_seasonFuture").a("class", "").f().sx("future season").g("label");
@@ -1994,6 +2005,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « seasonShortName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String seasonShortName;
 	@JsonIgnore
 	public Wrap<String> seasonShortNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonShortName").o(seasonShortName);
@@ -2055,6 +2067,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « seasonCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String seasonCompleteName;
 	@JsonIgnore
 	public Wrap<String> seasonCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonCompleteName").o(seasonCompleteName);
@@ -2862,8 +2875,9 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolSeason() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolSeason original = (SchoolSeason)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SchoolSeason)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolSeason) {
+			SchoolSeason original = (SchoolSeason)o;
 			if(!Objects.equals(yearKey, original.getYearKey()))
 				apiRequest.addVars("yearKey");
 			if(!Objects.equals(sessionKeys, original.getSessionKeys()))

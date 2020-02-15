@@ -324,7 +324,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("name", "setAgeKeys")
 				.a("id", classApiMethodMethod, "_ageKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSessionAgeKeys($(this).val() ? searchSchoolAgeFilters($('#suggestSchoolSessionAgeKeys')) : [{'name':'fq','value':'sessionKey:", pk, "'}], $('#listSchoolSessionAgeKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolSessionAgeKeys($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolSessionAgeKeys')) : [{'name':'fq','value':'sessionKey:", pk, "'}], $('#listSchoolSessionAgeKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -333,7 +333,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionAgeKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSessionAgeKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/age?fq=sessionKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
@@ -791,7 +791,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("name", "setSeasonKey")
 				.a("id", classApiMethodMethod, "_seasonKey")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSessionSeasonKey($(this).val() ? searchSchoolSeasonFilters($('#suggestSchoolSessionSeasonKey')) : [{'name':'fq','value':'sessionKeys:", pk, "'}], $('#listSchoolSessionSeasonKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolSessionSeasonKey($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolSessionSeasonKey')) : [{'name':'fq','value':'sessionKeys:", pk, "'}], $('#listSchoolSessionSeasonKey_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -800,7 +800,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionSeasonKey").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSessionSeasonKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/season?fq=sessionKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -1321,7 +1321,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionSchoolAddress").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSessionSchoolAddress").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_schoolAddress").a("class", "").f().sx("address").g("label");
@@ -2114,7 +2114,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionSessionStartDate").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSessionSessionStartDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_sessionStartDate").a("class", "").f().sx("start of the session").g("label");
@@ -2237,7 +2237,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionSessionEndDate").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSessionSessionEndDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classApiMethodMethod, "_sessionEndDate").a("class", "").f().sx("end of the session").g("label");
@@ -3230,8 +3230,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolSession() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolSession original = (SchoolSession)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SchoolSession)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolSession) {
+			SchoolSession original = (SchoolSession)o;
 			if(!Objects.equals(ageKeys, original.getAgeKeys()))
 				apiRequest.addVars("ageKeys");
 			if(!Objects.equals(seasonKey, original.getSeasonKey()))

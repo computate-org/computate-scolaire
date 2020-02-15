@@ -229,8 +229,9 @@ public abstract class YearPageGen<DEV> extends YearGenPage {
 
 	public void apiRequestYearPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		YearPage original = (YearPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (YearPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof YearPage) {
+			YearPage original = (YearPage)o;
 			super.apiRequestYearGenPage();
 		}
 	}

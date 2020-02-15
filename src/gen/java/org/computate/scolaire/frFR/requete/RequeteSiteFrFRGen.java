@@ -1,19 +1,17 @@
 package org.computate.scolaire.frFR.requete;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.solr.common.SolrDocumentList;
-import java.security.MessageDigest;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import javax.crypto.spec.SecretKeySpec;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
-import javax.crypto.Cipher;
 import java.text.NumberFormat;
 import java.util.Stack;
-import java.security.SecureRandom;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -1269,6 +1267,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « requetePk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long requetePk;
 	@JsonIgnore
 	public Couverture<Long> requetePkCouverture = new Couverture<Long>().p(this).c(Long.class).var("requetePk").o(requetePk);
@@ -1403,287 +1402,6 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
-	////////////////////////
-	// cryptageMotDePasse //
-	////////////////////////
-
-	/**	L'entité « cryptageMotDePasse »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String cryptageMotDePasse;
-	@JsonIgnore
-	public Couverture<String> cryptageMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
-
-	/**	<br/>L'entité « cryptageMotDePasse »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageMotDePasse">Trouver l'entité cryptageMotDePasse dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _cryptageMotDePasse(Couverture<String> c);
-
-	public String getCryptageMotDePasse() {
-		return cryptageMotDePasse;
-	}
-
-	public void setCryptageMotDePasse(String cryptageMotDePasse) {
-		this.cryptageMotDePasse = cryptageMotDePasse;
-		this.cryptageMotDePasseCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR cryptageMotDePasseInit() {
-		if(!cryptageMotDePasseCouverture.dejaInitialise) {
-			_cryptageMotDePasse(cryptageMotDePasseCouverture);
-			if(cryptageMotDePasse == null)
-				setCryptageMotDePasse(cryptageMotDePasseCouverture.o);
-		}
-		cryptageMotDePasseCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	public String solrCryptageMotDePasse() {
-		return cryptageMotDePasse;
-	}
-
-	public String strCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
-	}
-
-	public String jsonCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
-	}
-
-	public String nomAffichageCryptageMotDePasse() {
-		return null;
-	}
-
-	public String htmTooltipCryptageMotDePasse() {
-		return null;
-	}
-
-	public String htmCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strCryptageMotDePasse());
-	}
-
-	////////////////////////////
-	// cryptageChiffreCrypter //
-	////////////////////////////
-
-	/**	L'entité « cryptageChiffreCrypter »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Cipher cryptageChiffreCrypter;
-	@JsonIgnore
-	public Couverture<Cipher> cryptageChiffreCrypterCouverture = new Couverture<Cipher>().p(this).c(Cipher.class).var("cryptageChiffreCrypter").o(cryptageChiffreCrypter);
-
-	/**	<br/>L'entité « cryptageChiffreCrypter »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageChiffreCrypter">Trouver l'entité cryptageChiffreCrypter dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _cryptageChiffreCrypter(Couverture<Cipher> c);
-
-	public Cipher getCryptageChiffreCrypter() {
-		return cryptageChiffreCrypter;
-	}
-
-	public void setCryptageChiffreCrypter(Cipher cryptageChiffreCrypter) {
-		this.cryptageChiffreCrypter = cryptageChiffreCrypter;
-		this.cryptageChiffreCrypterCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR cryptageChiffreCrypterInit() {
-		if(!cryptageChiffreCrypterCouverture.dejaInitialise) {
-			_cryptageChiffreCrypter(cryptageChiffreCrypterCouverture);
-			if(cryptageChiffreCrypter == null)
-				setCryptageChiffreCrypter(cryptageChiffreCrypterCouverture.o);
-		}
-		cryptageChiffreCrypterCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	//////////////////////////////
-	// cryptageChiffreDecrypter //
-	//////////////////////////////
-
-	/**	L'entité « cryptageChiffreDecrypter »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Cipher cryptageChiffreDecrypter;
-	@JsonIgnore
-	public Couverture<Cipher> cryptageChiffreDecrypterCouverture = new Couverture<Cipher>().p(this).c(Cipher.class).var("cryptageChiffreDecrypter").o(cryptageChiffreDecrypter);
-
-	/**	<br/>L'entité « cryptageChiffreDecrypter »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageChiffreDecrypter">Trouver l'entité cryptageChiffreDecrypter dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _cryptageChiffreDecrypter(Couverture<Cipher> c);
-
-	public Cipher getCryptageChiffreDecrypter() {
-		return cryptageChiffreDecrypter;
-	}
-
-	public void setCryptageChiffreDecrypter(Cipher cryptageChiffreDecrypter) {
-		this.cryptageChiffreDecrypter = cryptageChiffreDecrypter;
-		this.cryptageChiffreDecrypterCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR cryptageChiffreDecrypterInit() {
-		if(!cryptageChiffreDecrypterCouverture.dejaInitialise) {
-			_cryptageChiffreDecrypter(cryptageChiffreDecrypterCouverture);
-			if(cryptageChiffreDecrypter == null)
-				setCryptageChiffreDecrypter(cryptageChiffreDecrypterCouverture.o);
-		}
-		cryptageChiffreDecrypterCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	///////////////////////////
-	// cryptageDigestMessage //
-	///////////////////////////
-
-	/**	L'entité « cryptageDigestMessage »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected MessageDigest cryptageDigestMessage;
-	@JsonIgnore
-	public Couverture<MessageDigest> cryptageDigestMessageCouverture = new Couverture<MessageDigest>().p(this).c(MessageDigest.class).var("cryptageDigestMessage").o(cryptageDigestMessage);
-
-	/**	<br/>L'entité « cryptageDigestMessage »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageDigestMessage">Trouver l'entité cryptageDigestMessage dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _cryptageDigestMessage(Couverture<MessageDigest> c);
-
-	public MessageDigest getCryptageDigestMessage() {
-		return cryptageDigestMessage;
-	}
-
-	public void setCryptageDigestMessage(MessageDigest cryptageDigestMessage) {
-		this.cryptageDigestMessage = cryptageDigestMessage;
-		this.cryptageDigestMessageCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR cryptageDigestMessageInit() {
-		if(!cryptageDigestMessageCouverture.dejaInitialise) {
-			_cryptageDigestMessage(cryptageDigestMessageCouverture);
-			if(cryptageDigestMessage == null)
-				setCryptageDigestMessage(cryptageDigestMessageCouverture.o);
-		}
-		cryptageDigestMessageCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	/////////////////
-	// cryptageCle //
-	/////////////////
-
-	/**	L'entité « cryptageCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected byte[] cryptageCle;
-	@JsonIgnore
-	public Couverture<byte[]> cryptageCleCouverture = new Couverture<byte[]>().p(this).c(byte[].class).var("cryptageCle").o(cryptageCle);
-
-	/**	<br/>L'entité « cryptageCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageCle">Trouver l'entité cryptageCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _cryptageCle(Couverture<byte[]> c);
-
-	public byte[] getCryptageCle() {
-		return cryptageCle;
-	}
-
-	public void setCryptageCle(byte[] cryptageCle) {
-		this.cryptageCle = cryptageCle;
-		this.cryptageCleCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR cryptageCleInit() {
-		if(!cryptageCleCouverture.dejaInitialise) {
-			_cryptageCle(cryptageCleCouverture);
-			if(cryptageCle == null)
-				setCryptageCle(cryptageCleCouverture.o);
-		}
-		cryptageCleCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	///////////////////////
-	// aleatoireSecurise //
-	///////////////////////
-
-	/**	L'entité « aleatoireSecurise »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SecureRandom(). 
-	 */
-	protected SecureRandom aleatoireSecurise = new SecureRandom();
-	@JsonIgnore
-	public Couverture<SecureRandom> aleatoireSecuriseCouverture = new Couverture<SecureRandom>().p(this).c(SecureRandom.class).var("aleatoireSecurise").o(aleatoireSecurise);
-
-	/**	<br/>L'entité « aleatoireSecurise »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SecureRandom(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:aleatoireSecurise">Trouver l'entité aleatoireSecurise dans Solr</a>
-	 * <br/>
-	 * @param aleatoireSecurise est l'entité déjà construit. 
-	 **/
-	protected abstract void _aleatoireSecurise(SecureRandom o);
-
-	public SecureRandom getAleatoireSecurise() {
-		return aleatoireSecurise;
-	}
-
-	public void setAleatoireSecurise(SecureRandom aleatoireSecurise) {
-		this.aleatoireSecurise = aleatoireSecurise;
-		this.aleatoireSecuriseCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR aleatoireSecuriseInit() {
-		if(!aleatoireSecuriseCouverture.dejaInitialise) {
-			_aleatoireSecurise(aleatoireSecurise);
-		}
-		aleatoireSecuriseCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	////////////////////
-	// specCleSecrete //
-	////////////////////
-
-	/**	L'entité « specCleSecrete »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected SecretKeySpec specCleSecrete;
-	@JsonIgnore
-	public Couverture<SecretKeySpec> specCleSecreteCouverture = new Couverture<SecretKeySpec>().p(this).c(SecretKeySpec.class).var("specCleSecrete").o(specCleSecrete);
-
-	/**	<br/>L'entité « specCleSecrete »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:specCleSecrete">Trouver l'entité specCleSecrete dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _specCleSecrete(Couverture<SecretKeySpec> c);
-
-	public SecretKeySpec getSpecCleSecrete() {
-		return specCleSecrete;
-	}
-
-	public void setSpecCleSecrete(SecretKeySpec specCleSecrete) {
-		this.specCleSecrete = specCleSecrete;
-		this.specCleSecreteCouverture.dejaInitialise = true;
-	}
-	protected RequeteSiteFrFR specCleSecreteInit() {
-		if(!specCleSecreteCouverture.dejaInitialise) {
-			_specCleSecrete(specCleSecreteCouverture);
-			if(specCleSecrete == null)
-				setSpecCleSecrete(specCleSecreteCouverture.o);
-		}
-		specCleSecreteCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -1733,13 +1451,6 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		requetePkInit();
 		connexionSqlInit();
 		requeteEnTetesInit();
-		cryptageMotDePasseInit();
-		cryptageChiffreCrypterInit();
-		cryptageChiffreDecrypterInit();
-		cryptageDigestMessageInit();
-		cryptageCleInit();
-		aleatoireSecuriseInit();
-		specCleSecreteInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1839,20 +1550,6 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.connexionSql;
 			case "requeteEnTetes":
 				return oRequeteSiteFrFR.requeteEnTetes;
-			case "cryptageMotDePasse":
-				return oRequeteSiteFrFR.cryptageMotDePasse;
-			case "cryptageChiffreCrypter":
-				return oRequeteSiteFrFR.cryptageChiffreCrypter;
-			case "cryptageChiffreDecrypter":
-				return oRequeteSiteFrFR.cryptageChiffreDecrypter;
-			case "cryptageDigestMessage":
-				return oRequeteSiteFrFR.cryptageDigestMessage;
-			case "cryptageCle":
-				return oRequeteSiteFrFR.cryptageCle;
-			case "aleatoireSecurise":
-				return oRequeteSiteFrFR.aleatoireSecurise;
-			case "specCleSecrete":
-				return oRequeteSiteFrFR.specCleSecrete;
 			default:
 				return null;
 		}

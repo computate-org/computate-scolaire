@@ -1,5 +1,7 @@
 package org.computate.scolaire.enUS.payment;
 
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -81,6 +83,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenApiService {
 
@@ -793,24 +796,34 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "paymentKeys", Long.parseLong(requestJson.getString(methodName))));
 						break;
-					case "setCustomerProfileId":
+					case "setPaymentDescription":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentDescription"));
 						} else {
-							o2.setCustomerProfileId(requestJson.getString(methodName));
+							o2.setPaymentDescription(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+							patchSqlParams.addAll(Arrays.asList("paymentDescription", o2.jsonPaymentDescription(), pk));
 						}
 						break;
-					case "setTransactionStatus":
+					case "setPaymentDate":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "transactionStatus"));
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentDate"));
 						} else {
-							o2.setTransactionStatus(requestJson.getString(methodName));
+							o2.setPaymentDate(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("transactionStatus", o2.jsonTransactionStatus(), pk));
+							patchSqlParams.addAll(Arrays.asList("paymentDate", o2.jsonPaymentDate(), pk));
+						}
+						break;
+					case "setPaymentAmount":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentAmount"));
+						} else {
+							o2.setPaymentAmount(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentAmount", o2.jsonPaymentAmount(), pk));
 						}
 						break;
 					case "setPaymentCash":
@@ -831,16 +844,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							o2.setPaymentCheck(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("paymentCheck", o2.jsonPaymentCheck(), pk));
-						}
-						break;
-					case "setPaymentDescription":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "paymentDescription"));
-						} else {
-							o2.setPaymentDescription(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("paymentDescription", o2.jsonPaymentDescription(), pk));
 						}
 						break;
 					case "setPaymentSystem":
@@ -873,24 +876,24 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							patchSqlParams.addAll(Arrays.asList("transactionId", o2.jsonTransactionId(), pk));
 						}
 						break;
-					case "setPaymentDate":
+					case "setCustomerProfileId":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "paymentDate"));
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
 						} else {
-							o2.setPaymentDate(requestJson.getString(methodName));
+							o2.setCustomerProfileId(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("paymentDate", o2.jsonPaymentDate(), pk));
+							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
 						}
 						break;
-					case "setPaymentAmount":
+					case "setTransactionStatus":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "paymentAmount"));
+							patchSqlParams.addAll(Arrays.asList(pk, "transactionStatus"));
 						} else {
-							o2.setPaymentAmount(requestJson.getString(methodName));
+							o2.setTransactionStatus(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("paymentAmount", o2.jsonPaymentAmount(), pk));
+							patchSqlParams.addAll(Arrays.asList("transactionStatus", o2.jsonTransactionStatus(), pk));
 						}
 						break;
 				}
@@ -1652,7 +1655,72 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolPayment.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{enrollmentKeys:{terms:{field:enrollmentKeys_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getEnrollmentKeys()) {
+						SchoolEnrollment o2 = new SchoolEnrollment();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolEnrollment(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SchoolPayment o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchoolPayment(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SchoolPayment %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SchoolPayment succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchoolPayment(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchoolPayment(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

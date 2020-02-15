@@ -1317,8 +1317,9 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void apiRequestSiteUser() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SiteUser original = (SiteUser)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SiteUser)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SiteUser) {
+			SiteUser original = (SiteUser)o;
 			if(!Objects.equals(userReceiveEmails, original.getUserReceiveEmails()))
 				apiRequest.addVars("userReceiveEmails");
 			if(!Objects.equals(seeArchived, original.getSeeArchived()))

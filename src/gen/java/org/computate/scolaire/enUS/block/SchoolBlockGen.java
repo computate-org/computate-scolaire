@@ -309,7 +309,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("name", "setEnrollmentKeys")
 				.a("id", classApiMethodMethod, "_enrollmentKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggestSchoolBlockEnrollmentKeys')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -318,7 +318,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockEnrollmentKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/enrollment?fq=blockKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
@@ -978,7 +978,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("name", "setAgeKey")
 				.a("id", classApiMethodMethod, "_ageKey")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggestSchoolBlockAgeKey')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -987,7 +987,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockAgeKey").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockAgeKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/age?fq=blockKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
@@ -1644,7 +1644,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockSchoolAddress").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockSchoolAddress").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_schoolAddress").a("class", "").f().sx("address").g("label");
@@ -2843,7 +2843,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockStartTime").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockStartTime").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockStartTime").a("class", "").f().sx("start time").g("label");
@@ -2958,7 +2958,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockEndTime").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockEndTime").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockEndTime").a("class", "").f().sx("end time").g("label");
@@ -3090,7 +3090,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockPricePerMonth").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockPricePerMonth").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
@@ -3289,7 +3289,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockMonday").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockMonday").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockMonday").a("class", "").f().sx("monday").g("label");
@@ -3411,7 +3411,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockTuesday").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockTuesday").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockTuesday").a("class", "").f().sx("tuesday").g("label");
@@ -3533,7 +3533,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockWednesday").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockWednesday").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockWednesday").a("class", "").f().sx("wednesday").g("label");
@@ -3655,7 +3655,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockThursday").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockThursday").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockThursday").a("class", "").f().sx("thursday").g("label");
@@ -3777,7 +3777,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock s = (SchoolBlock)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolBlockBlockFriday").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolBlockBlockFriday").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", classApiMethodMethod, "_blockFriday").a("class", "").f().sx("friday").g("label");
@@ -5500,8 +5500,9 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolBlock() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolBlock original = (SchoolBlock)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SchoolBlock)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolBlock) {
+			SchoolBlock original = (SchoolBlock)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
 				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(ageKey, original.getAgeKey()))

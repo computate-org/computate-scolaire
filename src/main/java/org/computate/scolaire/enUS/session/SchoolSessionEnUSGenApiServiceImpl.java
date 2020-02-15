@@ -1,5 +1,9 @@
 package org.computate.scolaire.enUS.session;
 
+import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.age.SchoolAge;
+import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.season.SchoolSeason;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -7,6 +11,8 @@ import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailMessage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -79,6 +85,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.session.SessionScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenApiService {
 
@@ -90,7 +97,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	public SchoolSessionEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SchoolSessionEnUSGenApiService service = SchoolSessionEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -124,6 +130,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestSchoolSession(schoolSession);
+																					schoolSession.apiRequestSchoolSession();
 																					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -196,11 +204,11 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "sessionStartDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionStartDate", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("sessionStartDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
 						break;
 					case "sessionEndDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionEndDate", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("sessionEndDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
 						break;
 					}
 				}
@@ -372,7 +380,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<SchoolSession> future = Future.future();
+		Promise<SchoolSession> promise = Promise.promise();
 		try {
 			createSchoolSession(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -387,7 +395,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 												if(e.succeeded()) {
 													apiRequestSchoolSession(schoolSession);
 													schoolSession.apiRequestSchoolSession();
-													future.complete(schoolSession);
+													promise.complete(schoolSession);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -409,7 +417,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -464,11 +472,11 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "sessionStartDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionStartDate", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("sessionStartDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
 						break;
 					case "sessionEndDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionEndDate", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("sessionEndDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
 						break;
 					}
 				}
@@ -1200,6 +1208,27 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			)
 			, new CaseInsensitiveHeaders()
 		);
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
+		MailClient mailClient = siteContext.getMailClient();
+		MailMessage message = new MailMessage();
+		message.setFrom(siteConfig.getEmailFrom());
+		message.setTo(siteConfig.getEmailAdmin());
+		message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+		workerExecutor.executeBlocking(
+			blockingCodeHandler -> {
+				mailClient.sendMail(message, result -> {
+					if (result.succeeded()) {
+						LOGGER.info(result.result());
+					} else {
+						LOGGER.error(result.cause());
+					}
+				});
+			}, resultHandler -> {
+			}
+		);
 		if(siteRequest != null) {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			if(sqlConnection != null) {
@@ -1339,23 +1368,27 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									, defineAsync
 							-> {
 								if(defineAsync.succeeded()) {
-									for(JsonArray definition : defineAsync.result().getResults()) {
-										siteUser.defineForClass(definition.getString(0), definition.getString(1));
+									try {
+										for(JsonArray definition : defineAsync.result().getResults()) {
+											siteUser.defineForClass(definition.getString(0), definition.getString(1));
+										}
+										JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+										JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+										siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
+										siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
+										siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
+										siteUser.setUserId(jsonPrincipal.getString("sub"));
+										siteUser.initDeepForClass(siteRequest);
+										siteUser.indexForClass();
+										siteRequest.setSiteUser(siteUser);
+										siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+										siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+										siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+										siteRequest.setUserId(jsonPrincipal.getString("sub"));
+										eventHandler.handle(Future.succeededFuture());
+									} catch(Exception e) {
+										eventHandler.handle(Future.failedFuture(e));
 									}
-									JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-									JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-									siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-									siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-									siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-									siteUser.setUserId(jsonPrincipal.getString("sub"));
-									siteUser.initDeepForClass(siteRequest);
-									siteUser.indexForClass();
-									siteRequest.setSiteUser(siteUser);
-									siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-									siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-									siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-									siteRequest.setUserId(jsonPrincipal.getString("sub"));
-									eventHandler.handle(Future.succeededFuture());
 								} else {
 									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
@@ -1522,7 +1555,92 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolSession.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{ageKeys:{terms:{field:ageKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{seasonKey:{terms:{field:seasonKey_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getAgeKeys()) {
+						SchoolAge o2 = new SchoolAge();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolAge(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolAge %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolAge %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SchoolSeason o2 = new SchoolSeason();
+					SchoolSeasonEnUSGenApiServiceImpl service = new SchoolSeasonEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					Long pk = o.getSeasonKey();
+
+					o2.setPk(pk);
+					o2.setSiteRequest_(siteRequest);
+					futures.add(
+						service.futurePATCHSchoolSeason(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("SchoolSeason %s refreshed. ", pk));
+							} else {
+								LOGGER.info(String.format("SchoolSeason %s failed. ", pk));
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolSessionEnUSGenApiServiceImpl service = new SchoolSessionEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SchoolSession o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchoolSession(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SchoolSession %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SchoolSession %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SchoolSession succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchoolSession(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchoolSession(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

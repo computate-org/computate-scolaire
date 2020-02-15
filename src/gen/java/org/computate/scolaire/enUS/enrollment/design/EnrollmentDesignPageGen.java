@@ -229,8 +229,9 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 
 	public void apiRequestEnrollmentDesignPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		EnrollmentDesignPage original = (EnrollmentDesignPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (EnrollmentDesignPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof EnrollmentDesignPage) {
+			EnrollmentDesignPage original = (EnrollmentDesignPage)o;
 			super.apiRequestEnrollmentDesignGenPage();
 		}
 	}

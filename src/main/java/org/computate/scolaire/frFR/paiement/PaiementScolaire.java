@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;                  
+package org.computate.scolaire.frFR.paiement;             
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -53,7 +53,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/    
+*/ 
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
@@ -279,6 +279,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: date de paiement
 	 * NomAffichage.enUS: payment date
+	 * HtmlColonne: 2
 	 */                   
 	protected void _paiementDate(Couverture<LocalDate> c) {
 	}
@@ -350,9 +351,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 2
-	 * NomAffichage.frFR: paiement par
-	 * NomAffichage.enUS: payment by
-	 */                  
+	 * NomAffichage.frFR: paiement par/pour
+	 * NomAffichage.enUS: payment by/for
+	 */ 
 	protected void _paiementPar(Couverture<String> c) {
 	}
 

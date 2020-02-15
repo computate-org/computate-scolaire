@@ -319,8 +319,9 @@ public abstract class ChildGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestChildGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		ChildGenPage original = (ChildGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof ChildGenPage) {
+			ChildGenPage original = (ChildGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

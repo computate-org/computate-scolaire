@@ -446,7 +446,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putSessionScolaire($('#putSessionScolaireFormulaireValeurs')); ")
+							.a("onclick", "putSessionScolaire($('#putSessionScolaireFormulaireValeurs'), ", Optional.ofNullable(sessionScolaire).map(SessionScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des sessions")
 						.g("button");
 
@@ -478,7 +478,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchSessionScolaire($('#patchSessionScolaireFormulaireFiltres'), $('#patchSessionScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchSessionScolaire($('#patchSessionScolaireFormulaireFiltres'), $('#patchSessionScolaireFormulaireValeurs'), ", Optional.ofNullable(sessionScolaire).map(SessionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des sessions")
 						.g("button");
 

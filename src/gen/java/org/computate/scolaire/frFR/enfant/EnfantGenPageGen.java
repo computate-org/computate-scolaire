@@ -319,8 +319,9 @@ public abstract class EnfantGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiEnfantGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		EnfantGenPage original = (EnfantGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof EnfantGenPage) {
+			EnfantGenPage original = (EnfantGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

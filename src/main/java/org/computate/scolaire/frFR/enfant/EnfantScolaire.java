@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;                                      
+package org.computate.scolaire.frFR.enfant;                                       
 
 import java.text.Normalizer;
 import java.time.LocalDate;

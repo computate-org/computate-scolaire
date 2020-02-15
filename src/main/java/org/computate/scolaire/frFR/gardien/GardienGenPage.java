@@ -466,7 +466,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "putGardienScolaire($('#putGardienScolaireFormulaireValeurs')); ")
+							.a("onclick", "putGardienScolaire($('#putGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des gardiens")
 						.g("button");
 
@@ -498,7 +498,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "patchGardienScolaire($('#patchGardienScolaireFormulaireFiltres'), $('#patchGardienScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchGardienScolaire($('#patchGardienScolaireFormulaireFiltres'), $('#patchGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des gardiens")
 						.g("button");
 

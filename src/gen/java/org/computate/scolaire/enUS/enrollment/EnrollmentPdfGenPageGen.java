@@ -319,8 +319,9 @@ public abstract class EnrollmentPdfGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestEnrollmentPdfGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		EnrollmentPdfGenPage original = (EnrollmentPdfGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof EnrollmentPdfGenPage) {
+			EnrollmentPdfGenPage original = (EnrollmentPdfGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

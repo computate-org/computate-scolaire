@@ -319,8 +319,9 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiPartHtmlGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		PartHtmlGenPage original = (PartHtmlGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof PartHtmlGenPage) {
+			PartHtmlGenPage original = (PartHtmlGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

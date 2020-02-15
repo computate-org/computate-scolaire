@@ -319,8 +319,9 @@ public abstract class DesignInscriptionGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiDesignInscriptionGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		DesignInscriptionGenPage original = (DesignInscriptionGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof DesignInscriptionGenPage) {
+			DesignInscriptionGenPage original = (DesignInscriptionGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

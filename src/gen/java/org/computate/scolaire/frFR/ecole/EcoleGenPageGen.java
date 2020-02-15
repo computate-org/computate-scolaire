@@ -319,8 +319,9 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiEcoleGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		EcoleGenPage original = (EcoleGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (EcoleGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof EcoleGenPage) {
+			EcoleGenPage original = (EcoleGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

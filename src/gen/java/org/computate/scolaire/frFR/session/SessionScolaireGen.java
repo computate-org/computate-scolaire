@@ -326,7 +326,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("name", "setAgeCles")
 				.a("id", classeApiMethodeMethode, "_ageCles")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($('#suggereSessionScolaireAgeCles')) : [{'name':'fq','value':'sessionCle:", pk, "'}], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireAgeCles')) : [{'name':'fq','value':'sessionCle:", pk, "'}], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -335,7 +335,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		SessionScolaire s = (SessionScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereSessionScolaireAgeCles").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireAgeCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=sessionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
@@ -794,7 +794,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("name", "setSaisonCle")
 				.a("id", classeApiMethodeMethode, "_saisonCle")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($('#suggereSessionScolaireSaisonCle')) : [{'name':'fq','value':'sessionCles:", pk, "'}], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireSaisonCle')) : [{'name':'fq','value':'sessionCles:", pk, "'}], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -803,7 +803,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		SessionScolaire s = (SessionScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereSessionScolaireSaisonCle").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireSaisonCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=sessionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -1325,7 +1325,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		SessionScolaire s = (SessionScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereSessionScolaireEcoleAddresse").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireEcoleAddresse").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
@@ -2119,7 +2119,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		SessionScolaire s = (SessionScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereSessionScolaireSessionJourDebut").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireSessionJourDebut").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_sessionJourDebut").a("class", "").f().sx("début de la session").g("label");
@@ -2243,7 +2243,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		SessionScolaire s = (SessionScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereSessionScolaireSessionJourFin").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireSessionJourFin").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", classeApiMethodeMethode, "_sessionJourFin").a("class", "").f().sx("fin de la session").g("label");
@@ -3236,8 +3236,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiSessionScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		SessionScolaire original = (SessionScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SessionScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof SessionScolaire) {
+			SessionScolaire original = (SessionScolaire)o;
 			if(!Objects.equals(ageCles, original.getAgeCles()))
 				requeteApi.addVars("ageCles");
 			if(!Objects.equals(saisonCle, original.getSaisonCle()))

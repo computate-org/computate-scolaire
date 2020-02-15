@@ -319,8 +319,9 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiSessionGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		SessionGenPage original = (SessionGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SessionGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof SessionGenPage) {
+			SessionGenPage original = (SessionGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

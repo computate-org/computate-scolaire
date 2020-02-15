@@ -229,8 +229,9 @@ public abstract class DadPageGen<DEV> extends DadGenPage {
 
 	public void apiRequestDadPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		DadPage original = (DadPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (DadPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof DadPage) {
+			DadPage original = (DadPage)o;
 			super.apiRequestDadGenPage();
 		}
 	}

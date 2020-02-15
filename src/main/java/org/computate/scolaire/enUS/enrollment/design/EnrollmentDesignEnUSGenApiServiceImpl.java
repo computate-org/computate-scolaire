@@ -1,5 +1,7 @@
 package org.computate.scolaire.enUS.enrollment.design;
 
+import org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -81,6 +83,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.inscription.design.DesignInscriptionFrFRGenApiServiceImpl
  **/
 public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEnUSGenApiService {
 
@@ -92,7 +95,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	public EnrollmentDesignEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		EnrollmentDesignEnUSGenApiService service = EnrollmentDesignEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -126,6 +128,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestEnrollmentDesign(enrollmentDesign);
+																					enrollmentDesign.apiRequestEnrollmentDesign();
 																					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -366,7 +370,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<EnrollmentDesign> future = Future.future();
+		Promise<EnrollmentDesign> promise = Promise.promise();
 		try {
 			createEnrollmentDesign(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -381,7 +385,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 												if(e.succeeded()) {
 													apiRequestEnrollmentDesign(enrollmentDesign);
 													enrollmentDesign.apiRequestEnrollmentDesign();
-													future.complete(enrollmentDesign);
+													promise.complete(enrollmentDesign);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -403,7 +407,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -1507,7 +1511,72 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<EnrollmentDesign> searchList = new SearchList<EnrollmentDesign>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(EnrollmentDesign.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{htmlPartKeys:{terms:{field:htmlPartKeys_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					HtmlPartEnUSGenApiServiceImpl service = new HtmlPartEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getHtmlPartKeys()) {
+						HtmlPart o2 = new HtmlPart();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHHtmlPart(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("HtmlPart %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("HtmlPart %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						EnrollmentDesignEnUSGenApiServiceImpl service = new EnrollmentDesignEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(EnrollmentDesign o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHEnrollmentDesign(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("EnrollmentDesign %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("EnrollmentDesign %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh EnrollmentDesign succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorEnrollmentDesign(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorEnrollmentDesign(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

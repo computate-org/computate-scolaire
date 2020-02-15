@@ -1,5 +1,9 @@
 package org.computate.scolaire.enUS.year;
 
+import org.computate.scolaire.enUS.school.SchoolEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.school.School;
+import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.season.SchoolSeason;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -81,6 +85,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiService {
 
@@ -92,7 +97,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 	public SchoolYearEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SchoolYearEnUSGenApiService service = SchoolYearEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -126,6 +130,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestSchoolYear(schoolYear);
+																					schoolYear.apiRequestSchoolYear();
 																					siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -374,7 +380,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<SchoolYear> future = Future.future();
+		Promise<SchoolYear> promise = Promise.promise();
 		try {
 			createSchoolYear(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -389,7 +395,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 												if(e.succeeded()) {
 													apiRequestSchoolYear(schoolYear);
 													schoolYear.apiRequestSchoolYear();
-													future.complete(schoolYear);
+													promise.complete(schoolYear);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -411,7 +417,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -1549,7 +1555,92 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolYear.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{schoolKey:{terms:{field:schoolKey_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{seasonKeys:{terms:{field:seasonKeys_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					School o2 = new School();
+					SchoolEnUSGenApiServiceImpl service = new SchoolEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					Long pk = o.getSchoolKey();
+
+					o2.setPk(pk);
+					o2.setSiteRequest_(siteRequest);
+					futures.add(
+						service.futurePATCHSchool(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("School %s refreshed. ", pk));
+							} else {
+								LOGGER.info(String.format("School %s failed. ", pk));
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				{
+					SchoolSeasonEnUSGenApiServiceImpl service = new SchoolSeasonEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getSeasonKeys()) {
+						SchoolSeason o2 = new SchoolSeason();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolSeason(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolSeason %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolSeason %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SchoolYear o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchoolYear(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SchoolYear %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SchoolYear %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SchoolYear succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchoolYear(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchoolYear(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

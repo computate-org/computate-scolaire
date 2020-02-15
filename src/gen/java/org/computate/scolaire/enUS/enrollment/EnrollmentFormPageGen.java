@@ -1852,8 +1852,9 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 
 	public void apiRequestEnrollmentFormPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		EnrollmentFormPage original = (EnrollmentFormPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof EnrollmentFormPage) {
+			EnrollmentFormPage original = (EnrollmentFormPage)o;
 			super.apiRequestEnrollmentFormGenPage();
 		}
 	}

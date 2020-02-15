@@ -1,19 +1,17 @@
 package org.computate.scolaire.enUS.request;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.solr.common.SolrDocumentList;
-import java.security.MessageDigest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import javax.crypto.spec.SecretKeySpec;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
-import javax.crypto.Cipher;
 import java.text.NumberFormat;
 import java.util.Stack;
-import java.security.SecureRandom;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -1273,6 +1271,7 @@ The site configuration.
 	/**	L'entité « requestPk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	protected Long requestPk;
 	@JsonIgnore
 	public Wrap<Long> requestPkWrap = new Wrap<Long>().p(this).c(Long.class).var("requestPk").o(requestPk);
@@ -1407,287 +1406,6 @@ The site configuration.
 		return (SiteRequestEnUS)this;
 	}
 
-	////////////////////////
-	// encryptionPassword //
-	////////////////////////
-
-	/**	L'entité « encryptionPassword »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String encryptionPassword;
-	@JsonIgnore
-	public Wrap<String> encryptionPasswordWrap = new Wrap<String>().p(this).c(String.class).var("encryptionPassword").o(encryptionPassword);
-
-	/**	<br/>L'entité « encryptionPassword »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionPassword">Trouver l'entité encryptionPassword dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _encryptionPassword(Wrap<String> c);
-
-	public String getEncryptionPassword() {
-		return encryptionPassword;
-	}
-
-	public void setEncryptionPassword(String encryptionPassword) {
-		this.encryptionPassword = encryptionPassword;
-		this.encryptionPasswordWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS encryptionPasswordInit() {
-		if(!encryptionPasswordWrap.alreadyInitialized) {
-			_encryptionPassword(encryptionPasswordWrap);
-			if(encryptionPassword == null)
-				setEncryptionPassword(encryptionPasswordWrap.o);
-		}
-		encryptionPasswordWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	public String solrEncryptionPassword() {
-		return encryptionPassword;
-	}
-
-	public String strEncryptionPassword() {
-		return encryptionPassword == null ? "" : encryptionPassword;
-	}
-
-	public String jsonEncryptionPassword() {
-		return encryptionPassword == null ? "" : encryptionPassword;
-	}
-
-	public String nomAffichageEncryptionPassword() {
-		return null;
-	}
-
-	public String htmTooltipEncryptionPassword() {
-		return null;
-	}
-
-	public String htmEncryptionPassword() {
-		return encryptionPassword == null ? "" : StringEscapeUtils.escapeHtml4(strEncryptionPassword());
-	}
-
-	//////////////////////
-	// encryptionCipher //
-	//////////////////////
-
-	/**	L'entité « encryptionCipher »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Cipher encryptionCipher;
-	@JsonIgnore
-	public Wrap<Cipher> encryptionCipherWrap = new Wrap<Cipher>().p(this).c(Cipher.class).var("encryptionCipher").o(encryptionCipher);
-
-	/**	<br/>L'entité « encryptionCipher »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionCipher">Trouver l'entité encryptionCipher dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _encryptionCipher(Wrap<Cipher> c);
-
-	public Cipher getEncryptionCipher() {
-		return encryptionCipher;
-	}
-
-	public void setEncryptionCipher(Cipher encryptionCipher) {
-		this.encryptionCipher = encryptionCipher;
-		this.encryptionCipherWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS encryptionCipherInit() {
-		if(!encryptionCipherWrap.alreadyInitialized) {
-			_encryptionCipher(encryptionCipherWrap);
-			if(encryptionCipher == null)
-				setEncryptionCipher(encryptionCipherWrap.o);
-		}
-		encryptionCipherWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	//////////////////////
-	// decryptionCipher //
-	//////////////////////
-
-	/**	L'entité « decryptionCipher »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Cipher decryptionCipher;
-	@JsonIgnore
-	public Wrap<Cipher> decryptionCipherWrap = new Wrap<Cipher>().p(this).c(Cipher.class).var("decryptionCipher").o(decryptionCipher);
-
-	/**	<br/>L'entité « decryptionCipher »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:decryptionCipher">Trouver l'entité decryptionCipher dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _decryptionCipher(Wrap<Cipher> c);
-
-	public Cipher getDecryptionCipher() {
-		return decryptionCipher;
-	}
-
-	public void setDecryptionCipher(Cipher decryptionCipher) {
-		this.decryptionCipher = decryptionCipher;
-		this.decryptionCipherWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS decryptionCipherInit() {
-		if(!decryptionCipherWrap.alreadyInitialized) {
-			_decryptionCipher(decryptionCipherWrap);
-			if(decryptionCipher == null)
-				setDecryptionCipher(decryptionCipherWrap.o);
-		}
-		decryptionCipherWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	/////////////////////////////
-	// encryptionMessageDigest //
-	/////////////////////////////
-
-	/**	L'entité « encryptionMessageDigest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected MessageDigest encryptionMessageDigest;
-	@JsonIgnore
-	public Wrap<MessageDigest> encryptionMessageDigestWrap = new Wrap<MessageDigest>().p(this).c(MessageDigest.class).var("encryptionMessageDigest").o(encryptionMessageDigest);
-
-	/**	<br/>L'entité « encryptionMessageDigest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionMessageDigest">Trouver l'entité encryptionMessageDigest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _encryptionMessageDigest(Wrap<MessageDigest> c);
-
-	public MessageDigest getEncryptionMessageDigest() {
-		return encryptionMessageDigest;
-	}
-
-	public void setEncryptionMessageDigest(MessageDigest encryptionMessageDigest) {
-		this.encryptionMessageDigest = encryptionMessageDigest;
-		this.encryptionMessageDigestWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS encryptionMessageDigestInit() {
-		if(!encryptionMessageDigestWrap.alreadyInitialized) {
-			_encryptionMessageDigest(encryptionMessageDigestWrap);
-			if(encryptionMessageDigest == null)
-				setEncryptionMessageDigest(encryptionMessageDigestWrap.o);
-		}
-		encryptionMessageDigestWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	///////////////////
-	// encryptionKey //
-	///////////////////
-
-	/**	L'entité « encryptionKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected byte[] encryptionKey;
-	@JsonIgnore
-	public Wrap<byte[]> encryptionKeyWrap = new Wrap<byte[]>().p(this).c(byte[].class).var("encryptionKey").o(encryptionKey);
-
-	/**	<br/>L'entité « encryptionKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionKey">Trouver l'entité encryptionKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _encryptionKey(Wrap<byte[]> c);
-
-	public byte[] getEncryptionKey() {
-		return encryptionKey;
-	}
-
-	public void setEncryptionKey(byte[] encryptionKey) {
-		this.encryptionKey = encryptionKey;
-		this.encryptionKeyWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS encryptionKeyInit() {
-		if(!encryptionKeyWrap.alreadyInitialized) {
-			_encryptionKey(encryptionKeyWrap);
-			if(encryptionKey == null)
-				setEncryptionKey(encryptionKeyWrap.o);
-		}
-		encryptionKeyWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	//////////////////
-	// secureRandom //
-	//////////////////
-
-	/**	L'entité « secureRandom »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SecureRandom(). 
-	 */
-	protected SecureRandom secureRandom = new SecureRandom();
-	@JsonIgnore
-	public Wrap<SecureRandom> secureRandomWrap = new Wrap<SecureRandom>().p(this).c(SecureRandom.class).var("secureRandom").o(secureRandom);
-
-	/**	<br/>L'entité « secureRandom »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SecureRandom(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:secureRandom">Trouver l'entité secureRandom dans Solr</a>
-	 * <br/>
-	 * @param secureRandom est l'entité déjà construit. 
-	 **/
-	protected abstract void _secureRandom(SecureRandom o);
-
-	public SecureRandom getSecureRandom() {
-		return secureRandom;
-	}
-
-	public void setSecureRandom(SecureRandom secureRandom) {
-		this.secureRandom = secureRandom;
-		this.secureRandomWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS secureRandomInit() {
-		if(!secureRandomWrap.alreadyInitialized) {
-			_secureRandom(secureRandom);
-		}
-		secureRandomWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	///////////////////
-	// secretKeySpec //
-	///////////////////
-
-	/**	L'entité « secretKeySpec »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected SecretKeySpec secretKeySpec;
-	@JsonIgnore
-	public Wrap<SecretKeySpec> secretKeySpecWrap = new Wrap<SecretKeySpec>().p(this).c(SecretKeySpec.class).var("secretKeySpec").o(secretKeySpec);
-
-	/**	<br/>L'entité « secretKeySpec »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:secretKeySpec">Trouver l'entité secretKeySpec dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _secretKeySpec(Wrap<SecretKeySpec> c);
-
-	public SecretKeySpec getSecretKeySpec() {
-		return secretKeySpec;
-	}
-
-	public void setSecretKeySpec(SecretKeySpec secretKeySpec) {
-		this.secretKeySpec = secretKeySpec;
-		this.secretKeySpecWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS secretKeySpecInit() {
-		if(!secretKeySpecWrap.alreadyInitialized) {
-			_secretKeySpec(secretKeySpecWrap);
-			if(secretKeySpec == null)
-				setSecretKeySpec(secretKeySpecWrap.o);
-		}
-		secretKeySpecWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -1737,13 +1455,6 @@ The site configuration.
 		requestPkInit();
 		sqlConnectionInit();
 		requestHeadersInit();
-		encryptionPasswordInit();
-		encryptionCipherInit();
-		decryptionCipherInit();
-		encryptionMessageDigestInit();
-		encryptionKeyInit();
-		secureRandomInit();
-		secretKeySpecInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -1843,20 +1554,6 @@ The site configuration.
 				return oSiteRequestEnUS.sqlConnection;
 			case "requestHeaders":
 				return oSiteRequestEnUS.requestHeaders;
-			case "encryptionPassword":
-				return oSiteRequestEnUS.encryptionPassword;
-			case "encryptionCipher":
-				return oSiteRequestEnUS.encryptionCipher;
-			case "decryptionCipher":
-				return oSiteRequestEnUS.decryptionCipher;
-			case "encryptionMessageDigest":
-				return oSiteRequestEnUS.encryptionMessageDigest;
-			case "encryptionKey":
-				return oSiteRequestEnUS.encryptionKey;
-			case "secureRandom":
-				return oSiteRequestEnUS.secureRandom;
-			case "secretKeySpec":
-				return oSiteRequestEnUS.secretKeySpec;
 			default:
 				return null;
 		}

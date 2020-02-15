@@ -303,6 +303,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> blocCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> blocClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("blocCles").o(blocCles);
@@ -1087,6 +1088,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « mereCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> mereCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> mereClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("mereCles").o(mereCles);
@@ -1232,6 +1234,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « pereCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> pereCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> pereClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("pereCles").o(pereCles);
@@ -1377,6 +1380,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « gardienCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> gardienCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> gardienClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("gardienCles").o(gardienCles);
@@ -1522,6 +1526,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> paiementCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> paiementClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("paiementCles").o(paiementCles);
@@ -2476,6 +2481,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantPrenom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantPrenom;
 	@JsonIgnore
 	public Couverture<String> enfantPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("enfantPrenom").o(enfantPrenom);
@@ -2537,6 +2543,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantPrenomPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantPrenomPrefere;
 	@JsonIgnore
 	public Couverture<String> enfantPrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("enfantPrenomPrefere").o(enfantPrenomPrefere);
@@ -2598,6 +2605,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantFamilleNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantFamilleNom;
 	@JsonIgnore
 	public Couverture<String> enfantFamilleNomCouverture = new Couverture<String>().p(this).c(String.class).var("enfantFamilleNom").o(enfantFamilleNom);
@@ -2659,6 +2667,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « merePrenom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String merePrenom;
 	@JsonIgnore
 	public Couverture<String> merePrenomCouverture = new Couverture<String>().p(this).c(String.class).var("merePrenom").o(merePrenom);
@@ -2720,6 +2729,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « merePrenomPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String merePrenomPrefere;
 	@JsonIgnore
 	public Couverture<String> merePrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("merePrenomPrefere").o(merePrenomPrefere);
@@ -2781,6 +2791,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « perePrenom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String perePrenom;
 	@JsonIgnore
 	public Couverture<String> perePrenomCouverture = new Couverture<String>().p(this).c(String.class).var("perePrenom").o(perePrenom);
@@ -2842,6 +2853,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « perePrenomPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String perePrenomPrefere;
 	@JsonIgnore
 	public Couverture<String> perePrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("perePrenomPrefere").o(perePrenomPrefere);
@@ -2903,6 +2915,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantNomComplet;
 	@JsonIgnore
 	public Couverture<String> enfantNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("enfantNomComplet").o(enfantNomComplet);
@@ -3019,6 +3032,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantNomCompletPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantNomCompletPrefere;
 	@JsonIgnore
 	public Couverture<String> enfantNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("enfantNomCompletPrefere").o(enfantNomCompletPrefere);
@@ -3259,6 +3273,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleNom;
 	@JsonIgnore
 	public Couverture<String> ecoleNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNom").o(ecoleNom);
@@ -3320,6 +3335,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleNomComplet;
 	@JsonIgnore
 	public Couverture<String> ecoleNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomComplet").o(ecoleNomComplet);
@@ -3381,6 +3397,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleEmplacement »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleEmplacement;
 	@JsonIgnore
 	public Couverture<String> ecoleEmplacementCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleEmplacement").o(ecoleEmplacement);
@@ -3442,6 +3459,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleAddresse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleAddresse;
 	@JsonIgnore
 	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
@@ -3558,6 +3576,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNumeroTelephone »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleNumeroTelephone;
 	@JsonIgnore
 	public Couverture<String> ecoleNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
@@ -3619,6 +3638,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleAdministrateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleAdministrateurNom;
 	@JsonIgnore
 	public Couverture<String> ecoleAdministrateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAdministrateurNom").o(ecoleAdministrateurNom);
@@ -3894,6 +3914,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonEte »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean saisonEte;
 	@JsonIgnore
 	public Couverture<Boolean> saisonEteCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("saisonEte").o(saisonEte);
@@ -3960,6 +3981,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonHiver »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean saisonHiver;
 	@JsonIgnore
 	public Couverture<Boolean> saisonHiverCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("saisonHiver").o(saisonHiver);
@@ -4105,6 +4127,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String saisonNomComplet;
 	@JsonIgnore
 	public Couverture<String> saisonNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("saisonNomComplet").o(saisonNomComplet);
@@ -4322,6 +4345,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ageNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ageNomComplet;
 	@JsonIgnore
 	public Couverture<String> ageNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ageNomComplet").o(ageNomComplet);
@@ -4740,6 +4764,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocDimanche »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocDimanche;
 	@JsonIgnore
 	public Couverture<Boolean> blocDimancheCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocDimanche").o(blocDimanche);
@@ -4806,6 +4831,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocLundi »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocLundi;
 	@JsonIgnore
 	public Couverture<Boolean> blocLundiCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocLundi").o(blocLundi);
@@ -4872,6 +4898,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocMardi »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocMardi;
 	@JsonIgnore
 	public Couverture<Boolean> blocMardiCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocMardi").o(blocMardi);
@@ -4938,6 +4965,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocMercredi »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocMercredi;
 	@JsonIgnore
 	public Couverture<Boolean> blocMercrediCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocMercredi").o(blocMercredi);
@@ -5004,6 +5032,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocJeudi »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocJeudi;
 	@JsonIgnore
 	public Couverture<Boolean> blocJeudiCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocJeudi").o(blocJeudi);
@@ -5070,6 +5099,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocVendredi »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocVendredi;
 	@JsonIgnore
 	public Couverture<Boolean> blocVendrediCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocVendredi").o(blocVendredi);
@@ -5136,6 +5166,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocSamedi »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blocSamedi;
 	@JsonIgnore
 	public Couverture<Boolean> blocSamediCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocSamedi").o(blocSamedi);
@@ -5281,6 +5312,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocNomAdmin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String blocNomAdmin;
 	@JsonIgnore
 	public Couverture<String> blocNomAdminCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomAdmin").o(blocNomAdmin);
@@ -5342,6 +5374,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocNomCourt »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String blocNomCourt;
 	@JsonIgnore
 	public Couverture<String> blocNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomCourt").o(blocNomCourt);
@@ -5403,6 +5436,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « blocNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String blocNomComplet;
 	@JsonIgnore
 	public Couverture<String> blocNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomComplet").o(blocNomComplet);
@@ -5464,6 +5498,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionApprouve »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean inscriptionApprouve;
 	@JsonIgnore
 	public Couverture<Boolean> inscriptionApprouveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionApprouve").o(inscriptionApprouve);
@@ -5586,6 +5621,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionImmunisations »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean inscriptionImmunisations;
 	@JsonIgnore
 	public Couverture<Boolean> inscriptionImmunisationsCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionImmunisations").o(inscriptionImmunisations);
@@ -5708,6 +5744,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleMarie »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean familleMarie;
 	@JsonIgnore
 	public Couverture<Boolean> familleMarieCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("familleMarie").o(familleMarie);
@@ -5830,6 +5867,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleSepare »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean familleSepare;
 	@JsonIgnore
 	public Couverture<Boolean> familleSepareCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("familleSepare").o(familleSepare);
@@ -5952,6 +5990,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleDivorce »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean familleDivorce;
 	@JsonIgnore
 	public Couverture<Boolean> familleDivorceCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("familleDivorce").o(familleDivorce);
@@ -6074,6 +6113,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleAddresse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String familleAddresse;
 	@JsonIgnore
 	public Couverture<String> familleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("familleAddresse").o(familleAddresse);
@@ -6188,6 +6228,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleCommentVousConnaissezEcole »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String familleCommentVousConnaissezEcole;
 	@JsonIgnore
 	public Couverture<String> familleCommentVousConnaissezEcoleCouverture = new Couverture<String>().p(this).c(String.class).var("familleCommentVousConnaissezEcole").o(familleCommentVousConnaissezEcole);
@@ -6302,6 +6343,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionConsiderationsSpeciales »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionConsiderationsSpeciales;
 	@JsonIgnore
 	public Couverture<String> inscriptionConsiderationsSpecialesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionConsiderationsSpeciales").o(inscriptionConsiderationsSpeciales);
@@ -6416,6 +6458,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantConditionsMedicales »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantConditionsMedicales;
 	@JsonIgnore
 	public Couverture<String> enfantConditionsMedicalesCouverture = new Couverture<String>().p(this).c(String.class).var("enfantConditionsMedicales").o(enfantConditionsMedicales);
@@ -6530,6 +6573,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantEcolesPrecedemmentFrequentees »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantEcolesPrecedemmentFrequentees;
 	@JsonIgnore
 	public Couverture<String> enfantEcolesPrecedemmentFrequenteesCouverture = new Couverture<String>().p(this).c(String.class).var("enfantEcolesPrecedemmentFrequentees").o(enfantEcolesPrecedemmentFrequentees);
@@ -6644,6 +6688,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantDescription;
 	@JsonIgnore
 	public Couverture<String> enfantDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("enfantDescription").o(enfantDescription);
@@ -6758,6 +6803,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantObjectifs »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantObjectifs;
 	@JsonIgnore
 	public Couverture<String> enfantObjectifsCouverture = new Couverture<String>().p(this).c(String.class).var("enfantObjectifs").o(enfantObjectifs);
@@ -6872,6 +6918,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantPropre »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean enfantPropre;
 	@JsonIgnore
 	public Couverture<Boolean> enfantPropreCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("enfantPropre").o(enfantPropre);
@@ -6994,6 +7041,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionNomGroupe »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionNomGroupe;
 	@JsonIgnore
 	public Couverture<String> inscriptionNomGroupeCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomGroupe").o(inscriptionNomGroupe);
@@ -7110,6 +7158,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionPaimentChaqueMois »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean inscriptionPaimentChaqueMois;
 	@JsonIgnore
 	public Couverture<Boolean> inscriptionPaimentChaqueMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentChaqueMois").o(inscriptionPaimentChaqueMois);
@@ -7232,6 +7281,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionPaimentComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean inscriptionPaimentComplet;
 	@JsonIgnore
 	public Couverture<Boolean> inscriptionPaimentCompletCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentComplet").o(inscriptionPaimentComplet);
@@ -7354,6 +7404,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionNomsParents »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionNomsParents;
 	@JsonIgnore
 	public Couverture<String> inscriptionNomsParentsCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomsParents").o(inscriptionNomsParents);
@@ -7466,6 +7517,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionNomParentLignes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionNomParentLignes;
 	@JsonIgnore
 	public Couverture<String> inscriptionNomParentLignesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomParentLignes").o(inscriptionNomParentLignes);
@@ -7527,6 +7579,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionMailParentLignes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionMailParentLignes;
 	@JsonIgnore
 	public Couverture<String> inscriptionMailParentLignesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionMailParentLignes").o(inscriptionMailParentLignes);
@@ -7588,6 +7641,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDetailParentLignes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionDetailParentLignes;
 	@JsonIgnore
 	public Couverture<String> inscriptionDetailParentLignesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionDetailParentLignes").o(inscriptionDetailParentLignes);
@@ -7649,6 +7703,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionChercherParentLignes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionChercherParentLignes;
 	@JsonIgnore
 	public Couverture<String> inscriptionChercherParentLignesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionChercherParentLignes").o(inscriptionChercherParentLignes);
@@ -7710,6 +7765,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionContactUrgenceParentLignes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionContactUrgenceParentLignes;
 	@JsonIgnore
 	public Couverture<String> inscriptionContactUrgenceParentLignesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionContactUrgenceParentLignes").o(inscriptionContactUrgenceParentLignes);
@@ -7771,6 +7827,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature1;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature1Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature1").o(inscriptionSignature1);
@@ -7899,6 +7956,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature2;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature2Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature2").o(inscriptionSignature2);
@@ -8027,6 +8085,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature3;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature3Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature3").o(inscriptionSignature3);
@@ -8155,6 +8214,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature4 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature4;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature4Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature4").o(inscriptionSignature4);
@@ -8283,6 +8343,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature5 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature5;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature5Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature5").o(inscriptionSignature5);
@@ -8411,6 +8472,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature6 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature6;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature6Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature6").o(inscriptionSignature6);
@@ -8539,6 +8601,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature7 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature7;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature7Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature7").o(inscriptionSignature7);
@@ -8667,6 +8730,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature8 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature8;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature8Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature8").o(inscriptionSignature8);
@@ -8795,6 +8859,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature9 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature9;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature9Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature9").o(inscriptionSignature9);
@@ -8923,6 +8988,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionSignature10 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionSignature10;
 	@JsonIgnore
 	public Couverture<String> inscriptionSignature10Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature10").o(inscriptionSignature10);
@@ -10261,6 +10327,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionsInscription »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<InscriptionScolaire> inscriptionsInscription = new java.util.ArrayList<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 	@JsonIgnore
 	public Couverture<List<InscriptionScolaire>> inscriptionsInscriptionCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptionsInscription").o(inscriptionsInscription);
@@ -10307,6 +10374,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantImmunisationsRecu »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantImmunisationsRecu;
 	@JsonIgnore
 	public Couverture<String> enfantImmunisationsRecuCouverture = new Couverture<String>().p(this).c(String.class).var("enfantImmunisationsRecu").o(enfantImmunisationsRecu);
@@ -10368,6 +10436,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantPhotosApprouve »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enfantPhotosApprouve;
 	@JsonIgnore
 	public Couverture<String> enfantPhotosApprouveCouverture = new Couverture<String>().p(this).c(String.class).var("enfantPhotosApprouve").o(enfantPhotosApprouve);
@@ -10497,6 +10566,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String inscriptionNomComplet;
 	@JsonIgnore
 	public Couverture<String> inscriptionNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomComplet").o(inscriptionNomComplet);
@@ -13053,8 +13123,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public void requeteApiInscriptionScolaire() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		InscriptionScolaire original = (InscriptionScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof InscriptionScolaire) {
+			InscriptionScolaire original = (InscriptionScolaire)o;
 			if(!Objects.equals(anneeCle, original.getAnneeCle()))
 				requeteApi.addVars("anneeCle");
 			if(!Objects.equals(blocCles, original.getBlocCles()))

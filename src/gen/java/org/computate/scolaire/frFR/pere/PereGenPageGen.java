@@ -319,8 +319,9 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiPereGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		PereGenPage original = (PereGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (PereGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof PereGenPage) {
+			PereGenPage original = (PereGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

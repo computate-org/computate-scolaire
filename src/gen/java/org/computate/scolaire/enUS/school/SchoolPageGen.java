@@ -229,8 +229,9 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 
 	public void apiRequestSchoolPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolPage original = (SchoolPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SchoolPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolPage) {
+			SchoolPage original = (SchoolPage)o;
 			super.apiRequestSchoolGenPage();
 		}
 	}

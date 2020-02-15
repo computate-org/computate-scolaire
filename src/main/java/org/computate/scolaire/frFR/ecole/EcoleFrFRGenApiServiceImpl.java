@@ -1,5 +1,7 @@
 package org.computate.scolaire.frFR.ecole;
 
+import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -81,6 +83,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
+ * classeNomCanonique.enUS: org.computate.scolaire.enUS.school.SchoolEnUSGenApiServiceImpl
  **/
 public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
@@ -125,6 +128,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteApiEcole(ecole);
+																					ecole.requeteApiEcole();
 																					requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -377,7 +382,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 		});
-		Future<Ecole> future = Future.future();
+		Promise<Ecole> promise = Promise.promise();
 		try {
 			creerEcole(requeteSite, a -> {
 				if(a.succeeded()) {
@@ -392,7 +397,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 												if(e.succeeded()) {
 													requeteApiEcole(ecole);
 													ecole.requeteApiEcole();
-													future.complete(ecole);
+													promise.complete(ecole);
 													gestionnaireEvenements.handle(Future.succeededFuture(e.result()));
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
@@ -414,7 +419,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -1560,7 +1565,72 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			gestionnaireEvenements.handle(Future.succeededFuture());
+			if(!requeteSite.getRequeteApi_().getEmpty()) {
+				ListeRecherche<Ecole> listeRecherche = new ListeRecherche<Ecole>();
+				listeRecherche.setPeupler(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(Ecole.class);
+				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				listeRecherche.add("json.facet", "{anneeCles:{terms:{field:anneeCles_indexed_longs, limit:1000}}}");
+				listeRecherche.setRows(1000);
+				listeRecherche.initLoinListeRecherche(requeteSite);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					for(Long pk : o.getAnneeCles()) {
+						AnneeScolaire o2 = new AnneeScolaire();
+
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite);
+						futures.add(
+							service.futurePATCHAnneeScolaire(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Recharger relations a réussi. ");
+						EcoleFrFRGenApiServiceImpl service = new EcoleFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						List<Future> futures2 = new ArrayList<>();
+						for(Ecole o2 : listeRecherche.getList()) {
+							futures2.add(
+								service.futurePATCHEcole(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("Ecole %s rechargé. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("Ecole %s a échoué. ", o2.getPk()));
+										gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Recharger Ecole a réussi. ");
+								gestionnaireEvenements.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Recharger relations a échoué. ", b.cause());
+								erreurEcole(requeteSite, gestionnaireEvenements, b);
+							}
+						});
+					} else {
+						LOGGER.error("Recharger relations a échoué. ", a.cause());
+						erreurEcole(requeteSite, gestionnaireEvenements, a);
+					}
+				});
+			} else {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

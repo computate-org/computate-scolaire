@@ -465,7 +465,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "putSchoolGuardian($('#putSchoolGuardianFormValues')); ")
+							.a("onclick", "putSchoolGuardian($('#putSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the guardians")
 						.g("button");
 
@@ -497,7 +497,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "patchSchoolGuardian($('#patchSchoolGuardianFormFilters'), $('#patchSchoolGuardianFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolGuardian($('#patchSchoolGuardianFormFilters'), $('#patchSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the guardians")
 						.g("button");
 

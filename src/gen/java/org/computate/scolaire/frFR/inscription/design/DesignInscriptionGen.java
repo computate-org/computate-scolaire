@@ -213,6 +213,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « partHtmlCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> partHtmlCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> partHtmlClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("partHtmlCles").o(partHtmlCles);
@@ -357,6 +358,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
@@ -671,6 +673,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleNomComplet;
 	@JsonIgnore
 	public Couverture<String> ecoleNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomComplet").o(ecoleNomComplet);
@@ -732,6 +735,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « ecoleEmplacement »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ecoleEmplacement;
 	@JsonIgnore
 	public Couverture<String> ecoleEmplacementCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleEmplacement").o(ecoleEmplacement);
@@ -929,6 +933,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « anneeNomCourt »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String anneeNomCourt;
 	@JsonIgnore
 	public Couverture<String> anneeNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("anneeNomCourt").o(anneeNomCourt);
@@ -990,6 +995,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « anneeNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String anneeNomComplet;
 	@JsonIgnore
 	public Couverture<String> anneeNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("anneeNomComplet").o(anneeNomComplet);
@@ -1051,6 +1057,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « designInscriptionNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String designInscriptionNomComplet;
 	@JsonIgnore
 	public Couverture<String> designInscriptionNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("designInscriptionNomComplet").o(designInscriptionNomComplet);
@@ -1166,6 +1173,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « designCache »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean designCache;
 	@JsonIgnore
 	public Couverture<Boolean> designCacheCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("designCache").o(designCache);
@@ -1824,8 +1832,9 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void requeteApiDesignInscription() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		DesignInscription original = (DesignInscription)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (DesignInscription)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof DesignInscription) {
+			DesignInscription original = (DesignInscription)o;
 			if(!Objects.equals(partHtmlCles, original.getPartHtmlCles()))
 				requeteApi.addVars("partHtmlCles");
 			if(!Objects.equals(designInscriptionNomComplet, original.getDesignInscriptionNomComplet()))

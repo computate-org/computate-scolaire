@@ -319,8 +319,9 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiGardienGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		GardienGenPage original = (GardienGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (GardienGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof GardienGenPage) {
+			GardienGenPage original = (GardienGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

@@ -229,8 +229,9 @@ public abstract class MerePageGen<DEV> extends MereGenPage {
 
 	public void requeteApiMerePage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		MerePage original = (MerePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (MerePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof MerePage) {
+			MerePage original = (MerePage)o;
 			super.requeteApiMereGenPage();
 		}
 	}

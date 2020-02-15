@@ -1084,6 +1084,10 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		solrQuery.set(name, vals);
 	}
 
+	public void add(String name, String...vals) {
+		solrQuery.add(name, vals);
+	}
+
 	public void setDistrib(boolean val) {
 		solrQuery.setDistrib(val);
 	}

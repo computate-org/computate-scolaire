@@ -319,8 +319,9 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestSchoolGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolGenPage original = (SchoolGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SchoolGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolGenPage) {
+			SchoolGenPage original = (SchoolGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

@@ -1,5 +1,7 @@
 package org.computate.scolaire.enUS.guardian;
 
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -7,6 +9,8 @@ import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailMessage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -79,6 +83,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.gardien.GardienScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGenApiService {
 
@@ -90,7 +95,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	public SchoolGuardianEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SchoolGuardianEnUSGenApiService service = SchoolGuardianEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -124,6 +128,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestSchoolGuardian(schoolGuardian);
+																					schoolGuardian.apiRequestSchoolGuardian();
 																					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -384,7 +390,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<SchoolGuardian> future = Future.future();
+		Promise<SchoolGuardian> promise = Promise.promise();
 		try {
 			createSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -399,7 +405,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 												if(e.succeeded()) {
 													apiRequestSchoolGuardian(schoolGuardian);
 													schoolGuardian.apiRequestSchoolGuardian();
-													future.complete(schoolGuardian);
+													promise.complete(schoolGuardian);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -421,7 +427,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -796,26 +802,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
 						}
 						break;
-					case "setPersonPhoneNumber":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personPhoneNumber"));
-						} else {
-							o2.setPersonPhoneNumber(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personPhoneNumber", o2.jsonPersonPhoneNumber(), pk));
-						}
-						break;
-					case "setPersonRelation":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personRelation"));
-						} else {
-							o2.setPersonRelation(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personRelation", o2.jsonPersonRelation(), pk));
-						}
-						break;
 					case "setPersonEmergencyContact":
 						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -834,6 +820,26 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 							o2.setPersonPickup(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personPickup", o2.jsonPersonPickup(), pk));
+						}
+						break;
+					case "setPersonPhoneNumber":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personPhoneNumber"));
+						} else {
+							o2.setPersonPhoneNumber(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personPhoneNumber", o2.jsonPersonPhoneNumber(), pk));
+						}
+						break;
+					case "setPersonRelation":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personRelation"));
+						} else {
+							o2.setPersonRelation(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personRelation", o2.jsonPersonRelation(), pk));
 						}
 						break;
 				}
@@ -1248,6 +1254,27 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			)
 			, new CaseInsensitiveHeaders()
 		);
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
+		MailClient mailClient = siteContext.getMailClient();
+		MailMessage message = new MailMessage();
+		message.setFrom(siteConfig.getEmailFrom());
+		message.setTo(siteConfig.getEmailAdmin());
+		message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+		workerExecutor.executeBlocking(
+			blockingCodeHandler -> {
+				mailClient.sendMail(message, result -> {
+					if (result.succeeded()) {
+						LOGGER.info(result.result());
+					} else {
+						LOGGER.error(result.cause());
+					}
+				});
+			}, resultHandler -> {
+			}
+		);
 		if(siteRequest != null) {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			if(sqlConnection != null) {
@@ -1387,23 +1414,27 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 									, defineAsync
 							-> {
 								if(defineAsync.succeeded()) {
-									for(JsonArray definition : defineAsync.result().getResults()) {
-										siteUser.defineForClass(definition.getString(0), definition.getString(1));
+									try {
+										for(JsonArray definition : defineAsync.result().getResults()) {
+											siteUser.defineForClass(definition.getString(0), definition.getString(1));
+										}
+										JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+										JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+										siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
+										siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
+										siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
+										siteUser.setUserId(jsonPrincipal.getString("sub"));
+										siteUser.initDeepForClass(siteRequest);
+										siteUser.indexForClass();
+										siteRequest.setSiteUser(siteUser);
+										siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+										siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+										siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+										siteRequest.setUserId(jsonPrincipal.getString("sub"));
+										eventHandler.handle(Future.succeededFuture());
+									} catch(Exception e) {
+										eventHandler.handle(Future.failedFuture(e));
 									}
-									JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-									JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-									siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-									siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-									siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-									siteUser.setUserId(jsonPrincipal.getString("sub"));
-									siteUser.initDeepForClass(siteRequest);
-									siteUser.indexForClass();
-									siteRequest.setSiteUser(siteUser);
-									siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-									siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-									siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-									siteRequest.setUserId(jsonPrincipal.getString("sub"));
-									eventHandler.handle(Future.succeededFuture());
 								} else {
 									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
@@ -1578,7 +1609,72 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolGuardian.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{enrollmentKeys:{terms:{field:enrollmentKeys_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getEnrollmentKeys()) {
+						SchoolEnrollment o2 = new SchoolEnrollment();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolEnrollment(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolGuardianEnUSGenApiServiceImpl service = new SchoolGuardianEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SchoolGuardian o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchoolGuardian(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SchoolGuardian %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SchoolGuardian %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SchoolGuardian succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchoolGuardian(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchoolGuardian(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

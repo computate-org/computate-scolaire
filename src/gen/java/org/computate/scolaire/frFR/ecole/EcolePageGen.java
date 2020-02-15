@@ -229,8 +229,9 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 
 	public void requeteApiEcolePage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		EcolePage original = (EcolePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (EcolePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof EcolePage) {
+			EcolePage original = (EcolePage)o;
 			super.requeteApiEcoleGenPage();
 		}
 	}

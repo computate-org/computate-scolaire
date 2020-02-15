@@ -319,8 +319,9 @@ public abstract class EnrollmentEmailGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestEnrollmentEmailGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		EnrollmentEmailGenPage original = (EnrollmentEmailGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof EnrollmentEmailGenPage) {
+			EnrollmentEmailGenPage original = (EnrollmentEmailGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

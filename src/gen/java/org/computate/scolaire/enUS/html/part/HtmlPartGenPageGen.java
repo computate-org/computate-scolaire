@@ -319,8 +319,9 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestHtmlPartGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		HtmlPartGenPage original = (HtmlPartGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (HtmlPartGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof HtmlPartGenPage) {
+			HtmlPartGenPage original = (HtmlPartGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

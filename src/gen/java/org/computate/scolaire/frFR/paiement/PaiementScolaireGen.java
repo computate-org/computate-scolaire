@@ -48,7 +48,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe enrollment_ dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe paymentCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class PaiementScolaireGen<DEV> extends Cluster {
@@ -2106,7 +2106,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaiementPar() {
-		return "paiement par";
+		return "paiement par/pour";
 	}
 
 	public String htmTooltipPaiementPar() {
@@ -2121,7 +2121,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("placeholder", "paiement par")
+			.a("placeholder", "paiement par/pour")
 			.a("title", "La clé primaire des enfants dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_paiementPar");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
@@ -2147,7 +2147,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementPar").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_paiementPar").a("class", "").f().sx("paiement par").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_paiementPar").a("class", "").f().sx("paiement par/pour").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();

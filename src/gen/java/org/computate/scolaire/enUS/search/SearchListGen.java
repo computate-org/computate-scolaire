@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.search;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -13,6 +14,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.solr.client.solrj.SolrQuery;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;

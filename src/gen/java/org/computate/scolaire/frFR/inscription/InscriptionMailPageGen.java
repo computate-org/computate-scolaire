@@ -229,8 +229,9 @@ public abstract class InscriptionMailPageGen<DEV> extends InscriptionMailGenPage
 
 	public void requeteApiInscriptionMailPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		InscriptionMailPage original = (InscriptionMailPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof InscriptionMailPage) {
+			InscriptionMailPage original = (InscriptionMailPage)o;
 			super.requeteApiInscriptionMailGenPage();
 		}
 	}

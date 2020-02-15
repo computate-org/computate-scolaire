@@ -319,8 +319,9 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestAgeGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		AgeGenPage original = (AgeGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (AgeGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof AgeGenPage) {
+			AgeGenPage original = (AgeGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

@@ -321,8 +321,9 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiUtilisateurSiteGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		UtilisateurSiteGenPage original = (UtilisateurSiteGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof UtilisateurSiteGenPage) {
+			UtilisateurSiteGenPage original = (UtilisateurSiteGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

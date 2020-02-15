@@ -1,5 +1,11 @@
 package org.computate.scolaire.frFR.inscription.design;
 
+import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import org.computate.scolaire.frFR.html.part.PartHtmlFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.html.part.PartHtml;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -81,6 +87,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
+ * classeNomCanonique.enUS: org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignEnUSGenApiServiceImpl
  **/
 public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscriptionFrFRGenApiService {
 
@@ -92,7 +99,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 
 	public DesignInscriptionFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
-		DesignInscriptionFrFRGenApiService service = DesignInscriptionFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -126,6 +132,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteApiDesignInscription(designInscription);
+																					designInscription.requeteApiDesignInscription();
 																					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -366,7 +374,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 		});
-		Future<DesignInscription> future = Future.future();
+		Promise<DesignInscription> promise = Promise.promise();
 		try {
 			creerDesignInscription(requeteSite, a -> {
 				if(a.succeeded()) {
@@ -381,7 +389,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 												if(e.succeeded()) {
 													requeteApiDesignInscription(designInscription);
 													designInscription.requeteApiDesignInscription();
-													future.complete(designInscription);
+													promise.complete(designInscription);
 													gestionnaireEvenements.handle(Future.succeededFuture(e.result()));
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
@@ -403,7 +411,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -1164,11 +1172,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
 		MailClient mailClient = siteContexte.getMailClient();
 		MailMessage message = new MailMessage();
-		message.setFrom(siteConfig.getMailDe());
-		message.setTo(siteConfig.getMailAdmin());
+		message.setFrom(configSite.getMailDe());
+		message.setTo(configSite.getMailAdmin());
 		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(configSite.getSiteBaseUrl() + " " + e.getMessage()));
-		WorkerExecutor workerExecutor = siteContexte.getWorkerExecutor();
+		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
 				mailClient.sendMail(message, result -> {
@@ -1507,7 +1515,72 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			gestionnaireEvenements.handle(Future.succeededFuture());
+			if(!requeteSite.getRequeteApi_().getEmpty()) {
+				ListeRecherche<DesignInscription> listeRecherche = new ListeRecherche<DesignInscription>();
+				listeRecherche.setPeupler(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(DesignInscription.class);
+				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				listeRecherche.add("json.facet", "{partHtmlCles:{terms:{field:partHtmlCles_indexed_longs, limit:1000}}}");
+				listeRecherche.setRows(1000);
+				listeRecherche.initLoinListeRecherche(requeteSite);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					PartHtmlFrFRGenApiServiceImpl service = new PartHtmlFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					for(Long pk : o.getPartHtmlCles()) {
+						PartHtml o2 = new PartHtml();
+
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite);
+						futures.add(
+							service.futurePATCHPartHtml(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("PartHtml %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("PartHtml %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Recharger relations a réussi. ");
+						DesignInscriptionFrFRGenApiServiceImpl service = new DesignInscriptionFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						List<Future> futures2 = new ArrayList<>();
+						for(DesignInscription o2 : listeRecherche.getList()) {
+							futures2.add(
+								service.futurePATCHDesignInscription(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("DesignInscription %s rechargé. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("DesignInscription %s a échoué. ", o2.getPk()));
+										gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Recharger DesignInscription a réussi. ");
+								gestionnaireEvenements.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Recharger relations a échoué. ", b.cause());
+								erreurDesignInscription(requeteSite, gestionnaireEvenements, b);
+							}
+						});
+					} else {
+						LOGGER.error("Recharger relations a échoué. ", a.cause());
+						erreurDesignInscription(requeteSite, gestionnaireEvenements, a);
+					}
+				});
+			} else {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

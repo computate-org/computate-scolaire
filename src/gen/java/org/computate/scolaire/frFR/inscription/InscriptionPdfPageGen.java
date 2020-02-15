@@ -229,8 +229,9 @@ public abstract class InscriptionPdfPageGen<DEV> extends InscriptionPdfGenPage {
 
 	public void requeteApiInscriptionPdfPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		InscriptionPdfPage original = (InscriptionPdfPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof InscriptionPdfPage) {
+			InscriptionPdfPage original = (InscriptionPdfPage)o;
 			super.requeteApiInscriptionPdfGenPage();
 		}
 	}

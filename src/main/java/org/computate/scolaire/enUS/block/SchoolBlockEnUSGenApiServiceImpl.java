@@ -1,5 +1,9 @@
 package org.computate.scolaire.enUS.block;
 
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
+import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.age.SchoolAge;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -7,6 +11,8 @@ import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailMessage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -79,6 +85,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiService {
 
@@ -90,7 +97,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 	public SchoolBlockEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SchoolBlockEnUSGenApiService service = SchoolBlockEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
@@ -124,6 +130,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					apiRequestSchoolBlock(schoolBlock);
+																					schoolBlock.apiRequestSchoolBlock();
 																					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
@@ -396,7 +404,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			jsonObject.put(o.getKey(), o.getValue());
 			jsonObject.getJsonArray("saves").add(o.getKey());
 		});
-		Future<SchoolBlock> future = Future.future();
+		Promise<SchoolBlock> promise = Promise.promise();
 		try {
 			createSchoolBlock(siteRequest, a -> {
 				if(a.succeeded()) {
@@ -411,7 +419,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 												if(e.succeeded()) {
 													apiRequestSchoolBlock(schoolBlock);
 													schoolBlock.apiRequestSchoolBlock();
-													future.complete(schoolBlock);
+													promise.complete(schoolBlock);
 													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
@@ -433,7 +441,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -1308,6 +1316,27 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			)
 			, new CaseInsensitiveHeaders()
 		);
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
+		MailClient mailClient = siteContext.getMailClient();
+		MailMessage message = new MailMessage();
+		message.setFrom(siteConfig.getEmailFrom());
+		message.setTo(siteConfig.getEmailAdmin());
+		message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + e.getMessage()));
+		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+		workerExecutor.executeBlocking(
+			blockingCodeHandler -> {
+				mailClient.sendMail(message, result -> {
+					if (result.succeeded()) {
+						LOGGER.info(result.result());
+					} else {
+						LOGGER.error(result.cause());
+					}
+				});
+			}, resultHandler -> {
+			}
+		);
 		if(siteRequest != null) {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			if(sqlConnection != null) {
@@ -1447,23 +1476,27 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 									, defineAsync
 							-> {
 								if(defineAsync.succeeded()) {
-									for(JsonArray definition : defineAsync.result().getResults()) {
-										siteUser.defineForClass(definition.getString(0), definition.getString(1));
+									try {
+										for(JsonArray definition : defineAsync.result().getResults()) {
+											siteUser.defineForClass(definition.getString(0), definition.getString(1));
+										}
+										JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+										JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+										siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
+										siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
+										siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
+										siteUser.setUserId(jsonPrincipal.getString("sub"));
+										siteUser.initDeepForClass(siteRequest);
+										siteUser.indexForClass();
+										siteRequest.setSiteUser(siteUser);
+										siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+										siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+										siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+										siteRequest.setUserId(jsonPrincipal.getString("sub"));
+										eventHandler.handle(Future.succeededFuture());
+									} catch(Exception e) {
+										eventHandler.handle(Future.failedFuture(e));
 									}
-									JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-									JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-									siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-									siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-									siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-									siteUser.setUserId(jsonPrincipal.getString("sub"));
-									siteUser.initDeepForClass(siteRequest);
-									siteUser.indexForClass();
-									siteRequest.setSiteUser(siteUser);
-									siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-									siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-									siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-									siteRequest.setUserId(jsonPrincipal.getString("sub"));
-									eventHandler.handle(Future.succeededFuture());
 								} else {
 									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
@@ -1630,7 +1663,92 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			eventHandler.handle(Future.succeededFuture());
+			if(!siteRequest.getApiRequest_().getEmpty()) {
+				SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+				searchList.setPopulate(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolBlock.class);
+				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{enrollmentKeys:{terms:{field:enrollmentKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{ageKey:{terms:{field:ageKey_indexed_longs, limit:1000}}}");
+				searchList.setRows(1000);
+				searchList.initDeepSearchList(siteRequest);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					for(Long pk : o.getEnrollmentKeys()) {
+						SchoolEnrollment o2 = new SchoolEnrollment();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest);
+						futures.add(
+							service.futurePATCHSchoolEnrollment(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SchoolAge o2 = new SchoolAge();
+					SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+					Long pk = o.getAgeKey();
+
+					o2.setPk(pk);
+					o2.setSiteRequest_(siteRequest);
+					futures.add(
+						service.futurePATCHSchoolAge(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("SchoolAge %s refreshed. ", pk));
+							} else {
+								LOGGER.info(String.format("SchoolAge %s failed. ", pk));
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Refresh relations succeeded. ");
+						SchoolBlockEnUSGenApiServiceImpl service = new SchoolBlockEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+						List<Future> futures2 = new ArrayList<>();
+						for(SchoolBlock o2 : searchList.getList()) {
+							futures2.add(
+								service.futurePATCHSchoolBlock(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("SchoolBlock %s refreshed. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("SchoolBlock %s failed. ", o2.getPk()));
+										eventHandler.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Refresh SchoolBlock succeeded. ");
+								eventHandler.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Refresh relations failed. ", b.cause());
+								errorSchoolBlock(siteRequest, eventHandler, b);
+							}
+						});
+					} else {
+						LOGGER.error("Refresh relations failed. ", a.cause());
+						errorSchoolBlock(siteRequest, eventHandler, a);
+					}
+				});
+			} else {
+				eventHandler.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

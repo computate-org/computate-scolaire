@@ -492,7 +492,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "putPereScolaire($('#putPereScolaireFormulaireValeurs')); ")
+							.a("onclick", "putPereScolaire($('#putPereScolaireFormulaireValeurs'), ", Optional.ofNullable(pereScolaire).map(PereScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des pères")
 						.g("button");
 
@@ -524,7 +524,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "patchPereScolaire($('#patchPereScolaireFormulaireFiltres'), $('#patchPereScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchPereScolaire($('#patchPereScolaireFormulaireFiltres'), $('#patchPereScolaireFormulaireValeurs'), ", Optional.ofNullable(pereScolaire).map(PereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des pères")
 						.g("button");
 

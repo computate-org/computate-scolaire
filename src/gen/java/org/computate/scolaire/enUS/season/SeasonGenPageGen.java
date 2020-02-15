@@ -319,8 +319,9 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestSeasonGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SeasonGenPage original = (SeasonGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SeasonGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SeasonGenPage) {
+			SeasonGenPage original = (SeasonGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

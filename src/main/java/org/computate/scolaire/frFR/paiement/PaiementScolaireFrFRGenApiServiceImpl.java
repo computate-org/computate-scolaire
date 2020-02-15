@@ -1,5 +1,7 @@
 package org.computate.scolaire.frFR.paiement;
 
+import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -81,6 +83,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
+ * classeNomCanonique.enUS: org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl
  **/
 public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFrFRGenApiService {
 
@@ -793,24 +796,34 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
-					case "setCustomerProfileId":
+					case "setPaiementDescription":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementDescription"));
 						} else {
-							o2.setCustomerProfileId(requeteJson.getString(methodeNom));
+							o2.setPaiementDescription(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+							patchSqlParams.addAll(Arrays.asList("paiementDescription", o2.jsonPaiementDescription(), pk));
 						}
 						break;
-					case "setTransactionStatus":
+					case "setPaiementDate":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "transactionStatus"));
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementDate"));
 						} else {
-							o2.setTransactionStatus(requeteJson.getString(methodeNom));
+							o2.setPaiementDate(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("transactionStatus", o2.jsonTransactionStatus(), pk));
+							patchSqlParams.addAll(Arrays.asList("paiementDate", o2.jsonPaiementDate(), pk));
+						}
+						break;
+					case "setPaiementMontant":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementMontant"));
+						} else {
+							o2.setPaiementMontant(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementMontant", o2.jsonPaiementMontant(), pk));
 						}
 						break;
 					case "setPaiementEspeces":
@@ -831,16 +844,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							o2.setPaiementCheque(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("paiementCheque", o2.jsonPaiementCheque(), pk));
-						}
-						break;
-					case "setPaiementDescription":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "paiementDescription"));
-						} else {
-							o2.setPaiementDescription(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("paiementDescription", o2.jsonPaiementDescription(), pk));
 						}
 						break;
 					case "setPaiementSysteme":
@@ -873,24 +876,24 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							patchSqlParams.addAll(Arrays.asList("transactionId", o2.jsonTransactionId(), pk));
 						}
 						break;
-					case "setPaiementDate":
+					case "setCustomerProfileId":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "paiementDate"));
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
 						} else {
-							o2.setPaiementDate(requeteJson.getString(methodeNom));
+							o2.setCustomerProfileId(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("paiementDate", o2.jsonPaiementDate(), pk));
+							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
 						}
 						break;
-					case "setPaiementMontant":
+					case "setTransactionStatus":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "paiementMontant"));
+							patchSqlParams.addAll(Arrays.asList(pk, "transactionStatus"));
 						} else {
-							o2.setPaiementMontant(requeteJson.getString(methodeNom));
+							o2.setTransactionStatus(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("paiementMontant", o2.jsonPaiementMontant(), pk));
+							patchSqlParams.addAll(Arrays.asList("transactionStatus", o2.jsonTransactionStatus(), pk));
 						}
 						break;
 				}
@@ -1652,7 +1655,72 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			gestionnaireEvenements.handle(Future.succeededFuture());
+			if(!requeteSite.getRequeteApi_().getEmpty()) {
+				ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+				listeRecherche.setPeupler(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(PaiementScolaire.class);
+				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+				listeRecherche.setRows(1000);
+				listeRecherche.initLoinListeRecherche(requeteSite);
+				List<Future> futures = new ArrayList<>();
+
+				{
+					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+					for(Long pk : o.getInscriptionCles()) {
+						InscriptionScolaire o2 = new InscriptionScolaire();
+
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite);
+						futures.add(
+							service.futurePATCHInscriptionScolaire(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				CompositeFuture.all(futures).setHandler(a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Recharger relations a réussi. ");
+						PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+						List<Future> futures2 = new ArrayList<>();
+						for(PaiementScolaire o2 : listeRecherche.getList()) {
+							futures2.add(
+								service.futurePATCHPaiementScolaire(o2, b -> {
+									if(b.succeeded()) {
+										LOGGER.info(String.format("PaiementScolaire %s rechargé. ", o2.getPk()));
+									} else {
+										LOGGER.info(String.format("PaiementScolaire %s a échoué. ", o2.getPk()));
+										gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
+									}
+								})
+							);
+						}
+
+						CompositeFuture.all(futures2).setHandler(b -> {
+							if(b.succeeded()) {
+								LOGGER.info("Recharger PaiementScolaire a réussi. ");
+								gestionnaireEvenements.handle(Future.succeededFuture());
+							} else {
+								LOGGER.error("Recharger relations a échoué. ", b.cause());
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+							}
+						});
+					} else {
+						LOGGER.error("Recharger relations a échoué. ", a.cause());
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				});
+			} else {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			}
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

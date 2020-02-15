@@ -446,7 +446,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-							.a("onclick", "putAgeScolaire($('#putAgeScolaireFormulaireValeurs')); ")
+							.a("onclick", "putAgeScolaire($('#putAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des âges")
 						.g("button");
 
@@ -478,7 +478,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-							.a("onclick", "patchAgeScolaire($('#patchAgeScolaireFormulaireFiltres'), $('#patchAgeScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchAgeScolaire($('#patchAgeScolaireFormulaireFiltres'), $('#patchAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des âges")
 						.g("button");
 

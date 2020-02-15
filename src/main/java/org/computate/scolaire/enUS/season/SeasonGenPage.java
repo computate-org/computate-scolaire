@@ -448,7 +448,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "putSchoolSeason($('#putSchoolSeasonFormValues')); ")
+							.a("onclick", "putSchoolSeason($('#putSchoolSeasonFormValues'), ", Optional.ofNullable(schoolSeason).map(SchoolSeason::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Duplicate the seasons")
 						.g("button");
 
@@ -480,7 +480,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "patchSchoolSeason($('#patchSchoolSeasonFormFilters'), $('#patchSchoolSeasonFormValues'), function() {}, function() {}); ")
+							.a("onclick", "patchSchoolSeason($('#patchSchoolSeasonFormFilters'), $('#patchSchoolSeasonFormValues'), ", Optional.ofNullable(schoolSeason).map(SchoolSeason::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modify the seasons")
 						.g("button");
 

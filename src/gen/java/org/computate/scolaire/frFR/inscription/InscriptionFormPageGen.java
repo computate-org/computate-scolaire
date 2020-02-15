@@ -229,8 +229,9 @@ public abstract class InscriptionFormPageGen<DEV> extends InscriptionFormGenPage
 
 	public void requeteApiInscriptionFormPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		InscriptionFormPage original = (InscriptionFormPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof InscriptionFormPage) {
+			InscriptionFormPage original = (InscriptionFormPage)o;
 			super.requeteApiInscriptionFormGenPage();
 		}
 	}

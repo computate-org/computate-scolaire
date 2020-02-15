@@ -492,7 +492,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "putMereScolaire($('#putMereScolaireFormulaireValeurs')); ")
+							.a("onclick", "putMereScolaire($('#putMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 							.f().sx("Dupliquer des mères")
 						.g("button");
 
@@ -524,7 +524,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 						} g("form");
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "patchMereScolaire($('#patchMereScolaireFormulaireFiltres'), $('#patchMereScolaireFormulaireValeurs'), function() {}, function() {}); ")
+							.a("onclick", "patchMereScolaire($('#patchMereScolaireFormulaireFiltres'), $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des mères")
 						.g("button");
 

@@ -143,6 +143,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
@@ -231,7 +232,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				.a("name", "setEnrollmentKeys")
 				.a("id", classApiMethodMethod, "_enrollmentKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolDadEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggestSchoolDadEnrollmentKeys')) : [{'name':'fq','value':'dadKeys:", pk, "'}], $('#listSchoolDadEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolDadEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolDadEnrollmentKeys')) : [{'name':'fq','value':'dadKeys:", pk, "'}], $('#listSchoolDadEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -240,7 +241,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadEnrollmentKeys").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadEnrollmentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/enrollment?fq=dadKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
@@ -507,6 +508,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « schoolKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> schoolKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> schoolKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("schoolKeys").o(schoolKeys);
@@ -592,6 +594,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « yearKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> yearKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> yearKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("yearKeys").o(yearKeys);
@@ -677,6 +680,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « seasonKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> seasonKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> seasonKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("seasonKeys").o(seasonKeys);
@@ -762,6 +766,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « sessionKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
@@ -847,6 +852,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « ageKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> ageKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> ageKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("ageKeys").o(ageKeys);
@@ -932,6 +938,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personFirstName;
 	@JsonIgnore
 	public Wrap<String> personFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("personFirstName").o(personFirstName);
@@ -1012,7 +1019,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonFirstName").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonFirstName").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personFirstName").a("class", "").f().sx("first name").g("label");
@@ -1047,6 +1054,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personFirstNamePreferred »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personFirstNamePreferred;
 	@JsonIgnore
 	public Wrap<String> personFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("personFirstNamePreferred").o(personFirstNamePreferred);
@@ -1127,7 +1135,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonFirstNamePreferred").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonFirstNamePreferred").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
@@ -1162,6 +1170,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « familyName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String familyName;
 	@JsonIgnore
 	public Wrap<String> familyNameWrap = new Wrap<String>().p(this).c(String.class).var("familyName").o(familyName);
@@ -1242,7 +1251,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadFamilyName").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadFamilyName").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_familyName").a("class", "").f().sx("last name").g("label");
@@ -1277,6 +1286,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personCompleteName;
 	@JsonIgnore
 	public Wrap<String> personCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("personCompleteName").o(personCompleteName);
@@ -1338,6 +1348,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personCompleteNamePreferred »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personCompleteNamePreferred;
 	@JsonIgnore
 	public Wrap<String> personCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("personCompleteNamePreferred").o(personCompleteNamePreferred);
@@ -1399,6 +1410,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personFormalName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personFormalName;
 	@JsonIgnore
 	public Wrap<String> personFormalNameWrap = new Wrap<String>().p(this).c(String.class).var("personFormalName").o(personFormalName);
@@ -1460,6 +1472,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personOccupation »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personOccupation;
 	@JsonIgnore
 	public Wrap<String> personOccupationWrap = new Wrap<String>().p(this).c(String.class).var("personOccupation").o(personOccupation);
@@ -1540,7 +1553,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonOccupation").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonOccupation").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personOccupation").a("class", "").f().sx("occupation").g("label");
@@ -1575,6 +1588,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personPhoneNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personPhoneNumber;
 	@JsonIgnore
 	public Wrap<String> personPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("personPhoneNumber").o(personPhoneNumber);
@@ -1655,7 +1669,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonPhoneNumber").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonPhoneNumber").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
@@ -1690,6 +1704,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personEmail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personEmail;
 	@JsonIgnore
 	public Wrap<String> personEmailWrap = new Wrap<String>().p(this).c(String.class).var("personEmail").o(personEmail);
@@ -1770,7 +1785,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonEmail").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonEmail").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personEmail").a("class", "").f().sx("email").g("label");
@@ -1805,6 +1820,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personRelation »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String personRelation;
 	@JsonIgnore
 	public Wrap<String> personRelationWrap = new Wrap<String>().p(this).c(String.class).var("personRelation").o(personRelation);
@@ -1866,6 +1882,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personSms »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean personSms;
 	@JsonIgnore
 	public Wrap<Boolean> personSmsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("personSms").o(personSms);
@@ -1964,7 +1981,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonSms").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonSms").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personSms").a("class", "").f().sx("text me").g("label");
@@ -1988,6 +2005,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personReceiveEmail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean personReceiveEmail;
 	@JsonIgnore
 	public Wrap<Boolean> personReceiveEmailWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("personReceiveEmail").o(personReceiveEmail);
@@ -2086,7 +2104,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonReceiveEmail").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonReceiveEmail").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personReceiveEmail").a("class", "").f().sx("receive email").g("label");
@@ -2110,6 +2128,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personEmergencyContact »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean personEmergencyContact;
 	@JsonIgnore
 	public Wrap<Boolean> personEmergencyContactWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("personEmergencyContact").o(personEmergencyContact);
@@ -2208,7 +2227,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonEmergencyContact").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonEmergencyContact").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personEmergencyContact").a("class", "").f().sx("contact in case of emergency").g("label");
@@ -2232,6 +2251,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « personPickup »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean personPickup;
 	@JsonIgnore
 	public Wrap<Boolean> personPickupWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("personPickup").o(personPickup);
@@ -2330,7 +2350,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolDadPersonPickup").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolDadPersonPickup").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-light-blue ").f();
 							e("label").a("for", classApiMethodMethod, "_personPickup").a("class", "").f().sx("authorized to pickup").g("label");
@@ -2354,6 +2374,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	/**	L'entité « dadCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String dadCompleteName;
 	@JsonIgnore
 	public Wrap<String> dadCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("dadCompleteName").o(dadCompleteName);
@@ -3200,8 +3221,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolDad() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolDad original = (SchoolDad)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (SchoolDad)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolDad) {
+			SchoolDad original = (SchoolDad)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
 				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(personFirstName, original.getPersonFirstName()))

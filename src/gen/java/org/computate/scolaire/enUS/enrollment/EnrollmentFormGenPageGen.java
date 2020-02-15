@@ -319,8 +319,9 @@ public abstract class EnrollmentFormGenPageGen<DEV> extends ClusterPage {
 
 	public void apiRequestEnrollmentFormGenPage() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		EnrollmentFormGenPage original = (EnrollmentFormGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof EnrollmentFormGenPage) {
+			EnrollmentFormGenPage original = (EnrollmentFormGenPage)o;
 			super.apiRequestClusterPage();
 		}
 	}

@@ -319,8 +319,9 @@ public abstract class InscriptionGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiInscriptionGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		InscriptionGenPage original = (InscriptionGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof InscriptionGenPage) {
+			InscriptionGenPage original = (InscriptionGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

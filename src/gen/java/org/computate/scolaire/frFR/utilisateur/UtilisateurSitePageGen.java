@@ -229,8 +229,9 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 
 	public void requeteApiUtilisateurSitePage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		UtilisateurSitePage original = (UtilisateurSitePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = (UtilisateurSitePage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof UtilisateurSitePage) {
+			UtilisateurSitePage original = (UtilisateurSitePage)o;
 			super.requeteApiUtilisateurSiteGenPage();
 		}
 	}

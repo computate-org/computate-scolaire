@@ -302,6 +302,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
@@ -1084,6 +1085,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « momKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> momKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> momKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("momKeys").o(momKeys);
@@ -1228,6 +1230,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « dadKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> dadKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> dadKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("dadKeys").o(dadKeys);
@@ -1372,6 +1375,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « guardianKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> guardianKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> guardianKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("guardianKeys").o(guardianKeys);
@@ -1516,6 +1520,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « paymentKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<Long> paymentKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> paymentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("paymentKeys").o(paymentKeys);
@@ -2469,6 +2474,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childFirstName;
 	@JsonIgnore
 	public Wrap<String> childFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("childFirstName").o(childFirstName);
@@ -2530,6 +2536,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childFirstNamePreferred »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childFirstNamePreferred;
 	@JsonIgnore
 	public Wrap<String> childFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("childFirstNamePreferred").o(childFirstNamePreferred);
@@ -2591,6 +2598,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childFamilyName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childFamilyName;
 	@JsonIgnore
 	public Wrap<String> childFamilyNameWrap = new Wrap<String>().p(this).c(String.class).var("childFamilyName").o(childFamilyName);
@@ -2652,6 +2660,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « momFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String momFirstName;
 	@JsonIgnore
 	public Wrap<String> momFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("momFirstName").o(momFirstName);
@@ -2713,6 +2722,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « momFirstNamePreferred »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String momFirstNamePreferred;
 	@JsonIgnore
 	public Wrap<String> momFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("momFirstNamePreferred").o(momFirstNamePreferred);
@@ -2774,6 +2784,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « dadFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String dadFirstName;
 	@JsonIgnore
 	public Wrap<String> dadFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("dadFirstName").o(dadFirstName);
@@ -2835,6 +2846,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « dadFirstNamePreferred »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String dadFirstNamePreferred;
 	@JsonIgnore
 	public Wrap<String> dadFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("dadFirstNamePreferred").o(dadFirstNamePreferred);
@@ -2896,6 +2908,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childCompleteName;
 	@JsonIgnore
 	public Wrap<String> childCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("childCompleteName").o(childCompleteName);
@@ -3011,6 +3024,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childCompleteNamePreferred »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childCompleteNamePreferred;
 	@JsonIgnore
 	public Wrap<String> childCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("childCompleteNamePreferred").o(childCompleteNamePreferred);
@@ -3249,6 +3263,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolName;
 	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
@@ -3310,6 +3325,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolCompleteName;
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
@@ -3371,6 +3387,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolLocation »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolLocation;
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
@@ -3432,6 +3449,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolAddress »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolAddress;
 	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
@@ -3547,6 +3565,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolPhoneNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolPhoneNumber;
 	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
@@ -3608,6 +3627,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « schoolAdministratorName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String schoolAdministratorName;
 	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
@@ -3883,6 +3903,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « seasonSummer »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean seasonSummer;
 	@JsonIgnore
 	public Wrap<Boolean> seasonSummerWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonSummer").o(seasonSummer);
@@ -3949,6 +3970,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « seasonWinter »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean seasonWinter;
 	@JsonIgnore
 	public Wrap<Boolean> seasonWinterWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonWinter").o(seasonWinter);
@@ -4094,6 +4116,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « seasonCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String seasonCompleteName;
 	@JsonIgnore
 	public Wrap<String> seasonCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonCompleteName").o(seasonCompleteName);
@@ -4311,6 +4334,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « ageCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String ageCompleteName;
 	@JsonIgnore
 	public Wrap<String> ageCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("ageCompleteName").o(ageCompleteName);
@@ -4729,6 +4753,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockSunday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockSunday;
 	@JsonIgnore
 	public Wrap<Boolean> blockSundayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockSunday").o(blockSunday);
@@ -4795,6 +4820,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockMonday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockMonday;
 	@JsonIgnore
 	public Wrap<Boolean> blockMondayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockMonday").o(blockMonday);
@@ -4861,6 +4887,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockTuesday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockTuesday;
 	@JsonIgnore
 	public Wrap<Boolean> blockTuesdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockTuesday").o(blockTuesday);
@@ -4927,6 +4954,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockWednesday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockWednesday;
 	@JsonIgnore
 	public Wrap<Boolean> blockWednesdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockWednesday").o(blockWednesday);
@@ -4993,6 +5021,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockThursday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockThursday;
 	@JsonIgnore
 	public Wrap<Boolean> blockThursdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockThursday").o(blockThursday);
@@ -5059,6 +5088,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockFriday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockFriday;
 	@JsonIgnore
 	public Wrap<Boolean> blockFridayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockFriday").o(blockFriday);
@@ -5125,6 +5155,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockSaturday »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean blockSaturday;
 	@JsonIgnore
 	public Wrap<Boolean> blockSaturdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockSaturday").o(blockSaturday);
@@ -5270,6 +5301,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockAdminName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String blockAdminName;
 	@JsonIgnore
 	public Wrap<String> blockAdminNameWrap = new Wrap<String>().p(this).c(String.class).var("blockAdminName").o(blockAdminName);
@@ -5331,6 +5363,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockShortName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String blockShortName;
 	@JsonIgnore
 	public Wrap<String> blockShortNameWrap = new Wrap<String>().p(this).c(String.class).var("blockShortName").o(blockShortName);
@@ -5392,6 +5425,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « blockCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String blockCompleteName;
 	@JsonIgnore
 	public Wrap<String> blockCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("blockCompleteName").o(blockCompleteName);
@@ -5453,6 +5487,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentApproved »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean enrollmentApproved;
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentApprovedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentApproved").o(enrollmentApproved);
@@ -5575,6 +5610,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentImmunizations »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean enrollmentImmunizations;
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentImmunizationsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentImmunizations").o(enrollmentImmunizations);
@@ -5697,6 +5733,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « familyMarried »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean familyMarried;
 	@JsonIgnore
 	public Wrap<Boolean> familyMarriedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familyMarried").o(familyMarried);
@@ -5819,6 +5856,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « familySeparated »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean familySeparated;
 	@JsonIgnore
 	public Wrap<Boolean> familySeparatedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familySeparated").o(familySeparated);
@@ -5941,6 +5979,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « familyDivorced »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean familyDivorced;
 	@JsonIgnore
 	public Wrap<Boolean> familyDivorcedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familyDivorced").o(familyDivorced);
@@ -6063,6 +6102,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « familyAddress »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String familyAddress;
 	@JsonIgnore
 	public Wrap<String> familyAddressWrap = new Wrap<String>().p(this).c(String.class).var("familyAddress").o(familyAddress);
@@ -6176,6 +6216,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « familyHowDoYouKnowTheSchool »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String familyHowDoYouKnowTheSchool;
 	@JsonIgnore
 	public Wrap<String> familyHowDoYouKnowTheSchoolWrap = new Wrap<String>().p(this).c(String.class).var("familyHowDoYouKnowTheSchool").o(familyHowDoYouKnowTheSchool);
@@ -6289,6 +6330,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSpecialConsiderations »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSpecialConsiderations;
 	@JsonIgnore
 	public Wrap<String> enrollmentSpecialConsiderationsWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSpecialConsiderations").o(enrollmentSpecialConsiderations);
@@ -6402,6 +6444,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childMedicalConditions »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childMedicalConditions;
 	@JsonIgnore
 	public Wrap<String> childMedicalConditionsWrap = new Wrap<String>().p(this).c(String.class).var("childMedicalConditions").o(childMedicalConditions);
@@ -6515,6 +6558,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childPreviousSchoolsAttended »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childPreviousSchoolsAttended;
 	@JsonIgnore
 	public Wrap<String> childPreviousSchoolsAttendedWrap = new Wrap<String>().p(this).c(String.class).var("childPreviousSchoolsAttended").o(childPreviousSchoolsAttended);
@@ -6628,6 +6672,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childDescription;
 	@JsonIgnore
 	public Wrap<String> childDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("childDescription").o(childDescription);
@@ -6741,6 +6786,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childObjectives »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childObjectives;
 	@JsonIgnore
 	public Wrap<String> childObjectivesWrap = new Wrap<String>().p(this).c(String.class).var("childObjectives").o(childObjectives);
@@ -6854,6 +6900,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childPottyTrained »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean childPottyTrained;
 	@JsonIgnore
 	public Wrap<Boolean> childPottyTrainedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("childPottyTrained").o(childPottyTrained);
@@ -6976,6 +7023,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentGroupName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentGroupName;
 	@JsonIgnore
 	public Wrap<String> enrollmentGroupNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentGroupName").o(enrollmentGroupName);
@@ -7091,6 +7139,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentPaymentEachMonth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean enrollmentPaymentEachMonth;
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentPaymentEachMonthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentEachMonth").o(enrollmentPaymentEachMonth);
@@ -7213,6 +7262,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentPaymentComplete »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected Boolean enrollmentPaymentComplete;
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentPaymentCompleteWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentComplete").o(enrollmentPaymentComplete);
@@ -7335,6 +7385,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentParentNames »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentParentNames;
 	@JsonIgnore
 	public Wrap<String> enrollmentParentNamesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentNames").o(enrollmentParentNames);
@@ -7446,6 +7497,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentParentNameLines »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentParentNameLines;
 	@JsonIgnore
 	public Wrap<String> enrollmentParentNameLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentNameLines").o(enrollmentParentNameLines);
@@ -7507,6 +7559,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentParentEmailLines »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentParentEmailLines;
 	@JsonIgnore
 	public Wrap<String> enrollmentParentEmailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentEmailLines").o(enrollmentParentEmailLines);
@@ -7568,6 +7621,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentParentDetailLines »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentParentDetailLines;
 	@JsonIgnore
 	public Wrap<String> enrollmentParentDetailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentDetailLines").o(enrollmentParentDetailLines);
@@ -7629,6 +7683,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentPickupDetailLines »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentPickupDetailLines;
 	@JsonIgnore
 	public Wrap<String> enrollmentPickupDetailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentPickupDetailLines").o(enrollmentPickupDetailLines);
@@ -7690,6 +7745,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentEmergencyContactDetailLines »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentEmergencyContactDetailLines;
 	@JsonIgnore
 	public Wrap<String> enrollmentEmergencyContactDetailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentEmergencyContactDetailLines").o(enrollmentEmergencyContactDetailLines);
@@ -7751,6 +7807,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature1;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature1Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature1").o(enrollmentSignature1);
@@ -7879,6 +7936,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature2;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature2Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature2").o(enrollmentSignature2);
@@ -8007,6 +8065,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature3;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature3Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature3").o(enrollmentSignature3);
@@ -8135,6 +8194,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature4 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature4;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature4Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature4").o(enrollmentSignature4);
@@ -8263,6 +8323,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature5 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature5;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature5Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature5").o(enrollmentSignature5);
@@ -8391,6 +8452,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature6 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature6;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature6Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature6").o(enrollmentSignature6);
@@ -8519,6 +8581,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature7 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature7;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature7Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature7").o(enrollmentSignature7);
@@ -8647,6 +8710,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature8 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature8;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature8Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature8").o(enrollmentSignature8);
@@ -8775,6 +8839,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature9 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature9;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature9Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature9").o(enrollmentSignature9);
@@ -8903,6 +8968,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentSignature10 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentSignature10;
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature10Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature10").o(enrollmentSignature10);
@@ -10231,6 +10297,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentEnrollments »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected List<SchoolEnrollment> enrollmentEnrollments = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentEnrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentEnrollments").o(enrollmentEnrollments);
@@ -10277,6 +10344,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childImmunizationsReceived »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childImmunizationsReceived;
 	@JsonIgnore
 	public Wrap<String> childImmunizationsReceivedWrap = new Wrap<String>().p(this).c(String.class).var("childImmunizationsReceived").o(childImmunizationsReceived);
@@ -10338,6 +10406,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « childPhotosApproved »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String childPhotosApproved;
 	@JsonIgnore
 	public Wrap<String> childPhotosApprovedWrap = new Wrap<String>().p(this).c(String.class).var("childPhotosApproved").o(childPhotosApproved);
@@ -10467,6 +10536,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	protected String enrollmentCompleteName;
 	@JsonIgnore
 	public Wrap<String> enrollmentCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentCompleteName").o(enrollmentCompleteName);
@@ -13023,8 +13093,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void apiRequestSchoolEnrollment() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SchoolEnrollment original = (SchoolEnrollment)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SchoolEnrollment) {
+			SchoolEnrollment original = (SchoolEnrollment)o;
 			if(!Objects.equals(yearKey, original.getYearKey()))
 				apiRequest.addVars("yearKey");
 			if(!Objects.equals(blockKeys, original.getBlockKeys()))

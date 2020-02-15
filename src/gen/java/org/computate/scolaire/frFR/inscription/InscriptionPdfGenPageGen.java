@@ -319,8 +319,9 @@ public abstract class InscriptionPdfGenPageGen<DEV> extends ClusterPage {
 
 	public void requeteApiInscriptionPdfGenPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		InscriptionPdfGenPage original = (InscriptionPdfGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof InscriptionPdfGenPage) {
+			InscriptionPdfGenPage original = (InscriptionPdfGenPage)o;
 			super.requeteApiClusterPage();
 		}
 	}

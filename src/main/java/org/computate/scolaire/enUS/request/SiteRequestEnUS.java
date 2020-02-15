@@ -2,23 +2,10 @@ package org.computate.scolaire.enUS.request;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -222,116 +209,5 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _requestHeaders(Wrap<CaseInsensitiveHeaders> c) {
-	}
-
-	protected void _encryptionPassword(Wrap<String> c) {
-		c.o(siteConfig_.getEncryptionPassword());
-	}
-
-	protected void _encryptionCipher(Wrap<Cipher> c) {
-		if(!StringUtils.isEmpty(encryptionPassword)) { 
-			try {
-				c.o(Cipher.getInstance("AES"));
-			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-	}
-
-	protected void _decryptionCipher(Wrap<Cipher> c) {
-		if(!StringUtils.isEmpty(encryptionPassword)) {
-			try {
-				c.o(Cipher.getInstance("AES"));
-			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-	}
-
-	protected void _encryptionMessageDigest(Wrap<MessageDigest> c) {    
-		if(!StringUtils.isEmpty(encryptionPassword)) {
-			try {
-				c.o(MessageDigest.getInstance("SHA-1"));
-			} catch (NoSuchAlgorithmException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-	}
-
-	protected void _encryptionKey(Wrap<byte[]> c) {
-		if(!StringUtils.isEmpty(encryptionPassword)) {
-			try {
-				c.o(Arrays.copyOf(encryptionMessageDigest.digest((encryptionPassword).getBytes("UTF-8")), 16));
-			} catch (UnsupportedEncodingException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-	}
-
-	protected void _secureRandom(SecureRandom o) {}
-
-	protected void _secretKeySpec(Wrap<SecretKeySpec> c) {
-		if(!StringUtils.isEmpty(encryptionPassword)) {
-			try {
-				SecretKeySpec o = new SecretKeySpec(encryptionKey, "AES");
-				encryptionCipher.init(Cipher.ENCRYPT_MODE, o);
-				decryptionCipher.init(Cipher.DECRYPT_MODE, o);
-				c.o(o);
-			} catch (InvalidKeyException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-	}
-
-	public byte[] encryptBytes(String o) {
-		byte[] bytesUnencrypted = o.getBytes();
-		byte[] bytesEncrypted = null;
-		try {
-			bytesEncrypted = encryptionCipher.doFinal(bytesUnencrypted);
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
-			ExceptionUtils.rethrow(e);
-		}
-		return bytesEncrypted;
-	}
-
-	public String decryptBytes(byte[] bytesEncrypted) {
-		String textUnencrypted = null;
-		try {
-			byte[] bytesUnencrypted = decryptionCipher.doFinal(bytesEncrypted);
-			textUnencrypted = new String(bytesUnencrypted);
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
-			ExceptionUtils.rethrow(e);
-		}
-		return textUnencrypted;
-	}
-
-	public String encryptStr(String o) {
-		String textEncrypted = null;     
-		if(encryptionCipher != null) {
-			byte[] bytesUnencrypted = o.getBytes();
-			try {
-				byte[] bytesEncrypted = encryptionCipher.doFinal(bytesUnencrypted);
-				Base64.Encoder encoder = Base64.getEncoder();
-				textEncrypted = encoder.encodeToString(bytesEncrypted);
-			} catch (IllegalBlockSizeException | BadPaddingException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-		return textEncrypted;
-	}
-
-	public String decryptStr(String o) {
-		String textUnencrypted = null;
-		if(o != null && decryptionCipher != null) {
-			Base64.Decoder decoder = Base64.getDecoder();
-			try {
-				byte[] bytesEncrypted = decoder.decode(o);
-				byte[] bytesUnencrypted = decryptionCipher.doFinal(bytesEncrypted);
-				textUnencrypted = new String(bytesUnencrypted);
-			} catch (IllegalBlockSizeException | BadPaddingException e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-		return textUnencrypted;
 	}
 }
