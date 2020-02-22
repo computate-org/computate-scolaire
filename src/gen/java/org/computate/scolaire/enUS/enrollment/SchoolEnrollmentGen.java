@@ -7378,6 +7378,455 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////
+	// customerProfileId //
+	///////////////////////
+
+	/**	L'entité « customerProfileId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String customerProfileId;
+	@JsonIgnore
+	public Wrap<String> customerProfileIdWrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+
+	/**	<br/>L'entité « customerProfileId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId(Wrap<String> c);
+
+	public String getCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public void setCustomerProfileId(String customerProfileId) {
+		this.customerProfileId = customerProfileId;
+		this.customerProfileIdWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment customerProfileIdInit() {
+		if(!customerProfileIdWrap.alreadyInitialized) {
+			_customerProfileId(customerProfileIdWrap);
+			if(customerProfileId == null)
+				setCustomerProfileId(customerProfileIdWrap.o);
+		}
+		customerProfileIdWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public String strCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String jsonCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String nomAffichageCustomerProfileId() {
+		return "customer profile ID";
+	}
+
+	public String htmTooltipCustomerProfileId() {
+		return null;
+	}
+
+	public String htmCustomerProfileId() {
+		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	}
+
+	public void inputCustomerProfileId(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "customer profile ID")
+			.a("id", classApiMethodMethod, "_customerProfileId");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setCustomerProfileId inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "setCustomerProfileId");
+			} else {
+				a("class", "valueCustomerProfileId w3-input w3-border inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "customerProfileId");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
+			}
+			a("value", strCustomerProfileId())
+		.fg();
+
+	}
+
+	public void htmCustomerProfileId(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentCustomerProfileId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classApiMethodMethod, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// createdYear //
+	/////////////////
+
+	/**	L'entité « createdYear »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	protected Integer createdYear;
+	@JsonIgnore
+	public Wrap<Integer> createdYearWrap = new Wrap<Integer>().p(this).c(Integer.class).var("createdYear").o(createdYear);
+
+	/**	<br/>L'entité « createdYear »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdYear">Trouver l'entité createdYear dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _createdYear(Wrap<Integer> c);
+
+	public Integer getCreatedYear() {
+		return createdYear;
+	}
+
+	public void setCreatedYear(Integer createdYear) {
+		this.createdYear = createdYear;
+		this.createdYearWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setCreatedYear(String o) {
+		if(NumberUtils.isParsable(o))
+			this.createdYear = Integer.parseInt(o);
+		this.createdYearWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment createdYearInit() {
+		if(!createdYearWrap.alreadyInitialized) {
+			_createdYear(createdYearWrap);
+			if(createdYear == null)
+				setCreatedYear(createdYearWrap.o);
+		}
+		createdYearWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Integer solrCreatedYear() {
+		return createdYear;
+	}
+
+	public String strCreatedYear() {
+		return createdYear == null ? "" : createdYear.toString();
+	}
+
+	public String jsonCreatedYear() {
+		return createdYear == null ? "" : createdYear.toString();
+	}
+
+	public String nomAffichageCreatedYear() {
+		return "created year";
+	}
+
+	public String htmTooltipCreatedYear() {
+		return null;
+	}
+
+	public String htmCreatedYear() {
+		return createdYear == null ? "" : StringEscapeUtils.escapeHtml4(strCreatedYear());
+	}
+
+	//////////////////////
+	// createdDayOfWeek //
+	//////////////////////
+
+	/**	L'entité « createdDayOfWeek »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String createdDayOfWeek;
+	@JsonIgnore
+	public Wrap<String> createdDayOfWeekWrap = new Wrap<String>().p(this).c(String.class).var("createdDayOfWeek").o(createdDayOfWeek);
+
+	/**	<br/>L'entité « createdDayOfWeek »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdDayOfWeek">Trouver l'entité createdDayOfWeek dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _createdDayOfWeek(Wrap<String> c);
+
+	public String getCreatedDayOfWeek() {
+		return createdDayOfWeek;
+	}
+
+	public void setCreatedDayOfWeek(String createdDayOfWeek) {
+		this.createdDayOfWeek = createdDayOfWeek;
+		this.createdDayOfWeekWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment createdDayOfWeekInit() {
+		if(!createdDayOfWeekWrap.alreadyInitialized) {
+			_createdDayOfWeek(createdDayOfWeekWrap);
+			if(createdDayOfWeek == null)
+				setCreatedDayOfWeek(createdDayOfWeekWrap.o);
+		}
+		createdDayOfWeekWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrCreatedDayOfWeek() {
+		return createdDayOfWeek;
+	}
+
+	public String strCreatedDayOfWeek() {
+		return createdDayOfWeek == null ? "" : createdDayOfWeek;
+	}
+
+	public String jsonCreatedDayOfWeek() {
+		return createdDayOfWeek == null ? "" : createdDayOfWeek;
+	}
+
+	public String nomAffichageCreatedDayOfWeek() {
+		return "created day of the week";
+	}
+
+	public String htmTooltipCreatedDayOfWeek() {
+		return null;
+	}
+
+	public String htmCreatedDayOfWeek() {
+		return createdDayOfWeek == null ? "" : StringEscapeUtils.escapeHtml4(strCreatedDayOfWeek());
+	}
+
+	////////////////////////
+	// createdMonthOfYear //
+	////////////////////////
+
+	/**	L'entité « createdMonthOfYear »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String createdMonthOfYear;
+	@JsonIgnore
+	public Wrap<String> createdMonthOfYearWrap = new Wrap<String>().p(this).c(String.class).var("createdMonthOfYear").o(createdMonthOfYear);
+
+	/**	<br/>L'entité « createdMonthOfYear »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdMonthOfYear">Trouver l'entité createdMonthOfYear dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _createdMonthOfYear(Wrap<String> c);
+
+	public String getCreatedMonthOfYear() {
+		return createdMonthOfYear;
+	}
+
+	public void setCreatedMonthOfYear(String createdMonthOfYear) {
+		this.createdMonthOfYear = createdMonthOfYear;
+		this.createdMonthOfYearWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment createdMonthOfYearInit() {
+		if(!createdMonthOfYearWrap.alreadyInitialized) {
+			_createdMonthOfYear(createdMonthOfYearWrap);
+			if(createdMonthOfYear == null)
+				setCreatedMonthOfYear(createdMonthOfYearWrap.o);
+		}
+		createdMonthOfYearWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrCreatedMonthOfYear() {
+		return createdMonthOfYear;
+	}
+
+	public String strCreatedMonthOfYear() {
+		return createdMonthOfYear == null ? "" : createdMonthOfYear;
+	}
+
+	public String jsonCreatedMonthOfYear() {
+		return createdMonthOfYear == null ? "" : createdMonthOfYear;
+	}
+
+	public String nomAffichageCreatedMonthOfYear() {
+		return "created month of the year";
+	}
+
+	public String htmTooltipCreatedMonthOfYear() {
+		return null;
+	}
+
+	public String htmCreatedMonthOfYear() {
+		return createdMonthOfYear == null ? "" : StringEscapeUtils.escapeHtml4(strCreatedMonthOfYear());
+	}
+
+	//////////////////////
+	// createdHourOfDay //
+	//////////////////////
+
+	/**	L'entité « createdHourOfDay »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String createdHourOfDay;
+	@JsonIgnore
+	public Wrap<String> createdHourOfDayWrap = new Wrap<String>().p(this).c(String.class).var("createdHourOfDay").o(createdHourOfDay);
+
+	/**	<br/>L'entité « createdHourOfDay »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdHourOfDay">Trouver l'entité createdHourOfDay dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _createdHourOfDay(Wrap<String> c);
+
+	public String getCreatedHourOfDay() {
+		return createdHourOfDay;
+	}
+
+	public void setCreatedHourOfDay(String createdHourOfDay) {
+		this.createdHourOfDay = createdHourOfDay;
+		this.createdHourOfDayWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment createdHourOfDayInit() {
+		if(!createdHourOfDayWrap.alreadyInitialized) {
+			_createdHourOfDay(createdHourOfDayWrap);
+			if(createdHourOfDay == null)
+				setCreatedHourOfDay(createdHourOfDayWrap.o);
+		}
+		createdHourOfDayWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrCreatedHourOfDay() {
+		return createdHourOfDay;
+	}
+
+	public String strCreatedHourOfDay() {
+		return createdHourOfDay == null ? "" : createdHourOfDay;
+	}
+
+	public String jsonCreatedHourOfDay() {
+		return createdHourOfDay == null ? "" : createdHourOfDay;
+	}
+
+	public String nomAffichageCreatedHourOfDay() {
+		return "hour of day";
+	}
+
+	public String htmTooltipCreatedHourOfDay() {
+		return null;
+	}
+
+	public String htmCreatedHourOfDay() {
+		return createdHourOfDay == null ? "" : StringEscapeUtils.escapeHtml4(strCreatedHourOfDay());
+	}
+
+	//////////////////////////
+	// enrollmentDaysOfWeek //
+	//////////////////////////
+
+	/**	L'entité « enrollmentDaysOfWeek »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected List<String> enrollmentDaysOfWeek = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Wrap<List<String>> enrollmentDaysOfWeekWrap = new Wrap<List<String>>().p(this).c(List.class).var("enrollmentDaysOfWeek").o(enrollmentDaysOfWeek);
+
+	/**	<br/>L'entité « enrollmentDaysOfWeek »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDaysOfWeek">Trouver l'entité enrollmentDaysOfWeek dans Solr</a>
+	 * <br/>
+	 * @param enrollmentDaysOfWeek est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentDaysOfWeek(List<String> l);
+
+	public List<String> getEnrollmentDaysOfWeek() {
+		return enrollmentDaysOfWeek;
+	}
+
+	public void setEnrollmentDaysOfWeek(List<String> enrollmentDaysOfWeek) {
+		this.enrollmentDaysOfWeek = enrollmentDaysOfWeek;
+		this.enrollmentDaysOfWeekWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addEnrollmentDaysOfWeek(String...objets) {
+		for(String o : objets) {
+			addEnrollmentDaysOfWeek(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addEnrollmentDaysOfWeek(String o) {
+		if(o != null && !enrollmentDaysOfWeek.contains(o))
+			this.enrollmentDaysOfWeek.add(o);
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setEnrollmentDaysOfWeek(JsonArray objets) {
+		enrollmentDaysOfWeek.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addEnrollmentDaysOfWeek(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentDaysOfWeekInit() {
+		if(!enrollmentDaysOfWeekWrap.alreadyInitialized) {
+			_enrollmentDaysOfWeek(enrollmentDaysOfWeek);
+		}
+		enrollmentDaysOfWeekWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public List<String> solrEnrollmentDaysOfWeek() {
+		return enrollmentDaysOfWeek;
+	}
+
+	public String strEnrollmentDaysOfWeek() {
+		return enrollmentDaysOfWeek == null ? "" : enrollmentDaysOfWeek.toString();
+	}
+
+	public String jsonEnrollmentDaysOfWeek() {
+		return enrollmentDaysOfWeek == null ? "" : enrollmentDaysOfWeek.toString();
+	}
+
+	public String nomAffichageEnrollmentDaysOfWeek() {
+		return "days of the week";
+	}
+
+	public String htmTooltipEnrollmentDaysOfWeek() {
+		return null;
+	}
+
+	public String htmEnrollmentDaysOfWeek() {
+		return enrollmentDaysOfWeek == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentDaysOfWeek());
+	}
+
 	///////////////////////////
 	// enrollmentParentNames //
 	///////////////////////////
@@ -10704,6 +11153,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		enrollmentGroupNameInit();
 		enrollmentPaymentEachMonthInit();
 		enrollmentPaymentCompleteInit();
+		customerProfileIdInit();
+		createdYearInit();
+		createdDayOfWeekInit();
+		createdMonthOfYearInit();
+		createdHourOfDayInit();
+		enrollmentDaysOfWeekInit();
 		enrollmentParentNamesInit();
 		enrollmentParentNameLinesInit();
 		enrollmentParentEmailLinesInit();
@@ -10969,6 +11424,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentPaymentEachMonth;
 			case "enrollmentPaymentComplete":
 				return oSchoolEnrollment.enrollmentPaymentComplete;
+			case "customerProfileId":
+				return oSchoolEnrollment.customerProfileId;
+			case "createdYear":
+				return oSchoolEnrollment.createdYear;
+			case "createdDayOfWeek":
+				return oSchoolEnrollment.createdDayOfWeek;
+			case "createdMonthOfYear":
+				return oSchoolEnrollment.createdMonthOfYear;
+			case "createdHourOfDay":
+				return oSchoolEnrollment.createdHourOfDay;
+			case "enrollmentDaysOfWeek":
+				return oSchoolEnrollment.enrollmentDaysOfWeek;
 			case "enrollmentParentNames":
 				return oSchoolEnrollment.enrollmentParentNames;
 			case "enrollmentParentNameLines":
@@ -11181,6 +11648,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return val;
 			case "enrollmentPaymentComplete":
 				setEnrollmentPaymentComplete(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "customerProfileId":
+				setCustomerProfileId(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentParentNames":
@@ -11742,6 +12213,42 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
 				if(enrollmentPaymentComplete != null)
 					oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
+			}
+
+			if(savesSchoolEnrollment.contains("customerProfileId")) {
+				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+				if(customerProfileId != null)
+					oSchoolEnrollment.setCustomerProfileId(customerProfileId);
+			}
+
+			if(savesSchoolEnrollment.contains("createdYear")) {
+				Integer createdYear = (Integer)solrDocument.get("createdYear_stored_int");
+				if(createdYear != null)
+					oSchoolEnrollment.setCreatedYear(createdYear);
+			}
+
+			if(savesSchoolEnrollment.contains("createdDayOfWeek")) {
+				String createdDayOfWeek = (String)solrDocument.get("createdDayOfWeek_stored_string");
+				if(createdDayOfWeek != null)
+					oSchoolEnrollment.setCreatedDayOfWeek(createdDayOfWeek);
+			}
+
+			if(savesSchoolEnrollment.contains("createdMonthOfYear")) {
+				String createdMonthOfYear = (String)solrDocument.get("createdMonthOfYear_stored_string");
+				if(createdMonthOfYear != null)
+					oSchoolEnrollment.setCreatedMonthOfYear(createdMonthOfYear);
+			}
+
+			if(savesSchoolEnrollment.contains("createdHourOfDay")) {
+				String createdHourOfDay = (String)solrDocument.get("createdHourOfDay_stored_string");
+				if(createdHourOfDay != null)
+					oSchoolEnrollment.setCreatedHourOfDay(createdHourOfDay);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentDaysOfWeek")) {
+				List<String> enrollmentDaysOfWeek = (List<String>)solrDocument.get("enrollmentDaysOfWeek_stored_strings");
+				if(enrollmentDaysOfWeek != null)
+					oSchoolEnrollment.enrollmentDaysOfWeek.addAll(enrollmentDaysOfWeek);
 			}
 
 			if(savesSchoolEnrollment.contains("enrollmentParentNames")) {
@@ -12319,6 +12826,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentPaymentComplete_indexed_boolean", enrollmentPaymentComplete);
 			document.addField("enrollmentPaymentComplete_stored_boolean", enrollmentPaymentComplete);
 		}
+		if(customerProfileId != null) {
+			document.addField("customerProfileId_indexed_string", customerProfileId);
+			document.addField("customerProfileId_stored_string", customerProfileId);
+		}
+		if(createdYear != null) {
+			document.addField("createdYear_indexed_int", createdYear);
+			document.addField("createdYear_stored_int", createdYear);
+		}
+		if(createdDayOfWeek != null) {
+			document.addField("createdDayOfWeek_indexed_string", createdDayOfWeek);
+			document.addField("createdDayOfWeek_stored_string", createdDayOfWeek);
+		}
+		if(createdMonthOfYear != null) {
+			document.addField("createdMonthOfYear_indexed_string", createdMonthOfYear);
+			document.addField("createdMonthOfYear_stored_string", createdMonthOfYear);
+		}
+		if(createdHourOfDay != null) {
+			document.addField("createdHourOfDay_indexed_string", createdHourOfDay);
+			document.addField("createdHourOfDay_stored_string", createdHourOfDay);
+		}
+		if(enrollmentDaysOfWeek != null) {
+			for(java.lang.String o : enrollmentDaysOfWeek) {
+				document.addField("enrollmentDaysOfWeek_indexed_strings", o);
+			}
+			for(java.lang.String o : enrollmentDaysOfWeek) {
+				document.addField("enrollmentDaysOfWeek_stored_strings", o);
+			}
+		}
 		if(enrollmentParentNames != null) {
 			document.addField("enrollmentParentNames_indexed_string", enrollmentParentNames);
 			document.addField("enrollmentParentNames_stored_string", enrollmentParentNames);
@@ -12599,6 +13134,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "enrollmentPaymentEachMonth_indexed_boolean";
 			case "enrollmentPaymentComplete":
 				return "enrollmentPaymentComplete_indexed_boolean";
+			case "customerProfileId":
+				return "customerProfileId_indexed_string";
+			case "createdYear":
+				return "createdYear_indexed_int";
+			case "createdDayOfWeek":
+				return "createdDayOfWeek_indexed_string";
+			case "createdMonthOfYear":
+				return "createdMonthOfYear_indexed_string";
+			case "createdHourOfDay":
+				return "createdHourOfDay_indexed_string";
+			case "enrollmentDaysOfWeek":
+				return "enrollmentDaysOfWeek_indexed_strings";
 			case "enrollmentParentNames":
 				return "enrollmentParentNames_indexed_string";
 			case "enrollmentDate1":
@@ -12968,6 +13515,30 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentPaymentComplete != null)
 			oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 
+		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+		if(customerProfileId != null)
+			oSchoolEnrollment.setCustomerProfileId(customerProfileId);
+
+		Integer createdYear = (Integer)solrDocument.get("createdYear_stored_int");
+		if(createdYear != null)
+			oSchoolEnrollment.setCreatedYear(createdYear);
+
+		String createdDayOfWeek = (String)solrDocument.get("createdDayOfWeek_stored_string");
+		if(createdDayOfWeek != null)
+			oSchoolEnrollment.setCreatedDayOfWeek(createdDayOfWeek);
+
+		String createdMonthOfYear = (String)solrDocument.get("createdMonthOfYear_stored_string");
+		if(createdMonthOfYear != null)
+			oSchoolEnrollment.setCreatedMonthOfYear(createdMonthOfYear);
+
+		String createdHourOfDay = (String)solrDocument.get("createdHourOfDay_stored_string");
+		if(createdHourOfDay != null)
+			oSchoolEnrollment.setCreatedHourOfDay(createdHourOfDay);
+
+		List<String> enrollmentDaysOfWeek = (List<String>)solrDocument.get("enrollmentDaysOfWeek_stored_strings");
+		if(enrollmentDaysOfWeek != null)
+			oSchoolEnrollment.enrollmentDaysOfWeek.addAll(enrollmentDaysOfWeek);
+
 		String enrollmentParentNames = (String)solrDocument.get("enrollmentParentNames_stored_string");
 		if(enrollmentParentNames != null)
 			oSchoolEnrollment.setEnrollmentParentNames(enrollmentParentNames);
@@ -13150,6 +13721,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("enrollmentPaymentEachMonth");
 			if(!Objects.equals(enrollmentPaymentComplete, original.getEnrollmentPaymentComplete()))
 				apiRequest.addVars("enrollmentPaymentComplete");
+			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
+				apiRequest.addVars("customerProfileId");
 			if(!Objects.equals(enrollmentParentNames, original.getEnrollmentParentNames()))
 				apiRequest.addVars("enrollmentParentNames");
 			if(!Objects.equals(enrollmentSignature1, original.getEnrollmentSignature1()))
@@ -13201,7 +13774,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
+		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
 	}
 
 	////////////
@@ -13242,6 +13815,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( enrollmentGroupName, that.enrollmentGroupName )
 				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
 				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete )
+				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( enrollmentParentNames, that.enrollmentParentNames )
 				&& Objects.equals( enrollmentSignature1, that.enrollmentSignature1 )
 				&& Objects.equals( enrollmentSignature2, that.enrollmentSignature2 )
@@ -13300,6 +13874,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", enrollmentGroupName: \"" ).append(enrollmentGroupName).append( "\"" );
 		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
 		sb.append( ", enrollmentPaymentComplete: " ).append(enrollmentPaymentComplete);
+		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", enrollmentParentNames: \"" ).append(enrollmentParentNames).append( "\"" );
 		sb.append( ", enrollmentSignature1: \"" ).append(enrollmentSignature1).append( "\"" );
 		sb.append( ", enrollmentSignature2: \"" ).append(enrollmentSignature2).append( "\"" );

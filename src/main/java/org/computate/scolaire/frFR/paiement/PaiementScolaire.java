@@ -53,7 +53,10 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/              
+ * 
+ * Tri.desc: paiementDate
+ * Tri.desc: paiementPar
+*/       
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
@@ -294,7 +297,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 * NomAffichage.frFR: montant
 	 * NomAffichage.enUS: amount
-	 */                     
+	 */                    
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
 	}
 
@@ -397,6 +400,35 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.enUS: transaction status
 	 */                  
 	protected void _transactionStatus(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: paymentDue
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: paiement dû
+	 * NomAffichage.enUS: payment due
+	 */                  
+	protected void _paiementDu(Couverture<LocalDate> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: paymentRecieved
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 2
+	 * NomAffichage.frFR: paiement dû
+	 * NomAffichage.enUS: payment due
+	 */                  
+	protected void _paiementRecu(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**    

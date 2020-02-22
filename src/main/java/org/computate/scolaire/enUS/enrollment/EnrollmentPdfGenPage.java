@@ -219,6 +219,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentApproved("Page");
 			o.htmEnrollmentImmunizations("Page");
 			o.htmEnrollmentGroupName("Page");
+			o.htmCustomerProfileId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentPaymentComplete("Page");
@@ -272,6 +273,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentApproved("POST");
 			o.htmEnrollmentImmunizations("POST");
 			o.htmEnrollmentGroupName("POST");
+			o.htmCustomerProfileId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentPaymentComplete("POST");
@@ -323,6 +325,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentApproved("PUT");
 			o.htmEnrollmentImmunizations("PUT");
 			o.htmEnrollmentGroupName("PUT");
+			o.htmCustomerProfileId("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentPaymentComplete("PUT");
@@ -401,6 +404,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentApproved("PATCH");
 			o.htmEnrollmentImmunizations("PATCH");
 			o.htmEnrollmentGroupName("PATCH");
+			o.htmCustomerProfileId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentPaymentComplete("PATCH");
@@ -481,6 +485,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentApproved("Recherche");
 			o.htmEnrollmentImmunizations("Recherche");
 			o.htmEnrollmentGroupName("Recherche");
+			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentPaymentComplete("Recherche");

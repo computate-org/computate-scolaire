@@ -133,7 +133,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDu("Page");
 			o.htmInscriptionCles("Page");
+			o.htmPaiementRecu("Page");
 		} g("div");
 	}
 
@@ -165,7 +167,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDu("POST");
 			o.htmInscriptionCles("POST");
+			o.htmPaiementRecu("POST");
 		} g("div");
 	}
 
@@ -195,7 +199,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDu("PUT");
 			o.htmInscriptionCles("PUT");
+			o.htmPaiementRecu("PUT");
 		} g("div");
 	}
 
@@ -225,7 +231,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDu("PATCH");
 			o.htmInscriptionCles("PATCH");
+			o.htmPaiementRecu("PATCH");
 		} g("div");
 	}
 
@@ -257,7 +265,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPaiementDu("Recherche");
 			o.htmInscriptionCles("Recherche");
+			o.htmPaiementRecu("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");

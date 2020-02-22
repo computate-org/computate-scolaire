@@ -317,6 +317,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "customerProfileId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
+						break;
 					case "inscriptionNomsParents":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionNomsParents", jsonObject.getString(entiteVar), pk));
@@ -764,6 +768,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "inscriptionPaimentComplet":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "customerProfileId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
 						break;
 					case "inscriptionNomsParents":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -1435,6 +1443,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setInscriptionPaimentComplet(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
+						}
+						break;
+					case "setCustomerProfileId":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+						} else {
+							o2.setCustomerProfileId(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
 						}
 						break;
 					case "setInscriptionNomsParents":

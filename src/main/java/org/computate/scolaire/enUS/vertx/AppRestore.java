@@ -46,7 +46,7 @@ public class AppRestore extends AbstractVerticle {
 	Base64.Decoder decoder;
 	Cipher cipher;
 
-	Boolean scramble = false;
+	Boolean scramble = true;
 
 	public static void main(String[] args) {
 
@@ -337,8 +337,9 @@ public class AppRestore extends AbstractVerticle {
 				System.err.println(o);
 //				e1.printStackTrace();
 			}
-			if(scramble && StringUtils.equalsAny(path, "personFirstName", "personEmail", "childMedicalConditions", "childPreviousSchoolsAttended", "childDescription", "childObjectives"))
-				value = getScrambledWord(value);
+			if(scramble && StringUtils.equalsAny(path, "personEmail", "childMedicalConditions", "childPreviousSchoolsAttended", "childDescription", "childObjectives"))
+//				value = getScrambledWord(value);
+				value = "";
 			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate", "enrollmentDate1", "enrollmentDate2", "enrollmentDate3", "enrollmentDate4", "enrollmentDate5", "enrollmentDate6", "enrollmentDate7", "enrollmentDate8", "enrollmentDate9", "enrollmentDate10")) {
 				try {
 					value = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US).format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).parse(value));
@@ -356,6 +357,7 @@ public class AppRestore extends AbstractVerticle {
 				}
 			}
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			if(scramble && StringUtils.equals(path, "personFirstName"))
 			sqlConnection.queryWithParams(
 					"update d set modified=now(), value=?, current=true where pk=?;"
 					, new JsonArray(Arrays.asList(value, pk))

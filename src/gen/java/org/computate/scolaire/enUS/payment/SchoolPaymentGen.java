@@ -2514,6 +2514,252 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////
+	// paymentDue //
+	////////////////
+
+	/**	L'entité « paymentDue »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	protected LocalDate paymentDue;
+	@JsonIgnore
+	public Wrap<LocalDate> paymentDueWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("paymentDue").o(paymentDue);
+
+	/**	<br/>L'entité « paymentDue »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentDue">Trouver l'entité paymentDue dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paymentDue(Wrap<LocalDate> c);
+
+	public LocalDate getPaymentDue() {
+		return paymentDue;
+	}
+
+	public void setPaymentDue(LocalDate paymentDue) {
+		this.paymentDue = paymentDue;
+		this.paymentDueWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setPaymentDue(Instant o) {
+		this.paymentDue = LocalDate.from(o);
+		this.paymentDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SchoolPayment setPaymentDue(String o) {
+		this.paymentDue = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.paymentDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setPaymentDue(Date o) {
+		this.paymentDue = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.paymentDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment paymentDueInit() {
+		if(!paymentDueWrap.alreadyInitialized) {
+			_paymentDue(paymentDueWrap);
+			if(paymentDue == null)
+				setPaymentDue(paymentDueWrap.o);
+		}
+		paymentDueWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Date solrPaymentDue() {
+		return paymentDue == null ? null : Date.from(paymentDue.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strPaymentDue() {
+		return paymentDue == null ? "" : paymentDue.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	}
+
+	public String jsonPaymentDue() {
+		return paymentDue == null ? "" : paymentDue.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	}
+
+	public String nomAffichagePaymentDue() {
+		return "payment due";
+	}
+
+	public String htmTooltipPaymentDue() {
+		return null;
+	}
+
+	public String htmPaymentDue() {
+		return paymentDue == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentDue());
+	}
+
+	public void inputPaymentDue(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("input")
+			.a("type", "text")
+			.a("class", "w3-input w3-border datepicker setPaymentDue inputSchoolPayment", pk, "PaymentDue w3-input w3-border ")
+			.a("placeholder", "MM/DD/YYYY")
+			.a("data-timeformat", "MM/DD/YYYY")
+			.a("id", classApiMethodMethod, "_paymentDue")
+			.a("onclick", "removeGlow($(this)); ")
+			.a("value", paymentDue == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(paymentDue))
+			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDue', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDue')); }, function() { addError($('#", classApiMethodMethod, "_paymentDue')); }); } ")
+			.fg();
+	}
+
+	public void htmPaymentDue(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentDue").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_paymentDue").a("class", "").f().sx("payment due").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputPaymentDue(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_paymentDue')); $('#", classApiMethodMethod, "_paymentDue').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setPaymentDue', null, function() { addGlow($('#", classApiMethodMethod, "_paymentDue')); }, function() { addError($('#", classApiMethodMethod, "_paymentDue')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////
+	// paymentRecieved //
+	/////////////////////
+
+	/**	L'entité « paymentRecieved »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected Boolean paymentRecieved;
+	@JsonIgnore
+	public Wrap<Boolean> paymentRecievedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("paymentRecieved").o(paymentRecieved);
+
+	/**	<br/>L'entité « paymentRecieved »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentRecieved">Trouver l'entité paymentRecieved dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paymentRecieved(Wrap<Boolean> c);
+
+	public Boolean getPaymentRecieved() {
+		return paymentRecieved;
+	}
+
+	public void setPaymentRecieved(Boolean paymentRecieved) {
+		this.paymentRecieved = paymentRecieved;
+		this.paymentRecievedWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setPaymentRecieved(String o) {
+		this.paymentRecieved = Boolean.parseBoolean(o);
+		this.paymentRecievedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment paymentRecievedInit() {
+		if(!paymentRecievedWrap.alreadyInitialized) {
+			_paymentRecieved(paymentRecievedWrap);
+			if(paymentRecieved == null)
+				setPaymentRecieved(paymentRecievedWrap.o);
+		}
+		paymentRecievedWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Boolean solrPaymentRecieved() {
+		return paymentRecieved;
+	}
+
+	public String strPaymentRecieved() {
+		return paymentRecieved == null ? "" : paymentRecieved.toString();
+	}
+
+	public String jsonPaymentRecieved() {
+		return paymentRecieved == null ? "" : paymentRecieved.toString();
+	}
+
+	public String nomAffichagePaymentRecieved() {
+		return "payment due";
+	}
+
+	public String htmTooltipPaymentRecieved() {
+		return null;
+	}
+
+	public String htmPaymentRecieved() {
+		return paymentRecieved == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentRecieved());
+	}
+
+	public void inputPaymentRecieved(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if("Page".equals(classApiMethodMethod)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classApiMethodMethod, "_paymentRecieved")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classApiMethodMethod, "_paymentRecieved");
+		}
+		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+			a("class", "setPaymentRecieved inputSchoolPayment", pk, "PaymentRecieved w3-input w3-border ");
+			a("name", "setPaymentRecieved");
+		} else {
+			a("class", "valuePaymentRecieved inputSchoolPayment", pk, "PaymentRecieved w3-input w3-border ");
+			a("name", "paymentRecieved");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentRecieved', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentRecieved')); }, function() { addError($('#", classApiMethodMethod, "_paymentRecieved')); }); ");
+		}
+		if("Page".equals(classApiMethodMethod)) {
+			if(getPaymentRecieved() != null && getPaymentRecieved())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmPaymentRecieved(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentRecieved").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_paymentRecieved").a("class", "").f().sx("payment due").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaymentRecieved(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////////////
 	// paymentCompleteName //
 	/////////////////////////
@@ -2622,6 +2868,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		transactionIdInit();
 		customerProfileIdInit();
 		transactionStatusInit();
+		paymentDueInit();
+		paymentRecievedInit();
 		paymentCompleteNameInit();
 	}
 
@@ -2713,6 +2961,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.customerProfileId;
 			case "transactionStatus":
 				return oSchoolPayment.transactionStatus;
+			case "paymentDue":
+				return oSchoolPayment.paymentDue;
+			case "paymentRecieved":
+				return oSchoolPayment.paymentRecieved;
 			case "paymentCompleteName":
 				return oSchoolPayment.paymentCompleteName;
 			default:
@@ -2807,6 +3059,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return val;
 			case "transactionStatus":
 				setTransactionStatus(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentDue":
+				setPaymentDue(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentRecieved":
+				setPaymentRecieved(val);
 				savesSchoolPayment.add(var);
 				return val;
 			default:
@@ -2960,6 +3220,18 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
 				if(transactionStatus != null)
 					oSchoolPayment.setTransactionStatus(transactionStatus);
+			}
+
+			if(savesSchoolPayment.contains("paymentDue")) {
+				Date paymentDue = (Date)solrDocument.get("paymentDue_stored_date");
+				if(paymentDue != null)
+					oSchoolPayment.setPaymentDue(paymentDue);
+			}
+
+			if(savesSchoolPayment.contains("paymentRecieved")) {
+				Boolean paymentRecieved = (Boolean)solrDocument.get("paymentRecieved_stored_boolean");
+				if(paymentRecieved != null)
+					oSchoolPayment.setPaymentRecieved(paymentRecieved);
 			}
 
 			if(savesSchoolPayment.contains("paymentCompleteName")) {
@@ -3169,6 +3441,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("transactionStatus_indexed_string", transactionStatus);
 			document.addField("transactionStatus_stored_string", transactionStatus);
 		}
+		if(paymentDue != null) {
+			document.addField("paymentDue_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentDue.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("paymentDue_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentDue.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(paymentRecieved != null) {
+			document.addField("paymentRecieved_indexed_boolean", paymentRecieved);
+			document.addField("paymentRecieved_stored_boolean", paymentRecieved);
+		}
 		if(paymentCompleteName != null) {
 			document.addField("paymentCompleteName_indexed_string", paymentCompleteName);
 			document.addField("paymentCompleteName_stored_string", paymentCompleteName);
@@ -3240,6 +3520,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "customerProfileId_indexed_string";
 			case "transactionStatus":
 				return "transactionStatus_indexed_string";
+			case "paymentDue":
+				return "paymentDue_indexed_date";
+			case "paymentRecieved":
+				return "paymentRecieved_indexed_boolean";
 			case "paymentCompleteName":
 				return "paymentCompleteName_indexed_string";
 			default:
@@ -3359,6 +3643,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(transactionStatus != null)
 			oSchoolPayment.setTransactionStatus(transactionStatus);
 
+		Date paymentDue = (Date)solrDocument.get("paymentDue_stored_date");
+		if(paymentDue != null)
+			oSchoolPayment.setPaymentDue(paymentDue);
+
+		Boolean paymentRecieved = (Boolean)solrDocument.get("paymentRecieved_stored_boolean");
+		if(paymentRecieved != null)
+			oSchoolPayment.setPaymentRecieved(paymentRecieved);
+
 		String paymentCompleteName = (String)solrDocument.get("paymentCompleteName_stored_string");
 		if(paymentCompleteName != null)
 			oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
@@ -3397,6 +3689,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("customerProfileId");
 			if(!Objects.equals(transactionStatus, original.getTransactionStatus()))
 				apiRequest.addVars("transactionStatus");
+			if(!Objects.equals(paymentDue, original.getPaymentDue()))
+				apiRequest.addVars("paymentDue");
+			if(!Objects.equals(paymentRecieved, original.getPaymentRecieved()))
+				apiRequest.addVars("paymentRecieved");
 			super.apiRequestCluster();
 		}
 	}
@@ -3406,7 +3702,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus);
+		return Objects.hash(super.hashCode(), enrollmentKeys, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentDue, paymentRecieved);
 	}
 
 	////////////
@@ -3430,7 +3726,9 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( paymentBy, that.paymentBy )
 				&& Objects.equals( transactionId, that.transactionId )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
-				&& Objects.equals( transactionStatus, that.transactionStatus );
+				&& Objects.equals( transactionStatus, that.transactionStatus )
+				&& Objects.equals( paymentDue, that.paymentDue )
+				&& Objects.equals( paymentRecieved, that.paymentRecieved );
 	}
 
 	//////////////
@@ -3452,6 +3750,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", transactionId: \"" ).append(transactionId).append( "\"" );
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
+		sb.append( ", paymentDue: " ).append(paymentDue);
+		sb.append( ", paymentRecieved: " ).append(paymentRecieved);
 		sb.append(" }");
 		return sb.toString();
 	}

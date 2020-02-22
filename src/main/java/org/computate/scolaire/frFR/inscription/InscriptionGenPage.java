@@ -220,6 +220,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmInscriptionApprouve("Page");
 			o.htmInscriptionImmunisations("Page");
 			o.htmInscriptionNomGroupe("Page");
+			o.htmCustomerProfileId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionPaimentComplet("Page");
@@ -273,6 +274,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmInscriptionApprouve("POST");
 			o.htmInscriptionImmunisations("POST");
 			o.htmInscriptionNomGroupe("POST");
+			o.htmCustomerProfileId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionPaimentComplet("POST");
@@ -324,6 +326,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmInscriptionApprouve("PUT");
 			o.htmInscriptionImmunisations("PUT");
 			o.htmInscriptionNomGroupe("PUT");
+			o.htmCustomerProfileId("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionPaimentComplet("PUT");
@@ -402,6 +405,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmInscriptionApprouve("PATCH");
 			o.htmInscriptionImmunisations("PATCH");
 			o.htmInscriptionNomGroupe("PATCH");
+			o.htmCustomerProfileId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionPaimentComplet("PATCH");
@@ -482,6 +486,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmInscriptionApprouve("Recherche");
 			o.htmInscriptionImmunisations("Recherche");
 			o.htmInscriptionNomGroupe("Recherche");
+			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionPaimentComplet("Recherche");

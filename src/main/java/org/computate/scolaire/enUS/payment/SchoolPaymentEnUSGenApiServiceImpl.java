@@ -233,6 +233,14 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("transactionStatus", jsonObject.getString(entityVar), pk));
 						break;
+					case "paymentDue":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentDue", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
+						break;
+					case "paymentRecieved":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentRecieved", jsonObject.getBoolean(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -524,6 +532,14 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "transactionStatus":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("transactionStatus", jsonObject.getString(entityVar), pk));
+						break;
+					case "paymentDue":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentDue", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
+						break;
+					case "paymentRecieved":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentRecieved", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
@@ -895,6 +911,26 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							o2.setTransactionStatus(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("transactionStatus", o2.jsonTransactionStatus(), pk));
+						}
+						break;
+					case "setPaymentDue":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentDue"));
+						} else {
+							o2.setPaymentDue(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentDue", o2.jsonPaymentDue(), pk));
+						}
+						break;
+					case "setPaymentRecieved":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentRecieved"));
+						} else {
+							o2.setPaymentRecieved(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentRecieved", o2.jsonPaymentRecieved(), pk));
 						}
 						break;
 				}
@@ -1577,8 +1613,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if(listSearch.getSorts().size() == 0)
-				listSearch.addSort("created_indexed_date", ORDER.desc);
+			if(listSearch.getSorts().size() == 0) {
+				listSearch.addSort("paymentDate_indexed_date", ORDER.desc);
+				listSearch.addSort("paymentBy_indexed_string", ORDER.desc);
+			}
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

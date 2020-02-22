@@ -7397,6 +7397,456 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////
+	// customerProfileId //
+	///////////////////////
+
+	/**	L'entité « customerProfileId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String customerProfileId;
+	@JsonIgnore
+	public Couverture<String> customerProfileIdCouverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+
+	/**	<br/>L'entité « customerProfileId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId(Couverture<String> c);
+
+	public String getCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public void setCustomerProfileId(String customerProfileId) {
+		this.customerProfileId = customerProfileId;
+		this.customerProfileIdCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire customerProfileIdInit() {
+		if(!customerProfileIdCouverture.dejaInitialise) {
+			_customerProfileId(customerProfileIdCouverture);
+			if(customerProfileId == null)
+				setCustomerProfileId(customerProfileIdCouverture.o);
+		}
+		customerProfileIdCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public String strCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String jsonCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String nomAffichageCustomerProfileId() {
+		return "customer profile ID";
+	}
+
+	public String htmTooltipCustomerProfileId() {
+		return null;
+	}
+
+	public String htmCustomerProfileId() {
+		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	}
+
+	public void inputCustomerProfileId(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "customer profile ID")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_customerProfileId");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setCustomerProfileId inputInscriptionScolaire", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "setCustomerProfileId");
+			} else {
+				a("class", "valeurCustomerProfileId w3-input w3-border inputInscriptionScolaire", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "customerProfileId");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
+			}
+			a("value", strCustomerProfileId())
+		.fg();
+
+	}
+
+	public void htmCustomerProfileId(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireCustomerProfileId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////
+	// creeDAnnee //
+	////////////////
+
+	/**	L'entité « creeDAnnee »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	protected Integer creeDAnnee;
+	@JsonIgnore
+	public Couverture<Integer> creeDAnneeCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("creeDAnnee").o(creeDAnnee);
+
+	/**	<br/>L'entité « creeDAnnee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:creeDAnnee">Trouver l'entité creeDAnnee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _creeDAnnee(Couverture<Integer> c);
+
+	public Integer getCreeDAnnee() {
+		return creeDAnnee;
+	}
+
+	public void setCreeDAnnee(Integer creeDAnnee) {
+		this.creeDAnnee = creeDAnnee;
+		this.creeDAnneeCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setCreeDAnnee(String o) {
+		if(NumberUtils.isParsable(o))
+			this.creeDAnnee = Integer.parseInt(o);
+		this.creeDAnneeCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire creeDAnneeInit() {
+		if(!creeDAnneeCouverture.dejaInitialise) {
+			_creeDAnnee(creeDAnneeCouverture);
+			if(creeDAnnee == null)
+				setCreeDAnnee(creeDAnneeCouverture.o);
+		}
+		creeDAnneeCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Integer solrCreeDAnnee() {
+		return creeDAnnee;
+	}
+
+	public String strCreeDAnnee() {
+		return creeDAnnee == null ? "" : creeDAnnee.toString();
+	}
+
+	public String jsonCreeDAnnee() {
+		return creeDAnnee == null ? "" : creeDAnnee.toString();
+	}
+
+	public String nomAffichageCreeDAnnee() {
+		return "crée l'année";
+	}
+
+	public String htmTooltipCreeDAnnee() {
+		return null;
+	}
+
+	public String htmCreeDAnnee() {
+		return creeDAnnee == null ? "" : StringEscapeUtils.escapeHtml4(strCreeDAnnee());
+	}
+
+	///////////////////////
+	// creeJourDeSemaine //
+	///////////////////////
+
+	/**	L'entité « creeJourDeSemaine »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String creeJourDeSemaine;
+	@JsonIgnore
+	public Couverture<String> creeJourDeSemaineCouverture = new Couverture<String>().p(this).c(String.class).var("creeJourDeSemaine").o(creeJourDeSemaine);
+
+	/**	<br/>L'entité « creeJourDeSemaine »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:creeJourDeSemaine">Trouver l'entité creeJourDeSemaine dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _creeJourDeSemaine(Couverture<String> c);
+
+	public String getCreeJourDeSemaine() {
+		return creeJourDeSemaine;
+	}
+
+	public void setCreeJourDeSemaine(String creeJourDeSemaine) {
+		this.creeJourDeSemaine = creeJourDeSemaine;
+		this.creeJourDeSemaineCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire creeJourDeSemaineInit() {
+		if(!creeJourDeSemaineCouverture.dejaInitialise) {
+			_creeJourDeSemaine(creeJourDeSemaineCouverture);
+			if(creeJourDeSemaine == null)
+				setCreeJourDeSemaine(creeJourDeSemaineCouverture.o);
+		}
+		creeJourDeSemaineCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrCreeJourDeSemaine() {
+		return creeJourDeSemaine;
+	}
+
+	public String strCreeJourDeSemaine() {
+		return creeJourDeSemaine == null ? "" : creeJourDeSemaine;
+	}
+
+	public String jsonCreeJourDeSemaine() {
+		return creeJourDeSemaine == null ? "" : creeJourDeSemaine;
+	}
+
+	public String nomAffichageCreeJourDeSemaine() {
+		return "crée jour de la semaine";
+	}
+
+	public String htmTooltipCreeJourDeSemaine() {
+		return null;
+	}
+
+	public String htmCreeJourDeSemaine() {
+		return creeJourDeSemaine == null ? "" : StringEscapeUtils.escapeHtml4(strCreeJourDeSemaine());
+	}
+
+	////////////////////
+	// creeMoisDAnnee //
+	////////////////////
+
+	/**	L'entité « creeMoisDAnnee »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String creeMoisDAnnee;
+	@JsonIgnore
+	public Couverture<String> creeMoisDAnneeCouverture = new Couverture<String>().p(this).c(String.class).var("creeMoisDAnnee").o(creeMoisDAnnee);
+
+	/**	<br/>L'entité « creeMoisDAnnee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:creeMoisDAnnee">Trouver l'entité creeMoisDAnnee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _creeMoisDAnnee(Couverture<String> c);
+
+	public String getCreeMoisDAnnee() {
+		return creeMoisDAnnee;
+	}
+
+	public void setCreeMoisDAnnee(String creeMoisDAnnee) {
+		this.creeMoisDAnnee = creeMoisDAnnee;
+		this.creeMoisDAnneeCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire creeMoisDAnneeInit() {
+		if(!creeMoisDAnneeCouverture.dejaInitialise) {
+			_creeMoisDAnnee(creeMoisDAnneeCouverture);
+			if(creeMoisDAnnee == null)
+				setCreeMoisDAnnee(creeMoisDAnneeCouverture.o);
+		}
+		creeMoisDAnneeCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrCreeMoisDAnnee() {
+		return creeMoisDAnnee;
+	}
+
+	public String strCreeMoisDAnnee() {
+		return creeMoisDAnnee == null ? "" : creeMoisDAnnee;
+	}
+
+	public String jsonCreeMoisDAnnee() {
+		return creeMoisDAnnee == null ? "" : creeMoisDAnnee;
+	}
+
+	public String nomAffichageCreeMoisDAnnee() {
+		return "crée mois de l'année";
+	}
+
+	public String htmTooltipCreeMoisDAnnee() {
+		return null;
+	}
+
+	public String htmCreeMoisDAnnee() {
+		return creeMoisDAnnee == null ? "" : StringEscapeUtils.escapeHtml4(strCreeMoisDAnnee());
+	}
+
+	/////////////////////
+	// creeHeureDuJour //
+	/////////////////////
+
+	/**	L'entité « creeHeureDuJour »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String creeHeureDuJour;
+	@JsonIgnore
+	public Couverture<String> creeHeureDuJourCouverture = new Couverture<String>().p(this).c(String.class).var("creeHeureDuJour").o(creeHeureDuJour);
+
+	/**	<br/>L'entité « creeHeureDuJour »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:creeHeureDuJour">Trouver l'entité creeHeureDuJour dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _creeHeureDuJour(Couverture<String> c);
+
+	public String getCreeHeureDuJour() {
+		return creeHeureDuJour;
+	}
+
+	public void setCreeHeureDuJour(String creeHeureDuJour) {
+		this.creeHeureDuJour = creeHeureDuJour;
+		this.creeHeureDuJourCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire creeHeureDuJourInit() {
+		if(!creeHeureDuJourCouverture.dejaInitialise) {
+			_creeHeureDuJour(creeHeureDuJourCouverture);
+			if(creeHeureDuJour == null)
+				setCreeHeureDuJour(creeHeureDuJourCouverture.o);
+		}
+		creeHeureDuJourCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrCreeHeureDuJour() {
+		return creeHeureDuJour;
+	}
+
+	public String strCreeHeureDuJour() {
+		return creeHeureDuJour == null ? "" : creeHeureDuJour;
+	}
+
+	public String jsonCreeHeureDuJour() {
+		return creeHeureDuJour == null ? "" : creeHeureDuJour;
+	}
+
+	public String nomAffichageCreeHeureDuJour() {
+		return "heure du jour";
+	}
+
+	public String htmTooltipCreeHeureDuJour() {
+		return null;
+	}
+
+	public String htmCreeHeureDuJour() {
+		return creeHeureDuJour == null ? "" : StringEscapeUtils.escapeHtml4(strCreeHeureDuJour());
+	}
+
+	///////////////////////////////
+	// inscriptionJoursDeSemaine //
+	///////////////////////////////
+
+	/**	L'entité « inscriptionJoursDeSemaine »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected List<String> inscriptionJoursDeSemaine = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Couverture<List<String>> inscriptionJoursDeSemaineCouverture = new Couverture<List<String>>().p(this).c(List.class).var("inscriptionJoursDeSemaine").o(inscriptionJoursDeSemaine);
+
+	/**	<br/>L'entité « inscriptionJoursDeSemaine »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionJoursDeSemaine">Trouver l'entité inscriptionJoursDeSemaine dans Solr</a>
+	 * <br/>
+	 * @param inscriptionJoursDeSemaine est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionJoursDeSemaine(List<String> l);
+
+	public List<String> getInscriptionJoursDeSemaine() {
+		return inscriptionJoursDeSemaine;
+	}
+
+	public void setInscriptionJoursDeSemaine(List<String> inscriptionJoursDeSemaine) {
+		this.inscriptionJoursDeSemaine = inscriptionJoursDeSemaine;
+		this.inscriptionJoursDeSemaineCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addInscriptionJoursDeSemaine(String...objets) {
+		for(String o : objets) {
+			addInscriptionJoursDeSemaine(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addInscriptionJoursDeSemaine(String o) {
+		if(o != null && !inscriptionJoursDeSemaine.contains(o))
+			this.inscriptionJoursDeSemaine.add(o);
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setInscriptionJoursDeSemaine(JsonArray objets) {
+		inscriptionJoursDeSemaine.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addInscriptionJoursDeSemaine(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionJoursDeSemaineInit() {
+		if(!inscriptionJoursDeSemaineCouverture.dejaInitialise) {
+			_inscriptionJoursDeSemaine(inscriptionJoursDeSemaine);
+		}
+		inscriptionJoursDeSemaineCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public List<String> solrInscriptionJoursDeSemaine() {
+		return inscriptionJoursDeSemaine;
+	}
+
+	public String strInscriptionJoursDeSemaine() {
+		return inscriptionJoursDeSemaine == null ? "" : inscriptionJoursDeSemaine.toString();
+	}
+
+	public String jsonInscriptionJoursDeSemaine() {
+		return inscriptionJoursDeSemaine == null ? "" : inscriptionJoursDeSemaine.toString();
+	}
+
+	public String nomAffichageInscriptionJoursDeSemaine() {
+		return "jours de la semaine";
+	}
+
+	public String htmTooltipInscriptionJoursDeSemaine() {
+		return null;
+	}
+
+	public String htmInscriptionJoursDeSemaine() {
+		return inscriptionJoursDeSemaine == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionJoursDeSemaine());
+	}
+
 	////////////////////////////
 	// inscriptionNomsParents //
 	////////////////////////////
@@ -10734,6 +11184,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionNomGroupeInit();
 		inscriptionPaimentChaqueMoisInit();
 		inscriptionPaimentCompletInit();
+		customerProfileIdInit();
+		creeDAnneeInit();
+		creeJourDeSemaineInit();
+		creeMoisDAnneeInit();
+		creeHeureDuJourInit();
+		inscriptionJoursDeSemaineInit();
 		inscriptionNomsParentsInit();
 		inscriptionNomParentLignesInit();
 		inscriptionMailParentLignesInit();
@@ -10999,6 +11455,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionPaimentChaqueMois;
 			case "inscriptionPaimentComplet":
 				return oInscriptionScolaire.inscriptionPaimentComplet;
+			case "customerProfileId":
+				return oInscriptionScolaire.customerProfileId;
+			case "creeDAnnee":
+				return oInscriptionScolaire.creeDAnnee;
+			case "creeJourDeSemaine":
+				return oInscriptionScolaire.creeJourDeSemaine;
+			case "creeMoisDAnnee":
+				return oInscriptionScolaire.creeMoisDAnnee;
+			case "creeHeureDuJour":
+				return oInscriptionScolaire.creeHeureDuJour;
+			case "inscriptionJoursDeSemaine":
+				return oInscriptionScolaire.inscriptionJoursDeSemaine;
 			case "inscriptionNomsParents":
 				return oInscriptionScolaire.inscriptionNomsParents;
 			case "inscriptionNomParentLignes":
@@ -11211,6 +11679,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return val;
 			case "inscriptionPaimentComplet":
 				setInscriptionPaimentComplet(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "customerProfileId":
+				setCustomerProfileId(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionNomsParents":
@@ -11772,6 +12244,42 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
 				if(inscriptionPaimentComplet != null)
 					oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("customerProfileId")) {
+				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+				if(customerProfileId != null)
+					oInscriptionScolaire.setCustomerProfileId(customerProfileId);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("creeDAnnee")) {
+				Integer creeDAnnee = (Integer)solrDocument.get("creeDAnnee_stored_int");
+				if(creeDAnnee != null)
+					oInscriptionScolaire.setCreeDAnnee(creeDAnnee);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("creeJourDeSemaine")) {
+				String creeJourDeSemaine = (String)solrDocument.get("creeJourDeSemaine_stored_string");
+				if(creeJourDeSemaine != null)
+					oInscriptionScolaire.setCreeJourDeSemaine(creeJourDeSemaine);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("creeMoisDAnnee")) {
+				String creeMoisDAnnee = (String)solrDocument.get("creeMoisDAnnee_stored_string");
+				if(creeMoisDAnnee != null)
+					oInscriptionScolaire.setCreeMoisDAnnee(creeMoisDAnnee);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("creeHeureDuJour")) {
+				String creeHeureDuJour = (String)solrDocument.get("creeHeureDuJour_stored_string");
+				if(creeHeureDuJour != null)
+					oInscriptionScolaire.setCreeHeureDuJour(creeHeureDuJour);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionJoursDeSemaine")) {
+				List<String> inscriptionJoursDeSemaine = (List<String>)solrDocument.get("inscriptionJoursDeSemaine_stored_strings");
+				if(inscriptionJoursDeSemaine != null)
+					oInscriptionScolaire.inscriptionJoursDeSemaine.addAll(inscriptionJoursDeSemaine);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("inscriptionNomsParents")) {
@@ -12349,6 +12857,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionPaimentComplet_indexed_boolean", inscriptionPaimentComplet);
 			document.addField("inscriptionPaimentComplet_stored_boolean", inscriptionPaimentComplet);
 		}
+		if(customerProfileId != null) {
+			document.addField("customerProfileId_indexed_string", customerProfileId);
+			document.addField("customerProfileId_stored_string", customerProfileId);
+		}
+		if(creeDAnnee != null) {
+			document.addField("creeDAnnee_indexed_int", creeDAnnee);
+			document.addField("creeDAnnee_stored_int", creeDAnnee);
+		}
+		if(creeJourDeSemaine != null) {
+			document.addField("creeJourDeSemaine_indexed_string", creeJourDeSemaine);
+			document.addField("creeJourDeSemaine_stored_string", creeJourDeSemaine);
+		}
+		if(creeMoisDAnnee != null) {
+			document.addField("creeMoisDAnnee_indexed_string", creeMoisDAnnee);
+			document.addField("creeMoisDAnnee_stored_string", creeMoisDAnnee);
+		}
+		if(creeHeureDuJour != null) {
+			document.addField("creeHeureDuJour_indexed_string", creeHeureDuJour);
+			document.addField("creeHeureDuJour_stored_string", creeHeureDuJour);
+		}
+		if(inscriptionJoursDeSemaine != null) {
+			for(java.lang.String o : inscriptionJoursDeSemaine) {
+				document.addField("inscriptionJoursDeSemaine_indexed_strings", o);
+			}
+			for(java.lang.String o : inscriptionJoursDeSemaine) {
+				document.addField("inscriptionJoursDeSemaine_stored_strings", o);
+			}
+		}
 		if(inscriptionNomsParents != null) {
 			document.addField("inscriptionNomsParents_indexed_string", inscriptionNomsParents);
 			document.addField("inscriptionNomsParents_stored_string", inscriptionNomsParents);
@@ -12629,6 +13165,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "inscriptionPaimentChaqueMois_indexed_boolean";
 			case "inscriptionPaimentComplet":
 				return "inscriptionPaimentComplet_indexed_boolean";
+			case "customerProfileId":
+				return "customerProfileId_indexed_string";
+			case "creeDAnnee":
+				return "creeDAnnee_indexed_int";
+			case "creeJourDeSemaine":
+				return "creeJourDeSemaine_indexed_string";
+			case "creeMoisDAnnee":
+				return "creeMoisDAnnee_indexed_string";
+			case "creeHeureDuJour":
+				return "creeHeureDuJour_indexed_string";
+			case "inscriptionJoursDeSemaine":
+				return "inscriptionJoursDeSemaine_indexed_strings";
 			case "inscriptionNomsParents":
 				return "inscriptionNomsParents_indexed_string";
 			case "inscriptionDate1":
@@ -12998,6 +13546,30 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionPaimentComplet != null)
 			oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 
+		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+		if(customerProfileId != null)
+			oInscriptionScolaire.setCustomerProfileId(customerProfileId);
+
+		Integer creeDAnnee = (Integer)solrDocument.get("creeDAnnee_stored_int");
+		if(creeDAnnee != null)
+			oInscriptionScolaire.setCreeDAnnee(creeDAnnee);
+
+		String creeJourDeSemaine = (String)solrDocument.get("creeJourDeSemaine_stored_string");
+		if(creeJourDeSemaine != null)
+			oInscriptionScolaire.setCreeJourDeSemaine(creeJourDeSemaine);
+
+		String creeMoisDAnnee = (String)solrDocument.get("creeMoisDAnnee_stored_string");
+		if(creeMoisDAnnee != null)
+			oInscriptionScolaire.setCreeMoisDAnnee(creeMoisDAnnee);
+
+		String creeHeureDuJour = (String)solrDocument.get("creeHeureDuJour_stored_string");
+		if(creeHeureDuJour != null)
+			oInscriptionScolaire.setCreeHeureDuJour(creeHeureDuJour);
+
+		List<String> inscriptionJoursDeSemaine = (List<String>)solrDocument.get("inscriptionJoursDeSemaine_stored_strings");
+		if(inscriptionJoursDeSemaine != null)
+			oInscriptionScolaire.inscriptionJoursDeSemaine.addAll(inscriptionJoursDeSemaine);
+
 		String inscriptionNomsParents = (String)solrDocument.get("inscriptionNomsParents_stored_string");
 		if(inscriptionNomsParents != null)
 			oInscriptionScolaire.setInscriptionNomsParents(inscriptionNomsParents);
@@ -13180,6 +13752,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("inscriptionPaimentChaqueMois");
 			if(!Objects.equals(inscriptionPaimentComplet, original.getInscriptionPaimentComplet()))
 				requeteApi.addVars("inscriptionPaimentComplet");
+			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
+				requeteApi.addVars("customerProfileId");
 			if(!Objects.equals(inscriptionNomsParents, original.getInscriptionNomsParents()))
 				requeteApi.addVars("inscriptionNomsParents");
 			if(!Objects.equals(inscriptionSignature1, original.getInscriptionSignature1()))
@@ -13231,7 +13805,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCle, blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
+		return Objects.hash(super.hashCode(), anneeCle, blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
 	}
 
 	////////////
@@ -13272,6 +13846,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
 				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
+				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( inscriptionNomsParents, that.inscriptionNomsParents )
 				&& Objects.equals( inscriptionSignature1, that.inscriptionSignature1 )
 				&& Objects.equals( inscriptionSignature2, that.inscriptionSignature2 )
@@ -13330,6 +13905,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
 		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
+		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", inscriptionNomsParents: \"" ).append(inscriptionNomsParents).append( "\"" );
 		sb.append( ", inscriptionSignature1: \"" ).append(inscriptionSignature1).append( "\"" );
 		sb.append( ", inscriptionSignature2: \"" ).append(inscriptionSignature2).append( "\"" );

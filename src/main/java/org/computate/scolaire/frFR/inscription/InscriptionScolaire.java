@@ -3,8 +3,14 @@ package org.computate.scolaire.frFR.inscription;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
+import java.util.Locale;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
@@ -13,6 +19,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import org.computate.scolaire.frFR.gardien.GardienScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
+import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.pere.PereScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
@@ -1542,6 +1549,151 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */                       
 	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: customerProfileId
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 4
+	 * NomAffichage.frFR: customer profile ID
+	 * NomAffichage.enUS: customer profile ID
+	 */                
+	protected void _customerProfileId(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: createdYear
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: crée l'année
+	 * NomAffichage.enUS: created year
+	 * r: cree
+	 * r.enUS: created
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _creeDAnnee(Couverture<Integer> c) {
+		if(cree != null)
+			c.o(cree.getYear());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: createdDayOfWeek
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: crée jour de la semaine
+	 * NomAffichage.enUS: created day of the week
+	 * r: cree
+	 * r.enUS: created
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _creeJourDeSemaine(Couverture<String> c) {
+		if(cree != null)
+			c.o(cree.format(DateTimeFormatter.ofPattern("EEEE", Locale.FRANCE)));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: createdMonthOfYear
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: crée mois de l'année
+	 * NomAffichage.enUS: created month of the year
+	 * r: cree
+	 * r.enUS: created
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _creeMoisDAnnee(Couverture<String> c) {
+		if(cree != null)
+			c.o(cree.format(DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE)));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: createdHourOfDay
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: heure du jour
+	 * NomAffichage.enUS: hour of day
+	 * r: cree
+	 * r.enUS: created
+	 * r: MiseEnPage
+	 * r.enUS: PageLayout
+	 * r: FORMATHeureAffichage
+	 * r.enUS: FORMATTimeDisplay
+	 */                       
+	protected void _creeHeureDuJour(Couverture<String> c) {
+		if(cree != null) {
+			ZonedDateTime cree1 = cree.truncatedTo(ChronoUnit.HOURS);
+			ZonedDateTime cree2 = cree1.plusHours(1);
+			c.o(cree1.format(MiseEnPage.FORMATHeureAffichage) + "-" + cree2.format(MiseEnPage.FORMATHeureAffichage));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDaysOfWeek
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: jours de la semaine
+	 * NomAffichage.enUS: days of the week
+	 * 
+	 * r: "dimanche"
+	 * r.enUS: "Sunday"
+	 * r: "lundi"
+	 * r.enUS: "Monday"
+	 * r: "mardi"
+	 * r.enUS: "Tuesday"
+	 * r: "mercredi"
+	 * r.enUS: "Wednesday"
+	 * r: "jeudi"
+	 * r.enUS: "Thursday"
+	 * r: "vendredi"
+	 * r.enUS: "Friday"
+	 * r: "samedi"
+	 * r.enUS: "Saturday"
+	 * 
+	 * r: Dimanche
+	 * r.enUS: Sunday
+	 * r: Lundi
+	 * r.enUS: Monday
+	 * r: Mardi
+	 * r.enUS: Tuesday
+	 * r: Mercredi
+	 * r.enUS: Wednesday
+	 * r: Jeudi
+	 * r.enUS: Thursday
+	 * r: Vendredi
+	 * r.enUS: Friday
+	 * r: Samedi
+	 * r.enUS: Saturday
+	 * 
+	 * r: bloc
+	 * r.enUS: block
+	 */                       
+	protected void _inscriptionJoursDeSemaine(List<String> l) {
+		if(BooleanUtils.isTrue(blocDimanche))
+			l.add("dimanche");
+		if(BooleanUtils.isTrue(blocLundi))
+			l.add("lundi");
+		if(BooleanUtils.isTrue(blocMardi))
+			l.add("mardi");
+		if(BooleanUtils.isTrue(blocMercredi))
+			l.add("mercredi");
+		if(BooleanUtils.isTrue(blocJeudi))
+			l.add("jeudi");
+		if(BooleanUtils.isTrue(blocVendredi))
+			l.add("vendredi");
+		if(BooleanUtils.isTrue(blocSamedi))
+			l.add("samedi");
 	}
 
 	/**       

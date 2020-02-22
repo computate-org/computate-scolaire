@@ -3,7 +3,13 @@ package org.computate.scolaire.enUS.enrollment;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
+import java.util.Locale;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.block.SchoolBlock;
@@ -12,6 +18,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.season.SchoolSeason;
@@ -447,6 +454,49 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
 		c.o(false);
+	}
+
+	protected void _customerProfileId(Wrap<String> c) {
+	}
+
+	protected void _createdYear(Wrap<Integer> c) {
+		if(created != null)
+			c.o(created.getYear());
+	}
+
+	protected void _createdDayOfWeek(Wrap<String> c) {
+		if(created != null)
+			c.o(created.format(DateTimeFormatter.ofPattern("EEEE", Locale.US)));
+	}
+
+	protected void _createdMonthOfYear(Wrap<String> c) {
+		if(created != null)
+			c.o(created.format(DateTimeFormatter.ofPattern("MMMM", Locale.US)));
+	}
+
+	protected void _createdHourOfDay(Wrap<String> c) {
+		if(created != null) {
+			ZonedDateTime created1 = created.truncatedTo(ChronoUnit.HOURS);
+			ZonedDateTime created2 = created1.plusHours(1);
+			c.o(created1.format(PageLayout.FORMATTimeDisplay) + "-" + created2.format(PageLayout.FORMATTimeDisplay));
+		}
+	}
+
+	protected void _enrollmentDaysOfWeek(List<String> l) {
+		if(BooleanUtils.isTrue(blockSunday))
+			l.add("Sunday");
+		if(BooleanUtils.isTrue(blockMonday))
+			l.add("Monday");
+		if(BooleanUtils.isTrue(blockTuesday))
+			l.add("Tuesday");
+		if(BooleanUtils.isTrue(blockWednesday))
+			l.add("Wednesday");
+		if(BooleanUtils.isTrue(blockThursday))
+			l.add("Thursday");
+		if(BooleanUtils.isTrue(blockFriday))
+			l.add("Friday");
+		if(BooleanUtils.isTrue(blockSaturday))
+			l.add("Saturday");
 	}
 
 	protected void _enrollmentParentNames(Wrap<String> c) {
