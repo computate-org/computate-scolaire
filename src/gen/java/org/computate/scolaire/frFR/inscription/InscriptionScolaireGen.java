@@ -430,7 +430,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+										.a("onclick", "postBlocScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
 										.f().sx("ajouter un bloc")
 									.g("button");
 								} g("div");
@@ -1069,7 +1069,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "enfantCle')); });")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "enfantCle')); });")
 										.f().sx("ajouter un enfant")
 									.g("button");
 								} g("div");
@@ -1215,7 +1215,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postMereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "mereCles')); });")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "mereCles')); });")
 										.f().sx("ajouter une mère")
 									.g("button");
 								} g("div");
@@ -1361,7 +1361,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postPereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "pereCles')); });")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "pereCles')); });")
 										.f().sx("ajouter un père")
 									.g("button");
 								} g("div");
@@ -1507,7 +1507,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postGardienScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "gardienCles')); });")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "gardienCles')); });")
 										.f().sx("ajouter un gardien")
 									.g("button");
 								} g("div");
@@ -1616,7 +1616,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("name", "setPaiementCles")
 				.a("id", classeApiMethodeMethode, "_paiementCles")
 				.a("autocomplete", "off")
-				.a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles')) : [{'name':'fq','value':'inscriptionCle:", pk, "'}], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -1628,7 +1628,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "?fq=inscriptionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fas fa-search-dollar ").f().g("i");
 								sx("paiements");
 							} g("a");
@@ -1653,7 +1653,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCle: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
 										.f().sx("ajouter un paiement")
 									.g("button");
 								} g("div");
@@ -2784,6 +2784,68 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return merePrenomPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strMerePrenomPrefere());
 	}
 
+	///////////////////////////
+	// mereNomCompletPrefere //
+	///////////////////////////
+
+	/**	L'entité « mereNomCompletPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String mereNomCompletPrefere;
+	@JsonIgnore
+	public Couverture<String> mereNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("mereNomCompletPrefere").o(mereNomCompletPrefere);
+
+	/**	<br/>L'entité « mereNomCompletPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereNomCompletPrefere">Trouver l'entité mereNomCompletPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mereNomCompletPrefere(Couverture<String> c);
+
+	public String getMereNomCompletPrefere() {
+		return mereNomCompletPrefere;
+	}
+
+	public void setMereNomCompletPrefere(String mereNomCompletPrefere) {
+		this.mereNomCompletPrefere = mereNomCompletPrefere;
+		this.mereNomCompletPrefereCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire mereNomCompletPrefereInit() {
+		if(!mereNomCompletPrefereCouverture.dejaInitialise) {
+			_mereNomCompletPrefere(mereNomCompletPrefereCouverture);
+			if(mereNomCompletPrefere == null)
+				setMereNomCompletPrefere(mereNomCompletPrefereCouverture.o);
+		}
+		mereNomCompletPrefereCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrMereNomCompletPrefere() {
+		return mereNomCompletPrefere;
+	}
+
+	public String strMereNomCompletPrefere() {
+		return mereNomCompletPrefere == null ? "" : mereNomCompletPrefere;
+	}
+
+	public String jsonMereNomCompletPrefere() {
+		return mereNomCompletPrefere == null ? "" : mereNomCompletPrefere;
+	}
+
+	public String nomAffichageMereNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmTooltipMereNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmMereNomCompletPrefere() {
+		return mereNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strMereNomCompletPrefere());
+	}
+
 	////////////////
 	// perePrenom //
 	////////////////
@@ -2906,6 +2968,68 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmPerePrenomPrefere() {
 		return perePrenomPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strPerePrenomPrefere());
+	}
+
+	///////////////////////////
+	// pereNomCompletPrefere //
+	///////////////////////////
+
+	/**	L'entité « pereNomCompletPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String pereNomCompletPrefere;
+	@JsonIgnore
+	public Couverture<String> pereNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("pereNomCompletPrefere").o(pereNomCompletPrefere);
+
+	/**	<br/>L'entité « pereNomCompletPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereNomCompletPrefere">Trouver l'entité pereNomCompletPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pereNomCompletPrefere(Couverture<String> c);
+
+	public String getPereNomCompletPrefere() {
+		return pereNomCompletPrefere;
+	}
+
+	public void setPereNomCompletPrefere(String pereNomCompletPrefere) {
+		this.pereNomCompletPrefere = pereNomCompletPrefere;
+		this.pereNomCompletPrefereCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire pereNomCompletPrefereInit() {
+		if(!pereNomCompletPrefereCouverture.dejaInitialise) {
+			_pereNomCompletPrefere(pereNomCompletPrefereCouverture);
+			if(pereNomCompletPrefere == null)
+				setPereNomCompletPrefere(pereNomCompletPrefereCouverture.o);
+		}
+		pereNomCompletPrefereCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrPereNomCompletPrefere() {
+		return pereNomCompletPrefere;
+	}
+
+	public String strPereNomCompletPrefere() {
+		return pereNomCompletPrefere == null ? "" : pereNomCompletPrefere;
+	}
+
+	public String jsonPereNomCompletPrefere() {
+		return pereNomCompletPrefere == null ? "" : pereNomCompletPrefere;
+	}
+
+	public String nomAffichagePereNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmTooltipPereNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmPereNomCompletPrefere() {
+		return pereNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strPereNomCompletPrefere());
 	}
 
 	//////////////////////
@@ -7514,6 +7638,84 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////////
+	// inscriptionDateFrais //
+	//////////////////////////
+
+	/**	L'entité « inscriptionDateFrais »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	protected LocalDate inscriptionDateFrais;
+	@JsonIgnore
+	public Couverture<LocalDate> inscriptionDateFraisCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("inscriptionDateFrais").o(inscriptionDateFrais);
+
+	/**	<br/>L'entité « inscriptionDateFrais »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionDateFrais">Trouver l'entité inscriptionDateFrais dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionDateFrais(Couverture<LocalDate> c);
+
+	public LocalDate getInscriptionDateFrais() {
+		return inscriptionDateFrais;
+	}
+
+	public void setInscriptionDateFrais(LocalDate inscriptionDateFrais) {
+		this.inscriptionDateFrais = inscriptionDateFrais;
+		this.inscriptionDateFraisCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setInscriptionDateFrais(Instant o) {
+		this.inscriptionDateFrais = LocalDate.from(o);
+		this.inscriptionDateFraisCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public InscriptionScolaire setInscriptionDateFrais(String o) {
+		this.inscriptionDateFrais = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDateFraisCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setInscriptionDateFrais(Date o) {
+		this.inscriptionDateFrais = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDateFraisCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionDateFraisInit() {
+		if(!inscriptionDateFraisCouverture.dejaInitialise) {
+			_inscriptionDateFrais(inscriptionDateFraisCouverture);
+			if(inscriptionDateFrais == null)
+				setInscriptionDateFrais(inscriptionDateFraisCouverture.o);
+		}
+		inscriptionDateFraisCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Date solrInscriptionDateFrais() {
+		return inscriptionDateFrais == null ? null : Date.from(inscriptionDateFrais.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strInscriptionDateFrais() {
+		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonInscriptionDateFrais() {
+		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichageInscriptionDateFrais() {
+		return null;
+	}
+
+	public String htmTooltipInscriptionDateFrais() {
+		return null;
+	}
+
+	public String htmInscriptionDateFrais() {
+		return inscriptionDateFrais == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionDateFrais());
+	}
+
 	////////////////
 	// creeDAnnee //
 	////////////////
@@ -11131,8 +11333,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfantFamilleNomInit();
 		merePrenomInit();
 		merePrenomPrefereInit();
+		mereNomCompletPrefereInit();
 		perePrenomInit();
 		perePrenomPrefereInit();
+		pereNomCompletPrefereInit();
 		enfantNomCompletInit();
 		enfantNomCompletPrefereInit();
 		enfantDateNaissanceInit();
@@ -11185,6 +11389,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionPaimentChaqueMoisInit();
 		inscriptionPaimentCompletInit();
 		customerProfileIdInit();
+		inscriptionDateFraisInit();
 		creeDAnneeInit();
 		creeJourDeSemaineInit();
 		creeMoisDAnneeInit();
@@ -11349,10 +11554,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.merePrenom;
 			case "merePrenomPrefere":
 				return oInscriptionScolaire.merePrenomPrefere;
+			case "mereNomCompletPrefere":
+				return oInscriptionScolaire.mereNomCompletPrefere;
 			case "perePrenom":
 				return oInscriptionScolaire.perePrenom;
 			case "perePrenomPrefere":
 				return oInscriptionScolaire.perePrenomPrefere;
+			case "pereNomCompletPrefere":
+				return oInscriptionScolaire.pereNomCompletPrefere;
 			case "enfantNomComplet":
 				return oInscriptionScolaire.enfantNomComplet;
 			case "enfantNomCompletPrefere":
@@ -11457,6 +11666,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionPaimentComplet;
 			case "customerProfileId":
 				return oInscriptionScolaire.customerProfileId;
+			case "inscriptionDateFrais":
+				return oInscriptionScolaire.inscriptionDateFrais;
 			case "creeDAnnee":
 				return oInscriptionScolaire.creeDAnnee;
 			case "creeJourDeSemaine":
@@ -11928,6 +12139,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setMerePrenomPrefere(merePrenomPrefere);
 			}
 
+			if(sauvegardesInscriptionScolaire.contains("mereNomCompletPrefere")) {
+				String mereNomCompletPrefere = (String)solrDocument.get("mereNomCompletPrefere_stored_string");
+				if(mereNomCompletPrefere != null)
+					oInscriptionScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
+			}
+
 			if(sauvegardesInscriptionScolaire.contains("perePrenom")) {
 				String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
 				if(perePrenom != null)
@@ -11938,6 +12155,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String perePrenomPrefere = (String)solrDocument.get("perePrenomPrefere_stored_string");
 				if(perePrenomPrefere != null)
 					oInscriptionScolaire.setPerePrenomPrefere(perePrenomPrefere);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("pereNomCompletPrefere")) {
+				String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
+				if(pereNomCompletPrefere != null)
+					oInscriptionScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("enfantNomComplet")) {
@@ -12250,6 +12473,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oInscriptionScolaire.setCustomerProfileId(customerProfileId);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionDateFrais")) {
+				Date inscriptionDateFrais = (Date)solrDocument.get("inscriptionDateFrais_stored_date");
+				if(inscriptionDateFrais != null)
+					oInscriptionScolaire.setInscriptionDateFrais(inscriptionDateFrais);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("creeDAnnee")) {
@@ -12645,6 +12874,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("merePrenomPrefere_indexed_string", merePrenomPrefere);
 			document.addField("merePrenomPrefere_stored_string", merePrenomPrefere);
 		}
+		if(mereNomCompletPrefere != null) {
+			document.addField("mereNomCompletPrefere_indexed_string", mereNomCompletPrefere);
+			document.addField("mereNomCompletPrefere_stored_string", mereNomCompletPrefere);
+		}
 		if(perePrenom != null) {
 			document.addField("perePrenom_indexed_string", perePrenom);
 			document.addField("perePrenom_stored_string", perePrenom);
@@ -12652,6 +12885,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(perePrenomPrefere != null) {
 			document.addField("perePrenomPrefere_indexed_string", perePrenomPrefere);
 			document.addField("perePrenomPrefere_stored_string", perePrenomPrefere);
+		}
+		if(pereNomCompletPrefere != null) {
+			document.addField("pereNomCompletPrefere_indexed_string", pereNomCompletPrefere);
+			document.addField("pereNomCompletPrefere_stored_string", pereNomCompletPrefere);
 		}
 		if(enfantNomComplet != null) {
 			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
@@ -12861,6 +13098,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("customerProfileId_indexed_string", customerProfileId);
 			document.addField("customerProfileId_stored_string", customerProfileId);
 		}
+		if(inscriptionDateFrais != null) {
+			document.addField("inscriptionDateFrais_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDateFrais.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("inscriptionDateFrais_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDateFrais.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(creeDAnnee != null) {
 			document.addField("creeDAnnee_indexed_int", creeDAnnee);
 			document.addField("creeDAnnee_stored_int", creeDAnnee);
@@ -13059,10 +13300,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "merePrenom_indexed_string";
 			case "merePrenomPrefere":
 				return "merePrenomPrefere_indexed_string";
+			case "mereNomCompletPrefere":
+				return "mereNomCompletPrefere_indexed_string";
 			case "perePrenom":
 				return "perePrenom_indexed_string";
 			case "perePrenomPrefere":
 				return "perePrenomPrefere_indexed_string";
+			case "pereNomCompletPrefere":
+				return "pereNomCompletPrefere_indexed_string";
 			case "enfantNomComplet":
 				return "enfantNomComplet_indexed_string";
 			case "enfantNomCompletPrefere":
@@ -13167,6 +13412,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "inscriptionPaimentComplet_indexed_boolean";
 			case "customerProfileId":
 				return "customerProfileId_indexed_string";
+			case "inscriptionDateFrais":
+				return "inscriptionDateFrais_indexed_date";
 			case "creeDAnnee":
 				return "creeDAnnee_indexed_int";
 			case "creeJourDeSemaine":
@@ -13334,6 +13581,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(merePrenomPrefere != null)
 			oInscriptionScolaire.setMerePrenomPrefere(merePrenomPrefere);
 
+		String mereNomCompletPrefere = (String)solrDocument.get("mereNomCompletPrefere_stored_string");
+		if(mereNomCompletPrefere != null)
+			oInscriptionScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
+
 		String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
 		if(perePrenom != null)
 			oInscriptionScolaire.setPerePrenom(perePrenom);
@@ -13341,6 +13592,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String perePrenomPrefere = (String)solrDocument.get("perePrenomPrefere_stored_string");
 		if(perePrenomPrefere != null)
 			oInscriptionScolaire.setPerePrenomPrefere(perePrenomPrefere);
+
+		String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
+		if(pereNomCompletPrefere != null)
+			oInscriptionScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
 
 		String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
 		if(enfantNomComplet != null)
@@ -13549,6 +13804,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 		if(customerProfileId != null)
 			oInscriptionScolaire.setCustomerProfileId(customerProfileId);
+
+		Date inscriptionDateFrais = (Date)solrDocument.get("inscriptionDateFrais_stored_date");
+		if(inscriptionDateFrais != null)
+			oInscriptionScolaire.setInscriptionDateFrais(inscriptionDateFrais);
 
 		Integer creeDAnnee = (Integer)solrDocument.get("creeDAnnee_stored_int");
 		if(creeDAnnee != null)

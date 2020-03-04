@@ -8,6 +8,7 @@ import java.math.MathContext;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -33,6 +35,7 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listSchoolPayment »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolPayment> listSchoolPayment;
 	@JsonIgnore
 	public Wrap<SearchList<SchoolPayment>> listSchoolPaymentWrap = new Wrap<SearchList<SchoolPayment>>().p(this).c(SearchList.class).var("listSchoolPayment").o(listSchoolPayment);
@@ -72,6 +75,7 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « schoolPayment »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolPayment schoolPayment;
 	@JsonIgnore
 	public Wrap<SchoolPayment> schoolPaymentWrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("schoolPayment").o(schoolPayment);

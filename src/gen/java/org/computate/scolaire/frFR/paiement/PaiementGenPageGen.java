@@ -5,6 +5,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.paiement.PaiementScolaire;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
@@ -33,6 +35,7 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listePaiementScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<PaiementScolaire> listePaiementScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<PaiementScolaire>> listePaiementScolaireCouverture = new Couverture<ListeRecherche<PaiementScolaire>>().p(this).c(ListeRecherche.class).var("listePaiementScolaire").o(listePaiementScolaire);
@@ -72,6 +75,7 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « paiementScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected PaiementScolaire paiementScolaire;
 	@JsonIgnore
 	public Couverture<PaiementScolaire> paiementScolaireCouverture = new Couverture<PaiementScolaire>().p(this).c(PaiementScolaire.class).var("paiementScolaire").o(paiementScolaire);

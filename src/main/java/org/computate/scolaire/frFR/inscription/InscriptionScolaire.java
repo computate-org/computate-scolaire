@@ -397,7 +397,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: paymentKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: PaiementScolaire.inscriptionCles
+	 * Attribuer: PaiementScolaire.inscriptionCle
 	 * HtmlLigne: 11
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
@@ -683,6 +683,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: momCompleteNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * r: meres
+	 * r.enUS: moms
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 */   
+	protected void _mereNomCompletPrefere(Couverture<String> c) {
+		if(meres.size() > 0)
+			c.o(meres.get(0).getPersonneNomCompletPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: dadFirstName
 	 * Indexe: true
 	 * Stocke: true
@@ -709,6 +724,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _perePrenomPrefere(Couverture<String> c) {
 		if(peres.size() > 0)
 			c.o(peres.get(0).getPersonnePrenomPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadCompleteNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * r: peres
+	 * r.enUS: dads
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 */   
+	protected void _pereNomCompletPrefere(Couverture<String> c) {
+		if(peres.size() > 0)
+			c.o(peres.get(0).getPersonneNomCompletPrefere());
 	}
 
 	/**
@@ -1563,6 +1593,15 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: customer profile ID
 	 */                
 	protected void _customerProfileId(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentChargeDate
+	 * Indexe: true
+	 * Stocke: true
+	 */
+	protected void _inscriptionDateFrais(Couverture<LocalDate> c) {
 	}
 
 	/**

@@ -4,18 +4,23 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -119,6 +124,8 @@ import net.authorize.api.controller.base.ApiOperationBase;
  * enUS: A Java class to start the Vert.x application as a main method. 
  */    
 public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
+
+	public final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	/**
 	 * enUS: A SQL query for creating a database table "c" to store any type of object in the application. 
@@ -247,8 +254,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: startServer
 	 * r: etapesPromises
 	 * r.enUS: promiseSteps
-	 * r: configurerAuthorizeNet
-	 * r.enUS: configureAuthorizeNet
+	 * r: configurerAuthorizeNetPaiements
+	 * r.enUS: configureAuthorizeNetPayments
+	 * r: configurerAuthorizeNetFrais
+	 * r.enUS: configureAuthorizeNetCharges
 	 * 
 	 * enUS: This is called by Vert.x when the verticle instance is deployed. 
 	 * enUS: Initialize a new site context object for storing information about the entire site in English. 
@@ -268,9 +277,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						configurerExecuteurTravailleurPartage().future().compose(e -> 
 							configurerWebsockets().future().compose(f -> 
 								configurerMail().future().compose(g -> 
-									configurerAuthorizeNet().future().compose(h -> 
+									configurerAuthorizeNetFrais().future().compose(h -> 
 										demarrerServeur().future()
 									)
+//									configurerAuthorizeNetPaiements().future().compose(h -> 
+//										demarrerServeur().future()
+//									)
 								)
 							)
 						)
@@ -481,6 +493,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: getAuthSslRequired
 	 * r: getSiteNomHote
 	 * r.enUS: getSiteHostName
+	 * r: gestionnaireAuth
+	 * r.enUS: authHandler
 	 * r: getSiteUrlBase
 	 * r.enUS: getSiteBaseUrl
 	 * r: /deconnexion
@@ -737,7 +751,639 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	}
 
 	/**
-	 * Var.enUS: configureAuthorizeNet
+	 * Var.enUS: configureAuthorizeNetCharges
+	 * 
+	 * enUS: Configure charges with Authorize.net. 
+	 * 
+	 * r: "Commencer à peupler les frais nouveaux. "
+	 * r.enUS: "Start to populate the new charges. "
+	 * r: "Init SQL a réussi. "
+	 * r.enUS: "Init SQL succeeded. "
+	 * r: "Il y a %s batch à charger. "
+	 * r.enUS: "There are %s batches to load. "
+	 * r: "batch %s chargé. "
+	 * r.enUS: "batch %s loaded. "
+	 * r: "inscriptions ont échoués. "
+	 * r.enUS: "enrollments failed. "
+	 * r: "Il y a %s inscriptions à recharger. "
+	 * r.enUS: "There are %s enrollments to reload. "
+	 * r: "Il y a %s paiements à recharger. "
+	 * r.enUS: "There are %s payments to reload. "
+	 * r: "inscription %s rechargé. "
+	 * r.enUS: "enrollment %s refreshed. "
+	 * r: "inscription %s a échoué. "
+	 * r.enUS: "enrollment %s failed. "
+	 * r: "paiement %s rechargé. "
+	 * r.enUS: "payment %s refreshed. "
+	 * r: "paiement %s a échoué. "
+	 * r.enUS: "payement %s failed. "
+	 * r: "Recharger les inscriptions a réussi. "
+	 * r.enUS: "Refreshing the enrollments has succeeded. "
+	 * r: "Commit la connexion SQL a réussi. "
+	 * r.enUS: "Commit the SQL connection succeeded. "
+	 * r: "Fermer la connexion SQL a réussi. "
+	 * r.enUS: "Close the SQL connection has succeeded. "
+	 * r: "Finir à peupler les transactions nouveaux. "
+	 * r.enUS: "Finish populating the new transactions. "
+	 * r: "Fermer la connexion SQL a échoué. "
+	 * r.enUS: "Close the SQL connection has failed. "
+	 * r: "Commit la connexion SQL a échoué. "
+	 * r.enUS: "Commit the SQL connection has failed. "
+	 * r: "Recharger les inscriptions a échoué. "
+	 * r.enUS: "Refresh the enrollments failed. "
+	 * r: "Authorize.net paiements a échoué. \n%s"
+	 * r.enUS: "Authorize.net payments have failed. \n%s"
+	 * r: "Init SQL a échoué. "
+	 * r.enUS: "Init SQL failed. "
+	 * r: "Authorize.net WorkerExecutor.executeBlocking a réussi. "
+	 * r.enUS: "Authorize.net WorkerExecutor.executeBlocking succeeded. "
+	 * r: "Authorize.net WorkerExecutor.executeBlocking a échoué. "
+	 * r.enUS: "Authorize.net WorkerExecutor.executeBlocking failed. "
+	 * r: PaiementScolaireFrFRGenApiServiceImpl
+	 * r.enUS: SchoolPaymentEnUSGenApiServiceImpl
+	 * r: InscriptionScolaireFrFRGenApiServiceImpl
+	 * r.enUS: SchoolEnrollmentEnUSGenApiServiceImpl
+	 * r: PaiementScolaireFrFRGenApiService
+	 * r.enUS: SchoolPaymentEnUSGenApiService
+	 * r: InscriptionScolaireFrFRGenApiService
+	 * r.enUS: SchoolEnrollmentEnUSGenApiService
+	 * r: inscriptionScolaire
+	 * r.enUS: schoolEnrollment
+	 * r: InscriptionCles
+	 * r.enUS: EnrollmentKeys
+	 * r: InscriptionScolaire
+	 * r.enUS: SchoolEnrollment
+	 * r: listeRechercheInscription
+	 * r.enUS: searchListEnrollment
+	 * r: enfantPrenomPrefere
+	 * r.enUS: childFirstNamePreferred
+	 * r: merePrenomPrefere
+	 * r.enUS: momFirstNamePreferred
+	 * r: perePrenomPrefere
+	 * r.enUS: dadFirstNamePreferred
+	 * r: enfantPrenom
+	 * r.enUS: childFirstName
+	 * r: enfantFamilleNom
+	 * r.enUS: childFamilyName
+	 * r: setSiteContexte
+	 * r.enUS: setSiteContext
+	 * r: ExecuteurTravailleur
+	 * r.enUS: WorkerExecutor
+	 * r: initLoinRequeteSiteFrFR
+	 * r.enUS: initDeepSiteRequestEnUS
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: RequeteSiteFrFR
+	 * r.enUS: SiteRequestEnUS
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: RequeteSite
+	 * r.enUS: SiteRequest
+	 * r: initLoinListeRecherche
+	 * r.enUS: initDeepSearchList
+	 * r: ListeRecherche
+	 * r.enUS: SearchList
+	 * r: initLoinPaiementScolaire
+	 * r.enUS: initDeepSchoolPayment
+	 * r: indexerPaiementScolaire
+	 * r.enUS: indexSchoolPayment
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 * r: setPaiementPar
+	 * r.enUS: setPaymentBy
+	 * r: paiement
+	 * r.enUS: payment
+	 * r: PaiementMontant
+	 * r.enUS: PaymentAmount
+	 * r: PaiementDate
+	 * r.enUS: PaymentDate
+	 * r: PaiementSysteme
+	 * r.enUS: PaymentSystem
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: ConnexionSql
+	 * r.enUS: SqlConnection
+	 * r: erreurAppliVertx
+	 * r.enUS: errorAppVertx
+	 * r: sessionJourDebut
+	 * r.enUS: sessionStartDate
+	 * r: sessionJourFin
+	 * r.enUS: sessionEndDate
+	 * r: inscriptionDateFrais
+	 * r.enUS: enrollmentChargeDate
+	 * r: futureAuthorizeNetFraisInscription
+	 * r.enUS: futureAuthorizeNetEnrollmentCharges
+	 * r: listeRecherche
+	 * r.enUS: searchList
+	 * 
+	 * r: supprime
+	 * r.enUS: deleted
+	 * r: archive
+	 * r.enUS: archived
+	 * r: inscriptionCle
+	 * r.enUS: enrollmentKey
+	 * r: paiementCle
+	 * r.enUS: paymentKey
+	 * r: paiementService
+	 * r.enUS: paymentService
+	 * r: inscriptionService
+	 * r.enUS: enrollmentService
+	 * r: operationRequete
+	 * r.enUS: operationRequest
+	 * r: ObjetJson
+	 * r.enUS: JsonObject
+	 * r: debut
+	 * r.enUS: start
+	 * r: cree
+	 * r.enUS: created
+	 * r: Paiement
+	 * r.enUS: Payment
+	 */  
+	private Promise<Void> configurerAuthorizeNetFrais() {
+		ConfigSite configSite = siteContexteFrFR.getConfigSite();
+		Promise<Void> promise = Promise.promise();
+
+//		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
+		vertx.setPeriodic(1000 * 60, a -> {
+			WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
+			executeurTravailleur.executeBlocking(
+				blockingCodeHandler -> {
+					LOGGER.info("Commencer à peupler les frais nouveaux. ");
+					ZonedDateTime debut = ZonedDateTime.now();
+					RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
+					requeteSite.setVertx(vertx);
+					requeteSite.setSiteContexte_(siteContexteFrFR);
+					requeteSite.setConfigSite_(siteContexteFrFR.getConfigSite());
+					requeteSite.initLoinRequeteSiteFrFR(requeteSite);
+					requeteSite.setObjetJson(new JsonObject());
+		
+					sqlInit(requeteSite, b -> {
+						if(b.succeeded()) {
+							LOGGER.info("Init SQL a réussi. ");
+							try {
+								PaiementScolaireFrFRGenApiServiceImpl paiementService = new PaiementScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
+								InscriptionScolaireFrFRGenApiServiceImpl inscriptionService = new InscriptionScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
+
+								ZonedDateTime sessionJourDebut = ZonedDateTime.now().plusMonths(1);
+								// Mar 26 is last late fee. 
+								// Mar 1 + 2 month = May 1 < May 20 last day
+								ZonedDateTime sessionJourFin = ZonedDateTime.now().plusMonths(2);
+								ZonedDateTime inscriptionDateFrais = ZonedDateTime.now().plusMonths(1);
+
+								ListeRecherche<InscriptionScolaire> listeRechercheInscription = new ListeRecherche<InscriptionScolaire>();
+								listeRechercheInscription.setStocker(true);
+								listeRechercheInscription.setQuery("*:*");
+								listeRechercheInscription.setC(InscriptionScolaire.class);
+								listeRechercheInscription.addFilterQuery("sessionJourDebut_indexed_date:[* TO " + dateFormat.format(sessionJourDebut) + "]");
+								listeRechercheInscription.addFilterQuery("sessionJourFin_indexed_date:[" + dateFormat.format(sessionJourFin) + " TO *]");
+								listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
+								listeRechercheInscription.addFilterQuery("pk_indexed_long:15186");// TODO: delete
+								listeRechercheInscription.initLoinListeRecherche(requeteSite);
+				
+								futureAuthorizeNetFraisInscription(listeRechercheInscription, paiementService, c -> {
+									if(c.succeeded()) {
+										try {
+											ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+											listeRecherche.setStocker(true);
+											listeRecherche.setQuery("*:*");
+											listeRecherche.setC(PaiementScolaire.class);
+											listeRecherche.addFilterQuery("cree_indexed_date:[" + dateFormat.format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
+											listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+											listeRecherche.setRows(100);
+											listeRecherche.initLoinListeRecherche(requeteSite);
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+											List<SimpleOrderedMap> inscriptionCles = (List<SimpleOrderedMap>)Optional.ofNullable((SimpleOrderedMap)facets.get("inscriptionCles")).map(m -> ((List<List<SimpleOrderedMap>>)m.getAll("bucket"))).orElse(Arrays.asList()).stream().findFirst().orElse(new ArrayList<SimpleOrderedMap>());
+			
+											List<Future> futures = new ArrayList<>();
+											LOGGER.info(String.format("Il y a %s inscriptions à recharger. ", inscriptionCles.size()));
+											for(SimpleOrderedMap inscriptionCleMap : inscriptionCles) {
+												Long inscriptionCle  = Long.parseLong(inscriptionCleMap.get("val").toString());
+												InscriptionScolaire inscriptionScolaire = new InscriptionScolaire();
+												inscriptionScolaire.setPk(inscriptionCle);
+												inscriptionScolaire.setRequeteSite_(requeteSite);
+												futures.add(
+													inscriptionService.futurePATCHInscriptionScolaire(inscriptionScolaire, d -> {
+														if(d.succeeded()) {
+															LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
+														} else {
+															LOGGER.error(String.format("inscription %s a échoué. ", inscriptionCle), d.cause());
+															blockingCodeHandler.handle(Future.failedFuture(d.cause()));
+														}
+													})
+												);
+											}
+											CompositeFuture.all(futures).setHandler(d -> {
+												if(d.succeeded()) {
+													List<Future> futuresPaiement = new ArrayList<>();
+													LOGGER.info(String.format("Il y a %s paiements à recharger. ", inscriptionCles.size()));
+													for(PaiementScolaire paiement : listeRecherche.getList()) {
+														futuresPaiement.add(
+															paiementService.futurePATCHPaiementScolaire(paiement, e -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("paiement %s rechargé. ", paiement.getPk()));
+																} else {
+																	LOGGER.error(String.format("paiement %s a échoué. ", paiement.getPk()), e.cause());
+																	blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																}
+															})
+														);
+													}
+													CompositeFuture.all(futuresPaiement).setHandler(e -> {
+														if(e.succeeded()) {
+															LOGGER.info("Recharger les inscriptions a réussi. ");
+															SQLConnection connexionSql = requeteSite.getConnexionSql();
+															connexionSql.commit(f -> {
+																if(f.succeeded()) {
+																	LOGGER.info("Commit la connexion SQL a réussi. ");
+																	connexionSql.close(g -> {
+																		if(f.succeeded()) {
+																			LOGGER.info("Fermer la connexion SQL a réussi. ");
+																			LOGGER.info("Finir à peupler les transactions nouveaux. ");
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																		} else {
+																			LOGGER.error("Fermer la connexion SQL a échoué. ", g.cause());
+																			erreurAppliVertx(requeteSite, g);
+																		}
+																	});
+																} else {
+																	LOGGER.error("Commit la connexion SQL a échoué. ", f.cause());
+																	erreurAppliVertx(requeteSite, f);
+																}
+															});
+														} else {
+															LOGGER.error("Commit la connexion SQL a échoué. ", e.cause());
+															erreurAppliVertx(requeteSite, e);
+														}
+													});
+												} else {
+													LOGGER.error("Recharger les inscriptions a échoué. ", d.cause());
+													erreurAppliVertx(requeteSite, d);
+												}
+											});
+										} catch (Exception e) {
+											LOGGER.error(String.format("Authorize.net paiements a échoué. \n%s", ExceptionUtils.getStackTrace(e)), ExceptionUtils.getStackTrace(e));
+											erreurAppliVertx(requeteSite, c);
+										}
+									} else {
+										LOGGER.error(String.format("inscriptions ont échoués. "), c.cause());
+										blockingCodeHandler.handle(Future.failedFuture(c.cause()));
+									}
+								});
+							} catch (Exception e) {
+								LOGGER.error(String.format("Authorize.net paiements a échoué. \n%s", ExceptionUtils.getStackTrace(e)), ExceptionUtils.getStackTrace(e));
+								erreurAppliVertx(requeteSite, b);
+							}
+						} else {
+							LOGGER.info("Init SQL a échoué. ");
+							erreurAppliVertx(requeteSite, b);
+						}
+					});
+				}, resultHandler -> {
+					if(resultHandler.succeeded()) {
+						LOGGER.info("Authorize.net WorkerExecutor.executeBlocking a réussi. ");
+					} else {
+						LOGGER.error("Authorize.net WorkerExecutor.executeBlocking a échoué. ", resultHandler.cause());
+					}
+				}
+			);
+		});
+
+		promise.complete();
+		return promise;
+	}
+
+	/**
+	 * Var.enUS: futureAuthorizeNetEnrollmentCharges
+	 * Param1.var.enUS: listSchoolEnrollment
+	 * Param2.var.enUS: paymentService
+	 * Param3.var.enUS: eventHandler
+	 * r: RequeteSiteFrFR
+	 * r.enUS: SiteRequestEnUS
+	 * r: RequeteSite
+	 * r.enUS: SiteRequest
+	 * r: listeInscriptionScolaire
+	 * r.enUS: listSchoolEnrollment
+	 * r: futureAuthorizeNetFraisInscription
+	 * r.enUS: futureAuthorizeNetEnrollmentCharges
+	 * r: futureAuthorizeNetFrais
+	 * r.enUS: futureAuthorizeNetCharge
+	 * r: paiementService
+	 * r.enUS: paymentService
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: erreurAppliVertx
+	 * r.enUS: errorAppVertx
+	 * r: gestionnaireEvenements
+	 * r.enUS: eventHandler
+	 * r: "Créer un frais a réussi. "
+	 * r.enUS: "Create a charge succeeded. "
+	 * r: "Créer une liste de frais a réussi. "
+	 * r.enUS: "Create a list of charges has succeeded. "
+	 */
+	public void futureAuthorizeNetFraisInscription(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, PaiementScolaireFrFRGenApiServiceImpl paiementService, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		List<Future> futures = new ArrayList<>();
+		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+		listeInscriptionScolaire.getList().forEach(o -> {
+			futures.add(
+				futureAuthorizeNetFrais(o, paiementService, requeteSite, a -> {
+					if(a.succeeded()) {
+						LOGGER.info("Créer un frais a réussi. ");
+					} else {
+						erreurAppliVertx(requeteSite, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				if(listeInscriptionScolaire.next()) {
+					futureAuthorizeNetFraisInscription(listeInscriptionScolaire, paiementService, gestionnaireEvenements);
+					LOGGER.info("Créer une liste de frais a réussi. ");
+				} else {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				}
+			} else {
+				erreurAppliVertx(listeInscriptionScolaire.getRequeteSite_(), a);
+			}
+		});
+	}
+
+	/**
+	 * Var.enUS: futureAuthorizeNetCharge
+	 * Param1.var.enUS: schoolEnrollment
+	 * Param2.var.enUS: paymentService
+	 * Param3.var.enUS: siteRequest
+	 * 
+	 * r: "paiement %s créé pour transaction %s. "
+	 * r.enUS: "payment %s created for transaction %s. "
+	 * r: "créer paiement %s a échoué pour transaction %s. "
+	 * r.enUS: "creating payment %s failed for transaction %s. "
+	 * r: listeRechercheInscription
+	 * r.enUS: searchListEnrollment
+	 * r: ListeRecherche
+	 * r.enUS: SearchList
+	 * r: listeRecherche
+	 * r.enUS: searchList
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 * r: InscriptionScolaire
+	 * r.enUS: SchoolEnrollment
+	 * r: initLoin
+	 * r.enUS: initDeep
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: PaiementPar
+	 * r.enUS: PaymentBy
+	 * r: InscriptionCle
+	 * r.enUS: EnrollmentKey
+	 * r: inscriptionCle
+	 * r.enUS: enrollmentKey
+	 * r: "paiement %s créé. "
+	 * r.enUS: "payment %s created. "
+	 * r: enfantFamilleNom
+	 * r.enUS: childFamilyName
+	 * r: paiementService
+	 * r.enUS: paymentService
+	 * r: initLoinRequeteSiteFrFR
+	 * r.enUS: initDeepSiteRequestEnUS
+	 * r: RequeteSiteFrFR
+	 * r.enUS: SiteRequestEnUS
+	 * r: RequeteSite
+	 * r.enUS: SiteRequest
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: PaiementMontant
+	 * r.enUS: PaymentAmount
+	 * r: PaiementDate
+	 * r.enUS: PaymentDate
+	 * r: PaiementSysteme
+	 * r.enUS: PaymentSystem
+	 * r: perePrenomPrefere
+	 * r.enUS: dadFirstNamePreferred
+	 * r: merePrenomPrefere
+	 * r.enUS: momFirstNamePreferred
+	 * r: enfantPrenomPrefere
+	 * r.enUS: childFirstNamePreferred
+	 * r: perePrenom
+	 * r.enUS: dadFirstName
+	 * r: merePrenom
+	 * r.enUS: momFirstName
+	 * r: enfantPrenom
+	 * r.enUS: childFirstName
+	 * r: inscriptionScolaire
+	 * r.enUS: schoolEnrollment
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: FraisMois
+	 * r.enUS: ChargeMonth
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: paiementsDu
+	 * r.enUS: paymentsDue
+	 * r: paiementDu
+	 * r.enUS: paymentDue
+	 * r: SessionJourDebut
+	 * r.enUS: SessionStartDate
+	 * r: SessionJourFin
+	 * r.enUS: SessionEndDate
+	 * r: sessionJourDebut
+	 * r.enUS: sessionStartDate
+	 * r: sessionJourFin
+	 * r.enUS: sessionEndDate
+	 * r: numMois
+	 * r.enUS: numMonths
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: BlocPrixParMois
+	 * r.enUS: BlockPricePerMonth
+	 * r: SiteContexte
+	 * r.enUS: SiteContext
+	 * r: ObjetJson
+	 * r.enUS: JsonObject
+	 * r: ConnexionSql
+	 * r.enUS: SqlConnection
+	 * r: "frais %s créé pour inscription %s. "
+	 * r.enUS: "charge %s created for enrollment %s. "
+	 * r: "créer frais %s a échoué pour inscription %s. "
+	 * r.enUS: "create fee %s failed for enrollment %s. "
+	 * r: "Des frais créé pour inscription %s. "
+	 * r.enUS: "Charges created for enrollment %s. "
+	 * r: "Créer des frais a échoué pour inscription %s. "
+	 * r.enUS: "Creating charges has failed for enrollment %s. "
+	 * r: futureAuthorizeNetFraisPOST
+	 * r.enUS: futureAuthorizeNetChargePOST
+	 * 
+	 * r: paiement
+	 * r.enUS: payment
+	 * r: supprime
+	 * r.enUS: deleted
+	 */
+	public Future<Void> futureAuthorizeNetFrais(
+			InscriptionScolaire inscriptionScolaire
+			, PaiementScolaireFrFRGenApiServiceImpl paiementService
+			, RequeteSiteFrFR requeteSite
+			,  Handler<AsyncResult<OperationResponse>> a) {
+		Promise<Void> promise = Promise.promise();
+		try {
+
+			ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+			listeRecherche.setStocker(true);
+			listeRecherche.setQuery("*:*");
+			listeRecherche.setC(PaiementScolaire.class);
+			listeRecherche.addFilterQuery("inscriptionCles_indexed_long:" + inscriptionScolaire.getPk());
+			listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+			listeRecherche.add("json.facet", "{paiementDu:{terms:{field:paiementDu_indexed_date, limit:1000}}}");
+			listeRecherche.add("json.facet", "{fraisInscription:{terms:{field:fraisInscription_indexed_boolean, limit:1000}}}");
+			listeRecherche.add("json.facet", "{fraisPremierDernier:{terms:{field:fraisPremierDernier_indexed_boolean, limit:1000}}}");
+			listeRecherche.setRows(0);
+			listeRecherche.initLoinListeRecherche(requeteSite);
+
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			Integer fraisInscription = Optional.ofNullable((SimpleOrderedMap)facets.get("fraisInscription")).map(m -> ((List<SimpleOrderedMap>)m.getAll("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
+			Integer fraisPremierDernier = Optional.ofNullable((SimpleOrderedMap)facets.get("fraisPremierDernier")).map(m -> ((List<SimpleOrderedMap>)m.getAll("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
+			List<LocalDate> paiementsDu = Optional.ofNullable((SimpleOrderedMap)facets.get("paiementDu")).map(m -> ((List<SimpleOrderedMap>)m.getAll("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> LocalDate.parse((String)m.get("val"), dateFormat), Collectors.toList()));
+			ConfigSite configSite = siteContexteFrFR.getConfigSite();
+			LocalDate sessionJourDebut = inscriptionScolaire.getSessionJourDebut();
+			LocalDate sessionJourFin = inscriptionScolaire.getSessionJourFin();
+			LocalDate fraisJourDebut = sessionJourDebut.plusWeeks(1).withDayOfMonth(25);
+			LocalDate fraisJourFin = sessionJourFin.minusWeeks(1).minusMonths(2).withDayOfMonth(25);
+			Long inscriptionCle = inscriptionScolaire.getPk();
+			long numMois = ChronoUnit.MONTHS.between(fraisJourDebut, fraisJourFin);
+			List<Future> futures = new ArrayList<>();
+			for(long i = 0; i < numMois; i++) {
+				LocalDate paiementDu = fraisJourDebut.plusMonths(i);
+				if(!paiementsDu.contains(paiementDu)) {
+					PaiementScolaire o = new PaiementScolaire();
+					o.setRequeteSite_(requeteSite);
+					o.setPaiementMontant(inscriptionScolaire.getBlocPrixParMois());
+					o.setPaiementDate(paiementDu);
+					o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
+					o.setFraisMois(true);
+					o.setInscriptionCle(inscriptionScolaire.getPk());
+
+					RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+					requeteSite2.setVertx(vertx);
+					requeteSite2.setSiteContexte_(siteContexteFrFR);
+					requeteSite2.setConfigSite_(siteContexteFrFR.getConfigSite());
+					requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+					requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+					requeteSite2.setObjetJson(JsonObject.mapFrom(o));
+
+					futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("frais %s créé pour inscription %s. ", paiementDu, inscriptionCle));
+						} else {
+							LOGGER.error(String.format("créer frais %s a échoué pour inscription %s. ", paiementDu, inscriptionCle), b.cause());
+							promise.fail(b.cause());
+						}
+					}));
+				}
+			}
+			CompositeFuture.all(futures).setHandler(b -> {
+				if(b.succeeded()) {
+					LOGGER.info(String.format("Des frais créé pour inscription %s. ", inscriptionCle));
+					promise.complete();
+				} else {
+					LOGGER.error(String.format("Créer des frais a échoué pour inscription %s. ", inscriptionCle), b.cause());
+					promise.fail(b.cause());
+				}
+			});
+
+			return promise.future();
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	/**
+	 * Var.enUS: futureAuthorizeNetChargePOST
+	 * Param2.var.enUS: paymentService
+	 * Param3.var.enUS: siteRequest
+	 * 
+	 * r: inscriptionCle
+	 * r.enUS: enrollmentKey
+	 * r: paiementScolaire
+	 * r.enUS: schoolPayment
+	 * r: InscriptionCle
+	 * r.enUS: EnrollmentKey
+	 * r: sqlPOSTPaiementScolaire
+	 * r.enUS: sqlPOSTSchoolPayment
+	 * r: paiementService
+	 * r.enUS: paymentService
+	 * r: definirPaiementScolaire
+	 * r.enUS: defineSchoolPayment
+	 * r: attribuerPaiementScolaire
+	 * r.enUS: attributeSchoolPayment
+	 * r: indexerPaiementScolaire
+	 * r.enUS: indexSchoolPayment
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: creerPaiementScolaire
+	 * r.enUS: createSchoolPayment
+	 * r: erreurPaiementScolaire
+	 * r.enUS: errorSchoolPayment
+	 * r: PaiementDate
+	 * r.enUS: PaymentDate
+	 * r: "frais %s créé %s pour inscription %s. "
+	 * r.enUS: "charge %s created %s for enrollment %s. "
+	 * r: "créer frais a échoué pour inscription %s. "
+	 * r.enUS: "Creating charge has failed for enrollment %s. "
+	 * 
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 */
+	public Future<PaiementScolaire> futureAuthorizeNetFraisPOST(
+			PaiementScolaire o
+			, PaiementScolaireFrFRGenApiServiceImpl paiementService
+			, RequeteSiteFrFR requeteSite
+			,  Handler<AsyncResult<OperationResponse>> a) {
+		Promise<PaiementScolaire> promise = Promise.promise();
+		Long inscriptionCle = o.getInscriptionCle();
+		paiementService.creerPaiementScolaire(requeteSite, b -> {
+			if(b.succeeded()) {
+				PaiementScolaire paiementScolaire = b.result();
+				paiementService.sqlPOSTPaiementScolaire(paiementScolaire, c -> {
+					if(c.succeeded()) {
+						paiementService.definirPaiementScolaire(paiementScolaire, d -> {
+							if(d.succeeded()) {
+								paiementService.attribuerPaiementScolaire(paiementScolaire, e -> {
+									if(e.succeeded()) {
+										paiementService.indexerPaiementScolaire(paiementScolaire, f -> {
+											if(c.succeeded()) {
+												promise.complete(paiementScolaire);
+												LOGGER.info(String.format("frais %s créé %s pour inscription %s. ", paiementScolaire.getPk(), paiementScolaire.getPaiementDate(), inscriptionCle));
+											} else {
+												LOGGER.error(String.format("créer frais a échoué pour inscription %s. ", inscriptionCle), c.cause());
+												promise.fail(c.cause());
+											}
+										});
+									} else {
+										paiementService.erreurPaiementScolaire(requeteSite, a, e);
+									}
+								});
+							} else {
+								paiementService.erreurPaiementScolaire(requeteSite, a, d);
+							}
+						});
+					} else {
+						paiementService.erreurPaiementScolaire(requeteSite, a, c);
+					}
+				});
+			} else {
+				paiementService.erreurPaiementScolaire(requeteSite, a, b);
+			}
+		});
+		return promise.future();
+	}
+
+	/**
+	 * Var.enUS: configureAuthorizeNetPayments
 	 * 
 	 * enUS: Configure payments with Authorize.net. 
 	 * 
@@ -849,8 +1495,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: PaymentDate
 	 * r: PaiementSysteme
 	 * r.enUS: PaymentSystem
-	 * r: setPeupler
-	 * r.enUS: setPopulate
+	 * r: setStocker
+	 * r.enUS: setStore
 	 * r: ConnexionSql
 	 * r.enUS: SqlConnection
 	 * r: erreurAppliVertx
@@ -878,7 +1524,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: Paiement
 	 * r.enUS: Payment
 	 */  
-	private Promise<Void> configurerAuthorizeNet() {
+	private Promise<Void> configurerAuthorizeNetPaiements() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Promise<Void> promise = Promise.promise();
 
@@ -915,9 +1561,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 								GetSettledBatchListRequest batchRequest = new GetSettledBatchListRequest();
 								batchRequest.setMerchantAuthentication(merchantAuthenticationType);
 								batchRequest.setFirstSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now()
-										.minusDays(7).atStartOfDay(ZoneId.of("America/Denver")))));
+										.minusDays(7).atStartOfDay(ZoneId.of(configSite.getSiteZone())))));
 								batchRequest.setLastSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now()
-										.plusDays(1).atStartOfDay(ZoneId.of("America/Denver")))));
+										.plusDays(1).atStartOfDay(ZoneId.of(configSite.getSiteZone())))));
 				
 								GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);
 								GetSettledBatchListController.setEnvironment(Environment.PRODUCTION);
@@ -946,10 +1592,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 									if(c.succeeded()) {
 										try {
 											ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
-											listeRecherche.setPeupler(true);
+											listeRecherche.setStocker(true);
 											listeRecherche.setQuery("*:*");
 											listeRecherche.setC(PaiementScolaire.class);
-											listeRecherche.addFilterQuery("cree_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
+											listeRecherche.addFilterQuery("cree_indexed_date:[" + dateFormat.format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
 											listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
 											listeRecherche.setRows(1000);
 											listeRecherche.initLoinListeRecherche(requeteSite);
@@ -1213,8 +1859,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolEnrollment
 	 * r: initLoin
 	 * r.enUS: initDeep
-	 * r: setPeupler
-	 * r.enUS: setPopulate
+	 * r: setStocker
+	 * r.enUS: setStore
 	 * r: PaiementPar
 	 * r.enUS: PaymentBy
 	 * r: InscriptionCle
@@ -1277,7 +1923,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 			if(transaction.getTransId() != null) {
 				ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
-				listeRecherche.setPeupler(true);
+				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PaiementScolaire.class);
 				listeRecherche.addFilterQuery("transactionId_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getTransId()));
@@ -1287,7 +1933,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					String firstName = StringUtils.substringBefore(transaction.getFirstName(), " ");
 					String lastName = transaction.getLastName();
 					ListeRecherche<InscriptionScolaire> listeRechercheInscription = new ListeRecherche<InscriptionScolaire>();
-					listeRechercheInscription.setPeupler(true);
+					listeRechercheInscription.setStocker(true);
 					listeRechercheInscription.setQuery("*:*");
 					listeRechercheInscription.setC(InscriptionScolaire.class);
 					listeRechercheInscription.addFilterQuery(
@@ -1303,7 +1949,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 					if(listeRechercheInscription.getList().size() == 1) {
 						Long inscriptionCle = listeRechercheInscription.getList().get(0).getPk();
-						paiement.addInscriptionCles(inscriptionCle);
+						paiement.setInscriptionCle(inscriptionCle);
 					}
 					paiementService.postPaiementScolaire(JsonObject.mapFrom(paiement), null, c -> {
 						if(c.succeeded()) {

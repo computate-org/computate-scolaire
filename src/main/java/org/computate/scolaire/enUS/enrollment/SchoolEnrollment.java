@@ -215,6 +215,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(moms.get(0).getPersonFirstNamePreferred());
 	}
 
+	protected void _momCompleteNamePreferred(Wrap<String> c) {
+		if(moms.size() > 0)
+			c.o(moms.get(0).getPersonCompleteNamePreferred());
+	}
+
 	protected void _dadFirstName(Wrap<String> c) {
 		if(dads.size() > 0)
 			c.o(dads.get(0).getPersonFirstName());
@@ -223,6 +228,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _dadFirstNamePreferred(Wrap<String> c) {
 		if(dads.size() > 0)
 			c.o(dads.get(0).getPersonFirstNamePreferred());
+	}
+
+	protected void _dadCompleteNamePreferred(Wrap<String> c) {
+		if(dads.size() > 0)
+			c.o(dads.get(0).getPersonCompleteNamePreferred());
 	}
 
 	protected void _childCompleteName(Wrap<String> c) {
@@ -457,6 +467,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _customerProfileId(Wrap<String> c) {
+	}
+
+	protected void _enrollmentChargeDate(Wrap<LocalDate> c) {
 	}
 
 	protected void _createdYear(Wrap<Integer> c) {

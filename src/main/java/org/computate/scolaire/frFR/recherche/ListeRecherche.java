@@ -1,7 +1,9 @@
 package org.computate.scolaire.frFR.recherche; 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -119,7 +121,7 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		Long start = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getStart()).orElse(0L);
 		Integer rows = Optional.ofNullable(getRows()).orElse(0);
 		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
-		if((start + rows) < numFound) {
+		if(rows > 0 && (start + rows) < numFound) {
 			try {
 				setStart(start.intValue() + rows);
 				setQueryResponse(requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery));
@@ -1165,11 +1167,19 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ListeRecherche { ");
-		list.stream().forEach(o -> {
-			sb.append(o);
-		});
-		sb.append(" }");
+//		sb.append("ListeRecherche { ");
+//		list.stream().forEach(o -> {
+//			sb.append(o);
+//		});
+//		sb.append(" }");
+//		return sb.toString();
+		
+		try {
+			sb.append(URLDecoder.decode(solrQuery.toString(), "UTF-8")).append("\n");
+		} catch (UnsupportedEncodingException e) {
+			ExceptionUtils.rethrow(e);
+		}
+		sb.append(list.toString());
 		return sb.toString();
 	}
 }

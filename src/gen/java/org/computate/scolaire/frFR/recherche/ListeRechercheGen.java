@@ -616,8 +616,9 @@ public abstract class ListeRechercheGen<DEV> {
 
 	public void requeteApiListeRecherche() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		ListeRecherche original = (ListeRecherche)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof ListeRecherche) {
+			ListeRecherche original = (ListeRecherche)o;
 		}
 	}
 

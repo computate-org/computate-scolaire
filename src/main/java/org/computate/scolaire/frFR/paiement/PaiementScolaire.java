@@ -1,9 +1,9 @@
 package org.computate.scolaire.frFR.paiement;              
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,99 +61,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'école dans la base de données. 
-	 * Description.enUS: The primary key of the school in the database. 
-	 * NomAffichage.frFR: écoles
-	 * NomAffichage.enUS: schools
-	 */
-	protected void _ecoleCles(List<Long> l) {
-	}
-
-	/*
-	 * {@inheritDoc}
-	 * Var.enUS: yearKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de l'paiement scolaire. 
-	 * Description.enUS: The school year of the school child. 
-	 * NomAffichage.frFR: années
-	 * NomAffichage.enUS: years
-	 */          
-	protected void _anneeCles(List<Long> l) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La saison scolaire de l'paiement scolaire. 
-	 * Description.enUS: The school season of the school child. 
-	 * NomAffichage.frFR: saisons
-	 * NomAffichage.enUS: seasons
-	 */          
-	protected void _saisonCle(List<Long> l) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: sessionKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de la session dans la base de données. 
-	 * Description.enUS: The primary key of the school child in the database. 
-	 * NomAffichage.frFR: sessions
-	 * NomAffichage.enUS: sessions
-	 */          
-	protected void _sessionCles(List<Long> l) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: ageKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
-	 * Description.enUS: The primary key of the age in the database. 
-	 * NomAffichage.frFR: âges
-	 * NomAffichage.enUS: ages
-	 */                  
-	protected void _ageCles(List<Long> l) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: blockKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de la session dans la base de données. 
-	 * Description.enUS: The primary key of the school child in the database. 
-	 * NomAffichage.frFR: sessions
-	 * NomAffichage.enUS: sessions
-	 */          
-	protected void _blocCles(List<Long> l) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: enrollmentKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: InscriptionScolaire.paiementCles
-	 * HtmlLigne: 6
-	 * HtmlCellule: 2
-	 * Description.frFR: La clé primaire des enfants dans la base de données. 
-	 * Description.enUS: The primary key of the school children in the database. 
-	 * NomAffichage.frFR: inscriptions
-	 * NomAffichage.enUS: enrollments
-	 */              
-	protected void _inscriptionCles(List<Long> l) {}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: paymentKey
 	 * Indexe: true
 	 * Stocke: true
@@ -168,63 +75,18 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: childKeys
+	 * Var.enUS: enrollmentKey
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: InscriptionScolaire.paiementCles
+	 * HtmlLigne: 6
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
-	 * Description.enUS: The primary key of the school childs in the database. 
-	 * NomAffichage.frFR: enfants
-	 * NomAffichage.enUS: childs
-	 */               
-	protected void _enfantCles(List<Long> o) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: momKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire des mères dans la base de données. 
-	 * Description.enUS: The primary key of the school moms in the database. 
-	 * NomAffichage.frFR: mères
-	 * NomAffichage.enUS: moms
-	 */               
-	protected void _mereCles(List<Long> o) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: dadKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire des pères dans la base de données. 
-	 * Description.enUS: The primary key of the school dads in the database. 
-	 * NomAffichage.frFR: pères
-	 * NomAffichage.enUS: dads
-	 */               
-	protected void _pereCles(List<Long> o) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: guardianKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
-	 * Description.enUS: The primary key of the school gardians in the database. 
-	 * NomAffichage.frFR: gardiens
-	 * NomAffichage.enUS: guardians
-	 */               
-	protected void _gardienCles(List<Long> o) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: contactKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
-	 * Description.enUS: The primary key of the school emergency contacts in the database. 
-	 * NomAffichage.frFR: contacts d'urgence
-	 * NomAffichage.enUS: emergency contacts
-	 */               
-	protected void _contactCles(List<Long> o) {}
+	 * Description.enUS: The primary key of the school children in the database. 
+	 * NomAffichage.frFR: inscription
+	 * NomAffichage.enUS: enrollment
+	 */             
+	protected void _inscriptionCle(Couverture<Long> c) {}
 
 	/**
 	 * Var.enUS: enrollmentSearch
@@ -251,9 +113,602 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Ignorer: true
 	 */   
 	protected void _inscription_(Couverture<InscriptionScolaire> c) {
-		if(inscriptionRecherche.size() > 0) {
+		if(inscriptionRecherche.size() == 1) {
 			c.o(inscriptionRecherche.get(0));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de l'école dans la base de données. 
+	 * Description.enUS: The primary key of the school in the database. 
+	 * NomAffichage.frFR: écoles
+	 * NomAffichage.enUS: schools
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: EcoleCle
+	 * r.enUS: SchoolKey
+	 */
+	protected void _ecoleCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de l'paiement scolaire. 
+	 * Description.enUS: The school year of the school child. 
+	 * NomAffichage.frFR: années
+	 * NomAffichage.enUS: years
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: AnneeCle
+	 * r.enUS: YearKey
+	 */         
+	protected void _anneeCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAnneeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La saison scolaire de l'paiement scolaire. 
+	 * Description.enUS: The school season of the school child. 
+	 * NomAffichage.frFR: saisons
+	 * NomAffichage.enUS: seasons
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: SaisonCle
+	 * r.enUS: SeasonKey
+	 */          
+	protected void _saisonCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getSaisonCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: sessionKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de la session dans la base de données. 
+	 * Description.enUS: The primary key of the school child in the database. 
+	 * NomAffichage.frFR: sessions
+	 * NomAffichage.enUS: sessions
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: SessionCle
+	 * r.enUS: SessionKey
+	 */          
+	protected void _sessionCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getSessionCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
+	 * Description.enUS: The primary key of the age in the database. 
+	 * NomAffichage.frFR: âges
+	 * NomAffichage.enUS: ages
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: AgeCle
+	 * r.enUS: AgeKey
+	 */                  
+	protected void _ageCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAgeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de la session dans la base de données. 
+	 * Description.enUS: The primary key of the school child in the database. 
+	 * NomAffichage.frFR: sessions
+	 * NomAffichage.enUS: sessions
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: BlocCle
+	 * r.enUS: BlockKey
+	 */          
+	protected void _blocCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getBlocCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire des enfants dans la base de données. 
+	 * Description.enUS: The primary key of the school childs in the database. 
+	 * NomAffichage.frFR: enfants
+	 * NomAffichage.enUS: childs
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: EnfantCle
+	 * r.enUS: ChildKey
+	 */               
+	protected void _enfantCle(Couverture<Long> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEnfantCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: momKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire des mères dans la base de données. 
+	 * Description.enUS: The primary key of the school moms in the database. 
+	 * NomAffichage.frFR: mères
+	 * NomAffichage.enUS: moms
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: MereCles
+	 * r.enUS: MomKeys
+	 */               
+	protected void _mereCles(List<Long> l) {
+		if(inscription_ != null)
+			l.addAll(inscription_.getMereCles());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire des pères dans la base de données. 
+	 * Description.enUS: The primary key of the school dads in the database. 
+	 * NomAffichage.frFR: pères
+	 * NomAffichage.enUS: dads
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: PereCles
+	 * r.enUS: DadKeys
+	 */               
+	protected void _pereCles(List<Long> l) {
+		if(inscription_ != null)
+			l.addAll(inscription_.getPereCles());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: guardianKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
+	 * Description.enUS: The primary key of the school gardians in the database. 
+	 * NomAffichage.frFR: gardiens
+	 * NomAffichage.enUS: guardians
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: GardienCles
+	 * r.enUS: GuardianKeys
+	 */               
+	protected void _gardienCles(List<Long> l) {
+		if(inscription_ != null)
+			l.addAll(inscription_.getGardienCles());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childCompleteNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: inscription_
+	 * r.enUS: enrollment_
+	 * r: EnfantNomCompletPrefere
+	 * r.enUS: ChildCompleteNamePreferred
+	 */  
+	protected void _enfantNomCompletPrefere(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEnfantNomCompletPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: inscription_
+	 * r.enUS: enrollment_
+	 * r: EnfantDateNaissance
+	 * r.enUS: ChildBirthDate
+	 */    
+	protected void _enfantDateNaissance(Couverture<LocalDate> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEnfantDateNaissance());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: momCompleteNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: inscription_
+	 * r.enUS: enrollment_
+	 * r: MereNomCompletPrefere
+	 * r.enUS: MomCompleteNamePreferred
+	 */  
+	protected void _mereNomCompletPrefere(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getMereNomCompletPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadCompleteNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: inscription_
+	 * r.enUS: enrollment_
+	 * r: PereNomCompletPrefere
+	 * r.enUS: DadCompleteNamePreferred
+	 */  
+	protected void _pereNomCompletPrefere(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getPereNomCompletPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleNom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolCompleteName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNomComplet
+	 * r.enUS: SchoolCompleteName
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */   
+	protected void _ecoleNomComplet(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */           
+	protected void _ecoleEmplacement(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleEmplacement());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearStart
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: début de l'année
+	 * NomAffichage.enUS: start of year
+	 * r: AnneeDebut
+	 * r.enUS: YearStart
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */               
+	protected void _anneeDebut(Couverture<Integer> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAnneeDebut());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearEnd
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFin
+	 * r.enUS: YearEnd
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                     
+	protected void _anneeFin(Couverture<Integer> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAnneeFin());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonStartDate
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: début de l'année
+	 * NomAffichage.enUS: start of season
+	 * r: SaisonJourDebut
+	 * r.enUS: SeasonStartDate
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                  
+	protected void _saisonJourDebut(Couverture<LocalDate> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getSaisonJourDebut());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonSummer
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: été
+	 * NomAffichage.enUS: summer
+	 * r: SaisonEte
+	 * r.enUS: SeasonSummer
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                   
+	protected void _saisonEte(Couverture<Boolean> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getSaisonEte());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonWinter
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: hiver
+	 * NomAffichage.enUS: winter
+	 * r: SaisonHiver
+	 * r.enUS: SeasonWinter
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                   
+	protected void _saisonHiver(Couverture<Boolean> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getSaisonHiver());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearEnrollmentFee
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAnneeFraisInscription());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: sessionStartDate
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: début de la session
+	 * NomAffichage.enUS: start of the session
+	 * r: SessionJourDebut
+	 * r.enUS: SessionStartDate
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                   
+	protected void _sessionJourDebut(Couverture<LocalDate> c) {
+		if(inscription_ != null)
+			c.o((LocalDate)inscription_.getSessionJourDebut());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: sessionEndDate
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: fin de la session
+	 * NomAffichage.enUS: end of the session
+	 * r: SessionJourFin
+	 * r.enUS: SessionEndDate
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                   
+	protected void _sessionJourFin(Couverture<LocalDate> c) {
+		if(inscription_ != null)
+			c.o((LocalDate)inscription_.getSessionJourFin());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageStart
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: début du groupe d'âge
+	 * NomAffichage.enUS: start of the age group
+	 * r: AgeDebut
+	 * r.enUS: AgeStart
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                   
+	protected void _ageDebut(Couverture<Integer> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAgeDebut());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageEnd
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: fin du groupe d'âge
+	 * NomAffichage.enUS: end of the age group
+	 * r: AgeFin
+	 * r.enUS: AgeEnd
+	 * r: inscription
+	 * r.enUS: enrollment
+	 */                   
+	protected void _ageFin(Couverture<Integer> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getAgeFin());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockStartTime
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: heure début
+	 * NomAffichage.enUS: start time
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: BlocHeureDebut
+	 * r.enUS: BlockStartTime
+	 */                   
+	protected void _blocHeureDebut(Couverture<LocalTime> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getBlocHeureDebut());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockEndTime
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: heure fin
+	 * NomAffichage.enUS: end time
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: BlocHeureFin
+	 * r.enUS: BlockEndTime
+	 */                   
+	protected void _blocHeureFin(Couverture<LocalTime> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getBlocHeureFin());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockPricePerMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prix par mois
+	 * NomAffichage.enUS: price per month
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: BlocPrixParMois
+	 * r.enUS: BlockPricePerMonth
+	 */                   
+	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getBlocPrixParMois());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockTotalPrice
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prix total
+	 * NomAffichage.enUS: total price
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: BlocPrixTotal
+	 * r.enUS: BlockTotalPrice
+	 */                   
+	protected void _blocPrixTotal(Couverture<BigDecimal> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getBlocPrixTotal());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPaymentEachMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: paiement chaque mois
+	 * NomAffichage.enUS: payment each month
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
+	 */                   
+	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPaymentComplete
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: paiement complet
+	 * NomAffichage.enUS: complete payment
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 */                       
+	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -295,10 +750,68 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 2
-	 * NomAffichage.frFR: montant
-	 * NomAffichage.enUS: amount
+	 * NomAffichage.frFR: paiement montant
+	 * NomAffichage.enUS: payment amount
 	 */                    
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmount
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: frais montant
+	 * NomAffichage.enUS: charge amount
+	 */                    
+	protected void _fraisMontant(Couverture<BigDecimal> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountFuture
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: frais montant future
+	 * NomAffichage.enUS: future charge amount
+	 */                    
+	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeEnrollment
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: frais d'inscription
+	 * NomAffichage.enUS: enrollment fee
+	 */                    
+	protected void _fraisInscription(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeFirstLast
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: frais mois premier et dernier
+	 * NomAffichage.enUS: first and last month charge
+	 */                    
+	protected void _fraisPremierDernier(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: frais du mois
+	 * NomAffichage.enUS: monthly fee
+	 */                    
+	protected void _fraisMois(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**

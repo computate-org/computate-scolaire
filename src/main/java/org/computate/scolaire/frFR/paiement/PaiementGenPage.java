@@ -99,7 +99,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggerePaiementScolaireInscriptionCles([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCles_Page'), pk); ");
+		tl(2, "suggerePaiementScolaireInscriptionCle([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCle_Page'), pk); ");
 		tl(1, "}");
 		tl(1, "websocketPaiementScolaire(websocketPaiementScolaireInner);");
 		l("});");
@@ -125,7 +125,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("Page");
+			o.htmInscriptionPaimentComplet("Page");
 			o.htmPaiementPar("Page");
+			o.htmInscriptionPaimentChaqueMois("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTransactionId("Page");
@@ -134,7 +136,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDu("Page");
-			o.htmInscriptionCles("Page");
+			o.htmInscriptionCle("Page");
 			o.htmPaiementRecu("Page");
 		} g("div");
 	}
@@ -159,7 +161,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("POST");
+			o.htmInscriptionPaimentComplet("POST");
 			o.htmPaiementPar("POST");
+			o.htmInscriptionPaimentChaqueMois("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTransactionId("POST");
@@ -168,7 +172,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDu("POST");
-			o.htmInscriptionCles("POST");
+			o.htmInscriptionCle("POST");
 			o.htmPaiementRecu("POST");
 		} g("div");
 	}
@@ -191,7 +195,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("PUT");
+			o.htmInscriptionPaimentComplet("PUT");
 			o.htmPaiementPar("PUT");
+			o.htmInscriptionPaimentChaqueMois("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTransactionId("PUT");
@@ -200,8 +206,14 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDu("PUT");
-			o.htmInscriptionCles("PUT");
+			o.htmInscriptionCle("PUT");
 			o.htmPaiementRecu("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnfantNomCompletPrefere("PUT");
+			o.htmEnfantDateNaissance("PUT");
+			o.htmMereNomCompletPrefere("PUT");
+			o.htmPereNomCompletPrefere("PUT");
 		} g("div");
 	}
 
@@ -223,7 +235,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("PATCH");
+			o.htmInscriptionPaimentComplet("PATCH");
 			o.htmPaiementPar("PATCH");
+			o.htmInscriptionPaimentChaqueMois("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTransactionId("PATCH");
@@ -232,8 +246,14 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDu("PATCH");
-			o.htmInscriptionCles("PATCH");
+			o.htmInscriptionCle("PATCH");
 			o.htmPaiementRecu("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnfantNomCompletPrefere("PATCH");
+			o.htmEnfantDateNaissance("PATCH");
+			o.htmMereNomCompletPrefere("PATCH");
+			o.htmPereNomCompletPrefere("PATCH");
 		} g("div");
 	}
 
@@ -257,7 +277,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDescription("Recherche");
+			o.htmInscriptionPaimentComplet("Recherche");
 			o.htmPaiementPar("Recherche");
+			o.htmInscriptionPaimentChaqueMois("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTransactionId("Recherche");
@@ -266,11 +288,15 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaiementDu("Recherche");
-			o.htmInscriptionCles("Recherche");
+			o.htmInscriptionCle("Recherche");
 			o.htmPaiementRecu("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");
+			o.htmEnfantNomCompletPrefere("Recherche");
+			o.htmEnfantDateNaissance("Recherche");
+			o.htmMereNomCompletPrefere("Recherche");
+			o.htmPereNomCompletPrefere("Recherche");
 		} g("div");
 	}
 

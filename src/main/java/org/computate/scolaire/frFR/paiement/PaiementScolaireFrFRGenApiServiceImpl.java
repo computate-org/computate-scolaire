@@ -187,11 +187,33 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "inscriptionCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContexteFrFR.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", l));
-						}
+					case "inscriptionCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("inscriptionCle", pk, "paiementCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
+					case "enfantNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
+					case "enfantDateNaissance":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						break;
+					case "mereNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("mereNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
+					case "pereNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("pereNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionPaimentChaqueMois":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "inscriptionPaimentComplet":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "paiementDescription":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -487,11 +509,33 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				for(Integer i = 0; i < entiteVars.size(); i++) {
 					String entiteVar = entiteVars.getString(i);
 					switch(entiteVar) {
-					case "inscriptionCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContexteFrFR.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", l));
-						}
+					case "inscriptionCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("inscriptionCle", pk, "paiementCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
+					case "enfantNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
+					case "enfantDateNaissance":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						break;
+					case "mereNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("mereNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
+					case "pereNomCompletPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("pereNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionPaimentChaqueMois":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "inscriptionPaimentComplet":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "paiementDescription":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -789,29 +833,75 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
-					case "addInscriptionCles":
-						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", Long.parseLong(requeteJson.getString(methodeNom))));
+					case "setInscriptionCle":
+						o2.setInscriptionCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCle", pk, "paiementCles", o2.getInscriptionCle()));
 						break;
-					case "addAllInscriptionCles":
-						JsonArray addAllInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
-						for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
-							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", addAllInscriptionClesValeurs.getString(i)));
-						}
-						break;
-					case "setInscriptionCles":
-						JsonArray setInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles"));
-						for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
-							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", setInscriptionClesValeurs.getString(i)));
-						}
-						break;
-					case "removeInscriptionCles":
+					case "removeInscriptionCle":
+						o2.setInscriptionCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCle", pk, "paiementCles", o2.getInscriptionCle()));
+						break;
+					case "setEnfantNomCompletPrefere":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomCompletPrefere"));
+						} else {
+							o2.setEnfantNomCompletPrefere(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere(), pk));
+						}
+						break;
+					case "setEnfantDateNaissance":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDateNaissance"));
+						} else {
+							o2.setEnfantDateNaissance(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enfantDateNaissance", o2.jsonEnfantDateNaissance(), pk));
+						}
+						break;
+					case "setMereNomCompletPrefere":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "mereNomCompletPrefere"));
+						} else {
+							o2.setMereNomCompletPrefere(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("mereNomCompletPrefere", o2.jsonMereNomCompletPrefere(), pk));
+						}
+						break;
+					case "setPereNomCompletPrefere":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "pereNomCompletPrefere"));
+						} else {
+							o2.setPereNomCompletPrefere(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("pereNomCompletPrefere", o2.jsonPereNomCompletPrefere(), pk));
+						}
+						break;
+					case "setInscriptionPaimentChaqueMois":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois"));
+						} else {
+							o2.setInscriptionPaimentChaqueMois(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois(), pk));
+						}
+						break;
+					case "setInscriptionPaimentComplet":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet"));
+						} else {
+							o2.setInscriptionPaimentComplet(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
+						}
 						break;
 					case "setPaiementDescription":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -1323,9 +1413,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		if(requeteApi != null) {
 			List<Long> pks = requeteApi.getPks();
 			List<String> classes = requeteApi.getClasses();
-			for(Long pk : o.getInscriptionCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
+			if(o.getInscriptionCle() != null) {
+				if(!pks.contains(o.getInscriptionCle())) {
+					pks.add(o.getInscriptionCle());
 					classes.add("InscriptionScolaire");
 				}
 			}
@@ -1702,29 +1792,28 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PaiementScolaire.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
-				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{inscriptionCle:{terms:{field:inscriptionCle_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
 				{
+					InscriptionScolaire o2 = new InscriptionScolaire();
 					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getInscriptionCles()) {
-						InscriptionScolaire o2 = new InscriptionScolaire();
+					Long pk = o.getInscriptionCle();
 
-						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite2);
-						futures.add(
-							service.futurePATCHInscriptionScolaire(o2, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
-								} else {
-									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
-									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
-					}
+					o2.setPk(pk);
+					o2.setRequeteSite_(requeteSite2);
+					futures.add(
+						service.futurePATCHInscriptionScolaire(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
+							} else {
+								LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {

@@ -776,8 +776,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if(listSearch.getSorts().size() == 0)
+			if(listSearch.getSorts().size() == 0) {
 				listSearch.addSort("created_indexed_date", ORDER.desc);
+			}
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

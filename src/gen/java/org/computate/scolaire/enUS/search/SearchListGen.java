@@ -616,8 +616,9 @@ public abstract class SearchListGen<DEV> {
 
 	public void apiRequestSearchList() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SearchList original = (SearchList)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SearchList) {
+			SearchList original = (SearchList)o;
 		}
 	}
 

@@ -428,7 +428,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -1066,7 +1066,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
+										.a("onclick", "postSchoolChildVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
 										.f().sx("add a child")
 									.g("button");
 								} g("div");
@@ -1211,7 +1211,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
+										.a("onclick", "postSchoolMomVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
 										.f().sx("add a mom")
 									.g("button");
 								} g("div");
@@ -1356,7 +1356,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
+										.a("onclick", "postSchoolDadVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
 										.f().sx("add a dad")
 									.g("button");
 								} g("div");
@@ -1501,7 +1501,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
+										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
 										.f().sx("add a guardian")
 									.g("button");
 								} g("div");
@@ -1609,7 +1609,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setPaymentKeys")
 				.a("id", classApiMethodMethod, "_paymentKeys")
 				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentPaymentKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentPaymentKeys')) : [{'name':'fq','value':'enrollmentKey:", pk, "'}], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 			.fg();
 
 	}
@@ -1621,7 +1621,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentPaymentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/payment?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/payment?fq=enrollmentKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fas fa-search-dollar ").f().g("i");
 								sx("payments");
 							} g("a");
@@ -1646,7 +1646,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+										.a("onclick", "postSchoolPaymentVals({ enrollmentKey: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
 										.f().sx("add a payment")
 									.g("button");
 								} g("div");
@@ -2777,6 +2777,68 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return momFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strMomFirstNamePreferred());
 	}
 
+	//////////////////////////////
+	// momCompleteNamePreferred //
+	//////////////////////////////
+
+	/**	L'entité « momCompleteNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String momCompleteNamePreferred;
+	@JsonIgnore
+	public Wrap<String> momCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("momCompleteNamePreferred").o(momCompleteNamePreferred);
+
+	/**	<br/>L'entité « momCompleteNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momCompleteNamePreferred">Trouver l'entité momCompleteNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _momCompleteNamePreferred(Wrap<String> c);
+
+	public String getMomCompleteNamePreferred() {
+		return momCompleteNamePreferred;
+	}
+
+	public void setMomCompleteNamePreferred(String momCompleteNamePreferred) {
+		this.momCompleteNamePreferred = momCompleteNamePreferred;
+		this.momCompleteNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment momCompleteNamePreferredInit() {
+		if(!momCompleteNamePreferredWrap.alreadyInitialized) {
+			_momCompleteNamePreferred(momCompleteNamePreferredWrap);
+			if(momCompleteNamePreferred == null)
+				setMomCompleteNamePreferred(momCompleteNamePreferredWrap.o);
+		}
+		momCompleteNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrMomCompleteNamePreferred() {
+		return momCompleteNamePreferred;
+	}
+
+	public String strMomCompleteNamePreferred() {
+		return momCompleteNamePreferred == null ? "" : momCompleteNamePreferred;
+	}
+
+	public String jsonMomCompleteNamePreferred() {
+		return momCompleteNamePreferred == null ? "" : momCompleteNamePreferred;
+	}
+
+	public String nomAffichageMomCompleteNamePreferred() {
+		return null;
+	}
+
+	public String htmTooltipMomCompleteNamePreferred() {
+		return null;
+	}
+
+	public String htmMomCompleteNamePreferred() {
+		return momCompleteNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strMomCompleteNamePreferred());
+	}
+
 	//////////////////
 	// dadFirstName //
 	//////////////////
@@ -2899,6 +2961,68 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmDadFirstNamePreferred() {
 		return dadFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strDadFirstNamePreferred());
+	}
+
+	//////////////////////////////
+	// dadCompleteNamePreferred //
+	//////////////////////////////
+
+	/**	L'entité « dadCompleteNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	protected String dadCompleteNamePreferred;
+	@JsonIgnore
+	public Wrap<String> dadCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("dadCompleteNamePreferred").o(dadCompleteNamePreferred);
+
+	/**	<br/>L'entité « dadCompleteNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadCompleteNamePreferred">Trouver l'entité dadCompleteNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _dadCompleteNamePreferred(Wrap<String> c);
+
+	public String getDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred;
+	}
+
+	public void setDadCompleteNamePreferred(String dadCompleteNamePreferred) {
+		this.dadCompleteNamePreferred = dadCompleteNamePreferred;
+		this.dadCompleteNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment dadCompleteNamePreferredInit() {
+		if(!dadCompleteNamePreferredWrap.alreadyInitialized) {
+			_dadCompleteNamePreferred(dadCompleteNamePreferredWrap);
+			if(dadCompleteNamePreferred == null)
+				setDadCompleteNamePreferred(dadCompleteNamePreferredWrap.o);
+		}
+		dadCompleteNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred;
+	}
+
+	public String strDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred == null ? "" : dadCompleteNamePreferred;
+	}
+
+	public String jsonDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred == null ? "" : dadCompleteNamePreferred;
+	}
+
+	public String nomAffichageDadCompleteNamePreferred() {
+		return null;
+	}
+
+	public String htmTooltipDadCompleteNamePreferred() {
+		return null;
+	}
+
+	public String htmDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strDadCompleteNamePreferred());
 	}
 
 	///////////////////////
@@ -7494,6 +7618,84 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////////
+	// enrollmentChargeDate //
+	//////////////////////////
+
+	/**	L'entité « enrollmentChargeDate »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	protected LocalDate enrollmentChargeDate;
+	@JsonIgnore
+	public Wrap<LocalDate> enrollmentChargeDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentChargeDate").o(enrollmentChargeDate);
+
+	/**	<br/>L'entité « enrollmentChargeDate »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentChargeDate">Trouver l'entité enrollmentChargeDate dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentChargeDate(Wrap<LocalDate> c);
+
+	public LocalDate getEnrollmentChargeDate() {
+		return enrollmentChargeDate;
+	}
+
+	public void setEnrollmentChargeDate(LocalDate enrollmentChargeDate) {
+		this.enrollmentChargeDate = enrollmentChargeDate;
+		this.enrollmentChargeDateWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setEnrollmentChargeDate(Instant o) {
+		this.enrollmentChargeDate = LocalDate.from(o);
+		this.enrollmentChargeDateWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SchoolEnrollment setEnrollmentChargeDate(String o) {
+		this.enrollmentChargeDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentChargeDateWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setEnrollmentChargeDate(Date o) {
+		this.enrollmentChargeDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentChargeDateWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentChargeDateInit() {
+		if(!enrollmentChargeDateWrap.alreadyInitialized) {
+			_enrollmentChargeDate(enrollmentChargeDateWrap);
+			if(enrollmentChargeDate == null)
+				setEnrollmentChargeDate(enrollmentChargeDateWrap.o);
+		}
+		enrollmentChargeDateWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Date solrEnrollmentChargeDate() {
+		return enrollmentChargeDate == null ? null : Date.from(enrollmentChargeDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strEnrollmentChargeDate() {
+		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	}
+
+	public String jsonEnrollmentChargeDate() {
+		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	}
+
+	public String nomAffichageEnrollmentChargeDate() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentChargeDate() {
+		return null;
+	}
+
+	public String htmEnrollmentChargeDate() {
+		return enrollmentChargeDate == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentChargeDate());
+	}
+
 	/////////////////
 	// createdYear //
 	/////////////////
@@ -11100,8 +11302,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childFamilyNameInit();
 		momFirstNameInit();
 		momFirstNamePreferredInit();
+		momCompleteNamePreferredInit();
 		dadFirstNameInit();
 		dadFirstNamePreferredInit();
+		dadCompleteNamePreferredInit();
 		childCompleteNameInit();
 		childCompleteNamePreferredInit();
 		childBirthDateInit();
@@ -11154,6 +11358,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		enrollmentPaymentEachMonthInit();
 		enrollmentPaymentCompleteInit();
 		customerProfileIdInit();
+		enrollmentChargeDateInit();
 		createdYearInit();
 		createdDayOfWeekInit();
 		createdMonthOfYearInit();
@@ -11318,10 +11523,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.momFirstName;
 			case "momFirstNamePreferred":
 				return oSchoolEnrollment.momFirstNamePreferred;
+			case "momCompleteNamePreferred":
+				return oSchoolEnrollment.momCompleteNamePreferred;
 			case "dadFirstName":
 				return oSchoolEnrollment.dadFirstName;
 			case "dadFirstNamePreferred":
 				return oSchoolEnrollment.dadFirstNamePreferred;
+			case "dadCompleteNamePreferred":
+				return oSchoolEnrollment.dadCompleteNamePreferred;
 			case "childCompleteName":
 				return oSchoolEnrollment.childCompleteName;
 			case "childCompleteNamePreferred":
@@ -11426,6 +11635,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentPaymentComplete;
 			case "customerProfileId":
 				return oSchoolEnrollment.customerProfileId;
+			case "enrollmentChargeDate":
+				return oSchoolEnrollment.enrollmentChargeDate;
 			case "createdYear":
 				return oSchoolEnrollment.createdYear;
 			case "createdDayOfWeek":
@@ -11897,6 +12108,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setMomFirstNamePreferred(momFirstNamePreferred);
 			}
 
+			if(savesSchoolEnrollment.contains("momCompleteNamePreferred")) {
+				String momCompleteNamePreferred = (String)solrDocument.get("momCompleteNamePreferred_stored_string");
+				if(momCompleteNamePreferred != null)
+					oSchoolEnrollment.setMomCompleteNamePreferred(momCompleteNamePreferred);
+			}
+
 			if(savesSchoolEnrollment.contains("dadFirstName")) {
 				String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
 				if(dadFirstName != null)
@@ -11907,6 +12124,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String dadFirstNamePreferred = (String)solrDocument.get("dadFirstNamePreferred_stored_string");
 				if(dadFirstNamePreferred != null)
 					oSchoolEnrollment.setDadFirstNamePreferred(dadFirstNamePreferred);
+			}
+
+			if(savesSchoolEnrollment.contains("dadCompleteNamePreferred")) {
+				String dadCompleteNamePreferred = (String)solrDocument.get("dadCompleteNamePreferred_stored_string");
+				if(dadCompleteNamePreferred != null)
+					oSchoolEnrollment.setDadCompleteNamePreferred(dadCompleteNamePreferred);
 			}
 
 			if(savesSchoolEnrollment.contains("childCompleteName")) {
@@ -12219,6 +12442,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oSchoolEnrollment.setCustomerProfileId(customerProfileId);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentChargeDate")) {
+				Date enrollmentChargeDate = (Date)solrDocument.get("enrollmentChargeDate_stored_date");
+				if(enrollmentChargeDate != null)
+					oSchoolEnrollment.setEnrollmentChargeDate(enrollmentChargeDate);
 			}
 
 			if(savesSchoolEnrollment.contains("createdYear")) {
@@ -12614,6 +12843,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("momFirstNamePreferred_indexed_string", momFirstNamePreferred);
 			document.addField("momFirstNamePreferred_stored_string", momFirstNamePreferred);
 		}
+		if(momCompleteNamePreferred != null) {
+			document.addField("momCompleteNamePreferred_indexed_string", momCompleteNamePreferred);
+			document.addField("momCompleteNamePreferred_stored_string", momCompleteNamePreferred);
+		}
 		if(dadFirstName != null) {
 			document.addField("dadFirstName_indexed_string", dadFirstName);
 			document.addField("dadFirstName_stored_string", dadFirstName);
@@ -12621,6 +12854,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(dadFirstNamePreferred != null) {
 			document.addField("dadFirstNamePreferred_indexed_string", dadFirstNamePreferred);
 			document.addField("dadFirstNamePreferred_stored_string", dadFirstNamePreferred);
+		}
+		if(dadCompleteNamePreferred != null) {
+			document.addField("dadCompleteNamePreferred_indexed_string", dadCompleteNamePreferred);
+			document.addField("dadCompleteNamePreferred_stored_string", dadCompleteNamePreferred);
 		}
 		if(childCompleteName != null) {
 			document.addField("childCompleteName_indexed_string", childCompleteName);
@@ -12830,6 +13067,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("customerProfileId_indexed_string", customerProfileId);
 			document.addField("customerProfileId_stored_string", customerProfileId);
 		}
+		if(enrollmentChargeDate != null) {
+			document.addField("enrollmentChargeDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enrollmentChargeDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("enrollmentChargeDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enrollmentChargeDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(createdYear != null) {
 			document.addField("createdYear_indexed_int", createdYear);
 			document.addField("createdYear_stored_int", createdYear);
@@ -13028,10 +13269,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "momFirstName_indexed_string";
 			case "momFirstNamePreferred":
 				return "momFirstNamePreferred_indexed_string";
+			case "momCompleteNamePreferred":
+				return "momCompleteNamePreferred_indexed_string";
 			case "dadFirstName":
 				return "dadFirstName_indexed_string";
 			case "dadFirstNamePreferred":
 				return "dadFirstNamePreferred_indexed_string";
+			case "dadCompleteNamePreferred":
+				return "dadCompleteNamePreferred_indexed_string";
 			case "childCompleteName":
 				return "childCompleteName_indexed_string";
 			case "childCompleteNamePreferred":
@@ -13136,6 +13381,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "enrollmentPaymentComplete_indexed_boolean";
 			case "customerProfileId":
 				return "customerProfileId_indexed_string";
+			case "enrollmentChargeDate":
+				return "enrollmentChargeDate_indexed_date";
 			case "createdYear":
 				return "createdYear_indexed_int";
 			case "createdDayOfWeek":
@@ -13303,6 +13550,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(momFirstNamePreferred != null)
 			oSchoolEnrollment.setMomFirstNamePreferred(momFirstNamePreferred);
 
+		String momCompleteNamePreferred = (String)solrDocument.get("momCompleteNamePreferred_stored_string");
+		if(momCompleteNamePreferred != null)
+			oSchoolEnrollment.setMomCompleteNamePreferred(momCompleteNamePreferred);
+
 		String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
 		if(dadFirstName != null)
 			oSchoolEnrollment.setDadFirstName(dadFirstName);
@@ -13310,6 +13561,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String dadFirstNamePreferred = (String)solrDocument.get("dadFirstNamePreferred_stored_string");
 		if(dadFirstNamePreferred != null)
 			oSchoolEnrollment.setDadFirstNamePreferred(dadFirstNamePreferred);
+
+		String dadCompleteNamePreferred = (String)solrDocument.get("dadCompleteNamePreferred_stored_string");
+		if(dadCompleteNamePreferred != null)
+			oSchoolEnrollment.setDadCompleteNamePreferred(dadCompleteNamePreferred);
 
 		String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 		if(childCompleteName != null)
@@ -13518,6 +13773,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 		if(customerProfileId != null)
 			oSchoolEnrollment.setCustomerProfileId(customerProfileId);
+
+		Date enrollmentChargeDate = (Date)solrDocument.get("enrollmentChargeDate_stored_date");
+		if(enrollmentChargeDate != null)
+			oSchoolEnrollment.setEnrollmentChargeDate(enrollmentChargeDate);
 
 		Integer createdYear = (Integer)solrDocument.get("createdYear_stored_int");
 		if(createdYear != null)

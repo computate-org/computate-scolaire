@@ -1,51 +1,55 @@
 package org.computate.scolaire.frFR.paiement;
 
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
+import java.lang.Integer;
 import java.math.BigDecimal;
-import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
+import java.time.LocalTime;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe paymentCompleteName dans Solr</a>
@@ -76,668 +80,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public static final String PaiementScolaire_IconeGroupe = "solid";
 	public static final String PaiementScolaire_IconeNom = "search-dollar";
 
-	///////////////
-	// ecoleCles //
-	///////////////
-
-	/**	L'entité « ecoleCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> ecoleCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> ecoleClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ecoleCles").o(ecoleCles);
-
-	/**	<br/>L'entité « ecoleCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleCles">Trouver l'entité ecoleCles dans Solr</a>
-	 * <br/>
-	 * @param ecoleCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _ecoleCles(List<Long> l);
-
-	public List<Long> getEcoleCles() {
-		return ecoleCles;
-	}
-
-	public void setEcoleCles(List<Long> ecoleCles) {
-		this.ecoleCles = ecoleCles;
-		this.ecoleClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addEcoleCles(Long...objets) {
-		for(Long o : objets) {
-			addEcoleCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addEcoleCles(Long o) {
-		if(o != null && !ecoleCles.contains(o))
-			this.ecoleCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setEcoleCles(JsonArray objets) {
-		ecoleCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addEcoleCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addEcoleCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addEcoleCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire ecoleClesInit() {
-		if(!ecoleClesCouverture.dejaInitialise) {
-			_ecoleCles(ecoleCles);
-		}
-		ecoleClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrEcoleCles() {
-		return ecoleCles;
-	}
-
-	public String strEcoleCles() {
-		return ecoleCles == null ? "" : ecoleCles.toString();
-	}
-
-	public String jsonEcoleCles() {
-		return ecoleCles == null ? "" : ecoleCles.toString();
-	}
-
-	public String nomAffichageEcoleCles() {
-		return "écoles";
-	}
-
-	public String htmTooltipEcoleCles() {
-		return null;
-	}
-
-	public String htmEcoleCles() {
-		return ecoleCles == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCles());
-	}
-
-	///////////////
-	// anneeCles //
-	///////////////
-
-	/**	L'entité « anneeCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> anneeCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> anneeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("anneeCles").o(anneeCles);
-
-	/**	<br/>L'entité « anneeCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCles">Trouver l'entité anneeCles dans Solr</a>
-	 * <br/>
-	 * @param anneeCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _anneeCles(List<Long> l);
-
-	public List<Long> getAnneeCles() {
-		return anneeCles;
-	}
-
-	public void setAnneeCles(List<Long> anneeCles) {
-		this.anneeCles = anneeCles;
-		this.anneeClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addAnneeCles(Long...objets) {
-		for(Long o : objets) {
-			addAnneeCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addAnneeCles(Long o) {
-		if(o != null && !anneeCles.contains(o))
-			this.anneeCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setAnneeCles(JsonArray objets) {
-		anneeCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addAnneeCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addAnneeCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addAnneeCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire anneeClesInit() {
-		if(!anneeClesCouverture.dejaInitialise) {
-			_anneeCles(anneeCles);
-		}
-		anneeClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrAnneeCles() {
-		return anneeCles;
-	}
-
-	public String strAnneeCles() {
-		return anneeCles == null ? "" : anneeCles.toString();
-	}
-
-	public String jsonAnneeCles() {
-		return anneeCles == null ? "" : anneeCles.toString();
-	}
-
-	public String nomAffichageAnneeCles() {
-		return null;
-	}
-
-	public String htmTooltipAnneeCles() {
-		return null;
-	}
-
-	public String htmAnneeCles() {
-		return anneeCles == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCles());
-	}
-
-	///////////////
-	// saisonCle //
-	///////////////
-
-	/**	L'entité « saisonCle »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> saisonCle = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> saisonCleCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("saisonCle").o(saisonCle);
-
-	/**	<br/>L'entité « saisonCle »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
-	 * <br/>
-	 * @param saisonCle est l'entité déjà construit. 
-	 **/
-	protected abstract void _saisonCle(List<Long> l);
-
-	public List<Long> getSaisonCle() {
-		return saisonCle;
-	}
-
-	public void setSaisonCle(List<Long> saisonCle) {
-		this.saisonCle = saisonCle;
-		this.saisonCleCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addSaisonCle(Long...objets) {
-		for(Long o : objets) {
-			addSaisonCle(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addSaisonCle(Long o) {
-		if(o != null && !saisonCle.contains(o))
-			this.saisonCle.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setSaisonCle(JsonArray objets) {
-		saisonCle.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addSaisonCle(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addSaisonCle(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addSaisonCle(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire saisonCleInit() {
-		if(!saisonCleCouverture.dejaInitialise) {
-			_saisonCle(saisonCle);
-		}
-		saisonCleCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrSaisonCle() {
-		return saisonCle;
-	}
-
-	public String strSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String jsonSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String nomAffichageSaisonCle() {
-		return "saisons";
-	}
-
-	public String htmTooltipSaisonCle() {
-		return null;
-	}
-
-	public String htmSaisonCle() {
-		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
-	}
-
-	/////////////////
-	// sessionCles //
-	/////////////////
-
-	/**	L'entité « sessionCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> sessionCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> sessionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("sessionCles").o(sessionCles);
-
-	/**	<br/>L'entité « sessionCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCles">Trouver l'entité sessionCles dans Solr</a>
-	 * <br/>
-	 * @param sessionCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _sessionCles(List<Long> l);
-
-	public List<Long> getSessionCles() {
-		return sessionCles;
-	}
-
-	public void setSessionCles(List<Long> sessionCles) {
-		this.sessionCles = sessionCles;
-		this.sessionClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addSessionCles(Long...objets) {
-		for(Long o : objets) {
-			addSessionCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addSessionCles(Long o) {
-		if(o != null && !sessionCles.contains(o))
-			this.sessionCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setSessionCles(JsonArray objets) {
-		sessionCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addSessionCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addSessionCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addSessionCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire sessionClesInit() {
-		if(!sessionClesCouverture.dejaInitialise) {
-			_sessionCles(sessionCles);
-		}
-		sessionClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrSessionCles() {
-		return sessionCles;
-	}
-
-	public String strSessionCles() {
-		return sessionCles == null ? "" : sessionCles.toString();
-	}
-
-	public String jsonSessionCles() {
-		return sessionCles == null ? "" : sessionCles.toString();
-	}
-
-	public String nomAffichageSessionCles() {
-		return "sessions";
-	}
-
-	public String htmTooltipSessionCles() {
-		return null;
-	}
-
-	public String htmSessionCles() {
-		return sessionCles == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCles());
-	}
-
-	/////////////
-	// ageCles //
-	/////////////
-
-	/**	L'entité « ageCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> ageCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> ageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ageCles").o(ageCles);
-
-	/**	<br/>L'entité « ageCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCles">Trouver l'entité ageCles dans Solr</a>
-	 * <br/>
-	 * @param ageCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _ageCles(List<Long> l);
-
-	public List<Long> getAgeCles() {
-		return ageCles;
-	}
-
-	public void setAgeCles(List<Long> ageCles) {
-		this.ageCles = ageCles;
-		this.ageClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addAgeCles(Long...objets) {
-		for(Long o : objets) {
-			addAgeCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addAgeCles(Long o) {
-		if(o != null && !ageCles.contains(o))
-			this.ageCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setAgeCles(JsonArray objets) {
-		ageCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addAgeCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addAgeCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addAgeCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire ageClesInit() {
-		if(!ageClesCouverture.dejaInitialise) {
-			_ageCles(ageCles);
-		}
-		ageClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrAgeCles() {
-		return ageCles;
-	}
-
-	public String strAgeCles() {
-		return ageCles == null ? "" : ageCles.toString();
-	}
-
-	public String jsonAgeCles() {
-		return ageCles == null ? "" : ageCles.toString();
-	}
-
-	public String nomAffichageAgeCles() {
-		return "âges";
-	}
-
-	public String htmTooltipAgeCles() {
-		return null;
-	}
-
-	public String htmAgeCles() {
-		return ageCles == null ? "" : StringEscapeUtils.escapeHtml4(strAgeCles());
-	}
-
-	//////////////
-	// blocCles //
-	//////////////
-
-	/**	L'entité « blocCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> blocCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> blocClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("blocCles").o(blocCles);
-
-	/**	<br/>L'entité « blocCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocCles">Trouver l'entité blocCles dans Solr</a>
-	 * <br/>
-	 * @param blocCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _blocCles(List<Long> l);
-
-	public List<Long> getBlocCles() {
-		return blocCles;
-	}
-
-	public void setBlocCles(List<Long> blocCles) {
-		this.blocCles = blocCles;
-		this.blocClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addBlocCles(Long...objets) {
-		for(Long o : objets) {
-			addBlocCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addBlocCles(Long o) {
-		if(o != null && !blocCles.contains(o))
-			this.blocCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setBlocCles(JsonArray objets) {
-		blocCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addBlocCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addBlocCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addBlocCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire blocClesInit() {
-		if(!blocClesCouverture.dejaInitialise) {
-			_blocCles(blocCles);
-		}
-		blocClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrBlocCles() {
-		return blocCles;
-	}
-
-	public String strBlocCles() {
-		return blocCles == null ? "" : blocCles.toString();
-	}
-
-	public String jsonBlocCles() {
-		return blocCles == null ? "" : blocCles.toString();
-	}
-
-	public String nomAffichageBlocCles() {
-		return "sessions";
-	}
-
-	public String htmTooltipBlocCles() {
-		return null;
-	}
-
-	public String htmBlocCles() {
-		return blocCles == null ? "" : StringEscapeUtils.escapeHtml4(strBlocCles());
-	}
-
-	/////////////////////
-	// inscriptionCles //
-	/////////////////////
-
-	/**	L'entité « inscriptionCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
-
-	/**	<br/>L'entité « inscriptionCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionCles">Trouver l'entité inscriptionCles dans Solr</a>
-	 * <br/>
-	 * @param inscriptionCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _inscriptionCles(List<Long> l);
-
-	public List<Long> getInscriptionCles() {
-		return inscriptionCles;
-	}
-
-	public void setInscriptionCles(List<Long> inscriptionCles) {
-		this.inscriptionCles = inscriptionCles;
-		this.inscriptionClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addInscriptionCles(Long...objets) {
-		for(Long o : objets) {
-			addInscriptionCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addInscriptionCles(Long o) {
-		if(o != null && !inscriptionCles.contains(o))
-			this.inscriptionCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setInscriptionCles(JsonArray objets) {
-		inscriptionCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addInscriptionCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addInscriptionCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addInscriptionCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire inscriptionClesInit() {
-		if(!inscriptionClesCouverture.dejaInitialise) {
-			_inscriptionCles(inscriptionCles);
-		}
-		inscriptionClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrInscriptionCles() {
-		return inscriptionCles;
-	}
-
-	public String strInscriptionCles() {
-		return inscriptionCles == null ? "" : inscriptionCles.toString();
-	}
-
-	public String jsonInscriptionCles() {
-		return inscriptionCles == null ? "" : inscriptionCles.toString();
-	}
-
-	public String nomAffichageInscriptionCles() {
-		return "inscriptions";
-	}
-
-	public String htmTooltipInscriptionCles() {
-		return null;
-	}
-
-	public String htmInscriptionCles() {
-		return inscriptionCles == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCles());
-	}
-
-	public void inputInscriptionCles(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscriptions")
-				.a("title", "La clé primaire des enfants dans la base de données. ")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCles")
-				.a("id", classeApiMethodeMethode, "_inscriptionCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggerePaiementScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCles')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
-
-	}
-
-	public void htmInscriptionCles(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCles").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=paiementCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit ").f().g("i");
-								sx("inscriptions");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a ce paiement");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputInscriptionCles(classeApiMethodeMethode);
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCles_", classeApiMethodeMethode).f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////
 	// paiementCle //
 	/////////////////
@@ -746,6 +88,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long paiementCle;
 	@JsonIgnore
 	public Couverture<Long> paiementCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("paiementCle").o(paiementCle);
@@ -806,90 +149,693 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return paiementCle == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementCle());
 	}
 
-	////////////////
-	// enfantCles //
-	////////////////
+	////////////////////
+	// inscriptionCle //
+	////////////////////
 
-	/**	L'entité « enfantCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	/**	L'entité « inscriptionCle »
+	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> enfantCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long inscriptionCle;
 	@JsonIgnore
-	public Couverture<List<Long>> enfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("enfantCles").o(enfantCles);
+	public Couverture<Long> inscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("inscriptionCle").o(inscriptionCle);
 
-	/**	<br/>L'entité « enfantCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantCles">Trouver l'entité enfantCles dans Solr</a>
+	/**	<br/>L'entité « inscriptionCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionCle">Trouver l'entité inscriptionCle dans Solr</a>
 	 * <br/>
-	 * @param enfantCles est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _enfantCles(List<Long> o);
+	protected abstract void _inscriptionCle(Couverture<Long> c);
 
-	public List<Long> getEnfantCles() {
-		return enfantCles;
+	public Long getInscriptionCle() {
+		return inscriptionCle;
 	}
 
-	public void setEnfantCles(List<Long> enfantCles) {
-		this.enfantCles = enfantCles;
-		this.enfantClesCouverture.dejaInitialise = true;
+	public void setInscriptionCle(Long inscriptionCle) {
+		this.inscriptionCle = inscriptionCle;
+		this.inscriptionCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire addEnfantCles(Long...objets) {
-		for(Long o : objets) {
-			addEnfantCles(o);
+	public PaiementScolaire setInscriptionCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.inscriptionCle = Long.parseLong(o);
+		this.inscriptionCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire inscriptionCleInit() {
+		if(!inscriptionCleCouverture.dejaInitialise) {
+			_inscriptionCle(inscriptionCleCouverture);
+			if(inscriptionCle == null)
+				setInscriptionCle(inscriptionCleCouverture.o);
 		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addEnfantCles(Long o) {
-		if(o != null && !enfantCles.contains(o))
-			this.enfantCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setEnfantCles(JsonArray objets) {
-		enfantCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addEnfantCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addEnfantCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addEnfantCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire enfantClesInit() {
-		if(!enfantClesCouverture.dejaInitialise) {
-			_enfantCles(enfantCles);
-		}
-		enfantClesCouverture.dejaInitialise(true);
+		inscriptionCleCouverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
 	}
 
-	public List<Long> solrEnfantCles() {
-		return enfantCles;
+	public Long solrInscriptionCle() {
+		return inscriptionCle;
 	}
 
-	public String strEnfantCles() {
-		return enfantCles == null ? "" : enfantCles.toString();
+	public String strInscriptionCle() {
+		return inscriptionCle == null ? "" : inscriptionCle.toString();
 	}
 
-	public String jsonEnfantCles() {
-		return enfantCles == null ? "" : enfantCles.toString();
+	public String jsonInscriptionCle() {
+		return inscriptionCle == null ? "" : inscriptionCle.toString();
 	}
 
-	public String nomAffichageEnfantCles() {
-		return "enfants";
+	public String nomAffichageInscriptionCle() {
+		return "inscription";
 	}
 
-	public String htmTooltipEnfantCles() {
+	public String htmTooltipInscriptionCle() {
 		return null;
 	}
 
-	public String htmEnfantCles() {
-		return enfantCles == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantCles());
+	public String htmInscriptionCle() {
+		return inscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCle());
+	}
+
+	public void inputInscriptionCle(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "inscription")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("class", "valeur suggereInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setInscriptionCle")
+				.a("id", classeApiMethodeMethode, "_inscriptionCle")
+				.a("autocomplete", "off")
+				.a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCle')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmInscriptionCle(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=paiementCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-edit ").f().g("i");
+								sx("inscription");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier une inscription a ce paiement");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputInscriptionCle(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCle_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCle')); });")
+										.f().sx("ajouter une inscription")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////////
+	// inscriptionRecherche //
+	//////////////////////////
+
+	/**	L'entité « inscriptionRecherche »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected ListeRecherche<InscriptionScolaire> inscriptionRecherche = new ListeRecherche<InscriptionScolaire>();
+	@JsonIgnore
+	public Couverture<ListeRecherche<InscriptionScolaire>> inscriptionRechercheCouverture = new Couverture<ListeRecherche<InscriptionScolaire>>().p(this).c(ListeRecherche.class).var("inscriptionRecherche").o(inscriptionRecherche);
+
+	/**	<br/>L'entité « inscriptionRecherche »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionRecherche">Trouver l'entité inscriptionRecherche dans Solr</a>
+	 * <br/>
+	 * @param inscriptionRecherche est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l);
+
+	public ListeRecherche<InscriptionScolaire> getInscriptionRecherche() {
+		return inscriptionRecherche;
+	}
+
+	public void setInscriptionRecherche(ListeRecherche<InscriptionScolaire> inscriptionRecherche) {
+		this.inscriptionRecherche = inscriptionRecherche;
+		this.inscriptionRechercheCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire inscriptionRechercheInit() {
+		if(!inscriptionRechercheCouverture.dejaInitialise) {
+			_inscriptionRecherche(inscriptionRecherche);
+		}
+		inscriptionRecherche.initLoinPourClasse(requeteSite_);
+		inscriptionRechercheCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	//////////////////
+	// inscription_ //
+	//////////////////
+
+	/**	L'entité « inscription_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected InscriptionScolaire inscription_;
+	@JsonIgnore
+	public Couverture<InscriptionScolaire> inscription_Couverture = new Couverture<InscriptionScolaire>().p(this).c(InscriptionScolaire.class).var("inscription_").o(inscription_);
+
+	/**	<br/>L'entité « inscription_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscription_">Trouver l'entité inscription_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscription_(Couverture<InscriptionScolaire> c);
+
+	public InscriptionScolaire getInscription_() {
+		return inscription_;
+	}
+
+	public void setInscription_(InscriptionScolaire inscription_) {
+		this.inscription_ = inscription_;
+		this.inscription_Couverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire inscription_Init() {
+		if(!inscription_Couverture.dejaInitialise) {
+			_inscription_(inscription_Couverture);
+			if(inscription_ == null)
+				setInscription_(inscription_Couverture.o);
+		}
+		inscription_Couverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	//////////////
+	// ecoleCle //
+	//////////////
+
+	/**	L'entité « ecoleCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long ecoleCle;
+	@JsonIgnore
+	public Couverture<Long> ecoleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ecoleCle").o(ecoleCle);
+
+	/**	<br/>L'entité « ecoleCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleCle">Trouver l'entité ecoleCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleCle(Couverture<Long> c);
+
+	public Long getEcoleCle() {
+		return ecoleCle;
+	}
+
+	public void setEcoleCle(Long ecoleCle) {
+		this.ecoleCle = ecoleCle;
+		this.ecoleCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setEcoleCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ecoleCle = Long.parseLong(o);
+		this.ecoleCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire ecoleCleInit() {
+		if(!ecoleCleCouverture.dejaInitialise) {
+			_ecoleCle(ecoleCleCouverture);
+			if(ecoleCle == null)
+				setEcoleCle(ecoleCleCouverture.o);
+		}
+		ecoleCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrEcoleCle() {
+		return ecoleCle;
+	}
+
+	public String strEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
+	public String jsonEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
+	public String nomAffichageEcoleCle() {
+		return "écoles";
+	}
+
+	public String htmTooltipEcoleCle() {
+		return null;
+	}
+
+	public String htmEcoleCle() {
+		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
+	}
+
+	//////////////
+	// anneeCle //
+	//////////////
+
+	/**	L'entité « anneeCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long anneeCle;
+	@JsonIgnore
+	public Couverture<Long> anneeCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("anneeCle").o(anneeCle);
+
+	/**	<br/>L'entité « anneeCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCle">Trouver l'entité anneeCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeCle(Couverture<Long> c);
+
+	public Long getAnneeCle() {
+		return anneeCle;
+	}
+
+	public void setAnneeCle(Long anneeCle) {
+		this.anneeCle = anneeCle;
+		this.anneeCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAnneeCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.anneeCle = Long.parseLong(o);
+		this.anneeCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire anneeCleInit() {
+		if(!anneeCleCouverture.dejaInitialise) {
+			_anneeCle(anneeCleCouverture);
+			if(anneeCle == null)
+				setAnneeCle(anneeCleCouverture.o);
+		}
+		anneeCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrAnneeCle() {
+		return anneeCle;
+	}
+
+	public String strAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
+	public String jsonAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
+	public String nomAffichageAnneeCle() {
+		return "années";
+	}
+
+	public String htmTooltipAnneeCle() {
+		return null;
+	}
+
+	public String htmAnneeCle() {
+		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
+	}
+
+	///////////////
+	// saisonCle //
+	///////////////
+
+	/**	L'entité « saisonCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long saisonCle;
+	@JsonIgnore
+	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
+
+	/**	<br/>L'entité « saisonCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonCle(Couverture<Long> c);
+
+	public Long getSaisonCle() {
+		return saisonCle;
+	}
+
+	public void setSaisonCle(Long saisonCle) {
+		this.saisonCle = saisonCle;
+		this.saisonCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSaisonCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.saisonCle = Long.parseLong(o);
+		this.saisonCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire saisonCleInit() {
+		if(!saisonCleCouverture.dejaInitialise) {
+			_saisonCle(saisonCleCouverture);
+			if(saisonCle == null)
+				setSaisonCle(saisonCleCouverture.o);
+		}
+		saisonCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrSaisonCle() {
+		return saisonCle;
+	}
+
+	public String strSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String jsonSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String nomAffichageSaisonCle() {
+		return "saisons";
+	}
+
+	public String htmTooltipSaisonCle() {
+		return null;
+	}
+
+	public String htmSaisonCle() {
+		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
+	}
+
+	////////////////
+	// sessionCle //
+	////////////////
+
+	/**	L'entité « sessionCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long sessionCle;
+	@JsonIgnore
+	public Couverture<Long> sessionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("sessionCle").o(sessionCle);
+
+	/**	<br/>L'entité « sessionCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCle">Trouver l'entité sessionCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionCle(Couverture<Long> c);
+
+	public Long getSessionCle() {
+		return sessionCle;
+	}
+
+	public void setSessionCle(Long sessionCle) {
+		this.sessionCle = sessionCle;
+		this.sessionCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSessionCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.sessionCle = Long.parseLong(o);
+		this.sessionCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire sessionCleInit() {
+		if(!sessionCleCouverture.dejaInitialise) {
+			_sessionCle(sessionCleCouverture);
+			if(sessionCle == null)
+				setSessionCle(sessionCleCouverture.o);
+		}
+		sessionCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrSessionCle() {
+		return sessionCle;
+	}
+
+	public String strSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String jsonSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String nomAffichageSessionCle() {
+		return "sessions";
+	}
+
+	public String htmTooltipSessionCle() {
+		return null;
+	}
+
+	public String htmSessionCle() {
+		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
+	}
+
+	////////////
+	// ageCle //
+	////////////
+
+	/**	L'entité « ageCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long ageCle;
+	@JsonIgnore
+	public Couverture<Long> ageCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ageCle").o(ageCle);
+
+	/**	<br/>L'entité « ageCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCle">Trouver l'entité ageCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ageCle(Couverture<Long> c);
+
+	public Long getAgeCle() {
+		return ageCle;
+	}
+
+	public void setAgeCle(Long ageCle) {
+		this.ageCle = ageCle;
+		this.ageCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAgeCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ageCle = Long.parseLong(o);
+		this.ageCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire ageCleInit() {
+		if(!ageCleCouverture.dejaInitialise) {
+			_ageCle(ageCleCouverture);
+			if(ageCle == null)
+				setAgeCle(ageCleCouverture.o);
+		}
+		ageCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrAgeCle() {
+		return ageCle;
+	}
+
+	public String strAgeCle() {
+		return ageCle == null ? "" : ageCle.toString();
+	}
+
+	public String jsonAgeCle() {
+		return ageCle == null ? "" : ageCle.toString();
+	}
+
+	public String nomAffichageAgeCle() {
+		return "âges";
+	}
+
+	public String htmTooltipAgeCle() {
+		return null;
+	}
+
+	public String htmAgeCle() {
+		return ageCle == null ? "" : StringEscapeUtils.escapeHtml4(strAgeCle());
+	}
+
+	/////////////
+	// blocCle //
+	/////////////
+
+	/**	L'entité « blocCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long blocCle;
+	@JsonIgnore
+	public Couverture<Long> blocCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("blocCle").o(blocCle);
+
+	/**	<br/>L'entité « blocCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocCle">Trouver l'entité blocCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocCle(Couverture<Long> c);
+
+	public Long getBlocCle() {
+		return blocCle;
+	}
+
+	public void setBlocCle(Long blocCle) {
+		this.blocCle = blocCle;
+		this.blocCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setBlocCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.blocCle = Long.parseLong(o);
+		this.blocCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire blocCleInit() {
+		if(!blocCleCouverture.dejaInitialise) {
+			_blocCle(blocCleCouverture);
+			if(blocCle == null)
+				setBlocCle(blocCleCouverture.o);
+		}
+		blocCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrBlocCle() {
+		return blocCle;
+	}
+
+	public String strBlocCle() {
+		return blocCle == null ? "" : blocCle.toString();
+	}
+
+	public String jsonBlocCle() {
+		return blocCle == null ? "" : blocCle.toString();
+	}
+
+	public String nomAffichageBlocCle() {
+		return "sessions";
+	}
+
+	public String htmTooltipBlocCle() {
+		return null;
+	}
+
+	public String htmBlocCle() {
+		return blocCle == null ? "" : StringEscapeUtils.escapeHtml4(strBlocCle());
+	}
+
+	///////////////
+	// enfantCle //
+	///////////////
+
+	/**	L'entité « enfantCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long enfantCle;
+	@JsonIgnore
+	public Couverture<Long> enfantCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("enfantCle").o(enfantCle);
+
+	/**	<br/>L'entité « enfantCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantCle">Trouver l'entité enfantCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantCle(Couverture<Long> c);
+
+	public Long getEnfantCle() {
+		return enfantCle;
+	}
+
+	public void setEnfantCle(Long enfantCle) {
+		this.enfantCle = enfantCle;
+		this.enfantCleCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setEnfantCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.enfantCle = Long.parseLong(o);
+		this.enfantCleCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire enfantCleInit() {
+		if(!enfantCleCouverture.dejaInitialise) {
+			_enfantCle(enfantCleCouverture);
+			if(enfantCle == null)
+				setEnfantCle(enfantCleCouverture.o);
+		}
+		enfantCleCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Long solrEnfantCle() {
+		return enfantCle;
+	}
+
+	public String strEnfantCle() {
+		return enfantCle == null ? "" : enfantCle.toString();
+	}
+
+	public String jsonEnfantCle() {
+		return enfantCle == null ? "" : enfantCle.toString();
+	}
+
+	public String nomAffichageEnfantCle() {
+		return "enfants";
+	}
+
+	public String htmTooltipEnfantCle() {
+		return null;
+	}
+
+	public String htmEnfantCle() {
+		return enfantCle == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantCle());
 	}
 
 	//////////////
@@ -899,7 +845,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « mereCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> mereCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> mereClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("mereCles").o(mereCles);
@@ -910,7 +856,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param mereCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _mereCles(List<Long> o);
+	protected abstract void _mereCles(List<Long> l);
 
 	public List<Long> getMereCles() {
 		return mereCles;
@@ -985,7 +931,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « pereCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> pereCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> pereClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("pereCles").o(pereCles);
@@ -996,7 +942,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param pereCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _pereCles(List<Long> o);
+	protected abstract void _pereCles(List<Long> l);
 
 	public List<Long> getPereCles() {
 		return pereCles;
@@ -1071,7 +1017,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « gardienCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> gardienCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> gardienClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("gardienCles").o(gardienCles);
@@ -1082,7 +1028,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param gardienCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _gardienCles(List<Long> o);
+	protected abstract void _gardienCles(List<Long> l);
 
 	public List<Long> getGardienCles() {
 		return gardienCles;
@@ -1150,165 +1096,1943 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return gardienCles == null ? "" : StringEscapeUtils.escapeHtml4(strGardienCles());
 	}
 
-	/////////////////
-	// contactCles //
-	/////////////////
+	/////////////////////////////
+	// enfantNomCompletPrefere //
+	/////////////////////////////
 
-	/**	L'entité « contactCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
-	protected List<Long> contactCles = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Couverture<List<Long>> contactClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("contactCles").o(contactCles);
-
-	/**	<br/>L'entité « contactCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:contactCles">Trouver l'entité contactCles dans Solr</a>
-	 * <br/>
-	 * @param contactCles est l'entité déjà construit. 
-	 **/
-	protected abstract void _contactCles(List<Long> o);
-
-	public List<Long> getContactCles() {
-		return contactCles;
-	}
-
-	public void setContactCles(List<Long> contactCles) {
-		this.contactCles = contactCles;
-		this.contactClesCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire addContactCles(Long...objets) {
-		for(Long o : objets) {
-			addContactCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addContactCles(Long o) {
-		if(o != null && !contactCles.contains(o))
-			this.contactCles.add(o);
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setContactCles(JsonArray objets) {
-		contactCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addContactCles(o);
-		}
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire addContactCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addContactCles(p);
-		}
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire contactClesInit() {
-		if(!contactClesCouverture.dejaInitialise) {
-			_contactCles(contactCles);
-		}
-		contactClesCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public List<Long> solrContactCles() {
-		return contactCles;
-	}
-
-	public String strContactCles() {
-		return contactCles == null ? "" : contactCles.toString();
-	}
-
-	public String jsonContactCles() {
-		return contactCles == null ? "" : contactCles.toString();
-	}
-
-	public String nomAffichageContactCles() {
-		return "contacts d'urgence";
-	}
-
-	public String htmTooltipContactCles() {
-		return null;
-	}
-
-	public String htmContactCles() {
-		return contactCles == null ? "" : StringEscapeUtils.escapeHtml4(strContactCles());
-	}
-
-	//////////////////////////
-	// inscriptionRecherche //
-	//////////////////////////
-
-	/**	L'entité « inscriptionRecherche »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
-	 */
-	@JsonIgnore
-	protected ListeRecherche<InscriptionScolaire> inscriptionRecherche = new ListeRecherche<InscriptionScolaire>();
-	@JsonIgnore
-	public Couverture<ListeRecherche<InscriptionScolaire>> inscriptionRechercheCouverture = new Couverture<ListeRecherche<InscriptionScolaire>>().p(this).c(ListeRecherche.class).var("inscriptionRecherche").o(inscriptionRecherche);
-
-	/**	<br/>L'entité « inscriptionRecherche »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionRecherche">Trouver l'entité inscriptionRecherche dans Solr</a>
-	 * <br/>
-	 * @param inscriptionRecherche est l'entité déjà construit. 
-	 **/
-	protected abstract void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l);
-
-	public ListeRecherche<InscriptionScolaire> getInscriptionRecherche() {
-		return inscriptionRecherche;
-	}
-
-	public void setInscriptionRecherche(ListeRecherche<InscriptionScolaire> inscriptionRecherche) {
-		this.inscriptionRecherche = inscriptionRecherche;
-		this.inscriptionRechercheCouverture.dejaInitialise = true;
-	}
-	protected PaiementScolaire inscriptionRechercheInit() {
-		if(!inscriptionRechercheCouverture.dejaInitialise) {
-			_inscriptionRecherche(inscriptionRecherche);
-		}
-		inscriptionRecherche.initLoinPourClasse(requeteSite_);
-		inscriptionRechercheCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	//////////////////
-	// inscription_ //
-	//////////////////
-
-	/**	L'entité « inscription_ »
+	/**	L'entité « enfantNomCompletPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String enfantNomCompletPrefere;
 	@JsonIgnore
-	protected InscriptionScolaire inscription_;
-	@JsonIgnore
-	public Couverture<InscriptionScolaire> inscription_Couverture = new Couverture<InscriptionScolaire>().p(this).c(InscriptionScolaire.class).var("inscription_").o(inscription_);
+	public Couverture<String> enfantNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("enfantNomCompletPrefere").o(enfantNomCompletPrefere);
 
-	/**	<br/>L'entité « inscription_ »
+	/**	<br/>L'entité « enfantNomCompletPrefere »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscription_">Trouver l'entité inscription_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantNomCompletPrefere">Trouver l'entité enfantNomCompletPrefere dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _inscription_(Couverture<InscriptionScolaire> c);
+	protected abstract void _enfantNomCompletPrefere(Couverture<String> c);
 
-	public InscriptionScolaire getInscription_() {
-		return inscription_;
+	public String getEnfantNomCompletPrefere() {
+		return enfantNomCompletPrefere;
 	}
 
-	public void setInscription_(InscriptionScolaire inscription_) {
-		this.inscription_ = inscription_;
-		this.inscription_Couverture.dejaInitialise = true;
+	public void setEnfantNomCompletPrefere(String enfantNomCompletPrefere) {
+		this.enfantNomCompletPrefere = enfantNomCompletPrefere;
+		this.enfantNomCompletPrefereCouverture.dejaInitialise = true;
 	}
-	protected PaiementScolaire inscription_Init() {
-		if(!inscription_Couverture.dejaInitialise) {
-			_inscription_(inscription_Couverture);
-			if(inscription_ == null)
-				setInscription_(inscription_Couverture.o);
+	protected PaiementScolaire enfantNomCompletPrefereInit() {
+		if(!enfantNomCompletPrefereCouverture.dejaInitialise) {
+			_enfantNomCompletPrefere(enfantNomCompletPrefereCouverture);
+			if(enfantNomCompletPrefere == null)
+				setEnfantNomCompletPrefere(enfantNomCompletPrefereCouverture.o);
 		}
-		inscription_Couverture.dejaInitialise(true);
+		enfantNomCompletPrefereCouverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
+	}
+
+	public String solrEnfantNomCompletPrefere() {
+		return enfantNomCompletPrefere;
+	}
+
+	public String strEnfantNomCompletPrefere() {
+		return enfantNomCompletPrefere == null ? "" : enfantNomCompletPrefere;
+	}
+
+	public String jsonEnfantNomCompletPrefere() {
+		return enfantNomCompletPrefere == null ? "" : enfantNomCompletPrefere;
+	}
+
+	public String nomAffichageEnfantNomCompletPrefere() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEnfantNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmEnfantNomCompletPrefere() {
+		return enfantNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantNomCompletPrefere());
+	}
+
+	public void inputEnfantNomCompletPrefere(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "NomAffichage.enUS: ")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_enfantNomCompletPrefere");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantNomCompletPrefere inputPaiementScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
+				a("name", "setEnfantNomCompletPrefere");
+			} else {
+				a("class", "valeurEnfantNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
+				a("name", "enfantNomCompletPrefere");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }); ");
+			}
+			a("value", strEnfantNomCompletPrefere())
+		.fg();
+
+	}
+
+	public void htmEnfantNomCompletPrefere(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireEnfantNomCompletPrefere").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantNomCompletPrefere").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantNomCompletPrefere(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); $('#", classeApiMethodeMethode, "_enfantNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setEnfantNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////
+	// enfantDateNaissance //
+	/////////////////////////
+
+	/**	L'entité « enfantDateNaissance »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate enfantDateNaissance;
+	@JsonIgnore
+	public Couverture<LocalDate> enfantDateNaissanceCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("enfantDateNaissance").o(enfantDateNaissance);
+
+	/**	<br/>L'entité « enfantDateNaissance »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantDateNaissance">Trouver l'entité enfantDateNaissance dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantDateNaissance(Couverture<LocalDate> c);
+
+	public LocalDate getEnfantDateNaissance() {
+		return enfantDateNaissance;
+	}
+
+	public void setEnfantDateNaissance(LocalDate enfantDateNaissance) {
+		this.enfantDateNaissance = enfantDateNaissance;
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setEnfantDateNaissance(Instant o) {
+		this.enfantDateNaissance = LocalDate.from(o);
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public PaiementScolaire setEnfantDateNaissance(String o) {
+		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setEnfantDateNaissance(Date o) {
+		this.enfantDateNaissance = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire enfantDateNaissanceInit() {
+		if(!enfantDateNaissanceCouverture.dejaInitialise) {
+			_enfantDateNaissance(enfantDateNaissanceCouverture);
+			if(enfantDateNaissance == null)
+				setEnfantDateNaissance(enfantDateNaissanceCouverture.o);
+		}
+		enfantDateNaissanceCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Date solrEnfantDateNaissance() {
+		return enfantDateNaissance == null ? null : Date.from(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strEnfantDateNaissance() {
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonEnfantDateNaissance() {
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichageEnfantDateNaissance() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEnfantDateNaissance() {
+		return null;
+	}
+
+	public String htmEnfantDateNaissance() {
+		return enfantDateNaissance == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantDateNaissance());
+	}
+
+	public void inputEnfantDateNaissance(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("class", "w3-input w3-border datepicker setEnfantDateNaissance inputPaiementScolaire", pk, "EnfantDateNaissance w3-input w3-border ")
+			.a("placeholder", "DD-MM-YYYY")
+			.a("data-timeformat", "DD-MM-YYYY")
+			.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
+			.a("onclick", "enleverLueur($(this)); ")
+			.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
+			.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
+			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
+			.fg();
+	}
+
+	public void htmEnfantDateNaissance(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireEnfantDateNaissance").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantDateNaissance").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputEnfantDateNaissance(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); $('#", classeApiMethodeMethode, "_enfantDateNaissance').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setEnfantDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////
+	// mereNomCompletPrefere //
+	///////////////////////////
+
+	/**	L'entité « mereNomCompletPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String mereNomCompletPrefere;
+	@JsonIgnore
+	public Couverture<String> mereNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("mereNomCompletPrefere").o(mereNomCompletPrefere);
+
+	/**	<br/>L'entité « mereNomCompletPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereNomCompletPrefere">Trouver l'entité mereNomCompletPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mereNomCompletPrefere(Couverture<String> c);
+
+	public String getMereNomCompletPrefere() {
+		return mereNomCompletPrefere;
+	}
+
+	public void setMereNomCompletPrefere(String mereNomCompletPrefere) {
+		this.mereNomCompletPrefere = mereNomCompletPrefere;
+		this.mereNomCompletPrefereCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire mereNomCompletPrefereInit() {
+		if(!mereNomCompletPrefereCouverture.dejaInitialise) {
+			_mereNomCompletPrefere(mereNomCompletPrefereCouverture);
+			if(mereNomCompletPrefere == null)
+				setMereNomCompletPrefere(mereNomCompletPrefereCouverture.o);
+		}
+		mereNomCompletPrefereCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrMereNomCompletPrefere() {
+		return mereNomCompletPrefere;
+	}
+
+	public String strMereNomCompletPrefere() {
+		return mereNomCompletPrefere == null ? "" : mereNomCompletPrefere;
+	}
+
+	public String jsonMereNomCompletPrefere() {
+		return mereNomCompletPrefere == null ? "" : mereNomCompletPrefere;
+	}
+
+	public String nomAffichageMereNomCompletPrefere() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipMereNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmMereNomCompletPrefere() {
+		return mereNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strMereNomCompletPrefere());
+	}
+
+	public void inputMereNomCompletPrefere(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "NomAffichage.enUS: ")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_mereNomCompletPrefere");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setMereNomCompletPrefere inputPaiementScolaire", pk, "MereNomCompletPrefere w3-input w3-border ");
+				a("name", "setMereNomCompletPrefere");
+			} else {
+				a("class", "valeurMereNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "MereNomCompletPrefere w3-input w3-border ");
+				a("name", "mereNomCompletPrefere");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setMereNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }); ");
+			}
+			a("value", strMereNomCompletPrefere())
+		.fg();
+
+	}
+
+	public void htmMereNomCompletPrefere(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireMereNomCompletPrefere").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_mereNomCompletPrefere").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputMereNomCompletPrefere(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); $('#", classeApiMethodeMethode, "_mereNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setMereNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////
+	// pereNomCompletPrefere //
+	///////////////////////////
+
+	/**	L'entité « pereNomCompletPrefere »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String pereNomCompletPrefere;
+	@JsonIgnore
+	public Couverture<String> pereNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("pereNomCompletPrefere").o(pereNomCompletPrefere);
+
+	/**	<br/>L'entité « pereNomCompletPrefere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereNomCompletPrefere">Trouver l'entité pereNomCompletPrefere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pereNomCompletPrefere(Couverture<String> c);
+
+	public String getPereNomCompletPrefere() {
+		return pereNomCompletPrefere;
+	}
+
+	public void setPereNomCompletPrefere(String pereNomCompletPrefere) {
+		this.pereNomCompletPrefere = pereNomCompletPrefere;
+		this.pereNomCompletPrefereCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire pereNomCompletPrefereInit() {
+		if(!pereNomCompletPrefereCouverture.dejaInitialise) {
+			_pereNomCompletPrefere(pereNomCompletPrefereCouverture);
+			if(pereNomCompletPrefere == null)
+				setPereNomCompletPrefere(pereNomCompletPrefereCouverture.o);
+		}
+		pereNomCompletPrefereCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrPereNomCompletPrefere() {
+		return pereNomCompletPrefere;
+	}
+
+	public String strPereNomCompletPrefere() {
+		return pereNomCompletPrefere == null ? "" : pereNomCompletPrefere;
+	}
+
+	public String jsonPereNomCompletPrefere() {
+		return pereNomCompletPrefere == null ? "" : pereNomCompletPrefere;
+	}
+
+	public String nomAffichagePereNomCompletPrefere() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipPereNomCompletPrefere() {
+		return null;
+	}
+
+	public String htmPereNomCompletPrefere() {
+		return pereNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strPereNomCompletPrefere());
+	}
+
+	public void inputPereNomCompletPrefere(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "NomAffichage.enUS: ")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_pereNomCompletPrefere");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPereNomCompletPrefere inputPaiementScolaire", pk, "PereNomCompletPrefere w3-input w3-border ");
+				a("name", "setPereNomCompletPrefere");
+			} else {
+				a("class", "valeurPereNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "PereNomCompletPrefere w3-input w3-border ");
+				a("name", "pereNomCompletPrefere");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPereNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }); ");
+			}
+			a("value", strPereNomCompletPrefere())
+		.fg();
+
+	}
+
+	public void htmPereNomCompletPrefere(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePereNomCompletPrefere").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_pereNomCompletPrefere").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPereNomCompletPrefere(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); $('#", classeApiMethodeMethode, "_pereNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPereNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////
+	// ecoleNom //
+	//////////////
+
+	/**	L'entité « ecoleNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleNom;
+	@JsonIgnore
+	public Couverture<String> ecoleNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNom").o(ecoleNom);
+
+	/**	<br/>L'entité « ecoleNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNom">Trouver l'entité ecoleNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNom(Couverture<String> c);
+
+	public String getEcoleNom() {
+		return ecoleNom;
+	}
+
+	public void setEcoleNom(String ecoleNom) {
+		this.ecoleNom = ecoleNom;
+		this.ecoleNomCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire ecoleNomInit() {
+		if(!ecoleNomCouverture.dejaInitialise) {
+			_ecoleNom(ecoleNomCouverture);
+			if(ecoleNom == null)
+				setEcoleNom(ecoleNomCouverture.o);
+		}
+		ecoleNomCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrEcoleNom() {
+		return ecoleNom;
+	}
+
+	public String strEcoleNom() {
+		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String jsonEcoleNom() {
+		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String nomAffichageEcoleNom() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEcoleNom() {
+		return null;
+	}
+
+	public String htmEcoleNom() {
+		return ecoleNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNom());
+	}
+
+	/////////////////////
+	// ecoleNomComplet //
+	/////////////////////
+
+	/**	L'entité « ecoleNomComplet »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleNomComplet;
+	@JsonIgnore
+	public Couverture<String> ecoleNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomComplet").o(ecoleNomComplet);
+
+	/**	<br/>L'entité « ecoleNomComplet »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNomComplet">Trouver l'entité ecoleNomComplet dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNomComplet(Couverture<String> c);
+
+	public String getEcoleNomComplet() {
+		return ecoleNomComplet;
+	}
+
+	public void setEcoleNomComplet(String ecoleNomComplet) {
+		this.ecoleNomComplet = ecoleNomComplet;
+		this.ecoleNomCompletCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire ecoleNomCompletInit() {
+		if(!ecoleNomCompletCouverture.dejaInitialise) {
+			_ecoleNomComplet(ecoleNomCompletCouverture);
+			if(ecoleNomComplet == null)
+				setEcoleNomComplet(ecoleNomCompletCouverture.o);
+		}
+		ecoleNomCompletCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrEcoleNomComplet() {
+		return ecoleNomComplet;
+	}
+
+	public String strEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
+	public String jsonEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
+	public String nomAffichageEcoleNomComplet() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEcoleNomComplet() {
+		return null;
+	}
+
+	public String htmEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNomComplet());
+	}
+
+	//////////////////////
+	// ecoleEmplacement //
+	//////////////////////
+
+	/**	L'entité « ecoleEmplacement »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleEmplacement;
+	@JsonIgnore
+	public Couverture<String> ecoleEmplacementCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleEmplacement").o(ecoleEmplacement);
+
+	/**	<br/>L'entité « ecoleEmplacement »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleEmplacement">Trouver l'entité ecoleEmplacement dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleEmplacement(Couverture<String> c);
+
+	public String getEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
+	public void setEcoleEmplacement(String ecoleEmplacement) {
+		this.ecoleEmplacement = ecoleEmplacement;
+		this.ecoleEmplacementCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire ecoleEmplacementInit() {
+		if(!ecoleEmplacementCouverture.dejaInitialise) {
+			_ecoleEmplacement(ecoleEmplacementCouverture);
+			if(ecoleEmplacement == null)
+				setEcoleEmplacement(ecoleEmplacementCouverture.o);
+		}
+		ecoleEmplacementCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
+	public String strEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String jsonEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String nomAffichageEcoleEmplacement() {
+		return "l'emplacement";
+	}
+
+	public String htmTooltipEcoleEmplacement() {
+		return null;
+	}
+
+	public String htmEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleEmplacement());
+	}
+
+	////////////////
+	// anneeDebut //
+	////////////////
+
+	/**	L'entité « anneeDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer anneeDebut;
+	@JsonIgnore
+	public Couverture<Integer> anneeDebutCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeDebut").o(anneeDebut);
+
+	/**	<br/>L'entité « anneeDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeDebut">Trouver l'entité anneeDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeDebut(Couverture<Integer> c);
+
+	public Integer getAnneeDebut() {
+		return anneeDebut;
+	}
+
+	public void setAnneeDebut(Integer anneeDebut) {
+		this.anneeDebut = anneeDebut;
+		this.anneeDebutCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAnneeDebut(String o) {
+		if(NumberUtils.isParsable(o))
+			this.anneeDebut = Integer.parseInt(o);
+		this.anneeDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire anneeDebutInit() {
+		if(!anneeDebutCouverture.dejaInitialise) {
+			_anneeDebut(anneeDebutCouverture);
+			if(anneeDebut == null)
+				setAnneeDebut(anneeDebutCouverture.o);
+		}
+		anneeDebutCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrAnneeDebut() {
+		return anneeDebut;
+	}
+
+	public String strAnneeDebut() {
+		return anneeDebut == null ? "" : anneeDebut.toString();
+	}
+
+	public String jsonAnneeDebut() {
+		return anneeDebut == null ? "" : anneeDebut.toString();
+	}
+
+	public String nomAffichageAnneeDebut() {
+		return "début de l'année";
+	}
+
+	public String htmTooltipAnneeDebut() {
+		return null;
+	}
+
+	public String htmAnneeDebut() {
+		return anneeDebut == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeDebut());
+	}
+
+	//////////////
+	// anneeFin //
+	//////////////
+
+	/**	L'entité « anneeFin »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer anneeFin;
+	@JsonIgnore
+	public Couverture<Integer> anneeFinCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeFin").o(anneeFin);
+
+	/**	<br/>L'entité « anneeFin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeFin">Trouver l'entité anneeFin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeFin(Couverture<Integer> c);
+
+	public Integer getAnneeFin() {
+		return anneeFin;
+	}
+
+	public void setAnneeFin(Integer anneeFin) {
+		this.anneeFin = anneeFin;
+		this.anneeFinCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAnneeFin(String o) {
+		if(NumberUtils.isParsable(o))
+			this.anneeFin = Integer.parseInt(o);
+		this.anneeFinCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire anneeFinInit() {
+		if(!anneeFinCouverture.dejaInitialise) {
+			_anneeFin(anneeFinCouverture);
+			if(anneeFin == null)
+				setAnneeFin(anneeFinCouverture.o);
+		}
+		anneeFinCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrAnneeFin() {
+		return anneeFin;
+	}
+
+	public String strAnneeFin() {
+		return anneeFin == null ? "" : anneeFin.toString();
+	}
+
+	public String jsonAnneeFin() {
+		return anneeFin == null ? "" : anneeFin.toString();
+	}
+
+	public String nomAffichageAnneeFin() {
+		return "le fin de l'année";
+	}
+
+	public String htmTooltipAnneeFin() {
+		return null;
+	}
+
+	public String htmAnneeFin() {
+		return anneeFin == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFin());
+	}
+
+	/////////////////////
+	// saisonJourDebut //
+	/////////////////////
+
+	/**	L'entité « saisonJourDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate saisonJourDebut;
+	@JsonIgnore
+	public Couverture<LocalDate> saisonJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonJourDebut").o(saisonJourDebut);
+
+	/**	<br/>L'entité « saisonJourDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonJourDebut">Trouver l'entité saisonJourDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonJourDebut(Couverture<LocalDate> c);
+
+	public LocalDate getSaisonJourDebut() {
+		return saisonJourDebut;
+	}
+
+	public void setSaisonJourDebut(LocalDate saisonJourDebut) {
+		this.saisonJourDebut = saisonJourDebut;
+		this.saisonJourDebutCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSaisonJourDebut(Instant o) {
+		this.saisonJourDebut = LocalDate.from(o);
+		this.saisonJourDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public PaiementScolaire setSaisonJourDebut(String o) {
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.saisonJourDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setSaisonJourDebut(Date o) {
+		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonJourDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire saisonJourDebutInit() {
+		if(!saisonJourDebutCouverture.dejaInitialise) {
+			_saisonJourDebut(saisonJourDebutCouverture);
+			if(saisonJourDebut == null)
+				setSaisonJourDebut(saisonJourDebutCouverture.o);
+		}
+		saisonJourDebutCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Date solrSaisonJourDebut() {
+		return saisonJourDebut == null ? null : Date.from(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strSaisonJourDebut() {
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSaisonJourDebut() {
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichageSaisonJourDebut() {
+		return "début de l'année";
+	}
+
+	public String htmTooltipSaisonJourDebut() {
+		return null;
+	}
+
+	public String htmSaisonJourDebut() {
+		return saisonJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonJourDebut());
+	}
+
+	///////////////
+	// saisonEte //
+	///////////////
+
+	/**	L'entité « saisonEte »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean saisonEte;
+	@JsonIgnore
+	public Couverture<Boolean> saisonEteCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("saisonEte").o(saisonEte);
+
+	/**	<br/>L'entité « saisonEte »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonEte">Trouver l'entité saisonEte dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonEte(Couverture<Boolean> c);
+
+	public Boolean getSaisonEte() {
+		return saisonEte;
+	}
+
+	public void setSaisonEte(Boolean saisonEte) {
+		this.saisonEte = saisonEte;
+		this.saisonEteCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSaisonEte(String o) {
+		this.saisonEte = Boolean.parseBoolean(o);
+		this.saisonEteCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire saisonEteInit() {
+		if(!saisonEteCouverture.dejaInitialise) {
+			_saisonEte(saisonEteCouverture);
+			if(saisonEte == null)
+				setSaisonEte(saisonEteCouverture.o);
+		}
+		saisonEteCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrSaisonEte() {
+		return saisonEte;
+	}
+
+	public String strSaisonEte() {
+		return saisonEte == null ? "" : saisonEte.toString();
+	}
+
+	public String jsonSaisonEte() {
+		return saisonEte == null ? "" : saisonEte.toString();
+	}
+
+	public String nomAffichageSaisonEte() {
+		return "été";
+	}
+
+	public String htmTooltipSaisonEte() {
+		return null;
+	}
+
+	public String htmSaisonEte() {
+		return saisonEte == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonEte());
+	}
+
+	/////////////////
+	// saisonHiver //
+	/////////////////
+
+	/**	L'entité « saisonHiver »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean saisonHiver;
+	@JsonIgnore
+	public Couverture<Boolean> saisonHiverCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("saisonHiver").o(saisonHiver);
+
+	/**	<br/>L'entité « saisonHiver »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonHiver">Trouver l'entité saisonHiver dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonHiver(Couverture<Boolean> c);
+
+	public Boolean getSaisonHiver() {
+		return saisonHiver;
+	}
+
+	public void setSaisonHiver(Boolean saisonHiver) {
+		this.saisonHiver = saisonHiver;
+		this.saisonHiverCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSaisonHiver(String o) {
+		this.saisonHiver = Boolean.parseBoolean(o);
+		this.saisonHiverCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire saisonHiverInit() {
+		if(!saisonHiverCouverture.dejaInitialise) {
+			_saisonHiver(saisonHiverCouverture);
+			if(saisonHiver == null)
+				setSaisonHiver(saisonHiverCouverture.o);
+		}
+		saisonHiverCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrSaisonHiver() {
+		return saisonHiver;
+	}
+
+	public String strSaisonHiver() {
+		return saisonHiver == null ? "" : saisonHiver.toString();
+	}
+
+	public String jsonSaisonHiver() {
+		return saisonHiver == null ? "" : saisonHiver.toString();
+	}
+
+	public String nomAffichageSaisonHiver() {
+		return "hiver";
+	}
+
+	public String htmTooltipSaisonHiver() {
+		return null;
+	}
+
+	public String htmSaisonHiver() {
+		return saisonHiver == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonHiver());
+	}
+
+	///////////////////////////
+	// anneeFraisInscription //
+	///////////////////////////
+
+	/**	L'entité « anneeFraisInscription »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal anneeFraisInscription;
+	@JsonIgnore
+	public Couverture<BigDecimal> anneeFraisInscriptionCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("anneeFraisInscription").o(anneeFraisInscription);
+
+	/**	<br/>L'entité « anneeFraisInscription »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeFraisInscription">Trouver l'entité anneeFraisInscription dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeFraisInscription(Couverture<BigDecimal> c);
+
+	public BigDecimal getAnneeFraisInscription() {
+		return anneeFraisInscription;
+	}
+
+	public void setAnneeFraisInscription(BigDecimal anneeFraisInscription) {
+		this.anneeFraisInscription = anneeFraisInscription;
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAnneeFraisInscription(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setAnneeFraisInscription(Double o) {
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setAnneeFraisInscription(Integer o) {
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire anneeFraisInscriptionInit() {
+		if(!anneeFraisInscriptionCouverture.dejaInitialise) {
+			_anneeFraisInscription(anneeFraisInscriptionCouverture);
+			if(anneeFraisInscription == null)
+				setAnneeFraisInscription(anneeFraisInscriptionCouverture.o);
+		}
+		anneeFraisInscriptionCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrAnneeFraisInscription() {
+		return anneeFraisInscription == null ? null : anneeFraisInscription.doubleValue();
+	}
+
+	public String strAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2).toString();
+	}
+
+	public String jsonAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.toString();
+	}
+
+	public String nomAffichageAnneeFraisInscription() {
+		return "le fin de l'année";
+	}
+
+	public String htmTooltipAnneeFraisInscription() {
+		return null;
+	}
+
+	public String htmAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFraisInscription());
+	}
+
+	//////////////////////
+	// sessionJourDebut //
+	//////////////////////
+
+	/**	L'entité « sessionJourDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate sessionJourDebut;
+	@JsonIgnore
+	public Couverture<LocalDate> sessionJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionJourDebut").o(sessionJourDebut);
+
+	/**	<br/>L'entité « sessionJourDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionJourDebut">Trouver l'entité sessionJourDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionJourDebut(Couverture<LocalDate> c);
+
+	public LocalDate getSessionJourDebut() {
+		return sessionJourDebut;
+	}
+
+	public void setSessionJourDebut(LocalDate sessionJourDebut) {
+		this.sessionJourDebut = sessionJourDebut;
+		this.sessionJourDebutCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSessionJourDebut(Instant o) {
+		this.sessionJourDebut = LocalDate.from(o);
+		this.sessionJourDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public PaiementScolaire setSessionJourDebut(String o) {
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setSessionJourDebut(Date o) {
+		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionJourDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire sessionJourDebutInit() {
+		if(!sessionJourDebutCouverture.dejaInitialise) {
+			_sessionJourDebut(sessionJourDebutCouverture);
+			if(sessionJourDebut == null)
+				setSessionJourDebut(sessionJourDebutCouverture.o);
+		}
+		sessionJourDebutCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Date solrSessionJourDebut() {
+		return sessionJourDebut == null ? null : Date.from(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strSessionJourDebut() {
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSessionJourDebut() {
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichageSessionJourDebut() {
+		return "début de la session";
+	}
+
+	public String htmTooltipSessionJourDebut() {
+		return null;
+	}
+
+	public String htmSessionJourDebut() {
+		return sessionJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourDebut());
+	}
+
+	////////////////////
+	// sessionJourFin //
+	////////////////////
+
+	/**	L'entité « sessionJourFin »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate sessionJourFin;
+	@JsonIgnore
+	public Couverture<LocalDate> sessionJourFinCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionJourFin").o(sessionJourFin);
+
+	/**	<br/>L'entité « sessionJourFin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionJourFin">Trouver l'entité sessionJourFin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionJourFin(Couverture<LocalDate> c);
+
+	public LocalDate getSessionJourFin() {
+		return sessionJourFin;
+	}
+
+	public void setSessionJourFin(LocalDate sessionJourFin) {
+		this.sessionJourFin = sessionJourFin;
+		this.sessionJourFinCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setSessionJourFin(Instant o) {
+		this.sessionJourFin = LocalDate.from(o);
+		this.sessionJourFinCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public PaiementScolaire setSessionJourFin(String o) {
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourFinCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setSessionJourFin(Date o) {
+		this.sessionJourFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionJourFinCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire sessionJourFinInit() {
+		if(!sessionJourFinCouverture.dejaInitialise) {
+			_sessionJourFin(sessionJourFinCouverture);
+			if(sessionJourFin == null)
+				setSessionJourFin(sessionJourFinCouverture.o);
+		}
+		sessionJourFinCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Date solrSessionJourFin() {
+		return sessionJourFin == null ? null : Date.from(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strSessionJourFin() {
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSessionJourFin() {
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichageSessionJourFin() {
+		return "fin de la session";
+	}
+
+	public String htmTooltipSessionJourFin() {
+		return null;
+	}
+
+	public String htmSessionJourFin() {
+		return sessionJourFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourFin());
+	}
+
+	//////////////
+	// ageDebut //
+	//////////////
+
+	/**	L'entité « ageDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer ageDebut;
+	@JsonIgnore
+	public Couverture<Integer> ageDebutCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ageDebut").o(ageDebut);
+
+	/**	<br/>L'entité « ageDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageDebut">Trouver l'entité ageDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ageDebut(Couverture<Integer> c);
+
+	public Integer getAgeDebut() {
+		return ageDebut;
+	}
+
+	public void setAgeDebut(Integer ageDebut) {
+		this.ageDebut = ageDebut;
+		this.ageDebutCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAgeDebut(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ageDebut = Integer.parseInt(o);
+		this.ageDebutCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire ageDebutInit() {
+		if(!ageDebutCouverture.dejaInitialise) {
+			_ageDebut(ageDebutCouverture);
+			if(ageDebut == null)
+				setAgeDebut(ageDebutCouverture.o);
+		}
+		ageDebutCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrAgeDebut() {
+		return ageDebut;
+	}
+
+	public String strAgeDebut() {
+		return ageDebut == null ? "" : ageDebut.toString();
+	}
+
+	public String jsonAgeDebut() {
+		return ageDebut == null ? "" : ageDebut.toString();
+	}
+
+	public String nomAffichageAgeDebut() {
+		return "début du groupe d'âge";
+	}
+
+	public String htmTooltipAgeDebut() {
+		return null;
+	}
+
+	public String htmAgeDebut() {
+		return ageDebut == null ? "" : StringEscapeUtils.escapeHtml4(strAgeDebut());
+	}
+
+	////////////
+	// ageFin //
+	////////////
+
+	/**	L'entité « ageFin »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer ageFin;
+	@JsonIgnore
+	public Couverture<Integer> ageFinCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ageFin").o(ageFin);
+
+	/**	<br/>L'entité « ageFin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageFin">Trouver l'entité ageFin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ageFin(Couverture<Integer> c);
+
+	public Integer getAgeFin() {
+		return ageFin;
+	}
+
+	public void setAgeFin(Integer ageFin) {
+		this.ageFin = ageFin;
+		this.ageFinCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setAgeFin(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ageFin = Integer.parseInt(o);
+		this.ageFinCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire ageFinInit() {
+		if(!ageFinCouverture.dejaInitialise) {
+			_ageFin(ageFinCouverture);
+			if(ageFin == null)
+				setAgeFin(ageFinCouverture.o);
+		}
+		ageFinCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrAgeFin() {
+		return ageFin;
+	}
+
+	public String strAgeFin() {
+		return ageFin == null ? "" : ageFin.toString();
+	}
+
+	public String jsonAgeFin() {
+		return ageFin == null ? "" : ageFin.toString();
+	}
+
+	public String nomAffichageAgeFin() {
+		return "fin du groupe d'âge";
+	}
+
+	public String htmTooltipAgeFin() {
+		return null;
+	}
+
+	public String htmAgeFin() {
+		return ageFin == null ? "" : StringEscapeUtils.escapeHtml4(strAgeFin());
+	}
+
+	////////////////////
+	// blocHeureDebut //
+	////////////////////
+
+	/**	L'entité « blocHeureDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalTime blocHeureDebut;
+	@JsonIgnore
+	public Couverture<LocalTime> blocHeureDebutCouverture = new Couverture<LocalTime>().p(this).c(LocalTime.class).var("blocHeureDebut").o(blocHeureDebut);
+
+	/**	<br/>L'entité « blocHeureDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocHeureDebut">Trouver l'entité blocHeureDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocHeureDebut(Couverture<LocalTime> c);
+
+	public LocalTime getBlocHeureDebut() {
+		return blocHeureDebut;
+	}
+
+	public void setBlocHeureDebut(LocalTime blocHeureDebut) {
+		this.blocHeureDebut = blocHeureDebut;
+		this.blocHeureDebutCouverture.dejaInitialise = true;
+	}
+	/** Example: 01:00 **/
+	public PaiementScolaire setBlocHeureDebut(String o) {
+		try {
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureDebutCouverture.dejaInitialise = true;
+		} catch(Exception e) {
+		}
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire blocHeureDebutInit() {
+		if(!blocHeureDebutCouverture.dejaInitialise) {
+			_blocHeureDebut(blocHeureDebutCouverture);
+			if(blocHeureDebut == null)
+				setBlocHeureDebut(blocHeureDebutCouverture.o);
+		}
+		blocHeureDebutCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrBlocHeureDebut() {
+		return blocHeureDebut == null ? null : blocHeureDebut.format(DateTimeFormatter.ISO_LOCAL_TIME);
+	}
+
+	public String strBlocHeureDebut() {
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+	}
+
+	public String jsonBlocHeureDebut() {
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+	}
+
+	public String nomAffichageBlocHeureDebut() {
+		return "heure début";
+	}
+
+	public String htmTooltipBlocHeureDebut() {
+		return null;
+	}
+
+	public String htmBlocHeureDebut() {
+		return blocHeureDebut == null ? "" : StringEscapeUtils.escapeHtml4(strBlocHeureDebut());
+	}
+
+	//////////////////
+	// blocHeureFin //
+	//////////////////
+
+	/**	L'entité « blocHeureFin »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalTime blocHeureFin;
+	@JsonIgnore
+	public Couverture<LocalTime> blocHeureFinCouverture = new Couverture<LocalTime>().p(this).c(LocalTime.class).var("blocHeureFin").o(blocHeureFin);
+
+	/**	<br/>L'entité « blocHeureFin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocHeureFin">Trouver l'entité blocHeureFin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocHeureFin(Couverture<LocalTime> c);
+
+	public LocalTime getBlocHeureFin() {
+		return blocHeureFin;
+	}
+
+	public void setBlocHeureFin(LocalTime blocHeureFin) {
+		this.blocHeureFin = blocHeureFin;
+		this.blocHeureFinCouverture.dejaInitialise = true;
+	}
+	/** Example: 01:00 **/
+	public PaiementScolaire setBlocHeureFin(String o) {
+		try {
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureFinCouverture.dejaInitialise = true;
+		} catch(Exception e) {
+		}
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire blocHeureFinInit() {
+		if(!blocHeureFinCouverture.dejaInitialise) {
+			_blocHeureFin(blocHeureFinCouverture);
+			if(blocHeureFin == null)
+				setBlocHeureFin(blocHeureFinCouverture.o);
+		}
+		blocHeureFinCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrBlocHeureFin() {
+		return blocHeureFin == null ? null : blocHeureFin.format(DateTimeFormatter.ISO_LOCAL_TIME);
+	}
+
+	public String strBlocHeureFin() {
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+	}
+
+	public String jsonBlocHeureFin() {
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+	}
+
+	public String nomAffichageBlocHeureFin() {
+		return "heure fin";
+	}
+
+	public String htmTooltipBlocHeureFin() {
+		return null;
+	}
+
+	public String htmBlocHeureFin() {
+		return blocHeureFin == null ? "" : StringEscapeUtils.escapeHtml4(strBlocHeureFin());
+	}
+
+	/////////////////////
+	// blocPrixParMois //
+	/////////////////////
+
+	/**	L'entité « blocPrixParMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal blocPrixParMois;
+	@JsonIgnore
+	public Couverture<BigDecimal> blocPrixParMoisCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("blocPrixParMois").o(blocPrixParMois);
+
+	/**	<br/>L'entité « blocPrixParMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocPrixParMois">Trouver l'entité blocPrixParMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocPrixParMois(Couverture<BigDecimal> c);
+
+	public BigDecimal getBlocPrixParMois() {
+		return blocPrixParMois;
+	}
+
+	public void setBlocPrixParMois(BigDecimal blocPrixParMois) {
+		this.blocPrixParMois = blocPrixParMois;
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setBlocPrixParMois(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setBlocPrixParMois(Double o) {
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setBlocPrixParMois(Integer o) {
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire blocPrixParMoisInit() {
+		if(!blocPrixParMoisCouverture.dejaInitialise) {
+			_blocPrixParMois(blocPrixParMoisCouverture);
+			if(blocPrixParMois == null)
+				setBlocPrixParMois(blocPrixParMoisCouverture.o);
+		}
+		blocPrixParMoisCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrBlocPrixParMois() {
+		return blocPrixParMois == null ? null : blocPrixParMois.doubleValue();
+	}
+
+	public String strBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(2).toString();
+	}
+
+	public String jsonBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
+	}
+
+	public String nomAffichageBlocPrixParMois() {
+		return "prix par mois";
+	}
+
+	public String htmTooltipBlocPrixParMois() {
+		return null;
+	}
+
+	public String htmBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixParMois());
+	}
+
+	///////////////////
+	// blocPrixTotal //
+	///////////////////
+
+	/**	L'entité « blocPrixTotal »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal blocPrixTotal;
+	@JsonIgnore
+	public Couverture<BigDecimal> blocPrixTotalCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("blocPrixTotal").o(blocPrixTotal);
+
+	/**	<br/>L'entité « blocPrixTotal »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocPrixTotal">Trouver l'entité blocPrixTotal dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocPrixTotal(Couverture<BigDecimal> c);
+
+	public BigDecimal getBlocPrixTotal() {
+		return blocPrixTotal;
+	}
+
+	public void setBlocPrixTotal(BigDecimal blocPrixTotal) {
+		this.blocPrixTotal = blocPrixTotal;
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setBlocPrixTotal(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setBlocPrixTotal(Double o) {
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setBlocPrixTotal(Integer o) {
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire blocPrixTotalInit() {
+		if(!blocPrixTotalCouverture.dejaInitialise) {
+			_blocPrixTotal(blocPrixTotalCouverture);
+			if(blocPrixTotal == null)
+				setBlocPrixTotal(blocPrixTotalCouverture.o);
+		}
+		blocPrixTotalCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrBlocPrixTotal() {
+		return blocPrixTotal == null ? null : blocPrixTotal.doubleValue();
+	}
+
+	public String strBlocPrixTotal() {
+		return blocPrixTotal == null ? "" : blocPrixTotal.setScale(2).toString();
+	}
+
+	public String jsonBlocPrixTotal() {
+		return blocPrixTotal == null ? "" : blocPrixTotal.toString();
+	}
+
+	public String nomAffichageBlocPrixTotal() {
+		return "prix total";
+	}
+
+	public String htmTooltipBlocPrixTotal() {
+		return null;
+	}
+
+	public String htmBlocPrixTotal() {
+		return blocPrixTotal == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixTotal());
+	}
+
+	//////////////////////////////////
+	// inscriptionPaimentChaqueMois //
+	//////////////////////////////////
+
+	/**	L'entité « inscriptionPaimentChaqueMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean inscriptionPaimentChaqueMois;
+	@JsonIgnore
+	public Couverture<Boolean> inscriptionPaimentChaqueMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentChaqueMois").o(inscriptionPaimentChaqueMois);
+
+	/**	<br/>L'entité « inscriptionPaimentChaqueMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentChaqueMois">Trouver l'entité inscriptionPaimentChaqueMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionPaimentChaqueMois(Couverture<Boolean> c);
+
+	public Boolean getInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois;
+	}
+
+	public void setInscriptionPaimentChaqueMois(Boolean inscriptionPaimentChaqueMois) {
+		this.inscriptionPaimentChaqueMois = inscriptionPaimentChaqueMois;
+		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setInscriptionPaimentChaqueMois(String o) {
+		this.inscriptionPaimentChaqueMois = Boolean.parseBoolean(o);
+		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire inscriptionPaimentChaqueMoisInit() {
+		if(!inscriptionPaimentChaqueMoisCouverture.dejaInitialise) {
+			_inscriptionPaimentChaqueMois(inscriptionPaimentChaqueMoisCouverture);
+			if(inscriptionPaimentChaqueMois == null)
+				setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMoisCouverture.o);
+		}
+		inscriptionPaimentChaqueMoisCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois;
+	}
+
+	public String strInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
+	}
+
+	public String jsonInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
+	}
+
+	public String nomAffichageInscriptionPaimentChaqueMois() {
+		return "paiement chaque mois";
+	}
+
+	public String htmTooltipInscriptionPaimentChaqueMois() {
+		return null;
+	}
+
+	public String htmInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentChaqueMois());
+	}
+
+	public void inputInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setInscriptionPaimentChaqueMois inputPaiementScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
+			a("name", "setInscriptionPaimentChaqueMois");
+		} else {
+			a("class", "valeurInscriptionPaimentChaqueMois inputPaiementScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
+			a("name", "inscriptionPaimentChaqueMois");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentChaqueMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getInscriptionPaimentChaqueMois() != null && getInscriptionPaimentChaqueMois())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionPaimentChaqueMois").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois").a("class", "").f().sx("paiement chaque mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputInscriptionPaimentChaqueMois(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////////
+	// inscriptionPaimentComplet //
+	///////////////////////////////
+
+	/**	L'entité « inscriptionPaimentComplet »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean inscriptionPaimentComplet;
+	@JsonIgnore
+	public Couverture<Boolean> inscriptionPaimentCompletCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentComplet").o(inscriptionPaimentComplet);
+
+	/**	<br/>L'entité « inscriptionPaimentComplet »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentComplet">Trouver l'entité inscriptionPaimentComplet dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionPaimentComplet(Couverture<Boolean> c);
+
+	public Boolean getInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet;
+	}
+
+	public void setInscriptionPaimentComplet(Boolean inscriptionPaimentComplet) {
+		this.inscriptionPaimentComplet = inscriptionPaimentComplet;
+		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setInscriptionPaimentComplet(String o) {
+		this.inscriptionPaimentComplet = Boolean.parseBoolean(o);
+		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire inscriptionPaimentCompletInit() {
+		if(!inscriptionPaimentCompletCouverture.dejaInitialise) {
+			_inscriptionPaimentComplet(inscriptionPaimentCompletCouverture);
+			if(inscriptionPaimentComplet == null)
+				setInscriptionPaimentComplet(inscriptionPaimentCompletCouverture.o);
+		}
+		inscriptionPaimentCompletCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet;
+	}
+
+	public String strInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
+	}
+
+	public String jsonInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
+	}
+
+	public String nomAffichageInscriptionPaimentComplet() {
+		return "paiement complet";
+	}
+
+	public String htmTooltipInscriptionPaimentComplet() {
+		return null;
+	}
+
+	public String htmInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentComplet());
+	}
+
+	public void inputInscriptionPaimentComplet(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setInscriptionPaimentComplet inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
+			a("name", "setInscriptionPaimentComplet");
+		} else {
+			a("class", "valeurInscriptionPaimentComplet inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
+			a("name", "inscriptionPaimentComplet");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getInscriptionPaimentComplet() != null && getInscriptionPaimentComplet())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmInscriptionPaimentComplet(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionPaimentComplet").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_inscriptionPaimentComplet").a("class", "").f().sx("paiement complet").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputInscriptionPaimentComplet(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////////
@@ -1318,7 +3042,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementDescription »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String paiementDescription;
 	@JsonIgnore
 	public Couverture<String> paiementDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("paiementDescription").o(paiementDescription);
@@ -1436,6 +3160,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDate paiementDate;
 	@JsonIgnore
 	public Couverture<LocalDate> paiementDateCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementDate").o(paiementDate);
@@ -1560,6 +3285,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected BigDecimal paiementMontant;
 	@JsonIgnore
 	public Couverture<BigDecimal> paiementMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("paiementMontant").o(paiementMontant);
@@ -1620,7 +3346,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaiementMontant() {
-		return "montant";
+		return "paiement montant";
 	}
 
 	public String htmTooltipPaiementMontant() {
@@ -1635,7 +3361,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("placeholder", "montant")
+			.a("placeholder", "paiement montant")
 			.a("title", "La clé primaire des enfants dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_paiementMontant");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
@@ -1661,7 +3387,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementMontant").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_paiementMontant").a("class", "").f().sx("montant").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_paiementMontant").a("class", "").f().sx("paiement montant").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1686,6 +3412,367 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////
+	// fraisMontant //
+	//////////////////
+
+	/**	L'entité « fraisMontant »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontant;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontant").o(fraisMontant);
+
+	/**	<br/>L'entité « fraisMontant »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontant">Trouver l'entité fraisMontant dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontant(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontant() {
+		return fraisMontant;
+	}
+
+	public void setFraisMontant(BigDecimal fraisMontant) {
+		this.fraisMontant = fraisMontant;
+		this.fraisMontantCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontant(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontant(Double o) {
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontant(Integer o) {
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantInit() {
+		if(!fraisMontantCouverture.dejaInitialise) {
+			_fraisMontant(fraisMontantCouverture);
+			if(fraisMontant == null)
+				setFraisMontant(fraisMontantCouverture.o);
+		}
+		fraisMontantCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontant() {
+		return fraisMontant == null ? null : fraisMontant.doubleValue();
+	}
+
+	public String strFraisMontant() {
+		return fraisMontant == null ? "" : fraisMontant.setScale(2).toString();
+	}
+
+	public String jsonFraisMontant() {
+		return fraisMontant == null ? "" : fraisMontant.toString();
+	}
+
+	public String nomAffichageFraisMontant() {
+		return "frais montant";
+	}
+
+	public String htmTooltipFraisMontant() {
+		return null;
+	}
+
+	public String htmFraisMontant() {
+		return fraisMontant == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontant());
+	}
+
+	////////////////////////
+	// fraisMontantFuture //
+	////////////////////////
+
+	/**	L'entité « fraisMontantFuture »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontantFuture;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantFutureCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontantFuture").o(fraisMontantFuture);
+
+	/**	<br/>L'entité « fraisMontantFuture »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontantFuture">Trouver l'entité fraisMontantFuture dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontantFuture(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontantFuture() {
+		return fraisMontantFuture;
+	}
+
+	public void setFraisMontantFuture(BigDecimal fraisMontantFuture) {
+		this.fraisMontantFuture = fraisMontantFuture;
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontantFuture(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantFuture(Double o) {
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantFuture(Integer o) {
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantFutureInit() {
+		if(!fraisMontantFutureCouverture.dejaInitialise) {
+			_fraisMontantFuture(fraisMontantFutureCouverture);
+			if(fraisMontantFuture == null)
+				setFraisMontantFuture(fraisMontantFutureCouverture.o);
+		}
+		fraisMontantFutureCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontantFuture() {
+		return fraisMontantFuture == null ? null : fraisMontantFuture.doubleValue();
+	}
+
+	public String strFraisMontantFuture() {
+		return fraisMontantFuture == null ? "" : fraisMontantFuture.setScale(2).toString();
+	}
+
+	public String jsonFraisMontantFuture() {
+		return fraisMontantFuture == null ? "" : fraisMontantFuture.toString();
+	}
+
+	public String nomAffichageFraisMontantFuture() {
+		return "frais montant future";
+	}
+
+	public String htmTooltipFraisMontantFuture() {
+		return null;
+	}
+
+	public String htmFraisMontantFuture() {
+		return fraisMontantFuture == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantFuture());
+	}
+
+	//////////////////////
+	// fraisInscription //
+	//////////////////////
+
+	/**	L'entité « fraisInscription »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisInscription;
+	@JsonIgnore
+	public Couverture<Boolean> fraisInscriptionCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisInscription").o(fraisInscription);
+
+	/**	<br/>L'entité « fraisInscription »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisInscription">Trouver l'entité fraisInscription dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisInscription(Couverture<Boolean> c);
+
+	public Boolean getFraisInscription() {
+		return fraisInscription;
+	}
+
+	public void setFraisInscription(Boolean fraisInscription) {
+		this.fraisInscription = fraisInscription;
+		this.fraisInscriptionCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisInscription(String o) {
+		this.fraisInscription = Boolean.parseBoolean(o);
+		this.fraisInscriptionCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisInscriptionInit() {
+		if(!fraisInscriptionCouverture.dejaInitialise) {
+			_fraisInscription(fraisInscriptionCouverture);
+			if(fraisInscription == null)
+				setFraisInscription(fraisInscriptionCouverture.o);
+		}
+		fraisInscriptionCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisInscription() {
+		return fraisInscription;
+	}
+
+	public String strFraisInscription() {
+		return fraisInscription == null ? "" : fraisInscription.toString();
+	}
+
+	public String jsonFraisInscription() {
+		return fraisInscription == null ? "" : fraisInscription.toString();
+	}
+
+	public String nomAffichageFraisInscription() {
+		return "frais d'inscription";
+	}
+
+	public String htmTooltipFraisInscription() {
+		return null;
+	}
+
+	public String htmFraisInscription() {
+		return fraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strFraisInscription());
+	}
+
+	/////////////////////////
+	// fraisPremierDernier //
+	/////////////////////////
+
+	/**	L'entité « fraisPremierDernier »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisPremierDernier;
+	@JsonIgnore
+	public Couverture<Boolean> fraisPremierDernierCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisPremierDernier").o(fraisPremierDernier);
+
+	/**	<br/>L'entité « fraisPremierDernier »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisPremierDernier">Trouver l'entité fraisPremierDernier dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisPremierDernier(Couverture<Boolean> c);
+
+	public Boolean getFraisPremierDernier() {
+		return fraisPremierDernier;
+	}
+
+	public void setFraisPremierDernier(Boolean fraisPremierDernier) {
+		this.fraisPremierDernier = fraisPremierDernier;
+		this.fraisPremierDernierCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisPremierDernier(String o) {
+		this.fraisPremierDernier = Boolean.parseBoolean(o);
+		this.fraisPremierDernierCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisPremierDernierInit() {
+		if(!fraisPremierDernierCouverture.dejaInitialise) {
+			_fraisPremierDernier(fraisPremierDernierCouverture);
+			if(fraisPremierDernier == null)
+				setFraisPremierDernier(fraisPremierDernierCouverture.o);
+		}
+		fraisPremierDernierCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisPremierDernier() {
+		return fraisPremierDernier;
+	}
+
+	public String strFraisPremierDernier() {
+		return fraisPremierDernier == null ? "" : fraisPremierDernier.toString();
+	}
+
+	public String jsonFraisPremierDernier() {
+		return fraisPremierDernier == null ? "" : fraisPremierDernier.toString();
+	}
+
+	public String nomAffichageFraisPremierDernier() {
+		return "frais mois premier et dernier";
+	}
+
+	public String htmTooltipFraisPremierDernier() {
+		return null;
+	}
+
+	public String htmFraisPremierDernier() {
+		return fraisPremierDernier == null ? "" : StringEscapeUtils.escapeHtml4(strFraisPremierDernier());
+	}
+
+	///////////////
+	// fraisMois //
+	///////////////
+
+	/**	L'entité « fraisMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisMois;
+	@JsonIgnore
+	public Couverture<Boolean> fraisMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisMois").o(fraisMois);
+
+	/**	<br/>L'entité « fraisMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMois">Trouver l'entité fraisMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMois(Couverture<Boolean> c);
+
+	public Boolean getFraisMois() {
+		return fraisMois;
+	}
+
+	public void setFraisMois(Boolean fraisMois) {
+		this.fraisMois = fraisMois;
+		this.fraisMoisCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMois(String o) {
+		this.fraisMois = Boolean.parseBoolean(o);
+		this.fraisMoisCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMoisInit() {
+		if(!fraisMoisCouverture.dejaInitialise) {
+			_fraisMois(fraisMoisCouverture);
+			if(fraisMois == null)
+				setFraisMois(fraisMoisCouverture.o);
+		}
+		fraisMoisCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisMois() {
+		return fraisMois;
+	}
+
+	public String strFraisMois() {
+		return fraisMois == null ? "" : fraisMois.toString();
+	}
+
+	public String jsonFraisMois() {
+		return fraisMois == null ? "" : fraisMois.toString();
+	}
+
+	public String nomAffichageFraisMois() {
+		return "frais du mois";
+	}
+
+	public String htmTooltipFraisMois() {
+		return null;
+	}
+
+	public String htmFraisMois() {
+		return fraisMois == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMois());
+	}
+
 	/////////////////////
 	// paiementEspeces //
 	/////////////////////
@@ -1693,7 +3780,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementEspeces »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean paiementEspeces;
 	@JsonIgnore
 	public Couverture<Boolean> paiementEspecesCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("paiementEspeces").o(paiementEspeces);
@@ -1816,7 +3903,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementCheque »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean paiementCheque;
 	@JsonIgnore
 	public Couverture<Boolean> paiementChequeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("paiementCheque").o(paiementCheque);
@@ -1939,7 +4026,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementSysteme »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean paiementSysteme;
 	@JsonIgnore
 	public Couverture<Boolean> paiementSystemeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("paiementSysteme").o(paiementSysteme);
@@ -2062,7 +4149,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementPar »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String paiementPar;
 	@JsonIgnore
 	public Couverture<String> paiementParCouverture = new Couverture<String>().p(this).c(String.class).var("paiementPar").o(paiementPar);
@@ -2179,7 +4266,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « transactionId »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String transactionId;
 	@JsonIgnore
 	public Couverture<String> transactionIdCouverture = new Couverture<String>().p(this).c(String.class).var("transactionId").o(transactionId);
@@ -2296,7 +4383,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « customerProfileId »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String customerProfileId;
 	@JsonIgnore
 	public Couverture<String> customerProfileIdCouverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
@@ -2413,7 +4500,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « transactionStatus »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String transactionStatus;
 	@JsonIgnore
 	public Couverture<String> transactionStatusCouverture = new Couverture<String>().p(this).c(String.class).var("transactionStatus").o(transactionStatus);
@@ -2531,6 +4618,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDate paiementDu;
 	@JsonIgnore
 	public Couverture<LocalDate> paiementDuCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementDu").o(paiementDu);
@@ -2654,7 +4742,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementRecu »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean paiementRecu;
 	@JsonIgnore
 	public Couverture<Boolean> paiementRecuCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("paiementRecu").o(paiementRecu);
@@ -2777,7 +4865,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String paiementNomComplet;
 	@JsonIgnore
 	public Couverture<String> paiementNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("paiementNomComplet").o(paiementNomComplet);
@@ -2853,24 +4941,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initPaiementScolaire() {
-		ecoleClesInit();
-		anneeClesInit();
-		saisonCleInit();
-		sessionClesInit();
-		ageClesInit();
-		blocClesInit();
-		inscriptionClesInit();
 		paiementCleInit();
-		enfantClesInit();
+		inscriptionCleInit();
+		inscriptionRechercheInit();
+		inscription_Init();
+		ecoleCleInit();
+		anneeCleInit();
+		saisonCleInit();
+		sessionCleInit();
+		ageCleInit();
+		blocCleInit();
+		enfantCleInit();
 		mereClesInit();
 		pereClesInit();
 		gardienClesInit();
-		contactClesInit();
-		inscriptionRechercheInit();
-		inscription_Init();
+		enfantNomCompletPrefereInit();
+		enfantDateNaissanceInit();
+		mereNomCompletPrefereInit();
+		pereNomCompletPrefereInit();
+		ecoleNomInit();
+		ecoleNomCompletInit();
+		ecoleEmplacementInit();
+		anneeDebutInit();
+		anneeFinInit();
+		saisonJourDebutInit();
+		saisonEteInit();
+		saisonHiverInit();
+		anneeFraisInscriptionInit();
+		sessionJourDebutInit();
+		sessionJourFinInit();
+		ageDebutInit();
+		ageFinInit();
+		blocHeureDebutInit();
+		blocHeureFinInit();
+		blocPrixParMoisInit();
+		blocPrixTotalInit();
+		inscriptionPaimentChaqueMoisInit();
+		inscriptionPaimentCompletInit();
 		paiementDescriptionInit();
 		paiementDateInit();
 		paiementMontantInit();
+		fraisMontantInit();
+		fraisMontantFutureInit();
+		fraisInscriptionInit();
+		fraisPremierDernierInit();
+		fraisMoisInit();
 		paiementEspecesInit();
 		paiementChequeInit();
 		paiementSystemeInit();
@@ -2921,42 +5036,96 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public Object obtenirPaiementScolaire(String var) {
 		PaiementScolaire oPaiementScolaire = (PaiementScolaire)this;
 		switch(var) {
-			case "ecoleCles":
-				return oPaiementScolaire.ecoleCles;
-			case "anneeCles":
-				return oPaiementScolaire.anneeCles;
-			case "saisonCle":
-				return oPaiementScolaire.saisonCle;
-			case "sessionCles":
-				return oPaiementScolaire.sessionCles;
-			case "ageCles":
-				return oPaiementScolaire.ageCles;
-			case "blocCles":
-				return oPaiementScolaire.blocCles;
-			case "inscriptionCles":
-				return oPaiementScolaire.inscriptionCles;
 			case "paiementCle":
 				return oPaiementScolaire.paiementCle;
-			case "enfantCles":
-				return oPaiementScolaire.enfantCles;
+			case "inscriptionCle":
+				return oPaiementScolaire.inscriptionCle;
+			case "inscriptionRecherche":
+				return oPaiementScolaire.inscriptionRecherche;
+			case "inscription_":
+				return oPaiementScolaire.inscription_;
+			case "ecoleCle":
+				return oPaiementScolaire.ecoleCle;
+			case "anneeCle":
+				return oPaiementScolaire.anneeCle;
+			case "saisonCle":
+				return oPaiementScolaire.saisonCle;
+			case "sessionCle":
+				return oPaiementScolaire.sessionCle;
+			case "ageCle":
+				return oPaiementScolaire.ageCle;
+			case "blocCle":
+				return oPaiementScolaire.blocCle;
+			case "enfantCle":
+				return oPaiementScolaire.enfantCle;
 			case "mereCles":
 				return oPaiementScolaire.mereCles;
 			case "pereCles":
 				return oPaiementScolaire.pereCles;
 			case "gardienCles":
 				return oPaiementScolaire.gardienCles;
-			case "contactCles":
-				return oPaiementScolaire.contactCles;
-			case "inscriptionRecherche":
-				return oPaiementScolaire.inscriptionRecherche;
-			case "inscription_":
-				return oPaiementScolaire.inscription_;
+			case "enfantNomCompletPrefere":
+				return oPaiementScolaire.enfantNomCompletPrefere;
+			case "enfantDateNaissance":
+				return oPaiementScolaire.enfantDateNaissance;
+			case "mereNomCompletPrefere":
+				return oPaiementScolaire.mereNomCompletPrefere;
+			case "pereNomCompletPrefere":
+				return oPaiementScolaire.pereNomCompletPrefere;
+			case "ecoleNom":
+				return oPaiementScolaire.ecoleNom;
+			case "ecoleNomComplet":
+				return oPaiementScolaire.ecoleNomComplet;
+			case "ecoleEmplacement":
+				return oPaiementScolaire.ecoleEmplacement;
+			case "anneeDebut":
+				return oPaiementScolaire.anneeDebut;
+			case "anneeFin":
+				return oPaiementScolaire.anneeFin;
+			case "saisonJourDebut":
+				return oPaiementScolaire.saisonJourDebut;
+			case "saisonEte":
+				return oPaiementScolaire.saisonEte;
+			case "saisonHiver":
+				return oPaiementScolaire.saisonHiver;
+			case "anneeFraisInscription":
+				return oPaiementScolaire.anneeFraisInscription;
+			case "sessionJourDebut":
+				return oPaiementScolaire.sessionJourDebut;
+			case "sessionJourFin":
+				return oPaiementScolaire.sessionJourFin;
+			case "ageDebut":
+				return oPaiementScolaire.ageDebut;
+			case "ageFin":
+				return oPaiementScolaire.ageFin;
+			case "blocHeureDebut":
+				return oPaiementScolaire.blocHeureDebut;
+			case "blocHeureFin":
+				return oPaiementScolaire.blocHeureFin;
+			case "blocPrixParMois":
+				return oPaiementScolaire.blocPrixParMois;
+			case "blocPrixTotal":
+				return oPaiementScolaire.blocPrixTotal;
+			case "inscriptionPaimentChaqueMois":
+				return oPaiementScolaire.inscriptionPaimentChaqueMois;
+			case "inscriptionPaimentComplet":
+				return oPaiementScolaire.inscriptionPaimentComplet;
 			case "paiementDescription":
 				return oPaiementScolaire.paiementDescription;
 			case "paiementDate":
 				return oPaiementScolaire.paiementDate;
 			case "paiementMontant":
 				return oPaiementScolaire.paiementMontant;
+			case "fraisMontant":
+				return oPaiementScolaire.fraisMontant;
+			case "fraisMontantFuture":
+				return oPaiementScolaire.fraisMontantFuture;
+			case "fraisInscription":
+				return oPaiementScolaire.fraisInscription;
+			case "fraisPremierDernier":
+				return oPaiementScolaire.fraisPremierDernier;
+			case "fraisMois":
+				return oPaiementScolaire.fraisMois;
 			case "paiementEspeces":
 				return oPaiementScolaire.paiementEspeces;
 			case "paiementCheque":
@@ -3002,8 +5171,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public Object attribuerPaiementScolaire(String var, Object val) {
 		PaiementScolaire oPaiementScolaire = (PaiementScolaire)this;
 		switch(var) {
-			case "inscriptionCles":
-				oPaiementScolaire.addInscriptionCles((Long)val);
+			case "inscriptionCle":
+				oPaiementScolaire.setInscriptionCle((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3031,6 +5200,30 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirPaiementScolaire(String var, String val) {
 		switch(var) {
+			case "enfantNomCompletPrefere":
+				setEnfantNomCompletPrefere(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "enfantDateNaissance":
+				setEnfantDateNaissance(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "mereNomCompletPrefere":
+				setMereNomCompletPrefere(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "pereNomCompletPrefere":
+				setPereNomCompletPrefere(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "inscriptionPaimentChaqueMois":
+				setInscriptionPaimentChaqueMois(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "inscriptionPaimentComplet":
+				setInscriptionPaimentComplet(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
 			case "paiementDescription":
 				setPaiementDescription(val);
 				sauvegardesPaiementScolaire.add(var);
@@ -3102,50 +5295,56 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sauvegardesPaiementScolaire = (List<String>)solrDocument.get("sauvegardesPaiementScolaire_stored_strings");
 		if(sauvegardesPaiementScolaire != null) {
 
-			if(sauvegardesPaiementScolaire.contains("ecoleCles")) {
-				List<Long> ecoleCles = (List<Long>)solrDocument.get("ecoleCles_stored_longs");
-				if(ecoleCles != null)
-					oPaiementScolaire.ecoleCles.addAll(ecoleCles);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("saisonCle")) {
-				List<Long> saisonCle = (List<Long>)solrDocument.get("saisonCle_stored_longs");
-				if(saisonCle != null)
-					oPaiementScolaire.saisonCle.addAll(saisonCle);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("sessionCles")) {
-				List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
-				if(sessionCles != null)
-					oPaiementScolaire.sessionCles.addAll(sessionCles);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("ageCles")) {
-				List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
-				if(ageCles != null)
-					oPaiementScolaire.ageCles.addAll(ageCles);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("blocCles")) {
-				List<Long> blocCles = (List<Long>)solrDocument.get("blocCles_stored_longs");
-				if(blocCles != null)
-					oPaiementScolaire.blocCles.addAll(blocCles);
-			}
-
-			List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
-			if(inscriptionCles != null)
-				oPaiementScolaire.inscriptionCles.addAll(inscriptionCles);
-
 			if(sauvegardesPaiementScolaire.contains("paiementCle")) {
 				Long paiementCle = (Long)solrDocument.get("paiementCle_stored_long");
 				if(paiementCle != null)
 					oPaiementScolaire.setPaiementCle(paiementCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("enfantCles")) {
-				List<Long> enfantCles = (List<Long>)solrDocument.get("enfantCles_stored_longs");
-				if(enfantCles != null)
-					oPaiementScolaire.enfantCles.addAll(enfantCles);
+			Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
+			if(inscriptionCle != null)
+				oPaiementScolaire.setInscriptionCle(inscriptionCle);
+
+			if(sauvegardesPaiementScolaire.contains("ecoleCle")) {
+				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
+				if(ecoleCle != null)
+					oPaiementScolaire.setEcoleCle(ecoleCle);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("anneeCle")) {
+				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+				if(anneeCle != null)
+					oPaiementScolaire.setAnneeCle(anneeCle);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("saisonCle")) {
+				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+				if(saisonCle != null)
+					oPaiementScolaire.setSaisonCle(saisonCle);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("sessionCle")) {
+				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+				if(sessionCle != null)
+					oPaiementScolaire.setSessionCle(sessionCle);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("ageCle")) {
+				Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
+				if(ageCle != null)
+					oPaiementScolaire.setAgeCle(ageCle);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("blocCle")) {
+				Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
+				if(blocCle != null)
+					oPaiementScolaire.setBlocCle(blocCle);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("enfantCle")) {
+				Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
+				if(enfantCle != null)
+					oPaiementScolaire.setEnfantCle(enfantCle);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("mereCles")) {
@@ -3166,10 +5365,142 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.gardienCles.addAll(gardienCles);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("contactCles")) {
-				List<Long> contactCles = (List<Long>)solrDocument.get("contactCles_stored_longs");
-				if(contactCles != null)
-					oPaiementScolaire.contactCles.addAll(contactCles);
+			if(sauvegardesPaiementScolaire.contains("enfantNomCompletPrefere")) {
+				String enfantNomCompletPrefere = (String)solrDocument.get("enfantNomCompletPrefere_stored_string");
+				if(enfantNomCompletPrefere != null)
+					oPaiementScolaire.setEnfantNomCompletPrefere(enfantNomCompletPrefere);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("enfantDateNaissance")) {
+				Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
+				if(enfantDateNaissance != null)
+					oPaiementScolaire.setEnfantDateNaissance(enfantDateNaissance);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("mereNomCompletPrefere")) {
+				String mereNomCompletPrefere = (String)solrDocument.get("mereNomCompletPrefere_stored_string");
+				if(mereNomCompletPrefere != null)
+					oPaiementScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("pereNomCompletPrefere")) {
+				String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
+				if(pereNomCompletPrefere != null)
+					oPaiementScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("ecoleNom")) {
+				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
+				if(ecoleNom != null)
+					oPaiementScolaire.setEcoleNom(ecoleNom);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("ecoleNomComplet")) {
+				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
+				if(ecoleNomComplet != null)
+					oPaiementScolaire.setEcoleNomComplet(ecoleNomComplet);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("ecoleEmplacement")) {
+				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
+				if(ecoleEmplacement != null)
+					oPaiementScolaire.setEcoleEmplacement(ecoleEmplacement);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("anneeDebut")) {
+				Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
+				if(anneeDebut != null)
+					oPaiementScolaire.setAnneeDebut(anneeDebut);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("anneeFin")) {
+				Integer anneeFin = (Integer)solrDocument.get("anneeFin_stored_int");
+				if(anneeFin != null)
+					oPaiementScolaire.setAnneeFin(anneeFin);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("saisonJourDebut")) {
+				Date saisonJourDebut = (Date)solrDocument.get("saisonJourDebut_stored_date");
+				if(saisonJourDebut != null)
+					oPaiementScolaire.setSaisonJourDebut(saisonJourDebut);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("saisonEte")) {
+				Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
+				if(saisonEte != null)
+					oPaiementScolaire.setSaisonEte(saisonEte);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("saisonHiver")) {
+				Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
+				if(saisonHiver != null)
+					oPaiementScolaire.setSaisonHiver(saisonHiver);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("anneeFraisInscription")) {
+				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
+				if(anneeFraisInscription != null)
+					oPaiementScolaire.setAnneeFraisInscription(anneeFraisInscription);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("sessionJourDebut")) {
+				Date sessionJourDebut = (Date)solrDocument.get("sessionJourDebut_stored_date");
+				if(sessionJourDebut != null)
+					oPaiementScolaire.setSessionJourDebut(sessionJourDebut);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("sessionJourFin")) {
+				Date sessionJourFin = (Date)solrDocument.get("sessionJourFin_stored_date");
+				if(sessionJourFin != null)
+					oPaiementScolaire.setSessionJourFin(sessionJourFin);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("ageDebut")) {
+				Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
+				if(ageDebut != null)
+					oPaiementScolaire.setAgeDebut(ageDebut);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("ageFin")) {
+				Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
+				if(ageFin != null)
+					oPaiementScolaire.setAgeFin(ageFin);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("blocHeureDebut")) {
+				String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
+				if(blocHeureDebut != null)
+					oPaiementScolaire.setBlocHeureDebut(blocHeureDebut);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("blocHeureFin")) {
+				String blocHeureFin = (String)solrDocument.get("blocHeureFin_stored_string");
+				if(blocHeureFin != null)
+					oPaiementScolaire.setBlocHeureFin(blocHeureFin);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("blocPrixParMois")) {
+				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
+				if(blocPrixParMois != null)
+					oPaiementScolaire.setBlocPrixParMois(blocPrixParMois);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("blocPrixTotal")) {
+				Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
+				if(blocPrixTotal != null)
+					oPaiementScolaire.setBlocPrixTotal(blocPrixTotal);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("inscriptionPaimentChaqueMois")) {
+				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
+				if(inscriptionPaimentChaqueMois != null)
+					oPaiementScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("inscriptionPaimentComplet")) {
+				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
+				if(inscriptionPaimentComplet != null)
+					oPaiementScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("paiementDescription")) {
@@ -3188,6 +5519,36 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 				if(paiementMontant != null)
 					oPaiementScolaire.setPaiementMontant(paiementMontant);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMontant")) {
+				Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
+				if(fraisMontant != null)
+					oPaiementScolaire.setFraisMontant(fraisMontant);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMontantFuture")) {
+				Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
+				if(fraisMontantFuture != null)
+					oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisInscription")) {
+				Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
+				if(fraisInscription != null)
+					oPaiementScolaire.setFraisInscription(fraisInscription);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisPremierDernier")) {
+				Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
+				if(fraisPremierDernier != null)
+					oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMois")) {
+				Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
+				if(fraisMois != null)
+					oPaiementScolaire.setFraisMois(fraisMois);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("paiementEspeces")) {
@@ -3319,65 +5680,41 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(sauvegardesPaiementScolaire != null)
 			document.addField("sauvegardesPaiementScolaire_stored_strings", sauvegardesPaiementScolaire);
 
-		if(ecoleCles != null) {
-			for(java.lang.Long o : ecoleCles) {
-				document.addField("ecoleCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : ecoleCles) {
-				document.addField("ecoleCles_stored_longs", o);
-			}
-		}
-		if(saisonCle != null) {
-			for(java.lang.Long o : saisonCle) {
-				document.addField("saisonCle_indexed_longs", o);
-			}
-			for(java.lang.Long o : saisonCle) {
-				document.addField("saisonCle_stored_longs", o);
-			}
-		}
-		if(sessionCles != null) {
-			for(java.lang.Long o : sessionCles) {
-				document.addField("sessionCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : sessionCles) {
-				document.addField("sessionCles_stored_longs", o);
-			}
-		}
-		if(ageCles != null) {
-			for(java.lang.Long o : ageCles) {
-				document.addField("ageCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : ageCles) {
-				document.addField("ageCles_stored_longs", o);
-			}
-		}
-		if(blocCles != null) {
-			for(java.lang.Long o : blocCles) {
-				document.addField("blocCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : blocCles) {
-				document.addField("blocCles_stored_longs", o);
-			}
-		}
-		if(inscriptionCles != null) {
-			for(java.lang.Long o : inscriptionCles) {
-				document.addField("inscriptionCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : inscriptionCles) {
-				document.addField("inscriptionCles_stored_longs", o);
-			}
-		}
 		if(paiementCle != null) {
 			document.addField("paiementCle_indexed_long", paiementCle);
 			document.addField("paiementCle_stored_long", paiementCle);
 		}
-		if(enfantCles != null) {
-			for(java.lang.Long o : enfantCles) {
-				document.addField("enfantCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : enfantCles) {
-				document.addField("enfantCles_stored_longs", o);
-			}
+		if(inscriptionCle != null) {
+			document.addField("inscriptionCle_indexed_long", inscriptionCle);
+			document.addField("inscriptionCle_stored_long", inscriptionCle);
+		}
+		if(ecoleCle != null) {
+			document.addField("ecoleCle_indexed_long", ecoleCle);
+			document.addField("ecoleCle_stored_long", ecoleCle);
+		}
+		if(anneeCle != null) {
+			document.addField("anneeCle_indexed_long", anneeCle);
+			document.addField("anneeCle_stored_long", anneeCle);
+		}
+		if(saisonCle != null) {
+			document.addField("saisonCle_indexed_long", saisonCle);
+			document.addField("saisonCle_stored_long", saisonCle);
+		}
+		if(sessionCle != null) {
+			document.addField("sessionCle_indexed_long", sessionCle);
+			document.addField("sessionCle_stored_long", sessionCle);
+		}
+		if(ageCle != null) {
+			document.addField("ageCle_indexed_long", ageCle);
+			document.addField("ageCle_stored_long", ageCle);
+		}
+		if(blocCle != null) {
+			document.addField("blocCle_indexed_long", blocCle);
+			document.addField("blocCle_stored_long", blocCle);
+		}
+		if(enfantCle != null) {
+			document.addField("enfantCle_indexed_long", enfantCle);
+			document.addField("enfantCle_stored_long", enfantCle);
 		}
 		if(mereCles != null) {
 			for(java.lang.Long o : mereCles) {
@@ -3403,13 +5740,97 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				document.addField("gardienCles_stored_longs", o);
 			}
 		}
-		if(contactCles != null) {
-			for(java.lang.Long o : contactCles) {
-				document.addField("contactCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : contactCles) {
-				document.addField("contactCles_stored_longs", o);
-			}
+		if(enfantNomCompletPrefere != null) {
+			document.addField("enfantNomCompletPrefere_indexed_string", enfantNomCompletPrefere);
+			document.addField("enfantNomCompletPrefere_stored_string", enfantNomCompletPrefere);
+		}
+		if(enfantDateNaissance != null) {
+			document.addField("enfantDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("enfantDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(mereNomCompletPrefere != null) {
+			document.addField("mereNomCompletPrefere_indexed_string", mereNomCompletPrefere);
+			document.addField("mereNomCompletPrefere_stored_string", mereNomCompletPrefere);
+		}
+		if(pereNomCompletPrefere != null) {
+			document.addField("pereNomCompletPrefere_indexed_string", pereNomCompletPrefere);
+			document.addField("pereNomCompletPrefere_stored_string", pereNomCompletPrefere);
+		}
+		if(ecoleNom != null) {
+			document.addField("ecoleNom_indexed_string", ecoleNom);
+			document.addField("ecoleNom_stored_string", ecoleNom);
+		}
+		if(ecoleNomComplet != null) {
+			document.addField("ecoleNomComplet_indexed_string", ecoleNomComplet);
+			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
+		}
+		if(ecoleEmplacement != null) {
+			document.addField("ecoleEmplacement_indexed_string", ecoleEmplacement);
+			document.addField("ecoleEmplacement_stored_string", ecoleEmplacement);
+		}
+		if(anneeDebut != null) {
+			document.addField("anneeDebut_indexed_int", anneeDebut);
+			document.addField("anneeDebut_stored_int", anneeDebut);
+		}
+		if(anneeFin != null) {
+			document.addField("anneeFin_indexed_int", anneeFin);
+			document.addField("anneeFin_stored_int", anneeFin);
+		}
+		if(saisonJourDebut != null) {
+			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(saisonEte != null) {
+			document.addField("saisonEte_indexed_boolean", saisonEte);
+			document.addField("saisonEte_stored_boolean", saisonEte);
+		}
+		if(saisonHiver != null) {
+			document.addField("saisonHiver_indexed_boolean", saisonHiver);
+			document.addField("saisonHiver_stored_boolean", saisonHiver);
+		}
+		if(anneeFraisInscription != null) {
+			document.addField("anneeFraisInscription_indexed_double", anneeFraisInscription.doubleValue());
+			document.addField("anneeFraisInscription_stored_double", anneeFraisInscription.doubleValue());
+		}
+		if(sessionJourDebut != null) {
+			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(sessionJourFin != null) {
+			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(ageDebut != null) {
+			document.addField("ageDebut_indexed_int", ageDebut);
+			document.addField("ageDebut_stored_int", ageDebut);
+		}
+		if(ageFin != null) {
+			document.addField("ageFin_indexed_int", ageFin);
+			document.addField("ageFin_stored_int", ageFin);
+		}
+		if(blocHeureDebut != null) {
+			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+		}
+		if(blocHeureFin != null) {
+			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+		}
+		if(blocPrixParMois != null) {
+			document.addField("blocPrixParMois_indexed_double", blocPrixParMois.doubleValue());
+			document.addField("blocPrixParMois_stored_double", blocPrixParMois.doubleValue());
+		}
+		if(blocPrixTotal != null) {
+			document.addField("blocPrixTotal_indexed_double", blocPrixTotal.doubleValue());
+			document.addField("blocPrixTotal_stored_double", blocPrixTotal.doubleValue());
+		}
+		if(inscriptionPaimentChaqueMois != null) {
+			document.addField("inscriptionPaimentChaqueMois_indexed_boolean", inscriptionPaimentChaqueMois);
+			document.addField("inscriptionPaimentChaqueMois_stored_boolean", inscriptionPaimentChaqueMois);
+		}
+		if(inscriptionPaimentComplet != null) {
+			document.addField("inscriptionPaimentComplet_indexed_boolean", inscriptionPaimentComplet);
+			document.addField("inscriptionPaimentComplet_stored_boolean", inscriptionPaimentComplet);
 		}
 		if(paiementDescription != null) {
 			document.addField("paiementDescription_indexed_string", paiementDescription);
@@ -3422,6 +5843,26 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementMontant != null) {
 			document.addField("paiementMontant_indexed_double", paiementMontant.doubleValue());
 			document.addField("paiementMontant_stored_double", paiementMontant.doubleValue());
+		}
+		if(fraisMontant != null) {
+			document.addField("fraisMontant_indexed_double", fraisMontant.doubleValue());
+			document.addField("fraisMontant_stored_double", fraisMontant.doubleValue());
+		}
+		if(fraisMontantFuture != null) {
+			document.addField("fraisMontantFuture_indexed_double", fraisMontantFuture.doubleValue());
+			document.addField("fraisMontantFuture_stored_double", fraisMontantFuture.doubleValue());
+		}
+		if(fraisInscription != null) {
+			document.addField("fraisInscription_indexed_boolean", fraisInscription);
+			document.addField("fraisInscription_stored_boolean", fraisInscription);
+		}
+		if(fraisPremierDernier != null) {
+			document.addField("fraisPremierDernier_indexed_boolean", fraisPremierDernier);
+			document.addField("fraisPremierDernier_stored_boolean", fraisPremierDernier);
+		}
+		if(fraisMois != null) {
+			document.addField("fraisMois_indexed_boolean", fraisMois);
+			document.addField("fraisMois_stored_boolean", fraisMois);
 		}
 		if(paiementEspeces != null) {
 			document.addField("paiementEspeces_indexed_boolean", paiementEspeces);
@@ -3486,36 +5927,92 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public static String varIndexePaiementScolaire(String entiteVar) {
 		switch(entiteVar) {
-			case "ecoleCles":
-				return "ecoleCles_indexed_longs";
-			case "saisonCle":
-				return "saisonCle_indexed_longs";
-			case "sessionCles":
-				return "sessionCles_indexed_longs";
-			case "ageCles":
-				return "ageCles_indexed_longs";
-			case "blocCles":
-				return "blocCles_indexed_longs";
-			case "inscriptionCles":
-				return "inscriptionCles_indexed_longs";
 			case "paiementCle":
 				return "paiementCle_indexed_long";
-			case "enfantCles":
-				return "enfantCles_indexed_longs";
+			case "inscriptionCle":
+				return "inscriptionCle_indexed_long";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "saisonCle":
+				return "saisonCle_indexed_long";
+			case "sessionCle":
+				return "sessionCle_indexed_long";
+			case "ageCle":
+				return "ageCle_indexed_long";
+			case "blocCle":
+				return "blocCle_indexed_long";
+			case "enfantCle":
+				return "enfantCle_indexed_long";
 			case "mereCles":
 				return "mereCles_indexed_longs";
 			case "pereCles":
 				return "pereCles_indexed_longs";
 			case "gardienCles":
 				return "gardienCles_indexed_longs";
-			case "contactCles":
-				return "contactCles_indexed_longs";
+			case "enfantNomCompletPrefere":
+				return "enfantNomCompletPrefere_indexed_string";
+			case "enfantDateNaissance":
+				return "enfantDateNaissance_indexed_date";
+			case "mereNomCompletPrefere":
+				return "mereNomCompletPrefere_indexed_string";
+			case "pereNomCompletPrefere":
+				return "pereNomCompletPrefere_indexed_string";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
+			case "anneeDebut":
+				return "anneeDebut_indexed_int";
+			case "anneeFin":
+				return "anneeFin_indexed_int";
+			case "saisonJourDebut":
+				return "saisonJourDebut_indexed_date";
+			case "saisonEte":
+				return "saisonEte_indexed_boolean";
+			case "saisonHiver":
+				return "saisonHiver_indexed_boolean";
+			case "anneeFraisInscription":
+				return "anneeFraisInscription_indexed_double";
+			case "sessionJourDebut":
+				return "sessionJourDebut_indexed_date";
+			case "sessionJourFin":
+				return "sessionJourFin_indexed_date";
+			case "ageDebut":
+				return "ageDebut_indexed_int";
+			case "ageFin":
+				return "ageFin_indexed_int";
+			case "blocHeureDebut":
+				return "blocHeureDebut_indexed_string";
+			case "blocHeureFin":
+				return "blocHeureFin_indexed_string";
+			case "blocPrixParMois":
+				return "blocPrixParMois_indexed_double";
+			case "blocPrixTotal":
+				return "blocPrixTotal_indexed_double";
+			case "inscriptionPaimentChaqueMois":
+				return "inscriptionPaimentChaqueMois_indexed_boolean";
+			case "inscriptionPaimentComplet":
+				return "inscriptionPaimentComplet_indexed_boolean";
 			case "paiementDescription":
 				return "paiementDescription_indexed_string";
 			case "paiementDate":
 				return "paiementDate_indexed_date";
 			case "paiementMontant":
 				return "paiementMontant_indexed_double";
+			case "fraisMontant":
+				return "fraisMontant_indexed_double";
+			case "fraisMontantFuture":
+				return "fraisMontantFuture_indexed_double";
+			case "fraisInscription":
+				return "fraisInscription_indexed_boolean";
+			case "fraisPremierDernier":
+				return "fraisPremierDernier_indexed_boolean";
+			case "fraisMois":
+				return "fraisMois_indexed_boolean";
 			case "paiementEspeces":
 				return "paiementEspeces_indexed_boolean";
 			case "paiementCheque":
@@ -3565,37 +6062,41 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public void stockerPaiementScolaire(SolrDocument solrDocument) {
 		PaiementScolaire oPaiementScolaire = (PaiementScolaire)this;
 
-		List<Long> ecoleCles = (List<Long>)solrDocument.get("ecoleCles_stored_longs");
-		if(ecoleCles != null)
-			oPaiementScolaire.ecoleCles.addAll(ecoleCles);
-
-		List<Long> saisonCle = (List<Long>)solrDocument.get("saisonCle_stored_longs");
-		if(saisonCle != null)
-			oPaiementScolaire.saisonCle.addAll(saisonCle);
-
-		List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
-		if(sessionCles != null)
-			oPaiementScolaire.sessionCles.addAll(sessionCles);
-
-		List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
-		if(ageCles != null)
-			oPaiementScolaire.ageCles.addAll(ageCles);
-
-		List<Long> blocCles = (List<Long>)solrDocument.get("blocCles_stored_longs");
-		if(blocCles != null)
-			oPaiementScolaire.blocCles.addAll(blocCles);
-
-		List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
-		if(inscriptionCles != null)
-			oPaiementScolaire.inscriptionCles.addAll(inscriptionCles);
-
 		Long paiementCle = (Long)solrDocument.get("paiementCle_stored_long");
 		if(paiementCle != null)
 			oPaiementScolaire.setPaiementCle(paiementCle);
 
-		List<Long> enfantCles = (List<Long>)solrDocument.get("enfantCles_stored_longs");
-		if(enfantCles != null)
-			oPaiementScolaire.enfantCles.addAll(enfantCles);
+		Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
+		if(inscriptionCle != null)
+			oPaiementScolaire.setInscriptionCle(inscriptionCle);
+
+		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
+		if(ecoleCle != null)
+			oPaiementScolaire.setEcoleCle(ecoleCle);
+
+		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+		if(anneeCle != null)
+			oPaiementScolaire.setAnneeCle(anneeCle);
+
+		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+		if(saisonCle != null)
+			oPaiementScolaire.setSaisonCle(saisonCle);
+
+		Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+		if(sessionCle != null)
+			oPaiementScolaire.setSessionCle(sessionCle);
+
+		Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
+		if(ageCle != null)
+			oPaiementScolaire.setAgeCle(ageCle);
+
+		Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
+		if(blocCle != null)
+			oPaiementScolaire.setBlocCle(blocCle);
+
+		Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
+		if(enfantCle != null)
+			oPaiementScolaire.setEnfantCle(enfantCle);
 
 		List<Long> mereCles = (List<Long>)solrDocument.get("mereCles_stored_longs");
 		if(mereCles != null)
@@ -3609,9 +6110,97 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(gardienCles != null)
 			oPaiementScolaire.gardienCles.addAll(gardienCles);
 
-		List<Long> contactCles = (List<Long>)solrDocument.get("contactCles_stored_longs");
-		if(contactCles != null)
-			oPaiementScolaire.contactCles.addAll(contactCles);
+		String enfantNomCompletPrefere = (String)solrDocument.get("enfantNomCompletPrefere_stored_string");
+		if(enfantNomCompletPrefere != null)
+			oPaiementScolaire.setEnfantNomCompletPrefere(enfantNomCompletPrefere);
+
+		Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
+		if(enfantDateNaissance != null)
+			oPaiementScolaire.setEnfantDateNaissance(enfantDateNaissance);
+
+		String mereNomCompletPrefere = (String)solrDocument.get("mereNomCompletPrefere_stored_string");
+		if(mereNomCompletPrefere != null)
+			oPaiementScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
+
+		String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
+		if(pereNomCompletPrefere != null)
+			oPaiementScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
+
+		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
+		if(ecoleNom != null)
+			oPaiementScolaire.setEcoleNom(ecoleNom);
+
+		String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
+		if(ecoleNomComplet != null)
+			oPaiementScolaire.setEcoleNomComplet(ecoleNomComplet);
+
+		String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
+		if(ecoleEmplacement != null)
+			oPaiementScolaire.setEcoleEmplacement(ecoleEmplacement);
+
+		Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
+		if(anneeDebut != null)
+			oPaiementScolaire.setAnneeDebut(anneeDebut);
+
+		Integer anneeFin = (Integer)solrDocument.get("anneeFin_stored_int");
+		if(anneeFin != null)
+			oPaiementScolaire.setAnneeFin(anneeFin);
+
+		Date saisonJourDebut = (Date)solrDocument.get("saisonJourDebut_stored_date");
+		if(saisonJourDebut != null)
+			oPaiementScolaire.setSaisonJourDebut(saisonJourDebut);
+
+		Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
+		if(saisonEte != null)
+			oPaiementScolaire.setSaisonEte(saisonEte);
+
+		Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
+		if(saisonHiver != null)
+			oPaiementScolaire.setSaisonHiver(saisonHiver);
+
+		Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
+		if(anneeFraisInscription != null)
+			oPaiementScolaire.setAnneeFraisInscription(anneeFraisInscription);
+
+		Date sessionJourDebut = (Date)solrDocument.get("sessionJourDebut_stored_date");
+		if(sessionJourDebut != null)
+			oPaiementScolaire.setSessionJourDebut(sessionJourDebut);
+
+		Date sessionJourFin = (Date)solrDocument.get("sessionJourFin_stored_date");
+		if(sessionJourFin != null)
+			oPaiementScolaire.setSessionJourFin(sessionJourFin);
+
+		Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
+		if(ageDebut != null)
+			oPaiementScolaire.setAgeDebut(ageDebut);
+
+		Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
+		if(ageFin != null)
+			oPaiementScolaire.setAgeFin(ageFin);
+
+		String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
+		if(blocHeureDebut != null)
+			oPaiementScolaire.setBlocHeureDebut(blocHeureDebut);
+
+		String blocHeureFin = (String)solrDocument.get("blocHeureFin_stored_string");
+		if(blocHeureFin != null)
+			oPaiementScolaire.setBlocHeureFin(blocHeureFin);
+
+		Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
+		if(blocPrixParMois != null)
+			oPaiementScolaire.setBlocPrixParMois(blocPrixParMois);
+
+		Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
+		if(blocPrixTotal != null)
+			oPaiementScolaire.setBlocPrixTotal(blocPrixTotal);
+
+		Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
+		if(inscriptionPaimentChaqueMois != null)
+			oPaiementScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
+
+		Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
+		if(inscriptionPaimentComplet != null)
+			oPaiementScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 
 		String paiementDescription = (String)solrDocument.get("paiementDescription_stored_string");
 		if(paiementDescription != null)
@@ -3624,6 +6213,26 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 		if(paiementMontant != null)
 			oPaiementScolaire.setPaiementMontant(paiementMontant);
+
+		Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
+		if(fraisMontant != null)
+			oPaiementScolaire.setFraisMontant(fraisMontant);
+
+		Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
+		if(fraisMontantFuture != null)
+			oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
+
+		Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
+		if(fraisInscription != null)
+			oPaiementScolaire.setFraisInscription(fraisInscription);
+
+		Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
+		if(fraisPremierDernier != null)
+			oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
+
+		Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
+		if(fraisMois != null)
+			oPaiementScolaire.setFraisMois(fraisMois);
 
 		Boolean paiementEspeces = (Boolean)solrDocument.get("paiementEspeces_stored_boolean");
 		if(paiementEspeces != null)
@@ -3677,8 +6286,20 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof PaiementScolaire) {
 			PaiementScolaire original = (PaiementScolaire)o;
-			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
-				requeteApi.addVars("inscriptionCles");
+			if(!Objects.equals(inscriptionCle, original.getInscriptionCle()))
+				requeteApi.addVars("inscriptionCle");
+			if(!Objects.equals(enfantNomCompletPrefere, original.getEnfantNomCompletPrefere()))
+				requeteApi.addVars("enfantNomCompletPrefere");
+			if(!Objects.equals(enfantDateNaissance, original.getEnfantDateNaissance()))
+				requeteApi.addVars("enfantDateNaissance");
+			if(!Objects.equals(mereNomCompletPrefere, original.getMereNomCompletPrefere()))
+				requeteApi.addVars("mereNomCompletPrefere");
+			if(!Objects.equals(pereNomCompletPrefere, original.getPereNomCompletPrefere()))
+				requeteApi.addVars("pereNomCompletPrefere");
+			if(!Objects.equals(inscriptionPaimentChaqueMois, original.getInscriptionPaimentChaqueMois()))
+				requeteApi.addVars("inscriptionPaimentChaqueMois");
+			if(!Objects.equals(inscriptionPaimentComplet, original.getInscriptionPaimentComplet()))
+				requeteApi.addVars("inscriptionPaimentComplet");
 			if(!Objects.equals(paiementDescription, original.getPaiementDescription()))
 				requeteApi.addVars("paiementDescription");
 			if(!Objects.equals(paiementDate, original.getPaiementDate()))
@@ -3712,7 +6333,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementDu, paiementRecu);
+		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementDu, paiementRecu);
 	}
 
 	////////////
@@ -3726,7 +6347,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return false;
 		PaiementScolaire that = (PaiementScolaire)o;
 		return super.equals(o)
-				&& Objects.equals( inscriptionCles, that.inscriptionCles )
+				&& Objects.equals( inscriptionCle, that.inscriptionCle )
+				&& Objects.equals( enfantNomCompletPrefere, that.enfantNomCompletPrefere )
+				&& Objects.equals( enfantDateNaissance, that.enfantDateNaissance )
+				&& Objects.equals( mereNomCompletPrefere, that.mereNomCompletPrefere )
+				&& Objects.equals( pereNomCompletPrefere, that.pereNomCompletPrefere )
+				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
+				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
 				&& Objects.equals( paiementDescription, that.paiementDescription )
 				&& Objects.equals( paiementDate, that.paiementDate )
 				&& Objects.equals( paiementMontant, that.paiementMontant )
@@ -3749,7 +6376,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("PaiementScolaire { ");
-		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( "inscriptionCle: " ).append(inscriptionCle);
+		sb.append( ", enfantNomCompletPrefere: \"" ).append(enfantNomCompletPrefere).append( "\"" );
+		sb.append( ", enfantDateNaissance: " ).append(enfantDateNaissance);
+		sb.append( ", mereNomCompletPrefere: \"" ).append(mereNomCompletPrefere).append( "\"" );
+		sb.append( ", pereNomCompletPrefere: \"" ).append(pereNomCompletPrefere).append( "\"" );
+		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
+		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
 		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );
 		sb.append( ", paiementDate: " ).append(paiementDate);
 		sb.append( ", paiementMontant: " ).append(paiementMontant);

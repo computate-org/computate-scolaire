@@ -234,7 +234,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "paymentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "paymentKeys", pk));
+							postSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
 						}
 						break;
 					case "childCompleteName":
@@ -686,7 +686,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "paymentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "paymentKeys", pk));
+							postSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
 						}
 						break;
 					case "childCompleteName":
@@ -1223,27 +1223,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "addPaymentKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
 						break;
 					case "addAllPaymentKeys":
 						JsonArray addAllPaymentKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllPaymentKeysValues.getString(i), "paymentKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("enrollmentKey", addAllPaymentKeysValues.getString(i), "paymentKeys", pk));
 						}
 						break;
 					case "setPaymentKeys":
 						JsonArray setPaymentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
 						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setPaymentKeysValues.getString(i), "paymentKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("enrollmentKey", setPaymentKeysValues.getString(i), "paymentKeys", pk));
 						}
 						break;
 					case "removePaymentKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
 						break;
 					case "setChildCompleteName":
 						if(requestJson.getString(methodName) == null) {
@@ -2644,8 +2644,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if(listSearch.getSorts().size() == 0)
+			if(listSearch.getSorts().size() == 0) {
 				listSearch.addSort("created_indexed_date", ORDER.desc);
+			}
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

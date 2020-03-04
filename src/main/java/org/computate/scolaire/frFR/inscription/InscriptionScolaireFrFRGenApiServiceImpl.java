@@ -234,7 +234,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "paiementCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "paiementCles", pk));
+							postSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
 						}
 						break;
 					case "enfantNomComplet":
@@ -686,7 +686,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "paiementCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "paiementCles", pk));
+							postSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
 						}
 						break;
 					case "enfantNomComplet":
@@ -1223,27 +1223,27 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "addPaiementCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						break;
 					case "addAllPaiementCles":
 						JsonArray addAllPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", addAllPaiementClesValeurs.getString(i), "paiementCles", pk));
+							patchSqlParams.addAll(Arrays.asList("inscriptionCle", addAllPaiementClesValeurs.getString(i), "paiementCles", pk));
 						}
 						break;
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPaiementClesValeurs.getString(i), "paiementCles", pk));
+							patchSqlParams.addAll(Arrays.asList("inscriptionCle", setPaiementClesValeurs.getString(i), "paiementCles", pk));
 						}
 						break;
 					case "removePaiementCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						break;
 					case "setEnfantNomComplet":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -2644,8 +2644,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if(listeRecherche.getSorts().size() == 0)
+			if(listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
+			}
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
