@@ -3,15 +3,19 @@ package org.computate.scolaire.frFR.inscription;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -20,6 +24,7 @@ import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import org.computate.scolaire.frFR.gardien.GardienScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
 import org.computate.scolaire.frFR.page.MiseEnPage;
+import org.computate.scolaire.frFR.paiement.PaiementScolaire;
 import org.computate.scolaire.frFR.pere.PereScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
@@ -604,6 +609,31 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */      
 	protected void _gardiens(Couverture<List<GardienScolaire>> c) {
 		c.o(gardienRecherche.getList());
+	}
+
+	/**
+	 * Var.enUS: paymentSearch
+	 * r: inscriptionCle
+	 * r.enUS: enrollmentKey
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: enfantCle
+	 * r.enUS: childKey
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * Ignorer: true
+	 * r: fraisMois
+	 * r.enUS: chargeMonth
+	 */
+	protected void _paiementRecherche(ListeRecherche<PaiementScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("inscriptionCle_indexed_long:" + pk);
+		l.addFilterQuery("fraisMois_indexed_boolean:true");
+		l.add("json.facet", "{'paiementDateMax':'max(paiementDate_indexed_date)'}");
+		l.setC(PaiementScolaire.class);
+		l.setStocker(true);
 	}
 
 	/**
@@ -1600,8 +1630,20 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentChargeDate
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * r: paiementRecherche
+	 * r.enUS: paymentSearch
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: paiementDateMax
+	 * r.enUS: paymentDateMax
 	 */
 	protected void _inscriptionDateFrais(Couverture<LocalDate> c) {
+		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(paiementRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+		LocalDate o = Optional.ofNullable((Date)facets.get("paiementDateMax")).map(d -> d.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate()).orElse(null);
+		c.o(o);
 	}
 
 	/**

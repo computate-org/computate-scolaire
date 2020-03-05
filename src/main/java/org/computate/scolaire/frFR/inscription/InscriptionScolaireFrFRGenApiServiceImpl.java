@@ -321,6 +321,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
 						break;
+					case "inscriptionDateFrais":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDateFrais", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						break;
 					case "inscriptionNomsParents":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionNomsParents", jsonObject.getString(entiteVar), pk));
@@ -772,6 +776,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "customerProfileId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDateFrais":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDateFrais", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
 						break;
 					case "inscriptionNomsParents":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -1453,6 +1461,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setCustomerProfileId(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+						}
+						break;
+					case "setInscriptionDateFrais":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDateFrais"));
+						} else {
+							o2.setInscriptionDateFrais(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDateFrais", o2.jsonInscriptionDateFrais(), pk));
 						}
 						break;
 					case "setInscriptionNomsParents":

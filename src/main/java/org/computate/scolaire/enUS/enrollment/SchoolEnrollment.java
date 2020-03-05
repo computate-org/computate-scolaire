@@ -3,14 +3,18 @@ package org.computate.scolaire.enUS.enrollment;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -19,6 +23,7 @@ import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.page.PageLayout;
+import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.season.SchoolSeason;
@@ -188,6 +193,15 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _guardians(Wrap<List<SchoolGuardian>> c) {
 		c.o(guardianSearch.getList());
+	}
+
+	protected void _paymentSearch(SearchList<SchoolPayment> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("enrollmentKey_indexed_long:" + pk);
+		l.addFilterQuery("chargeMonth_indexed_boolean:true");
+		l.add("json.facet", "{'paymentDateMax':'max(paymentDate_indexed_date)'}");
+		l.setC(SchoolPayment.class);
+		l.setStore(true);
 	}
 
 	protected void _childFirstName(Wrap<String> c) {
@@ -470,6 +484,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _enrollmentChargeDate(Wrap<LocalDate> c) {
+		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(paymentSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+		LocalDate o = Optional.ofNullable((Date)facets.get("paymentDateMax")).map(d -> d.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate()).orElse(null);
+		c.o(o);
 	}
 
 	protected void _createdYear(Wrap<Integer> c) {

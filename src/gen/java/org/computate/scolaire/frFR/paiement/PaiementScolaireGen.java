@@ -3492,6 +3492,61 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return fraisMontant == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontant());
 	}
 
+	public void inputFraisMontant(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "frais montant")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_fraisMontant");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisMontant inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
+				a("name", "setFraisMontant");
+			} else {
+				a("class", "valeurFraisMontant w3-input w3-border inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
+				a("name", "fraisMontant");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ");
+			}
+			a("value", strFraisMontant())
+		.fg();
+
+	}
+
+	public void htmFraisMontant(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontant").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontant").a("class", "").f().sx("frais montant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontant(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontant')); $('#", classeApiMethodeMethode, "_fraisMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////////
 	// fraisMontantFuture //
 	////////////////////////
@@ -3572,6 +3627,61 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return fraisMontantFuture == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantFuture());
 	}
 
+	public void inputFraisMontantFuture(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "frais montant future")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_fraisMontantFuture");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisMontantFuture inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
+				a("name", "setFraisMontantFuture");
+			} else {
+				a("class", "valeurFraisMontantFuture w3-input w3-border inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
+				a("name", "fraisMontantFuture");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontantFuture', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ");
+			}
+			a("value", strFraisMontantFuture())
+		.fg();
+
+	}
+
+	public void htmFraisMontantFuture(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontantFuture").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontantFuture").a("class", "").f().sx("frais montant future").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontantFuture(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); $('#", classeApiMethodeMethode, "_fraisMontantFuture').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontantFuture', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////
 	// fraisInscription //
 	//////////////////////
@@ -3637,6 +3747,62 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public String htmFraisInscription() {
 		return fraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strFraisInscription());
+	}
+
+	public void inputFraisInscription(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_fraisInscription")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_fraisInscription");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
+			a("name", "setFraisInscription");
+		} else {
+			a("class", "valeurFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
+			a("name", "fraisInscription");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisInscription', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisInscription')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getFraisInscription() != null && getFraisInscription())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmFraisInscription(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisInscription").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisInscription").a("class", "").f().sx("frais d'inscription").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisInscription(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////////
@@ -3706,6 +3872,62 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return fraisPremierDernier == null ? "" : StringEscapeUtils.escapeHtml4(strFraisPremierDernier());
 	}
 
+	public void inputFraisPremierDernier(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_fraisPremierDernier")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_fraisPremierDernier");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
+			a("name", "setFraisPremierDernier");
+		} else {
+			a("class", "valeurFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
+			a("name", "fraisPremierDernier");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisPremierDernier', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getFraisPremierDernier() != null && getFraisPremierDernier())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmFraisPremierDernier(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisPremierDernier").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisPremierDernier").a("class", "").f().sx("frais mois premier et dernier").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisPremierDernier(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////
 	// fraisMois //
 	///////////////
@@ -3771,6 +3993,62 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public String htmFraisMois() {
 		return fraisMois == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMois());
+	}
+
+	public void inputFraisMois(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if("Page".equals(classeApiMethodeMethode)) {
+			e("input")
+				.a("type", "checkbox")
+				.a("id", classeApiMethodeMethode, "_fraisMois")
+				.a("value", "true");
+		} else {
+			e("select")
+				.a("id", classeApiMethodeMethode, "_fraisMois");
+		}
+		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+			a("class", "setFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
+			a("name", "setFraisMois");
+		} else {
+			a("class", "valeurFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
+			a("name", "fraisMois");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMois')); }); ");
+		}
+		if("Page".equals(classeApiMethodeMethode)) {
+			if(getFraisMois() != null && getFraisMois())
+				a("checked", "checked");
+			fg();
+		} else {
+			f();
+			e("option").a("value", "").a("selected", "selected").f().g("option");
+			e("option").a("value", "true").f().sx("true").g("option");
+			e("option").a("value", "false").f().sx("false").g("option");
+			g("select");
+		}
+
+	}
+
+	public void htmFraisMois(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMois").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMois").a("class", "").f().sx("frais du mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMois(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////
@@ -4610,131 +4888,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	////////////////
-	// paiementDu //
-	////////////////
-
-	/**	L'entité « paiementDu »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected LocalDate paiementDu;
-	@JsonIgnore
-	public Couverture<LocalDate> paiementDuCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementDu").o(paiementDu);
-
-	/**	<br/>L'entité « paiementDu »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementDu">Trouver l'entité paiementDu dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _paiementDu(Couverture<LocalDate> c);
-
-	public LocalDate getPaiementDu() {
-		return paiementDu;
-	}
-
-	public void setPaiementDu(LocalDate paiementDu) {
-		this.paiementDu = paiementDu;
-		this.paiementDuCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setPaiementDu(Instant o) {
-		this.paiementDu = LocalDate.from(o);
-		this.paiementDuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setPaiementDu(String o) {
-		this.paiementDu = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.paiementDuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setPaiementDu(Date o) {
-		this.paiementDu = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.paiementDuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire paiementDuInit() {
-		if(!paiementDuCouverture.dejaInitialise) {
-			_paiementDu(paiementDuCouverture);
-			if(paiementDu == null)
-				setPaiementDu(paiementDuCouverture.o);
-		}
-		paiementDuCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Date solrPaiementDu() {
-		return paiementDu == null ? null : Date.from(paiementDu.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
-	public String strPaiementDu() {
-		return paiementDu == null ? "" : paiementDu.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
-	}
-
-	public String jsonPaiementDu() {
-		return paiementDu == null ? "" : paiementDu.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
-	}
-
-	public String nomAffichagePaiementDu() {
-		return "paiement dû";
-	}
-
-	public String htmTooltipPaiementDu() {
-		return null;
-	}
-
-	public String htmPaiementDu() {
-		return paiementDu == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementDu());
-	}
-
-	public void inputPaiementDu(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setPaiementDu inputPaiementScolaire", pk, "PaiementDu w3-input w3-border ")
-			.a("placeholder", "DD-MM-YYYY")
-			.a("data-timeformat", "DD-MM-YYYY")
-			.a("id", classeApiMethodeMethode, "_paiementDu")
-			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-			.a("value", paiementDu == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(paiementDu))
-			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDu', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDu')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDu')); }); } ")
-			.fg();
-	}
-
-	public void htmPaiementDu(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementDu").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_paiementDu").a("class", "").f().sx("paiement dû").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								inputPaiementDu(classeApiMethodeMethode);
-							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementDu')); $('#", classeApiMethodeMethode, "_paiementDu').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementDu', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDu')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDu')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	//////////////////
 	// paiementRecu //
 	//////////////////
@@ -4993,7 +5146,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		transactionIdInit();
 		customerProfileIdInit();
 		transactionStatusInit();
-		paiementDuInit();
 		paiementRecuInit();
 		paiementNomCompletInit();
 	}
@@ -5140,8 +5292,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.customerProfileId;
 			case "transactionStatus":
 				return oPaiementScolaire.transactionStatus;
-			case "paiementDu":
-				return oPaiementScolaire.paiementDu;
 			case "paiementRecu":
 				return oPaiementScolaire.paiementRecu;
 			case "paiementNomComplet":
@@ -5236,6 +5386,26 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				setPaiementMontant(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
+			case "fraisMontant":
+				setFraisMontant(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisMontantFuture":
+				setFraisMontantFuture(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisInscription":
+				setFraisInscription(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisPremierDernier":
+				setFraisPremierDernier(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisMois":
+				setFraisMois(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
 			case "paiementEspeces":
 				setPaiementEspeces(val);
 				sauvegardesPaiementScolaire.add(var);
@@ -5262,10 +5432,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return val;
 			case "transactionStatus":
 				setTransactionStatus(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
-			case "paiementDu":
-				setPaiementDu(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementRecu":
@@ -5593,12 +5759,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setTransactionStatus(transactionStatus);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementDu")) {
-				Date paiementDu = (Date)solrDocument.get("paiementDu_stored_date");
-				if(paiementDu != null)
-					oPaiementScolaire.setPaiementDu(paiementDu);
-			}
-
 			if(sauvegardesPaiementScolaire.contains("paiementRecu")) {
 				Boolean paiementRecu = (Boolean)solrDocument.get("paiementRecu_stored_boolean");
 				if(paiementRecu != null)
@@ -5892,10 +6052,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("transactionStatus_indexed_string", transactionStatus);
 			document.addField("transactionStatus_stored_string", transactionStatus);
 		}
-		if(paiementDu != null) {
-			document.addField("paiementDu_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDu.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("paiementDu_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDu.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-		}
 		if(paiementRecu != null) {
 			document.addField("paiementRecu_indexed_boolean", paiementRecu);
 			document.addField("paiementRecu_stored_boolean", paiementRecu);
@@ -6027,8 +6183,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "customerProfileId_indexed_string";
 			case "transactionStatus":
 				return "transactionStatus_indexed_string";
-			case "paiementDu":
-				return "paiementDu_indexed_date";
 			case "paiementRecu":
 				return "paiementRecu_indexed_boolean";
 			case "paiementNomComplet":
@@ -6262,10 +6416,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(transactionStatus != null)
 			oPaiementScolaire.setTransactionStatus(transactionStatus);
 
-		Date paiementDu = (Date)solrDocument.get("paiementDu_stored_date");
-		if(paiementDu != null)
-			oPaiementScolaire.setPaiementDu(paiementDu);
-
 		Boolean paiementRecu = (Boolean)solrDocument.get("paiementRecu_stored_boolean");
 		if(paiementRecu != null)
 			oPaiementScolaire.setPaiementRecu(paiementRecu);
@@ -6306,6 +6456,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("paiementDate");
 			if(!Objects.equals(paiementMontant, original.getPaiementMontant()))
 				requeteApi.addVars("paiementMontant");
+			if(!Objects.equals(fraisMontant, original.getFraisMontant()))
+				requeteApi.addVars("fraisMontant");
+			if(!Objects.equals(fraisMontantFuture, original.getFraisMontantFuture()))
+				requeteApi.addVars("fraisMontantFuture");
+			if(!Objects.equals(fraisInscription, original.getFraisInscription()))
+				requeteApi.addVars("fraisInscription");
+			if(!Objects.equals(fraisPremierDernier, original.getFraisPremierDernier()))
+				requeteApi.addVars("fraisPremierDernier");
+			if(!Objects.equals(fraisMois, original.getFraisMois()))
+				requeteApi.addVars("fraisMois");
 			if(!Objects.equals(paiementEspeces, original.getPaiementEspeces()))
 				requeteApi.addVars("paiementEspeces");
 			if(!Objects.equals(paiementCheque, original.getPaiementCheque()))
@@ -6320,8 +6480,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("customerProfileId");
 			if(!Objects.equals(transactionStatus, original.getTransactionStatus()))
 				requeteApi.addVars("transactionStatus");
-			if(!Objects.equals(paiementDu, original.getPaiementDu()))
-				requeteApi.addVars("paiementDu");
 			if(!Objects.equals(paiementRecu, original.getPaiementRecu()))
 				requeteApi.addVars("paiementRecu");
 			super.requeteApiCluster();
@@ -6333,7 +6491,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementDu, paiementRecu);
+		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, fraisMontant, fraisMontantFuture, fraisInscription, fraisPremierDernier, fraisMois, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu);
 	}
 
 	////////////
@@ -6357,6 +6515,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( paiementDescription, that.paiementDescription )
 				&& Objects.equals( paiementDate, that.paiementDate )
 				&& Objects.equals( paiementMontant, that.paiementMontant )
+				&& Objects.equals( fraisMontant, that.fraisMontant )
+				&& Objects.equals( fraisMontantFuture, that.fraisMontantFuture )
+				&& Objects.equals( fraisInscription, that.fraisInscription )
+				&& Objects.equals( fraisPremierDernier, that.fraisPremierDernier )
+				&& Objects.equals( fraisMois, that.fraisMois )
 				&& Objects.equals( paiementEspeces, that.paiementEspeces )
 				&& Objects.equals( paiementCheque, that.paiementCheque )
 				&& Objects.equals( paiementSysteme, that.paiementSysteme )
@@ -6364,7 +6527,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( transactionId, that.transactionId )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( transactionStatus, that.transactionStatus )
-				&& Objects.equals( paiementDu, that.paiementDu )
 				&& Objects.equals( paiementRecu, that.paiementRecu );
 	}
 
@@ -6386,6 +6548,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );
 		sb.append( ", paiementDate: " ).append(paiementDate);
 		sb.append( ", paiementMontant: " ).append(paiementMontant);
+		sb.append( ", fraisMontant: " ).append(fraisMontant);
+		sb.append( ", fraisMontantFuture: " ).append(fraisMontantFuture);
+		sb.append( ", fraisInscription: " ).append(fraisInscription);
+		sb.append( ", fraisPremierDernier: " ).append(fraisPremierDernier);
+		sb.append( ", fraisMois: " ).append(fraisMois);
 		sb.append( ", paiementEspeces: " ).append(paiementEspeces);
 		sb.append( ", paiementCheque: " ).append(paiementCheque);
 		sb.append( ", paiementSysteme: " ).append(paiementSysteme);
@@ -6393,7 +6560,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", transactionId: \"" ).append(transactionId).append( "\"" );
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
-		sb.append( ", paiementDu: " ).append(paiementDu);
 		sb.append( ", paiementRecu: " ).append(paiementRecu);
 		sb.append(" }");
 		return sb.toString();

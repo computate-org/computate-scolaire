@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.vertx;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
@@ -12,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
@@ -941,7 +943,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 								listeRechercheInscription.addFilterQuery("sessionJourDebut_indexed_date:[* TO " + dateFormat.format(sessionJourDebut) + "]");
 								listeRechercheInscription.addFilterQuery("sessionJourFin_indexed_date:[" + dateFormat.format(sessionJourFin) + " TO *]");
 								listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
-								listeRechercheInscription.addFilterQuery("pk_indexed_long:15186");// TODO: delete
+								listeRechercheInscription.addFilterQuery("pk_indexed_long:15157");// TODO: delete
 								listeRechercheInscription.initLoinListeRecherche(requeteSite);
 				
 								futureAuthorizeNetFraisInscription(listeRechercheInscription, paiementService, c -> {
@@ -952,16 +954,15 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 											listeRecherche.setQuery("*:*");
 											listeRecherche.setC(PaiementScolaire.class);
 											listeRecherche.addFilterQuery("cree_indexed_date:[" + dateFormat.format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
-											listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+											listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCle_indexed_long, limit:1000}}}");
 											listeRecherche.setRows(100);
 											listeRecherche.initLoinListeRecherche(requeteSite);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-											List<SimpleOrderedMap> inscriptionCles = (List<SimpleOrderedMap>)Optional.ofNullable((SimpleOrderedMap)facets.get("inscriptionCles")).map(m -> ((List<List<SimpleOrderedMap>>)m.getAll("bucket"))).orElse(Arrays.asList()).stream().findFirst().orElse(new ArrayList<SimpleOrderedMap>());
+											List<Long> inscriptionCles = Optional.ofNullable((SimpleOrderedMap)facets.get("inscriptionCles")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> (Long)m.get("val"), Collectors.toList()));
 			
 											List<Future> futures = new ArrayList<>();
 											LOGGER.info(String.format("Il y a %s inscriptions à recharger. ", inscriptionCles.size()));
-											for(SimpleOrderedMap inscriptionCleMap : inscriptionCles) {
-												Long inscriptionCle  = Long.parseLong(inscriptionCleMap.get("val").toString());
+											for(Long inscriptionCle : inscriptionCles) {
 												InscriptionScolaire inscriptionScolaire = new InscriptionScolaire();
 												inscriptionScolaire.setPk(inscriptionCle);
 												inscriptionScolaire.setRequeteSite_(requeteSite);
@@ -978,45 +979,24 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 											}
 											CompositeFuture.all(futures).setHandler(d -> {
 												if(d.succeeded()) {
-													List<Future> futuresPaiement = new ArrayList<>();
-													LOGGER.info(String.format("Il y a %s paiements à recharger. ", inscriptionCles.size()));
-													for(PaiementScolaire paiement : listeRecherche.getList()) {
-														futuresPaiement.add(
-															paiementService.futurePATCHPaiementScolaire(paiement, e -> {
-																if(e.succeeded()) {
-																	LOGGER.info(String.format("paiement %s rechargé. ", paiement.getPk()));
-																} else {
-																	LOGGER.error(String.format("paiement %s a échoué. ", paiement.getPk()), e.cause());
-																	blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-																}
-															})
-														);
-													}
-													CompositeFuture.all(futuresPaiement).setHandler(e -> {
-														if(e.succeeded()) {
-															LOGGER.info("Recharger les inscriptions a réussi. ");
-															SQLConnection connexionSql = requeteSite.getConnexionSql();
-															connexionSql.commit(f -> {
+													LOGGER.info("Recharger les inscriptions a réussi. ");
+													SQLConnection connexionSql = requeteSite.getConnexionSql();
+													connexionSql.commit(f -> {
+														if(f.succeeded()) {
+															LOGGER.info("Commit la connexion SQL a réussi. ");
+															connexionSql.close(g -> {
 																if(f.succeeded()) {
-																	LOGGER.info("Commit la connexion SQL a réussi. ");
-																	connexionSql.close(g -> {
-																		if(f.succeeded()) {
-																			LOGGER.info("Fermer la connexion SQL a réussi. ");
-																			LOGGER.info("Finir à peupler les transactions nouveaux. ");
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error("Fermer la connexion SQL a échoué. ", g.cause());
-																			erreurAppliVertx(requeteSite, g);
-																		}
-																	});
+																	LOGGER.info("Fermer la connexion SQL a réussi. ");
+																	LOGGER.info("Finir à peupler les transactions nouveaux. ");
+																	blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																} else {
-																	LOGGER.error("Commit la connexion SQL a échoué. ", f.cause());
-																	erreurAppliVertx(requeteSite, f);
+																	LOGGER.error("Fermer la connexion SQL a échoué. ", g.cause());
+																	erreurAppliVertx(requeteSite, g);
 																}
 															});
 														} else {
-															LOGGER.error("Commit la connexion SQL a échoué. ", e.cause());
-															erreurAppliVertx(requeteSite, e);
+															LOGGER.error("Commit la connexion SQL a échoué. ", f.cause());
+															erreurAppliVertx(requeteSite, f);
 														}
 													});
 												} else {
@@ -1156,8 +1136,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteRequest
 	 * r: requeteSite
 	 * r.enUS: siteRequest
-	 * r: PaiementMontant
-	 * r.enUS: PaymentAmount
+	 * r: FraisMontant
+	 * r.enUS: ChargeAmount
 	 * r: PaiementDate
 	 * r.enUS: PaymentDate
 	 * r: PaiementSysteme
@@ -1186,8 +1166,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: chargeFirstLast
 	 * r: paiementsDu
 	 * r.enUS: paymentsDue
-	 * r: paiementDu
-	 * r.enUS: paymentDue
+	 * r: paiementDate
+	 * r.enUS: paymentDate
 	 * r: SessionJourDebut
 	 * r.enUS: SessionStartDate
 	 * r: SessionJourFin
@@ -1208,6 +1188,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: JsonObject
 	 * r: ConnexionSql
 	 * r.enUS: SqlConnection
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
 	 * r: "frais %s créé pour inscription %s. "
 	 * r.enUS: "charge %s created for enrollment %s. "
 	 * r: "créer frais %s a échoué pour inscription %s. "
@@ -1219,6 +1201,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: futureAuthorizeNetFraisPOST
 	 * r.enUS: futureAuthorizeNetChargePOST
 	 * 
+	 * r: FraisPremierDernier
+	 * r.enUS: ChargeFirstLast
+	 * r: FraisInscription
+	 * r.enUS: ChargeEnrollment
 	 * r: paiement
 	 * r.enUS: payment
 	 * r: supprime
@@ -1236,19 +1222,18 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			listeRecherche.setStocker(true);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(PaiementScolaire.class);
-			listeRecherche.addFilterQuery("inscriptionCles_indexed_long:" + inscriptionScolaire.getPk());
-			listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
-			listeRecherche.add("json.facet", "{paiementDu:{terms:{field:paiementDu_indexed_date, limit:1000}}}");
+			listeRecherche.addFilterQuery("inscriptionCle_indexed_long:" + inscriptionScolaire.getPk());
+			listeRecherche.add("json.facet", "{paiementDate:{terms:{field:paiementDate_indexed_date, limit:1000}}}");
 			listeRecherche.add("json.facet", "{fraisInscription:{terms:{field:fraisInscription_indexed_boolean, limit:1000}}}");
 			listeRecherche.add("json.facet", "{fraisPremierDernier:{terms:{field:fraisPremierDernier_indexed_boolean, limit:1000}}}");
 			listeRecherche.setRows(0);
 			listeRecherche.initLoinListeRecherche(requeteSite);
 
-			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-			Integer fraisInscription = Optional.ofNullable((SimpleOrderedMap)facets.get("fraisInscription")).map(m -> ((List<SimpleOrderedMap>)m.getAll("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
-			Integer fraisPremierDernier = Optional.ofNullable((SimpleOrderedMap)facets.get("fraisPremierDernier")).map(m -> ((List<SimpleOrderedMap>)m.getAll("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
-			List<LocalDate> paiementsDu = Optional.ofNullable((SimpleOrderedMap)facets.get("paiementDu")).map(m -> ((List<SimpleOrderedMap>)m.getAll("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> LocalDate.parse((String)m.get("val"), dateFormat), Collectors.toList()));
 			ConfigSite configSite = siteContexteFrFR.getConfigSite();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			Integer fraisInscription = Optional.ofNullable((SimpleOrderedMap)facets.get("fraisInscription")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
+			Integer fraisPremierDernier = Optional.ofNullable((SimpleOrderedMap)facets.get("fraisPremierDernier")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
+			List<LocalDate> paiementsDu = Optional.ofNullable((SimpleOrderedMap)facets.get("paiementDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(ZoneId.of(configSite.getSiteZone())).toLocalDate(), Collectors.toList()));
 			LocalDate sessionJourDebut = inscriptionScolaire.getSessionJourDebut();
 			LocalDate sessionJourFin = inscriptionScolaire.getSessionJourFin();
 			LocalDate fraisJourDebut = sessionJourDebut.plusWeeks(1).withDayOfMonth(25);
@@ -1256,13 +1241,66 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			Long inscriptionCle = inscriptionScolaire.getPk();
 			long numMois = ChronoUnit.MONTHS.between(fraisJourDebut, fraisJourFin);
 			List<Future> futures = new ArrayList<>();
-			for(long i = 0; i < numMois; i++) {
-				LocalDate paiementDu = fraisJourDebut.plusMonths(i);
-				if(!paiementsDu.contains(paiementDu)) {
+
+			if(fraisInscription == 0) {
+				PaiementScolaire o = new PaiementScolaire();
+				o.setRequeteSite_(requeteSite);
+				o.setFraisMontant(inscriptionScolaire.getAnneeFraisInscription());
+				o.setPaiementDate(sessionJourDebut);
+				o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
+				o.setFraisInscription(true);
+				o.setInscriptionCle(inscriptionScolaire.getPk());
+
+				RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+				requeteSite2.setVertx(vertx);
+				requeteSite2.setSiteContexte_(siteContexteFrFR);
+				requeteSite2.setConfigSite_(siteContexteFrFR.getConfigSite());
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+				requeteSite2.setObjetJson(JsonObject.mapFrom(o));
+
+				futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("frais %s créé pour inscription %s. ", sessionJourDebut, inscriptionCle));
+					} else {
+						LOGGER.error(String.format("créer frais %s a échoué pour inscription %s. ", sessionJourDebut, inscriptionCle), b.cause());
+						promise.fail(b.cause());
+					}
+				}));
+			}
+			if(fraisPremierDernier == 0) {
+				PaiementScolaire o = new PaiementScolaire();
+				o.setRequeteSite_(requeteSite);
+				o.setFraisMontant(inscriptionScolaire.getBlocPrixParMois().multiply(BigDecimal.valueOf(2)));
+				o.setPaiementDate(sessionJourDebut);
+				o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
+				o.setFraisPremierDernier(true);
+				o.setInscriptionCle(inscriptionScolaire.getPk());
+
+				RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+				requeteSite2.setVertx(vertx);
+				requeteSite2.setSiteContexte_(siteContexteFrFR);
+				requeteSite2.setConfigSite_(siteContexteFrFR.getConfigSite());
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+				requeteSite2.setObjetJson(JsonObject.mapFrom(o));
+
+				futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("frais %s créé pour inscription %s. ", sessionJourDebut, inscriptionCle));
+					} else {
+						LOGGER.error(String.format("créer frais %s a échoué pour inscription %s. ", sessionJourDebut, inscriptionCle), b.cause());
+						promise.fail(b.cause());
+					}
+				}));
+			}
+			for(long i = 0; i <= numMois; i++) {
+				LocalDate paiementDate = fraisJourDebut.plusMonths(i);
+				if(!paiementsDu.contains(paiementDate)) {
 					PaiementScolaire o = new PaiementScolaire();
 					o.setRequeteSite_(requeteSite);
-					o.setPaiementMontant(inscriptionScolaire.getBlocPrixParMois());
-					o.setPaiementDate(paiementDu);
+					o.setFraisMontant(inscriptionScolaire.getBlocPrixParMois());
+					o.setPaiementDate(paiementDate);
 					o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
 					o.setFraisMois(true);
 					o.setInscriptionCle(inscriptionScolaire.getPk());
@@ -1277,9 +1315,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 					futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("frais %s créé pour inscription %s. ", paiementDu, inscriptionCle));
+							LOGGER.info(String.format("frais %s créé pour inscription %s. ", paiementDate, inscriptionCle));
 						} else {
-							LOGGER.error(String.format("créer frais %s a échoué pour inscription %s. ", paiementDu, inscriptionCle), b.cause());
+							LOGGER.error(String.format("créer frais %s a échoué pour inscription %s. ", paiementDate, inscriptionCle), b.cause());
 							promise.fail(b.cause());
 						}
 					}));
@@ -1596,7 +1634,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 											listeRecherche.setQuery("*:*");
 											listeRecherche.setC(PaiementScolaire.class);
 											listeRecherche.addFilterQuery("cree_indexed_date:[" + dateFormat.format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
-											listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+											listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCle_indexed_long, limit:1000}}}");
 											listeRecherche.setRows(1000);
 											listeRecherche.initLoinListeRecherche(requeteSite);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());

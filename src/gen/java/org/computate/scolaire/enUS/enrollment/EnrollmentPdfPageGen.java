@@ -22,6 +22,7 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -37,6 +38,7 @@ import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -52,6 +54,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « w1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter w1;
 	@JsonIgnore
 	public Wrap<AllWriter> w1Wrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w1").o(w1);
@@ -91,6 +94,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « w2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter w2;
 	@JsonIgnore
 	public Wrap<AllWriter> w2Wrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w2").o(w2);
@@ -130,6 +134,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « listEnrollmentDesign »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<EnrollmentDesign> listEnrollmentDesign = new SearchList<EnrollmentDesign>();
 	@JsonIgnore
 	public Wrap<SearchList<EnrollmentDesign>> listEnrollmentDesignWrap = new Wrap<SearchList<EnrollmentDesign>>().p(this).c(SearchList.class).var("listEnrollmentDesign").o(listEnrollmentDesign);
@@ -166,6 +171,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « enrollmentDesign »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected EnrollmentDesign enrollmentDesign;
 	@JsonIgnore
 	public Wrap<EnrollmentDesign> enrollmentDesignWrap = new Wrap<EnrollmentDesign>().p(this).c(EnrollmentDesign.class).var("enrollmentDesign").o(enrollmentDesign);
@@ -205,6 +211,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « enrollmentSearch »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<SchoolEnrollment>();
 	@JsonIgnore
 	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
@@ -241,6 +248,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « enrollments »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<SchoolEnrollment> enrollments;
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
@@ -289,6 +297,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « enrollmentBlocks »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<SchoolEnrollment> enrollmentBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentBlocksWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentBlocks").o(enrollmentBlocks);
@@ -335,6 +344,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « enrollmentBlock »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolEnrollment enrollmentBlock;
 	@JsonIgnore
 	public Wrap<SchoolEnrollment> enrollmentBlockWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentBlock").o(enrollmentBlock);
@@ -374,6 +384,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « enrollmentEnrollment »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolEnrollment enrollmentEnrollment;
 	@JsonIgnore
 	public Wrap<SchoolEnrollment> enrollmentEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentEnrollment").o(enrollmentEnrollment);
@@ -413,6 +424,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « yearSearch »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
@@ -449,6 +461,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « year_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolYear year_;
 	@JsonIgnore
 	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
@@ -487,6 +500,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long schoolKey;
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
@@ -554,6 +568,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « schoolName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolName;
 	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
@@ -615,6 +630,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolCompleteName;
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
@@ -676,6 +692,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « schoolLocation »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolLocation;
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
@@ -737,6 +754,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « schoolAddress »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolAddress;
 	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
@@ -798,6 +816,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « schoolPhoneNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolPhoneNumber;
 	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
@@ -859,6 +878,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « schoolAdministratorName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolAdministratorName;
 	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
@@ -921,6 +941,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearStart;
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
@@ -989,6 +1010,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearEnd;
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
@@ -1057,6 +1079,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);
@@ -1134,6 +1157,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « mom_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolMom mom_;
 	@JsonIgnore
 	public Wrap<SchoolMom> mom_Wrap = new Wrap<SchoolMom>().p(this).c(SchoolMom.class).var("mom_").o(mom_);
@@ -1171,6 +1195,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « dad_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolDad dad_;
 	@JsonIgnore
 	public Wrap<SchoolDad> dad_Wrap = new Wrap<SchoolDad>().p(this).c(SchoolDad.class).var("dad_").o(dad_);
@@ -1208,6 +1233,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « guardian_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolGuardian guardian_;
 	@JsonIgnore
 	public Wrap<SchoolGuardian> guardian_Wrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("guardian_").o(guardian_);
@@ -1245,6 +1271,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « blockSearch »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolBlock>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolBlock> blockSearch = new SearchList<SchoolBlock>();
 	@JsonIgnore
 	public Wrap<SearchList<SchoolBlock>> blockSearchWrap = new Wrap<SearchList<SchoolBlock>>().p(this).c(SearchList.class).var("blockSearch").o(blockSearch);
@@ -1281,6 +1308,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « blocks »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<SchoolBlock> blocks;
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> blocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("blocks").o(blocks);
@@ -1329,6 +1357,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « seasonBlocks »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<SchoolBlock> seasonBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.block.SchoolBlock>();
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> seasonBlocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("seasonBlocks").o(seasonBlocks);
@@ -1375,6 +1404,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « seasonBlock »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolBlock seasonBlock;
 	@JsonIgnore
 	public Wrap<SchoolBlock> seasonBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("seasonBlock").o(seasonBlock);
@@ -1414,6 +1444,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « sessionBlock »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolBlock sessionBlock;
 	@JsonIgnore
 	public Wrap<SchoolBlock> sessionBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("sessionBlock").o(sessionBlock);
@@ -1453,6 +1484,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « ageBlock »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolBlock ageBlock;
 	@JsonIgnore
 	public Wrap<SchoolBlock> ageBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("ageBlock").o(ageBlock);
@@ -1492,6 +1524,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « blockBlock »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolBlock blockBlock;
 	@JsonIgnore
 	public Wrap<SchoolBlock> blockBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("blockBlock").o(blockBlock);
@@ -1531,6 +1564,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « htmlPartSearch »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<HtmlPart> htmlPartSearch = new SearchList<HtmlPart>();
 	@JsonIgnore
 	public Wrap<SearchList<HtmlPart>> htmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("htmlPartSearch").o(htmlPartSearch);
@@ -1567,6 +1601,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/**	L'entité « htmlPartList »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<HtmlPart> htmlPartList;
 	@JsonIgnore
 	public Wrap<List<HtmlPart>> htmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("htmlPartList").o(htmlPartList);

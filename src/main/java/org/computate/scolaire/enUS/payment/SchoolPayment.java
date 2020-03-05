@@ -248,9 +248,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _transactionStatus(Wrap<String> c) {
 	}
 
-	protected void _paymentDue(Wrap<LocalDate> c) {
-	}
-
 	protected void _paymentRecieved(Wrap<Boolean> c) {
 		c.o(false);
 	}

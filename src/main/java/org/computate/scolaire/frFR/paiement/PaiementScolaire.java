@@ -750,6 +750,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 2
+	 * HtmlColonne: 3
 	 * NomAffichage.frFR: paiement montant
 	 * NomAffichage.enUS: payment amount
 	 */                    
@@ -761,6 +762,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeAmount
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlColonne: 4
 	 * NomAffichage.frFR: frais montant
 	 * NomAffichage.enUS: charge amount
 	 */                    
@@ -772,6 +775,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeAmountFuture
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * NomAffichage.frFR: frais montant future
 	 * NomAffichage.enUS: future charge amount
 	 */                    
@@ -783,6 +787,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeEnrollment
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * NomAffichage.frFR: frais d'inscription
 	 * NomAffichage.enUS: enrollment fee
 	 */                    
@@ -795,6 +800,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeFirstLast
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * NomAffichage.frFR: frais mois premier et dernier
 	 * NomAffichage.enUS: first and last month charge
 	 */                    
@@ -807,6 +813,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeMonth
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * NomAffichage.frFR: frais du mois
 	 * NomAffichage.enUS: monthly fee
 	 */                    
@@ -913,20 +920,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.enUS: transaction status
 	 */                  
 	protected void _transactionStatus(Couverture<String> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: paymentDue
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * HtmlLigne: 6
-	 * HtmlCellule: 1
-	 * NomAffichage.frFR: paiement dû
-	 * NomAffichage.enUS: payment due
-	 */                  
-	protected void _paiementDu(Couverture<LocalDate> c) {
 	}
 
 	/**

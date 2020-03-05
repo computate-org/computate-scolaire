@@ -135,7 +135,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaiementDu("Page");
 			o.htmInscriptionCle("Page");
 			o.htmPaiementRecu("Page");
 		} g("div");
@@ -171,7 +170,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaiementDu("POST");
 			o.htmInscriptionCle("POST");
 			o.htmPaiementRecu("POST");
 		} g("div");
@@ -205,7 +203,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaiementDu("PUT");
 			o.htmInscriptionCle("PUT");
 			o.htmPaiementRecu("PUT");
 		} g("div");
@@ -214,6 +211,11 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmEnfantDateNaissance("PUT");
 			o.htmMereNomCompletPrefere("PUT");
 			o.htmPereNomCompletPrefere("PUT");
+			o.htmFraisMontant("PUT");
+			o.htmFraisMontantFuture("PUT");
+			o.htmFraisInscription("PUT");
+			o.htmFraisPremierDernier("PUT");
+			o.htmFraisMois("PUT");
 		} g("div");
 	}
 
@@ -245,7 +247,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaiementDu("PATCH");
 			o.htmInscriptionCle("PATCH");
 			o.htmPaiementRecu("PATCH");
 		} g("div");
@@ -254,6 +255,11 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmEnfantDateNaissance("PATCH");
 			o.htmMereNomCompletPrefere("PATCH");
 			o.htmPereNomCompletPrefere("PATCH");
+			o.htmFraisMontant("PATCH");
+			o.htmFraisMontantFuture("PATCH");
+			o.htmFraisInscription("PATCH");
+			o.htmFraisPremierDernier("PATCH");
+			o.htmFraisMois("PATCH");
 		} g("div");
 	}
 
@@ -287,7 +293,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmTransactionStatus("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaiementDu("Recherche");
 			o.htmInscriptionCle("Recherche");
 			o.htmPaiementRecu("Recherche");
 		} g("div");
@@ -297,6 +302,11 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmEnfantDateNaissance("Recherche");
 			o.htmMereNomCompletPrefere("Recherche");
 			o.htmPereNomCompletPrefere("Recherche");
+			o.htmFraisMontant("Recherche");
+			o.htmFraisMontantFuture("Recherche");
+			o.htmFraisInscription("Recherche");
+			o.htmFraisPremierDernier("Recherche");
+			o.htmFraisMois("Recherche");
 		} g("div");
 	}
 
@@ -404,6 +414,8 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 						e("th").f().sx("crée").g("th");
 						e("th").f().sx("").g("th");
 						e("th").f().sx("date de paiement").g("th");
+						e("th").f().sx("paiement montant").g("th");
+						e("th").f().sx("frais montant").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -433,6 +445,20 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									{ e("span").f();
 										sx(o.strPaiementDate());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									{ e("span").f();
+										sx(o.strPaiementMontant());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									{ e("span").f();
+										sx(o.strFraisMontant());
 									} g("span");
 								} g("a");
 							} g("td");

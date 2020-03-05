@@ -367,6 +367,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			o.htmEnfantNomCompletPrefere("PUT");
 			o.htmEnfantDateNaissance("PUT");
 			o.htmEcoleAddresse("PUT");
+			o.htmInscriptionDateFrais("PUT");
 			o.htmInscriptionNomsParents("PUT");
 			o.htmInscriptionSignature1("PUT");
 			o.htmInscriptionSignature2("PUT");
@@ -446,6 +447,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			o.htmEnfantNomCompletPrefere("PATCH");
 			o.htmEnfantDateNaissance("PATCH");
 			o.htmEcoleAddresse("PATCH");
+			o.htmInscriptionDateFrais("PATCH");
 			o.htmInscriptionNomsParents("PATCH");
 			o.htmInscriptionSignature1("PATCH");
 			o.htmInscriptionSignature2("PATCH");
@@ -528,6 +530,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 			o.htmEnfantNomCompletPrefere("Recherche");
 			o.htmEnfantDateNaissance("Recherche");
 			o.htmEcoleAddresse("Recherche");
+			o.htmInscriptionDateFrais("Recherche");
 			o.htmInscriptionNomsParents("Recherche");
 			o.htmInscriptionDate1("Recherche");
 			o.htmInscriptionDate2("Recherche");

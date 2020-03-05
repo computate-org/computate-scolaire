@@ -367,6 +367,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 			o.htmChildCompleteNamePreferred("PUT");
 			o.htmChildBirthDate("PUT");
 			o.htmSchoolAddress("PUT");
+			o.htmEnrollmentChargeDate("PUT");
 			o.htmEnrollmentParentNames("PUT");
 			o.htmEnrollmentSignature1("PUT");
 			o.htmEnrollmentSignature2("PUT");
@@ -446,6 +447,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
 			o.htmSchoolAddress("PATCH");
+			o.htmEnrollmentChargeDate("PATCH");
 			o.htmEnrollmentParentNames("PATCH");
 			o.htmEnrollmentSignature1("PATCH");
 			o.htmEnrollmentSignature2("PATCH");
@@ -528,6 +530,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 			o.htmChildCompleteNamePreferred("Recherche");
 			o.htmChildBirthDate("Recherche");
 			o.htmSchoolAddress("Recherche");
+			o.htmEnrollmentChargeDate("Recherche");
 			o.htmEnrollmentParentNames("Recherche");
 			o.htmEnrollmentDate1("Recherche");
 			o.htmEnrollmentDate2("Recherche");
