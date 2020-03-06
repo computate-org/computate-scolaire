@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,6 +57,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Tri.desc: paiementDate
  * Tri.desc: paiementPar
+ * 
+ * Rows: 50
 */       
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
@@ -322,6 +325,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: enrollment_
 	 * r: EnfantNomCompletPrefere
 	 * r.enUS: ChildCompleteNamePreferred
+	 * 
 	 */  
 	protected void _enfantNomCompletPrefere(Couverture<String> c) {
 		if(inscription_ != null)
@@ -737,7 +741,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: date de paiement
 	 * NomAffichage.enUS: payment date
-	 * HtmlColonne: 2
+	 * HtmlColonne: 3
 	 */                   
 	protected void _paiementDate(Couverture<LocalDate> c) {
 	}
@@ -750,7 +754,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 2
-	 * HtmlColonne: 3
+	 * HtmlColonne: 4
 	 * NomAffichage.frFR: paiement montant
 	 * NomAffichage.enUS: payment amount
 	 */                    
@@ -763,7 +767,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlColonne: 4
+	 * HtmlColonne: 5
 	 * NomAffichage.frFR: frais montant
 	 * NomAffichage.enUS: charge amount
 	 */                    
@@ -790,7 +794,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Definir: true
 	 * NomAffichage.frFR: frais d'inscription
 	 * NomAffichage.enUS: enrollment fee
-	 */                    
+	 */                 
 	protected void _fraisInscription(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -946,6 +950,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * VarTitre: true
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
+	 * r: enfantNomCompletPrefere
+	 * r.enUS: childCompleteNamePreferred
 	 * r: EnfantNomComplet
 	 * r.enUS: ChildCompleteName
 	 * r: paiementDate
@@ -964,6 +970,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentDescription
 	 * r: paiementValeur
 	 * r.enUS: paymentValue
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
 	 * r: " par chèque"
 	 * r.enUS: " by check"
 	 * r: " par espèces"
@@ -972,26 +980,60 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: " by cash"
 	 * r: inscription_
 	 * r.enUS: enrollment_
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: SessionJourDebut
+	 * r.enUS: SessionStartDate
+	 * r: SessionJourFin
+	 * r.enUS: SessionEndDate
 	 * r: FRANCE
 	 * r.enUS: US
+	 * r: " pour %s"
+	 * r.enUS: " for %s"
+	 * r: "%s frais de %s"
+	 * r.enUS: "%s %s tuition"
+	 * r: "%s frais de %s + %s"
+	 * r.enUS: "%s %s + %s tuition"
+	 * r: "%s frais d'inscription %s-%s"
+	 * r.enUS: "%s %s-%s enrollment fee"
+	 * r: " paiement"
+	 * r.enUS: " payment"
+	 * r: " pour %s"
+	 * r.enUS: " for %s"
 	 */    
 	protected void _paiementNomComplet(Couverture<String> c) {
-		NumberFormat f = NumberFormat.getCurrencyInstance(Locale.FRANCE);
-		f.setMaximumFractionDigits(0);
+		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.FRANCE);
+		fn.setMaximumFractionDigits(0);
 
 		StringBuilder o = new StringBuilder();
-		if(inscription_ != null)
-			o.append(inscription_.getEnfantNomComplet());
-		if(paiementDate != null)
-			o.append(" ").append(strPaiementDate());
-		if(paiementMontant != null)
-			o.append(" ").append(f.format(paiementMontant));
-		if(BooleanUtils.isTrue(paiementCheque))
-			o.append(" by check");
-		if(BooleanUtils.isTrue(paiementEspeces))
-			o.append(" by cash");
-		if(BooleanUtils.isTrue(paiementSysteme))
-			o.append(" by authorize.net");
+		if(fraisMontant != null) {
+			if(inscription_ != null && fraisPremierDernier)
+				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+			else if(inscription_ != null && fraisInscription)
+				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+			else
+				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate)));
+
+			if(enfantNomCompletPrefere != null)
+				o.append(String.format(" pour %s", enfantNomCompletPrefere));
+		}
+		if(paiementMontant != null) {
+			o.append(fn.format(paiementMontant));
+			if(paiementDate != null)
+				o.append(" ").append(strPaiementDate());
+			o.append(" paiement");
+			if(enfantNomCompletPrefere != null)
+				o.append(String.format(" pour %s", enfantNomCompletPrefere));
+			if(BooleanUtils.isTrue(paiementCheque))
+				o.append(" by check");
+			if(BooleanUtils.isTrue(paiementEspeces))
+				o.append(" by cash");
+			if(BooleanUtils.isTrue(paiementSysteme))
+				o.append(" by authorize.net");
+		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
 		c.o(o.toString());

@@ -411,11 +411,21 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").a("class", "w3-green w3-hover-green ").f();
 					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-						e("th").f().sx("date de paiement").g("th");
-						e("th").f().sx("paiement montant").g("th");
-						e("th").f().sx("frais montant").g("th");
+						if(getColonneCree()) {
+							e("th").f().sx("crée").g("th");
+						}
+						if(getColonneObjetTitre()) {
+							e("th").f().sx("").g("th");
+						}
+						if(getColonnePaiementDate()) {
+							e("th").f().sx("date de paiement").g("th");
+						}
+						if(getColonnePaiementMontant()) {
+							e("th").f().sx("paiement montant").g("th");
+						}
+						if(getColonneFraisMontant()) {
+							e("th").f().sx("frais montant").g("th");
+						}
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -426,42 +436,52 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
 						String uri = "/paiement/" + o.getPk();
 						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "fas fa-search-dollar ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strPaiementDate());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strPaiementMontant());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strFraisMontant());
-									} g("span");
-								} g("a");
-							} g("td");
+							if(getColonneCree()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strCree());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColonneObjetTitre()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										e("i").a("class", "fas fa-search-dollar ").f().g("i");
+										{ e("span").f();
+											sx(o.strObjetTitre());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColonnePaiementDate()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strPaiementDate());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColonnePaiementMontant()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strPaiementMontant());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColonneFraisMontant()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strFraisMontant());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
 						} g("tr");
 					}
 				} g("tbody");
@@ -495,6 +515,26 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		htmlBodyFormsPaiementGenPage();
 		htmlSuggerePaiementGenPage(this, null);
 		g("div");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
+	public Boolean getColonnePaiementDate() {
+		return true;
+	}
+
+	public Boolean getColonnePaiementMontant() {
+		return true;
+	}
+
+	public Boolean getColonneFraisMontant() {
+		return true;
 	}
 
 	public void htmlBodyFormsPaiementGenPage() {

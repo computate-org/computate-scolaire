@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import org.apache.commons.lang3.BooleanUtils;
@@ -253,22 +254,36 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	protected void _paymentCompleteName(Wrap<String> c) {
-		NumberFormat f = NumberFormat.getCurrencyInstance(Locale.US);
-		f.setMaximumFractionDigits(0);
+		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
+		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
+		fn.setMaximumFractionDigits(0);
 
 		StringBuilder o = new StringBuilder();
-		if(enrollment_ != null)
-			o.append(enrollment_.getChildCompleteName());
-		if(paymentDate != null)
-			o.append(" ").append(strPaymentDate());
-		if(paymentAmount != null)
-			o.append(" ").append(f.format(paymentAmount));
-		if(BooleanUtils.isTrue(paymentCheck))
-			o.append(" by check");
-		if(BooleanUtils.isTrue(paymentCash))
-			o.append(" by cash");
-		if(BooleanUtils.isTrue(paymentSystem))
-			o.append(" by authorize.net");
+		if(chargeAmount != null) {
+			if(enrollment_ != null && chargeFirstLast)
+				o.append(String.format("%s %s + %s tuition", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+			else if(enrollment_ != null && chargeEnrollment)
+				o.append(String.format("%s %s-%s enrollment fee", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+			else
+				o.append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate)));
+
+			if(childCompleteNamePreferred != null)
+				o.append(String.format(" for %s", childCompleteNamePreferred));
+		}
+		if(paymentAmount != null) {
+			o.append(fn.format(paymentAmount));
+			if(paymentDate != null)
+				o.append(" ").append(strPaymentDate());
+			o.append(" payment");
+			if(childCompleteNamePreferred != null)
+				o.append(String.format(" for %s", childCompleteNamePreferred));
+			if(BooleanUtils.isTrue(paymentCheck))
+				o.append(" by check");
+			if(BooleanUtils.isTrue(paymentCash))
+				o.append(" by cash");
+			if(BooleanUtils.isTrue(paymentSystem))
+				o.append(" by authorize.net");
+		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
 		c.o(o.toString());

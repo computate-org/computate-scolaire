@@ -410,11 +410,21 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").a("class", "w3-green w3-hover-green ").f();
 					{ e("tr").f();
-						e("th").f().sx("created").g("th");
-						e("th").f().sx("").g("th");
-						e("th").f().sx("payment date").g("th");
-						e("th").f().sx("payment amount").g("th");
-						e("th").f().sx("charge amount").g("th");
+						if(getColumnCreated()) {
+							e("th").f().sx("created").g("th");
+						}
+						if(getColumnObjectTitle()) {
+							e("th").f().sx("").g("th");
+						}
+						if(getColumnPaymentDate()) {
+							e("th").f().sx("payment date").g("th");
+						}
+						if(getColumnPaymentAmount()) {
+							e("th").f().sx("payment amount").g("th");
+						}
+						if(getColumnChargeAmount()) {
+							e("th").f().sx("charge amount").g("th");
+						}
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -425,42 +435,52 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
 						String uri = "/payment/" + o.getPk();
 						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCreated());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "fas fa-search-dollar ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjectTitle());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strPaymentDate());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strPaymentAmount());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strChargeAmount());
-									} g("span");
-								} g("a");
-							} g("td");
+							if(getColumnCreated()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strCreated());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColumnObjectTitle()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										e("i").a("class", "fas fa-search-dollar ").f().g("i");
+										{ e("span").f();
+											sx(o.strObjectTitle());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColumnPaymentDate()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strPaymentDate());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColumnPaymentAmount()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strPaymentAmount());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
+							if(getColumnChargeAmount()) {
+								{ e("td").f();
+									{ e("a").a("href", uri).f();
+										{ e("span").f();
+											sx(o.strChargeAmount());
+										} g("span");
+									} g("a");
+								} g("td");
+							}
 						} g("tr");
 					}
 				} g("tbody");
@@ -494,6 +514,26 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		htmlBodyFormsPaymentGenPage();
 		htmlSuggestPaymentGenPage(this, null);
 		g("div");
+	}
+
+	public Boolean getColumnCreated() {
+		return true;
+	}
+
+	public Boolean getColumnObjectTitle() {
+		return true;
+	}
+
+	public Boolean getColumnPaymentDate() {
+		return true;
+	}
+
+	public Boolean getColumnPaymentAmount() {
+		return true;
+	}
+
+	public Boolean getColumnChargeAmount() {
+		return true;
 	}
 
 	public void htmlBodyFormsPaymentGenPage() {

@@ -78,6 +78,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public static final String SchoolPayment_Couleur = "green";
 	public static final String SchoolPayment_IconeGroupe = "solid";
 	public static final String SchoolPayment_IconeNom = "search-dollar";
+	public static final Integer SchoolPayment_Rows = 50;
 
 	////////////////
 	// paymentKey //

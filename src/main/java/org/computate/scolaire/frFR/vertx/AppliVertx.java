@@ -93,7 +93,6 @@ import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.api.OperationResponse;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
@@ -109,6 +108,7 @@ import net.authorize.api.contract.v1.BatchDetailsType;
 import net.authorize.api.contract.v1.CustomerProfileIdType;
 import net.authorize.api.contract.v1.GetSettledBatchListRequest;
 import net.authorize.api.contract.v1.GetSettledBatchListResponse;
+import net.authorize.api.contract.v1.GetTransactionListForCustomerRequest;
 import net.authorize.api.contract.v1.GetTransactionListRequest;
 import net.authorize.api.contract.v1.GetTransactionListResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
@@ -119,6 +119,7 @@ import net.authorize.api.contract.v1.TransactionListSorting;
 import net.authorize.api.contract.v1.TransactionSummaryType;
 import net.authorize.api.controller.GetSettledBatchListController;
 import net.authorize.api.controller.GetTransactionListController;
+import net.authorize.api.controller.GetTransactionListForCustomerController;
 import net.authorize.api.controller.base.ApiOperationBase;
 
 /**
@@ -929,6 +930,14 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 							try {
 								PaiementScolaireFrFRGenApiServiceImpl paiementService = new PaiementScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
 								InscriptionScolaireFrFRGenApiServiceImpl inscriptionService = new InscriptionScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
+				
+								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+								String authorizeApiLoginId = configSite.getAuthorizeApiLoginId();
+								String authorizeTransactionKey = configSite.getAuthorizeTransactionKey();
+								merchantAuthenticationType.setName(authorizeApiLoginId);
+								merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+								ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+								DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
 
 								ZonedDateTime sessionJourDebut = ZonedDateTime.now().plusMonths(1);
 								// Mar 26 is last late fee. 
@@ -943,10 +952,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 								listeRechercheInscription.addFilterQuery("sessionJourDebut_indexed_date:[* TO " + dateFormat.format(sessionJourDebut) + "]");
 								listeRechercheInscription.addFilterQuery("sessionJourFin_indexed_date:[" + dateFormat.format(sessionJourFin) + " TO *]");
 								listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
-								listeRechercheInscription.addFilterQuery("pk_indexed_long:15157");// TODO: delete
+								listeRechercheInscription.addFilterQuery("pk_indexed_long:12243");// TODO: delete
 								listeRechercheInscription.initLoinListeRecherche(requeteSite);
 				
-								futureAuthorizeNetFraisInscription(listeRechercheInscription, paiementService, c -> {
+								futureAuthorizeNetFraisInscription(merchantAuthenticationType, listeRechercheInscription, paiementService, c -> {
 									if(c.succeeded()) {
 										try {
 											ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
@@ -1038,9 +1047,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	/**
 	 * Var.enUS: futureAuthorizeNetEnrollmentCharges
-	 * Param1.var.enUS: listSchoolEnrollment
-	 * Param2.var.enUS: paymentService
-	 * Param3.var.enUS: eventHandler
+	 * Param2.var.enUS: listSchoolEnrollment
+	 * Param3.var.enUS: paymentService
+	 * Param4.var.enUS: eventHandler
 	 * r: RequeteSiteFrFR
 	 * r.enUS: SiteRequestEnUS
 	 * r: RequeteSite
@@ -1051,6 +1060,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: futureAuthorizeNetEnrollmentCharges
 	 * r: futureAuthorizeNetFrais
 	 * r.enUS: futureAuthorizeNetCharge
+	 * r: futureAuthorizeNetInscriptionPaiements
+	 * r.enUS: futureAuthorizeNetEnrollmentPayments
 	 * r: paiementService
 	 * r.enUS: paymentService
 	 * r: requeteSite
@@ -1064,12 +1075,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: "Créer une liste de frais a réussi. "
 	 * r.enUS: "Create a list of charges has succeeded. "
 	 */
-	public void futureAuthorizeNetFraisInscription(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, PaiementScolaireFrFRGenApiServiceImpl paiementService, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void futureAuthorizeNetFraisInscription(MerchantAuthenticationType merchantAuthenticationType, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, PaiementScolaireFrFRGenApiServiceImpl paiementService, Handler<AsyncResult<Void>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 		listeInscriptionScolaire.getList().forEach(o -> {
 			futures.add(
-				futureAuthorizeNetFrais(o, paiementService, requeteSite, a -> {
+				futureAuthorizeNetFrais(merchantAuthenticationType, o, paiementService, requeteSite, a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Créer un frais a réussi. ");
 					} else {
@@ -1081,7 +1092,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				if(listeInscriptionScolaire.next()) {
-					futureAuthorizeNetFraisInscription(listeInscriptionScolaire, paiementService, gestionnaireEvenements);
+					futureAuthorizeNetFraisInscription(merchantAuthenticationType, listeInscriptionScolaire, paiementService, gestionnaireEvenements);
 					LOGGER.info("Créer une liste de frais a réussi. ");
 				} else {
 					gestionnaireEvenements.handle(Future.succeededFuture());
@@ -1094,9 +1105,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	/**
 	 * Var.enUS: futureAuthorizeNetCharge
-	 * Param1.var.enUS: schoolEnrollment
-	 * Param2.var.enUS: paymentService
-	 * Param3.var.enUS: siteRequest
+	 * Param2.var.enUS: schoolEnrollment
+	 * Param3.var.enUS: paymentService
+	 * Param4.var.enUS: siteRequest
 	 * 
 	 * r: "paiement %s créé pour transaction %s. "
 	 * r.enUS: "payment %s created for transaction %s. "
@@ -1190,6 +1201,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SqlConnection
 	 * r: AnneeFraisInscription
 	 * r.enUS: YearEnrollmentFee
+	 * r: futureAuthorizeNetInscriptionPaiements
+	 * r.enUS: futureAuthorizeNetEnrollmentPayments
 	 * r: "frais %s créé pour inscription %s. "
 	 * r.enUS: "charge %s created for enrollment %s. "
 	 * r: "créer frais %s a échoué pour inscription %s. "
@@ -1198,6 +1211,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: "Charges created for enrollment %s. "
 	 * r: "Créer des frais a échoué pour inscription %s. "
 	 * r.enUS: "Creating charges has failed for enrollment %s. "
+	 * r: "Créer des paiements pour client %s a réussi. "
+	 * r.enUS: "Creating payments for customer %s succeeded. "
 	 * r: futureAuthorizeNetFraisPOST
 	 * r.enUS: futureAuthorizeNetChargePOST
 	 * 
@@ -1211,10 +1226,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: deleted
 	 */
 	public Future<Void> futureAuthorizeNetFrais(
-			InscriptionScolaire inscriptionScolaire
+			MerchantAuthenticationType merchantAuthenticationType 
+			, InscriptionScolaire inscriptionScolaire
 			, PaiementScolaireFrFRGenApiServiceImpl paiementService
 			, RequeteSiteFrFR requeteSite
-			,  Handler<AsyncResult<OperationResponse>> a) {
+			,  Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
 
@@ -1326,15 +1342,131 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			CompositeFuture.all(futures).setHandler(b -> {
 				if(b.succeeded()) {
 					LOGGER.info(String.format("Des frais créé pour inscription %s. ", inscriptionCle));
-					promise.complete();
+					if(inscriptionScolaire.getCustomerProfileId() == null) {
+						promise.complete();
+					} else {
+						futureAuthorizeNetInscriptionPaiements(merchantAuthenticationType, inscriptionScolaire, c -> {
+							if(c.succeeded()) {
+								LOGGER.info("Créer des paiements pour client %s a réussi. ");
+								a.handle(Future.succeededFuture());
+								promise.complete();
+							} else {
+								a.handle(Future.failedFuture(c.cause()));
+								promise.fail(c.cause());
+							}
+						});
+					}
 				} else {
 					LOGGER.error(String.format("Créer des frais a échoué pour inscription %s. ", inscriptionCle), b.cause());
+					a.handle(Future.failedFuture(b.cause()));
 					promise.fail(b.cause());
 				}
 			});
 
 			return promise.future();
 		} catch(Exception e) {
+			a.handle(Future.failedFuture(e));
+			return Future.failedFuture(e);
+		}
+	}
+
+	/**
+	 * Var.enUS: futureAuthorizeNetEnrollmentPayments
+	 * Param2.var.enUS: schoolEnrollment
+	 * 
+	 * r: "Il y a %s transactions pour client %s à charger. "
+	 * r.enUS: "There are %s transactions for client %s to load. "
+	 * r: "transaction %s chargé. "
+	 * r.enUS: "transaction %s loaded. "
+	 * r: "paiement future pour transaction %s a échoué. "
+	 * r.enUS: "payment future for transaction %s failed. "
+	 * r: "transactions pour client %s chargé. "
+	 * r.enUS: "transactions for customer %s loaded. "
+	 * r: "transactions pour client %s a échoué. "
+	 * r.enUS: "transactions for customer %s failed. "
+	 * r: PaiementScolaireFrFRGenApiServiceImpl
+	 * r.enUS: SchoolPaymentEnUSGenApiServiceImpl
+	 * r: InscriptionScolaireFrFRGenApiServiceImpl
+	 * r.enUS: SchoolEnrollmentEnUSGenApiServiceImpl
+	 * r: futureAuthorizeNetPaiement
+	 * r.enUS: futureAuthorizeNetPayment
+	 * r: paiementService
+	 * r.enUS: paymentService
+	 * r: inscriptionService
+	 * r.enUS: enrollmentService
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: inscriptionScolaire
+	 * r.enUS: schoolEnrollment
+	 * r: RequeteSite
+	 * r.enUS: SiteRequest
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 */
+	public Future<Void> futureAuthorizeNetInscriptionPaiements(
+			MerchantAuthenticationType merchantAuthenticationType
+			, InscriptionScolaire inscriptionScolaire
+			,  Handler<AsyncResult<Void>> a) {
+		Promise<Void> promise = Promise.promise();
+		try {
+			Paging paging = new Paging();
+			paging.setLimit(1000);
+			paging.setOffset(1);
+			
+			GetTransactionListForCustomerRequest getRequest = new GetTransactionListForCustomerRequest();
+			getRequest.setMerchantAuthentication(merchantAuthenticationType);
+			getRequest.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
+
+			getRequest.setPaging(paging);
+
+			TransactionListSorting sorting = new TransactionListSorting();
+			sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
+			sorting.setOrderDescending(true);
+
+			getRequest.setSorting(sorting);
+
+			GetTransactionListForCustomerController controller = new GetTransactionListForCustomerController(getRequest);
+			GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+			controller.execute();
+			if(controller.getErrorResponse() != null)
+				throw new RuntimeException(controller.getResults().toString());
+
+			PaiementScolaireFrFRGenApiServiceImpl paiementService = new PaiementScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
+
+			List<Future> futures = new ArrayList<>();
+
+			GetTransactionListResponse getResponse = controller.getApiResponse();
+			if (getResponse != null) {
+
+				if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
+					List<TransactionSummaryType> transactions = Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList());
+					LOGGER.info(String.format("Il y a %s transactions pour client %s à charger. ", transactions.size(), inscriptionScolaire.getCustomerProfileId()));
+					for(TransactionSummaryType transaction : transactions) {
+						futures.add(
+							futureAuthorizeNetPaiement(paiementService, inscriptionScolaire.getRequeteSite_(), transaction, inscriptionScolaire, b -> {
+								if(b.succeeded()) {
+									LOGGER.info(String.format("transaction %s chargé. ", transaction.getTransId()));
+								} else {
+									LOGGER.error(String.format("paiement future pour transaction %s a échoué. ", transaction.getTransId()), b.cause());
+								}
+							})
+						);
+					}
+					CompositeFuture.all(futures).setHandler(b -> {
+						if(b.succeeded()) {
+							a.handle(Future.succeededFuture());
+							promise.complete();
+							LOGGER.info(String.format("transactions pour client %s chargé. ", inscriptionScolaire.getCustomerProfileId()));
+						} else {
+							LOGGER.error(String.format("transactions pour client %s a échoué. ", inscriptionScolaire.getCustomerProfileId()));
+							promise.fail(b.cause());
+						}
+					});
+				}
+			}
+			return promise.future();
+		} catch(Exception e) {
+			a.handle(Future.failedFuture(e));
 			return Future.failedFuture(e);
 		}
 	}
@@ -1364,6 +1496,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: siteRequest
 	 * r: creerPaiementScolaire
 	 * r.enUS: createSchoolPayment
+	 * r: erreurAppliVertx
+	 * r.enUS: errorAppVertx
 	 * r: erreurPaiementScolaire
 	 * r.enUS: errorSchoolPayment
 	 * r: PaiementDate
@@ -1380,7 +1514,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			PaiementScolaire o
 			, PaiementScolaireFrFRGenApiServiceImpl paiementService
 			, RequeteSiteFrFR requeteSite
-			,  Handler<AsyncResult<OperationResponse>> a) {
+			,  Handler<AsyncResult<Void>> a) {
 		Promise<PaiementScolaire> promise = Promise.promise();
 		Long inscriptionCle = o.getInscriptionCle();
 		paiementService.creerPaiementScolaire(requeteSite, b -> {
@@ -1402,19 +1536,19 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 											}
 										});
 									} else {
-										paiementService.erreurPaiementScolaire(requeteSite, a, e);
+										erreurAppliVertx(requeteSite, e);
 									}
 								});
 							} else {
-								paiementService.erreurPaiementScolaire(requeteSite, a, d);
+								erreurAppliVertx(requeteSite, d);
 							}
 						});
 					} else {
-						paiementService.erreurPaiementScolaire(requeteSite, a, c);
+						erreurAppliVertx(requeteSite, c);
 					}
 				});
 			} else {
-				paiementService.erreurPaiementScolaire(requeteSite, a, b);
+				erreurAppliVertx(requeteSite, b);
 			}
 		});
 		return promise.future();
@@ -1800,6 +1934,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolPaymentEnUSGenApiServiceImpl
 	 * r: InscriptionScolaireFrFRGenApiServiceImpl
 	 * r.enUS: SchoolEnrollmentEnUSGenApiServiceImpl
+	 * r: futureAuthorizeNetPaiement
+	 * r.enUS: futureAuthorizeNetPayment
 	 * r: paiementService
 	 * r.enUS: paymentService
 	 * r: inscriptionService
@@ -1814,7 +1950,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			, GetSettledBatchListController batchController
 			, BatchDetailsType batch
 			, RequeteSiteFrFR requeteSite
-			,  Handler<AsyncResult<OperationResponse>> a) {
+			,  Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			Paging paging = new Paging();
@@ -1851,7 +1987,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					LOGGER.info(String.format("Il y a %s transactions dans batch %s à charger. ", transactions.size(), batch.getBatchId()));
 					for(TransactionSummaryType transaction : transactions) {
 						futures.add(
-							futureAuthorizeNetPaiement(merchantAuthenticationType, batchController, paiementService, batch, requeteSite, transaction, b -> {
+							futureAuthorizeNetPaiement(paiementService, requeteSite, transaction, null, b -> {
 								if(b.succeeded()) {
 									LOGGER.info(String.format("transaction %s chargé. ", transaction.getTransId()));
 								} else {
@@ -1862,6 +1998,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					}
 					CompositeFuture.all(futures).setHandler(b -> {
 						if(b.succeeded()) {
+							a.handle(Future.succeededFuture());
 							promise.complete();
 							LOGGER.info(String.format("transactions pour batch %s chargé. ", batch.getBatchId()));
 						} else {
@@ -1873,18 +2010,23 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			}
 			return promise.future();
 		} catch(Exception e) {
+			a.handle(Future.failedFuture(e));
 			return Future.failedFuture(e);
 		}
 	}
 
 	/**
-	 * Param3.var.enUS: paymentService
-	 * Param5.var.enUS: siteRequest
+	 * Var.enUS: futureAuthorizeNetPayment
+	 * Param1.var.enUS: paymentService
+	 * Param2.var.enUS: siteRequest
+	 * Param4.var.enUS: schoolEnrollment
 	 * 
 	 * r: "paiement %s créé pour transaction %s. "
 	 * r.enUS: "payment %s created for transaction %s. "
 	 * r: "créer paiement %s a échoué pour transaction %s. "
 	 * r.enUS: "creating payment %s failed for transaction %s. "
+	 * r: inscriptionScolaire
+	 * r.enUS: schoolEnrollment
 	 * r: listeRechercheInscription
 	 * r.enUS: searchListEnrollment
 	 * r: ListeRecherche
@@ -1938,13 +2080,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: payment
 	 */
 	public Future<Void> futureAuthorizeNetPaiement(
-			MerchantAuthenticationType merchantAuthenticationType
-			, GetSettledBatchListController batchController
-			, PaiementScolaireFrFRGenApiServiceImpl paiementService
-			, BatchDetailsType batch
+			PaiementScolaireFrFRGenApiServiceImpl paiementService
 			, RequeteSiteFrFR requeteSite
 			, TransactionSummaryType transaction
-			,  Handler<AsyncResult<OperationResponse>> a) {
+			, InscriptionScolaire inscriptionScolaire
+			,  Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
 
@@ -1959,7 +2099,19 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			paiement.setTransactionStatus(transaction.getTransactionStatus());
 			paiement.setPaiementPar(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
 
-			if(transaction.getTransId() != null) {
+			if(inscriptionScolaire != null) {
+				paiement.setInscriptionCle(inscriptionScolaire.getPk());
+				paiementService.postPaiementScolaire(JsonObject.mapFrom(paiement), null, c -> {
+					if(c.succeeded()) {
+						a.handle(Future.succeededFuture());
+						promise.complete();
+						LOGGER.info(String.format("paiement %s créé pour transaction %s. ", c.result().getPayload().toJsonObject().getString("pk"), transaction.getTransId()));
+					} else {
+						LOGGER.error("créer paiement %s a échoué pour transaction %s. ", c.cause());
+						promise.fail(c.cause());
+					}
+				});
+			} else if(transaction.getTransId() != null) {
 				ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
@@ -1991,6 +2143,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					}
 					paiementService.postPaiementScolaire(JsonObject.mapFrom(paiement), null, c -> {
 						if(c.succeeded()) {
+							a.handle(Future.succeededFuture());
 							promise.complete();
 							LOGGER.info(String.format("paiement %s créé pour transaction %s. ", c.result().getPayload().toJsonObject().getString("pk"), transaction.getTransId()));
 						} else {
@@ -2006,6 +2159,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 			return promise.future();
 		} catch(Exception e) {
+			a.handle(Future.failedFuture(e));
 			return Future.failedFuture(e);
 		}
 	}
@@ -2028,7 +2182,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: ConnexionSql
 	 * r.enUS: SqlConnection
 	 */
-	public void sqlInit(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlInit(RequeteSiteFrFR requeteSite, Handler<AsyncResult<Void>> gestionnaireEvenements) {
 		try {
 			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
 
