@@ -237,6 +237,11 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	Boolean classeEstBase;
 
 	/**
+	 * Var.enUS: contextRows
+	 */
+	Integer contexteRows;
+
+	/**
 	 * Var.enUS: classKeywordsFound
 	 */
 	Boolean classeMotsClesTrouves;
@@ -398,6 +403,8 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: partIsClass
 	 * r: partNumero
 	 * r.enUS: partNumber
+	 * r: contexteRows
+	 * r.enUS: contextRows
 	 * 
 	 * r: classeApi
 	 * r.enUS: classApi
@@ -426,6 +433,10 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: classeMotsClesTrouves_
 	 * r: classKeywords_
 	 * r.enUS: classeMotsCles_
+	 * r: contextRows_
+	 * r.enUS: contexteRows_
+	 * r: ContexteRows
+	 * r.enUS: ContextRows
 	 * r: _frFR_
 	 * r.enUS: _enUS_
 	 */
@@ -471,6 +482,7 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 					classeApiTag = StringUtils.defaultIfBlank((String)classeDocumentSolr.get("classApiTag_frFR_stored_string"), classeNomSimple + " API");
 					classeApiUri = (String)classeDocumentSolr.get("classeApiUri_frFR_stored_string");
 					classeEstBase = (Boolean)classeDocumentSolr.get("classeEstBase_stored_boolean");
+					contexteRows = (Integer)classeDocumentSolr.get("contexteRows_stored_int");
 
 					classeApiMethodes = (List<String>)classeDocumentSolr.get("classeApiMethodes_frFR_stored_strings");
 					classeUris = new ArrayList<>();
@@ -482,6 +494,7 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 						ApiEcrivain apiEcrivain = new ApiEcrivain();
 						apiEcrivain.setClasseDocumentSolr(classeDocumentSolr);
 						apiEcrivain.setClasseApiMethode(classeApiMethode);
+						apiEcrivain.setContexteRows(contexteRows);
 						apiEcrivain.setWChemins(wChemins);
 						apiEcrivain.setWCorpsRequetes(wCorpsRequetes);
 						apiEcrivain.setWSchemas(wSchemas);

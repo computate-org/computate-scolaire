@@ -1,10 +1,13 @@
 package org.computate.scolaire.frFR.vertx;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -13,8 +16,11 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -32,6 +38,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « requeteSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
@@ -69,6 +76,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « siteContexte »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContexteFrFR(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexteCouverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte").o(siteContexte);
@@ -105,6 +113,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « configSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ConfigSite configSite;
 	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
@@ -144,6 +153,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « appliChemin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String appliChemin;
 	@JsonIgnore
 	public Couverture<String> appliCheminCouverture = new Couverture<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
@@ -205,6 +215,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiVersion;
 	@JsonIgnore
 	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
@@ -266,6 +277,8 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiVersionNumero »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer openApiVersionNumero;
 	@JsonIgnore
 	public Couverture<Integer> openApiVersionNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("openApiVersionNumero").o(openApiVersionNumero);
@@ -333,6 +346,8 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « tabsSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer tabsSchema;
 	@JsonIgnore
 	public Couverture<Integer> tabsSchemaCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
@@ -400,6 +415,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « apiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiVersion;
 	@JsonIgnore
 	public Couverture<String> apiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
@@ -461,6 +477,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiYamlChemin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiYamlChemin;
 	@JsonIgnore
 	public Couverture<String> openApiYamlCheminCouverture = new Couverture<String>().p(this).c(String.class).var("openApiYamlChemin").o(openApiYamlChemin);
@@ -522,6 +539,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiYamlFichier »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected File openApiYamlFichier;
 	@JsonIgnore
 	public Couverture<File> openApiYamlFichierCouverture = new Couverture<File>().p(this).c(File.class).var("openApiYamlFichier").o(openApiYamlFichier);
@@ -559,6 +577,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain w;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
@@ -598,6 +617,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « wChemins »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wChemins;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCheminsCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wChemins").o(wChemins);
@@ -637,6 +657,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « wCorpsRequetes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wCorpsRequetes;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCorpsRequetesCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wCorpsRequetes").o(wCorpsRequetes);
@@ -676,6 +697,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/**	L'entité « wSchemas »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wSchemas;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wSchemasCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wSchemas").o(wSchemas);
@@ -868,6 +890,18 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiAppliSwagger2() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof AppliSwagger2) {
+			AppliSwagger2 original = (AppliSwagger2)o;
 		}
 	}
 

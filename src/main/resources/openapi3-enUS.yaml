@@ -7848,7 +7848,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 1000000
             minimum: 0
       requestBody:
         description: >+
@@ -7964,7 +7964,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 1000000
             minimum: 0
       requestBody:
         description: >+
@@ -8080,7 +8080,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 1000000
             minimum: 0
       responses:
         '200':
@@ -8331,7 +8331,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 1000000
             minimum: 0
       responses:
         '200':
@@ -8447,7 +8447,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 1000000
             minimum: 0
       responses:
         '200':
@@ -11922,7 +11922,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 50
             minimum: 0
       requestBody:
         description: >+
@@ -12038,7 +12038,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 50
             minimum: 0
       requestBody:
         description: >+
@@ -12154,7 +12154,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 50
             minimum: 0
       responses:
         '200':
@@ -12405,7 +12405,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 50
             minimum: 0
       responses:
         '200':
@@ -12521,7 +12521,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 50
             minimum: 0
       responses:
         '200':
@@ -24649,9 +24649,13 @@ components:
               type: string
             momFirstNamePreferred:
               type: string
+            momCompleteNamePreferred:
+              type: string
             dadFirstName:
               type: string
             dadFirstNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
               type: string
             childCompleteName:
               type: string
@@ -24756,6 +24760,8 @@ components:
             enrollmentPaymentComplete:
               type: boolean
             customerProfileId:
+              type: string
+            enrollmentChargeDate:
               type: string
             createdYear:
               type: string
@@ -24894,9 +24900,13 @@ components:
               type: string
             momFirstNamePreferred:
               type: string
+            momCompleteNamePreferred:
+              type: string
             dadFirstName:
               type: string
             dadFirstNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
               type: string
             childCompleteName:
               type: string
@@ -25001,6 +25011,8 @@ components:
             enrollmentPaymentComplete:
               type: boolean
             customerProfileId:
+              type: string
+            enrollmentChargeDate:
               type: string
             createdYear:
               type: string
@@ -25139,9 +25151,13 @@ components:
               type: string
             momFirstNamePreferred:
               type: string
+            momCompleteNamePreferred:
+              type: string
             dadFirstName:
               type: string
             dadFirstNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
               type: string
             childCompleteName:
               type: string
@@ -25246,6 +25262,8 @@ components:
             enrollmentPaymentComplete:
               type: boolean
             customerProfileId:
+              type: string
+            enrollmentChargeDate:
               type: string
             createdYear:
               type: string
@@ -25384,9 +25402,13 @@ components:
               type: string
             momFirstNamePreferred:
               type: string
+            momCompleteNamePreferred:
+              type: string
             dadFirstName:
               type: string
             dadFirstNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
               type: string
             childCompleteName:
               type: string
@@ -25491,6 +25513,8 @@ components:
             enrollmentPaymentComplete:
               type: boolean
             customerProfileId:
+              type: string
+            enrollmentChargeDate:
               type: string
             createdYear:
               type: string
@@ -25794,6 +25818,13 @@ components:
               type: string
             removeAllMomFirstNamePreferred:
               type: string
+            setMomCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeMomCompleteNamePreferred:
+              type: string
+            removeAllMomCompleteNamePreferred:
+              type: string
             setDadFirstName:
               type: string
               nullable: true
@@ -25807,6 +25838,13 @@ components:
             removeDadFirstNamePreferred:
               type: string
             removeAllDadFirstNamePreferred:
+              type: string
+            setDadCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeDadCompleteNamePreferred:
+              type: string
+            removeAllDadCompleteNamePreferred:
               type: string
             setChildCompleteName:
               type: string
@@ -26171,6 +26209,13 @@ components:
             removeCustomerProfileId:
               type: string
             removeAllCustomerProfileId:
+              type: string
+            setEnrollmentChargeDate:
+              type: string
+              nullable: true
+            removeEnrollmentChargeDate:
+              type: string
+            removeAllEnrollmentChargeDate:
               type: string
             setCreatedYear:
               type: string
@@ -26657,6 +26702,13 @@ components:
               type: string
             removeAllMomFirstNamePreferred:
               type: string
+            setMomCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeMomCompleteNamePreferred:
+              type: string
+            removeAllMomCompleteNamePreferred:
+              type: string
             setDadFirstName:
               type: string
               nullable: true
@@ -26670,6 +26722,13 @@ components:
             removeDadFirstNamePreferred:
               type: string
             removeAllDadFirstNamePreferred:
+              type: string
+            setDadCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeDadCompleteNamePreferred:
+              type: string
+            removeAllDadCompleteNamePreferred:
               type: string
             setChildCompleteName:
               type: string
@@ -27035,6 +27094,13 @@ components:
               type: string
             removeAllCustomerProfileId:
               type: string
+            setEnrollmentChargeDate:
+              type: string
+              nullable: true
+            removeEnrollmentChargeDate:
+              type: string
+            removeAllEnrollmentChargeDate:
+              type: string
             setCreatedYear:
               type: string
               nullable: true
@@ -27357,9 +27423,13 @@ components:
                 type: string
               momFirstNamePreferred:
                 type: string
+              momCompleteNamePreferred:
+                type: string
               dadFirstName:
                 type: string
               dadFirstNamePreferred:
+                type: string
+              dadCompleteNamePreferred:
                 type: string
               childCompleteName:
                 type: string
@@ -27464,6 +27534,8 @@ components:
               enrollmentPaymentComplete:
                 type: boolean
               customerProfileId:
+                type: string
+              enrollmentChargeDate:
                 type: string
               createdYear:
                 type: string
@@ -27602,9 +27674,13 @@ components:
               type: string
             momFirstNamePreferred:
               type: string
+            momCompleteNamePreferred:
+              type: string
             dadFirstName:
               type: string
             dadFirstNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
               type: string
             childCompleteName:
               type: string
@@ -27709,6 +27785,8 @@ components:
             enrollmentPaymentComplete:
               type: boolean
             customerProfileId:
+              type: string
+            enrollmentChargeDate:
               type: string
             createdYear:
               type: string
@@ -27847,9 +27925,13 @@ components:
               type: string
             momFirstNamePreferred:
               type: string
+            momCompleteNamePreferred:
+              type: string
             dadFirstName:
               type: string
             dadFirstNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
               type: string
             childCompleteName:
               type: string
@@ -27955,6 +28037,8 @@ components:
               type: boolean
             customerProfileId:
               type: string
+            enrollmentChargeDate:
+              type: string
             createdYear:
               type: string
             createdDayOfWeek:
@@ -28046,40 +28130,24 @@ components:
         - $ref: "#/components/schemas/POSTClusterRequest"
         - type: object
           properties:
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            anneeCles:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
             paymentKey:
               type: string
-            childKeys:
-              type: array
-              items:
-                type: string
+            enrollmentKey:
+              type: string
+            schoolKey:
+              type: string
+            yearKey:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
             momKeys:
               type: array
               items:
@@ -28092,16 +28160,68 @@ components:
               type: array
               items:
                 type: string
-            contactKeys:
-              type: array
-              items:
-                type: string
+            childCompleteNamePreferred:
+              type: string
+            childBirthDate:
+              type: string
+            momCompleteNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
+              type: string
+            schoolName:
+              type: string
+            schoolCompleteName:
+              type: string
+            schoolLocation:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDate:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            yearEnrollmentFee:
+              type: string
+            sessionStartDate:
+              type: string
+            sessionEndDate:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockTotalPrice:
+              type: string
+            enrollmentPaymentEachMonth:
+              type: boolean
+            enrollmentPaymentComplete:
+              type: boolean
             paymentDescription:
               type: string
             paymentDate:
               type: string
             paymentAmount:
               type: string
+            chargeAmount:
+              type: string
+            chargeAmountFuture:
+              type: string
+            chargeEnrollment:
+              type: boolean
+            chargeFirstLast:
+              type: boolean
+            chargeMonth:
+              type: boolean
             paymentCash:
               type: boolean
             paymentCheck:
@@ -28115,6 +28235,10 @@ components:
             customerProfileId:
               type: string
             transactionStatus:
+              type: string
+            paymentRecieved:
+              type: boolean
+            paymentShortName:
               type: string
             paymentCompleteName:
               type: string
@@ -28123,40 +28247,24 @@ components:
         - $ref: "#/components/schemas/POSTClusterResponse"
         - type: object
           properties:
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            anneeCles:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
             paymentKey:
               type: string
-            childKeys:
-              type: array
-              items:
-                type: string
+            enrollmentKey:
+              type: string
+            schoolKey:
+              type: string
+            yearKey:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
             momKeys:
               type: array
               items:
@@ -28169,16 +28277,68 @@ components:
               type: array
               items:
                 type: string
-            contactKeys:
-              type: array
-              items:
-                type: string
+            childCompleteNamePreferred:
+              type: string
+            childBirthDate:
+              type: string
+            momCompleteNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
+              type: string
+            schoolName:
+              type: string
+            schoolCompleteName:
+              type: string
+            schoolLocation:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDate:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            yearEnrollmentFee:
+              type: string
+            sessionStartDate:
+              type: string
+            sessionEndDate:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockTotalPrice:
+              type: string
+            enrollmentPaymentEachMonth:
+              type: boolean
+            enrollmentPaymentComplete:
+              type: boolean
             paymentDescription:
               type: string
             paymentDate:
               type: string
             paymentAmount:
               type: string
+            chargeAmount:
+              type: string
+            chargeAmountFuture:
+              type: string
+            chargeEnrollment:
+              type: boolean
+            chargeFirstLast:
+              type: boolean
+            chargeMonth:
+              type: boolean
             paymentCash:
               type: boolean
             paymentCheck:
@@ -28192,6 +28352,10 @@ components:
             customerProfileId:
               type: string
             transactionStatus:
+              type: string
+            paymentRecieved:
+              type: boolean
+            paymentShortName:
               type: string
             paymentCompleteName:
               type: string
@@ -28200,40 +28364,24 @@ components:
         - $ref: "#/components/schemas/PUTClusterRequest"
         - type: object
           properties:
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            anneeCles:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
             paymentKey:
               type: string
-            childKeys:
-              type: array
-              items:
-                type: string
+            enrollmentKey:
+              type: string
+            schoolKey:
+              type: string
+            yearKey:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
             momKeys:
               type: array
               items:
@@ -28246,16 +28394,68 @@ components:
               type: array
               items:
                 type: string
-            contactKeys:
-              type: array
-              items:
-                type: string
+            childCompleteNamePreferred:
+              type: string
+            childBirthDate:
+              type: string
+            momCompleteNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
+              type: string
+            schoolName:
+              type: string
+            schoolCompleteName:
+              type: string
+            schoolLocation:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDate:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            yearEnrollmentFee:
+              type: string
+            sessionStartDate:
+              type: string
+            sessionEndDate:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockTotalPrice:
+              type: string
+            enrollmentPaymentEachMonth:
+              type: boolean
+            enrollmentPaymentComplete:
+              type: boolean
             paymentDescription:
               type: string
             paymentDate:
               type: string
             paymentAmount:
               type: string
+            chargeAmount:
+              type: string
+            chargeAmountFuture:
+              type: string
+            chargeEnrollment:
+              type: boolean
+            chargeFirstLast:
+              type: boolean
+            chargeMonth:
+              type: boolean
             paymentCash:
               type: boolean
             paymentCheck:
@@ -28269,6 +28469,10 @@ components:
             customerProfileId:
               type: string
             transactionStatus:
+              type: string
+            paymentRecieved:
+              type: boolean
+            paymentShortName:
               type: string
             paymentCompleteName:
               type: string
@@ -28277,40 +28481,24 @@ components:
         - $ref: "#/components/schemas/PUTClusterResponse"
         - type: object
           properties:
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            anneeCles:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
             paymentKey:
               type: string
-            childKeys:
-              type: array
-              items:
-                type: string
+            enrollmentKey:
+              type: string
+            schoolKey:
+              type: string
+            yearKey:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
             momKeys:
               type: array
               items:
@@ -28323,16 +28511,68 @@ components:
               type: array
               items:
                 type: string
-            contactKeys:
-              type: array
-              items:
-                type: string
+            childCompleteNamePreferred:
+              type: string
+            childBirthDate:
+              type: string
+            momCompleteNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
+              type: string
+            schoolName:
+              type: string
+            schoolCompleteName:
+              type: string
+            schoolLocation:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDate:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            yearEnrollmentFee:
+              type: string
+            sessionStartDate:
+              type: string
+            sessionEndDate:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockTotalPrice:
+              type: string
+            enrollmentPaymentEachMonth:
+              type: boolean
+            enrollmentPaymentComplete:
+              type: boolean
             paymentDescription:
               type: string
             paymentDate:
               type: string
             paymentAmount:
               type: string
+            chargeAmount:
+              type: string
+            chargeAmountFuture:
+              type: string
+            chargeEnrollment:
+              type: boolean
+            chargeFirstLast:
+              type: boolean
+            chargeMonth:
+              type: boolean
             paymentCash:
               type: boolean
             paymentCheck:
@@ -28347,6 +28587,10 @@ components:
               type: string
             transactionStatus:
               type: string
+            paymentRecieved:
+              type: boolean
+            paymentShortName:
+              type: string
             paymentCompleteName:
               type: string
     PATCHSchoolPaymentRequest:
@@ -28354,125 +28598,6 @@ components:
         - $ref: "#/components/schemas/PATCHClusterRequest"
         - type: object
           properties:
-            setSchoolKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSchoolKeys:
-              type: string
-            removeAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            addSchoolKeys:
-              type: string
-            addAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            setAnneeCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAnneeCles:
-              type: string
-            removeAllAnneeCles:
-              type: array
-              items:
-                type: string
-            addAnneeCles:
-              type: string
-            addAllAnneeCles:
-              type: array
-              items:
-                type: string
-            setSeasonKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSeasonKeys:
-              type: string
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            addSeasonKeys:
-              type: string
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            setSessionKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSessionKeys:
-              type: string
-            removeAllSessionKeys:
-              type: array
-              items:
-                type: string
-            addSessionKeys:
-              type: string
-            addAllSessionKeys:
-              type: array
-              items:
-                type: string
-            setAgeKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAgeKeys:
-              type: string
-            removeAllAgeKeys:
-              type: array
-              items:
-                type: string
-            addAgeKeys:
-              type: string
-            addAllAgeKeys:
-              type: array
-              items:
-                type: string
-            setBlockKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeBlockKeys:
-              type: string
-            removeAllBlockKeys:
-              type: array
-              items:
-                type: string
-            addBlockKeys:
-              type: string
-            addAllBlockKeys:
-              type: array
-              items:
-                type: string
-            setEnrollmentKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeEnrollmentKeys:
-              type: string
-            removeAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
-            addEnrollmentKeys:
-              type: string
-            addAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
             setPaymentKey:
               type: string
               nullable: true
@@ -28480,23 +28605,62 @@ components:
               type: string
             removeAllPaymentKey:
               type: string
-            setChildKeys:
-              type: array
+            setEnrollmentKey:
+              type: string
               nullable: true
-              items:
-                type: string
-            removeChildKeys:
+            removeEnrollmentKey:
               type: string
-            removeAllChildKeys:
-              type: array
-              items:
-                type: string
-            addChildKeys:
+            removeAllEnrollmentKey:
               type: string
-            addAllChildKeys:
-              type: array
-              items:
-                type: string
+            setSchoolKey:
+              type: string
+              nullable: true
+            removeSchoolKey:
+              type: string
+            removeAllSchoolKey:
+              type: string
+            setYearKey:
+              type: string
+              nullable: true
+            removeYearKey:
+              type: string
+            removeAllYearKey:
+              type: string
+            setSeasonKey:
+              type: string
+              nullable: true
+            removeSeasonKey:
+              type: string
+            removeAllSeasonKey:
+              type: string
+            setSessionKey:
+              type: string
+              nullable: true
+            removeSessionKey:
+              type: string
+            removeAllSessionKey:
+              type: string
+            setAgeKey:
+              type: string
+              nullable: true
+            removeAgeKey:
+              type: string
+            removeAllAgeKey:
+              type: string
+            setBlockKey:
+              type: string
+              nullable: true
+            removeBlockKey:
+              type: string
+            removeAllBlockKey:
+              type: string
+            setChildKey:
+              type: string
+              nullable: true
+            removeChildKey:
+              type: string
+            removeAllChildKey:
+              type: string
             setMomKeys:
               type: array
               nullable: true
@@ -28548,23 +28712,167 @@ components:
               type: array
               items:
                 type: string
-            setContactKeys:
-              type: array
+            setChildCompleteNamePreferred:
+              type: string
               nullable: true
-              items:
-                type: string
-            removeContactKeys:
+            removeChildCompleteNamePreferred:
               type: string
-            removeAllContactKeys:
-              type: array
-              items:
-                type: string
-            addContactKeys:
+            removeAllChildCompleteNamePreferred:
               type: string
-            addAllContactKeys:
-              type: array
-              items:
-                type: string
+            setChildBirthDate:
+              type: string
+              nullable: true
+            removeChildBirthDate:
+              type: string
+            removeAllChildBirthDate:
+              type: string
+            setMomCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeMomCompleteNamePreferred:
+              type: string
+            removeAllMomCompleteNamePreferred:
+              type: string
+            setDadCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeDadCompleteNamePreferred:
+              type: string
+            removeAllDadCompleteNamePreferred:
+              type: string
+            setSchoolName:
+              type: string
+              nullable: true
+            removeSchoolName:
+              type: string
+            removeAllSchoolName:
+              type: string
+            setSchoolCompleteName:
+              type: string
+              nullable: true
+            removeSchoolCompleteName:
+              type: string
+            removeAllSchoolCompleteName:
+              type: string
+            setSchoolLocation:
+              type: string
+              nullable: true
+            removeSchoolLocation:
+              type: string
+            removeAllSchoolLocation:
+              type: string
+            setYearStart:
+              type: string
+              nullable: true
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+              nullable: true
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setSeasonStartDate:
+              type: string
+              nullable: true
+            removeSeasonStartDate:
+              type: string
+            removeAllSeasonStartDate:
+              type: string
+            setSeasonSummer:
+              type: boolean
+              nullable: true
+            removeSeasonSummer:
+              type: boolean
+            removeAllSeasonSummer:
+              type: boolean
+            setSeasonWinter:
+              type: boolean
+              nullable: true
+            removeSeasonWinter:
+              type: boolean
+            removeAllSeasonWinter:
+              type: boolean
+            setYearEnrollmentFee:
+              type: string
+              nullable: true
+            removeYearEnrollmentFee:
+              type: string
+            removeAllYearEnrollmentFee:
+              type: string
+            setSessionStartDate:
+              type: string
+              nullable: true
+            removeSessionStartDate:
+              type: string
+            removeAllSessionStartDate:
+              type: string
+            setSessionEndDate:
+              type: string
+              nullable: true
+            removeSessionEndDate:
+              type: string
+            removeAllSessionEndDate:
+              type: string
+            setAgeStart:
+              type: string
+              nullable: true
+            removeAgeStart:
+              type: string
+            removeAllAgeStart:
+              type: string
+            setAgeEnd:
+              type: string
+              nullable: true
+            removeAgeEnd:
+              type: string
+            removeAllAgeEnd:
+              type: string
+            setBlockStartTime:
+              type: string
+              nullable: true
+            removeBlockStartTime:
+              type: string
+            removeAllBlockStartTime:
+              type: string
+            setBlockEndTime:
+              type: string
+              nullable: true
+            removeBlockEndTime:
+              type: string
+            removeAllBlockEndTime:
+              type: string
+            setBlockPricePerMonth:
+              type: string
+              nullable: true
+            removeBlockPricePerMonth:
+              type: string
+            removeAllBlockPricePerMonth:
+              type: string
+            setBlockTotalPrice:
+              type: string
+              nullable: true
+            removeBlockTotalPrice:
+              type: string
+            removeAllBlockTotalPrice:
+              type: string
+            setEnrollmentPaymentEachMonth:
+              type: boolean
+              nullable: true
+            removeEnrollmentPaymentEachMonth:
+              type: boolean
+            removeAllEnrollmentPaymentEachMonth:
+              type: boolean
+            setEnrollmentPaymentComplete:
+              type: boolean
+              nullable: true
+            removeEnrollmentPaymentComplete:
+              type: boolean
+            removeAllEnrollmentPaymentComplete:
+              type: boolean
             setPaymentDescription:
               type: string
               nullable: true
@@ -28586,6 +28894,41 @@ components:
               type: string
             removeAllPaymentAmount:
               type: string
+            setChargeAmount:
+              type: string
+              nullable: true
+            removeChargeAmount:
+              type: string
+            removeAllChargeAmount:
+              type: string
+            setChargeAmountFuture:
+              type: string
+              nullable: true
+            removeChargeAmountFuture:
+              type: string
+            removeAllChargeAmountFuture:
+              type: string
+            setChargeEnrollment:
+              type: boolean
+              nullable: true
+            removeChargeEnrollment:
+              type: boolean
+            removeAllChargeEnrollment:
+              type: boolean
+            setChargeFirstLast:
+              type: boolean
+              nullable: true
+            removeChargeFirstLast:
+              type: boolean
+            removeAllChargeFirstLast:
+              type: boolean
+            setChargeMonth:
+              type: boolean
+              nullable: true
+            removeChargeMonth:
+              type: boolean
+            removeAllChargeMonth:
+              type: boolean
             setPaymentCash:
               type: boolean
               nullable: true
@@ -28634,6 +28977,20 @@ components:
             removeTransactionStatus:
               type: string
             removeAllTransactionStatus:
+              type: string
+            setPaymentRecieved:
+              type: boolean
+              nullable: true
+            removePaymentRecieved:
+              type: boolean
+            removeAllPaymentRecieved:
+              type: boolean
+            setPaymentShortName:
+              type: string
+              nullable: true
+            removePaymentShortName:
+              type: string
+            removeAllPaymentShortName:
               type: string
             setPaymentCompleteName:
               type: string
@@ -28647,125 +29004,6 @@ components:
         - $ref: "#/components/schemas/PATCHClusterResponse"
         - type: object
           properties:
-            setSchoolKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSchoolKeys:
-              type: string
-            removeAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            addSchoolKeys:
-              type: string
-            addAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            setAnneeCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAnneeCles:
-              type: string
-            removeAllAnneeCles:
-              type: array
-              items:
-                type: string
-            addAnneeCles:
-              type: string
-            addAllAnneeCles:
-              type: array
-              items:
-                type: string
-            setSeasonKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSeasonKeys:
-              type: string
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            addSeasonKeys:
-              type: string
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            setSessionKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSessionKeys:
-              type: string
-            removeAllSessionKeys:
-              type: array
-              items:
-                type: string
-            addSessionKeys:
-              type: string
-            addAllSessionKeys:
-              type: array
-              items:
-                type: string
-            setAgeKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAgeKeys:
-              type: string
-            removeAllAgeKeys:
-              type: array
-              items:
-                type: string
-            addAgeKeys:
-              type: string
-            addAllAgeKeys:
-              type: array
-              items:
-                type: string
-            setBlockKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeBlockKeys:
-              type: string
-            removeAllBlockKeys:
-              type: array
-              items:
-                type: string
-            addBlockKeys:
-              type: string
-            addAllBlockKeys:
-              type: array
-              items:
-                type: string
-            setEnrollmentKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeEnrollmentKeys:
-              type: string
-            removeAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
-            addEnrollmentKeys:
-              type: string
-            addAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
             setPaymentKey:
               type: string
               nullable: true
@@ -28773,23 +29011,62 @@ components:
               type: string
             removeAllPaymentKey:
               type: string
-            setChildKeys:
-              type: array
+            setEnrollmentKey:
+              type: string
               nullable: true
-              items:
-                type: string
-            removeChildKeys:
+            removeEnrollmentKey:
               type: string
-            removeAllChildKeys:
-              type: array
-              items:
-                type: string
-            addChildKeys:
+            removeAllEnrollmentKey:
               type: string
-            addAllChildKeys:
-              type: array
-              items:
-                type: string
+            setSchoolKey:
+              type: string
+              nullable: true
+            removeSchoolKey:
+              type: string
+            removeAllSchoolKey:
+              type: string
+            setYearKey:
+              type: string
+              nullable: true
+            removeYearKey:
+              type: string
+            removeAllYearKey:
+              type: string
+            setSeasonKey:
+              type: string
+              nullable: true
+            removeSeasonKey:
+              type: string
+            removeAllSeasonKey:
+              type: string
+            setSessionKey:
+              type: string
+              nullable: true
+            removeSessionKey:
+              type: string
+            removeAllSessionKey:
+              type: string
+            setAgeKey:
+              type: string
+              nullable: true
+            removeAgeKey:
+              type: string
+            removeAllAgeKey:
+              type: string
+            setBlockKey:
+              type: string
+              nullable: true
+            removeBlockKey:
+              type: string
+            removeAllBlockKey:
+              type: string
+            setChildKey:
+              type: string
+              nullable: true
+            removeChildKey:
+              type: string
+            removeAllChildKey:
+              type: string
             setMomKeys:
               type: array
               nullable: true
@@ -28841,23 +29118,167 @@ components:
               type: array
               items:
                 type: string
-            setContactKeys:
-              type: array
+            setChildCompleteNamePreferred:
+              type: string
               nullable: true
-              items:
-                type: string
-            removeContactKeys:
+            removeChildCompleteNamePreferred:
               type: string
-            removeAllContactKeys:
-              type: array
-              items:
-                type: string
-            addContactKeys:
+            removeAllChildCompleteNamePreferred:
               type: string
-            addAllContactKeys:
-              type: array
-              items:
-                type: string
+            setChildBirthDate:
+              type: string
+              nullable: true
+            removeChildBirthDate:
+              type: string
+            removeAllChildBirthDate:
+              type: string
+            setMomCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeMomCompleteNamePreferred:
+              type: string
+            removeAllMomCompleteNamePreferred:
+              type: string
+            setDadCompleteNamePreferred:
+              type: string
+              nullable: true
+            removeDadCompleteNamePreferred:
+              type: string
+            removeAllDadCompleteNamePreferred:
+              type: string
+            setSchoolName:
+              type: string
+              nullable: true
+            removeSchoolName:
+              type: string
+            removeAllSchoolName:
+              type: string
+            setSchoolCompleteName:
+              type: string
+              nullable: true
+            removeSchoolCompleteName:
+              type: string
+            removeAllSchoolCompleteName:
+              type: string
+            setSchoolLocation:
+              type: string
+              nullable: true
+            removeSchoolLocation:
+              type: string
+            removeAllSchoolLocation:
+              type: string
+            setYearStart:
+              type: string
+              nullable: true
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+              nullable: true
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setSeasonStartDate:
+              type: string
+              nullable: true
+            removeSeasonStartDate:
+              type: string
+            removeAllSeasonStartDate:
+              type: string
+            setSeasonSummer:
+              type: boolean
+              nullable: true
+            removeSeasonSummer:
+              type: boolean
+            removeAllSeasonSummer:
+              type: boolean
+            setSeasonWinter:
+              type: boolean
+              nullable: true
+            removeSeasonWinter:
+              type: boolean
+            removeAllSeasonWinter:
+              type: boolean
+            setYearEnrollmentFee:
+              type: string
+              nullable: true
+            removeYearEnrollmentFee:
+              type: string
+            removeAllYearEnrollmentFee:
+              type: string
+            setSessionStartDate:
+              type: string
+              nullable: true
+            removeSessionStartDate:
+              type: string
+            removeAllSessionStartDate:
+              type: string
+            setSessionEndDate:
+              type: string
+              nullable: true
+            removeSessionEndDate:
+              type: string
+            removeAllSessionEndDate:
+              type: string
+            setAgeStart:
+              type: string
+              nullable: true
+            removeAgeStart:
+              type: string
+            removeAllAgeStart:
+              type: string
+            setAgeEnd:
+              type: string
+              nullable: true
+            removeAgeEnd:
+              type: string
+            removeAllAgeEnd:
+              type: string
+            setBlockStartTime:
+              type: string
+              nullable: true
+            removeBlockStartTime:
+              type: string
+            removeAllBlockStartTime:
+              type: string
+            setBlockEndTime:
+              type: string
+              nullable: true
+            removeBlockEndTime:
+              type: string
+            removeAllBlockEndTime:
+              type: string
+            setBlockPricePerMonth:
+              type: string
+              nullable: true
+            removeBlockPricePerMonth:
+              type: string
+            removeAllBlockPricePerMonth:
+              type: string
+            setBlockTotalPrice:
+              type: string
+              nullable: true
+            removeBlockTotalPrice:
+              type: string
+            removeAllBlockTotalPrice:
+              type: string
+            setEnrollmentPaymentEachMonth:
+              type: boolean
+              nullable: true
+            removeEnrollmentPaymentEachMonth:
+              type: boolean
+            removeAllEnrollmentPaymentEachMonth:
+              type: boolean
+            setEnrollmentPaymentComplete:
+              type: boolean
+              nullable: true
+            removeEnrollmentPaymentComplete:
+              type: boolean
+            removeAllEnrollmentPaymentComplete:
+              type: boolean
             setPaymentDescription:
               type: string
               nullable: true
@@ -28879,6 +29300,41 @@ components:
               type: string
             removeAllPaymentAmount:
               type: string
+            setChargeAmount:
+              type: string
+              nullable: true
+            removeChargeAmount:
+              type: string
+            removeAllChargeAmount:
+              type: string
+            setChargeAmountFuture:
+              type: string
+              nullable: true
+            removeChargeAmountFuture:
+              type: string
+            removeAllChargeAmountFuture:
+              type: string
+            setChargeEnrollment:
+              type: boolean
+              nullable: true
+            removeChargeEnrollment:
+              type: boolean
+            removeAllChargeEnrollment:
+              type: boolean
+            setChargeFirstLast:
+              type: boolean
+              nullable: true
+            removeChargeFirstLast:
+              type: boolean
+            removeAllChargeFirstLast:
+              type: boolean
+            setChargeMonth:
+              type: boolean
+              nullable: true
+            removeChargeMonth:
+              type: boolean
+            removeAllChargeMonth:
+              type: boolean
             setPaymentCash:
               type: boolean
               nullable: true
@@ -28927,6 +29383,20 @@ components:
             removeTransactionStatus:
               type: string
             removeAllTransactionStatus:
+              type: string
+            setPaymentRecieved:
+              type: boolean
+              nullable: true
+            removePaymentRecieved:
+              type: boolean
+            removeAllPaymentRecieved:
+              type: boolean
+            setPaymentShortName:
+              type: string
+              nullable: true
+            removePaymentShortName:
+              type: string
+            removeAllPaymentShortName:
               type: string
             setPaymentCompleteName:
               type: string
@@ -28942,40 +29412,24 @@ components:
           items:
             type: object
             properties:
-              schoolKeys:
-                type: array
-                items:
-                  type: string
-              anneeCles:
-                type: array
-                items:
-                  type: string
-              seasonKeys:
-                type: array
-                items:
-                  type: string
-              sessionKeys:
-                type: array
-                items:
-                  type: string
-              ageKeys:
-                type: array
-                items:
-                  type: string
-              blockKeys:
-                type: array
-                items:
-                  type: string
-              enrollmentKeys:
-                type: array
-                items:
-                  type: string
               paymentKey:
                 type: string
-              childKeys:
-                type: array
-                items:
-                  type: string
+              enrollmentKey:
+                type: string
+              schoolKey:
+                type: string
+              yearKey:
+                type: string
+              seasonKey:
+                type: string
+              sessionKey:
+                type: string
+              ageKey:
+                type: string
+              blockKey:
+                type: string
+              childKey:
+                type: string
               momKeys:
                 type: array
                 items:
@@ -28988,16 +29442,68 @@ components:
                 type: array
                 items:
                   type: string
-              contactKeys:
-                type: array
-                items:
-                  type: string
+              childCompleteNamePreferred:
+                type: string
+              childBirthDate:
+                type: string
+              momCompleteNamePreferred:
+                type: string
+              dadCompleteNamePreferred:
+                type: string
+              schoolName:
+                type: string
+              schoolCompleteName:
+                type: string
+              schoolLocation:
+                type: string
+              yearStart:
+                type: string
+              yearEnd:
+                type: string
+              seasonStartDate:
+                type: string
+              seasonSummer:
+                type: boolean
+              seasonWinter:
+                type: boolean
+              yearEnrollmentFee:
+                type: string
+              sessionStartDate:
+                type: string
+              sessionEndDate:
+                type: string
+              ageStart:
+                type: string
+              ageEnd:
+                type: string
+              blockStartTime:
+                type: string
+              blockEndTime:
+                type: string
+              blockPricePerMonth:
+                type: string
+              blockTotalPrice:
+                type: string
+              enrollmentPaymentEachMonth:
+                type: boolean
+              enrollmentPaymentComplete:
+                type: boolean
               paymentDescription:
                 type: string
               paymentDate:
                 type: string
               paymentAmount:
                 type: string
+              chargeAmount:
+                type: string
+              chargeAmountFuture:
+                type: string
+              chargeEnrollment:
+                type: boolean
+              chargeFirstLast:
+                type: boolean
+              chargeMonth:
+                type: boolean
               paymentCash:
                 type: boolean
               paymentCheck:
@@ -29012,6 +29518,10 @@ components:
                 type: string
               transactionStatus:
                 type: string
+              paymentRecieved:
+                type: boolean
+              paymentShortName:
+                type: string
               paymentCompleteName:
                 type: string
     GETSchoolPaymentResponse:
@@ -29019,40 +29529,24 @@ components:
         - $ref: "#/components/schemas/GETClusterResponse"
         - type: object
           properties:
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            anneeCles:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
             paymentKey:
               type: string
-            childKeys:
-              type: array
-              items:
-                type: string
+            enrollmentKey:
+              type: string
+            schoolKey:
+              type: string
+            yearKey:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
             momKeys:
               type: array
               items:
@@ -29065,16 +29559,68 @@ components:
               type: array
               items:
                 type: string
-            contactKeys:
-              type: array
-              items:
-                type: string
+            childCompleteNamePreferred:
+              type: string
+            childBirthDate:
+              type: string
+            momCompleteNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
+              type: string
+            schoolName:
+              type: string
+            schoolCompleteName:
+              type: string
+            schoolLocation:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDate:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            yearEnrollmentFee:
+              type: string
+            sessionStartDate:
+              type: string
+            sessionEndDate:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockTotalPrice:
+              type: string
+            enrollmentPaymentEachMonth:
+              type: boolean
+            enrollmentPaymentComplete:
+              type: boolean
             paymentDescription:
               type: string
             paymentDate:
               type: string
             paymentAmount:
               type: string
+            chargeAmount:
+              type: string
+            chargeAmountFuture:
+              type: string
+            chargeEnrollment:
+              type: boolean
+            chargeFirstLast:
+              type: boolean
+            chargeMonth:
+              type: boolean
             paymentCash:
               type: boolean
             paymentCheck:
@@ -29088,6 +29634,10 @@ components:
             customerProfileId:
               type: string
             transactionStatus:
+              type: string
+            paymentRecieved:
+              type: boolean
+            paymentShortName:
               type: string
             paymentCompleteName:
               type: string
@@ -29096,40 +29646,24 @@ components:
         - $ref: "#/components/schemas/DELETEClusterResponse"
         - type: object
           properties:
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            anneeCles:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
             paymentKey:
               type: string
-            childKeys:
-              type: array
-              items:
-                type: string
+            enrollmentKey:
+              type: string
+            schoolKey:
+              type: string
+            yearKey:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
             momKeys:
               type: array
               items:
@@ -29142,16 +29676,68 @@ components:
               type: array
               items:
                 type: string
-            contactKeys:
-              type: array
-              items:
-                type: string
+            childCompleteNamePreferred:
+              type: string
+            childBirthDate:
+              type: string
+            momCompleteNamePreferred:
+              type: string
+            dadCompleteNamePreferred:
+              type: string
+            schoolName:
+              type: string
+            schoolCompleteName:
+              type: string
+            schoolLocation:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDate:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            yearEnrollmentFee:
+              type: string
+            sessionStartDate:
+              type: string
+            sessionEndDate:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockTotalPrice:
+              type: string
+            enrollmentPaymentEachMonth:
+              type: boolean
+            enrollmentPaymentComplete:
+              type: boolean
             paymentDescription:
               type: string
             paymentDate:
               type: string
             paymentAmount:
               type: string
+            chargeAmount:
+              type: string
+            chargeAmountFuture:
+              type: string
+            chargeEnrollment:
+              type: boolean
+            chargeFirstLast:
+              type: boolean
+            chargeMonth:
+              type: boolean
             paymentCash:
               type: boolean
             paymentCheck:
@@ -29165,6 +29751,10 @@ components:
             customerProfileId:
               type: string
             transactionStatus:
+              type: string
+            paymentRecieved:
+              type: boolean
+            paymentShortName:
               type: string
             paymentCompleteName:
               type: string

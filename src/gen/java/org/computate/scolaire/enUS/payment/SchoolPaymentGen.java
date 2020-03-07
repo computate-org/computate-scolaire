@@ -4997,6 +4997,122 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////
+	// paymentShortName //
+	//////////////////////
+
+	/**	L'entité « paymentShortName »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String paymentShortName;
+	@JsonIgnore
+	public Wrap<String> paymentShortNameWrap = new Wrap<String>().p(this).c(String.class).var("paymentShortName").o(paymentShortName);
+
+	/**	<br/>L'entité « paymentShortName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentShortName">Trouver l'entité paymentShortName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paymentShortName(Wrap<String> c);
+
+	public String getPaymentShortName() {
+		return paymentShortName;
+	}
+
+	public void setPaymentShortName(String paymentShortName) {
+		this.paymentShortName = paymentShortName;
+		this.paymentShortNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolPayment paymentShortNameInit() {
+		if(!paymentShortNameWrap.alreadyInitialized) {
+			_paymentShortName(paymentShortNameWrap);
+			if(paymentShortName == null)
+				setPaymentShortName(paymentShortNameWrap.o);
+		}
+		paymentShortNameWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public String solrPaymentShortName() {
+		return paymentShortName;
+	}
+
+	public String strPaymentShortName() {
+		return paymentShortName == null ? "" : paymentShortName;
+	}
+
+	public String jsonPaymentShortName() {
+		return paymentShortName == null ? "" : paymentShortName;
+	}
+
+	public String nomAffichagePaymentShortName() {
+		return "name";
+	}
+
+	public String htmTooltipPaymentShortName() {
+		return null;
+	}
+
+	public String htmPaymentShortName() {
+		return paymentShortName == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentShortName());
+	}
+
+	public void inputPaymentShortName(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "name")
+			.a("id", classApiMethodMethod, "_paymentShortName");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPaymentShortName inputSchoolPayment", pk, "PaymentShortName w3-input w3-border ");
+				a("name", "setPaymentShortName");
+			} else {
+				a("class", "valuePaymentShortName w3-input w3-border inputSchoolPayment", pk, "PaymentShortName w3-input w3-border ");
+				a("name", "paymentShortName");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentShortName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentShortName')); }, function() { addError($('#", classApiMethodMethod, "_paymentShortName')); }); ");
+			}
+			a("value", strPaymentShortName())
+		.fg();
+
+	}
+
+	public void htmPaymentShortName(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentShortName").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_paymentShortName").a("class", "").f().sx("name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaymentShortName(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_paymentShortName')); $('#", classApiMethodMethod, "_paymentShortName').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setPaymentShortName', null, function() { addGlow($('#", classApiMethodMethod, "_paymentShortName')); }, function() { addError($('#", classApiMethodMethod, "_paymentShortName')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////////////
 	// paymentCompleteName //
 	/////////////////////////
@@ -5133,6 +5249,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		customerProfileIdInit();
 		transactionStatusInit();
 		paymentRecievedInit();
+		paymentShortNameInit();
 		paymentCompleteNameInit();
 	}
 
@@ -5280,6 +5397,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.transactionStatus;
 			case "paymentRecieved":
 				return oSchoolPayment.paymentRecieved;
+			case "paymentShortName":
+				return oSchoolPayment.paymentShortName;
 			case "paymentCompleteName":
 				return oSchoolPayment.paymentCompleteName;
 			default:
@@ -5422,6 +5541,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return val;
 			case "paymentRecieved":
 				setPaymentRecieved(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentShortName":
+				setPaymentShortName(val);
 				savesSchoolPayment.add(var);
 				return val;
 			default:
@@ -5751,6 +5874,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setPaymentRecieved(paymentRecieved);
 			}
 
+			if(savesSchoolPayment.contains("paymentShortName")) {
+				String paymentShortName = (String)solrDocument.get("paymentShortName_stored_string");
+				if(paymentShortName != null)
+					oSchoolPayment.setPaymentShortName(paymentShortName);
+			}
+
 			if(savesSchoolPayment.contains("paymentCompleteName")) {
 				String paymentCompleteName = (String)solrDocument.get("paymentCompleteName_stored_string");
 				if(paymentCompleteName != null)
@@ -6042,6 +6171,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("paymentRecieved_indexed_boolean", paymentRecieved);
 			document.addField("paymentRecieved_stored_boolean", paymentRecieved);
 		}
+		if(paymentShortName != null) {
+			document.addField("paymentShortName_indexed_string", paymentShortName);
+			document.addField("paymentShortName_stored_string", paymentShortName);
+		}
 		if(paymentCompleteName != null) {
 			document.addField("paymentCompleteName_indexed_string", paymentCompleteName);
 			document.addField("paymentCompleteName_stored_string", paymentCompleteName);
@@ -6171,6 +6304,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "transactionStatus_indexed_string";
 			case "paymentRecieved":
 				return "paymentRecieved_indexed_boolean";
+			case "paymentShortName":
+				return "paymentShortName_indexed_string";
 			case "paymentCompleteName":
 				return "paymentCompleteName_indexed_string";
 			default:
@@ -6406,6 +6541,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(paymentRecieved != null)
 			oSchoolPayment.setPaymentRecieved(paymentRecieved);
 
+		String paymentShortName = (String)solrDocument.get("paymentShortName_stored_string");
+		if(paymentShortName != null)
+			oSchoolPayment.setPaymentShortName(paymentShortName);
+
 		String paymentCompleteName = (String)solrDocument.get("paymentCompleteName_stored_string");
 		if(paymentCompleteName != null)
 			oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
@@ -6468,6 +6607,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("transactionStatus");
 			if(!Objects.equals(paymentRecieved, original.getPaymentRecieved()))
 				apiRequest.addVars("paymentRecieved");
+			if(!Objects.equals(paymentShortName, original.getPaymentShortName()))
+				apiRequest.addVars("paymentShortName");
 			super.apiRequestCluster();
 		}
 	}
@@ -6477,7 +6618,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, chargeAmount, chargeAmountFuture, chargeEnrollment, chargeFirstLast, chargeMonth, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved);
+		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, chargeAmount, chargeAmountFuture, chargeEnrollment, chargeFirstLast, chargeMonth, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, paymentShortName);
 	}
 
 	////////////
@@ -6513,7 +6654,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( transactionId, that.transactionId )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( transactionStatus, that.transactionStatus )
-				&& Objects.equals( paymentRecieved, that.paymentRecieved );
+				&& Objects.equals( paymentRecieved, that.paymentRecieved )
+				&& Objects.equals( paymentShortName, that.paymentShortName );
 	}
 
 	//////////////
@@ -6547,6 +6689,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append( ", paymentRecieved: " ).append(paymentRecieved);
+		sb.append( ", paymentShortName: \"" ).append(paymentShortName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -216,6 +222,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmFraisInscription("PUT");
 			o.htmFraisPremierDernier("PUT");
 			o.htmFraisMois("PUT");
+			o.htmPaiementNomCourt("PUT");
 		} g("div");
 	}
 
@@ -260,6 +267,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmFraisInscription("PATCH");
 			o.htmFraisPremierDernier("PATCH");
 			o.htmFraisMois("PATCH");
+			o.htmPaiementNomCourt("PATCH");
 		} g("div");
 	}
 
@@ -307,6 +315,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmFraisInscription("Recherche");
 			o.htmFraisPremierDernier("Recherche");
 			o.htmFraisMois("Recherche");
+			o.htmPaiementNomCourt("Recherche");
 		} g("div");
 	}
 
@@ -409,82 +418,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-green w3-hover-green ").f();
-					{ e("tr").f();
-						if(getColonneCree()) {
-							e("th").f().sx("crée").g("th");
-						}
-						if(getColonneObjetTitre()) {
-							e("th").f().sx("").g("th");
-						}
-						if(getColonnePaiementDate()) {
-							e("th").f().sx("date de paiement").g("th");
-						}
-						if(getColonnePaiementMontant()) {
-							e("th").f().sx("paiement montant").g("th");
-						}
-						if(getColonneFraisMontant()) {
-							e("th").f().sx("frais montant").g("th");
-						}
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listePaiementScolaire.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listePaiementScolaire.size(); i++) {
-						PaiementScolaire o = listePaiementScolaire.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/paiement/" + o.getPk();
-						{ e("tr").f();
-							if(getColonneCree()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strCree());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColonneObjetTitre()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										e("i").a("class", "fas fa-search-dollar ").f().g("i");
-										{ e("span").f();
-											sx(o.strObjetTitre());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColonnePaiementDate()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strPaiementDate());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColonnePaiementMontant()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strPaiementMontant());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColonneFraisMontant()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strFraisMontant());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-						} g("tr");
-					}
-				} g("tbody");
+				theadPaiementGenPage();
+				tbodyPaiementGenPage();
+				tfootPaiementGenPage();
 			} g("table");
 		}
 
@@ -517,11 +453,145 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void theadPaiementGenPage() {
+		{ e("thead").a("class", "w3-green w3-hover-green ").f();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					e("th").f().sx("crée").g("th");
+				}
+				if(getColonneObjetTitre()) {
+					e("th").f().sx("").g("th");
+				}
+				if(getColonnePaiementNomCourt()) {
+					e("th").f().sx("nom").g("th");
+				}
+				if(getColonnePaiementDate()) {
+					e("th").f().sx("date de paiement").g("th");
+				}
+				if(getColonnePaiementMontant()) {
+					e("th").f().sx("paiement montant").g("th");
+				}
+				if(getColonneFraisMontant()) {
+					e("th").f().sx("frais montant").g("th");
+				}
+			} g("tr");
+		} g("thead");
+	}
+
+	public void tbodyPaiementGenPage() {
+		{ e("tbody").f();
+			Map<String, Map<String, List<String>>> highlighting = listePaiementScolaire.getQueryResponse().getHighlighting();
+			for(int i = 0; i < listePaiementScolaire.size(); i++) {
+				PaiementScolaire o = listePaiementScolaire.getList().get(i);
+				Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+				List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+				String uri = "/paiement/" + o.getPk();
+				{ e("tr").f();
+					if(getColonneCree()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strCree());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColonneObjetTitre()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								e("i").a("class", "fas fa-search-dollar ").f().g("i");
+								{ e("span").f();
+									sx(o.strObjetTitre());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColonnePaiementNomCourt()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strPaiementNomCourt());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColonnePaiementDate()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strPaiementDate());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColonnePaiementMontant()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strPaiementMontant());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColonneFraisMontant()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strFraisMontant());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+				} g("tr");
+			}
+		} g("tbody");
+	}
+
+	public void tfootPaiementGenPage() {
+		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+			{ e("tr").f();
+				SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+				if(getColonneCree()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColonneObjetTitre()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColonnePaiementNomCourt()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColonnePaiementDate()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColonnePaiementMontant()) {
+					e("td").f();
+					BigDecimal sum_paiementMontant = Optional.ofNullable((Double)facets.get("sum_paiementMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+					e("span").a("class", "font-weight-bold ").f().sx(sum_paiementMontant).g("span");
+					g("td");
+				}
+				if(getColonneFraisMontant()) {
+					e("td").f();
+					BigDecimal sum_fraisMontant = Optional.ofNullable((Double)facets.get("sum_fraisMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+					e("span").a("class", "font-weight-bold ").f().sx(sum_fraisMontant).g("span");
+					g("td");
+				}
+			} g("tr");
+		} g("tfoot");
+	}
+
 	public Boolean getColonneCree() {
 		return true;
 	}
 
 	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
+	public Boolean getColonnePaiementNomCourt() {
 		return true;
 	}
 

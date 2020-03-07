@@ -1,29 +1,33 @@
 package org.computate.scolaire.enUS.writer;
 
 import org.computate.scolaire.enUS.writer.AllWriters;
-import java.math.MathContext;
-import org.computate.scolaire.enUS.cluster.Cluster;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.vertx.AppSwagger2;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.config.SiteConfig;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import java.lang.Boolean;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -38,6 +42,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
@@ -75,6 +80,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classSolrDocument »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument classSolrDocument;
 	@JsonIgnore
 	public Wrap<SolrDocument> classSolrDocumentWrap = new Wrap<SolrDocument>().p(this).c(SolrDocument.class).var("classSolrDocument").o(classSolrDocument);
@@ -105,6 +111,75 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return (ApiWriter)this;
 	}
 
+	/////////////////
+	// contextRows //
+	/////////////////
+
+	/**	L'entité « contextRows »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer contextRows;
+	@JsonIgnore
+	public Wrap<Integer> contextRowsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("contextRows").o(contextRows);
+
+	/**	<br/>L'entité « contextRows »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:contextRows">Trouver l'entité contextRows dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _contextRows(Wrap<Integer> c);
+
+	public Integer getContextRows() {
+		return contextRows;
+	}
+
+	public void setContextRows(Integer contextRows) {
+		this.contextRows = contextRows;
+		this.contextRowsWrap.alreadyInitialized = true;
+	}
+	public ApiWriter setContextRows(String o) {
+		if(NumberUtils.isParsable(o))
+			this.contextRows = Integer.parseInt(o);
+		this.contextRowsWrap.alreadyInitialized = true;
+		return (ApiWriter)this;
+	}
+	protected ApiWriter contextRowsInit() {
+		if(!contextRowsWrap.alreadyInitialized) {
+			_contextRows(contextRowsWrap);
+			if(contextRows == null)
+				setContextRows(contextRowsWrap.o);
+		}
+		contextRowsWrap.alreadyInitialized(true);
+		return (ApiWriter)this;
+	}
+
+	public Integer solrContextRows() {
+		return contextRows;
+	}
+
+	public String strContextRows() {
+		return contextRows == null ? "" : contextRows.toString();
+	}
+
+	public String jsonContextRows() {
+		return contextRows == null ? "" : contextRows.toString();
+	}
+
+	public String nomAffichageContextRows() {
+		return null;
+	}
+
+	public String htmTooltipContextRows() {
+		return null;
+	}
+
+	public String htmContextRows() {
+		return contextRows == null ? "" : StringEscapeUtils.escapeHtml4(strContextRows());
+	}
+
 	////////////////////
 	// classApiMethod //
 	////////////////////
@@ -112,6 +187,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiMethod »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiMethod;
 	@JsonIgnore
 	public Wrap<String> classApiMethodWrap = new Wrap<String>().p(this).c(String.class).var("classApiMethod").o(classApiMethod);
@@ -173,6 +249,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « openApiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiVersion;
 	@JsonIgnore
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
@@ -234,6 +311,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « appSwagger2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AppSwagger2 appSwagger2;
 	@JsonIgnore
 	public Wrap<AppSwagger2> appSwagger2Wrap = new Wrap<AppSwagger2>().p(this).c(AppSwagger2.class).var("appSwagger2").o(appSwagger2);
@@ -273,6 +351,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classUris »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classUris;
 	@JsonIgnore
 	public Wrap<List<String>> classUrisWrap = new Wrap<List<String>>().p(this).c(List.class).var("classUris").o(classUris);
@@ -353,6 +432,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « openApiVersionNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer openApiVersionNumber;
 	@JsonIgnore
 	public Wrap<Integer> openApiVersionNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("openApiVersionNumber").o(openApiVersionNumber);
@@ -420,6 +501,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « tabsSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer tabsSchema;
 	@JsonIgnore
 	public Wrap<Integer> tabsSchemaWrap = new Wrap<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
@@ -487,6 +570,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « tabsResponses »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer tabsResponses;
 	@JsonIgnore
 	public Wrap<Integer> tabsResponsesWrap = new Wrap<Integer>().p(this).c(Integer.class).var("tabsResponses").o(tabsResponses);
@@ -554,6 +639,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wPaths »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wPaths;
 	@JsonIgnore
 	public Wrap<AllWriter> wPathsWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wPaths").o(wPaths);
@@ -593,6 +679,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wRequestBodies »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wRequestBodies;
 	@JsonIgnore
 	public Wrap<AllWriter> wRequestBodiesWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestBodies").o(wRequestBodies);
@@ -632,6 +719,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wSchemas »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wSchemas;
 	@JsonIgnore
 	public Wrap<AllWriter> wSchemasWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wSchemas").o(wSchemas);
@@ -671,6 +759,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « siteContext »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteContextEnUS siteContext;
 	@JsonIgnore
 	public Wrap<SiteContextEnUS> siteContextWrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContext").o(siteContext);
@@ -710,6 +799,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « siteConfig »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteConfig siteConfig;
 	@JsonIgnore
 	public Wrap<SiteConfig> siteConfigWrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig").o(siteConfig);
@@ -749,6 +839,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wRequestHeaders »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wRequestHeaders;
 	@JsonIgnore
 	public Wrap<AllWriter> wRequestHeadersWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestHeaders").o(wRequestHeaders);
@@ -788,6 +879,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wRequestDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wRequestDescription;
 	@JsonIgnore
 	public Wrap<AllWriter> wRequestDescriptionWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestDescription").o(wRequestDescription);
@@ -827,6 +919,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wResponseDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wResponseDescription;
 	@JsonIgnore
 	public Wrap<AllWriter> wResponseDescriptionWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wResponseDescription").o(wResponseDescription);
@@ -866,6 +959,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wRequestBody »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wRequestBody;
 	@JsonIgnore
 	public Wrap<AllWriter> wRequestBodyWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestBody").o(wRequestBody);
@@ -905,6 +999,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wResponseBody »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wResponseBody;
 	@JsonIgnore
 	public Wrap<AllWriter> wResponseBodyWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wResponseBody").o(wResponseBody);
@@ -944,6 +1039,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wRequestSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wRequestSchema;
 	@JsonIgnore
 	public Wrap<AllWriter> wRequestSchemaWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestSchema").o(wRequestSchema);
@@ -983,6 +1079,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « wResponseSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wResponseSchema;
 	@JsonIgnore
 	public Wrap<AllWriter> wResponseSchemaWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wResponseSchema").o(wResponseSchema);
@@ -1022,6 +1119,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « writers »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriters writers;
 	@JsonIgnore
 	public Wrap<AllWriters> writersWrap = new Wrap<AllWriters>().p(this).c(AllWriters.class).var("writers").o(writers);
@@ -1061,6 +1159,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiTag »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiTag;
 	@JsonIgnore
 	public Wrap<String> classApiTagWrap = new Wrap<String>().p(this).c(String.class).var("classApiTag").o(classApiTag);
@@ -1122,6 +1221,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classExtendsBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classExtendsBase;
 	@JsonIgnore
 	public Wrap<Boolean> classExtendsBaseWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classExtendsBase").o(classExtendsBase);
@@ -1188,6 +1288,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classIsBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classIsBase;
 	@JsonIgnore
 	public Wrap<Boolean> classIsBaseWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classIsBase").o(classIsBase);
@@ -1254,6 +1355,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classSimpleName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classSimpleName;
 	@JsonIgnore
 	public Wrap<String> classSimpleNameWrap = new Wrap<String>().p(this).c(String.class).var("classSimpleName").o(classSimpleName);
@@ -1315,6 +1417,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « appName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String appName;
 	@JsonIgnore
 	public Wrap<String> appNameWrap = new Wrap<String>().p(this).c(String.class).var("appName").o(appName);
@@ -1376,6 +1479,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classAbsolutePath »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classAbsolutePath;
 	@JsonIgnore
 	public Wrap<String> classAbsolutePathWrap = new Wrap<String>().p(this).c(String.class).var("classAbsolutePath").o(classAbsolutePath);
@@ -1437,6 +1541,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiUriMethod »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiUriMethod;
 	@JsonIgnore
 	public Wrap<String> classApiUriMethodWrap = new Wrap<String>().p(this).c(String.class).var("classApiUriMethod").o(classApiUriMethod);
@@ -1498,6 +1603,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiMethodMethod »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiMethodMethod;
 	@JsonIgnore
 	public Wrap<String> classApiMethodMethodWrap = new Wrap<String>().p(this).c(String.class).var("classApiMethodMethod").o(classApiMethodMethod);
@@ -1559,6 +1665,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiMediaType200Method »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiMediaType200Method;
 	@JsonIgnore
 	public Wrap<String> classApiMediaType200MethodWrap = new Wrap<String>().p(this).c(String.class).var("classApiMediaType200Method").o(classApiMediaType200Method);
@@ -1620,6 +1727,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiOperationIdMethod »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiOperationIdMethod;
 	@JsonIgnore
 	public Wrap<String> classApiOperationIdMethodWrap = new Wrap<String>().p(this).c(String.class).var("classApiOperationIdMethod").o(classApiOperationIdMethod);
@@ -1681,6 +1789,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiOperationIdMethodRequest »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiOperationIdMethodRequest;
 	@JsonIgnore
 	public Wrap<String> classApiOperationIdMethodRequestWrap = new Wrap<String>().p(this).c(String.class).var("classApiOperationIdMethodRequest").o(classApiOperationIdMethodRequest);
@@ -1742,6 +1851,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classApiOperationIdMethodResponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classApiOperationIdMethodResponse;
 	@JsonIgnore
 	public Wrap<String> classApiOperationIdMethodResponseWrap = new Wrap<String>().p(this).c(String.class).var("classApiOperationIdMethodResponse").o(classApiOperationIdMethodResponse);
@@ -1803,6 +1913,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classSuperApiOperationIdMethodRequest »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classSuperApiOperationIdMethodRequest;
 	@JsonIgnore
 	public Wrap<String> classSuperApiOperationIdMethodRequestWrap = new Wrap<String>().p(this).c(String.class).var("classSuperApiOperationIdMethodRequest").o(classSuperApiOperationIdMethodRequest);
@@ -1864,6 +1975,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classSuperApiOperationIdMethodResponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classSuperApiOperationIdMethodResponse;
 	@JsonIgnore
 	public Wrap<String> classSuperApiOperationIdMethodResponseWrap = new Wrap<String>().p(this).c(String.class).var("classSuperApiOperationIdMethodResponse").o(classSuperApiOperationIdMethodResponse);
@@ -1925,6 +2037,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classPageCanonicalNameMethod »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classPageCanonicalNameMethod;
 	@JsonIgnore
 	public Wrap<String> classPageCanonicalNameMethodWrap = new Wrap<String>().p(this).c(String.class).var("classPageCanonicalNameMethod").o(classPageCanonicalNameMethod);
@@ -1986,6 +2099,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classKeywordsFound »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classKeywordsFound;
 	@JsonIgnore
 	public Wrap<Boolean> classKeywordsFoundWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classKeywordsFound").o(classKeywordsFound);
@@ -2052,6 +2166,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classKeywords »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classKeywords;
 	@JsonIgnore
 	public Wrap<List<String>> classKeywordsWrap = new Wrap<List<String>>().p(this).c(List.class).var("classKeywords").o(classKeywords);
@@ -2132,6 +2247,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classRoleSession »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classRoleSession;
 	@JsonIgnore
 	public Wrap<Boolean> classRoleSessionWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classRoleSession").o(classRoleSession);
@@ -2198,6 +2314,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classRolesFound »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classRolesFound;
 	@JsonIgnore
 	public Wrap<Boolean> classRolesFoundWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classRolesFound").o(classRolesFound);
@@ -2264,6 +2381,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classRoles »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classRoles;
 	@JsonIgnore
 	public Wrap<List<String>> classRolesWrap = new Wrap<List<String>>().p(this).c(List.class).var("classRoles").o(classRoles);
@@ -2344,6 +2462,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « classRolesLanguage »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classRolesLanguage;
 	@JsonIgnore
 	public Wrap<List<String>> classRolesLanguageWrap = new Wrap<List<String>>().p(this).c(List.class).var("classRolesLanguage").o(classRolesLanguage);
@@ -2424,6 +2543,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « languageName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String languageName;
 	@JsonIgnore
 	public Wrap<String> languageNameWrap = new Wrap<String>().p(this).c(String.class).var("languageName").o(languageName);
@@ -2485,6 +2605,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	/**	L'entité « entitySolrDocument »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument entitySolrDocument;
 	@JsonIgnore
 	public Wrap<SolrDocument> entitySolrDocumentWrap = new Wrap<SolrDocument>().p(this).c(SolrDocument.class).var("entitySolrDocument").o(entitySolrDocument);
@@ -2537,6 +2658,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	public void initApiWriter() {
 		siteRequest_Init();
 		classSolrDocumentInit();
+		contextRowsInit();
 		classApiMethodInit();
 		openApiVersionInit();
 		appSwagger2Init();
@@ -2645,6 +2767,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 				return oApiWriter.siteRequest_;
 			case "classSolrDocument":
 				return oApiWriter.classSolrDocument;
+			case "contextRows":
+				return oApiWriter.contextRows;
 			case "classApiMethod":
 				return oApiWriter.classApiMethod;
 			case "openApiVersion":
@@ -2793,8 +2917,9 @@ public abstract class ApiWriterGen<DEV> extends Object {
 
 	public void apiRequestApiWriter() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		ApiWriter original = (ApiWriter)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof ApiWriter) {
+			ApiWriter original = (ApiWriter)o;
 		}
 	}
 

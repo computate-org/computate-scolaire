@@ -279,6 +279,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("paiementRecu", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "paiementNomCourt":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementNomCourt", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -616,6 +620,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					case "paiementRecu":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("paiementRecu", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "paiementNomCourt":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementNomCourt", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -1093,6 +1101,16 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							o2.setPaiementRecu(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("paiementRecu", o2.jsonPaiementRecu(), pk));
+						}
+						break;
+					case "setPaiementNomCourt":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementNomCourt"));
+						} else {
+							o2.setPaiementNomCourt(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementNomCourt", o2.jsonPaiementNomCourt(), pk));
 						}
 						break;
 				}
@@ -1715,7 +1733,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.setC(PaiementScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+			listeRecherche.add("json.facet", "{sum_paiementMontant:'sum(paiementMontant_indexed_double)'}");
+			listeRecherche.add("json.facet", "{sum_fraisMontant:'sum(fraisMontant_indexed_double)'}");
+			listeRecherche.add("json.facet", "{sum_fraisMontantFuture:'sum(fraisMontantFuture_indexed_double)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

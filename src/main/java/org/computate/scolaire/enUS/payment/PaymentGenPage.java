@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -215,6 +221,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmChargeEnrollment("PUT");
 			o.htmChargeFirstLast("PUT");
 			o.htmChargeMonth("PUT");
+			o.htmPaymentShortName("PUT");
 		} g("div");
 	}
 
@@ -259,6 +266,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmChargeEnrollment("PATCH");
 			o.htmChargeFirstLast("PATCH");
 			o.htmChargeMonth("PATCH");
+			o.htmPaymentShortName("PATCH");
 		} g("div");
 	}
 
@@ -306,6 +314,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmChargeEnrollment("Recherche");
 			o.htmChargeFirstLast("Recherche");
 			o.htmChargeMonth("Recherche");
+			o.htmPaymentShortName("Recherche");
 		} g("div");
 	}
 
@@ -408,82 +417,9 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-green w3-hover-green ").f();
-					{ e("tr").f();
-						if(getColumnCreated()) {
-							e("th").f().sx("created").g("th");
-						}
-						if(getColumnObjectTitle()) {
-							e("th").f().sx("").g("th");
-						}
-						if(getColumnPaymentDate()) {
-							e("th").f().sx("payment date").g("th");
-						}
-						if(getColumnPaymentAmount()) {
-							e("th").f().sx("payment amount").g("th");
-						}
-						if(getColumnChargeAmount()) {
-							e("th").f().sx("charge amount").g("th");
-						}
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listSchoolPayment.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listSchoolPayment.size(); i++) {
-						SchoolPayment o = listSchoolPayment.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/payment/" + o.getPk();
-						{ e("tr").f();
-							if(getColumnCreated()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strCreated());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColumnObjectTitle()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										e("i").a("class", "fas fa-search-dollar ").f().g("i");
-										{ e("span").f();
-											sx(o.strObjectTitle());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColumnPaymentDate()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strPaymentDate());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColumnPaymentAmount()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strPaymentAmount());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-							if(getColumnChargeAmount()) {
-								{ e("td").f();
-									{ e("a").a("href", uri).f();
-										{ e("span").f();
-											sx(o.strChargeAmount());
-										} g("span");
-									} g("a");
-								} g("td");
-							}
-						} g("tr");
-					}
-				} g("tbody");
+				theadPaymentGenPage();
+				tbodyPaymentGenPage();
+				tfootPaymentGenPage();
 			} g("table");
 		}
 
@@ -516,11 +452,145 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void theadPaymentGenPage() {
+		{ e("thead").a("class", "w3-green w3-hover-green ").f();
+			{ e("tr").f();
+				if(getColumnCreated()) {
+					e("th").f().sx("created").g("th");
+				}
+				if(getColumnObjectTitle()) {
+					e("th").f().sx("").g("th");
+				}
+				if(getColumnPaymentShortName()) {
+					e("th").f().sx("name").g("th");
+				}
+				if(getColumnPaymentDate()) {
+					e("th").f().sx("payment date").g("th");
+				}
+				if(getColumnPaymentAmount()) {
+					e("th").f().sx("payment amount").g("th");
+				}
+				if(getColumnChargeAmount()) {
+					e("th").f().sx("charge amount").g("th");
+				}
+			} g("tr");
+		} g("thead");
+	}
+
+	public void tbodyPaymentGenPage() {
+		{ e("tbody").f();
+			Map<String, Map<String, List<String>>> highlighting = listSchoolPayment.getQueryResponse().getHighlighting();
+			for(int i = 0; i < listSchoolPayment.size(); i++) {
+				SchoolPayment o = listSchoolPayment.getList().get(i);
+				Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+				List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+				String uri = "/payment/" + o.getPk();
+				{ e("tr").f();
+					if(getColumnCreated()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strCreated());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColumnObjectTitle()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								e("i").a("class", "fas fa-search-dollar ").f().g("i");
+								{ e("span").f();
+									sx(o.strObjectTitle());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColumnPaymentShortName()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strPaymentShortName());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColumnPaymentDate()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strPaymentDate());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColumnPaymentAmount()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strPaymentAmount());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+					if(getColumnChargeAmount()) {
+						{ e("td").f();
+							{ e("a").a("href", uri).f();
+								{ e("span").f();
+									sx(o.strChargeAmount());
+								} g("span");
+							} g("a");
+						} g("td");
+					}
+				} g("tr");
+			}
+		} g("tbody");
+	}
+
+	public void tfootPaymentGenPage() {
+		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+			{ e("tr").f();
+				SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+				if(getColumnCreated()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColumnObjectTitle()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColumnPaymentShortName()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColumnPaymentDate()) {
+					e("td").f();
+					g("td");
+				}
+				if(getColumnPaymentAmount()) {
+					e("td").f();
+					BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+					e("span").a("class", "font-weight-bold ").f().sx(sum_paymentAmount).g("span");
+					g("td");
+				}
+				if(getColumnChargeAmount()) {
+					e("td").f();
+					BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+					e("span").a("class", "font-weight-bold ").f().sx(sum_chargeAmount).g("span");
+					g("td");
+				}
+			} g("tr");
+		} g("tfoot");
+	}
+
 	public Boolean getColumnCreated() {
 		return true;
 	}
 
 	public Boolean getColumnObjectTitle() {
+		return true;
+	}
+
+	public Boolean getColumnPaymentShortName() {
 		return true;
 	}
 

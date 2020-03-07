@@ -512,7 +512,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 								searchListEnrollment.addFilterQuery("sessionStartDate_indexed_date:[* TO " + dateFormat.format(sessionStartDate) + "]");
 								searchListEnrollment.addFilterQuery("sessionEndDate_indexed_date:[" + dateFormat.format(sessionEndDate) + " TO *]");
 								searchListEnrollment.addFilterQuery("(*:* AND -enrollmentChargeDate_indexed_date:[* TO *] OR enrollmentChargeDate_indexed_date:[* TO " + dateFormat.format(enrollmentChargeDate) + "])");
-								searchListEnrollment.addFilterQuery("pk_indexed_long:12243");// TODO: delete
+								searchListEnrollment.addFilterQuery("pk_indexed_long:13744");// TODO: delete
 								searchListEnrollment.initDeepSearchList(siteRequest);
 				
 								futureAuthorizeNetEnrollmentCharges(merchantAuthenticationType, searchListEnrollment, paymentService, c -> {
@@ -669,6 +669,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 				o.setChargeEnrollment(true);
 				o.setEnrollmentKey(schoolEnrollment.getPk());
+				o.setEnrollment_(schoolEnrollment);
 
 				SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
 				siteRequest2.setVertx(vertx);
@@ -695,6 +696,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 				o.setChargeFirstLast(true);
 				o.setEnrollmentKey(schoolEnrollment.getPk());
+				o.setEnrollment_(schoolEnrollment);
 
 				SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
 				siteRequest2.setVertx(vertx);
@@ -723,6 +725,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 					o.setChargeMonth(true);
 					o.setEnrollmentKey(schoolEnrollment.getPk());
+					o.setEnrollment_(schoolEnrollment);
 
 					SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
 					siteRequest2.setVertx(vertx);

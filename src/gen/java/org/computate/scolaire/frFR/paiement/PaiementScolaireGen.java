@@ -5012,6 +5012,123 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////
+	// paiementNomCourt //
+	//////////////////////
+
+	/**	L'entité « paiementNomCourt »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String paiementNomCourt;
+	@JsonIgnore
+	public Couverture<String> paiementNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("paiementNomCourt").o(paiementNomCourt);
+
+	/**	<br/>L'entité « paiementNomCourt »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementNomCourt">Trouver l'entité paiementNomCourt dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementNomCourt(Couverture<String> c);
+
+	public String getPaiementNomCourt() {
+		return paiementNomCourt;
+	}
+
+	public void setPaiementNomCourt(String paiementNomCourt) {
+		this.paiementNomCourt = paiementNomCourt;
+		this.paiementNomCourtCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire paiementNomCourtInit() {
+		if(!paiementNomCourtCouverture.dejaInitialise) {
+			_paiementNomCourt(paiementNomCourtCouverture);
+			if(paiementNomCourt == null)
+				setPaiementNomCourt(paiementNomCourtCouverture.o);
+		}
+		paiementNomCourtCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrPaiementNomCourt() {
+		return paiementNomCourt;
+	}
+
+	public String strPaiementNomCourt() {
+		return paiementNomCourt == null ? "" : paiementNomCourt;
+	}
+
+	public String jsonPaiementNomCourt() {
+		return paiementNomCourt == null ? "" : paiementNomCourt;
+	}
+
+	public String nomAffichagePaiementNomCourt() {
+		return "nom";
+	}
+
+	public String htmTooltipPaiementNomCourt() {
+		return null;
+	}
+
+	public String htmPaiementNomCourt() {
+		return paiementNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementNomCourt());
+	}
+
+	public void inputPaiementNomCourt(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "nom")
+			.a("title", "La clé primaire des enfants dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_paiementNomCourt");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementNomCourt inputPaiementScolaire", pk, "PaiementNomCourt w3-input w3-border ");
+				a("name", "setPaiementNomCourt");
+			} else {
+				a("class", "valeurPaiementNomCourt w3-input w3-border inputPaiementScolaire", pk, "PaiementNomCourt w3-input w3-border ");
+				a("name", "paiementNomCourt");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementNomCourt', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }); ");
+			}
+			a("value", strPaiementNomCourt())
+		.fg();
+
+	}
+
+	public void htmPaiementNomCourt(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementNomCourt").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_paiementNomCourt").a("class", "").f().sx("nom").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaiementNomCourt(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); $('#", classeApiMethodeMethode, "_paiementNomCourt').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementNomCourt', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////////
 	// paiementNomComplet //
 	////////////////////////
@@ -5148,6 +5265,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		customerProfileIdInit();
 		transactionStatusInit();
 		paiementRecuInit();
+		paiementNomCourtInit();
 		paiementNomCompletInit();
 	}
 
@@ -5295,6 +5413,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.transactionStatus;
 			case "paiementRecu":
 				return oPaiementScolaire.paiementRecu;
+			case "paiementNomCourt":
+				return oPaiementScolaire.paiementNomCourt;
 			case "paiementNomComplet":
 				return oPaiementScolaire.paiementNomComplet;
 			default:
@@ -5437,6 +5557,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return val;
 			case "paiementRecu":
 				setPaiementRecu(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementNomCourt":
+				setPaiementNomCourt(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			default:
@@ -5766,6 +5890,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setPaiementRecu(paiementRecu);
 			}
 
+			if(sauvegardesPaiementScolaire.contains("paiementNomCourt")) {
+				String paiementNomCourt = (String)solrDocument.get("paiementNomCourt_stored_string");
+				if(paiementNomCourt != null)
+					oPaiementScolaire.setPaiementNomCourt(paiementNomCourt);
+			}
+
 			if(sauvegardesPaiementScolaire.contains("paiementNomComplet")) {
 				String paiementNomComplet = (String)solrDocument.get("paiementNomComplet_stored_string");
 				if(paiementNomComplet != null)
@@ -6057,6 +6187,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementRecu_indexed_boolean", paiementRecu);
 			document.addField("paiementRecu_stored_boolean", paiementRecu);
 		}
+		if(paiementNomCourt != null) {
+			document.addField("paiementNomCourt_indexed_string", paiementNomCourt);
+			document.addField("paiementNomCourt_stored_string", paiementNomCourt);
+		}
 		if(paiementNomComplet != null) {
 			document.addField("paiementNomComplet_indexed_string", paiementNomComplet);
 			document.addField("paiementNomComplet_stored_string", paiementNomComplet);
@@ -6186,6 +6320,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "transactionStatus_indexed_string";
 			case "paiementRecu":
 				return "paiementRecu_indexed_boolean";
+			case "paiementNomCourt":
+				return "paiementNomCourt_indexed_string";
 			case "paiementNomComplet":
 				return "paiementNomComplet_indexed_string";
 			default:
@@ -6421,6 +6557,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementRecu != null)
 			oPaiementScolaire.setPaiementRecu(paiementRecu);
 
+		String paiementNomCourt = (String)solrDocument.get("paiementNomCourt_stored_string");
+		if(paiementNomCourt != null)
+			oPaiementScolaire.setPaiementNomCourt(paiementNomCourt);
+
 		String paiementNomComplet = (String)solrDocument.get("paiementNomComplet_stored_string");
 		if(paiementNomComplet != null)
 			oPaiementScolaire.setPaiementNomComplet(paiementNomComplet);
@@ -6483,6 +6623,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("transactionStatus");
 			if(!Objects.equals(paiementRecu, original.getPaiementRecu()))
 				requeteApi.addVars("paiementRecu");
+			if(!Objects.equals(paiementNomCourt, original.getPaiementNomCourt()))
+				requeteApi.addVars("paiementNomCourt");
 			super.requeteApiCluster();
 		}
 	}
@@ -6492,7 +6634,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, fraisMontant, fraisMontantFuture, fraisInscription, fraisPremierDernier, fraisMois, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu);
+		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, fraisMontant, fraisMontantFuture, fraisInscription, fraisPremierDernier, fraisMois, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, paiementNomCourt);
 	}
 
 	////////////
@@ -6528,7 +6670,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( transactionId, that.transactionId )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( transactionStatus, that.transactionStatus )
-				&& Objects.equals( paiementRecu, that.paiementRecu );
+				&& Objects.equals( paiementRecu, that.paiementRecu )
+				&& Objects.equals( paiementNomCourt, that.paiementNomCourt );
 	}
 
 	//////////////
@@ -6562,6 +6705,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append( ", paiementRecu: " ).append(paiementRecu);
+		sb.append( ", paiementNomCourt: \"" ).append(paiementNomCourt).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

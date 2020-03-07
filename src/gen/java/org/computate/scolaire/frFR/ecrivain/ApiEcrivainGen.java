@@ -1,29 +1,33 @@
 package org.computate.scolaire.frFR.ecrivain;
 
 import org.computate.scolaire.frFR.ecrivain.TousEcrivains;
-import java.math.MathContext;
-import org.computate.scolaire.frFR.cluster.Cluster;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.vertx.AppliSwagger2;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.config.ConfigSite;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.config.ConfigSite;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import java.lang.Boolean;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -38,6 +42,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « requeteSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
@@ -75,6 +80,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeDocumentSolr »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument classeDocumentSolr;
 	@JsonIgnore
 	public Couverture<SolrDocument> classeDocumentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("classeDocumentSolr").o(classeDocumentSolr);
@@ -105,6 +111,75 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return (ApiEcrivain)this;
 	}
 
+	//////////////////
+	// contexteRows //
+	//////////////////
+
+	/**	L'entité « contexteRows »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer contexteRows;
+	@JsonIgnore
+	public Couverture<Integer> contexteRowsCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("contexteRows").o(contexteRows);
+
+	/**	<br/>L'entité « contexteRows »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:contexteRows">Trouver l'entité contexteRows dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _contexteRows(Couverture<Integer> c);
+
+	public Integer getContexteRows() {
+		return contexteRows;
+	}
+
+	public void setContexteRows(Integer contexteRows) {
+		this.contexteRows = contexteRows;
+		this.contexteRowsCouverture.dejaInitialise = true;
+	}
+	public ApiEcrivain setContexteRows(String o) {
+		if(NumberUtils.isParsable(o))
+			this.contexteRows = Integer.parseInt(o);
+		this.contexteRowsCouverture.dejaInitialise = true;
+		return (ApiEcrivain)this;
+	}
+	protected ApiEcrivain contexteRowsInit() {
+		if(!contexteRowsCouverture.dejaInitialise) {
+			_contexteRows(contexteRowsCouverture);
+			if(contexteRows == null)
+				setContexteRows(contexteRowsCouverture.o);
+		}
+		contexteRowsCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public Integer solrContexteRows() {
+		return contexteRows;
+	}
+
+	public String strContexteRows() {
+		return contexteRows == null ? "" : contexteRows.toString();
+	}
+
+	public String jsonContexteRows() {
+		return contexteRows == null ? "" : contexteRows.toString();
+	}
+
+	public String nomAffichageContexteRows() {
+		return null;
+	}
+
+	public String htmTooltipContexteRows() {
+		return null;
+	}
+
+	public String htmContexteRows() {
+		return contexteRows == null ? "" : StringEscapeUtils.escapeHtml4(strContexteRows());
+	}
+
 	//////////////////////
 	// classeApiMethode //
 	//////////////////////
@@ -112,6 +187,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiMethode »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiMethode;
 	@JsonIgnore
 	public Couverture<String> classeApiMethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiMethode").o(classeApiMethode);
@@ -173,6 +249,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « openApiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiVersion;
 	@JsonIgnore
 	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
@@ -234,6 +311,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « appSwagger2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AppliSwagger2 appSwagger2;
 	@JsonIgnore
 	public Couverture<AppliSwagger2> appSwagger2Couverture = new Couverture<AppliSwagger2>().p(this).c(AppliSwagger2.class).var("appSwagger2").o(appSwagger2);
@@ -273,6 +351,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeUris »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classeUris;
 	@JsonIgnore
 	public Couverture<List<String>> classeUrisCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeUris").o(classeUris);
@@ -353,6 +432,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « openApiVersionNumero »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer openApiVersionNumero;
 	@JsonIgnore
 	public Couverture<Integer> openApiVersionNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("openApiVersionNumero").o(openApiVersionNumero);
@@ -420,6 +501,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « tabsSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer tabsSchema;
 	@JsonIgnore
 	public Couverture<Integer> tabsSchemaCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
@@ -487,6 +570,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « tabsReponses »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer tabsReponses;
 	@JsonIgnore
 	public Couverture<Integer> tabsReponsesCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("tabsReponses").o(tabsReponses);
@@ -554,6 +639,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wChemins »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wChemins;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCheminsCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wChemins").o(wChemins);
@@ -593,6 +679,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wCorpsRequetes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wCorpsRequetes;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCorpsRequetesCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wCorpsRequetes").o(wCorpsRequetes);
@@ -632,6 +719,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wSchemas »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wSchemas;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wSchemasCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wSchemas").o(wSchemas);
@@ -671,6 +759,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « siteContexte »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteContexteFrFR siteContexte;
 	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexteCouverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte").o(siteContexte);
@@ -710,6 +799,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « configSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ConfigSite configSite;
 	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
@@ -749,6 +839,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wRequeteEnTete »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wRequeteEnTete;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wRequeteEnTeteCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wRequeteEnTete").o(wRequeteEnTete);
@@ -788,6 +879,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wRequeteDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wRequeteDescription;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wRequeteDescriptionCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wRequeteDescription").o(wRequeteDescription);
@@ -827,6 +919,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wReponseDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wReponseDescription;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wReponseDescriptionCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wReponseDescription").o(wReponseDescription);
@@ -866,6 +959,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wRequeteCorps »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wRequeteCorps;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wRequeteCorpsCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wRequeteCorps").o(wRequeteCorps);
@@ -905,6 +999,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wReponseCorps »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wReponseCorps;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wReponseCorpsCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wReponseCorps").o(wReponseCorps);
@@ -944,6 +1039,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wRequeteSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wRequeteSchema;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wRequeteSchemaCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wRequeteSchema").o(wRequeteSchema);
@@ -983,6 +1079,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « wReponseSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain wReponseSchema;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wReponseSchemaCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wReponseSchema").o(wReponseSchema);
@@ -1022,6 +1119,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « ecrivains »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected TousEcrivains ecrivains;
 	@JsonIgnore
 	public Couverture<TousEcrivains> ecrivainsCouverture = new Couverture<TousEcrivains>().p(this).c(TousEcrivains.class).var("ecrivains").o(ecrivains);
@@ -1061,6 +1159,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiTag »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiTag;
 	@JsonIgnore
 	public Couverture<String> classeApiTagCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiTag").o(classeApiTag);
@@ -1122,6 +1221,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeEtendBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classeEtendBase;
 	@JsonIgnore
 	public Couverture<Boolean> classeEtendBaseCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeEtendBase").o(classeEtendBase);
@@ -1188,6 +1288,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeEstBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classeEstBase;
 	@JsonIgnore
 	public Couverture<Boolean> classeEstBaseCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeEstBase").o(classeEstBase);
@@ -1254,6 +1355,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeNomSimple »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeNomSimple;
 	@JsonIgnore
 	public Couverture<String> classeNomSimpleCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomSimple").o(classeNomSimple);
@@ -1315,6 +1417,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « appliNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String appliNom;
 	@JsonIgnore
 	public Couverture<String> appliNomCouverture = new Couverture<String>().p(this).c(String.class).var("appliNom").o(appliNom);
@@ -1376,6 +1479,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeCheminAbsolu »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeCheminAbsolu;
 	@JsonIgnore
 	public Couverture<String> classeCheminAbsoluCouverture = new Couverture<String>().p(this).c(String.class).var("classeCheminAbsolu").o(classeCheminAbsolu);
@@ -1437,6 +1541,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiUriMethode »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiUriMethode;
 	@JsonIgnore
 	public Couverture<String> classeApiUriMethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiUriMethode").o(classeApiUriMethode);
@@ -1498,6 +1603,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiMethodeMethode »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiMethodeMethode;
 	@JsonIgnore
 	public Couverture<String> classeApiMethodeMethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiMethodeMethode").o(classeApiMethodeMethode);
@@ -1559,6 +1665,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiTypeMedia200Methode »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiTypeMedia200Methode;
 	@JsonIgnore
 	public Couverture<String> classeApiTypeMedia200MethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiTypeMedia200Methode").o(classeApiTypeMedia200Methode);
@@ -1620,6 +1727,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiOperationIdMethode »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiOperationIdMethode;
 	@JsonIgnore
 	public Couverture<String> classeApiOperationIdMethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiOperationIdMethode").o(classeApiOperationIdMethode);
@@ -1681,6 +1789,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiOperationIdMethodeRequete »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiOperationIdMethodeRequete;
 	@JsonIgnore
 	public Couverture<String> classeApiOperationIdMethodeRequeteCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiOperationIdMethodeRequete").o(classeApiOperationIdMethodeRequete);
@@ -1742,6 +1851,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeApiOperationIdMethodeReponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeApiOperationIdMethodeReponse;
 	@JsonIgnore
 	public Couverture<String> classeApiOperationIdMethodeReponseCouverture = new Couverture<String>().p(this).c(String.class).var("classeApiOperationIdMethodeReponse").o(classeApiOperationIdMethodeReponse);
@@ -1803,6 +1913,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeSuperApiOperationIdMethodeRequete »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeSuperApiOperationIdMethodeRequete;
 	@JsonIgnore
 	public Couverture<String> classeSuperApiOperationIdMethodeRequeteCouverture = new Couverture<String>().p(this).c(String.class).var("classeSuperApiOperationIdMethodeRequete").o(classeSuperApiOperationIdMethodeRequete);
@@ -1864,6 +1975,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeSuperApiOperationIdMethodeReponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeSuperApiOperationIdMethodeReponse;
 	@JsonIgnore
 	public Couverture<String> classeSuperApiOperationIdMethodeReponseCouverture = new Couverture<String>().p(this).c(String.class).var("classeSuperApiOperationIdMethodeReponse").o(classeSuperApiOperationIdMethodeReponse);
@@ -1925,6 +2037,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classePageNomCanoniqueMethode »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classePageNomCanoniqueMethode;
 	@JsonIgnore
 	public Couverture<String> classePageNomCanoniqueMethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classePageNomCanoniqueMethode").o(classePageNomCanoniqueMethode);
@@ -1986,6 +2099,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeMotsClesTrouves »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classeMotsClesTrouves;
 	@JsonIgnore
 	public Couverture<Boolean> classeMotsClesTrouvesCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeMotsClesTrouves").o(classeMotsClesTrouves);
@@ -2052,6 +2166,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeMotsCles »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classeMotsCles;
 	@JsonIgnore
 	public Couverture<List<String>> classeMotsClesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeMotsCles").o(classeMotsCles);
@@ -2132,6 +2247,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeRoleSession »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classeRoleSession;
 	@JsonIgnore
 	public Couverture<Boolean> classeRoleSessionCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeRoleSession").o(classeRoleSession);
@@ -2198,6 +2314,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeRolesTrouves »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean classeRolesTrouves;
 	@JsonIgnore
 	public Couverture<Boolean> classeRolesTrouvesCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeRolesTrouves").o(classeRolesTrouves);
@@ -2264,6 +2381,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeRoles »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classeRoles;
 	@JsonIgnore
 	public Couverture<List<String>> classeRolesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeRoles").o(classeRoles);
@@ -2344,6 +2462,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « classeRolesLangue »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classeRolesLangue;
 	@JsonIgnore
 	public Couverture<List<String>> classeRolesLangueCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeRolesLangue").o(classeRolesLangue);
@@ -2424,6 +2543,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « langueNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String langueNom;
 	@JsonIgnore
 	public Couverture<String> langueNomCouverture = new Couverture<String>().p(this).c(String.class).var("langueNom").o(langueNom);
@@ -2485,6 +2605,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/**	L'entité « entiteDocumentSolr »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument entiteDocumentSolr;
 	@JsonIgnore
 	public Couverture<SolrDocument> entiteDocumentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("entiteDocumentSolr").o(entiteDocumentSolr);
@@ -2537,6 +2658,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	public void initApiEcrivain() {
 		requeteSite_Init();
 		classeDocumentSolrInit();
+		contexteRowsInit();
 		classeApiMethodeInit();
 		openApiVersionInit();
 		appSwagger2Init();
@@ -2645,6 +2767,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.requeteSite_;
 			case "classeDocumentSolr":
 				return oApiEcrivain.classeDocumentSolr;
+			case "contexteRows":
+				return oApiEcrivain.contexteRows;
 			case "classeApiMethode":
 				return oApiEcrivain.classeApiMethode;
 			case "openApiVersion":
@@ -2793,8 +2917,9 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 
 	public void requeteApiApiEcrivain() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		ApiEcrivain original = (ApiEcrivain)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof ApiEcrivain) {
+			ApiEcrivain original = (ApiEcrivain)o;
 		}
 	}
 

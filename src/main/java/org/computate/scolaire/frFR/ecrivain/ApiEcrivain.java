@@ -40,6 +40,13 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: contextRows
+	 **/
+	protected void _contexteRows(Couverture<Integer> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: classApiMethod
 	 **/
 	protected void _classeApiMethode(Couverture<String> c) {
@@ -1296,6 +1303,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: wRequestSchema
 	 * r: wReponseSchema
 	 * r.enUS: wResponseSchema
+	 * r: contexteRows
+	 * r.enUS: contextRows
 	 * 
 	 * r: classeSuperApiOperationIdMethodeRequete
 	 * r.enUS: classSuperApiOperationIdMethodRequest
@@ -1409,7 +1418,10 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				wChemins.tl(5, "required: false");
 				wChemins.tl(5, "schema:");
 				wChemins.tl(6, "type: integer");
-				wChemins.tl(6, "default: 10");
+				if(contexteRows == null)
+					wChemins.tl(6, "default: 10");
+				else
+					wChemins.tl(6, "default: ", contexteRows);
 				wChemins.tl(6, "minimum: 0");
 			}
 		}

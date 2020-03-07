@@ -952,7 +952,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 								listeRechercheInscription.addFilterQuery("sessionJourDebut_indexed_date:[* TO " + dateFormat.format(sessionJourDebut) + "]");
 								listeRechercheInscription.addFilterQuery("sessionJourFin_indexed_date:[" + dateFormat.format(sessionJourFin) + " TO *]");
 								listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
-								listeRechercheInscription.addFilterQuery("pk_indexed_long:12243");// TODO: delete
+								listeRechercheInscription.addFilterQuery("pk_indexed_long:13744");// TODO: delete
 								listeRechercheInscription.initLoinListeRecherche(requeteSite);
 				
 								futureAuthorizeNetFraisInscription(merchantAuthenticationType, listeRechercheInscription, paiementService, c -> {
@@ -1224,6 +1224,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: payment
 	 * r: supprime
 	 * r.enUS: deleted
+	 * r: Inscription_
+	 * r.enUS: Enrollment_
 	 */
 	public Future<Void> futureAuthorizeNetFrais(
 			MerchantAuthenticationType merchantAuthenticationType 
@@ -1266,6 +1268,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
 				o.setFraisInscription(true);
 				o.setInscriptionCle(inscriptionScolaire.getPk());
+				o.setInscription_(inscriptionScolaire);
 
 				RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 				requeteSite2.setVertx(vertx);
@@ -1292,6 +1295,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
 				o.setFraisPremierDernier(true);
 				o.setInscriptionCle(inscriptionScolaire.getPk());
+				o.setInscription_(inscriptionScolaire);
 
 				RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 				requeteSite2.setVertx(vertx);
@@ -1320,6 +1324,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					o.setCustomerProfileId(inscriptionScolaire.getCustomerProfileId());
 					o.setFraisMois(true);
 					o.setInscriptionCle(inscriptionScolaire.getPk());
+					o.setInscription_(inscriptionScolaire);
 
 					RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 					requeteSite2.setVertx(vertx);

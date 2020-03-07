@@ -101,6 +101,8 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 
 	Boolean classIsBase;
 
+	Integer contextRows;
+
 	Boolean classKeywordsFound;
 
 	List<String> classKeywords;
@@ -183,6 +185,7 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 					classApiTag = StringUtils.defaultIfBlank((String)classSolrDocument.get("classeApiTag_enUS_stored_string"), classSimpleName + " API");
 					classApiUri = (String)classSolrDocument.get("classeApiUri_enUS_stored_string");
 					classIsBase = (Boolean)classSolrDocument.get("classeEstBase_stored_boolean");
+					contextRows = (Integer)classSolrDocument.get("contexteRows_stored_int");
 
 					classApiMethods = (List<String>)classSolrDocument.get("classeApiMethodes_enUS_stored_strings");
 					classUris = new ArrayList<>();
@@ -194,6 +197,7 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 						ApiWriter apiWriter = new ApiWriter();
 						apiWriter.setClassSolrDocument(classSolrDocument);
 						apiWriter.setClassApiMethod(classApiMethode);
+						apiWriter.setContextRows(contextRows);
 						apiWriter.setWPaths(wPaths);
 						apiWriter.setWRequestBodies(wRequestBodies);
 						apiWriter.setWSchemas(wSchemas);

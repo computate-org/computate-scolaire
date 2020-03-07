@@ -1,5 +1,12 @@
 package org.computate.scolaire.enUS.payment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.Optional;
+
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.util.SimpleOrderedMap;
+
 /**
  * Translate: false
  **/
@@ -7,5 +14,33 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 
 	@Override public Boolean getColumnCreated() {
 		return false;
+	}
+
+	@Override public Boolean getColumnObjectTitle() {
+		return false;
+	}
+
+	@Override public void tfootPaymentGenPage() {
+		super.tfootPaymentGenPage();
+		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+		BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+		BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+		BigDecimal sum_chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+		if(sum_chargeAmount.subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) <= 0) {
+			e("div").a("class", "w3-panel w3-yellow ").f();
+			sx("You are current with all payments! Thank you! ");
+			g("div");
+		}
+		else {
+			e("div").a("class", "w3-panel w3-blue ").f();
+			sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", sum_chargeAmount.subtract(sum_paymentAmount)));
+			g("div");
+		}
+
+		if(sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
+			e("div").a("class", "w3-panel w3-red ").f();
+			sx(String.format("You are late on payments for $%s. ", sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount)));
+			g("div");
+		}
 	}
 }

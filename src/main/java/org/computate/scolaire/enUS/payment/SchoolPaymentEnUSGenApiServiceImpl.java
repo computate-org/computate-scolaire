@@ -279,6 +279,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("paymentRecieved", jsonObject.getBoolean(entityVar), pk));
 						break;
+					case "paymentShortName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentShortName", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -616,6 +620,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "paymentRecieved":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("paymentRecieved", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "paymentShortName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentShortName", jsonObject.getString(entityVar), pk));
 						break;
 					}
 				}
@@ -1093,6 +1101,16 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							o2.setPaymentRecieved(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("paymentRecieved", o2.jsonPaymentRecieved(), pk));
+						}
+						break;
+					case "setPaymentShortName":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentShortName"));
+						} else {
+							o2.setPaymentShortName(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentShortName", o2.jsonPaymentShortName(), pk));
 						}
 						break;
 				}
@@ -1708,18 +1726,21 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolPayment> listSearch = new SearchList<SchoolPayment>();
-			listSearch.setPopulate(populate);
-			listSearch.setStore(store);
-			listSearch.setQuery("*:*");
-			listSearch.setC(SchoolPayment.class);
+			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+			searchList.setPopulate(populate);
+			searchList.setStore(store);
+			searchList.setQuery("*:*");
+			searchList.setC(SchoolPayment.class);
 			if(entityList != null)
-				listSearch.addFields(entityList);
-			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+				searchList.addFields(entityList);
+			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+			searchList.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -1741,33 +1762,33 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolPayment.varSearchSchoolPayment(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 								if(!"*".equals(entityVar)) {
-									listSearch.setHighlight(true);
-									listSearch.setHighlightSnippets(3);
-									listSearch.addHighlightField(varIndexed);
-									listSearch.setParam("hl.encoder", "html");
+									searchList.setHighlight(true);
+									searchList.setHighlightSnippets(3);
+									searchList.addHighlightField(varIndexed);
+									searchList.setParam("hl.encoder", "html");
 								}
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
-								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
-								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
+								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;
-								listSearch.setStart(aSearchStart);
+								searchList.setStart(aSearchStart);
 								break;
 							case "rows":
 								aSearchNum = (Integer)paramObject;
-								listSearch.setRows(aSearchNum);
+								searchList.setRows(aSearchNum);
 								break;
 						}
 					}
@@ -1775,12 +1796,12 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if(listSearch.getSorts().size() == 0) {
-				listSearch.addSort("paymentDate_indexed_date", ORDER.desc);
-				listSearch.addSort("paymentBy_indexed_string", ORDER.desc);
+			if(searchList.getSorts().size() == 0) {
+				searchList.addSort("paymentDate_indexed_date", ORDER.desc);
+				searchList.addSort("paymentBy_indexed_string", ORDER.desc);
 			}
-			listSearch.initDeepForClass(siteRequest);
-			eventHandler.handle(Future.succeededFuture(listSearch));
+			searchList.initDeepForClass(siteRequest);
+			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

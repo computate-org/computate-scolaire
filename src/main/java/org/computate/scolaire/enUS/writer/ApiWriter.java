@@ -25,6 +25,9 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	protected void _classSolrDocument(Wrap<SolrDocument> c) {
 	}
 
+	protected void _contextRows(Wrap<Integer> c) {
+	}
+
 	protected void _classApiMethod(Wrap<String> c) {
 	}
 
@@ -643,7 +646,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(5, "required: false");
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: integer");
-				wPaths.tl(6, "default: 10");
+				if(contextRows == null)
+					wPaths.tl(6, "default: 10");
+				else
+					wPaths.tl(6, "default: ", contextRows);
 				wPaths.tl(6, "minimum: 0");
 			}
 		}

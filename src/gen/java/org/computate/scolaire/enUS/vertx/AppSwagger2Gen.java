@@ -1,10 +1,13 @@
 package org.computate.scolaire.enUS.vertx;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -13,8 +16,11 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -32,6 +38,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
@@ -69,6 +76,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « siteContext »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContextEnUS(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteContextEnUS siteContext = new SiteContextEnUS();
 	@JsonIgnore
 	public Wrap<SiteContextEnUS> siteContextWrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContext").o(siteContext);
@@ -105,6 +113,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « siteConfig »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteConfig siteConfig;
 	@JsonIgnore
 	public Wrap<SiteConfig> siteConfigWrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig").o(siteConfig);
@@ -144,6 +153,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « appPath »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String appPath;
 	@JsonIgnore
 	public Wrap<String> appPathWrap = new Wrap<String>().p(this).c(String.class).var("appPath").o(appPath);
@@ -205,6 +215,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiVersion;
 	@JsonIgnore
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
@@ -266,6 +277,8 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiVersionNumber »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer openApiVersionNumber;
 	@JsonIgnore
 	public Wrap<Integer> openApiVersionNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("openApiVersionNumber").o(openApiVersionNumber);
@@ -333,6 +346,8 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « tabsSchema »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer tabsSchema;
 	@JsonIgnore
 	public Wrap<Integer> tabsSchemaWrap = new Wrap<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
@@ -400,6 +415,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « apiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiVersion;
 	@JsonIgnore
 	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
@@ -461,6 +477,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiYamlPath »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiYamlPath;
 	@JsonIgnore
 	public Wrap<String> openApiYamlPathWrap = new Wrap<String>().p(this).c(String.class).var("openApiYamlPath").o(openApiYamlPath);
@@ -522,6 +539,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « openApiYamlFile »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected File openApiYamlFile;
 	@JsonIgnore
 	public Wrap<File> openApiYamlFileWrap = new Wrap<File>().p(this).c(File.class).var("openApiYamlFile").o(openApiYamlFile);
@@ -559,6 +577,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter w;
 	@JsonIgnore
 	public Wrap<AllWriter> wWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w").o(w);
@@ -598,6 +617,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « wPaths »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wPaths;
 	@JsonIgnore
 	public Wrap<AllWriter> wPathsWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wPaths").o(wPaths);
@@ -637,6 +657,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « wRequestBodies »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wRequestBodies;
 	@JsonIgnore
 	public Wrap<AllWriter> wRequestBodiesWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestBodies").o(wRequestBodies);
@@ -676,6 +697,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	/**	L'entité « wSchemas »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter wSchemas;
 	@JsonIgnore
 	public Wrap<AllWriter> wSchemasWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wSchemas").o(wSchemas);
@@ -868,6 +890,18 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// apiRequest //
+	//////////////////
+
+	public void apiRequestAppSwagger2() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof AppSwagger2) {
+			AppSwagger2 original = (AppSwagger2)o;
 		}
 	}
 

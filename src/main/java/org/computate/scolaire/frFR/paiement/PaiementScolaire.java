@@ -59,7 +59,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.desc: paiementPar
  * 
  * Rows: 50
-*/       
+*/  
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
@@ -88,7 +88,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: inscription
 	 * NomAffichage.enUS: enrollment
-	 */             
+	 */            
 	protected void _inscriptionCle(Couverture<Long> c) {}
 
 	/**
@@ -742,7 +742,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.frFR: date de paiement
 	 * NomAffichage.enUS: payment date
 	 * HtmlColonne: 3
-	 */                   
+	 */                
 	protected void _paiementDate(Couverture<LocalDate> c) {
 	}
 
@@ -755,9 +755,10 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlLigne: 3
 	 * HtmlCellule: 2
 	 * HtmlColonne: 4
+	 * Facet: sum
 	 * NomAffichage.frFR: paiement montant
 	 * NomAffichage.enUS: payment amount
-	 */                    
+	 */              
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
 	}
 
@@ -767,10 +768,11 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
+	 * Facet: sum
 	 * HtmlColonne: 5
 	 * NomAffichage.frFR: frais montant
 	 * NomAffichage.enUS: charge amount
-	 */                    
+	 */                   
 	protected void _fraisMontant(Couverture<BigDecimal> c) {
 	}
 
@@ -780,10 +782,17 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
+	 * Facet: sum
 	 * NomAffichage.frFR: frais montant future
 	 * NomAffichage.enUS: future charge amount
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
 	 */                    
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(LocalDate.now()) > 0)
+			c.o(fraisMontant);
 	}
 
 	/**
@@ -880,7 +889,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 * NomAffichage.frFR: paiement par/pour
 	 * NomAffichage.enUS: payment by/for
-	 */ 
+	 */  
 	protected void _paiementPar(Couverture<String> c) {
 	}
 
@@ -939,6 +948,96 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                  
 	protected void _paiementRecu(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**    
+	 * {@inheritDoc}
+	 * Var.enUS: paymentShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
+	 * HtmlColonne: 2
+	 * r: enfantNomCompletPrefere
+	 * r.enUS: childCompleteNamePreferred
+	 * r: EnfantNomComplet
+	 * r.enUS: ChildCompleteName
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementDate
+	 * r.enUS: PaymentDate
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
+	 * r: paiementCheque
+	 * r.enUS: paymentCheck
+	 * r: paiementEspeces
+	 * r.enUS: paymentCash
+	 * r: paiementSysteme
+	 * r.enUS: paymentSystem
+	 * r: paiementDescription
+	 * r.enUS: paymentDescription
+	 * r: paiementValeur
+	 * r.enUS: paymentValue
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: " par chèque"
+	 * r.enUS: " by check"
+	 * r: " par espèces"
+	 * r.enUS: " by cash"
+	 * r: " par espèces"
+	 * r.enUS: " by cash"
+	 * r: inscription_
+	 * r.enUS: enrollment_
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: SessionJourDebut
+	 * r.enUS: SessionStartDate
+	 * r: SessionJourFin
+	 * r.enUS: SessionEndDate
+	 * r: FRANCE
+	 * r.enUS: US
+	 * r: " pour %s"
+	 * r.enUS: " for %s"
+	 * r: "Frais de %s"
+	 * r.enUS: "%s tuition"
+	 * r: "Frais de %s + %s"
+	 * r.enUS: "%s + %s tuition"
+	 * r: "Frais d'inscription %s-%s"
+	 * r.enUS: "%s-%s enrollment fee"
+	 * r: "Paiement"
+	 * r.enUS: "Payment"
+	 * r: " pour %s"
+	 * r.enUS: " for %s"
+	 */  
+	protected void _paiementNomCourt(Couverture<String> c) {
+		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE);
+		fn.setMaximumFractionDigits(0);
+
+		StringBuilder o = new StringBuilder();
+		if(fraisMontant != null) {
+			if(inscription_ != null && fraisPremierDernier)
+				o.append(String.format("Frais de %s + %s", fd.format(inscription_.getSessionJourDebut().plusWeeks(1)), fd.format(inscription_.getSessionJourFin())));
+			else if(inscription_ != null && fraisInscription)
+				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionJourDebut().getYear(), inscription_.getSessionJourFin().getYear()));
+			else
+				o.append(String.format("Frais de %s", fd.format(paiementDate.plusMonths(1))));
+		}
+		if(paiementMontant != null) {
+			o.append("Paiement");
+			if(BooleanUtils.isTrue(paiementCheque))
+				o.append(" by check");
+			if(BooleanUtils.isTrue(paiementEspeces))
+				o.append(" by cash");
+			if(BooleanUtils.isTrue(paiementSysteme))
+				o.append(" by authorize.net");
+		}
+		if(!StringUtils.isEmpty(paiementDescription))
+			o.append(" ").append(paiementDescription);
+		c.o(o.toString());
 	}
 
 	/**    
@@ -1015,7 +1114,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			else if(inscription_ != null && fraisInscription)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
 			else
-				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate)));
+				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate.plusMonths(1))));
 
 			if(enfantNomCompletPrefere != null)
 				o.append(String.format(" pour %s", enfantNomCompletPrefere));
@@ -1048,5 +1147,5 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	@Override
 	protected void _objetTitre(Couverture<String> c) {
 		c.o(paiementNomComplet);
-	}
+	} 
 }
