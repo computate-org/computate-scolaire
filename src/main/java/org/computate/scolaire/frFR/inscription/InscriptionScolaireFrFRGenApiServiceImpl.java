@@ -90,6 +90,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -120,7 +121,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					creerInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-						RequeteApi requeteApi = new RequeteApi();
+							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
@@ -2490,87 +2491,114 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				-> {
 					if(selectCAsync.succeeded()) {
 						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+						UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
 						if(utilisateurValeurs == null) {
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_creer
-									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
-									, creerAsync
-							-> {
-								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUtilisateur = creerLigne.getLong(0);
-								UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-								utilisateurSite.setPk(pkUtilisateur);
+							JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+							JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								connexionSql.queryWithParams(
-										SiteContexteFrFR.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-										, definirAsync
-								-> {
-									if(definirAsync.succeeded()) {
-										try {
-											for(JsonArray definition : definirAsync.result().getResults()) {
-												utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
-											}
-											JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-											JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-											utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-											utilisateurSite.initLoinPourClasse(requeteSite);
-											utilisateurSite.indexerPourClasse();
-											requeteSite.setUtilisateurSite(utilisateurSite);
-											requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											requeteSite.setUtilisateurId(principalJson.getString("sub"));
-											gestionnaireEvenements.handle(Future.succeededFuture());
-										} catch(Exception e) {
-											gestionnaireEvenements.handle(Future.failedFuture(e));
+							JsonObject jsonObject = new JsonObject();
+							jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+							jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+							jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+							jsonObject.put("utilisateurId", principalJson.getString("sub"));
+							utilisateurInscriptionScolaireDefinir(siteRequest, jsonObject);
+
+							RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+							requeteSite2.setObjetJson(jsonObject);
+							requeteSite2.setVertx(requeteSite.getVertx());
+							requeteSite2.setSiteContexte_(siteContexte);
+							requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+							requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+							requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+
+							utilisateurService.creerSiteUser(requeteSite2, b -> {
+								if(b.succeeded()) {
+									SiteUser siteUser = b.result();
+									utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+										if(c.succeeded()) {
+											utilisateurService.definirSiteUser(siteUser, d -> {
+												if(d.succeeded()) {
+													utilisateurService.attribuerSiteUser(siteUser, e -> {
+														if(e.succeeded()) {
+															utilisateurService.indexerSiteUser(siteUser, f -> {
+																if(f.succeeded()) {
+																	requeteSite.setUtilisateurSite(utilisateurSite);
+																	requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+																	requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+																	requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																	requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																	gestionnaireEvenements.handle(Future.succeededFuture());
+																} else {
+																	erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
+																}
+															});
+														} else {
+															erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, e);
+														}
+													});
+												} else {
+													erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+												}
+											});
+										} else {
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
 										}
-									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
-									}
-								});
+									});
+								} else {
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+								}
 							});
 						} else {
 							Long pkUtilisateur = utilisateurValeurs.getLong(0);
-							UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-							utilisateurSite.setPk(pkUtilisateur);
+							ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+							listeRecherche.setStocker(true);
+							listeRecherche.setC(UtilisateurSite.class);
+							listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
+							listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
+							listeRecherche.initLoinListeRecherche(requeteSite);
+							UtilisateurSite utilisateurSite = listeRecherche.getList().stream().findFirst().orElse(null);
 
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-									, definirAsync
-							-> {
-								if(definirAsync.succeeded()) {
-									try {
-										for(JsonArray definition : definirAsync.result().getResults()) {
-											utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
-										}
-										JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-										JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-										utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-										utilisateurSite.initLoinPourClasse(requeteSite);
-										utilisateurSite.indexerPourClasse();
-										requeteSite.setUtilisateurSite(utilisateurSite);
-										requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										requeteSite.setUtilisateurId(principalJson.getString("sub"));
-										gestionnaireEvenements.handle(Future.succeededFuture());
-									} catch(Exception e) {
-										gestionnaireEvenements.handle(Future.failedFuture(e));
+							JsonObject jsonObject = JsonObject.mapFrom(utilisateurSite);
+							Boolean definir = utilisateurInscriptionScolaireDefinir(siteRequest, jsonObject);
+							if(definir) {
+								utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
+									if(c.succeeded()) {
+										utilisateurService.definirSiteUser(siteUser, d -> {
+											if(d.succeeded()) {
+												utilisateurService.attribuerSiteUser(siteUser, e -> {
+													if(e.succeeded()) {
+														utilisateurService.indexerSiteUser(siteUser, f -> {
+															if(f.succeeded()) {
+																requeteSite.setUtilisateurSite(utilisateurSite);
+																requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
+																requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
+																requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
+																requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																gestionnaireEvenements.handle(Future.succeededFuture());
+															} else {
+																erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, e);
+													}
+												});
+											} else {
+												erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+											}
+										});
+									} else {
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
 									}
-								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
-								}
-							});
+								});
+							} else {
+								requeteSite.setUtilisateurSite(utilisateurSite);
+								requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
+								requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
+								requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
+								requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+								gestionnaireEvenements.handle(Future.succeededFuture());
+							}
 						}
 					} else {
 						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -2580,6 +2608,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
+	}
+
+	public Boolean utilisateurInscriptionScolaireDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject) {
+		return true;
 	}
 
 	public void rechercheInscriptionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<InscriptionScolaire>>> gestionnaireEvenements) {
@@ -2594,7 +2626,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			listeRecherche.setC(InscriptionScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

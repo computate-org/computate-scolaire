@@ -417,11 +417,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				theadPaiementGenPage();
-				tbodyPaiementGenPage();
-				tfootPaiementGenPage();
-			} g("table");
+				table1PaiementGenPage();
 		}
 
 		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -453,134 +449,158 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		g("div");
 	}
 
-	public void theadPaiementGenPage() {
+	public void table1PaiementGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2PaiementGenPage();
+		} g("table");
+	}
+
+	public void table2PaiementGenPage() {
+		thead1PaiementGenPage();
+		tbody1PaiementGenPage();
+		tfoot1PaiementGenPage();
+	}
+
+	public void thead1PaiementGenPage() {
 		{ e("thead").a("class", "w3-green w3-hover-green ").f();
-			{ e("tr").f();
-				if(getColonneCree()) {
-					e("th").f().sx("crée").g("th");
-				}
-				if(getColonneObjetTitre()) {
-					e("th").f().sx("").g("th");
-				}
-				if(getColonnePaiementNomCourt()) {
-					e("th").f().sx("nom").g("th");
-				}
-				if(getColonnePaiementDate()) {
-					e("th").f().sx("date de paiement").g("th");
-				}
-				if(getColonnePaiementMontant()) {
-					e("th").f().sx("paiement montant").g("th");
-				}
-				if(getColonneFraisMontant()) {
-					e("th").f().sx("frais montant").g("th");
-				}
-			} g("tr");
+			thead2PaiementGenPage();
 		} g("thead");
 	}
 
-	public void tbodyPaiementGenPage() {
-		{ e("tbody").f();
-			Map<String, Map<String, List<String>>> highlighting = listePaiementScolaire.getQueryResponse().getHighlighting();
-			for(int i = 0; i < listePaiementScolaire.size(); i++) {
-				PaiementScolaire o = listePaiementScolaire.getList().get(i);
-				Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-				List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-				String uri = "/paiement/" + o.getPk();
-				{ e("tr").f();
-					if(getColonneCree()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strCree());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColonneObjetTitre()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								e("i").a("class", "fas fa-search-dollar ").f().g("i");
-								{ e("span").f();
-									sx(o.strObjetTitre());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColonnePaiementNomCourt()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strPaiementNomCourt());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColonnePaiementDate()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strPaiementDate());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColonnePaiementMontant()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strPaiementMontant());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColonneFraisMontant()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strFraisMontant());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-				} g("tr");
+	public void thead2PaiementGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
 			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			if(getColonnePaiementNomCourt()) {
+				e("th").f().sx("nom").g("th");
+			}
+			if(getColonnePaiementDate()) {
+				e("th").f().sx("date de paiement").g("th");
+			}
+			if(getColonnePaiementMontant()) {
+				e("th").f().sx("paiement montant").g("th");
+			}
+			if(getColonneFraisMontant()) {
+				e("th").f().sx("frais montant").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1PaiementGenPage() {
+		{ e("tbody").f();
+			tbody2PaiementGenPage();
 		} g("tbody");
 	}
 
-	public void tfootPaiementGenPage() {
-		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+	public void tbody2PaiementGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listePaiementScolaire.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listePaiementScolaire.size(); i++) {
+			PaiementScolaire o = listePaiementScolaire.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/paiement/" + o.getPk();
 			{ e("tr").f();
-				SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 				if(getColonneCree()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColonneObjetTitre()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "fas fa-search-dollar ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColonnePaiementNomCourt()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strPaiementNomCourt());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColonnePaiementDate()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strPaiementDate());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColonnePaiementMontant()) {
-					e("td").f();
-					BigDecimal sum_paiementMontant = Optional.ofNullable((Double)facets.get("sum_paiementMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-					e("span").a("class", "font-weight-bold ").f().sx(sum_paiementMontant).g("span");
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strPaiementMontant());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColonneFraisMontant()) {
-					e("td").f();
-					BigDecimal sum_fraisMontant = Optional.ofNullable((Double)facets.get("sum_fraisMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-					e("span").a("class", "font-weight-bold ").f().sx(sum_fraisMontant).g("span");
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strFraisMontant());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 			} g("tr");
+		}
+	}
+
+	public void tfoot1PaiementGenPage() {
+		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+			tfoot2PaiementGenPage();
 		} g("tfoot");
+	}
+
+	public void tfoot2PaiementGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonnePaiementNomCourt()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonnePaiementDate()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonnePaiementMontant()) {
+				e("td").f();
+				BigDecimal sum_paiementMontant = Optional.ofNullable((Double)facets.get("sum_paiementMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+				e("span").a("class", "font-weight-bold ").f().sx(sum_paiementMontant).g("span");
+				g("td");
+			}
+			if(getColonneFraisMontant()) {
+				e("td").f();
+				BigDecimal sum_fraisMontant = Optional.ofNullable((Double)facets.get("sum_fraisMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+				e("span").a("class", "font-weight-bold ").f().sx(sum_fraisMontant).g("span");
+				g("td");
+			}
+		} g("tr");
 	}
 
 	public Boolean getColonneCree() {
@@ -610,13 +630,15 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	public void htmlBodyFormsPaiementGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("id", "rechargerCePaiementGenPage")
-				.a("onclick", "patchPaiementScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCePaiementGenPage')); }, function() { ajouterErreur($('#rechargerCePaiementGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger ce paiement");
-		} g("button");
+		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+					.a("id", "rechargerCePaiementGenPage")
+					.a("onclick", "patchPaiementScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCePaiementGenPage')); }, function() { ajouterErreur($('#rechargerCePaiementGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("recharger ce paiement");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")

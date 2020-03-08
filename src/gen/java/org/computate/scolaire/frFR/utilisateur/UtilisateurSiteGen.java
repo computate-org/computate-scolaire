@@ -22,6 +22,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -31,6 +32,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -72,6 +74,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurId;
 	@JsonIgnore
 	public Couverture<String> utilisateurIdCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurId").o(utilisateurId);
@@ -133,6 +136,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNom;
 	@JsonIgnore
 	public Couverture<String> utilisateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNom").o(utilisateurNom);
@@ -194,6 +198,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurMail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurMail;
 	@JsonIgnore
 	public Couverture<String> utilisateurMailCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurMail").o(utilisateurMail);
@@ -255,6 +260,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurPrenom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurPrenom;
 	@JsonIgnore
 	public Couverture<String> utilisateurPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurPrenom").o(utilisateurPrenom);
@@ -316,6 +322,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNomFamille »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomFamille;
 	@JsonIgnore
 	public Couverture<String> utilisateurNomFamilleCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomFamille").o(utilisateurNomFamille);
@@ -377,6 +384,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomComplet;
 	@JsonIgnore
 	public Couverture<String> utilisateurNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomComplet").o(utilisateurNomComplet);
@@ -438,6 +446,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurSite;
 	@JsonIgnore
 	public Couverture<String> utilisateurSiteCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurSite").o(utilisateurSite);
@@ -492,6 +501,122 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurSite == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurSite());
 	}
 
+	///////////////////////
+	// customerProfileId //
+	///////////////////////
+
+	/**	L'entité « customerProfileId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId;
+	@JsonIgnore
+	public Couverture<String> customerProfileIdCouverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+
+	/**	<br/>L'entité « customerProfileId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId(Couverture<String> c);
+
+	public String getCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public void setCustomerProfileId(String customerProfileId) {
+		this.customerProfileId = customerProfileId;
+		this.customerProfileIdCouverture.dejaInitialise = true;
+	}
+	protected UtilisateurSite customerProfileIdInit() {
+		if(!customerProfileIdCouverture.dejaInitialise) {
+			_customerProfileId(customerProfileIdCouverture);
+			if(customerProfileId == null)
+				setCustomerProfileId(customerProfileIdCouverture.o);
+		}
+		customerProfileIdCouverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
+	public String solrCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public String strCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String jsonCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String nomAffichageCustomerProfileId() {
+		return "customer profile ID";
+	}
+
+	public String htmTooltipCustomerProfileId() {
+		return null;
+	}
+
+	public String htmCustomerProfileId() {
+		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	}
+
+	public void inputCustomerProfileId(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "customer profile ID")
+			.a("id", classeApiMethodeMethode, "_customerProfileId");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setCustomerProfileId inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "setCustomerProfileId");
+			} else {
+				a("class", "valeurCustomerProfileId w3-input w3-border inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "customerProfileId");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
+			}
+			a("value", strCustomerProfileId())
+		.fg();
+
+	}
+
+	public void htmCustomerProfileId(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteCustomerProfileId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////////////////
 	// utilisateurRecevoirCourriels //
 	//////////////////////////////////
@@ -499,6 +624,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurRecevoirCourriels »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean utilisateurRecevoirCourriels;
 	@JsonIgnore
 	public Couverture<Boolean> utilisateurRecevoirCourrielsCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("utilisateurRecevoirCourriels").o(utilisateurRecevoirCourriels);
@@ -621,6 +747,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « voirArchive »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean voirArchive;
 	@JsonIgnore
 	public Couverture<Boolean> voirArchiveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("voirArchive").o(voirArchive);
@@ -743,6 +870,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « voirSupprime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean voirSupprime;
 	@JsonIgnore
 	public Couverture<Boolean> voirSupprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("voirSupprime").o(voirSupprime);
@@ -886,6 +1014,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		utilisateurNomFamilleInit();
 		utilisateurNomCompletInit();
 		utilisateurSiteInit();
+		customerProfileIdInit();
 		utilisateurRecevoirCourrielsInit();
 		voirArchiveInit();
 		voirSupprimeInit();
@@ -941,6 +1070,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				return oUtilisateurSite.utilisateurNomComplet;
 			case "utilisateurSite":
 				return oUtilisateurSite.utilisateurSite;
+			case "customerProfileId":
+				return oUtilisateurSite.customerProfileId;
 			case "utilisateurRecevoirCourriels":
 				return oUtilisateurSite.utilisateurRecevoirCourriels;
 			case "voirArchive":
@@ -998,6 +1129,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 	public Object definirUtilisateurSite(String var, String val) {
 		switch(var) {
+			case "customerProfileId":
+				setCustomerProfileId(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
 			case "utilisateurRecevoirCourriels":
 				setUtilisateurRecevoirCourriels(val);
 				sauvegardesUtilisateurSite.add(var);
@@ -1067,6 +1202,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				String utilisateurSite = (String)solrDocument.get("utilisateurSite_stored_string");
 				if(utilisateurSite != null)
 					oUtilisateurSite.setUtilisateurSite(utilisateurSite);
+			}
+
+			if(sauvegardesUtilisateurSite.contains("customerProfileId")) {
+				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+				if(customerProfileId != null)
+					oUtilisateurSite.setCustomerProfileId(customerProfileId);
 			}
 
 			if(sauvegardesUtilisateurSite.contains("utilisateurRecevoirCourriels")) {
@@ -1180,6 +1321,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			document.addField("utilisateurSite_indexed_string", utilisateurSite);
 			document.addField("utilisateurSite_stored_string", utilisateurSite);
 		}
+		if(customerProfileId != null) {
+			document.addField("customerProfileId_indexed_string", customerProfileId);
+			document.addField("customerProfileId_stored_string", customerProfileId);
+		}
 		if(utilisateurRecevoirCourriels != null) {
 			document.addField("utilisateurRecevoirCourriels_indexed_boolean", utilisateurRecevoirCourriels);
 			document.addField("utilisateurRecevoirCourriels_stored_boolean", utilisateurRecevoirCourriels);
@@ -1227,6 +1372,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				return "utilisateurNomComplet_indexed_string";
 			case "utilisateurSite":
 				return "utilisateurSite_indexed_string";
+			case "customerProfileId":
+				return "customerProfileId_indexed_string";
 			case "utilisateurRecevoirCourriels":
 				return "utilisateurRecevoirCourriels_indexed_boolean";
 			case "voirArchive":
@@ -1286,6 +1433,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(utilisateurSite != null)
 			oUtilisateurSite.setUtilisateurSite(utilisateurSite);
 
+		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+		if(customerProfileId != null)
+			oUtilisateurSite.setCustomerProfileId(customerProfileId);
+
 		Boolean utilisateurRecevoirCourriels = (Boolean)solrDocument.get("utilisateurRecevoirCourriels_stored_boolean");
 		if(utilisateurRecevoirCourriels != null)
 			oUtilisateurSite.setUtilisateurRecevoirCourriels(utilisateurRecevoirCourriels);
@@ -1321,6 +1472,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof UtilisateurSite) {
 			UtilisateurSite original = (UtilisateurSite)o;
+			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
+				requeteApi.addVars("customerProfileId");
 			if(!Objects.equals(utilisateurRecevoirCourriels, original.getUtilisateurRecevoirCourriels()))
 				requeteApi.addVars("utilisateurRecevoirCourriels");
 			if(!Objects.equals(voirArchive, original.getVoirArchive()))
@@ -1336,7 +1489,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), utilisateurRecevoirCourriels, voirArchive, voirSupprime);
+		return Objects.hash(super.hashCode(), customerProfileId, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
 	}
 
 	////////////
@@ -1350,6 +1503,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			return false;
 		UtilisateurSite that = (UtilisateurSite)o;
 		return super.equals(o)
+				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( utilisateurRecevoirCourriels, that.utilisateurRecevoirCourriels )
 				&& Objects.equals( voirArchive, that.voirArchive )
 				&& Objects.equals( voirSupprime, that.voirSupprime );
@@ -1363,7 +1517,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("UtilisateurSite { ");
-		sb.append( "utilisateurRecevoirCourriels: " ).append(utilisateurRecevoirCourriels);
+		sb.append( "customerProfileId: \"" ).append(customerProfileId).append( "\"" );
+		sb.append( ", utilisateurRecevoirCourriels: " ).append(utilisateurRecevoirCourriels);
 		sb.append( ", voirArchive: " ).append(voirArchive);
 		sb.append( ", voirSupprime: " ).append(voirSupprime);
 		sb.append(" }");

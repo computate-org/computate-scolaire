@@ -78,6 +78,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -108,7 +109,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				if(a.succeeded()) {
 					createSchoolPayment(siteRequest, b -> {
 						if(b.succeeded()) {
-						ApiRequest apiRequest = new ApiRequest();
+							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
@@ -1628,88 +1629,139 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						if(userValues == null) {
-							sqlConnection.queryWithParams(
-									SiteContextEnUS.SQL_create
-									, new JsonArray(Arrays.asList("org.computate.scolaire.enUS.user.SiteUser", userId))
-									, createAsync
-							-> {
-								JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUser = createLine.getLong(0);
-								SiteUser siteUser = new SiteUser();
-								siteUser.setSiteRequest_(siteRequest);
-								siteUser.setPk(pkUser);
+						try {
+							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
+							if(userValues == null) {
+								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								sqlConnection.queryWithParams(
-										SiteContextEnUS.SQL_define
-										, new JsonArray(Arrays.asList(pkUser, pkUser, pkUser))
-										, defineAsync
-								-> {
-									if(defineAsync.succeeded()) {
-										try {
-											for(JsonArray definition : defineAsync.result().getResults()) {
-												siteUser.defineForClass(definition.getString(0), definition.getString(1));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userId", jsonPrincipal.getString("sub"));
+								userSchoolPaymentDefine(siteRequest, jsonObject);
+
+								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+								siteRequest2.setJsonObject(jsonObject);
+								siteRequest2.setVertx(siteRequest.getVertx());
+								siteRequest2.setSiteContext_(siteContext);
+								siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+								siteRequest2.setUserId(siteRequest.getUserId());
+								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+
+								userService.createSiteUser(siteRequest2, b -> {
+									if(b.succeeded()) {
+										SiteUser siteUser = b.result();
+										userService.sqlPOSTSiteUser(siteUser, c -> {
+											if(c.succeeded()) {
+												userService.defineSiteUser(siteUser, d -> {
+													if(d.succeeded()) {
+														userService.attributeSiteUser(siteUser, e -> {
+															if(e.succeeded()) {
+																userService.indexSiteUser(siteUser, f -> {
+																	if(f.succeeded()) {
+																		siteRequest.setSiteUser(siteUser);
+																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		eventHandler.handle(Future.succeededFuture());
+																	} else {
+																		errorSchoolPayment(siteRequest, eventHandler, f);
+																	}
+																});
+															} else {
+																errorSchoolPayment(siteRequest, eventHandler, e);
+															}
+														});
+													} else {
+														errorSchoolPayment(siteRequest, eventHandler, d);
+													}
+												});
+											} else {
+												errorSchoolPayment(siteRequest, eventHandler, c);
 											}
-											JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-											JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-											siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-											siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-											siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-											siteUser.setUserId(jsonPrincipal.getString("sub"));
-											siteUser.initDeepForClass(siteRequest);
-											siteUser.indexForClass();
-											siteRequest.setSiteUser(siteUser);
-											siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-											siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-											siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-											siteRequest.setUserId(jsonPrincipal.getString("sub"));
-											eventHandler.handle(Future.succeededFuture());
-										} catch(Exception e) {
-											eventHandler.handle(Future.failedFuture(e));
-										}
+										});
 									} else {
-										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
+										errorSchoolPayment(siteRequest, eventHandler, b);
 									}
 								});
-							});
-						} else {
-							Long pkUser = userValues.getLong(0);
-							SiteUser siteUser = new SiteUser();
-								siteUser.setSiteRequest_(siteRequest);
-							siteUser.setPk(pkUser);
+							} else {
+								Long pkUser = userValues.getLong(0);
+								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								searchList.setStore(true);
+								searchList.setC(SiteUser.class);
+								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+								searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+								searchList.initDeepSearchList(siteRequest);
+								SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
-							sqlConnection.queryWithParams(
-									SiteContextEnUS.SQL_define
-									, new JsonArray(Arrays.asList(pkUser, pkUser, pkUser))
-									, defineAsync
-							-> {
-								if(defineAsync.succeeded()) {
-									try {
-										for(JsonArray definition : defineAsync.result().getResults()) {
-											siteUser.defineForClass(definition.getString(0), definition.getString(1));
-										}
-										JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-										JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-										siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-										siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-										siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-										siteUser.setUserId(jsonPrincipal.getString("sub"));
-										siteUser.initDeepForClass(siteRequest);
-										siteUser.indexForClass();
-										siteRequest.setSiteUser(siteUser);
-										siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-										siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-										siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-										siteRequest.setUserId(jsonPrincipal.getString("sub"));
-										eventHandler.handle(Future.succeededFuture());
-									} catch(Exception e) {
-										eventHandler.handle(Future.failedFuture(e));
+								JsonObject jsonObject = Optional.ofNullable(siteUser1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								Boolean define = userSchoolPaymentDefine(siteRequest, jsonObject);
+								if(define) {
+									SiteUser siteUser;
+									if(siteUser1 == null) {
+										siteUser = new SiteUser();
+										siteUser.setPk(pkUser);
+										siteUser.setSiteRequest_(siteRequest);
+									} else {
+										siteUser = siteUser1;
 									}
+
+									SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+									siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+									siteRequest2.setJsonObject(jsonObject);
+									siteRequest2.setVertx(siteRequest.getVertx());
+									siteRequest2.setSiteContext_(siteContext);
+									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+									siteRequest2.setUserId(siteRequest.getUserId());
+									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+									siteUser.setSiteRequest_(siteRequest2);
+
+									userService.sqlPATCHSiteUser(siteUser, c -> {
+										if(c.succeeded()) {
+											userService.defineSiteUser(siteUser, d -> {
+												if(d.succeeded()) {
+													userService.attributeSiteUser(siteUser, e -> {
+														if(e.succeeded()) {
+															userService.indexSiteUser(siteUser, f -> {
+																if(f.succeeded()) {
+																	siteRequest.setSiteUser(siteUser);
+																	siteRequest.setUserName(siteUser.getUserName());
+																	siteRequest.setUserFirstName(siteUser.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser.getUserLastName());
+																	siteRequest.setUserId(siteUser.getUserId());
+																	eventHandler.handle(Future.succeededFuture());
+																} else {
+																	errorSchoolPayment(siteRequest, eventHandler, f);
+																}
+															});
+														} else {
+															errorSchoolPayment(siteRequest, eventHandler, e);
+														}
+													});
+												} else {
+													errorSchoolPayment(siteRequest, eventHandler, d);
+												}
+											});
+										} else {
+											errorSchoolPayment(siteRequest, eventHandler, c);
+										}
+									});
 								} else {
-									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
+									siteRequest.setSiteUser(siteUser1);
+									siteRequest.setUserName(siteUser1.getUserName());
+									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
+									siteRequest.setUserLastName(siteUser1.getUserLastName());
+									siteRequest.setUserId(siteUser1.getUserId());
+									eventHandler.handle(Future.succeededFuture());
 								}
-							});
+							}
+						} catch(Exception e) {
+							eventHandler.handle(Future.failedFuture(e));
 						}
 					} else {
 						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -1719,6 +1771,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
+	}
+
+	public Boolean userSchoolPaymentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject) {
+		return true;
 	}
 
 	public void aSearchSchoolPayment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolPayment>>> eventHandler) {
@@ -1734,6 +1790,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+			searchList.add("json.facet", "{terms_childCompleteNamePreferred:{terms:{field:childCompleteNamePreferred_indexed_string}}}");
 			searchList.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
 			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
 			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");

@@ -321,12 +321,13 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
+	 * Facet: terms
 	 * r: inscription_
 	 * r.enUS: enrollment_
 	 * r: EnfantNomCompletPrefere
 	 * r.enUS: ChildCompleteNamePreferred
 	 * 
-	 */  
+	 */         
 	protected void _enfantNomCompletPrefere(Couverture<String> c) {
 		if(inscription_ != null)
 			c.o(inscription_.getEnfantNomCompletPrefere());
@@ -789,7 +790,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeAmount
 	 * r: paiementDate
 	 * r.enUS: paymentDate
-	 */                    
+	 */                   
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
 		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(LocalDate.now()) > 0)
 			c.o(fraisMontant);

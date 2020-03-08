@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -35,6 +37,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	/**	L'entité « enrollmentDesignSearch »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<EnrollmentDesign> enrollmentDesignSearch = new SearchList<EnrollmentDesign>();
 	@JsonIgnore
 	public Wrap<SearchList<EnrollmentDesign>> enrollmentDesignSearchWrap = new Wrap<SearchList<EnrollmentDesign>>().p(this).c(SearchList.class).var("enrollmentDesignSearch").o(enrollmentDesignSearch);
@@ -71,6 +74,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	/**	L'entité « enrollmentDesigns »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<EnrollmentDesign> enrollmentDesigns;
 	@JsonIgnore
 	public Wrap<List<EnrollmentDesign>> enrollmentDesignsWrap = new Wrap<List<EnrollmentDesign>>().p(this).c(List.class).var("enrollmentDesigns").o(enrollmentDesigns);
@@ -119,6 +123,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	/**	L'entité « yearSearch »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
@@ -155,6 +160,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	/**	L'entité « years »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<SchoolYear> years;
 	@JsonIgnore
 	public Wrap<List<SchoolYear>> yearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("years").o(years);
@@ -203,6 +209,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	/**	L'entité « schoolYears »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<SchoolYear> schoolYears = new java.util.ArrayList<org.computate.scolaire.enUS.year.SchoolYear>();
 	@JsonIgnore
 	public Wrap<List<SchoolYear>> schoolYearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("schoolYears").o(schoolYears);

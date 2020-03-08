@@ -76,6 +76,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -317,6 +318,16 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "setCustomerProfileId":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+						} else {
+							o2.setCustomerProfileId(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+						}
+						break;
 					case "setUtilisateurRecevoirCourriels":
 						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -372,6 +383,140 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		try {
 			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	// POST //
+
+	@Override
+	public void postUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+			sqlUtilisateurSite(requeteSite, a -> {
+				if(a.succeeded()) {
+					creerUtilisateurSite(requeteSite, b -> {
+						if(b.succeeded()) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
+							UtilisateurSite utilisateurSite = b.result();
+							sqlPOSTUtilisateurSite(utilisateurSite, c -> {
+								if(c.succeeded()) {
+									definirUtilisateurSite(utilisateurSite, d -> {
+										if(d.succeeded()) {
+											attribuerUtilisateurSite(utilisateurSite, e -> {
+												if(e.succeeded()) {
+													indexerUtilisateurSite(utilisateurSite, f -> {
+														if(f.succeeded()) {
+															reponse200POSTUtilisateurSite(utilisateurSite, g -> {
+																if(f.succeeded()) {
+																	SQLConnection connexionSql = requeteSite.getConnexionSql();
+																	connexionSql.commit(h -> {
+																		if(a.succeeded()) {
+																			connexionSql.close(i -> {
+																				if(a.succeeded()) {
+																					requeteApiUtilisateurSite(utilisateurSite);
+																					utilisateurSite.requeteApiUtilisateurSite();
+																					requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
+																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, i);
+																				}
+																			});
+																		} else {
+																			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, h);
+																		}
+																	});
+																} else {
+																	erreurUtilisateurSite(requeteSite, gestionnaireEvenements, g);
+																}
+															});
+														} else {
+															erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+														}
+													});
+												} else {
+													erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+												}
+											});
+										} else {
+											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void sqlPOSTUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Long pk = o.getPk();
+			JsonObject jsonObject = requeteSite.getObjetJson();
+			StringBuilder postSql = new StringBuilder();
+			List<Object> postSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				Set<String> entiteVars = jsonObject.fieldNames();
+				for(String entiteVar : entiteVars) {
+					switch(entiteVar) {
+					case "customerProfileId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurRecevoirCourriels":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurRecevoirCourriels", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "voirArchive":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("voirArchive", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "voirSupprime":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("voirSupprime", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					}
+				}
+			}
+			connexionSql.queryWithParams(
+					postSql.toString()
+					, new JsonArray(postSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200POSTUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -611,88 +756,146 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						if(utilisateurValeurs == null) {
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_creer
-									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
-									, creerAsync
-							-> {
-								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUtilisateur = creerLigne.getLong(0);
-								UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-								utilisateurSite.setPk(pkUtilisateur);
+						try {
+							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
+							if(utilisateurValeurs == null) {
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								connexionSql.queryWithParams(
-										SiteContexteFrFR.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-										, definirAsync
-								-> {
-									if(definirAsync.succeeded()) {
-										try {
-											for(JsonArray definition : definirAsync.result().getResults()) {
-												utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject);
+
+								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+								requeteSite2.setObjetJson(jsonObject);
+								requeteSite2.setVertx(requeteSite.getVertx());
+								requeteSite2.setSiteContexte_(siteContexte);
+								requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+
+								utilisateurService.creerSiteUser(requeteSite2, b -> {
+									if(b.succeeded()) {
+										SiteUser siteUser = b.result();
+										utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+											if(c.succeeded()) {
+												utilisateurService.definirSiteUser(siteUser, d -> {
+													if(d.succeeded()) {
+														utilisateurService.attribuerSiteUser(siteUser, e -> {
+															if(e.succeeded()) {
+																utilisateurService.indexerSiteUser(siteUser, f -> {
+																	if(f.succeeded()) {
+																		requeteSite.setUtilisateurSite(utilisateurSite);
+																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		gestionnaireEvenements.handle(Future.succeededFuture());
+																	} else {
+																		erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+																	}
+																});
+															} else {
+																erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+															}
+														});
+													} else {
+														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+													}
+												});
+											} else {
+												erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 											}
-											JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-											JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-											utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-											utilisateurSite.initLoinPourClasse(requeteSite);
-											utilisateurSite.indexerPourClasse();
-											requeteSite.setUtilisateurSite(utilisateurSite);
-											requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											requeteSite.setUtilisateurId(principalJson.getString("sub"));
-											gestionnaireEvenements.handle(Future.succeededFuture());
-										} catch(Exception e) {
-											gestionnaireEvenements.handle(Future.failedFuture(e));
-										}
+										});
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+										erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
 									}
 								});
-							});
-						} else {
-							Long pkUtilisateur = utilisateurValeurs.getLong(0);
-							UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-							utilisateurSite.setPk(pkUtilisateur);
+							} else {
+								Long pkUtilisateur = utilisateurValeurs.getLong(0);
+								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(UtilisateurSite.class);
+								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
+								listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-									, definirAsync
-							-> {
-								if(definirAsync.succeeded()) {
-									try {
-										for(JsonArray definition : definirAsync.result().getResults()) {
-											utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
-										}
-										JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-										JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-										utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-										utilisateurSite.initLoinPourClasse(requeteSite);
-										utilisateurSite.indexerPourClasse();
-										requeteSite.setUtilisateurSite(utilisateurSite);
-										requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										requeteSite.setUtilisateurId(principalJson.getString("sub"));
-										gestionnaireEvenements.handle(Future.succeededFuture());
-									} catch(Exception e) {
-										gestionnaireEvenements.handle(Future.failedFuture(e));
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+
+								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								Boolean definir = utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject);
+								if(definir) {
+									UtilisateurSite utilisateurSite;
+									if(utilisateurSite1 == null) {
+										utilisateurSite = new UtilisateurSite();
+										utilisateurSite.setPk(pkUtilisateur);
+										utilisateurSite.setRequeteSite_(requeteSite);
+									} else {
+										utilisateurSite = utilisateurSite1;
 									}
+
+									RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+									requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+									requeteSite2.setObjetJson(jsonObject);
+									requeteSite2.setVertx(requeteSite.getVertx());
+									requeteSite2.setSiteContexte_(siteContexte);
+									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
+										if(c.succeeded()) {
+											utilisateurService.definirSiteUser(siteUser, d -> {
+												if(d.succeeded()) {
+													utilisateurService.attribuerSiteUser(siteUser, e -> {
+														if(e.succeeded()) {
+															utilisateurService.indexerSiteUser(siteUser, f -> {
+																if(f.succeeded()) {
+																	requeteSite.setUtilisateurSite(utilisateurSite);
+																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																	gestionnaireEvenements.handle(Future.succeededFuture());
+																} else {
+																	erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+																}
+															});
+														} else {
+															erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+														}
+													});
+												} else {
+													erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+												}
+											});
+										} else {
+											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+										}
+									});
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+									requeteSite.setUtilisateurSite(utilisateurSite1);
+									requeteSite.setUtilisateurNom(utilisateurSite1.getUtilisateurNom());
+									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
+									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
+									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
-							});
+							}
+						} catch(Exception e) {
+							gestionnaireEvenements.handle(Future.failedFuture(e));
 						}
 					} else {
 						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -702,6 +905,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
+	}
+
+	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject) {
+		return true;
 	}
 
 	public void rechercheUtilisateurSite(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<UtilisateurSite>>> gestionnaireEvenements) {
@@ -716,7 +923,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			listeRecherche.setC(UtilisateurSite.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

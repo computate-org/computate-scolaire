@@ -1621,7 +1621,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 4
 	 * NomAffichage.frFR: customer profile ID
 	 * NomAffichage.enUS: customer profile ID
-	 */                
+	 */               
 	protected void _customerProfileId(Couverture<String> c) {
 	}
 

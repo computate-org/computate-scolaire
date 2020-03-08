@@ -36,6 +36,9 @@ public class SiteUser extends SiteUserGen<Cluster> {
 	protected void _userSite(Wrap<String> c) {
 	}
 
+	protected void _customerProfileId(Wrap<String> c) {
+	}
+
 	protected void _userReceiveEmails(Wrap<Boolean> c) {
 		c.o(false);
 	}

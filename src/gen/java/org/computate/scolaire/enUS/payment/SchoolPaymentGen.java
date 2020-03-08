@@ -1146,7 +1146,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageChildCompleteNamePreferred() {
-		return "r: inscription_";
+		return "Facet: terms";
 	}
 
 	public String htmTooltipChildCompleteNamePreferred() {
@@ -1161,7 +1161,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "text")
-			.a("placeholder", "r: inscription_")
+			.a("placeholder", "Facet: terms")
 			.a("id", classApiMethodMethod, "_childCompleteNamePreferred");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 				a("class", "setChildCompleteNamePreferred inputSchoolPayment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
@@ -1186,7 +1186,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChildCompleteNamePreferred").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_childCompleteNamePreferred").a("class", "").f().sx("r: inscription_").g("label");
+							e("label").a("for", classApiMethodMethod, "_childCompleteNamePreferred").a("class", "").f().sx("Facet: terms").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();

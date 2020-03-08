@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -117,6 +123,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("Page");
 			o.htmVoirArchive("Page");
 			o.htmVoirSupprime("Page");
+			o.htmCustomerProfileId("Page");
 		} g("div");
 	}
 
@@ -135,6 +142,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("POST");
 			o.htmVoirArchive("POST");
 			o.htmVoirSupprime("POST");
+			o.htmCustomerProfileId("POST");
 		} g("div");
 	}
 
@@ -151,6 +159,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("PUT");
 			o.htmVoirArchive("PUT");
 			o.htmVoirSupprime("PUT");
+			o.htmCustomerProfileId("PUT");
 		} g("div");
 	}
 
@@ -167,6 +176,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("PATCH");
 			o.htmVoirArchive("PATCH");
 			o.htmVoirSupprime("PATCH");
+			o.htmCustomerProfileId("PATCH");
 		} g("div");
 	}
 
@@ -185,6 +195,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("Recherche");
 			o.htmVoirArchive("Recherche");
 			o.htmVoirSupprime("Recherche");
+			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");
@@ -289,40 +300,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-gray w3-hover-gray ").f();
-					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listeUtilisateurSite.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listeUtilisateurSite.size(); i++) {
-						UtilisateurSite o = listeUtilisateurSite.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/utilisateur/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-user-cog ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1UtilisateurSiteGenPage();
 		}
 
 		if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -357,16 +335,112 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		g("div");
 	}
 
+	public void table1UtilisateurSiteGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2UtilisateurSiteGenPage();
+		} g("table");
+	}
+
+	public void table2UtilisateurSiteGenPage() {
+		thead1UtilisateurSiteGenPage();
+		tbody1UtilisateurSiteGenPage();
+		tfoot1UtilisateurSiteGenPage();
+	}
+
+	public void thead1UtilisateurSiteGenPage() {
+		{ e("thead").a("class", "w3-gray w3-hover-gray ").f();
+			thead2UtilisateurSiteGenPage();
+		} g("thead");
+	}
+
+	public void thead2UtilisateurSiteGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
+			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1UtilisateurSiteGenPage() {
+		{ e("tbody").f();
+			tbody2UtilisateurSiteGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2UtilisateurSiteGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listeUtilisateurSite.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listeUtilisateurSite.size(); i++) {
+			UtilisateurSite o = listeUtilisateurSite.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/utilisateur/" + o.getPk();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColonneObjetTitre()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "far fa-user-cog ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1UtilisateurSiteGenPage() {
+		{ e("tfoot").a("class", "w3-gray w3-hover-gray ").f();
+			tfoot2UtilisateurSiteGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2UtilisateurSiteGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
 	public void htmlBodyFormsUtilisateurSiteGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-				.a("id", "rechargerCeUtilisateurSiteGenPage")
-				.a("onclick", "patchUtilisateurSiteVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeUtilisateurSiteGenPage')); }, function() { ajouterErreur($('#rechargerCeUtilisateurSiteGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger cet utilisateur du site");
-		} g("button");
+		if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+					.a("id", "rechargerCeUtilisateurSiteGenPage")
+					.a("onclick", "patchUtilisateurSiteVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeUtilisateurSiteGenPage')); }, function() { ajouterErreur($('#rechargerCeUtilisateurSiteGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("recharger cet utilisateur du site");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
@@ -392,6 +466,38 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
 							.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 							.f().sx("Modifier des utilisateurs du site")
+						.g("button");
+
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+			.a("onclick", "$('#postUtilisateurSiteModale').show(); ")
+			.f().sx("Créer un utilisateur du site")
+		.g("button");
+		{ e("div").a("id", "postUtilisateurSiteModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("class", "w3-modal-content ").f();
+				{ e("div").a("class", "w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-gray ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Créer un utilisateur du site").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						UtilisateurSite o = new UtilisateurSite();
+						o.setRequeteSite_(requeteSite_);
+
+						// Form POST
+						{ e("div").a("id", "postUtilisateurSiteForm").f();
+							htmlFormPOSTUtilisateurSite(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+							.a("onclick", "postUtilisateurSite($('#postUtilisateurSiteForm')); ")
+							.f().sx("Créer un utilisateur du site")
 						.g("button");
 
 					} g("div");

@@ -6,6 +6,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
@@ -33,6 +35,7 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listeMereScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<MereScolaire> listeMereScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<MereScolaire>> listeMereScolaireCouverture = new Couverture<ListeRecherche<MereScolaire>>().p(this).c(ListeRecherche.class).var("listeMereScolaire").o(listeMereScolaire);
@@ -72,6 +75,7 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « mereScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected MereScolaire mereScolaire;
 	@JsonIgnore
 	public Couverture<MereScolaire> mereScolaireCouverture = new Couverture<MereScolaire>().p(this).c(MereScolaire.class).var("mereScolaire").o(mereScolaire);

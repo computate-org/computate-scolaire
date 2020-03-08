@@ -78,6 +78,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -108,7 +109,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				if(a.succeeded()) {
 					createSchoolMom(siteRequest, b -> {
 						if(b.succeeded()) {
-						ApiRequest apiRequest = new ApiRequest();
+							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
@@ -1413,87 +1414,114 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				-> {
 					if(selectCAsync.succeeded()) {
 						JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+						SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
 						if(userValues == null) {
-							sqlConnection.queryWithParams(
-									SiteContextEnUS.SQL_create
-									, new JsonArray(Arrays.asList("org.computate.scolaire.enUS.user.SiteUser", userId))
-									, createAsync
-							-> {
-								JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUser = createLine.getLong(0);
-								SiteUser siteUser = new SiteUser();
-								siteUser.setSiteRequest_(siteRequest);
-								siteUser.setPk(pkUser);
+							JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+							JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								sqlConnection.queryWithParams(
-										SiteContextEnUS.SQL_define
-										, new JsonArray(Arrays.asList(pkUser, pkUser, pkUser))
-										, defineAsync
-								-> {
-									if(defineAsync.succeeded()) {
-										try {
-											for(JsonArray definition : defineAsync.result().getResults()) {
-												siteUser.defineForClass(definition.getString(0), definition.getString(1));
-											}
-											JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-											JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-											siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-											siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-											siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-											siteUser.setUserId(jsonPrincipal.getString("sub"));
-											siteUser.initDeepForClass(siteRequest);
-											siteUser.indexForClass();
-											siteRequest.setSiteUser(siteUser);
-											siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-											siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-											siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-											siteRequest.setUserId(jsonPrincipal.getString("sub"));
-											eventHandler.handle(Future.succeededFuture());
-										} catch(Exception e) {
-											eventHandler.handle(Future.failedFuture(e));
+							JsonObject jsonObject = new JsonObject();
+							jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+							jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+							jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+							jsonObject.put("userId", jsonPrincipal.getString("sub"));
+							userSchoolMomDefine(siteRequest, jsonObject);
+
+							SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+							siteRequest2.setJsonObject(jsonObject);
+							siteRequest2.setVertx(siteRequest.getVertx());
+							siteRequest2.setSiteContext_(siteContext);
+							siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+							siteRequest2.setUserId(siteRequest.getUserId());
+							siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+
+							userService.createSiteUser(siteRequest2, b -> {
+								if(b.succeeded()) {
+									SiteUser siteUser = b.result();
+									userService.sqlPOSTSiteUser(siteUser, c -> {
+										if(c.succeeded()) {
+											userService.defineSiteUser(siteUser, d -> {
+												if(d.succeeded()) {
+													userService.attributeSiteUser(siteUser, e -> {
+														if(e.succeeded()) {
+															userService.indexSiteUser(siteUser, f -> {
+																if(f.succeeded()) {
+																	siteRequest.setSiteUser(siteUser);
+																	siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+																	siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+																	siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																	siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																	eventHandler.handle(Future.succeededFuture());
+																} else {
+																	errorSchoolMom(siteRequest, eventHandler, f);
+																}
+															});
+														} else {
+															errorSchoolMom(siteRequest, eventHandler, e);
+														}
+													});
+												} else {
+													errorSchoolMom(siteRequest, eventHandler, d);
+												}
+											});
+										} else {
+											errorSchoolMom(siteRequest, eventHandler, c);
 										}
-									} else {
-										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
-									}
-								});
+									});
+								} else {
+									errorSchoolMom(siteRequest, eventHandler, b);
+								}
 							});
 						} else {
 							Long pkUser = userValues.getLong(0);
-							SiteUser siteUser = new SiteUser();
-								siteUser.setSiteRequest_(siteRequest);
-							siteUser.setPk(pkUser);
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+							searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+							searchList.initDeepSearchList(siteRequest);
+							SiteUser siteUser = searchList.getList().stream().findFirst().orElse(null);
 
-							sqlConnection.queryWithParams(
-									SiteContextEnUS.SQL_define
-									, new JsonArray(Arrays.asList(pkUser, pkUser, pkUser))
-									, defineAsync
-							-> {
-								if(defineAsync.succeeded()) {
-									try {
-										for(JsonArray definition : defineAsync.result().getResults()) {
-											siteUser.defineForClass(definition.getString(0), definition.getString(1));
-										}
-										JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-										JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-										siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
-										siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
-										siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
-										siteUser.setUserId(jsonPrincipal.getString("sub"));
-										siteUser.initDeepForClass(siteRequest);
-										siteUser.indexForClass();
-										siteRequest.setSiteUser(siteUser);
-										siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-										siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-										siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-										siteRequest.setUserId(jsonPrincipal.getString("sub"));
-										eventHandler.handle(Future.succeededFuture());
-									} catch(Exception e) {
-										eventHandler.handle(Future.failedFuture(e));
+							JsonObject jsonObject = JsonObject.mapFrom(siteUser);
+							Boolean define = userSchoolMomDefine(siteRequest, jsonObject);
+							if(define) {
+								userService.sqlPATCHSiteUser(siteUser, c -> {
+									if(c.succeeded()) {
+										userService.defineSiteUser(siteUser, d -> {
+											if(d.succeeded()) {
+												userService.attributeSiteUser(siteUser, e -> {
+													if(e.succeeded()) {
+														userService.indexSiteUser(siteUser, f -> {
+															if(f.succeeded()) {
+																siteRequest.setSiteUser(siteUser);
+																siteRequest.setUserName(siteUser.getUserName());
+																siteRequest.setUserFirstName(siteUser.getUserFirstName());
+																siteRequest.setUserLastName(siteUser.getUserLastName());
+																siteRequest.setUserId(siteUser.getUserId());
+																eventHandler.handle(Future.succeededFuture());
+															} else {
+																errorSchoolMom(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														errorSchoolMom(siteRequest, eventHandler, e);
+													}
+												});
+											} else {
+												errorSchoolMom(siteRequest, eventHandler, d);
+											}
+										});
+									} else {
+										errorSchoolMom(siteRequest, eventHandler, c);
 									}
-								} else {
-									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
-								}
-							});
+								});
+							} else {
+								siteRequest.setSiteUser(siteUser);
+								siteRequest.setUserName(siteUser.getUserName());
+								siteRequest.setUserFirstName(siteUser.getUserFirstName());
+								siteRequest.setUserLastName(siteUser.getUserLastName());
+								siteRequest.setUserId(siteUser.getUserId());
+								eventHandler.handle(Future.succeededFuture());
+							}
 						}
 					} else {
 						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -1505,23 +1533,27 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		}
 	}
 
+	public Boolean userSchoolMomDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject) {
+		return true;
+	}
+
 	public void aSearchSchoolMom(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolMom>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolMom> listSearch = new SearchList<SchoolMom>();
-			listSearch.setPopulate(populate);
-			listSearch.setStore(store);
-			listSearch.setQuery("*:*");
-			listSearch.setC(SchoolMom.class);
+			SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+			searchList.setPopulate(populate);
+			searchList.setStore(store);
+			searchList.setQuery("*:*");
+			searchList.setC(SchoolMom.class);
 			if(entityList != null)
-				listSearch.addFields(entityList);
-			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+				searchList.addFields(entityList);
+			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -1529,7 +1561,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
-				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
+				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -1551,33 +1583,33 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolMom.varSearchSchoolMom(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 								if(!"*".equals(entityVar)) {
-									listSearch.setHighlight(true);
-									listSearch.setHighlightSnippets(3);
-									listSearch.addHighlightField(varIndexed);
-									listSearch.setParam("hl.encoder", "html");
+									searchList.setHighlight(true);
+									searchList.setHighlightSnippets(3);
+									searchList.addHighlightField(varIndexed);
+									searchList.setParam("hl.encoder", "html");
 								}
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolMom.varIndexedSchoolMom(entityVar);
-								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolMom.varIndexedSchoolMom(entityVar);
-								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
+								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;
-								listSearch.setStart(aSearchStart);
+								searchList.setStart(aSearchStart);
 								break;
 							case "rows":
 								aSearchNum = (Integer)paramObject;
-								listSearch.setRows(aSearchNum);
+								searchList.setRows(aSearchNum);
 								break;
 						}
 					}
@@ -1585,10 +1617,11 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if(listSearch.getSorts().size() == 0)
-				listSearch.addSort("created_indexed_date", ORDER.desc);
-			listSearch.initDeepForClass(siteRequest);
-			eventHandler.handle(Future.succeededFuture(listSearch));
+			if(searchList.getSorts().size() == 0) {
+				searchList.addSort("created_indexed_date", ORDER.desc);
+			}
+			searchList.initDeepForClass(siteRequest);
+			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

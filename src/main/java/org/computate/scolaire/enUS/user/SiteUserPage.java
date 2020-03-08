@@ -101,6 +101,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	}
 
 	@Override public void htmlBodySiteUserGenPage() {
+		super.htmlBodySiteUserGenPage();
 
 		{ e("h1").f();
 			{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();

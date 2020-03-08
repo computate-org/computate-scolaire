@@ -22,6 +22,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -31,6 +32,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -71,6 +73,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userId;
 	@JsonIgnore
 	public Wrap<String> userIdWrap = new Wrap<String>().p(this).c(String.class).var("userId").o(userId);
@@ -132,6 +135,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userName;
 	@JsonIgnore
 	public Wrap<String> userNameWrap = new Wrap<String>().p(this).c(String.class).var("userName").o(userName);
@@ -193,6 +197,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userEmail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userEmail;
 	@JsonIgnore
 	public Wrap<String> userEmailWrap = new Wrap<String>().p(this).c(String.class).var("userEmail").o(userEmail);
@@ -254,6 +259,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userFirstName;
 	@JsonIgnore
 	public Wrap<String> userFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("userFirstName").o(userFirstName);
@@ -315,6 +321,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userLastName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userLastName;
 	@JsonIgnore
 	public Wrap<String> userLastNameWrap = new Wrap<String>().p(this).c(String.class).var("userLastName").o(userLastName);
@@ -376,6 +383,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userFullName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userFullName;
 	@JsonIgnore
 	public Wrap<String> userFullNameWrap = new Wrap<String>().p(this).c(String.class).var("userFullName").o(userFullName);
@@ -437,6 +445,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « userSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userSite;
 	@JsonIgnore
 	public Wrap<String> userSiteWrap = new Wrap<String>().p(this).c(String.class).var("userSite").o(userSite);
@@ -492,12 +501,129 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	///////////////////////
+	// customerProfileId //
+	///////////////////////
+
+	/**	L'entité « customerProfileId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId;
+	@JsonIgnore
+	public Wrap<String> customerProfileIdWrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+
+	/**	<br/>L'entité « customerProfileId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId(Wrap<String> c);
+
+	public String getCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public void setCustomerProfileId(String customerProfileId) {
+		this.customerProfileId = customerProfileId;
+		this.customerProfileIdWrap.alreadyInitialized = true;
+	}
+	protected SiteUser customerProfileIdInit() {
+		if(!customerProfileIdWrap.alreadyInitialized) {
+			_customerProfileId(customerProfileIdWrap);
+			if(customerProfileId == null)
+				setCustomerProfileId(customerProfileIdWrap.o);
+		}
+		customerProfileIdWrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public String solrCustomerProfileId() {
+		return customerProfileId;
+	}
+
+	public String strCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String jsonCustomerProfileId() {
+		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String nomAffichageCustomerProfileId() {
+		return "customer profile ID";
+	}
+
+	public String htmTooltipCustomerProfileId() {
+		return null;
+	}
+
+	public String htmCustomerProfileId() {
+		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	}
+
+	public void inputCustomerProfileId(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "customer profile ID")
+			.a("id", classApiMethodMethod, "_customerProfileId");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setCustomerProfileId inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "setCustomerProfileId");
+			} else {
+				a("class", "valueCustomerProfileId w3-input w3-border inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
+				a("name", "customerProfileId");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
+			}
+			a("value", strCustomerProfileId())
+		.fg();
+
+	}
+
+	public void htmCustomerProfileId(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
 	// userReceiveEmails //
 	///////////////////////
 
 	/**	L'entité « userReceiveEmails »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean userReceiveEmails;
 	@JsonIgnore
 	public Wrap<Boolean> userReceiveEmailsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("userReceiveEmails").o(userReceiveEmails);
@@ -620,6 +746,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « seeArchived »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean seeArchived;
 	@JsonIgnore
 	public Wrap<Boolean> seeArchivedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seeArchived").o(seeArchived);
@@ -742,6 +869,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/**	L'entité « seeDeleted »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean seeDeleted;
 	@JsonIgnore
 	public Wrap<Boolean> seeDeletedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seeDeleted").o(seeDeleted);
@@ -885,6 +1013,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		userLastNameInit();
 		userFullNameInit();
 		userSiteInit();
+		customerProfileIdInit();
 		userReceiveEmailsInit();
 		seeArchivedInit();
 		seeDeletedInit();
@@ -940,6 +1069,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				return oSiteUser.userFullName;
 			case "userSite":
 				return oSiteUser.userSite;
+			case "customerProfileId":
+				return oSiteUser.customerProfileId;
 			case "userReceiveEmails":
 				return oSiteUser.userReceiveEmails;
 			case "seeArchived":
@@ -997,6 +1128,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 	public Object defineSiteUser(String var, String val) {
 		switch(var) {
+			case "customerProfileId":
+				setCustomerProfileId(val);
+				savesSiteUser.add(var);
+				return val;
 			case "userReceiveEmails":
 				setUserReceiveEmails(val);
 				savesSiteUser.add(var);
@@ -1066,6 +1201,12 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				String userSite = (String)solrDocument.get("userSite_stored_string");
 				if(userSite != null)
 					oSiteUser.setUserSite(userSite);
+			}
+
+			if(savesSiteUser.contains("customerProfileId")) {
+				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+				if(customerProfileId != null)
+					oSiteUser.setCustomerProfileId(customerProfileId);
 			}
 
 			if(savesSiteUser.contains("userReceiveEmails")) {
@@ -1179,6 +1320,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			document.addField("userSite_indexed_string", userSite);
 			document.addField("userSite_stored_string", userSite);
 		}
+		if(customerProfileId != null) {
+			document.addField("customerProfileId_indexed_string", customerProfileId);
+			document.addField("customerProfileId_stored_string", customerProfileId);
+		}
 		if(userReceiveEmails != null) {
 			document.addField("userReceiveEmails_indexed_boolean", userReceiveEmails);
 			document.addField("userReceiveEmails_stored_boolean", userReceiveEmails);
@@ -1226,6 +1371,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				return "userFullName_indexed_string";
 			case "userSite":
 				return "userSite_indexed_string";
+			case "customerProfileId":
+				return "customerProfileId_indexed_string";
 			case "userReceiveEmails":
 				return "userReceiveEmails_indexed_boolean";
 			case "seeArchived":
@@ -1285,6 +1432,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		if(userSite != null)
 			oSiteUser.setUserSite(userSite);
 
+		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
+		if(customerProfileId != null)
+			oSiteUser.setCustomerProfileId(customerProfileId);
+
 		Boolean userReceiveEmails = (Boolean)solrDocument.get("userReceiveEmails_stored_boolean");
 		if(userReceiveEmails != null)
 			oSiteUser.setUserReceiveEmails(userReceiveEmails);
@@ -1320,6 +1471,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SiteUser) {
 			SiteUser original = (SiteUser)o;
+			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
+				apiRequest.addVars("customerProfileId");
 			if(!Objects.equals(userReceiveEmails, original.getUserReceiveEmails()))
 				apiRequest.addVars("userReceiveEmails");
 			if(!Objects.equals(seeArchived, original.getSeeArchived()))
@@ -1335,7 +1488,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), userReceiveEmails, seeArchived, seeDeleted);
+		return Objects.hash(super.hashCode(), customerProfileId, userReceiveEmails, seeArchived, seeDeleted);
 	}
 
 	////////////
@@ -1349,6 +1502,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			return false;
 		SiteUser that = (SiteUser)o;
 		return super.equals(o)
+				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( userReceiveEmails, that.userReceiveEmails )
 				&& Objects.equals( seeArchived, that.seeArchived )
 				&& Objects.equals( seeDeleted, that.seeDeleted );
@@ -1362,7 +1516,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SiteUser { ");
-		sb.append( "userReceiveEmails: " ).append(userReceiveEmails);
+		sb.append( "customerProfileId: \"" ).append(customerProfileId).append( "\"" );
+		sb.append( ", userReceiveEmails: " ).append(userReceiveEmails);
 		sb.append( ", seeArchived: " ).append(seeArchived);
 		sb.append( ", seeDeleted: " ).append(seeDeleted);
 		sb.append(" }");

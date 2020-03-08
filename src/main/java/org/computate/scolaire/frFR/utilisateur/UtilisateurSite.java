@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.utilisateur;                           
+package org.computate.scolaire.frFR.utilisateur;                        
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -17,6 +17,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiUri.enUS: /api/user
  * 
  * ApiMethode: PATCH
+ * ApiMethode: POST
  * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: UtilisateurSitePage
@@ -113,7 +114,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: siteRequest_
 	 * r: UtilisateurNomFamille
 	 * r.enUS: UserLastName
-	 */ 
+	 */         
 	protected void _utilisateurNomFamille(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNomFamille();
 		c.o(o);
@@ -141,6 +142,19 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Stocke: true
 	 */
 	protected void _utilisateurSite(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 4
+	 * NomAffichage.frFR: customer profile ID
+	 * NomAffichage.enUS: customer profile ID
+	 */    
+	protected void _customerProfileId(Couverture<String> c) {
 	}
 
 	/**	

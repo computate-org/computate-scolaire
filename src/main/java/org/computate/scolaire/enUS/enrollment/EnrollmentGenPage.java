@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -52,6 +58,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -78,6 +90,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -104,6 +122,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -643,40 +667,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-purple w3-hover-purple ").f();
-					{ e("tr").f();
-						e("th").f().sx("created").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listSchoolEnrollment.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listSchoolEnrollment.size(); i++) {
-						SchoolEnrollment o = listSchoolEnrollment.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/enrollment/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCreated());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "fas fa-edit ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjectTitle());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1EnrollmentGenPage();
 		}
 
 		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -708,16 +699,112 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void table1EnrollmentGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2EnrollmentGenPage();
+		} g("table");
+	}
+
+	public void table2EnrollmentGenPage() {
+		thead1EnrollmentGenPage();
+		tbody1EnrollmentGenPage();
+		tfoot1EnrollmentGenPage();
+	}
+
+	public void thead1EnrollmentGenPage() {
+		{ e("thead").a("class", "w3-purple w3-hover-purple ").f();
+			thead2EnrollmentGenPage();
+		} g("thead");
+	}
+
+	public void thead2EnrollmentGenPage() {
+			{ e("tr").f();
+			if(getColumnCreated()) {
+				e("th").f().sx("created").g("th");
+			}
+			if(getColumnObjectTitle()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1EnrollmentGenPage() {
+		{ e("tbody").f();
+			tbody2EnrollmentGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2EnrollmentGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listSchoolEnrollment.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listSchoolEnrollment.size(); i++) {
+			SchoolEnrollment o = listSchoolEnrollment.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/enrollment/" + o.getPk();
+			{ e("tr").f();
+				if(getColumnCreated()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCreated());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColumnObjectTitle()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "fas fa-edit ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjectTitle());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1EnrollmentGenPage() {
+		{ e("tfoot").a("class", "w3-purple w3-hover-purple ").f();
+			tfoot2EnrollmentGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2EnrollmentGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColumnCreated()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColumnObjectTitle()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColumnCreated() {
+		return true;
+	}
+
+	public Boolean getColumnObjectTitle() {
+		return true;
+	}
+
 	public void htmlBodyFormsEnrollmentGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-				.a("id", "refreshThisEnrollmentGenPage")
-				.a("onclick", "patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisEnrollmentGenPage')); }, function() { addError($('#refreshThisEnrollmentGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("refresh this enrollment");
-		} g("button");
+		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+					.a("id", "refreshThisEnrollmentGenPage")
+					.a("onclick", "patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisEnrollmentGenPage')); }, function() { addError($('#refreshThisEnrollmentGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("refresh this enrollment");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")

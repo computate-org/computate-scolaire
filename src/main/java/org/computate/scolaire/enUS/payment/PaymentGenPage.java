@@ -416,11 +416,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				theadPaymentGenPage();
-				tbodyPaymentGenPage();
-				tfootPaymentGenPage();
-			} g("table");
+				table1PaymentGenPage();
 		}
 
 		if(listSchoolPayment != null && listSchoolPayment.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -452,134 +448,158 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		g("div");
 	}
 
-	public void theadPaymentGenPage() {
+	public void table1PaymentGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2PaymentGenPage();
+		} g("table");
+	}
+
+	public void table2PaymentGenPage() {
+		thead1PaymentGenPage();
+		tbody1PaymentGenPage();
+		tfoot1PaymentGenPage();
+	}
+
+	public void thead1PaymentGenPage() {
 		{ e("thead").a("class", "w3-green w3-hover-green ").f();
-			{ e("tr").f();
-				if(getColumnCreated()) {
-					e("th").f().sx("created").g("th");
-				}
-				if(getColumnObjectTitle()) {
-					e("th").f().sx("").g("th");
-				}
-				if(getColumnPaymentShortName()) {
-					e("th").f().sx("name").g("th");
-				}
-				if(getColumnPaymentDate()) {
-					e("th").f().sx("payment date").g("th");
-				}
-				if(getColumnPaymentAmount()) {
-					e("th").f().sx("payment amount").g("th");
-				}
-				if(getColumnChargeAmount()) {
-					e("th").f().sx("charge amount").g("th");
-				}
-			} g("tr");
+			thead2PaymentGenPage();
 		} g("thead");
 	}
 
-	public void tbodyPaymentGenPage() {
-		{ e("tbody").f();
-			Map<String, Map<String, List<String>>> highlighting = listSchoolPayment.getQueryResponse().getHighlighting();
-			for(int i = 0; i < listSchoolPayment.size(); i++) {
-				SchoolPayment o = listSchoolPayment.getList().get(i);
-				Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-				List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-				String uri = "/payment/" + o.getPk();
-				{ e("tr").f();
-					if(getColumnCreated()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strCreated());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColumnObjectTitle()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								e("i").a("class", "fas fa-search-dollar ").f().g("i");
-								{ e("span").f();
-									sx(o.strObjectTitle());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColumnPaymentShortName()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strPaymentShortName());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColumnPaymentDate()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strPaymentDate());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColumnPaymentAmount()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strPaymentAmount());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-					if(getColumnChargeAmount()) {
-						{ e("td").f();
-							{ e("a").a("href", uri).f();
-								{ e("span").f();
-									sx(o.strChargeAmount());
-								} g("span");
-							} g("a");
-						} g("td");
-					}
-				} g("tr");
+	public void thead2PaymentGenPage() {
+			{ e("tr").f();
+			if(getColumnCreated()) {
+				e("th").f().sx("created").g("th");
 			}
+			if(getColumnObjectTitle()) {
+				e("th").f().sx("").g("th");
+			}
+			if(getColumnPaymentShortName()) {
+				e("th").f().sx("name").g("th");
+			}
+			if(getColumnPaymentDate()) {
+				e("th").f().sx("payment date").g("th");
+			}
+			if(getColumnPaymentAmount()) {
+				e("th").f().sx("payment amount").g("th");
+			}
+			if(getColumnChargeAmount()) {
+				e("th").f().sx("charge amount").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1PaymentGenPage() {
+		{ e("tbody").f();
+			tbody2PaymentGenPage();
 		} g("tbody");
 	}
 
-	public void tfootPaymentGenPage() {
-		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+	public void tbody2PaymentGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listSchoolPayment.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listSchoolPayment.size(); i++) {
+			SchoolPayment o = listSchoolPayment.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/payment/" + o.getPk();
 			{ e("tr").f();
-				SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 				if(getColumnCreated()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCreated());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColumnObjectTitle()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "fas fa-search-dollar ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjectTitle());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColumnPaymentShortName()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strPaymentShortName());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColumnPaymentDate()) {
-					e("td").f();
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strPaymentDate());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColumnPaymentAmount()) {
-					e("td").f();
-					BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-					e("span").a("class", "font-weight-bold ").f().sx(sum_paymentAmount).g("span");
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strPaymentAmount());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 				if(getColumnChargeAmount()) {
-					e("td").f();
-					BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-					e("span").a("class", "font-weight-bold ").f().sx(sum_chargeAmount).g("span");
-					g("td");
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strChargeAmount());
+							} g("span");
+						} g("a");
+					} g("td");
 				}
 			} g("tr");
+		}
+	}
+
+	public void tfoot1PaymentGenPage() {
+		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+			tfoot2PaymentGenPage();
 		} g("tfoot");
+	}
+
+	public void tfoot2PaymentGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColumnCreated()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColumnObjectTitle()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColumnPaymentShortName()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColumnPaymentDate()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColumnPaymentAmount()) {
+				e("td").f();
+				BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+				e("span").a("class", "font-weight-bold ").f().sx(sum_paymentAmount).g("span");
+				g("td");
+			}
+			if(getColumnChargeAmount()) {
+				e("td").f();
+				BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+				e("span").a("class", "font-weight-bold ").f().sx(sum_chargeAmount).g("span");
+				g("td");
+			}
+		} g("tr");
 	}
 
 	public Boolean getColumnCreated() {
@@ -609,13 +629,15 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 	public void htmlBodyFormsPaymentGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("id", "refreshThisPaymentGenPage")
-				.a("onclick", "patchSchoolPaymentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisPaymentGenPage')); }, function() { addError($('#refreshThisPaymentGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("refresh this payment");
-		} g("button");
+		if(listSchoolPayment != null && listSchoolPayment.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+					.a("id", "refreshThisPaymentGenPage")
+					.a("onclick", "patchSchoolPaymentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisPaymentGenPage')); }, function() { addError($('#refreshThisPaymentGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("refresh this payment");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
