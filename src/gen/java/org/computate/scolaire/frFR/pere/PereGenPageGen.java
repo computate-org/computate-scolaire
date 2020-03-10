@@ -5,6 +5,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import org.computate.scolaire.frFR.pere.PereScolaire;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
@@ -33,6 +35,7 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listePereScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<PereScolaire> listePereScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<PereScolaire>> listePereScolaireCouverture = new Couverture<ListeRecherche<PereScolaire>>().p(this).c(ListeRecherche.class).var("listePereScolaire").o(listePereScolaire);
@@ -72,6 +75,7 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « pereScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected PereScolaire pereScolaire;
 	@JsonIgnore
 	public Couverture<PereScolaire> pereScolaireCouverture = new Couverture<PereScolaire>().p(this).c(PereScolaire.class).var("pereScolaire").o(pereScolaire);

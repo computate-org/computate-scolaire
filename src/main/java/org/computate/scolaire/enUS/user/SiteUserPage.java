@@ -7,15 +7,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.year.SchoolYear;
+
+import net.authorize.Environment;
+import net.authorize.api.contract.v1.ArrayOfSetting;
+import net.authorize.api.contract.v1.CustomerProfileType;
+import net.authorize.api.contract.v1.GetHostedProfilePageRequest;
+import net.authorize.api.contract.v1.GetHostedProfilePageResponse;
+import net.authorize.api.contract.v1.MerchantAuthenticationType;
+import net.authorize.api.contract.v1.MessageTypeEnum;
+import net.authorize.api.contract.v1.SettingType;
+import net.authorize.api.controller.GetHostedProfilePageController;
+import net.authorize.api.controller.GetTransactionListForCustomerController;
+import net.authorize.api.controller.base.ApiOperationBase;
 
 /**
  * Translate: false
@@ -110,6 +125,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				e("span").a("class", " ").f().sx("my user page").g("span");
 			} g("a");
 		} g("h1");
+		writeConfigurePayments();
 		{ e("div").a("class", "").f();
 		for(SchoolYear schoolYear : schoolYears) {
 			{ e("div").a("class", "w3-cell-row w3-mobile w3-center w3-margin ").f();
@@ -135,6 +151,65 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				} g("div");
 			} g("div");
 		}
+		} g("div");
+	}
+
+	public void writeConfigurePayments() {
+		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
+		SiteUser siteUser = siteRequest_.getSiteUser();
+		String customerProfileId = siteUser.getCustomerProfileId();
+		MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+		merchantAuthenticationType.setName(siteConfig.getAuthorizeApiLoginId());
+		merchantAuthenticationType.setTransactionKey(siteConfig.getAuthorizeTransactionKey());
+		ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+		
+		GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
+		createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+		createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
+		ArrayOfSetting settings = new ArrayOfSetting();
+		{
+			SettingType settingType = new SettingType();
+			settingType.setSettingName("hostedProfileManageOptions");
+			settingType.setSettingValue("showPayment");
+			settings.getSetting().add(settingType);
+		}
+		{
+			SettingType settingType = new SettingType();
+			settingType.setSettingName("hostedProfileValidationMode");
+			settingType.setSettingValue("testMode");
+			settings.getSetting().add(settingType);
+		}
+		{
+			SettingType settingType = new SettingType();
+			settingType.setSettingName("hostedProfileBillingAddressOptions");
+			settingType.setSettingValue("showNone");
+			settings.getSetting().add(settingType);
+		}
+		{
+			SettingType settingType = new SettingType();
+			settingType.setSettingName("hostedProfileCardCodeRequired");
+			settingType.setSettingValue("true");
+			settings.getSetting().add(settingType);
+		}
+		createCustomerProfileRequest.setHostedProfileSettings(settings);
+
+		GetHostedProfilePageController controller = new GetHostedProfilePageController(createCustomerProfileRequest);
+		GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+		controller.execute();
+		if(controller.getErrorResponse() != null)
+			throw new RuntimeException(controller.getResults().toString());
+		GetHostedProfilePageResponse response = controller.getApiResponse();
+		if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
+			throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+		}
+		{ e("div").a("class", "").f();
+			e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
+			{ e("form").a("method", "post").a("target", "_blank").a("action", "https://accept.authorize.net/customer/manage").f();
+				e("input").a("type", "hidden").a("name", "token").a("value", response.getToken()).fg();
+//				e("input").a("type", "hidden").a("name", "paymentProfileId").a("value", response.getToken()).fg();
+				e("button").a("type", "submit").f().sx("Manage payments").g("button");
+			} g("form");
+			e("div").a("class", "").f().sx("Click here to manage payments in a new tab. ").g("div");
 		} g("div");
 	}
 }

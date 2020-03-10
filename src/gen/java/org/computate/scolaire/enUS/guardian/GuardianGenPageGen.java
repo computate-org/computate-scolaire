@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -33,6 +35,7 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listSchoolGuardian »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolGuardian> listSchoolGuardian;
 	@JsonIgnore
 	public Wrap<SearchList<SchoolGuardian>> listSchoolGuardianWrap = new Wrap<SearchList<SchoolGuardian>>().p(this).c(SearchList.class).var("listSchoolGuardian").o(listSchoolGuardian);
@@ -72,6 +75,7 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « schoolGuardian »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolGuardian schoolGuardian;
 	@JsonIgnore
 	public Wrap<SchoolGuardian> schoolGuardianWrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("schoolGuardian").o(schoolGuardian);

@@ -5,6 +5,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.gardien.GardienScolaire;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
@@ -33,6 +35,7 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listeGardienScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<GardienScolaire> listeGardienScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<GardienScolaire>> listeGardienScolaireCouverture = new Couverture<ListeRecherche<GardienScolaire>>().p(this).c(ListeRecherche.class).var("listeGardienScolaire").o(listeGardienScolaire);
@@ -72,6 +75,7 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « gardienScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected GardienScolaire gardienScolaire;
 	@JsonIgnore
 	public Couverture<GardienScolaire> gardienScolaireCouverture = new Couverture<GardienScolaire>().p(this).c(GardienScolaire.class).var("gardienScolaire").o(gardienScolaire);

@@ -117,6 +117,8 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * r.enUS: sessionKey
 	 * r: ageCle
 	 * r.enUS: ageKey
+	 * r: utilisateurCles
+	 * r.enUS: userKeys
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
@@ -129,11 +131,12 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 		l.addFacetField("saisonCle_indexed_long");
 		l.addFacetField("sessionCle_indexed_long");
 		l.addFacetField("ageCle_indexed_long");
+		l.addFacetField("utilisateurCles_indexed_longs");
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: inscriptions
+	 * Var.enUS: enrollments
 	 * r: inscriptionRecherche
 	 * r.enUS: enrollmentSearch
 	 * r: inscriptions
@@ -142,6 +145,22 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 */   
 	protected void _inscriptions(List<InscriptionScolaire> l) {
 		l.addAll(inscriptionRecherche.getList());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: userKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire des utlisateurs dans la base de données. 
+	 * Description.enUS: The primary key of the users in the database. 
+	 * r: utilisateurCles
+	 * r.enUS: userKeys
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
+	 */                  
+	protected void _utilisateurCles(List<Long> l) {
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("utilisateurCles_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	/**

@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -336,40 +342,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
-					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listeGardienScolaire.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listeGardienScolaire.size(); i++) {
-						GardienScolaire o = listeGardienScolaire.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/gardien/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-phone ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1GardienGenPage();
 		}
 
 		if(listeGardienScolaire != null && listeGardienScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -401,16 +374,112 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void table1GardienGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2GardienGenPage();
+		} g("table");
+	}
+
+	public void table2GardienGenPage() {
+		thead1GardienGenPage();
+		tbody1GardienGenPage();
+		tfoot1GardienGenPage();
+	}
+
+	public void thead1GardienGenPage() {
+		{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
+			thead2GardienGenPage();
+		} g("thead");
+	}
+
+	public void thead2GardienGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
+			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1GardienGenPage() {
+		{ e("tbody").f();
+			tbody2GardienGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2GardienGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listeGardienScolaire.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listeGardienScolaire.size(); i++) {
+			GardienScolaire o = listeGardienScolaire.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/gardien/" + o.getPk();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColonneObjetTitre()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "far fa-phone ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1GardienGenPage() {
+		{ e("tfoot").a("class", "w3-yellow w3-hover-yellow ").f();
+			tfoot2GardienGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2GardienGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
 	public void htmlBodyFormsGardienGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-				.a("id", "rechargerCeGardienGenPage")
-				.a("onclick", "patchGardienScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeGardienGenPage')); }, function() { ajouterErreur($('#rechargerCeGardienGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger ce gardien");
-		} g("button");
+		if(listeGardienScolaire != null && listeGardienScolaire.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+					.a("id", "rechargerCeGardienGenPage")
+					.a("onclick", "patchGardienScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeGardienGenPage')); }, function() { ajouterErreur($('#rechargerCeGardienGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("recharger ce gardien");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")

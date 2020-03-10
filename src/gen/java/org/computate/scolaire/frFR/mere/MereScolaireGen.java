@@ -510,6 +510,93 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	/////////////////////
+	// utilisateurCles //
+	/////////////////////
+
+	/**	L'entité « utilisateurCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
+
+	/**	<br/>L'entité « utilisateurCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCles">Trouver l'entité utilisateurCles dans Solr</a>
+	 * <br/>
+	 * @param utilisateurCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _utilisateurCles(List<Long> l);
+
+	public List<Long> getUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public void setUtilisateurCles(List<Long> utilisateurCles) {
+		this.utilisateurCles = utilisateurCles;
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public MereScolaire addUtilisateurCles(Long...objets) {
+		for(Long o : objets) {
+			addUtilisateurCles(o);
+		}
+		return (MereScolaire)this;
+	}
+	public MereScolaire addUtilisateurCles(Long o) {
+		if(o != null && !utilisateurCles.contains(o))
+			this.utilisateurCles.add(o);
+		return (MereScolaire)this;
+	}
+	public MereScolaire setUtilisateurCles(JsonArray objets) {
+		utilisateurCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUtilisateurCles(o);
+		}
+		return (MereScolaire)this;
+	}
+	public MereScolaire addUtilisateurCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUtilisateurCles(p);
+		}
+		return (MereScolaire)this;
+	}
+	protected MereScolaire utilisateurClesInit() {
+		if(!utilisateurClesCouverture.dejaInitialise) {
+			_utilisateurCles(utilisateurCles);
+		}
+		utilisateurClesCouverture.dejaInitialise(true);
+		return (MereScolaire)this;
+	}
+
+	public List<Long> solrUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public String strUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String jsonUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String nomAffichageUtilisateurCles() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurCles() {
+		return null;
+	}
+
+	public String htmUtilisateurCles() {
+		return utilisateurCles == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCles());
+	}
+
 	///////////////
 	// ecoleCles //
 	///////////////
@@ -2485,6 +2572,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		mereTriInit();
 		inscriptionRechercheInit();
 		inscriptionsInit();
+		utilisateurClesInit();
 		ecoleClesInit();
 		anneeClesInit();
 		saisonClesInit();
@@ -2557,6 +2645,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				return oMereScolaire.inscriptionRecherche;
 			case "inscriptions":
 				return oMereScolaire.inscriptions;
+			case "utilisateurCles":
+				return oMereScolaire.utilisateurCles;
 			case "ecoleCles":
 				return oMereScolaire.ecoleCles;
 			case "anneeCles":
@@ -2734,6 +2824,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				Integer mereTri = (Integer)solrDocument.get("mereTri_stored_int");
 				if(mereTri != null)
 					oMereScolaire.setMereTri(mereTri);
+			}
+
+			if(sauvegardesMereScolaire.contains("utilisateurCles")) {
+				List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+				if(utilisateurCles != null)
+					oMereScolaire.utilisateurCles.addAll(utilisateurCles);
 			}
 
 			if(sauvegardesMereScolaire.contains("ecoleCles")) {
@@ -2945,6 +3041,14 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			document.addField("mereTri_indexed_int", mereTri);
 			document.addField("mereTri_stored_int", mereTri);
 		}
+		if(utilisateurCles != null) {
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_stored_longs", o);
+			}
+		}
 		if(ecoleCles != null) {
 			for(java.lang.Long o : ecoleCles) {
 				document.addField("ecoleCles_indexed_longs", o);
@@ -3076,6 +3180,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				return "familleTri_indexed_int";
 			case "mereTri":
 				return "mereTri_indexed_int";
+			case "utilisateurCles":
+				return "utilisateurCles_indexed_longs";
 			case "ecoleCles":
 				return "ecoleCles_indexed_longs";
 			case "anneeCles":
@@ -3160,6 +3266,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		Integer mereTri = (Integer)solrDocument.get("mereTri_stored_int");
 		if(mereTri != null)
 			oMereScolaire.setMereTri(mereTri);
+
+		List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+		if(utilisateurCles != null)
+			oMereScolaire.utilisateurCles.addAll(utilisateurCles);
 
 		List<Long> ecoleCles = (List<Long>)solrDocument.get("ecoleCles_stored_longs");
 		if(ecoleCles != null)

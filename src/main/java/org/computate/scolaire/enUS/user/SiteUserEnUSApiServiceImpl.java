@@ -1,5 +1,8 @@
 package org.computate.scolaire.enUS.user;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -42,7 +45,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 		eventHandler.handle(Future.succeededFuture(listSearch));
 	}
 
-	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject) {
+	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		String customerProfileId = jsonObject.getString("customerProfileId");
 		if(customerProfileId == null) {
 			SiteConfig siteConfig = siteRequest.getSiteConfig_();
@@ -54,7 +57,9 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
 			createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
 			CustomerProfileType profile = new CustomerProfileType();
-			profile.setMerchantCustomerId(jsonObject.getString("userId"));
+			profile.setEmail(jsonObject.getString("email"));
+			profile.setDescription(jsonObject.getString("userId"));
+			profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
 			createCustomerProfileRequest.setProfile(profile);
 	
 			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
@@ -63,10 +68,20 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(controller.getResults().toString());
 			CreateCustomerProfileResponse response = controller.getApiResponse();
-			if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode()))
-				throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
-			customerProfileId = response.getCustomerProfileId();
-			if(jsonObject.size() == 0)
+			if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
+				String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
+				Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);
+				if(matcher.find()) {
+					customerProfileId = matcher.group(1);
+				}
+				else {
+					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+				}
+			}
+			else {
+				customerProfileId = response.getCustomerProfileId();
+			}
+			if(patch)
 				jsonObject.put("setCustomerProfileId", customerProfileId);
 			else
 				jsonObject.put("customerProfileId", customerProfileId);

@@ -461,52 +461,139 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		return (SchoolMom)this;
 	}
 
-	//////////////////
-	// inscriptions //
-	//////////////////
+	/////////////////
+	// enrollments //
+	/////////////////
 
-	/**	L'entité « inscriptions »
+	/**	L'entité « enrollments »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolEnrollment> inscriptions = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
+	protected List<SchoolEnrollment> enrollments = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 	@JsonIgnore
-	public Wrap<List<SchoolEnrollment>> inscriptionsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("inscriptions").o(inscriptions);
+	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
 
-	/**	<br/>L'entité « inscriptions »
+	/**	<br/>L'entité « enrollments »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.SchoolMom&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:inscriptions">Trouver l'entité inscriptions dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.SchoolMom&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments">Trouver l'entité enrollments dans Solr</a>
 	 * <br/>
-	 * @param inscriptions est l'entité déjà construit. 
+	 * @param enrollments est l'entité déjà construit. 
 	 **/
-	protected abstract void _inscriptions(List<SchoolEnrollment> l);
+	protected abstract void _enrollments(List<SchoolEnrollment> l);
 
-	public List<SchoolEnrollment> getInscriptions() {
-		return inscriptions;
+	public List<SchoolEnrollment> getEnrollments() {
+		return enrollments;
 	}
 
-	public void setInscriptions(List<SchoolEnrollment> inscriptions) {
-		this.inscriptions = inscriptions;
-		this.inscriptionsWrap.alreadyInitialized = true;
+	public void setEnrollments(List<SchoolEnrollment> enrollments) {
+		this.enrollments = enrollments;
+		this.enrollmentsWrap.alreadyInitialized = true;
 	}
-	public SchoolMom addInscriptions(SchoolEnrollment...objets) {
+	public SchoolMom addEnrollments(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
-			addInscriptions(o);
+			addEnrollments(o);
 		}
 		return (SchoolMom)this;
 	}
-	public SchoolMom addInscriptions(SchoolEnrollment o) {
-		if(o != null && !inscriptions.contains(o))
-			this.inscriptions.add(o);
+	public SchoolMom addEnrollments(SchoolEnrollment o) {
+		if(o != null && !enrollments.contains(o))
+			this.enrollments.add(o);
 		return (SchoolMom)this;
 	}
-	protected SchoolMom inscriptionsInit() {
-		if(!inscriptionsWrap.alreadyInitialized) {
-			_inscriptions(inscriptions);
+	protected SchoolMom enrollmentsInit() {
+		if(!enrollmentsWrap.alreadyInitialized) {
+			_enrollments(enrollments);
 		}
-		inscriptionsWrap.alreadyInitialized(true);
+		enrollmentsWrap.alreadyInitialized(true);
 		return (SchoolMom)this;
+	}
+
+	//////////////
+	// userKeys //
+	//////////////
+
+	/**	L'entité « userKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
+
+	/**	<br/>L'entité « userKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.SchoolMom&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKeys">Trouver l'entité userKeys dans Solr</a>
+	 * <br/>
+	 * @param userKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _userKeys(List<Long> l);
+
+	public List<Long> getUserKeys() {
+		return userKeys;
+	}
+
+	public void setUserKeys(List<Long> userKeys) {
+		this.userKeys = userKeys;
+		this.userKeysWrap.alreadyInitialized = true;
+	}
+	public SchoolMom addUserKeys(Long...objets) {
+		for(Long o : objets) {
+			addUserKeys(o);
+		}
+		return (SchoolMom)this;
+	}
+	public SchoolMom addUserKeys(Long o) {
+		if(o != null && !userKeys.contains(o))
+			this.userKeys.add(o);
+		return (SchoolMom)this;
+	}
+	public SchoolMom setUserKeys(JsonArray objets) {
+		userKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUserKeys(o);
+		}
+		return (SchoolMom)this;
+	}
+	public SchoolMom addUserKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUserKeys(p);
+		}
+		return (SchoolMom)this;
+	}
+	protected SchoolMom userKeysInit() {
+		if(!userKeysWrap.alreadyInitialized) {
+			_userKeys(userKeys);
+		}
+		userKeysWrap.alreadyInitialized(true);
+		return (SchoolMom)this;
+	}
+
+	public List<Long> solrUserKeys() {
+		return userKeys;
+	}
+
+	public String strUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String jsonUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String nomAffichageUserKeys() {
+		return null;
+	}
+
+	public String htmTooltipUserKeys() {
+		return null;
+	}
+
+	public String htmUserKeys() {
+		return userKeys == null ? "" : StringEscapeUtils.escapeHtml4(strUserKeys());
 	}
 
 	////////////////
@@ -2483,7 +2570,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		familySortInit();
 		schoolSortInit();
 		enrollmentSearchInit();
-		inscriptionsInit();
+		enrollmentsInit();
+		userKeysInit();
 		schoolKeysInit();
 		yearKeysInit();
 		seasonKeysInit();
@@ -2554,8 +2642,10 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				return oSchoolMom.schoolSort;
 			case "enrollmentSearch":
 				return oSchoolMom.enrollmentSearch;
-			case "inscriptions":
-				return oSchoolMom.inscriptions;
+			case "enrollments":
+				return oSchoolMom.enrollments;
+			case "userKeys":
+				return oSchoolMom.userKeys;
 			case "schoolKeys":
 				return oSchoolMom.schoolKeys;
 			case "yearKeys":
@@ -2733,6 +2823,12 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchoolMom.setSchoolSort(schoolSort);
+			}
+
+			if(savesSchoolMom.contains("userKeys")) {
+				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+				if(userKeys != null)
+					oSchoolMom.userKeys.addAll(userKeys);
 			}
 
 			if(savesSchoolMom.contains("schoolKeys")) {
@@ -2944,6 +3040,14 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			document.addField("schoolSort_indexed_int", schoolSort);
 			document.addField("schoolSort_stored_int", schoolSort);
 		}
+		if(userKeys != null) {
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_stored_longs", o);
+			}
+		}
 		if(schoolKeys != null) {
 			for(java.lang.Long o : schoolKeys) {
 				document.addField("schoolKeys_indexed_longs", o);
@@ -3075,6 +3179,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				return "familySort_indexed_int";
 			case "schoolSort":
 				return "schoolSort_indexed_int";
+			case "userKeys":
+				return "userKeys_indexed_longs";
 			case "schoolKeys":
 				return "schoolKeys_indexed_longs";
 			case "yearKeys":
@@ -3159,6 +3265,10 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 		if(schoolSort != null)
 			oSchoolMom.setSchoolSort(schoolSort);
+
+		List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+		if(userKeys != null)
+			oSchoolMom.userKeys.addAll(userKeys);
 
 		List<Long> schoolKeys = (List<Long>)solrDocument.get("schoolKeys_stored_longs");
 		if(schoolKeys != null)

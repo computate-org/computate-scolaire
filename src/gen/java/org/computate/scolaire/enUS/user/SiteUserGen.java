@@ -1167,6 +1167,12 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		savesSiteUser = (List<String>)solrDocument.get("savesSiteUser_stored_strings");
 		if(savesSiteUser != null) {
 
+			if(savesSiteUser.contains("userId")) {
+				String userId = (String)solrDocument.get("userId_stored_string");
+				if(userId != null)
+					oSiteUser.setUserId(userId);
+			}
+
 			if(savesSiteUser.contains("userName")) {
 				String userName = (String)solrDocument.get("userName_stored_string");
 				if(userName != null)
@@ -1296,6 +1302,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		if(savesSiteUser != null)
 			document.addField("savesSiteUser_stored_strings", savesSiteUser);
 
+		if(userId != null) {
+			document.addField("userId_indexed_string", userId);
+			document.addField("userId_stored_string", userId);
+		}
 		if(userName != null) {
 			document.addField("userName_indexed_string", userName);
 			document.addField("userName_stored_string", userName);
@@ -1359,6 +1369,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public static String varIndexedSiteUser(String entityVar) {
 		switch(entityVar) {
+			case "userId":
+				return "userId_indexed_string";
 			case "userName":
 				return "userName_indexed_string";
 			case "userEmail":
@@ -1407,6 +1419,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 	public void storeSiteUser(SolrDocument solrDocument) {
 		SiteUser oSiteUser = (SiteUser)this;
+
+		String userId = (String)solrDocument.get("userId_stored_string");
+		if(userId != null)
+			oSiteUser.setUserId(userId);
 
 		String userName = (String)solrDocument.get("userName_stored_string");
 		if(userName != null)

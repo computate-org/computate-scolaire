@@ -1413,31 +1413,106 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
-						if(userValues == null) {
-							JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-							JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+						try {
+							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
+							if(userValues == null) {
+								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-							JsonObject jsonObject = new JsonObject();
-							jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-							jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-							jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-							jsonObject.put("userId", jsonPrincipal.getString("sub"));
-							userSchoolMomDefine(siteRequest, jsonObject);
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userId", jsonPrincipal.getString("sub"));
+								userSchoolMomDefine(siteRequest, jsonObject);
 
-							SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-							siteRequest2.setJsonObject(jsonObject);
-							siteRequest2.setVertx(siteRequest.getVertx());
-							siteRequest2.setSiteContext_(siteContext);
-							siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-							siteRequest2.setUserId(siteRequest.getUserId());
-							siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+								siteRequest2.setJsonObject(jsonObject);
+								siteRequest2.setVertx(siteRequest.getVertx());
+								siteRequest2.setSiteContext_(siteContext);
+								siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+								siteRequest2.setUserId(siteRequest.getUserId());
+								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 
-							userService.createSiteUser(siteRequest2, b -> {
-								if(b.succeeded()) {
-									SiteUser siteUser = b.result();
-									userService.sqlPOSTSiteUser(siteUser, c -> {
+								userService.createSiteUser(siteRequest2, b -> {
+									if(b.succeeded()) {
+										SiteUser siteUser = b.result();
+										userService.sqlPOSTSiteUser(siteUser, c -> {
+											if(c.succeeded()) {
+												userService.defineSiteUser(siteUser, d -> {
+													if(d.succeeded()) {
+														userService.attributeSiteUser(siteUser, e -> {
+															if(e.succeeded()) {
+																userService.indexSiteUser(siteUser, f -> {
+																	if(f.succeeded()) {
+																		siteRequest.setSiteUser(siteUser);
+																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		eventHandler.handle(Future.succeededFuture());
+																	} else {
+																		errorSchoolMom(siteRequest, eventHandler, f);
+																	}
+																});
+															} else {
+																errorSchoolMom(siteRequest, eventHandler, e);
+															}
+														});
+													} else {
+														errorSchoolMom(siteRequest, eventHandler, d);
+													}
+												});
+											} else {
+												errorSchoolMom(siteRequest, eventHandler, c);
+											}
+										});
+									} else {
+										errorSchoolMom(siteRequest, eventHandler, b);
+									}
+								});
+							} else {
+								Long pkUser = userValues.getLong(0);
+								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								searchList.setStore(true);
+								searchList.setC(SiteUser.class);
+								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+								searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+								searchList.initDeepSearchList(siteRequest);
+								SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
+
+								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+
+								JsonObject jsonObject = Optional.ofNullable(siteUser1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userId", jsonPrincipal.getString("sub"));
+								Boolean define = userSchoolMomDefine(siteRequest, jsonObject);
+								if(define) {
+									SiteUser siteUser;
+									if(siteUser1 == null) {
+										siteUser = new SiteUser();
+										siteUser.setPk(pkUser);
+										siteUser.setSiteRequest_(siteRequest);
+									} else {
+										siteUser = siteUser1;
+									}
+
+									SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+									siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+									siteRequest2.setJsonObject(jsonObject);
+									siteRequest2.setVertx(siteRequest.getVertx());
+									siteRequest2.setSiteContext_(siteContext);
+									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+									siteRequest2.setUserId(siteRequest.getUserId());
+									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+									siteUser.setSiteRequest_(siteRequest2);
+
+									userService.sqlPATCHSiteUser(siteUser, c -> {
 										if(c.succeeded()) {
 											userService.defineSiteUser(siteUser, d -> {
 												if(d.succeeded()) {
@@ -1446,10 +1521,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 															userService.indexSiteUser(siteUser, f -> {
 																if(f.succeeded()) {
 																	siteRequest.setSiteUser(siteUser);
-																	siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-																	siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-																	siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-																	siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																	siteRequest.setUserName(siteUser.getUserName());
+																	siteRequest.setUserFirstName(siteUser.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser.getUserLastName());
+																	siteRequest.setUserId(siteUser.getUserId());
 																	eventHandler.handle(Future.succeededFuture());
 																} else {
 																	errorSchoolMom(siteRequest, eventHandler, f);
@@ -1468,60 +1543,16 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 										}
 									});
 								} else {
-									errorSchoolMom(siteRequest, eventHandler, b);
+									siteRequest.setSiteUser(siteUser1);
+									siteRequest.setUserName(siteUser1.getUserName());
+									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
+									siteRequest.setUserLastName(siteUser1.getUserLastName());
+									siteRequest.setUserId(siteUser1.getUserId());
+									eventHandler.handle(Future.succeededFuture());
 								}
-							});
-						} else {
-							Long pkUser = userValues.getLong(0);
-							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-							searchList.setStore(true);
-							searchList.setC(SiteUser.class);
-							searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
-							searchList.addFilterQuery("pk_indexed_long:" + pkUser);
-							searchList.initDeepSearchList(siteRequest);
-							SiteUser siteUser = searchList.getList().stream().findFirst().orElse(null);
-
-							JsonObject jsonObject = JsonObject.mapFrom(siteUser);
-							Boolean define = userSchoolMomDefine(siteRequest, jsonObject);
-							if(define) {
-								userService.sqlPATCHSiteUser(siteUser, c -> {
-									if(c.succeeded()) {
-										userService.defineSiteUser(siteUser, d -> {
-											if(d.succeeded()) {
-												userService.attributeSiteUser(siteUser, e -> {
-													if(e.succeeded()) {
-														userService.indexSiteUser(siteUser, f -> {
-															if(f.succeeded()) {
-																siteRequest.setSiteUser(siteUser);
-																siteRequest.setUserName(siteUser.getUserName());
-																siteRequest.setUserFirstName(siteUser.getUserFirstName());
-																siteRequest.setUserLastName(siteUser.getUserLastName());
-																siteRequest.setUserId(siteUser.getUserId());
-																eventHandler.handle(Future.succeededFuture());
-															} else {
-																errorSchoolMom(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														errorSchoolMom(siteRequest, eventHandler, e);
-													}
-												});
-											} else {
-												errorSchoolMom(siteRequest, eventHandler, d);
-											}
-										});
-									} else {
-										errorSchoolMom(siteRequest, eventHandler, c);
-									}
-								});
-							} else {
-								siteRequest.setSiteUser(siteUser);
-								siteRequest.setUserName(siteUser.getUserName());
-								siteRequest.setUserFirstName(siteUser.getUserFirstName());
-								siteRequest.setUserLastName(siteUser.getUserLastName());
-								siteRequest.setUserId(siteUser.getUserId());
-								eventHandler.handle(Future.succeededFuture());
 							}
+						} catch(Exception e) {
+							eventHandler.handle(Future.failedFuture(e));
 						}
 					} else {
 						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));

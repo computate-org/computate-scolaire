@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -17,6 +18,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 
@@ -33,6 +35,7 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listSchoolDad »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolDad> listSchoolDad;
 	@JsonIgnore
 	public Wrap<SearchList<SchoolDad>> listSchoolDadWrap = new Wrap<SearchList<SchoolDad>>().p(this).c(SearchList.class).var("listSchoolDad").o(listSchoolDad);
@@ -72,6 +75,7 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « schoolDad »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolDad schoolDad;
 	@JsonIgnore
 	public Wrap<SchoolDad> schoolDadWrap = new Wrap<SchoolDad>().p(this).c(SchoolDad.class).var("schoolDad").o(schoolDad);

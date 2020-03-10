@@ -44,11 +44,13 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */      
+ */       
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {    
 
 	/**  
 	 * Var.enUS: userId
+	 * Indexe: true
+	 * Stocke: true
 	 * Description.frFR: L'identifiant Keycloak pour cet utilisateur. 
 	 * NomAffichage.frFR: utilisateur ID
 	 * NomAffichage.enUS: user ID
@@ -153,7 +155,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * HtmlCellule: 4
 	 * NomAffichage.frFR: customer profile ID
 	 * NomAffichage.enUS: customer profile ID
-	 */    
+	 */       
 	protected void _customerProfileId(Couverture<String> c) {
 	}
 

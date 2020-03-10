@@ -39,8 +39,12 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 		l.addFacetField("ageKey_indexed_long");
 	}
 
-	protected void _inscriptions(List<SchoolEnrollment> l) {
+	protected void _enrollments(List<SchoolEnrollment> l) {
 		l.addAll(enrollmentSearch.getList());
+	}
+
+	protected void _userKeys(List<Long> l) {
+		l.addAll(enrollmentSearch.getQueryResponse().getFacetField("userKeys_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	protected void _schoolKeys(List<Long> l) {

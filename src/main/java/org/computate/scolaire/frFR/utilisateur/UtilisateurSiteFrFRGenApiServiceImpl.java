@@ -768,7 +768,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject);
+								utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject, false);
 
 								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
@@ -819,6 +819,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							} else {
 								Long pkUtilisateur = utilisateurValeurs.getLong(0);
 								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(UtilisateurSite.class);
 								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
@@ -833,8 +834,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("customerProfileId", principalJson.getString("name"));
 								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								Boolean definir = utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject);
+								jsonObject.put("email", principalJson.getString("email"));
+								Boolean definir = utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
 									if(utilisateurSite1 == null) {
@@ -907,7 +911,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject) {
+	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 

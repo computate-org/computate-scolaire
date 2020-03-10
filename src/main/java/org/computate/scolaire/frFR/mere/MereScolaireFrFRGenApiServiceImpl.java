@@ -1413,31 +1413,106 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
-						if(utilisateurValeurs == null) {
-							JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-							JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+						try {
+							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
+							if(utilisateurValeurs == null) {
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-							JsonObject jsonObject = new JsonObject();
-							jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
-							jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
-							jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
-							jsonObject.put("utilisateurId", principalJson.getString("sub"));
-							utilisateurMereScolaireDefinir(siteRequest, jsonObject);
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								utilisateurMereScolaireDefinir(siteRequest, jsonObject);
 
-							RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
-							requeteSite2.setObjetJson(jsonObject);
-							requeteSite2.setVertx(requeteSite.getVertx());
-							requeteSite2.setSiteContexte_(siteContexte);
-							requeteSite2.setConfigSite_(siteContexte.getConfigSite());
-							requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
-							requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+								requeteSite2.setObjetJson(jsonObject);
+								requeteSite2.setVertx(requeteSite.getVertx());
+								requeteSite2.setSiteContexte_(siteContexte);
+								requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
-							utilisateurService.creerSiteUser(requeteSite2, b -> {
-								if(b.succeeded()) {
-									SiteUser siteUser = b.result();
-									utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+								utilisateurService.creerSiteUser(requeteSite2, b -> {
+									if(b.succeeded()) {
+										SiteUser siteUser = b.result();
+										utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+											if(c.succeeded()) {
+												utilisateurService.definirSiteUser(siteUser, d -> {
+													if(d.succeeded()) {
+														utilisateurService.attribuerSiteUser(siteUser, e -> {
+															if(e.succeeded()) {
+																utilisateurService.indexerSiteUser(siteUser, f -> {
+																	if(f.succeeded()) {
+																		requeteSite.setUtilisateurSite(utilisateurSite);
+																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		gestionnaireEvenements.handle(Future.succeededFuture());
+																	} else {
+																		erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
+																	}
+																});
+															} else {
+																erreurMereScolaire(requeteSite, gestionnaireEvenements, e);
+															}
+														});
+													} else {
+														erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+													}
+												});
+											} else {
+												erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+											}
+										});
+									} else {
+										erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+									}
+								});
+							} else {
+								Long pkUtilisateur = utilisateurValeurs.getLong(0);
+								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(UtilisateurSite.class);
+								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
+								listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
+
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+
+								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								Boolean definir = utilisateurMereScolaireDefinir(siteRequest, jsonObject);
+								if(definir) {
+									UtilisateurSite utilisateurSite;
+									if(utilisateurSite1 == null) {
+										utilisateurSite = new UtilisateurSite();
+										utilisateurSite.setPk(pkUtilisateur);
+										utilisateurSite.setRequeteSite_(requeteSite);
+									} else {
+										utilisateurSite = utilisateurSite1;
+									}
+
+									RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+									requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+									requeteSite2.setObjetJson(jsonObject);
+									requeteSite2.setVertx(requeteSite.getVertx());
+									requeteSite2.setSiteContexte_(siteContexte);
+									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
 										if(c.succeeded()) {
 											utilisateurService.definirSiteUser(siteUser, d -> {
 												if(d.succeeded()) {
@@ -1446,10 +1521,10 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 															utilisateurService.indexerSiteUser(siteUser, f -> {
 																if(f.succeeded()) {
 																	requeteSite.setUtilisateurSite(utilisateurSite);
-																	requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-																	requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-																	requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-																	requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
 																	gestionnaireEvenements.handle(Future.succeededFuture());
 																} else {
 																	erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
@@ -1468,60 +1543,16 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 										}
 									});
 								} else {
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+									requeteSite.setUtilisateurSite(utilisateurSite1);
+									requeteSite.setUtilisateurNom(utilisateurSite1.getUtilisateurNom());
+									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
+									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
+									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
-							});
-						} else {
-							Long pkUtilisateur = utilisateurValeurs.getLong(0);
-							ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(UtilisateurSite.class);
-							listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
-							listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							UtilisateurSite utilisateurSite = listeRecherche.getList().stream().findFirst().orElse(null);
-
-							JsonObject jsonObject = JsonObject.mapFrom(utilisateurSite);
-							Boolean definir = utilisateurMereScolaireDefinir(siteRequest, jsonObject);
-							if(definir) {
-								utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
-									if(c.succeeded()) {
-										utilisateurService.definirSiteUser(siteUser, d -> {
-											if(d.succeeded()) {
-												utilisateurService.attribuerSiteUser(siteUser, e -> {
-													if(e.succeeded()) {
-														utilisateurService.indexerSiteUser(siteUser, f -> {
-															if(f.succeeded()) {
-																requeteSite.setUtilisateurSite(utilisateurSite);
-																requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
-																requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
-																requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
-																requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
-																gestionnaireEvenements.handle(Future.succeededFuture());
-															} else {
-																erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														erreurMereScolaire(requeteSite, gestionnaireEvenements, e);
-													}
-												});
-											} else {
-												erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
-											}
-										});
-									} else {
-										erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-									}
-								});
-							} else {
-								requeteSite.setUtilisateurSite(utilisateurSite);
-								requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
-								requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
-								requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
-								requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
-								gestionnaireEvenements.handle(Future.succeededFuture());
 							}
+						} catch(Exception e) {
+							gestionnaireEvenements.handle(Future.failedFuture(e));
 						}
 					} else {
 						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));

@@ -1168,6 +1168,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		sauvegardesUtilisateurSite = (List<String>)solrDocument.get("sauvegardesUtilisateurSite_stored_strings");
 		if(sauvegardesUtilisateurSite != null) {
 
+			if(sauvegardesUtilisateurSite.contains("utilisateurId")) {
+				String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
+				if(utilisateurId != null)
+					oUtilisateurSite.setUtilisateurId(utilisateurId);
+			}
+
 			if(sauvegardesUtilisateurSite.contains("utilisateurNom")) {
 				String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
 				if(utilisateurNom != null)
@@ -1297,6 +1303,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(sauvegardesUtilisateurSite != null)
 			document.addField("sauvegardesUtilisateurSite_stored_strings", sauvegardesUtilisateurSite);
 
+		if(utilisateurId != null) {
+			document.addField("utilisateurId_indexed_string", utilisateurId);
+			document.addField("utilisateurId_stored_string", utilisateurId);
+		}
 		if(utilisateurNom != null) {
 			document.addField("utilisateurNom_indexed_string", utilisateurNom);
 			document.addField("utilisateurNom_stored_string", utilisateurNom);
@@ -1360,6 +1370,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public static String varIndexeUtilisateurSite(String entiteVar) {
 		switch(entiteVar) {
+			case "utilisateurId":
+				return "utilisateurId_indexed_string";
 			case "utilisateurNom":
 				return "utilisateurNom_indexed_string";
 			case "utilisateurMail":
@@ -1408,6 +1420,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 	public void stockerUtilisateurSite(SolrDocument solrDocument) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
+
+		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
+		if(utilisateurId != null)
+			oUtilisateurSite.setUtilisateurId(utilisateurId);
 
 		String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
 		if(utilisateurNom != null)

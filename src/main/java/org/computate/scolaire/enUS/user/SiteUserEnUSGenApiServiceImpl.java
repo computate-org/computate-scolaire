@@ -768,7 +768,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
 								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								userSiteUserDefine(siteRequest, jsonObject);
+								userSiteUserDefine(siteRequest, jsonObject, false);
 
 								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
 								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
@@ -819,6 +819,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							} else {
 								Long pkUser = userValues.getLong(0);
 								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
@@ -833,8 +834,11 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
+								jsonObject.put("customerProfileId", jsonPrincipal.getString("name"));
 								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								Boolean define = userSiteUserDefine(siteRequest, jsonObject);
+								jsonObject.put("email", jsonPrincipal.getString("email"));
+								Boolean define = userSiteUserDefine(siteRequest, jsonObject, true);
 								if(define) {
 									SiteUser siteUser;
 									if(siteUser1 == null) {
@@ -907,7 +911,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject) {
+	public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 

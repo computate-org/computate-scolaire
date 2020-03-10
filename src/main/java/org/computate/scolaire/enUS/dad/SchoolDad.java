@@ -37,10 +37,15 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 		l.addFacetField("seasonKey_indexed_long");
 		l.addFacetField("sessionKey_indexed_long");
 		l.addFacetField("ageKey_indexed_long");
+		l.addFacetField("userKeys_indexed_longs");
 	}
 
-	protected void _inscriptions(List<SchoolEnrollment> l) {
+	protected void _enrollments(List<SchoolEnrollment> l) {
 		l.addAll(enrollmentSearch.getList());
+	}
+
+	protected void _userKeys(List<Long> l) {
+		l.addAll(enrollmentSearch.getQueryResponse().getFacetField("userKeys_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	protected void _schoolKeys(List<Long> l) {
