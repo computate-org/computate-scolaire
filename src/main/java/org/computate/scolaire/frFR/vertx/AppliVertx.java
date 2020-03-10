@@ -489,6 +489,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: routerFactory
 	 * r: UsineRouteur
 	 * r.enUS: RouterFactory
+	 * r: authFournisseur
+	 * r.enUS: authProvider
 	 * r: getAuthRoyaume
 	 * r.enUS: getAuthRealm
 	 * r: getAuthRessource

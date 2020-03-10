@@ -323,16 +323,16 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					.put("credentials", new JsonObject().put("secret", siteConfig.getAuthSecret()))
 					;
 
-				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
+				OAuth2Auth authProvider = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
 				router.route().handler(new CookieHandlerImpl());
 				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
 				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
-				sessionHandler.setAuthProvider(authFournisseur);
+				sessionHandler.setAuthProvider(authProvider);
 				router.route().handler(sessionHandler);
 
 				String siteUrlBase = siteConfig.getSiteBaseUrl();
-				OAuth2AuthHandler authHandler = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
+				OAuth2AuthHandler authHandler = OAuth2AuthHandler.create(authProvider, siteUrlBase + "/callback");
 
 				authHandler.setupCallback(router.get("/callback"));
 
