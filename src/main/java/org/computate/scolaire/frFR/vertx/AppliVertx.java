@@ -98,6 +98,7 @@ import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.ext.web.handler.impl.CookieHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
@@ -526,39 +527,23 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				usineRouteur.mountServicesFromExtensions();
 				siteContexteFrFR.setUsineRouteur(usineRouteur);
 
-				JsonObject keycloakJson = new JsonObject() {
-					{
-						put("realm", configSite.getAuthRoyaume());
-						put("resource", configSite.getAuthRessource());
-						put("auth-server-url", configSite.getAuthUrl());
-						put("ssl-required", configSite.getAuthSslRequis());
-						put("use-resource-role-mappings", false);
-						put("bearer-only", false);
-						put("enable-basic-auth", false);
-						put("expose-token", true);
-						put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()));
-						put("connection-pool-size", 20);
-						put("disable-trust-manager", false);
-						put("allow-any-hostname", false);
-						put("policy-enforcer", new JsonObject());
-						put("redirect-rewrite-rules", new JsonObject().put("^(.*)$", "$1"));
-					}
-				};
+				JsonObject keycloakJson = new JsonObject()
+					.put("realm", configSite.getAuthRoyaume())
+					.put("resource", configSite.getAuthRessource())
+					.put("auth-server-url", configSite.getAuthUrl())
+					.put("ssl-required", configSite.getAuthSslRequis())
+					.put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()))
+					;
 
-				String siteNomHote = configSite.getSiteNomHote();
-				Integer sitePort = configSite.getSitePort();
-				String siteUrlBase = configSite.getSiteUrlBase();
 				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
-				routeur.route().handler(CookieHandler.create());
+				routeur.route().handler(new CookieHandlerImpl());
 				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
-//				ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx, "computate-scolaire-frFR-session");
 				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
 				sessionHandler.setAuthProvider(authFournisseur);
 				routeur.route().handler(sessionHandler);
 
-//				routeur.route().handler(UserSessionHandler.create(authFournisseur));
-
+				String siteUrlBase = configSite.getSiteUrlBase();
 				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
 
 				gestionnaireAuth.setupCallback(routeur.get("/callback"));
