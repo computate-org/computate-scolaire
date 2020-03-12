@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -41,7 +39,6 @@ import org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiService;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiService;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiServiceImpl;
-import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceVertxEBProxy;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
 import org.computate.scolaire.enUS.java.LocalTimeSerializer;
@@ -64,8 +61,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.CaseInsensitiveHeaders;
+import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
@@ -84,19 +80,19 @@ import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailConfig;
-import io.vertx.ext.mail.MailMessage;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
-import io.vertx.ext.web.handler.CookieHandler;
+import io.vertx.ext.web.api.contract.RouterFactoryOptions;
+import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.impl.CookieHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfBatchDetailsType;
@@ -307,36 +303,80 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	private Promise<Void> configureOpenApi() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Promise<Void> promise = Promise.promise();
-		Router router = Router.router(vertx);
+		String siteUrlBase = siteConfig.getSiteBaseUrl();
+		JsonObject keycloakJson = new JsonObject()
+			.put("realm", siteConfig.getAuthRealm())
+			.put("resource", siteConfig.getAuthResource())
+			.put("auth-server-url", siteConfig.getAuthUrl())
+			.put("ssl-required", siteConfig.getAuthSslRequired())
+			.put("credentials", new JsonObject().put("secret", siteConfig.getAuthSecret()))
+			;
+		OAuth2Auth authProvider = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
-		AppOpenAPI3RouterFactory.create(vertx, router, "openapi3-enUS.yaml", ar -> {
+		OAuth2AuthHandler authHandler = OAuth2AuthHandler.create(authProvider, siteUrlBase + "/callback");
+		{
+			Router tempRouter = Router.router(vertx);
+			authHandler.setupCallback(tempRouter.get("/callback"));
+		}
+
+//		ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
+		LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+		SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+		sessionHandler.setAuthProvider(authProvider);
+
+		OpenAPI3RouterFactory.create(vertx, "openapi3-enUS.yaml", ar -> {
 			if (ar.succeeded()) {
-				AppOpenAPI3RouterFactory routerFactory = ar.result();
+				OpenAPI3RouterFactory routerFactory = ar.result();
 				routerFactory.mountServicesFromExtensions();
 				siteContextEnUS.setRouterFactory(routerFactory);
 
-				JsonObject keycloakJson = new JsonObject()
-					.put("realm", siteConfig.getAuthRealm())
-					.put("resource", siteConfig.getAuthResource())
-					.put("auth-server-url", siteConfig.getAuthUrl())
-					.put("ssl-required", siteConfig.getAuthSslRequired())
-					.put("credentials", new JsonObject().put("secret", siteConfig.getAuthSecret()))
-					;
+				routerFactory.addGlobalHandler(new CookieHandlerImpl());
+				routerFactory.addGlobalHandler(sessionHandler);
+				routerFactory.addHandlerByOperationId("callback", ctx -> {
 
-				OAuth2Auth authProvider = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
+					// Handle the callback of the flow
+					final String code = ctx.request().getParam("code");
 
-				router.route().handler(new CookieHandlerImpl());
-				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
-				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
-				sessionHandler.setAuthProvider(authProvider);
-				router.route().handler(sessionHandler);
+					// code is a require value
+					if (code == null) {
+						ctx.fail(400);
+						return;
+					}
 
-				String siteUrlBase = siteConfig.getSiteBaseUrl();
-				OAuth2AuthHandler authHandler = OAuth2AuthHandler.create(authProvider, siteUrlBase + "/callback");
+					final String state = ctx.request().getParam("state");
 
-				authHandler.setupCallback(router.get("/callback"));
+					final JsonObject config = new JsonObject().put("code", code);
 
-				router.get("/logout").handler(rc -> {
+					config.put("redirect_uri", siteUrlBase + "/callback");
+
+					authProvider.authenticate(config, res -> {
+						if (res.failed()) {
+							ctx.fail(res.cause());
+						} else {
+							ctx.setUser(res.result());
+							Session session = ctx.session();
+							if (session != null) {
+								// the user has upgraded from unauthenticated to authenticated
+								// session should be upgraded as recommended by owasp
+								session.regenerateId();
+								// we should redirect the UA so this link becomes invalid
+								ctx.response()
+										// disable all caching
+										.putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
+										.putHeader("Pragma", "no-cache").putHeader(HttpHeaders.EXPIRES, "0")
+										// redirect (when there is no state, redirect to home
+										.putHeader(HttpHeaders.LOCATION, state != null ? state : "/").setStatusCode(302)
+										.end("Redirecting to " + (state != null ? state : "/") + ".");
+							} else {
+								// there is no session object so we cannot keep state
+								ctx.reroute(state != null ? state : "/");
+							}
+						}
+					});
+				});
+				routerFactory.addFailureHandlerByOperationId("callback", a -> {});
+
+				routerFactory.addHandlerByOperationId("logout", rc -> {
 					Session session = rc.session();
 					if (session != null) {
 						session.destroy();
@@ -344,10 +384,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					rc.clearUser();
 					rc.reroute("/school");
 				});
+				routerFactory.addFailureHandlerByOperationId("logout", a -> {});
 
 				routerFactory.addSecurityHandler("openIdConnect", authHandler);
-
-				routerFactory.initRouter();
+				Router router = routerFactory.getRouter();
+				siteContextEnUS.setRouter(router);
 
 				LOGGER.info(configureOpenApiSuccess);
 				promise.complete();
@@ -378,7 +419,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Promise<Void> configureHealthChecks() {
 		Promise<Void> promise = Promise.promise();
-		Router siteRouteur = siteContextEnUS.getRouterFactory().getRouter();
+		Router siteRouteur = siteContextEnUS.getRouter();
 		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
 
 		healthCheckHandler.register("database", 2000, a -> {
@@ -420,7 +461,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Promise<Void> configureWebsockets() {
 		Promise<Void> promise = Promise.promise();
-		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
+		Router siteRouter = siteContextEnUS.getRouter();
 		BridgeOptions options = new BridgeOptions()
 				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
 		SockJSHandler sockJsHandler = SockJSHandler.create(vertx);
@@ -1271,7 +1312,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		EnrollmentDesignEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		HtmlPartEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
-		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
+		Router siteRouter = siteContextEnUS.getRouter();
 
 		StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
 		if("scolaire-dev.computate.org".equals(siteConfig.getSiteHostName())) {

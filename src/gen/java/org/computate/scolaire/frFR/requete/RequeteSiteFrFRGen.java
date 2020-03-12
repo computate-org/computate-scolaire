@@ -24,6 +24,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import io.vertx.core.Vertx;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -33,6 +34,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLConnection;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 
 /**	
@@ -48,6 +50,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « siteContexte_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteContexteFrFR siteContexte_;
 	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexte_Couverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte_").o(siteContexte_);
@@ -85,6 +88,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « configSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ConfigSite configSite_;
 	@JsonIgnore
 	public Couverture<ConfigSite> configSite_Couverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite_").o(configSite_);
@@ -122,6 +126,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « requeteSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
@@ -159,6 +164,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « requeteApi_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteApi requeteApi_;
 	@JsonIgnore
 	public Couverture<RequeteApi> requeteApi_Couverture = new Couverture<RequeteApi>().p(this).c(RequeteApi.class).var("requeteApi_").o(requeteApi_);
@@ -196,6 +202,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « vertx »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Vertx vertx;
 	@JsonIgnore
 	public Couverture<Vertx> vertxCouverture = new Couverture<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
@@ -233,6 +240,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « objetJson »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject objetJson;
 	@JsonIgnore
 	public Couverture<JsonObject> objetJsonCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("objetJson").o(objetJson);
@@ -270,6 +278,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « rechercheSolr »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrQuery rechercheSolr;
 	@JsonIgnore
 	public Couverture<SolrQuery> rechercheSolrCouverture = new Couverture<SolrQuery>().p(this).c(SolrQuery.class).var("rechercheSolr").o(rechercheSolr);
@@ -307,6 +316,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « operationRequete »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OperationRequest operationRequete;
 	@JsonIgnore
 	public Couverture<OperationRequest> operationRequeteCouverture = new Couverture<OperationRequest>().p(this).c(OperationRequest.class).var("operationRequete").o(operationRequete);
@@ -344,6 +354,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « reponseRecherche »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected QueryResponse reponseRecherche;
 	@JsonIgnore
 	public Couverture<QueryResponse> reponseRechercheCouverture = new Couverture<QueryResponse>().p(this).c(QueryResponse.class).var("reponseRecherche").o(reponseRecherche);
@@ -381,6 +392,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « resultatsRecherche »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocumentList resultatsRecherche;
 	@JsonIgnore
 	public Couverture<SolrDocumentList> resultatsRechercheCouverture = new Couverture<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("resultatsRecherche").o(resultatsRecherche);
@@ -418,6 +430,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain w;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
@@ -457,6 +470,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurVertx »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject utilisateurVertx;
 	@JsonIgnore
 	public Couverture<JsonObject> utilisateurVertxCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("utilisateurVertx").o(utilisateurVertx);
@@ -494,6 +508,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « principalJson »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject principalJson;
 	@JsonIgnore
 	public Couverture<JsonObject> principalJsonCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("principalJson").o(principalJson);
@@ -531,6 +546,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurId;
 	@JsonIgnore
 	public Couverture<String> utilisateurIdCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurId").o(utilisateurId);
@@ -592,6 +608,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « sessionId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sessionId;
 	@JsonIgnore
 	public Couverture<String> sessionIdCouverture = new Couverture<String>().p(this).c(String.class).var("sessionId").o(sessionId);
@@ -653,6 +670,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNom;
 	@JsonIgnore
 	public Couverture<String> utilisateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNom").o(utilisateurNom);
@@ -714,6 +732,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurNomFamille »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomFamille;
 	@JsonIgnore
 	public Couverture<String> utilisateurNomFamilleCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomFamille").o(utilisateurNomFamille);
@@ -775,6 +794,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurPrenom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurPrenom;
 	@JsonIgnore
 	public Couverture<String> utilisateurPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurPrenom").o(utilisateurPrenom);
@@ -836,6 +856,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomComplet;
 	@JsonIgnore
 	public Couverture<String> utilisateurNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomComplet").o(utilisateurNomComplet);
@@ -897,6 +918,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurRolesRoyaume »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> utilisateurRolesRoyaume = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Couverture<List<String>> utilisateurRolesRoyaumeCouverture = new Couverture<List<String>>().p(this).c(List.class).var("utilisateurRolesRoyaume").o(utilisateurRolesRoyaume);
@@ -975,6 +997,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurRessource »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject utilisateurRessource;
 	@JsonIgnore
 	public Couverture<JsonObject> utilisateurRessourceCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("utilisateurRessource").o(utilisateurRessource);
@@ -1012,6 +1035,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurRolesRessource »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> utilisateurRolesRessource = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Couverture<List<String>> utilisateurRolesRessourceCouverture = new Couverture<List<String>>().p(this).c(List.class).var("utilisateurRolesRessource").o(utilisateurRolesRessource);
@@ -1090,6 +1114,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « utilisateurSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected UtilisateurSite utilisateurSite;
 	@JsonIgnore
 	public Couverture<UtilisateurSite> utilisateurSiteCouverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("utilisateurSite").o(utilisateurSite);
@@ -1129,6 +1154,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « xmlPile »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Stack<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Stack<String> xmlPile = new Stack<String>();
 	@JsonIgnore
 	public Couverture<Stack<String>> xmlPileCouverture = new Couverture<Stack<String>>().p(this).c(Stack.class).var("xmlPile").o(xmlPile);
@@ -1164,6 +1190,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « documentSolr »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument documentSolr;
 	@JsonIgnore
 	public Couverture<SolrDocument> documentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("documentSolr").o(documentSolr);
@@ -1201,6 +1228,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « pageAdmin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean pageAdmin;
 	@JsonIgnore
 	public Couverture<Boolean> pageAdminCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pageAdmin").o(pageAdmin);
@@ -1268,6 +1296,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long requetePk;
 	@JsonIgnore
 	public Couverture<Long> requetePkCouverture = new Couverture<Long>().p(this).c(Long.class).var("requetePk").o(requetePk);
@@ -1335,6 +1364,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « connexionSql »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SQLConnection connexionSql;
 	@JsonIgnore
 	public Couverture<SQLConnection> connexionSqlCouverture = new Couverture<SQLConnection>().p(this).c(SQLConnection.class).var("connexionSql").o(connexionSql);
@@ -1372,6 +1402,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	/**	L'entité « requeteEnTetes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected CaseInsensitiveHeaders requeteEnTetes;
 	@JsonIgnore
 	public Couverture<CaseInsensitiveHeaders> requeteEnTetesCouverture = new Couverture<CaseInsensitiveHeaders>().p(this).c(CaseInsensitiveHeaders.class).var("requeteEnTetes").o(requeteEnTetes);
@@ -1612,8 +1643,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public void requeteApiRequeteSiteFrFR() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		RequeteSiteFrFR original = (RequeteSiteFrFR)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof RequeteSiteFrFR) {
+			RequeteSiteFrFR original = (RequeteSiteFrFR)o;
 		}
 	}
 

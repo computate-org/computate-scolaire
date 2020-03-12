@@ -2,7 +2,9 @@ package org.computate.scolaire.enUS.request;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -100,6 +102,8 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _jsonPrincipal(Wrap<JsonObject> c) {
 		if(userVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+			if(o != null)
+				System.out.println(String.format("SCOPE for %s: %s", o.getString("preferred_username"), o.getString("scope")));
 			c.o(o);
 		}
 	}
@@ -152,32 +156,24 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _userRealmRoles(List<String> o) {
-		if(siteConfig_ != null && jsonPrincipal != null) {
-			JsonArray roles = jsonPrincipal.getJsonObject("realm_access").getJsonArray("roles");
-			if(roles != null) {
-				roles.stream().forEach(r -> {
-					addUserRealmRoles((String)r);
-				});
-			}
-		}
+		JsonArray roles = Optional.ofNullable(jsonPrincipal).map(o1 -> o1.getJsonObject("realm_access")).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
+		roles.stream().forEach(r -> {
+			addUserRealmRoles((String)r);
+		});
 	}
 
 	protected void _userResource(Wrap<JsonObject> c) {
-		if(siteConfig_ != null && jsonPrincipal != null) {
-			JsonObject ressource = jsonPrincipal.getJsonObject("resource_access").getJsonObject(siteRequest_.getSiteConfig_().getAuthResource());
-			c.o(ressource);
-		}
+		JsonObject o = Optional.ofNullable(jsonPrincipal).map(p -> p.getJsonObject("resource_access")).map(o1 -> o1.getJsonObject(
+				Optional.ofNullable(siteRequest_).map(r -> r.getSiteConfig_()).map(c1 -> c1.getAuthResource()).orElse("")
+				)).orElse(new JsonObject());
+		c.o(o);
 	}
 
 	protected void _userResourceRoles(List<String> o) {
-		if(siteConfig_ != null && userResource != null) {
-			JsonArray roles = userResource.getJsonArray("roles");
-			if(roles != null) {
-				roles.stream().forEach(r -> {
-					addUserResourceRoles((String)r);
-				});
-			}
-		}
+		JsonArray roles = Optional.ofNullable(userResource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
+		roles.stream().forEach(r -> {
+			addUserResourceRoles((String)r);
+		});
 	}
 
 	protected void _siteUser(Wrap<SiteUser> c) { 

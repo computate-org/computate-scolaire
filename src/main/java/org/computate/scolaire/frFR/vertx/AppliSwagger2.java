@@ -82,6 +82,24 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: appName
+	 **/
+	protected void _appliNom(Couverture<String> c) {
+		c.o("computate-scolaire");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: languageName
+	 * r: frFR
+	 * r.enUS: enUS
+	 **/
+	protected void _langueNom(Couverture<String> c) {
+		c.o("frFR");
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * r: configSite
 	 * r.enUS: siteConfig
 	 **/
@@ -439,10 +457,66 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: ContextRows
 	 * r: _frFR_
 	 * r.enUS: _enUS_
+	 * r: deconnexion
+	 * r.enUS: logout
+	 * r: appliNom
+	 * r.enUS: appName
+	 * r: langueNom
+	 * r.enUS: languageName
 	 */
 	public void ecrireApi() {
 		try {
 			wChemins.tl(0, "paths:");
+			wChemins.l();
+			wChemins.tl(1, "/callback:");
+			wChemins.tl(2, "get:");
+			wChemins.tl(3, "operationId: callback");
+			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-callback");
+			wChemins.tl(3, "description: >+");
+			wChemins.tl(3, "responses:");
+			wChemins.tl(4, "'200':");
+			wChemins.tl(5, "description: >+");
+			wChemins.tl(5, "content:");
+			wChemins.tl(6, "application/json; charset=utf-8:");
+			wChemins.tl(7, "schema:");
+			wChemins.tl(8, "type: string");
+			wChemins.l();
+			wChemins.tl(1, "/deconnexion:");
+			wChemins.tl(2, "get:");
+			wChemins.tl(3, "operationId: deconnexion");
+			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-deconnexion");
+			wChemins.tl(3, "description: >+");
+			wChemins.tl(3, "responses:");
+			wChemins.tl(4, "'200':");
+			wChemins.tl(5, "description: >+");
+			wChemins.tl(5, "content:");
+			wChemins.tl(6, "application/json; charset=utf-8:");
+			wChemins.tl(7, "schema:");
+			wChemins.tl(8, "type: string");
+			wChemins.l();
+
+//		  /callback:
+//		    get:
+//		      operationId: callback
+//		      x-vertx-event-bus: computate-scolaire-enUS-School
+//		      responses:
+//		        '200':
+//		          description: >+
+//		          content:
+//		            application/json; charset=utf-8:
+//		              schema:
+//		                type: string
+//		  /logout:
+//		    get:
+//		      operationId: logout
+//		      x-vertx-event-bus: computate-scolaire-enUS-School
+//		      responses:
+//		        '200':
+//		          description: >+
+//		          content:
+//		            application/json; charset=utf-8:
+//		              schema:
+//		                type: string
 
 			if(openApiVersionNumero == 2) {
 				wSchemas.tl(0, "definitions:");

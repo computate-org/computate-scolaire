@@ -118,40 +118,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	@Override public void htmlBodySiteUserGenPage() {
 		super.htmlBodySiteUserGenPage();
 
-		{ e("h1").f();
-			{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
-				if(contextIconCssClasses != null)
-					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("my user page").g("span");
-			} g("a");
-		} g("h1");
 		writeConfigurePayments();
-		{ e("div").a("class", "").f();
-		for(SchoolYear schoolYear : schoolYears) {
-			{ e("div").a("class", "w3-cell-row w3-mobile w3-center w3-margin ").f();
-				e("div").a("class", "w3-large font-weight-bold ").f().sx(schoolYear.getSchoolName()).g("div");
-				e("div").a("class", "w3-xxlarge font-weight-bold ").f().sx(schoolYear.getSchoolLocation()).g("div");
-				{ e("div").a("class", "w3-cell-row ").f();
-					for(SchoolYear yearYear : schoolYear.getYearYears()) {
-						{ e("div").a("class", "w3-cell w3-mobile ").f();
-							for(EnrollmentDesign enrollmentDesign : enrollmentDesigns) {
-								try {
-									String url = "/enrollment-form?fq=design:" + URLEncoder.encode(enrollmentDesign.getEnrollmentDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
-									{ e("div").a("class", "w3-cell-row ").f();
-										{ e("a").a("href", url).a("class", "").f();
-											e("span").a("class", " ").f().sx(enrollmentDesign.getEnrollmentDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
-										} g("a");
-									} g("div");
-								} catch (UnsupportedEncodingException e) {
-									ExceptionUtils.rethrow(e);
-								}
-							}
-						} g("div");
-					}
-				} g("div");
-			} g("div");
-		}
-		} g("div");
+		writeSchoolReports();
 	}
 
 	public void writeConfigurePayments() {
@@ -202,6 +170,13 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
 			throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
 		}
+		{ e("h1").f();
+			{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
+				if(contextIconCssClasses != null)
+					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+				e("span").a("class", " ").f().sx("make payments").g("span");
+			} g("a");
+		} g("h1");
 		{ e("div").a("class", "").f();
 			e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
 			{ e("form").a("method", "post").a("target", "_blank").a("action", "https://accept.authorize.net/customer/manage").f();
@@ -211,5 +186,43 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			} g("form");
 			e("div").a("class", "").f().sx("Click here to manage payments in a new tab. ").g("div");
 		} g("div");
+	}
+
+	public void writeSchoolReports() {
+		if(siteRequest_.getUserRealmRoles().contains("SiteAdmin") || siteRequest_.getUserResourceRoles().contains("SiteAdmin")) {
+			{ e("h1").f();
+				{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("school reports").g("span");
+				} g("a");
+			} g("h1");
+			{ e("div").a("class", "").f();
+				for(SchoolYear schoolYear : schoolYears) {
+					{ e("div").a("class", "w3-cell-row w3-mobile w3-center w3-margin ").f();
+						e("div").a("class", "w3-large font-weight-bold ").f().sx(schoolYear.getSchoolName()).g("div");
+						e("div").a("class", "w3-xxlarge font-weight-bold ").f().sx(schoolYear.getSchoolLocation()).g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							for(SchoolYear yearYear : schoolYear.getYearYears()) {
+								{ e("div").a("class", "w3-cell w3-mobile ").f();
+									for(EnrollmentDesign enrollmentDesign : enrollmentDesigns) {
+										try {
+											String url = "/enrollment-form?fq=design:" + URLEncoder.encode(enrollmentDesign.getEnrollmentDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
+											{ e("div").a("class", "w3-cell-row ").f();
+												{ e("a").a("href", url).a("class", "").f();
+													e("span").a("class", " ").f().sx(enrollmentDesign.getEnrollmentDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
+												} g("a");
+											} g("div");
+										} catch (UnsupportedEncodingException e) {
+											ExceptionUtils.rethrow(e);
+										}
+									}
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				}
+			} g("div");
+		}
 	}
 }

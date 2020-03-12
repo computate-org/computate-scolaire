@@ -42,6 +42,14 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 		c.o(siteConfig.getAppPath());
 	}
 
+	protected void _appName(Wrap<String> c) {
+		c.o("computate-scolaire");
+	}
+
+	protected void _languageName(Wrap<String> c) {
+		c.o("enUS");
+	}
+
 	protected void _openApiVersion(Wrap<String> c) {
 		c.o(siteConfig.getOpenApiVersion());
 	}
@@ -146,6 +154,56 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 	public void  writeApi() {
 		try {
 			wPaths.tl(0, "paths:");
+			wPaths.l();
+			wPaths.tl(1, "/callback:");
+			wPaths.tl(2, "get:");
+			wPaths.tl(3, "operationId: callback");
+			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-callback");
+			wPaths.tl(3, "description: >+");
+			wPaths.tl(3, "responses:");
+			wPaths.tl(4, "'200':");
+			wPaths.tl(5, "description: >+");
+			wPaths.tl(5, "content:");
+			wPaths.tl(6, "application/json; charset=utf-8:");
+			wPaths.tl(7, "schema:");
+			wPaths.tl(8, "type: string");
+			wPaths.l();
+			wPaths.tl(1, "/logout:");
+			wPaths.tl(2, "get:");
+			wPaths.tl(3, "operationId: logout");
+			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-logout");
+			wPaths.tl(3, "description: >+");
+			wPaths.tl(3, "responses:");
+			wPaths.tl(4, "'200':");
+			wPaths.tl(5, "description: >+");
+			wPaths.tl(5, "content:");
+			wPaths.tl(6, "application/json; charset=utf-8:");
+			wPaths.tl(7, "schema:");
+			wPaths.tl(8, "type: string");
+			wPaths.l();
+
+//		  /callback:
+//		    get:
+//		      operationId: callback
+//		      x-vertx-event-bus: computate-scolaire-enUS-School
+//		      responses:
+//		        '200':
+//		          description: >+
+//		          content:
+//		            application/json; charset=utf-8:
+//		              schema:
+//		                type: string
+//		  /logout:
+//		    get:
+//		      operationId: logout
+//		      x-vertx-event-bus: computate-scolaire-enUS-School
+//		      responses:
+//		        '200':
+//		          description: >+
+//		          content:
+//		            application/json; charset=utf-8:
+//		              schema:
+//		                type: string
 
 			if(openApiVersionNumber == 2) {
 				wSchemas.tl(0, "definitions:");

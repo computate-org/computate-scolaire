@@ -2,7 +2,9 @@ package org.computate.scolaire.frFR.requete;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -170,6 +172,8 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _principalJson(Couverture<JsonObject> c) {
 		if(utilisateurVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+			if(o != null)
+				System.out.println(String.format("SCOPE for %s: %s", o.getString("preferred_username"), o.getString("scope")));
 			c.o(o);
 		}
 	}
@@ -274,14 +278,10 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * frFR: Les rôles de la ressource de l'utilisateur. 
 	 * **/
 	protected void _utilisateurRolesRoyaume(List<String> o) {
-		if(configSite_ != null && principalJson != null) {
-			JsonArray roles = principalJson.getJsonObject("realm_access").getJsonArray("roles");
-			if(roles != null) {
-				roles.stream().forEach(r -> {
-					addUtilisateurRolesRoyaume((String)r);
-				});
-			}
-		}
+		JsonArray roles = Optional.ofNullable(principalJson).map(o1 -> o1.getJsonObject("realm_access")).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
+		roles.stream().forEach(r -> {
+			addUtilisateurRolesRoyaume((String)r);
+		});
 	}
 
 	/**	
@@ -299,10 +299,10 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * frFR: Les rôles de la ressource de l'utilisateur. 
 	 * **/
 	protected void _utilisateurRessource(Couverture<JsonObject> c) {
-		if(configSite_ != null && principalJson != null) {
-			JsonObject ressource = principalJson.getJsonObject("resource_access").getJsonObject(requeteSite_.getConfigSite_().getAuthRessource());
-			c.o(ressource);
-		}
+		JsonObject o = Optional.ofNullable(principalJson).map(p -> p.getJsonObject("resource_access")).map(o1 -> o1.getJsonObject(
+				Optional.ofNullable(requeteSite_).map(r -> r.getConfigSite_()).map(c1 -> c1.getAuthRessource()).orElse("")
+				)).orElse(new JsonObject());
+		c.o(o);
 	}
 
 	/**	
@@ -316,14 +316,10 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * frFR: Les rôles de la ressource de l'utilisateur. 
 	 * **/
 	protected void _utilisateurRolesRessource(List<String> o) {
-		if(configSite_ != null && utilisateurRessource != null) {
-			JsonArray roles = utilisateurRessource.getJsonArray("roles");
-			if(roles != null) {
-				roles.stream().forEach(r -> {
-					addUtilisateurRolesRessource((String)r);
-				});
-			}
-		}
+		JsonArray roles = Optional.ofNullable(utilisateurRessource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
+		roles.stream().forEach(r -> {
+			addUtilisateurRolesRessource((String)r);
+		});
 	}
 
 	/**	

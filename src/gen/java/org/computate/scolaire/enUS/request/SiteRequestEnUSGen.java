@@ -24,6 +24,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -33,6 +34,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLConnection;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 
 /**	
@@ -49,6 +51,7 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 The site context with global site information. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteContextEnUS siteContext_;
 	@JsonIgnore
 	public Wrap<SiteContextEnUS> siteContext_Wrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContext_").o(siteContext_);
@@ -88,6 +91,7 @@ The site context with global site information.
 The site configuration. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteConfig siteConfig_;
 	@JsonIgnore
 	public Wrap<SiteConfig> siteConfig_Wrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig_").o(siteConfig_);
@@ -126,6 +130,7 @@ The site configuration.
 	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
@@ -163,6 +168,7 @@ The site configuration.
 	/**	L'entité « apiRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ApiRequest apiRequest_;
 	@JsonIgnore
 	public Wrap<ApiRequest> apiRequest_Wrap = new Wrap<ApiRequest>().p(this).c(ApiRequest.class).var("apiRequest_").o(apiRequest_);
@@ -200,6 +206,7 @@ The site configuration.
 	/**	L'entité « vertx »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Vertx vertx;
 	@JsonIgnore
 	public Wrap<Vertx> vertxWrap = new Wrap<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
@@ -237,6 +244,7 @@ The site configuration.
 	/**	L'entité « jsonObject »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject jsonObject;
 	@JsonIgnore
 	public Wrap<JsonObject> jsonObjectWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("jsonObject").o(jsonObject);
@@ -274,6 +282,7 @@ The site configuration.
 	/**	L'entité « solrQuery »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrQuery solrQuery;
 	@JsonIgnore
 	public Wrap<SolrQuery> solrQueryWrap = new Wrap<SolrQuery>().p(this).c(SolrQuery.class).var("solrQuery").o(solrQuery);
@@ -311,6 +320,7 @@ The site configuration.
 	/**	L'entité « operationRequest »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OperationRequest operationRequest;
 	@JsonIgnore
 	public Wrap<OperationRequest> operationRequestWrap = new Wrap<OperationRequest>().p(this).c(OperationRequest.class).var("operationRequest").o(operationRequest);
@@ -348,6 +358,7 @@ The site configuration.
 	/**	L'entité « queryResponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected QueryResponse queryResponse;
 	@JsonIgnore
 	public Wrap<QueryResponse> queryResponseWrap = new Wrap<QueryResponse>().p(this).c(QueryResponse.class).var("queryResponse").o(queryResponse);
@@ -385,6 +396,7 @@ The site configuration.
 	/**	L'entité « searchResults »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocumentList searchResults;
 	@JsonIgnore
 	public Wrap<SolrDocumentList> searchResultsWrap = new Wrap<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("searchResults").o(searchResults);
@@ -422,6 +434,7 @@ The site configuration.
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter w;
 	@JsonIgnore
 	public Wrap<AllWriter> wWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w").o(w);
@@ -461,6 +474,7 @@ The site configuration.
 	/**	L'entité « userVertx »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject userVertx;
 	@JsonIgnore
 	public Wrap<JsonObject> userVertxWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("userVertx").o(userVertx);
@@ -498,6 +512,7 @@ The site configuration.
 	/**	L'entité « jsonPrincipal »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject jsonPrincipal;
 	@JsonIgnore
 	public Wrap<JsonObject> jsonPrincipalWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("jsonPrincipal").o(jsonPrincipal);
@@ -535,6 +550,7 @@ The site configuration.
 	/**	L'entité « userId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userId;
 	@JsonIgnore
 	public Wrap<String> userIdWrap = new Wrap<String>().p(this).c(String.class).var("userId").o(userId);
@@ -596,6 +612,7 @@ The site configuration.
 	/**	L'entité « sessionId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sessionId;
 	@JsonIgnore
 	public Wrap<String> sessionIdWrap = new Wrap<String>().p(this).c(String.class).var("sessionId").o(sessionId);
@@ -657,6 +674,7 @@ The site configuration.
 	/**	L'entité « userName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userName;
 	@JsonIgnore
 	public Wrap<String> userNameWrap = new Wrap<String>().p(this).c(String.class).var("userName").o(userName);
@@ -718,6 +736,7 @@ The site configuration.
 	/**	L'entité « userLastName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userLastName;
 	@JsonIgnore
 	public Wrap<String> userLastNameWrap = new Wrap<String>().p(this).c(String.class).var("userLastName").o(userLastName);
@@ -779,6 +798,7 @@ The site configuration.
 	/**	L'entité « userFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userFirstName;
 	@JsonIgnore
 	public Wrap<String> userFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("userFirstName").o(userFirstName);
@@ -840,6 +860,7 @@ The site configuration.
 	/**	L'entité « userFullName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String userFullName;
 	@JsonIgnore
 	public Wrap<String> userFullNameWrap = new Wrap<String>().p(this).c(String.class).var("userFullName").o(userFullName);
@@ -901,6 +922,7 @@ The site configuration.
 	/**	L'entité « userRealmRoles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> userRealmRoles = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Wrap<List<String>> userRealmRolesWrap = new Wrap<List<String>>().p(this).c(List.class).var("userRealmRoles").o(userRealmRoles);
@@ -979,6 +1001,7 @@ The site configuration.
 	/**	L'entité « userResource »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected JsonObject userResource;
 	@JsonIgnore
 	public Wrap<JsonObject> userResourceWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("userResource").o(userResource);
@@ -1016,6 +1039,7 @@ The site configuration.
 	/**	L'entité « userResourceRoles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> userResourceRoles = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Wrap<List<String>> userResourceRolesWrap = new Wrap<List<String>>().p(this).c(List.class).var("userResourceRoles").o(userResourceRoles);
@@ -1094,6 +1118,7 @@ The site configuration.
 	/**	L'entité « siteUser »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteUser siteUser;
 	@JsonIgnore
 	public Wrap<SiteUser> siteUserWrap = new Wrap<SiteUser>().p(this).c(SiteUser.class).var("siteUser").o(siteUser);
@@ -1133,6 +1158,7 @@ The site configuration.
 	/**	L'entité « xmlStack »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Stack<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Stack<String> xmlStack = new Stack<String>();
 	@JsonIgnore
 	public Wrap<Stack<String>> xmlStackWrap = new Wrap<Stack<String>>().p(this).c(Stack.class).var("xmlStack").o(xmlStack);
@@ -1168,6 +1194,7 @@ The site configuration.
 	/**	L'entité « solrDocument »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument solrDocument;
 	@JsonIgnore
 	public Wrap<SolrDocument> solrDocumentWrap = new Wrap<SolrDocument>().p(this).c(SolrDocument.class).var("solrDocument").o(solrDocument);
@@ -1205,6 +1232,7 @@ The site configuration.
 	/**	L'entité « pageAdmin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean pageAdmin;
 	@JsonIgnore
 	public Wrap<Boolean> pageAdminWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("pageAdmin").o(pageAdmin);
@@ -1272,6 +1300,7 @@ The site configuration.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long requestPk;
 	@JsonIgnore
 	public Wrap<Long> requestPkWrap = new Wrap<Long>().p(this).c(Long.class).var("requestPk").o(requestPk);
@@ -1339,6 +1368,7 @@ The site configuration.
 	/**	L'entité « sqlConnection »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SQLConnection sqlConnection;
 	@JsonIgnore
 	public Wrap<SQLConnection> sqlConnectionWrap = new Wrap<SQLConnection>().p(this).c(SQLConnection.class).var("sqlConnection").o(sqlConnection);
@@ -1376,6 +1406,7 @@ The site configuration.
 	/**	L'entité « requestHeaders »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected CaseInsensitiveHeaders requestHeaders;
 	@JsonIgnore
 	public Wrap<CaseInsensitiveHeaders> requestHeadersWrap = new Wrap<CaseInsensitiveHeaders>().p(this).c(CaseInsensitiveHeaders.class).var("requestHeaders").o(requestHeaders);
@@ -1616,8 +1647,9 @@ The site configuration.
 
 	public void apiRequestSiteRequestEnUS() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		SiteRequestEnUS original = (SiteRequestEnUS)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SiteRequestEnUS) {
+			SiteRequestEnUS original = (SiteRequestEnUS)o;
 		}
 	}
 

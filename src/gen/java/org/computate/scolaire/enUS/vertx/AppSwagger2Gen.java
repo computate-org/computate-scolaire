@@ -208,6 +208,130 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		return appPath == null ? "" : StringEscapeUtils.escapeHtml4(strAppPath());
 	}
 
+	/////////////
+	// appName //
+	/////////////
+
+	/**	L'entité « appName »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String appName;
+	@JsonIgnore
+	public Wrap<String> appNameWrap = new Wrap<String>().p(this).c(String.class).var("appName").o(appName);
+
+	/**	<br/>L'entité « appName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.vertx.AppSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appName">Trouver l'entité appName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _appName(Wrap<String> c);
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+		this.appNameWrap.alreadyInitialized = true;
+	}
+	protected AppSwagger2 appNameInit() {
+		if(!appNameWrap.alreadyInitialized) {
+			_appName(appNameWrap);
+			if(appName == null)
+				setAppName(appNameWrap.o);
+		}
+		appNameWrap.alreadyInitialized(true);
+		return (AppSwagger2)this;
+	}
+
+	public String solrAppName() {
+		return appName;
+	}
+
+	public String strAppName() {
+		return appName == null ? "" : appName;
+	}
+
+	public String jsonAppName() {
+		return appName == null ? "" : appName;
+	}
+
+	public String nomAffichageAppName() {
+		return null;
+	}
+
+	public String htmTooltipAppName() {
+		return null;
+	}
+
+	public String htmAppName() {
+		return appName == null ? "" : StringEscapeUtils.escapeHtml4(strAppName());
+	}
+
+	//////////////////
+	// languageName //
+	//////////////////
+
+	/**	L'entité « languageName »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String languageName;
+	@JsonIgnore
+	public Wrap<String> languageNameWrap = new Wrap<String>().p(this).c(String.class).var("languageName").o(languageName);
+
+	/**	<br/>L'entité « languageName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.vertx.AppSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:languageName">Trouver l'entité languageName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _languageName(Wrap<String> c);
+
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName(String languageName) {
+		this.languageName = languageName;
+		this.languageNameWrap.alreadyInitialized = true;
+	}
+	protected AppSwagger2 languageNameInit() {
+		if(!languageNameWrap.alreadyInitialized) {
+			_languageName(languageNameWrap);
+			if(languageName == null)
+				setLanguageName(languageNameWrap.o);
+		}
+		languageNameWrap.alreadyInitialized(true);
+		return (AppSwagger2)this;
+	}
+
+	public String solrLanguageName() {
+		return languageName;
+	}
+
+	public String strLanguageName() {
+		return languageName == null ? "" : languageName;
+	}
+
+	public String jsonLanguageName() {
+		return languageName == null ? "" : languageName;
+	}
+
+	public String nomAffichageLanguageName() {
+		return null;
+	}
+
+	public String htmTooltipLanguageName() {
+		return null;
+	}
+
+	public String htmLanguageName() {
+		return languageName == null ? "" : StringEscapeUtils.escapeHtml4(strLanguageName());
+	}
+
 	////////////////////
 	// openApiVersion //
 	////////////////////
@@ -754,6 +878,8 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		siteContextInit();
 		siteConfigInit();
 		appPathInit();
+		appNameInit();
+		languageNameInit();
 		openApiVersionInit();
 		openApiVersionNumberInit();
 		tabsSchemaInit();
@@ -817,6 +943,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 				return oAppSwagger2.siteConfig;
 			case "appPath":
 				return oAppSwagger2.appPath;
+			case "appName":
+				return oAppSwagger2.appName;
+			case "languageName":
+				return oAppSwagger2.languageName;
 			case "openApiVersion":
 				return oAppSwagger2.openApiVersion;
 			case "openApiVersionNumber":

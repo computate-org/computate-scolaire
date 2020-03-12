@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -43,7 +41,6 @@ import org.computate.scolaire.frFR.html.part.PartHtmlFrFRGenApiService;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
-import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceVertxEBProxy;
 import org.computate.scolaire.frFR.inscription.design.DesignInscriptionFrFRGenApiService;
 import org.computate.scolaire.frFR.java.LocalDateSerializer;
 import org.computate.scolaire.frFR.java.LocalTimeSerializer;
@@ -68,8 +65,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.CaseInsensitiveHeaders;
+import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
@@ -88,19 +84,19 @@ import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailConfig;
-import io.vertx.ext.mail.MailMessage;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
-import io.vertx.ext.web.handler.CookieHandler;
+import io.vertx.ext.web.api.contract.RouterFactoryOptions;
+import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.impl.CookieHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfBatchDetailsType;
@@ -503,8 +499,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: authHandler
 	 * r: getSiteUrlBase
 	 * r.enUS: getSiteBaseUrl
-	 * r: /deconnexion
-	 * r.enUS: /logout
+	 * r: setRouteur
+	 * r.enUS: setRouter
+	 * r: deconnexion
+	 * r.enUS: logout
 	 * r: Erreur
 	 * r.enUS: Error
 	 * r: Succes
@@ -521,36 +519,80 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	private Promise<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Promise<Void> promise = Promise.promise();
-		Router routeur = Router.router(vertx);
+		String siteUrlBase = configSite.getSiteUrlBase();
+		JsonObject keycloakJson = new JsonObject()
+			.put("realm", configSite.getAuthRoyaume())
+			.put("resource", configSite.getAuthRessource())
+			.put("auth-server-url", configSite.getAuthUrl())
+			.put("ssl-required", configSite.getAuthSslRequis())
+			.put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()))
+			;
+		OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
-		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3-frFR.yaml", ar -> {
+		OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
+		{
+			Router tempRouter = Router.router(vertx);
+			gestionnaireAuth.setupCallback(tempRouter.get("/callback"));
+		}
+
+//		ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
+		LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+		SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+		sessionHandler.setAuthProvider(authFournisseur);
+
+		OpenAPI3RouterFactory.create(vertx, "openapi3-frFR.yaml", ar -> {
 			if (ar.succeeded()) {
-				AppOpenAPI3RouterFactory usineRouteur = ar.result();
+				OpenAPI3RouterFactory usineRouteur = ar.result();
 				usineRouteur.mountServicesFromExtensions();
 				siteContexteFrFR.setUsineRouteur(usineRouteur);
 
-				JsonObject keycloakJson = new JsonObject()
-					.put("realm", configSite.getAuthRoyaume())
-					.put("resource", configSite.getAuthRessource())
-					.put("auth-server-url", configSite.getAuthUrl())
-					.put("ssl-required", configSite.getAuthSslRequis())
-					.put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()))
-					;
+				usineRouteur.addGlobalHandler(new CookieHandlerImpl());
+				usineRouteur.addGlobalHandler(sessionHandler);
+				usineRouteur.addHandlerByOperationId("callback", ctx -> {
 
-				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
+					// Handle the callback of the flow
+					final String code = ctx.request().getParam("code");
 
-				routeur.route().handler(new CookieHandlerImpl());
-				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
-				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
-				sessionHandler.setAuthProvider(authFournisseur);
-				routeur.route().handler(sessionHandler);
+					// code is a require value
+					if (code == null) {
+						ctx.fail(400);
+						return;
+					}
 
-				String siteUrlBase = configSite.getSiteUrlBase();
-				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
+					final String state = ctx.request().getParam("state");
 
-				gestionnaireAuth.setupCallback(routeur.get("/callback"));
+					final JsonObject config = new JsonObject().put("code", code);
 
-				routeur.get("/deconnexion").handler(rc -> {
+					config.put("redirect_uri", siteUrlBase + "/callback");
+
+					authFournisseur.authenticate(config, res -> {
+						if (res.failed()) {
+							ctx.fail(res.cause());
+						} else {
+							ctx.setUser(res.result());
+							Session session = ctx.session();
+							if (session != null) {
+								// the user has upgraded from unauthenticated to authenticated
+								// session should be upgraded as recommended by owasp
+								session.regenerateId();
+								// we should redirect the UA so this link becomes invalid
+								ctx.response()
+										// disable all caching
+										.putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
+										.putHeader("Pragma", "no-cache").putHeader(HttpHeaders.EXPIRES, "0")
+										// redirect (when there is no state, redirect to home
+										.putHeader(HttpHeaders.LOCATION, state != null ? state : "/").setStatusCode(302)
+										.end("Redirecting to " + (state != null ? state : "/") + ".");
+							} else {
+								// there is no session object so we cannot keep state
+								ctx.reroute(state != null ? state : "/");
+							}
+						}
+					});
+				});
+				usineRouteur.addFailureHandlerByOperationId("callback", a -> {});
+
+				usineRouteur.addHandlerByOperationId("deconnexion", rc -> {
 					Session session = rc.session();
 					if (session != null) {
 						session.destroy();
@@ -558,10 +600,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					rc.clearUser();
 					rc.reroute("/ecole");
 				});
+				usineRouteur.addFailureHandlerByOperationId("deconnexion", a -> {});
 
 				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
-
-				usineRouteur.initRouter();
+				Router routeur = usineRouteur.getRouter();
+				siteContexteFrFR.setRouteur(routeur);
 
 				LOGGER.info(configurerOpenApiSucces);
 				promise.complete();
@@ -572,6 +615,62 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		});
 		return promise;
 	}
+
+//	private Promise<Void> configurerOpenApi() {
+//		ConfigSite configSite = siteContexteFrFR.getConfigSite();
+//		Promise<Void> promise = Promise.promise();
+//		Router routeur = Router.router(vertx);
+//
+//		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3-frFR.yaml", ar -> {
+//			if (ar.succeeded()) {
+//				AppOpenAPI3RouterFactory usineRouteur = ar.result();
+//				usineRouteur.mountServicesFromExtensions();
+//				siteContexteFrFR.setUsineRouteur(usineRouteur);
+//
+//				JsonObject keycloakJson = new JsonObject()
+//					.put("realm", configSite.getAuthRoyaume())
+//					.put("resource", configSite.getAuthRessource())
+//					.put("auth-server-url", configSite.getAuthUrl())
+//					.put("ssl-required", configSite.getAuthSslRequis())
+//					.put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()))
+//					;
+//
+//				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
+//
+//				routeur.route().handler(new CookieHandlerImpl());
+//				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+//				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+//				sessionHandler.setAuthProvider(authFournisseur);
+//				routeur.route().handler(sessionHandler);
+//
+//				String siteUrlBase = configSite.getSiteUrlBase();
+//				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
+//
+//				gestionnaireAuth.setupCallback(routeur.get("/callback"));
+//
+//				routeur.get("/deconnexion").handler(rc -> {
+//					Session session = rc.session();
+//					if (session != null) {
+//						session.destroy();
+//					}
+//					rc.clearUser();
+//					rc.reroute("/ecole");
+//				});
+//
+//				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
+//
+//				usineRouteur.initRouter();
+//				siteContexteFrFR.setRouteur(usineRouteur.getRouter());
+//
+//				LOGGER.info(configurerOpenApiSucces);
+//				promise.complete();
+//			} else {
+//				LOGGER.error(configurerOpenApiErreur, ar.cause());
+//				promise.fail(ar.cause());
+//			}
+//		});
+//		return promise;
+//	}
 
 	/**
 	 * Var.enUS: configureSharedWorkerExecutor
@@ -633,10 +732,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SolrClient
 	 * r: ClientSql
 	 * r.enUS: SqlClient
+	 * r: getRouteur
+	 * r.enUS: getRouter
 	 */
 	private Promise<Void> configurerControlesSante() {
 		Promise<Void> promise = Promise.promise();
-		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
+		Router siteRouteur = siteContexteFrFR.getRouteur();
 		HealthCheckHandler gestionnaireControlesSante = HealthCheckHandler.create(vertx);
 
 		gestionnaireControlesSante.register("baseDeDonnees", 2000, a -> {
@@ -690,10 +791,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: routerFactory
 	 * r: UsineRouteur
 	 * r.enUS: RouterFactory
+	 * r: getRouteur
+	 * r.enUS: getRouter
 	 */
 	private Promise<Void> configurerWebsockets() {
 		Promise<Void> promise = Promise.promise();
-		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
+		Router siteRouteur = siteContexteFrFR.getRouteur();
 		BridgeOptions options = new BridgeOptions()
 				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
 		SockJSHandler gestionnaireSockJs = SockJSHandler.create(vertx);
@@ -2277,6 +2380,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: HtmlPartEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
+	 * r: getRouteur
+	 * r.enUS: getRouter
 	 */   
 	private Promise<Void> demarrerServeur() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -2299,7 +2404,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		DesignInscriptionFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		PartHtmlFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
-		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
+		Router siteRouteur = siteContexteFrFR.getRouteur();
 
 		StaticHandler gestionnaireStatic = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
 		if("scolaire-dev.computate.org".equals(configSite.getSiteNomHote())) {

@@ -208,6 +208,130 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return appliChemin == null ? "" : StringEscapeUtils.escapeHtml4(strAppliChemin());
 	}
 
+	//////////////
+	// appliNom //
+	//////////////
+
+	/**	L'entité « appliNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String appliNom;
+	@JsonIgnore
+	public Couverture<String> appliNomCouverture = new Couverture<String>().p(this).c(String.class).var("appliNom").o(appliNom);
+
+	/**	<br/>L'entité « appliNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:appliNom">Trouver l'entité appliNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _appliNom(Couverture<String> c);
+
+	public String getAppliNom() {
+		return appliNom;
+	}
+
+	public void setAppliNom(String appliNom) {
+		this.appliNom = appliNom;
+		this.appliNomCouverture.dejaInitialise = true;
+	}
+	protected AppliSwagger2 appliNomInit() {
+		if(!appliNomCouverture.dejaInitialise) {
+			_appliNom(appliNomCouverture);
+			if(appliNom == null)
+				setAppliNom(appliNomCouverture.o);
+		}
+		appliNomCouverture.dejaInitialise(true);
+		return (AppliSwagger2)this;
+	}
+
+	public String solrAppliNom() {
+		return appliNom;
+	}
+
+	public String strAppliNom() {
+		return appliNom == null ? "" : appliNom;
+	}
+
+	public String jsonAppliNom() {
+		return appliNom == null ? "" : appliNom;
+	}
+
+	public String nomAffichageAppliNom() {
+		return null;
+	}
+
+	public String htmTooltipAppliNom() {
+		return null;
+	}
+
+	public String htmAppliNom() {
+		return appliNom == null ? "" : StringEscapeUtils.escapeHtml4(strAppliNom());
+	}
+
+	///////////////
+	// langueNom //
+	///////////////
+
+	/**	L'entité « langueNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String langueNom;
+	@JsonIgnore
+	public Couverture<String> langueNomCouverture = new Couverture<String>().p(this).c(String.class).var("langueNom").o(langueNom);
+
+	/**	<br/>L'entité « langueNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:langueNom">Trouver l'entité langueNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _langueNom(Couverture<String> c);
+
+	public String getLangueNom() {
+		return langueNom;
+	}
+
+	public void setLangueNom(String langueNom) {
+		this.langueNom = langueNom;
+		this.langueNomCouverture.dejaInitialise = true;
+	}
+	protected AppliSwagger2 langueNomInit() {
+		if(!langueNomCouverture.dejaInitialise) {
+			_langueNom(langueNomCouverture);
+			if(langueNom == null)
+				setLangueNom(langueNomCouverture.o);
+		}
+		langueNomCouverture.dejaInitialise(true);
+		return (AppliSwagger2)this;
+	}
+
+	public String solrLangueNom() {
+		return langueNom;
+	}
+
+	public String strLangueNom() {
+		return langueNom == null ? "" : langueNom;
+	}
+
+	public String jsonLangueNom() {
+		return langueNom == null ? "" : langueNom;
+	}
+
+	public String nomAffichageLangueNom() {
+		return null;
+	}
+
+	public String htmTooltipLangueNom() {
+		return null;
+	}
+
+	public String htmLangueNom() {
+		return langueNom == null ? "" : StringEscapeUtils.escapeHtml4(strLangueNom());
+	}
+
 	////////////////////
 	// openApiVersion //
 	////////////////////
@@ -754,6 +878,8 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		siteContexteInit();
 		configSiteInit();
 		appliCheminInit();
+		appliNomInit();
+		langueNomInit();
 		openApiVersionInit();
 		openApiVersionNumeroInit();
 		tabsSchemaInit();
@@ -817,6 +943,10 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 				return oAppliSwagger2.configSite;
 			case "appliChemin":
 				return oAppliSwagger2.appliChemin;
+			case "appliNom":
+				return oAppliSwagger2.appliNom;
+			case "langueNom":
+				return oAppliSwagger2.langueNom;
 			case "openApiVersion":
 				return oAppliSwagger2.openApiVersion;
 			case "openApiVersionNumero":
