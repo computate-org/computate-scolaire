@@ -426,6 +426,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: userKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: UtilisateurSite.inscriptionCles
+	 * HtmlLigne: 12
+	 * HtmlCellule: 1
+	 * Description.frFR: La clé primaire des utilisateurs dans la base de données. 
+	 * Description.enUS: The primary key of the users in the database. 
+	 * NomAffichage.frFR: utilisateurs
+	 * NomAffichage.enUS: users
+	 */              
+	protected void _utilisateurCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: educationSort
 	 * Indexe: true
 	 * Stocke: true

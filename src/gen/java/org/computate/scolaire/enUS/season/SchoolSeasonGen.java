@@ -1,52 +1,54 @@
 package org.computate.scolaire.enUS.season;
 
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.math.BigDecimal;
-import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -86,6 +88,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long seasonKey;
 	@JsonIgnore
 	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
@@ -154,6 +157,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
@@ -240,6 +244,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long yearKey;
 	@JsonIgnore
 	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
@@ -367,6 +372,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
@@ -512,6 +518,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer educationSort;
 	@JsonIgnore
 	public Wrap<Integer> educationSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("educationSort").o(educationSort);
@@ -580,6 +587,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer schoolSort;
 	@JsonIgnore
 	public Wrap<Integer> schoolSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolSort").o(schoolSort);
@@ -648,6 +656,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearSort;
 	@JsonIgnore
 	public Wrap<Integer> yearSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearSort").o(yearSort);
@@ -716,6 +725,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer seasonSort;
 	@JsonIgnore
 	public Wrap<Integer> seasonSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("seasonSort").o(seasonSort);
@@ -784,6 +794,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
@@ -821,6 +832,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolYear year_;
 	@JsonIgnore
 	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
@@ -859,6 +871,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long schoolKey;
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
@@ -927,6 +940,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolName;
 	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
@@ -989,6 +1003,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolCompleteName;
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
@@ -1051,6 +1066,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolLocation;
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
@@ -1113,6 +1129,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolAddress;
 	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
@@ -1175,6 +1192,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolPhoneNumber;
 	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
@@ -1237,6 +1255,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolAdministratorName;
 	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
@@ -1299,6 +1318,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearStart;
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
@@ -1367,6 +1387,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearEnd;
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
@@ -1435,6 +1456,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected BigDecimal yearEnrollmentFee;
 	@JsonIgnore
 	public Wrap<BigDecimal> yearEnrollmentFeeWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("yearEnrollmentFee").o(yearEnrollmentFee);
@@ -1514,6 +1536,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);
@@ -1637,6 +1660,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean seasonSummer;
 	@JsonIgnore
 	public Wrap<Boolean> seasonSummerWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonSummer").o(seasonSummer);
@@ -1760,6 +1784,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean seasonWinter;
 	@JsonIgnore
 	public Wrap<Boolean> seasonWinterWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonWinter").o(seasonWinter);
@@ -1883,6 +1908,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean seasonFuture;
 	@JsonIgnore
 	public Wrap<Boolean> seasonFutureWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonFuture").o(seasonFuture);
@@ -2006,6 +2032,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String seasonShortName;
 	@JsonIgnore
 	public Wrap<String> seasonShortNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonShortName").o(seasonShortName);
@@ -2068,6 +2095,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String seasonCompleteName;
 	@JsonIgnore
 	public Wrap<String> seasonCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonCompleteName").o(seasonCompleteName);

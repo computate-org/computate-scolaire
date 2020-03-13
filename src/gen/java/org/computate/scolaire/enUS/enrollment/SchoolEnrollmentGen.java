@@ -436,7 +436,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -1084,7 +1084,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
+										.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
 										.f().sx("add a child")
 									.g("button");
 								} g("div");
@@ -1230,7 +1230,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
+										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
 										.f().sx("add a mom")
 									.g("button");
 								} g("div");
@@ -1376,7 +1376,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
+										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
 										.f().sx("add a dad")
 									.g("button");
 								} g("div");
@@ -1522,7 +1522,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
+										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
 										.f().sx("add a guardian")
 									.g("button");
 								} g("div");
@@ -1668,7 +1668,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKey: \"", pk, "\" }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+										.a("onclick", "postSchoolPaymentVals({ enrollmentKey: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
 										.f().sx("add a payment")
 									.g("button");
 								} g("div");
@@ -1747,6 +1747,152 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmEnrollmentFormKey() {
 		return enrollmentFormKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentFormKey());
+	}
+
+	//////////////
+	// userKeys //
+	//////////////
+
+	/**	L'entité « userKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
+
+	/**	<br/>L'entité « userKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKeys">Trouver l'entité userKeys dans Solr</a>
+	 * <br/>
+	 * @param userKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _userKeys(List<Long> o);
+
+	public List<Long> getUserKeys() {
+		return userKeys;
+	}
+
+	public void setUserKeys(List<Long> userKeys) {
+		this.userKeys = userKeys;
+		this.userKeysWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addUserKeys(Long...objets) {
+		for(Long o : objets) {
+			addUserKeys(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addUserKeys(Long o) {
+		if(o != null && !userKeys.contains(o))
+			this.userKeys.add(o);
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setUserKeys(JsonArray objets) {
+		userKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUserKeys(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addUserKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUserKeys(p);
+		}
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment userKeysInit() {
+		if(!userKeysWrap.alreadyInitialized) {
+			_userKeys(userKeys);
+		}
+		userKeysWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public List<Long> solrUserKeys() {
+		return userKeys;
+	}
+
+	public String strUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String jsonUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String nomAffichageUserKeys() {
+		return "users";
+	}
+
+	public String htmTooltipUserKeys() {
+		return null;
+	}
+
+	public String htmUserKeys() {
+		return userKeys == null ? "" : StringEscapeUtils.escapeHtml4(strUserKeys());
+	}
+
+	public void inputUserKeys(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "users")
+				.a("class", "valueObjectSuggest suggestUserKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setUserKeys")
+				.a("id", classApiMethodMethod, "_userKeys")
+				.a("autocomplete", "off")
+				.a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? searchSiteUserFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentUserKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmUserKeys(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentUserKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/user?fq=enrollmentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-gray w3-hover-gray ").f();
+								e("i").a("class", "far fa-user-cog ").f().g("i");
+								sx("users");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate site users to this enrollment");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputUserKeys(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentUserKeys_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+										.a("onclick", "postSiteUserVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "userKeys')); });")
+										.f().sx("add a site user")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////
@@ -11498,6 +11644,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		guardianKeysInit();
 		paymentKeysInit();
 		enrollmentFormKeyInit();
+		userKeysInit();
 		educationSortInit();
 		schoolSortInit();
 		yearSortInit();
@@ -11703,6 +11850,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.paymentKeys;
 			case "enrollmentFormKey":
 				return oSchoolEnrollment.enrollmentFormKey;
+			case "userKeys":
+				return oSchoolEnrollment.userKeys;
 			case "educationSort":
 				return oSchoolEnrollment.educationSort;
 			case "schoolSort":
@@ -11974,6 +12123,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return val;
 			case "paymentKeys":
 				oSchoolEnrollment.addPaymentKeys((Long)val);
+				return val;
+			case "userKeys":
+				oSchoolEnrollment.addUserKeys((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -12265,6 +12417,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				if(enrollmentFormKey != null)
 					oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
 			}
+
+			List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+			if(userKeys != null)
+				oSchoolEnrollment.userKeys.addAll(userKeys);
 
 			if(savesSchoolEnrollment.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -13023,6 +13179,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentFormKey_indexed_long", enrollmentFormKey);
 			document.addField("enrollmentFormKey_stored_long", enrollmentFormKey);
 		}
+		if(userKeys != null) {
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_stored_longs", o);
+			}
+		}
 		if(educationSort != null) {
 			document.addField("educationSort_indexed_int", educationSort);
 			document.addField("educationSort_stored_int", educationSort);
@@ -13471,6 +13635,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "paymentKeys_indexed_longs";
 			case "enrollmentFormKey":
 				return "enrollmentFormKey_indexed_long";
+			case "userKeys":
+				return "userKeys_indexed_longs";
 			case "educationSort":
 				return "educationSort_indexed_int";
 			case "schoolSort":
@@ -13729,6 +13895,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
 		if(enrollmentFormKey != null)
 			oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
+
+		List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+		if(userKeys != null)
+			oSchoolEnrollment.userKeys.addAll(userKeys);
 
 		Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 		if(educationSort != null)
@@ -14164,6 +14334,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("guardianKeys");
 			if(!Objects.equals(paymentKeys, original.getPaymentKeys()))
 				apiRequest.addVars("paymentKeys");
+			if(!Objects.equals(userKeys, original.getUserKeys()))
+				apiRequest.addVars("userKeys");
 			if(!Objects.equals(childCompleteName, original.getChildCompleteName()))
 				apiRequest.addVars("childCompleteName");
 			if(!Objects.equals(childCompleteNamePreferred, original.getChildCompleteNamePreferred()))
@@ -14259,7 +14431,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
+		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, userKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
 	}
 
 	////////////
@@ -14280,6 +14452,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( dadKeys, that.dadKeys )
 				&& Objects.equals( guardianKeys, that.guardianKeys )
 				&& Objects.equals( paymentKeys, that.paymentKeys )
+				&& Objects.equals( userKeys, that.userKeys )
 				&& Objects.equals( childCompleteName, that.childCompleteName )
 				&& Objects.equals( childCompleteNamePreferred, that.childCompleteNamePreferred )
 				&& Objects.equals( childBirthDate, that.childBirthDate )
@@ -14340,6 +14513,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", dadKeys: " ).append(dadKeys);
 		sb.append( ", guardianKeys: " ).append(guardianKeys);
 		sb.append( ", paymentKeys: " ).append(paymentKeys);
+		sb.append( ", userKeys: " ).append(userKeys);
 		sb.append( ", childCompleteName: \"" ).append(childCompleteName).append( "\"" );
 		sb.append( ", childCompleteNamePreferred: \"" ).append(childCompleteNamePreferred).append( "\"" );
 		sb.append( ", childBirthDate: " ).append(childBirthDate);

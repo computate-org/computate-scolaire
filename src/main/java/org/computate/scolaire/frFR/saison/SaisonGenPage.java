@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -319,40 +325,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
-					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listeSaisonScolaire.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listeSaisonScolaire.size(); i++) {
-						SaisonScolaire o = listeSaisonScolaire.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/saison/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-sun ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1SaisonGenPage();
 		}
 
 		if(listeSaisonScolaire != null && listeSaisonScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -384,16 +357,112 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void table1SaisonGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2SaisonGenPage();
+		} g("table");
+	}
+
+	public void table2SaisonGenPage() {
+		thead1SaisonGenPage();
+		tbody1SaisonGenPage();
+		tfoot1SaisonGenPage();
+	}
+
+	public void thead1SaisonGenPage() {
+		{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
+			thead2SaisonGenPage();
+		} g("thead");
+	}
+
+	public void thead2SaisonGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
+			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1SaisonGenPage() {
+		{ e("tbody").f();
+			tbody2SaisonGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2SaisonGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listeSaisonScolaire.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listeSaisonScolaire.size(); i++) {
+			SaisonScolaire o = listeSaisonScolaire.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/saison/" + o.getPk();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColonneObjetTitre()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "far fa-sun ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1SaisonGenPage() {
+		{ e("tfoot").a("class", "w3-yellow w3-hover-yellow ").f();
+			tfoot2SaisonGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2SaisonGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSaisonScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
 	public void htmlBodyFormsSaisonGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-				.a("id", "rechargerCetteSaisonGenPage")
-				.a("onclick", "patchSaisonScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteSaisonGenPage')); }, function() { ajouterErreur($('#rechargerCetteSaisonGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger cette saison");
-		} g("button");
+		if(listeSaisonScolaire != null && listeSaisonScolaire.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+					.a("id", "rechargerCetteSaisonGenPage")
+					.a("onclick", "patchSaisonScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteSaisonGenPage')); }, function() { ajouterErreur($('#rechargerCetteSaisonGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("recharger cette saison");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")

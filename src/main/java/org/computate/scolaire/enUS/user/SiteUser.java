@@ -1,9 +1,12 @@
 package org.computate.scolaire.enUS.user;
 
+import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 
 public class SiteUser extends SiteUserGen<Cluster> {
+
+	protected void _enrollmentKeys(List<Long> o) {}
 
 	protected void _userId(Wrap<String> c) {
 		String o = siteRequest_.getUserId();
@@ -49,6 +52,11 @@ public class SiteUser extends SiteUserGen<Cluster> {
 
 	protected void _seeDeleted(Wrap<Boolean> c) {
 		c.o(false);
+	}
+
+	@Override()
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(userFullName + " " + userEmail + " " + userName);
 	}
 
 	public void  htmlBody() {

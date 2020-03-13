@@ -199,6 +199,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 		e("script").a("src", staticBaseUrl, "/js/enUS/DadPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/GuardianPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/PaymentPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptEnrollmentEmailGenPage() {
@@ -212,6 +213,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 		tl(2, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk); ");
 		tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk); ");
 		tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk); ");
 		tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk); ");
 		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}); ");
 		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}); ");
@@ -280,6 +282,9 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			o.htmGuardianKeys("Page");
 			o.htmPaymentKeys("Page");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserKeys("Page");
+		} g("div");
 	}
 
 	public void htmlFormPOSTSchoolEnrollment(SchoolEnrollment o) {
@@ -334,6 +339,9 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			o.htmGuardianKeys("POST");
 			o.htmPaymentKeys("POST");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserKeys("POST");
+		} g("div");
 	}
 
 	public void htmlFormPUTSchoolEnrollment(SchoolEnrollment o) {
@@ -385,6 +393,9 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGuardianKeys("PUT");
 			o.htmPaymentKeys("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserKeys("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildCompleteName("PUT");
@@ -467,6 +478,9 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			o.htmPaymentKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildCompleteName("PATCH");
 			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
@@ -547,6 +561,9 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGuardianKeys("Recherche");
 			o.htmPaymentKeys("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Recherche");

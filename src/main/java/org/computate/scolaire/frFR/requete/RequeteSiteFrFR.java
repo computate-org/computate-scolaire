@@ -172,8 +172,6 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _principalJson(Couverture<JsonObject> c) {
 		if(utilisateurVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-			if(o != null)
-				System.out.println(String.format("SCOPE for %s: %s", o.getString("preferred_username"), o.getString("scope")));
 			c.o(o);
 		}
 	}
@@ -317,6 +315,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * **/
 	protected void _utilisateurRolesRessource(List<String> o) {
 		JsonArray roles = Optional.ofNullable(utilisateurRessource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
+		System.out.println(String.format("ROLES: %s", roles));
 		roles.stream().forEach(r -> {
 			addUtilisateurRolesRessource((String)r);
 		});

@@ -8,6 +8,7 @@ import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.session.SchoolSession;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -33,6 +35,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listSchoolSession »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolSession> listSchoolSession;
 	@JsonIgnore
 	public Wrap<SearchList<SchoolSession>> listSchoolSessionWrap = new Wrap<SearchList<SchoolSession>>().p(this).c(SearchList.class).var("listSchoolSession").o(listSchoolSession);
@@ -72,6 +75,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « schoolSession »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolSession schoolSession;
 	@JsonIgnore
 	public Wrap<SchoolSession> schoolSessionWrap = new Wrap<SchoolSession>().p(this).c(SchoolSession.class).var("schoolSession").o(schoolSession);

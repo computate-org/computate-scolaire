@@ -5,6 +5,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
@@ -33,6 +35,7 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listeEcole »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<Ecole> listeEcole;
 	@JsonIgnore
 	public Couverture<ListeRecherche<Ecole>> listeEcoleCouverture = new Couverture<ListeRecherche<Ecole>>().p(this).c(ListeRecherche.class).var("listeEcole").o(listeEcole);
@@ -72,6 +75,7 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « ecole »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Ecole ecole;
 	@JsonIgnore
 	public Couverture<Ecole> ecoleCouverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole").o(ecole);

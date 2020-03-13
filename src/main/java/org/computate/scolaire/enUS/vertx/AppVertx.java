@@ -497,7 +497,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 
 //		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
-		vertx.setPeriodic(1000 * 60, a -> {
+		vertx.setPeriodic(1000 * 60 * 60, a -> {
 			WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {

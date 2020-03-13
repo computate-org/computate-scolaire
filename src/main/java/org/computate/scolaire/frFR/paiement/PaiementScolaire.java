@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;              
+package org.computate.scolaire.frFR.paiement;        
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -52,14 +52,17 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: solid
  * IconeNom: search-dollar
  * 
+ * RoleSession: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
+ * RoleRead.frFR: User
+ * RoleRead.enUS: User
  * 
  * Tri.desc: paiementDate
  * Tri.desc: paiementPar
  * 
  * Rows: 50
-*/  
+*/       
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**

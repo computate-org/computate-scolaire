@@ -95,6 +95,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsSiteUserGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptSiteUserGenPage() {
@@ -102,6 +103,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
+		tl(2, "suggestSiteUserEnrollmentKeys([{'name':'fq','value':'userKeys:' + pk}], $('#listSiteUserEnrollmentKeys_Page'), pk); ");
 		tl(1, "}");
 		tl(1, "websocketSiteUser(websocketSiteUserInner);");
 		l("});");
@@ -124,6 +126,9 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeDeleted("Page");
 			o.htmCustomerProfileId("Page");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("Page");
+		} g("div");
 	}
 
 	public void htmlFormPOSTSiteUser(SiteUser o) {
@@ -143,6 +148,9 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeDeleted("POST");
 			o.htmCustomerProfileId("POST");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("POST");
+		} g("div");
 	}
 
 	public void htmlFormPUTSiteUser(SiteUser o) {
@@ -160,6 +168,14 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeDeleted("PUT");
 			o.htmCustomerProfileId("PUT");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserId("PUT");
+			o.htmUserName("PUT");
+			o.htmUserEmail("PUT");
+		} g("div");
 	}
 
 	public void htmlFormPATCHSiteUser(SiteUser o) {
@@ -176,6 +192,14 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeArchived("PATCH");
 			o.htmSeeDeleted("PATCH");
 			o.htmCustomerProfileId("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUserId("PATCH");
+			o.htmUserName("PATCH");
+			o.htmUserEmail("PATCH");
 		} g("div");
 	}
 
@@ -197,7 +221,13 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEnrollmentKeys("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Recherche");
+			o.htmUserId("Recherche");
+			o.htmUserName("Recherche");
+			o.htmUserEmail("Recherche");
 		} g("div");
 	}
 

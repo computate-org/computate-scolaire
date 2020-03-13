@@ -120,6 +120,8 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentFormKey(Wrap<Long> c) {
 	}
 
+	protected void _userKeys(List<Long> o) {}
+
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(6);
 	}

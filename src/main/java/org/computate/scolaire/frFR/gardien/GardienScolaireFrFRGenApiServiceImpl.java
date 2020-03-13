@@ -105,6 +105,24 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void postGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerGardienScolaire(requeteSite, b -> {
@@ -257,6 +275,24 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void putGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
@@ -535,6 +571,24 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void patchGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
@@ -881,6 +935,27 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void getGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
@@ -947,6 +1022,24 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void deleteGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					rechercheGardienScolaire(requeteSite, false, true, null, b -> {
@@ -1028,6 +1121,24 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void rechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
@@ -1131,6 +1242,27 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void pagerechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
@@ -1371,7 +1503,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								utilisateurGardienScolaireDefinir(siteRequest, jsonObject);
+								utilisateurGardienScolaireDefinir(requeteSite, jsonObject, false);
 
 								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
@@ -1382,16 +1514,16 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
 								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
-								utilisateurService.creerSiteUser(requeteSite2, b -> {
+								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
-										SiteUser siteUser = b.result();
-										utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+										UtilisateurSite utilisateurSite = b.result();
+										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, c -> {
 											if(c.succeeded()) {
-												utilisateurService.definirSiteUser(siteUser, d -> {
+												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 													if(d.succeeded()) {
-														utilisateurService.attribuerSiteUser(siteUser, e -> {
+														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
 															if(e.succeeded()) {
-																utilisateurService.indexerSiteUser(siteUser, f -> {
+																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
 																	if(f.succeeded()) {
 																		requeteSite.setUtilisateurSite(utilisateurSite);
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
@@ -1422,6 +1554,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							} else {
 								Long pkUtilisateur = utilisateurValeurs.getLong(0);
 								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(UtilisateurSite.class);
 								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
@@ -1436,8 +1569,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("customerProfileId", principalJson.getString("name"));
 								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								Boolean definir = utilisateurGardienScolaireDefinir(siteRequest, jsonObject);
+								jsonObject.put("email", principalJson.getString("email"));
+								Boolean definir = utilisateurGardienScolaireDefinir(requeteSite, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
 									if(utilisateurSite1 == null) {
@@ -1458,13 +1594,13 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
-									utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
+									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirSiteUser(siteUser, d -> {
+											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerSiteUser(siteUser, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerSiteUser(siteUser, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
 																if(f.succeeded()) {
 																	requeteSite.setUtilisateurSite(utilisateurSite);
 																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
@@ -1510,7 +1646,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public Boolean utilisateurGardienScolaireDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject) {
+	public Boolean utilisateurGardienScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 
@@ -1538,7 +1674,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
+						+ " AND utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getUtilisateurId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

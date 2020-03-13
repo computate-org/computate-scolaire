@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -327,40 +333,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-pink w3-hover-pink ").f();
-					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listeEcole.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listeEcole.size(); i++) {
-						Ecole o = listeEcole.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/ecole/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-school ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1EcoleGenPage();
 		}
 
 		if(listeEcole != null && listeEcole.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -392,16 +365,112 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void table1EcoleGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2EcoleGenPage();
+		} g("table");
+	}
+
+	public void table2EcoleGenPage() {
+		thead1EcoleGenPage();
+		tbody1EcoleGenPage();
+		tfoot1EcoleGenPage();
+	}
+
+	public void thead1EcoleGenPage() {
+		{ e("thead").a("class", "w3-pink w3-hover-pink ").f();
+			thead2EcoleGenPage();
+		} g("thead");
+	}
+
+	public void thead2EcoleGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
+			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1EcoleGenPage() {
+		{ e("tbody").f();
+			tbody2EcoleGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2EcoleGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listeEcole.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listeEcole.size(); i++) {
+			Ecole o = listeEcole.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/ecole/" + o.getPk();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColonneObjetTitre()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "far fa-school ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1EcoleGenPage() {
+		{ e("tfoot").a("class", "w3-pink w3-hover-pink ").f();
+			tfoot2EcoleGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2EcoleGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
 	public void htmlBodyFormsEcoleGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-				.a("id", "rechargerCetteEcoleGenPage")
-				.a("onclick", "patchEcoleVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteEcoleGenPage')); }, function() { ajouterErreur($('#rechargerCetteEcoleGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger cette école");
-		} g("button");
+		if(listeEcole != null && listeEcole.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+					.a("id", "rechargerCetteEcoleGenPage")
+					.a("onclick", "patchEcoleVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteEcoleGenPage')); }, function() { ajouterErreur($('#rechargerCetteEcoleGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("recharger cette école");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")

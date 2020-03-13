@@ -26,6 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -314,40 +320,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-orange w3-hover-orange ").f();
-					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listeAnneeScolaire.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listeAnneeScolaire.size(); i++) {
-						AnneeScolaire o = listeAnneeScolaire.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/annee/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-calendar-check ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1AnneeGenPage();
 		}
 
 		if(listeAnneeScolaire != null && listeAnneeScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -379,16 +352,112 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void table1AnneeGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2AnneeGenPage();
+		} g("table");
+	}
+
+	public void table2AnneeGenPage() {
+		thead1AnneeGenPage();
+		tbody1AnneeGenPage();
+		tfoot1AnneeGenPage();
+	}
+
+	public void thead1AnneeGenPage() {
+		{ e("thead").a("class", "w3-orange w3-hover-orange ").f();
+			thead2AnneeGenPage();
+		} g("thead");
+	}
+
+	public void thead2AnneeGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
+			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1AnneeGenPage() {
+		{ e("tbody").f();
+			tbody2AnneeGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2AnneeGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listeAnneeScolaire.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listeAnneeScolaire.size(); i++) {
+			AnneeScolaire o = listeAnneeScolaire.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/annee/" + o.getPk();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColonneObjetTitre()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "far fa-calendar-check ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1AnneeGenPage() {
+		{ e("tfoot").a("class", "w3-orange w3-hover-orange ").f();
+			tfoot2AnneeGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2AnneeGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeAnneeScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
 	public void htmlBodyFormsAnneeGenPage() {
 		e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-				.a("id", "rechargerCetteAnneeGenPage")
-				.a("onclick", "patchAnneeScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteAnneeGenPage')); }, function() { ajouterErreur($('#rechargerCetteAnneeGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger cette année");
-		} g("button");
+		if(listeAnneeScolaire != null && listeAnneeScolaire.size() == 1) {
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+					.a("id", "rechargerCetteAnneeGenPage")
+					.a("onclick", "patchAnneeScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteAnneeGenPage')); }, function() { ajouterErreur($('#rechargerCetteAnneeGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt ").f().g("i");
+				sx("recharger cette année");
+			} g("button");
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")

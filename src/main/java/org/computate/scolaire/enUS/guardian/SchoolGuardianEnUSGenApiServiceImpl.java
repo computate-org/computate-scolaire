@@ -105,6 +105,24 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void postSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					createSchoolGuardian(siteRequest, b -> {
@@ -257,6 +275,24 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void putSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -535,6 +571,24 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void patchSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -881,6 +935,27 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void getSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -947,6 +1022,24 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void deleteSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					aSearchSchoolGuardian(siteRequest, false, true, null, b -> {
@@ -1028,6 +1121,27 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void searchSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -1131,6 +1245,27 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void searchpageSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -1371,7 +1506,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
 								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								userSchoolGuardianDefine(siteRequest, jsonObject);
+								userSchoolGuardianDefine(siteRequest, jsonObject, false);
 
 								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
 								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
@@ -1422,6 +1557,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 							} else {
 								Long pkUser = userValues.getLong(0);
 								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
@@ -1436,8 +1572,11 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
+								jsonObject.put("customerProfileId", jsonPrincipal.getString("name"));
 								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								Boolean define = userSchoolGuardianDefine(siteRequest, jsonObject);
+								jsonObject.put("email", jsonPrincipal.getString("email"));
+								Boolean define = userSchoolGuardianDefine(siteRequest, jsonObject, true);
 								if(define) {
 									SiteUser siteUser;
 									if(siteUser1 == null) {
@@ -1510,7 +1649,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public Boolean userSchoolGuardianDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject) {
+	public Boolean userSchoolGuardianDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 
@@ -1538,7 +1677,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
-				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
+				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----"))
+						+ " AND userId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getUserId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

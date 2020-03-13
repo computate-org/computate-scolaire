@@ -96,6 +96,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 
 	@Override public void htmlScriptsUtilisateurSiteGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptUtilisateurSiteGenPage() {
@@ -103,6 +104,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
+		tl(2, "suggereUtilisateurSiteInscriptionCles([{'name':'fq','value':'utilisateurCles:' + pk}], $('#listUtilisateurSiteInscriptionCles_Page'), pk); ");
 		tl(1, "}");
 		tl(1, "websocketUtilisateurSite(websocketUtilisateurSiteInner);");
 		l("});");
@@ -125,6 +127,9 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirSupprime("Page");
 			o.htmCustomerProfileId("Page");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionCles("Page");
+		} g("div");
 	}
 
 	public void htmlFormPOSTUtilisateurSite(UtilisateurSite o) {
@@ -144,6 +149,9 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirSupprime("POST");
 			o.htmCustomerProfileId("POST");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionCles("POST");
+		} g("div");
 	}
 
 	public void htmlFormPUTUtilisateurSite(UtilisateurSite o) {
@@ -161,6 +169,14 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirSupprime("PUT");
 			o.htmCustomerProfileId("PUT");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionCles("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurId("PUT");
+			o.htmUtilisateurNom("PUT");
+			o.htmUtilisateurMail("PUT");
+		} g("div");
 	}
 
 	public void htmlFormPATCHUtilisateurSite(UtilisateurSite o) {
@@ -177,6 +193,14 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirArchive("PATCH");
 			o.htmVoirSupprime("PATCH");
 			o.htmCustomerProfileId("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurId("PATCH");
+			o.htmUtilisateurNom("PATCH");
+			o.htmUtilisateurMail("PATCH");
 		} g("div");
 	}
 
@@ -198,7 +222,13 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionCles("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");
+			o.htmUtilisateurId("Recherche");
+			o.htmUtilisateurNom("Recherche");
+			o.htmUtilisateurMail("Recherche");
 		} g("div");
 	}
 

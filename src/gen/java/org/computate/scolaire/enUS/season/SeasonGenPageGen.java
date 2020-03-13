@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -17,6 +18,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.season.SchoolSeason;
 
@@ -33,6 +35,7 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listSchoolSeason »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolSeason> listSchoolSeason;
 	@JsonIgnore
 	public Wrap<SearchList<SchoolSeason>> listSchoolSeasonWrap = new Wrap<SearchList<SchoolSeason>>().p(this).c(SearchList.class).var("listSchoolSeason").o(listSchoolSeason);
@@ -72,6 +75,7 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « schoolSeason »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolSeason schoolSeason;
 	@JsonIgnore
 	public Wrap<SchoolSeason> schoolSeasonWrap = new Wrap<SchoolSeason>().p(this).c(SchoolSeason.class).var("schoolSeason").o(schoolSeason);

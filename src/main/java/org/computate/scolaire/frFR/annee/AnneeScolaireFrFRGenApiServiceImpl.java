@@ -80,6 +80,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -106,11 +107,29 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void postAnneeScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerAnneeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-						RequeteApi requeteApi = new RequeteApi();
+							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
@@ -246,6 +265,24 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void putAnneeScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurAnneeScolaire(requeteSite, b -> {
@@ -512,6 +549,24 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void patchAnneeScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurAnneeScolaire(requeteSite, b -> {
@@ -828,6 +883,27 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void getAnneeScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurAnneeScolaire(requeteSite, b -> {
@@ -894,6 +970,24 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void deleteAnneeScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					rechercheAnneeScolaire(requeteSite, false, true, null, b -> {
@@ -975,6 +1069,24 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void rechercheAnneeScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurAnneeScolaire(requeteSite, b -> {
@@ -1078,6 +1190,27 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void pagerechercheAnneeScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlAnneeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurAnneeScolaire(requeteSite, b -> {
@@ -1312,88 +1445,150 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						if(utilisateurValeurs == null) {
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_creer
-									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
-									, creerAsync
-							-> {
-								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUtilisateur = creerLigne.getLong(0);
-								UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-								utilisateurSite.setPk(pkUtilisateur);
+						try {
+							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
+							if(utilisateurValeurs == null) {
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								connexionSql.queryWithParams(
-										SiteContexteFrFR.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-										, definirAsync
-								-> {
-									if(definirAsync.succeeded()) {
-										try {
-											for(JsonArray definition : definirAsync.result().getResults()) {
-												utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								utilisateurAnneeScolaireDefinir(requeteSite, jsonObject, false);
+
+								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+								requeteSite2.setObjetJson(jsonObject);
+								requeteSite2.setVertx(requeteSite.getVertx());
+								requeteSite2.setSiteContexte_(siteContexte);
+								requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+
+								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
+									if(b.succeeded()) {
+										UtilisateurSite utilisateurSite = b.result();
+										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, c -> {
+											if(c.succeeded()) {
+												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+													if(d.succeeded()) {
+														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+															if(e.succeeded()) {
+																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+																	if(f.succeeded()) {
+																		requeteSite.setUtilisateurSite(utilisateurSite);
+																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		gestionnaireEvenements.handle(Future.succeededFuture());
+																	} else {
+																		erreurAnneeScolaire(requeteSite, gestionnaireEvenements, f);
+																	}
+																});
+															} else {
+																erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
+															}
+														});
+													} else {
+														erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+													}
+												});
+											} else {
+												erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
 											}
-											JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-											JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-											utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-											utilisateurSite.initLoinPourClasse(requeteSite);
-											utilisateurSite.indexerPourClasse();
-											requeteSite.setUtilisateurSite(utilisateurSite);
-											requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											requeteSite.setUtilisateurId(principalJson.getString("sub"));
-											gestionnaireEvenements.handle(Future.succeededFuture());
-										} catch(Exception e) {
-											gestionnaireEvenements.handle(Future.failedFuture(e));
-										}
+										});
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+										erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
 									}
 								});
-							});
-						} else {
-							Long pkUtilisateur = utilisateurValeurs.getLong(0);
-							UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-							utilisateurSite.setPk(pkUtilisateur);
+							} else {
+								Long pkUtilisateur = utilisateurValeurs.getLong(0);
+								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(UtilisateurSite.class);
+								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
+								listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-									, definirAsync
-							-> {
-								if(definirAsync.succeeded()) {
-									try {
-										for(JsonArray definition : definirAsync.result().getResults()) {
-											utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
-										}
-										JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-										JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-										utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-										utilisateurSite.initLoinPourClasse(requeteSite);
-										utilisateurSite.indexerPourClasse();
-										requeteSite.setUtilisateurSite(utilisateurSite);
-										requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										requeteSite.setUtilisateurId(principalJson.getString("sub"));
-										gestionnaireEvenements.handle(Future.succeededFuture());
-									} catch(Exception e) {
-										gestionnaireEvenements.handle(Future.failedFuture(e));
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+
+								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("customerProfileId", principalJson.getString("name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								jsonObject.put("email", principalJson.getString("email"));
+								Boolean definir = utilisateurAnneeScolaireDefinir(requeteSite, jsonObject, true);
+								if(definir) {
+									UtilisateurSite utilisateurSite;
+									if(utilisateurSite1 == null) {
+										utilisateurSite = new UtilisateurSite();
+										utilisateurSite.setPk(pkUtilisateur);
+										utilisateurSite.setRequeteSite_(requeteSite);
+									} else {
+										utilisateurSite = utilisateurSite1;
 									}
+
+									RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+									requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+									requeteSite2.setObjetJson(jsonObject);
+									requeteSite2.setVertx(requeteSite.getVertx());
+									requeteSite2.setSiteContexte_(siteContexte);
+									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
+										if(c.succeeded()) {
+											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+												if(d.succeeded()) {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+														if(e.succeeded()) {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+																if(f.succeeded()) {
+																	requeteSite.setUtilisateurSite(utilisateurSite);
+																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																	gestionnaireEvenements.handle(Future.succeededFuture());
+																} else {
+																	erreurAnneeScolaire(requeteSite, gestionnaireEvenements, f);
+																}
+															});
+														} else {
+															erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
+														}
+													});
+												} else {
+													erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+												}
+											});
+										} else {
+											erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+										}
+									});
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+									requeteSite.setUtilisateurSite(utilisateurSite1);
+									requeteSite.setUtilisateurNom(utilisateurSite1.getUtilisateurNom());
+									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
+									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
+									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
-							});
+							}
+						} catch(Exception e) {
+							gestionnaireEvenements.handle(Future.failedFuture(e));
 						}
 					} else {
 						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -1403,6 +1598,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
+	}
+
+	public Boolean utilisateurAnneeScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
+		return true;
 	}
 
 	public void rechercheAnneeScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<AnneeScolaire>>> gestionnaireEvenements) {
@@ -1417,7 +1616,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			listeRecherche.setC(AnneeScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
@@ -1477,8 +1676,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if(listeRecherche.getSorts().size() == 0)
+			if(listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
+			}
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

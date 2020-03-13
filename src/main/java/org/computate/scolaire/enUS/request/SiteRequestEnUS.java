@@ -102,8 +102,6 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _jsonPrincipal(Wrap<JsonObject> c) {
 		if(userVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-			if(o != null)
-				System.out.println(String.format("SCOPE for %s: %s", o.getString("preferred_username"), o.getString("scope")));
 			c.o(o);
 		}
 	}
@@ -171,6 +169,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 
 	protected void _userResourceRoles(List<String> o) {
 		JsonArray roles = Optional.ofNullable(userResource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
+		System.out.println(String.format("ROLES: %s", roles));
 		roles.stream().forEach(r -> {
 			addUserResourceRoles((String)r);
 		});

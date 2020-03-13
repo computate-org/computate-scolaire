@@ -1,5 +1,7 @@
 package org.computate.scolaire.frFR.utilisateur;                        
 
+import java.util.List;
+
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 
@@ -16,6 +18,8 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiTag.enUS: User
  * ApiUri.enUS: /api/user
  * 
+ * ApiMethode.frFR: Recherche
+ * ApiMethode.enUS: Search
  * ApiMethode: PATCH
  * ApiMethode: POST
  * 
@@ -42,15 +46,30 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * IconeGroupe: regular
  * IconeNom: user-cog
  * 
+ * RoleSession: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  */       
-public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {    
+public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: InscriptionScolaire.utilisateurCles
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: inscriptions
+	 * NomAffichage.enUS: enrollments
+	 */              
+	protected void _inscriptionCles(List<Long> o) {}
 
 	/**  
 	 * Var.enUS: userId
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * Description.frFR: L'identifiant Keycloak pour cet utilisateur. 
 	 * NomAffichage.frFR: utilisateur ID
 	 * NomAffichage.enUS: user ID
@@ -69,11 +88,12 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * description.frFR: Le nom d'utilisateur pour se connecter au site. 
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * r: requeteSite_
 	 * r.enUS: siteRequest_
 	 * r: UtilisateurNom
 	 * r.enUS: UserName
-	 */
+	 */   
 	protected void _utilisateurNom(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNom();
 		c.o(o);
@@ -84,6 +104,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * description.frFR: Le mail pour recevoir des courriels. 
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * r: requeteSite_
 	 * r.enUS: siteRequest_
 	 * r: UtilisateurMail
@@ -206,6 +227,20 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 **/
 	protected void _voirSupprime(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**
+	 * Var.enUS: _objectTitle
+	 * r: utilisateurNomComplet
+	 * r.enUS: userFullName
+	 * r: utilisateurMail
+	 * r.enUS: userEmail
+	 * r: utilisateurNom
+	 * r.enUS: userName
+	 */
+	@Override 
+	protected void _objetTitre(Couverture<String> c) {
+		c.o(utilisateurNomComplet + " " + utilisateurMail + " " + utilisateurNom);
 	}
 
 	public void htmlBody() {

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.age.SchoolAge;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -33,6 +35,7 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listSchoolAge »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolAge> listSchoolAge;
 	@JsonIgnore
 	public Wrap<SearchList<SchoolAge>> listSchoolAgeWrap = new Wrap<SearchList<SchoolAge>>().p(this).c(SearchList.class).var("listSchoolAge").o(listSchoolAge);
@@ -72,6 +75,7 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « schoolAge »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolAge schoolAge;
 	@JsonIgnore
 	public Wrap<SchoolAge> schoolAgeWrap = new Wrap<SchoolAge>().p(this).c(SchoolAge.class).var("schoolAge").o(schoolAge);

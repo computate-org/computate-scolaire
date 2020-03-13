@@ -396,7 +396,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "blocs")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 				.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setBlocCles")
 				.a("id", classeApiMethodeMethode, "_blocCles")
@@ -438,7 +438,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+										.a("onclick", "postBlocScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
 										.f().sx("ajouter un bloc")
 									.g("button");
 								} g("div");
@@ -1045,7 +1045,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "enfants")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 				.a("class", "valeur suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setEnfantCle")
 				.a("id", classeApiMethodeMethode, "_enfantCle")
@@ -1087,7 +1087,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "enfantCle')); });")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "enfantCle')); });")
 										.f().sx("ajouter un enfant")
 									.g("button");
 								} g("div");
@@ -1192,7 +1192,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "mères")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 				.a("class", "valeur suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setMereCles")
 				.a("id", classeApiMethodeMethode, "_mereCles")
@@ -1234,7 +1234,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postMereScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "mereCles')); });")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "mereCles')); });")
 										.f().sx("ajouter une mère")
 									.g("button");
 								} g("div");
@@ -1339,7 +1339,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "pères")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 				.a("class", "valeur suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setPereCles")
 				.a("id", classeApiMethodeMethode, "_pereCles")
@@ -1381,7 +1381,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postPereScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "pereCles')); });")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "pereCles')); });")
 										.f().sx("ajouter un père")
 									.g("button");
 								} g("div");
@@ -1486,7 +1486,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "gardiens")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 				.a("class", "valeur suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setGardienCles")
 				.a("id", classeApiMethodeMethode, "_gardienCles")
@@ -1528,7 +1528,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postGardienScolaireVals({ inscriptionCles: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "gardienCles')); });")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "gardienCles')); });")
 										.f().sx("ajouter un gardien")
 									.g("button");
 								} g("div");
@@ -1633,7 +1633,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "paiements")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 				.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setPaiementCles")
 				.a("id", classeApiMethodeMethode, "_paiementCles")
@@ -1675,7 +1675,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postPaiementScolaireVals({ inscriptionCle: \"", pk, "\" }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCle: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
 										.f().sx("ajouter un paiement")
 									.g("button");
 								} g("div");
@@ -1754,6 +1754,153 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmFormInscriptionCle() {
 		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
+	}
+
+	/////////////////////
+	// utilisateurCles //
+	/////////////////////
+
+	/**	L'entité « utilisateurCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
+
+	/**	<br/>L'entité « utilisateurCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCles">Trouver l'entité utilisateurCles dans Solr</a>
+	 * <br/>
+	 * @param utilisateurCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _utilisateurCles(List<Long> o);
+
+	public List<Long> getUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public void setUtilisateurCles(List<Long> utilisateurCles) {
+		this.utilisateurCles = utilisateurCles;
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addUtilisateurCles(Long...objets) {
+		for(Long o : objets) {
+			addUtilisateurCles(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addUtilisateurCles(Long o) {
+		if(o != null && !utilisateurCles.contains(o))
+			this.utilisateurCles.add(o);
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setUtilisateurCles(JsonArray objets) {
+		utilisateurCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUtilisateurCles(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addUtilisateurCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUtilisateurCles(p);
+		}
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire utilisateurClesInit() {
+		if(!utilisateurClesCouverture.dejaInitialise) {
+			_utilisateurCles(utilisateurCles);
+		}
+		utilisateurClesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public List<Long> solrUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public String strUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String jsonUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String nomAffichageUtilisateurCles() {
+		return "utilisateurs";
+	}
+
+	public String htmTooltipUtilisateurCles() {
+		return null;
+	}
+
+	public String htmUtilisateurCles() {
+		return utilisateurCles == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCles());
+	}
+
+	public void inputUtilisateurCles(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "utilisateurs")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereUtilisateurCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setUtilisateurCles")
+				.a("id", classeApiMethodeMethode, "_utilisateurCles")
+				.a("autocomplete", "off")
+				.a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireUtilisateurCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmUtilisateurCles(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireUtilisateurCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-gray w3-hover-gray ").f();
+								e("i").a("class", "far fa-user-cog ").f().g("i");
+								sx("utilisateurs");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputUtilisateurCles(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+										.a("onclick", "postUtilisateurSiteVals({ inscriptionCles: [ \"", pk, "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "utilisateurCles')); });")
+										.f().sx("ajouter un utilisateur du site")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////
@@ -3184,7 +3331,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "NomAffichage.enUS: ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantNomComplet");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEnfantNomComplet inputInscriptionScolaire", pk, "EnfantNomComplet w3-input w3-border ");
@@ -3302,7 +3449,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "NomAffichage.enUS: ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantNomCompletPrefere");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEnfantNomCompletPrefere inputInscriptionScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
@@ -3440,7 +3587,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
 			.fg();
@@ -3734,7 +3881,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "addresse")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEcoleAddresse inputInscriptionScolaire", pk, "EcoleAddresse w3-input w3-border ");
@@ -6421,7 +6568,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "addresse de la famille")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_familleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setFamilleAddresse inputInscriptionScolaire", pk, "FamilleAddresse w3-input w3-border ");
@@ -6537,7 +6684,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "comment vous connaissez l'école ? ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_familleCommentVousConnaissezEcole");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setFamilleCommentVousConnaissezEcole inputInscriptionScolaire", pk, "FamilleCommentVousConnaissezEcole w3-input w3-border ");
@@ -6653,7 +6800,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "considérations spéciale")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_inscriptionConsiderationsSpeciales");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setInscriptionConsiderationsSpeciales inputInscriptionScolaire", pk, "InscriptionConsiderationsSpeciales w3-input w3-border ");
@@ -6769,7 +6916,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "conditions médicales")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantConditionsMedicales");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEnfantConditionsMedicales inputInscriptionScolaire", pk, "EnfantConditionsMedicales w3-input w3-border ");
@@ -6885,7 +7032,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "écoles précedemment fréqentées")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEnfantEcolesPrecedemmentFrequentees inputInscriptionScolaire", pk, "EnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
@@ -7001,7 +7148,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "description")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantDescription");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEnfantDescription inputInscriptionScolaire", pk, "EnfantDescription w3-input w3-border ");
@@ -7117,7 +7264,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("textarea")
 			.a("placeholder", "objectifs")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantObjectifs");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setEnfantObjectifs inputInscriptionScolaire", pk, "EnfantObjectifs w3-input w3-border ");
@@ -7358,7 +7505,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "nom du groupe")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_inscriptionNomGroupe");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setInscriptionNomGroupe inputInscriptionScolaire", pk, "InscriptionNomGroupe w3-input w3-border ");
@@ -7724,7 +7871,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "customer profile ID")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_customerProfileId");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setCustomerProfileId inputInscriptionScolaire", pk, "CustomerProfileId w3-input w3-border ");
@@ -7862,7 +8009,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDateFrais")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDateFrais == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDateFrais))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDateFrais', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDateFrais')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDateFrais')); }); } ")
 			.fg();
@@ -8301,7 +8448,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("title", "La clé primaire des utilisateurs dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_inscriptionNomsParents");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setInscriptionNomsParents inputInscriptionScolaire", pk, "InscriptionNomsParents w3-input w3-border ");
@@ -10051,7 +10198,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate1")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate1 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate1))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate1', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }); } ")
 			.fg();
@@ -10173,7 +10320,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate2")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate2 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate2))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate2', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate2')); }); } ")
 			.fg();
@@ -10295,7 +10442,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate3")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate3 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate3))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate3', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate3')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate3')); }); } ")
 			.fg();
@@ -10417,7 +10564,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate4")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate4 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate4))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate4', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate4')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate4')); }); } ")
 			.fg();
@@ -10539,7 +10686,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate5")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate5 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate5))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate5', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate5')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate5')); }); } ")
 			.fg();
@@ -10661,7 +10808,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate6")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate6 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate6))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate6', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate6')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate6')); }); } ")
 			.fg();
@@ -10783,7 +10930,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate7")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate7 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate7))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate7', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate7')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate7')); }); } ")
 			.fg();
@@ -10905,7 +11052,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate8")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate8 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate8))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate8', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate8')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate8')); }); } ")
 			.fg();
@@ -11027,7 +11174,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate9")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate9 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate9))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate9', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate9')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate9')); }); } ")
 			.fg();
@@ -11149,7 +11296,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate10")
 			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
 			.a("value", inscriptionDate10 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate10))
 			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate10', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate10')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate10')); }); } ")
 			.fg();
@@ -11530,6 +11677,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		gardienClesInit();
 		paiementClesInit();
 		formInscriptionCleInit();
+		utilisateurClesInit();
 		scolaireTriInit();
 		ecoleTriInit();
 		anneeTriInit();
@@ -11735,6 +11883,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.paiementCles;
 			case "formInscriptionCle":
 				return oInscriptionScolaire.formInscriptionCle;
+			case "utilisateurCles":
+				return oInscriptionScolaire.utilisateurCles;
 			case "scolaireTri":
 				return oInscriptionScolaire.scolaireTri;
 			case "ecoleTri":
@@ -12006,6 +12156,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return val;
 			case "paiementCles":
 				oInscriptionScolaire.addPaiementCles((Long)val);
+				return val;
+			case "utilisateurCles":
+				oInscriptionScolaire.addUtilisateurCles((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -12297,6 +12450,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				if(formInscriptionCle != null)
 					oInscriptionScolaire.setFormInscriptionCle(formInscriptionCle);
 			}
+
+			List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+			if(utilisateurCles != null)
+				oInscriptionScolaire.utilisateurCles.addAll(utilisateurCles);
 
 			if(sauvegardesInscriptionScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -13055,6 +13212,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("formInscriptionCle_indexed_long", formInscriptionCle);
 			document.addField("formInscriptionCle_stored_long", formInscriptionCle);
 		}
+		if(utilisateurCles != null) {
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_stored_longs", o);
+			}
+		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -13503,6 +13668,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "paiementCles_indexed_longs";
 			case "formInscriptionCle":
 				return "formInscriptionCle_indexed_long";
+			case "utilisateurCles":
+				return "utilisateurCles_indexed_longs";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":
@@ -13761,6 +13928,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
 		if(formInscriptionCle != null)
 			oInscriptionScolaire.setFormInscriptionCle(formInscriptionCle);
+
+		List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+		if(utilisateurCles != null)
+			oInscriptionScolaire.utilisateurCles.addAll(utilisateurCles);
 
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
@@ -14196,6 +14367,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("gardienCles");
 			if(!Objects.equals(paiementCles, original.getPaiementCles()))
 				requeteApi.addVars("paiementCles");
+			if(!Objects.equals(utilisateurCles, original.getUtilisateurCles()))
+				requeteApi.addVars("utilisateurCles");
 			if(!Objects.equals(enfantNomComplet, original.getEnfantNomComplet()))
 				requeteApi.addVars("enfantNomComplet");
 			if(!Objects.equals(enfantNomCompletPrefere, original.getEnfantNomCompletPrefere()))
@@ -14291,7 +14464,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCle, blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
+		return Objects.hash(super.hashCode(), anneeCle, blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, utilisateurCles, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
 	}
 
 	////////////
@@ -14312,6 +14485,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( pereCles, that.pereCles )
 				&& Objects.equals( gardienCles, that.gardienCles )
 				&& Objects.equals( paiementCles, that.paiementCles )
+				&& Objects.equals( utilisateurCles, that.utilisateurCles )
 				&& Objects.equals( enfantNomComplet, that.enfantNomComplet )
 				&& Objects.equals( enfantNomCompletPrefere, that.enfantNomCompletPrefere )
 				&& Objects.equals( enfantDateNaissance, that.enfantDateNaissance )
@@ -14372,6 +14546,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", pereCles: " ).append(pereCles);
 		sb.append( ", gardienCles: " ).append(gardienCles);
 		sb.append( ", paiementCles: " ).append(paiementCles);
+		sb.append( ", utilisateurCles: " ).append(utilisateurCles);
 		sb.append( ", enfantNomComplet: \"" ).append(enfantNomComplet).append( "\"" );
 		sb.append( ", enfantNomCompletPrefere: \"" ).append(enfantNomCompletPrefere).append( "\"" );
 		sb.append( ", enfantDateNaissance: " ).append(enfantDateNaissance);

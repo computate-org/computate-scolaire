@@ -105,6 +105,24 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void postPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerPaiementScolaire(requeteSite, b -> {
@@ -319,6 +337,24 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void putPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -659,6 +695,24 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void patchPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1151,6 +1205,27 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void getPaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("User");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1217,6 +1292,24 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void deletePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					recherchePaiementScolaire(requeteSite, false, true, null, b -> {
@@ -1298,6 +1391,24 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void recherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1401,6 +1512,27 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void pagerecherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("User");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1641,7 +1773,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								utilisateurPaiementScolaireDefinir(siteRequest, jsonObject);
+								utilisateurPaiementScolaireDefinir(requeteSite, jsonObject, false);
 
 								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
@@ -1652,16 +1784,16 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
 								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
-								utilisateurService.creerSiteUser(requeteSite2, b -> {
+								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
-										SiteUser siteUser = b.result();
-										utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+										UtilisateurSite utilisateurSite = b.result();
+										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, c -> {
 											if(c.succeeded()) {
-												utilisateurService.definirSiteUser(siteUser, d -> {
+												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 													if(d.succeeded()) {
-														utilisateurService.attribuerSiteUser(siteUser, e -> {
+														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
 															if(e.succeeded()) {
-																utilisateurService.indexerSiteUser(siteUser, f -> {
+																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
 																	if(f.succeeded()) {
 																		requeteSite.setUtilisateurSite(utilisateurSite);
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
@@ -1692,6 +1824,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							} else {
 								Long pkUtilisateur = utilisateurValeurs.getLong(0);
 								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(UtilisateurSite.class);
 								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
@@ -1699,8 +1832,18 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+
 								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								Boolean definir = utilisateurPaiementScolaireDefinir(siteRequest, jsonObject);
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("customerProfileId", principalJson.getString("name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								jsonObject.put("email", principalJson.getString("email"));
+								Boolean definir = utilisateurPaiementScolaireDefinir(requeteSite, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
 									if(utilisateurSite1 == null) {
@@ -1721,13 +1864,13 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
-									utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
+									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirSiteUser(siteUser, d -> {
+											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerSiteUser(siteUser, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerSiteUser(siteUser, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
 																if(f.succeeded()) {
 																	requeteSite.setUtilisateurSite(utilisateurSite);
 																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
@@ -1773,7 +1916,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		}
 	}
 
-	public Boolean utilisateurPaiementScolaireDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject) {
+	public Boolean utilisateurPaiementScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 
@@ -1798,6 +1941,15 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+			}
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
+						+ " AND utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getUtilisateurId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

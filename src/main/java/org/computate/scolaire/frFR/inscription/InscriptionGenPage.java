@@ -200,6 +200,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PerePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/GardienPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PaiementPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptInscriptionGenPage() {
@@ -213,6 +214,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		tl(2, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk); ");
 		tl(2, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk); ");
 		tl(2, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCle:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireUtilisateurCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireUtilisateurCles_Page'), pk); ");
 		tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk); ");
 		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}); ");
 		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}); ");
@@ -281,6 +283,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmGardienCles("Page");
 			o.htmPaiementCles("Page");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurCles("Page");
+		} g("div");
 	}
 
 	public void htmlFormPOSTInscriptionScolaire(InscriptionScolaire o) {
@@ -335,6 +340,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmGardienCles("POST");
 			o.htmPaiementCles("POST");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurCles("POST");
+		} g("div");
 	}
 
 	public void htmlFormPUTInscriptionScolaire(InscriptionScolaire o) {
@@ -386,6 +394,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGardienCles("PUT");
 			o.htmPaiementCles("PUT");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurCles("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantNomComplet("PUT");
@@ -468,6 +479,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmPaiementCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantNomComplet("PATCH");
 			o.htmEnfantNomCompletPrefere("PATCH");
 			o.htmEnfantDateNaissance("PATCH");
@@ -548,6 +562,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmGardienCles("Recherche");
 			o.htmPaiementCles("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmUtilisateurCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjetTitre("Recherche");

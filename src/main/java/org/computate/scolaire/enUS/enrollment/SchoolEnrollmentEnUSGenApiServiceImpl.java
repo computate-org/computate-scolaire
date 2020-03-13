@@ -14,6 +14,8 @@ import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
+import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -117,6 +119,24 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void postSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					createSchoolEnrollment(siteRequest, b -> {
@@ -236,6 +256,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
 							postSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+						}
+						break;
+					case "userKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
 						}
 						break;
 					case "childCompleteName":
@@ -445,6 +471,24 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void putSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -694,6 +738,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							postSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
 						}
 						break;
+					case "userKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+						}
+						break;
 					case "childCompleteName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("childCompleteName", jsonObject.getString(entityVar), pk));
@@ -899,6 +949,24 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void patchSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -1253,6 +1321,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "removePaymentKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						break;
+					case "addUserKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						break;
+					case "addAllUserKeys":
+						JsonArray addAllUserKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllUserKeysValues.getString(i), "userKeys", pk));
+						}
+						break;
+					case "setUserKeys":
+						JsonArray setUserKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setUserKeysValues.getString(i), "userKeys", pk));
+						}
+						break;
+					case "removeUserKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
 						break;
 					case "setChildCompleteName":
 						if(requestJson.getString(methodName) == null) {
@@ -1721,6 +1813,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void getSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -1787,6 +1900,24 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void deleteSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					aSearchSchoolEnrollment(siteRequest, false, true, null, b -> {
@@ -1868,6 +1999,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void searchSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -1971,6 +2123,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void searchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -2056,6 +2229,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void formsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -2141,6 +2335,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void pdfsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -2226,6 +2441,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void emailsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -2371,6 +2607,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					classes.add("SchoolPayment");
 				}
 			}
+			for(Long pk : o.getUserKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("SiteUser");
+				}
+			}
 		}
 	}
 
@@ -2490,31 +2732,110 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
-						if(userValues == null) {
-							JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-							JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+						try {
+							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
+							if(userValues == null) {
+								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-							JsonObject jsonObject = new JsonObject();
-							jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-							jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-							jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-							jsonObject.put("userId", jsonPrincipal.getString("sub"));
-							userSchoolEnrollmentDefine(siteRequest, jsonObject);
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userId", jsonPrincipal.getString("sub"));
+								userSchoolEnrollmentDefine(siteRequest, jsonObject, false);
 
-							SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-							siteRequest2.setJsonObject(jsonObject);
-							siteRequest2.setVertx(siteRequest.getVertx());
-							siteRequest2.setSiteContext_(siteContext);
-							siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-							siteRequest2.setUserId(siteRequest.getUserId());
-							siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+								siteRequest2.setJsonObject(jsonObject);
+								siteRequest2.setVertx(siteRequest.getVertx());
+								siteRequest2.setSiteContext_(siteContext);
+								siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+								siteRequest2.setUserId(siteRequest.getUserId());
+								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 
-							userService.createSiteUser(siteRequest2, b -> {
-								if(b.succeeded()) {
-									SiteUser siteUser = b.result();
-									userService.sqlPOSTSiteUser(siteUser, c -> {
+								userService.createSiteUser(siteRequest2, b -> {
+									if(b.succeeded()) {
+										SiteUser siteUser = b.result();
+										userService.sqlPOSTSiteUser(siteUser, c -> {
+											if(c.succeeded()) {
+												userService.defineSiteUser(siteUser, d -> {
+													if(d.succeeded()) {
+														userService.attributeSiteUser(siteUser, e -> {
+															if(e.succeeded()) {
+																userService.indexSiteUser(siteUser, f -> {
+																	if(f.succeeded()) {
+																		siteRequest.setSiteUser(siteUser);
+																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		eventHandler.handle(Future.succeededFuture());
+																	} else {
+																		errorSchoolEnrollment(siteRequest, eventHandler, f);
+																	}
+																});
+															} else {
+																errorSchoolEnrollment(siteRequest, eventHandler, e);
+															}
+														});
+													} else {
+														errorSchoolEnrollment(siteRequest, eventHandler, d);
+													}
+												});
+											} else {
+												errorSchoolEnrollment(siteRequest, eventHandler, c);
+											}
+										});
+									} else {
+										errorSchoolEnrollment(siteRequest, eventHandler, b);
+									}
+								});
+							} else {
+								Long pkUser = userValues.getLong(0);
+								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SiteUser.class);
+								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+								searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+								searchList.initDeepSearchList(siteRequest);
+								SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
+
+								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+
+								JsonObject jsonObject = Optional.ofNullable(siteUser1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
+								jsonObject.put("customerProfileId", jsonPrincipal.getString("name"));
+								jsonObject.put("userId", jsonPrincipal.getString("sub"));
+								jsonObject.put("email", jsonPrincipal.getString("email"));
+								Boolean define = userSchoolEnrollmentDefine(siteRequest, jsonObject, true);
+								if(define) {
+									SiteUser siteUser;
+									if(siteUser1 == null) {
+										siteUser = new SiteUser();
+										siteUser.setPk(pkUser);
+										siteUser.setSiteRequest_(siteRequest);
+									} else {
+										siteUser = siteUser1;
+									}
+
+									SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+									siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+									siteRequest2.setJsonObject(jsonObject);
+									siteRequest2.setVertx(siteRequest.getVertx());
+									siteRequest2.setSiteContext_(siteContext);
+									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+									siteRequest2.setUserId(siteRequest.getUserId());
+									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+									siteUser.setSiteRequest_(siteRequest2);
+
+									userService.sqlPATCHSiteUser(siteUser, c -> {
 										if(c.succeeded()) {
 											userService.defineSiteUser(siteUser, d -> {
 												if(d.succeeded()) {
@@ -2523,10 +2844,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 															userService.indexSiteUser(siteUser, f -> {
 																if(f.succeeded()) {
 																	siteRequest.setSiteUser(siteUser);
-																	siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-																	siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-																	siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-																	siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																	siteRequest.setUserName(siteUser.getUserName());
+																	siteRequest.setUserFirstName(siteUser.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser.getUserLastName());
+																	siteRequest.setUserId(siteUser.getUserId());
 																	eventHandler.handle(Future.succeededFuture());
 																} else {
 																	errorSchoolEnrollment(siteRequest, eventHandler, f);
@@ -2545,60 +2866,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, b);
+									siteRequest.setSiteUser(siteUser1);
+									siteRequest.setUserName(siteUser1.getUserName());
+									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
+									siteRequest.setUserLastName(siteUser1.getUserLastName());
+									siteRequest.setUserId(siteUser1.getUserId());
+									eventHandler.handle(Future.succeededFuture());
 								}
-							});
-						} else {
-							Long pkUser = userValues.getLong(0);
-							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-							searchList.setStore(true);
-							searchList.setC(SiteUser.class);
-							searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
-							searchList.addFilterQuery("pk_indexed_long:" + pkUser);
-							searchList.initDeepSearchList(siteRequest);
-							SiteUser siteUser = searchList.getList().stream().findFirst().orElse(null);
-
-							JsonObject jsonObject = JsonObject.mapFrom(siteUser);
-							Boolean define = userSchoolEnrollmentDefine(siteRequest, jsonObject);
-							if(define) {
-								userService.sqlPATCHSiteUser(siteUser, c -> {
-									if(c.succeeded()) {
-										userService.defineSiteUser(siteUser, d -> {
-											if(d.succeeded()) {
-												userService.attributeSiteUser(siteUser, e -> {
-													if(e.succeeded()) {
-														userService.indexSiteUser(siteUser, f -> {
-															if(f.succeeded()) {
-																siteRequest.setSiteUser(siteUser);
-																siteRequest.setUserName(siteUser.getUserName());
-																siteRequest.setUserFirstName(siteUser.getUserFirstName());
-																siteRequest.setUserLastName(siteUser.getUserLastName());
-																siteRequest.setUserId(siteUser.getUserId());
-																eventHandler.handle(Future.succeededFuture());
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														errorSchoolEnrollment(siteRequest, eventHandler, e);
-													}
-												});
-											} else {
-												errorSchoolEnrollment(siteRequest, eventHandler, d);
-											}
-										});
-									} else {
-										errorSchoolEnrollment(siteRequest, eventHandler, c);
-									}
-								});
-							} else {
-								siteRequest.setSiteUser(siteUser);
-								siteRequest.setUserName(siteUser.getUserName());
-								siteRequest.setUserFirstName(siteUser.getUserFirstName());
-								siteRequest.setUserLastName(siteUser.getUserLastName());
-								siteRequest.setUserId(siteUser.getUserId());
-								eventHandler.handle(Future.succeededFuture());
 							}
+						} catch(Exception e) {
+							eventHandler.handle(Future.failedFuture(e));
 						}
 					} else {
 						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -2610,7 +2887,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public Boolean userSchoolEnrollmentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject) {
+	public Boolean userSchoolEnrollmentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 
@@ -2638,7 +2915,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
-				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
+				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----"))
+						+ " AND userId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getUserId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -2789,6 +3067,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				searchList.add("json.facet", "{dadKeys:{terms:{field:dadKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{guardianKeys:{terms:{field:guardianKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{paymentKeys:{terms:{field:paymentKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{userKeys:{terms:{field:userKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
@@ -2924,6 +3203,26 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
 								} else {
 									LOGGER.info(String.format("SchoolPayment %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					SiteUserEnUSGenApiServiceImpl service = new SiteUserEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+					for(Long pk : o.getUserKeys()) {
+						SiteUser o2 = new SiteUser();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.futurePATCHSiteUser(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SiteUser %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SiteUser %s failed. ", pk));
 									eventHandler.handle(Future.failedFuture(a.cause()));
 								}
 							})

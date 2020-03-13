@@ -10,6 +10,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -67,6 +68,152 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static final String UtilisateurSite_IconeGroupe = "regular";
 	public static final String UtilisateurSite_IconeNom = "user-cog";
 
+	/////////////////////
+	// inscriptionCles //
+	/////////////////////
+
+	/**	L'entité « inscriptionCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
+
+	/**	<br/>L'entité « inscriptionCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionCles">Trouver l'entité inscriptionCles dans Solr</a>
+	 * <br/>
+	 * @param inscriptionCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionCles(List<Long> o);
+
+	public List<Long> getInscriptionCles() {
+		return inscriptionCles;
+	}
+
+	public void setInscriptionCles(List<Long> inscriptionCles) {
+		this.inscriptionCles = inscriptionCles;
+		this.inscriptionClesCouverture.dejaInitialise = true;
+	}
+	public UtilisateurSite addInscriptionCles(Long...objets) {
+		for(Long o : objets) {
+			addInscriptionCles(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addInscriptionCles(Long o) {
+		if(o != null && !inscriptionCles.contains(o))
+			this.inscriptionCles.add(o);
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite setInscriptionCles(JsonArray objets) {
+		inscriptionCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addInscriptionCles(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addInscriptionCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addInscriptionCles(p);
+		}
+		return (UtilisateurSite)this;
+	}
+	protected UtilisateurSite inscriptionClesInit() {
+		if(!inscriptionClesCouverture.dejaInitialise) {
+			_inscriptionCles(inscriptionCles);
+		}
+		inscriptionClesCouverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
+	public List<Long> solrInscriptionCles() {
+		return inscriptionCles;
+	}
+
+	public String strInscriptionCles() {
+		return inscriptionCles == null ? "" : inscriptionCles.toString();
+	}
+
+	public String jsonInscriptionCles() {
+		return inscriptionCles == null ? "" : inscriptionCles.toString();
+	}
+
+	public String nomAffichageInscriptionCles() {
+		return "inscriptions";
+	}
+
+	public String htmTooltipInscriptionCles() {
+		return null;
+	}
+
+	public String htmInscriptionCles() {
+		return inscriptionCles == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCles());
+	}
+
+	public void inputInscriptionCles(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "inscriptions")
+				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setInscriptionCles")
+				.a("id", classeApiMethodeMethode, "_inscriptionCles")
+				.a("autocomplete", "off")
+				.a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles')) : [{'name':'fq','value':'utilisateurCles:", pk, "'}], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmInscriptionCles(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=utilisateurCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-edit ").f().g("i");
+								sx("inscriptions");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cet utilisateur du site");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputInscriptionCles(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postInscriptionScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+										.f().sx("ajouter une inscription")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////
 	// utilisateurId //
 	///////////////////
@@ -74,6 +221,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurId;
 	@JsonIgnore
@@ -129,6 +277,60 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurId == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurId());
 	}
 
+	public void inputUtilisateurId(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "utilisateur ID")
+			.a("id", classeApiMethodeMethode, "_utilisateurId");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setUtilisateurId inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
+				a("name", "setUtilisateurId");
+			} else {
+				a("class", "valeurUtilisateurId w3-input w3-border inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
+				a("name", "utilisateurId");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ");
+			}
+			a("value", strUtilisateurId())
+		.fg();
+
+	}
+
+	public void htmUtilisateurId(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_utilisateurId").a("class", "").f().sx("utilisateur ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputUtilisateurId(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurId')); $('#", classeApiMethodeMethode, "_utilisateurId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////
 	// utilisateurNom //
 	////////////////////
@@ -136,6 +338,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNom;
 	@JsonIgnore
@@ -191,6 +394,56 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurNom == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurNom());
 	}
 
+	public void inputUtilisateurNom(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("input")
+			.a("type", "text")
+			.a("id", classeApiMethodeMethode, "_utilisateurNom");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setUtilisateurNom inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
+				a("name", "setUtilisateurNom");
+			} else {
+				a("class", "valeurUtilisateurNom w3-input w3-border inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
+				a("name", "utilisateurNom");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurNom')); }); ");
+			}
+			a("value", strUtilisateurNom())
+		.fg();
+
+	}
+
+	public void htmUtilisateurNom(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurNom").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputUtilisateurNom(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); $('#", classeApiMethodeMethode, "_utilisateurNom').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurNom')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////////
 	// utilisateurMail //
 	/////////////////////
@@ -198,6 +451,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurMail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurMail;
 	@JsonIgnore
@@ -253,6 +507,56 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurMail == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurMail());
 	}
 
+	public void inputUtilisateurMail(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("input")
+			.a("type", "text")
+			.a("id", classeApiMethodeMethode, "_utilisateurMail");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setUtilisateurMail inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
+				a("name", "setUtilisateurMail");
+			} else {
+				a("class", "valeurUtilisateurMail w3-input w3-border inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
+				a("name", "utilisateurMail");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurMail')); }); ");
+			}
+			a("value", strUtilisateurMail())
+		.fg();
+
+	}
+
+	public void htmUtilisateurMail(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurMail").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputUtilisateurMail(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); $('#", classeApiMethodeMethode, "_utilisateurMail').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurMail')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////////
 	// utilisateurPrenom //
 	///////////////////////
@@ -260,6 +564,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurPrenom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurPrenom;
 	@JsonIgnore
@@ -322,6 +627,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNomFamille »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomFamille;
 	@JsonIgnore
@@ -384,6 +690,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomComplet;
 	@JsonIgnore
@@ -446,6 +753,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurSite;
 	@JsonIgnore
@@ -508,6 +816,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « customerProfileId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String customerProfileId;
 	@JsonIgnore
@@ -624,6 +933,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurRecevoirCourriels »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean utilisateurRecevoirCourriels;
 	@JsonIgnore
@@ -747,6 +1057,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « voirArchive »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean voirArchive;
 	@JsonIgnore
@@ -870,6 +1181,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « voirSupprime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean voirSupprime;
 	@JsonIgnore
@@ -1007,6 +1319,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public void initUtilisateurSite() {
+		inscriptionClesInit();
 		utilisateurIdInit();
 		utilisateurNomInit();
 		utilisateurMailInit();
@@ -1056,6 +1369,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public Object obtenirUtilisateurSite(String var) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 		switch(var) {
+			case "inscriptionCles":
+				return oUtilisateurSite.inscriptionCles;
 			case "utilisateurId":
 				return oUtilisateurSite.utilisateurId;
 			case "utilisateurNom":
@@ -1103,6 +1418,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public Object attribuerUtilisateurSite(String var, Object val) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 		switch(var) {
+			case "inscriptionCles":
+				oUtilisateurSite.addInscriptionCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -1129,6 +1447,18 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 	public Object definirUtilisateurSite(String var, String val) {
 		switch(var) {
+			case "utilisateurId":
+				setUtilisateurId(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
+			case "utilisateurNom":
+				setUtilisateurNom(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
+			case "utilisateurMail":
+				setUtilisateurMail(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
 			case "customerProfileId":
 				setCustomerProfileId(val);
 				sauvegardesUtilisateurSite.add(var);
@@ -1167,6 +1497,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 		sauvegardesUtilisateurSite = (List<String>)solrDocument.get("sauvegardesUtilisateurSite_stored_strings");
 		if(sauvegardesUtilisateurSite != null) {
+
+			List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
+			if(inscriptionCles != null)
+				oUtilisateurSite.inscriptionCles.addAll(inscriptionCles);
 
 			if(sauvegardesUtilisateurSite.contains("utilisateurId")) {
 				String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
@@ -1303,6 +1637,14 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(sauvegardesUtilisateurSite != null)
 			document.addField("sauvegardesUtilisateurSite_stored_strings", sauvegardesUtilisateurSite);
 
+		if(inscriptionCles != null) {
+			for(java.lang.Long o : inscriptionCles) {
+				document.addField("inscriptionCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : inscriptionCles) {
+				document.addField("inscriptionCles_stored_longs", o);
+			}
+		}
 		if(utilisateurId != null) {
 			document.addField("utilisateurId_indexed_string", utilisateurId);
 			document.addField("utilisateurId_stored_string", utilisateurId);
@@ -1370,6 +1712,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public static String varIndexeUtilisateurSite(String entiteVar) {
 		switch(entiteVar) {
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
 			case "utilisateurId":
 				return "utilisateurId_indexed_string";
 			case "utilisateurNom":
@@ -1420,6 +1764,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 	public void stockerUtilisateurSite(SolrDocument solrDocument) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
+
+		List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
+		if(inscriptionCles != null)
+			oUtilisateurSite.inscriptionCles.addAll(inscriptionCles);
 
 		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
 		if(utilisateurId != null)
@@ -1488,6 +1836,14 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof UtilisateurSite) {
 			UtilisateurSite original = (UtilisateurSite)o;
+			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
+				requeteApi.addVars("inscriptionCles");
+			if(!Objects.equals(utilisateurId, original.getUtilisateurId()))
+				requeteApi.addVars("utilisateurId");
+			if(!Objects.equals(utilisateurNom, original.getUtilisateurNom()))
+				requeteApi.addVars("utilisateurNom");
+			if(!Objects.equals(utilisateurMail, original.getUtilisateurMail()))
+				requeteApi.addVars("utilisateurMail");
 			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
 				requeteApi.addVars("customerProfileId");
 			if(!Objects.equals(utilisateurRecevoirCourriels, original.getUtilisateurRecevoirCourriels()))
@@ -1505,7 +1861,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), customerProfileId, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
+		return Objects.hash(super.hashCode(), inscriptionCles, utilisateurId, utilisateurNom, utilisateurMail, customerProfileId, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
 	}
 
 	////////////
@@ -1519,6 +1875,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			return false;
 		UtilisateurSite that = (UtilisateurSite)o;
 		return super.equals(o)
+				&& Objects.equals( inscriptionCles, that.inscriptionCles )
+				&& Objects.equals( utilisateurId, that.utilisateurId )
+				&& Objects.equals( utilisateurNom, that.utilisateurNom )
+				&& Objects.equals( utilisateurMail, that.utilisateurMail )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( utilisateurRecevoirCourriels, that.utilisateurRecevoirCourriels )
 				&& Objects.equals( voirArchive, that.voirArchive )
@@ -1533,7 +1893,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("UtilisateurSite { ");
-		sb.append( "customerProfileId: \"" ).append(customerProfileId).append( "\"" );
+		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( ", utilisateurId: \"" ).append(utilisateurId).append( "\"" );
+		sb.append( ", utilisateurNom: \"" ).append(utilisateurNom).append( "\"" );
+		sb.append( ", utilisateurMail: \"" ).append(utilisateurMail).append( "\"" );
+		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", utilisateurRecevoirCourriels: " ).append(utilisateurRecevoirCourriels);
 		sb.append( ", voirArchive: " ).append(voirArchive);
 		sb.append( ", voirSupprime: " ).append(voirSupprime);

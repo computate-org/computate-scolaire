@@ -34,15 +34,16 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 	@Override
 	public void aSearchSiteUser(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod,
 			Handler<AsyncResult<SearchList<SiteUser>>> eventHandler) {
-		SearchList<SiteUser> listSearch = new SearchList<SiteUser>();
-		SiteUser siteUser = siteRequest.getSiteUser();
-		if(siteUser != null) {
-			listSearch.getList().add(siteUser);
-		}
-		listSearch.setQuery(null);
-		listSearch.setC(SiteUser.class);
-		listSearch.initDeepForClass(siteRequest);
-		eventHandler.handle(Future.succeededFuture(listSearch));
+		super.aSearchSiteUser(siteRequest, populate, store, classApiUriMethod, eventHandler);
+//		SearchList<SiteUser> listSearch = new SearchList<SiteUser>();
+//		SiteUser siteUser = siteRequest.getSiteUser();
+//		if(siteUser != null) {
+//			listSearch.getList().add(siteUser);
+//		}
+//		listSearch.setQuery(null);
+//		listSearch.setC(SiteUser.class);
+//		listSearch.initDeepForClass(siteRequest);
+//		eventHandler.handle(Future.succeededFuture(listSearch));
 	}
 
 	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
@@ -88,7 +89,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			return true;
 		}
 		else {
-			return false;
+			return true;
 		}
 	}
 }

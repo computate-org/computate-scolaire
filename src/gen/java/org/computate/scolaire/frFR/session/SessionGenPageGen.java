@@ -6,6 +6,7 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
@@ -33,6 +35,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listeSessionScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<SessionScolaire> listeSessionScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<SessionScolaire>> listeSessionScolaireCouverture = new Couverture<ListeRecherche<SessionScolaire>>().p(this).c(ListeRecherche.class).var("listeSessionScolaire").o(listeSessionScolaire);
@@ -72,6 +75,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « sessionScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SessionScolaire sessionScolaire;
 	@JsonIgnore
 	public Couverture<SessionScolaire> sessionScolaireCouverture = new Couverture<SessionScolaire>().p(this).c(SessionScolaire.class).var("sessionScolaire").o(sessionScolaire);

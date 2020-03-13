@@ -5,6 +5,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
@@ -33,6 +35,7 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listeBlocScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<BlocScolaire> listeBlocScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<BlocScolaire>> listeBlocScolaireCouverture = new Couverture<ListeRecherche<BlocScolaire>>().p(this).c(ListeRecherche.class).var("listeBlocScolaire").o(listeBlocScolaire);
@@ -72,6 +75,7 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « blocScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected BlocScolaire blocScolaire;
 	@JsonIgnore
 	public Couverture<BlocScolaire> blocScolaireCouverture = new Couverture<BlocScolaire>().p(this).c(BlocScolaire.class).var("blocScolaire").o(blocScolaire);

@@ -5,6 +5,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
@@ -33,6 +35,7 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listeAnneeScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<AnneeScolaire> listeAnneeScolaire;
 	@JsonIgnore
 	public Couverture<ListeRecherche<AnneeScolaire>> listeAnneeScolaireCouverture = new Couverture<ListeRecherche<AnneeScolaire>>().p(this).c(ListeRecherche.class).var("listeAnneeScolaire").o(listeAnneeScolaire);
@@ -72,6 +75,7 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « anneeScolaire »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AnneeScolaire anneeScolaire;
 	@JsonIgnore
 	public Couverture<AnneeScolaire> anneeScolaireCouverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("anneeScolaire").o(anneeScolaire);

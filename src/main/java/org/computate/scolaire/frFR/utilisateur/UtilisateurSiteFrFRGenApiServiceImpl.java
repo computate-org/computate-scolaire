@@ -1,5 +1,7 @@
 package org.computate.scolaire.frFR.utilisateur;
 
+import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -97,12 +99,146 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		this.siteContexte = siteContexte;
 	}
 
+	// Recherche //
+
+	@Override
+	public void rechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlUtilisateurSite(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurUtilisateurSite(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheUtilisateurSite(requeteSite, false, true, "/api/utilisateur", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
+									reponse200RechercheUtilisateurSite(listeUtilisateurSite, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200RechercheUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
+			QueryResponse reponseRecherche = listeUtilisateurSite.getQueryResponse();
+			SolrDocumentList documentsSolr = listeUtilisateurSite.getSolrDocumentList();
+			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
+			Long millisTransmission = reponseRecherche.getElapsedTime();
+			Long numCommence = reponseRecherche.getResults().getStart();
+			Long numTrouve = reponseRecherche.getResults().getNumFound();
+			Integer numRetourne = reponseRecherche.getResults().size();
+			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
+			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
+			Exception exceptionRecherche = reponseRecherche.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("numCommence", numCommence);
+			json.put("numTrouve", numTrouve);
+			json.put("numRetourne", numRetourne);
+			json.put("tempsRecherche", tempsRecherche);
+			json.put("tempsTransmission", tempsTransmission);
+			JsonArray l = new JsonArray();
+			listeUtilisateurSite.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeUtilisateurSite.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("liste", l);
+			if(exceptionRecherche != null) {
+				json.put("exceptionRecherche", exceptionRecherche.getMessage());
+			}
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// PATCH //
 
 	@Override
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -318,6 +454,60 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "addInscriptionCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
+					case "addAllInscriptionCles":
+						JsonArray addAllInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", addAllInscriptionClesValeurs.getString(i)));
+						}
+						break;
+					case "setInscriptionCles":
+						JsonArray setInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles"));
+						for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", setInscriptionClesValeurs.getString(i)));
+						}
+						break;
+					case "removeInscriptionCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
+					case "setUtilisateurId":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId"));
+						} else {
+							o2.setUtilisateurId(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+						}
+						break;
+					case "setUtilisateurNom":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurNom"));
+						} else {
+							o2.setUtilisateurNom(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurNom", o2.jsonUtilisateurNom(), pk));
+						}
+						break;
+					case "setUtilisateurMail":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurMail"));
+						} else {
+							o2.setUtilisateurMail(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurMail", o2.jsonUtilisateurMail(), pk));
+						}
+						break;
 					case "setCustomerProfileId":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -395,6 +585,24 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void postUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerUtilisateurSite(requeteSite, b -> {
@@ -478,6 +686,24 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "inscriptionCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+						}
+						break;
+					case "utilisateurId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurNom":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurNom", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurMail":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurMail", jsonObject.getString(entiteVar), pk));
+						break;
 					case "customerProfileId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
@@ -534,6 +760,27 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void pagerechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -637,6 +884,12 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		if(requeteApi != null) {
 			List<Long> pks = requeteApi.getPks();
 			List<String> classes = requeteApi.getClasses();
+			for(Long pk : o.getInscriptionCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("InscriptionScolaire");
+				}
+			}
 		}
 	}
 
@@ -768,7 +1021,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject, false);
+								utilisateurUtilisateurSiteDefinir(requeteSite, jsonObject, false);
 
 								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
 								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
@@ -779,16 +1032,16 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
 								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
-								utilisateurService.creerSiteUser(requeteSite2, b -> {
+								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
-										SiteUser siteUser = b.result();
-										utilisateurService.sqlPOSTSiteUser(siteUser, c -> {
+										UtilisateurSite utilisateurSite = b.result();
+										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, c -> {
 											if(c.succeeded()) {
-												utilisateurService.definirSiteUser(siteUser, d -> {
+												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 													if(d.succeeded()) {
-														utilisateurService.attribuerSiteUser(siteUser, e -> {
+														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
 															if(e.succeeded()) {
-																utilisateurService.indexerSiteUser(siteUser, f -> {
+																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
 																	if(f.succeeded()) {
 																		requeteSite.setUtilisateurSite(utilisateurSite);
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
@@ -831,14 +1084,14 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
 								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
-								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
-								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
-								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
-								jsonObject.put("customerProfileId", principalJson.getString("name"));
-								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								jsonObject.put("email", principalJson.getString("email"));
-								Boolean definir = utilisateurUtilisateurSiteDefinir(siteRequest, jsonObject, true);
+								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("setCustomerProfileId", principalJson.getString("name"));
+								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
+								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
+								Boolean definir = utilisateurUtilisateurSiteDefinir(requeteSite, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
 									if(utilisateurSite1 == null) {
@@ -859,13 +1112,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
-									utilisateurService.sqlPATCHSiteUser(siteUser, c -> {
+									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirSiteUser(siteUser, d -> {
+											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerSiteUser(siteUser, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerSiteUser(siteUser, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
 																if(f.succeeded()) {
 																	requeteSite.setUtilisateurSite(utilisateurSite);
 																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
@@ -911,7 +1164,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR siteRequest, JsonObject jsonObject, Boolean patch) {
+	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
 		return true;
 	}
 
@@ -932,6 +1185,15 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+			}
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
+						+ " AND utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getUtilisateurId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1075,9 +1337,30 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(UtilisateurSite.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
+
+				{
+					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+					for(Long pk : o.getInscriptionCles()) {
+						InscriptionScolaire o2 = new InscriptionScolaire();
+
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite2);
+						futures.add(
+							service.futurePATCHInscriptionScolaire(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
