@@ -12381,6 +12381,11 @@ paths:
     get:
       operationId: searchSiteUser
       x-vertx-event-bus: computate-scolaire-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - roles
+          - profile
+          - offline_access
       description: >+
       summary: >+
       tags:
@@ -12487,6 +12492,11 @@ paths:
     patch:
       operationId: patchSiteUser
       x-vertx-event-bus: computate-scolaire-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - roles
+          - profile
+          - offline_access
       description: >+
       summary: >+
       tags:
@@ -12600,6 +12610,11 @@ paths:
     post:
       operationId: postSiteUser
       x-vertx-event-bus: computate-scolaire-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - roles
+          - profile
+          - offline_access
       description: >+
       summary: >+
       tags:
@@ -12668,6 +12683,11 @@ paths:
     get:
       operationId: searchpageSiteUser
       x-vertx-event-bus: computate-scolaire-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - roles
+          - profile
+          - offline_access
       description: >+
       summary: >+
       tags:
@@ -12775,6 +12795,11 @@ paths:
     get:
       operationId: searchpageSiteUserId
       x-vertx-event-bus: computate-scolaire-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - roles
+          - profile
+          - offline_access
       description: >+
       summary: >+
       tags:
