@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.paiement;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -35,6 +36,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -57,6 +59,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PaiementScolaire.class);
+
+	List<String> ROLES = Arrays.asList("SiteAdmin");
+	List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String PaiementScolaire_UnNom = "un paiement";
 	public static final String PaiementScolaire_Ce = "ce ";
@@ -221,18 +226,32 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCle(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscription")
-				.a("title", "La clé primaire des enfants dans la base de données. ")
-				.a("class", "valeur suggereInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCle")
-				.a("id", classeApiMethodeMethode, "_inscriptionCle")
-				.a("autocomplete", "off")
-				.a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCle')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "inscription")
+					.a("title", "La clé primaire des enfants dans la base de données. ")
+					.a("class", "valeur suggereInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setInscriptionCle")
+					.a("id", classeApiMethodeMethode, "_inscriptionCle")
+					.a("autocomplete", "off")
+					.a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCle')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmInscriptionCle());
+			}
+		}
 	}
 
 	public void htmInscriptionCle(String classeApiMethodeMethode) {
@@ -354,6 +373,92 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		}
 		inscription_Couverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
+	}
+
+	/////////////////////
+	// utilisateurCles //
+	/////////////////////
+
+	/**	L'entité « utilisateurCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
+
+	/**	<br/>L'entité « utilisateurCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCles">Trouver l'entité utilisateurCles dans Solr</a>
+	 * <br/>
+	 * @param utilisateurCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _utilisateurCles(List<Long> l);
+
+	public List<Long> getUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public void setUtilisateurCles(List<Long> utilisateurCles) {
+		this.utilisateurCles = utilisateurCles;
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire addUtilisateurCles(Long...objets) {
+		for(Long o : objets) {
+			addUtilisateurCles(o);
+		}
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire addUtilisateurCles(Long o) {
+		if(o != null && !utilisateurCles.contains(o))
+			this.utilisateurCles.add(o);
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setUtilisateurCles(JsonArray objets) {
+		utilisateurCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUtilisateurCles(o);
+		}
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire addUtilisateurCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUtilisateurCles(p);
+		}
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire utilisateurClesInit() {
+		if(!utilisateurClesCouverture.dejaInitialise) {
+			_utilisateurCles(utilisateurCles);
+		}
+		utilisateurClesCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public List<Long> solrUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public String strUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String jsonUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String nomAffichageUtilisateurCles() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurCles() {
+		return null;
+	}
+
+	public String htmUtilisateurCles() {
+		return utilisateurCles == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCles());
 	}
 
 	//////////////
@@ -1161,25 +1266,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantNomCompletPrefere(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "NomAffichage.enUS: ")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_enfantNomCompletPrefere");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantNomCompletPrefere inputPaiementScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
-				a("name", "setEnfantNomCompletPrefere");
-			} else {
-				a("class", "valeurEnfantNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
-				a("name", "enfantNomCompletPrefere");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }); ");
-			}
-			a("value", strEnfantNomCompletPrefere())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "NomAffichage.enUS: ")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_enfantNomCompletPrefere");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEnfantNomCompletPrefere inputPaiementScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
+					a("name", "setEnfantNomCompletPrefere");
+				} else {
+					a("class", "valeurEnfantNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "EnfantNomCompletPrefere w3-input w3-border ");
+					a("name", "enfantNomCompletPrefere");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }); ");
+				}
+				a("value", strEnfantNomCompletPrefere())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmEnfantNomCompletPrefere());
+			}
+		}
 	}
 
 	public void htmEnfantNomCompletPrefere(String classeApiMethodeMethode) {
@@ -1295,17 +1414,31 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantDateNaissance(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnfantDateNaissance inputPaiementScolaire", pk, "EnfantDateNaissance w3-input w3-border ")
-			.a("placeholder", "DD-MM-YYYY")
-			.a("data-timeformat", "DD-MM-YYYY")
-			.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
-			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-			.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
-			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnfantDateNaissance inputPaiementScolaire", pk, "EnfantDateNaissance w3-input w3-border ")
+				.a("placeholder", "DD-MM-YYYY")
+				.a("data-timeformat", "DD-MM-YYYY")
+				.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
+				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
+				.fg();
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmEnfantDateNaissance());
+			}
+		}
 	}
 
 	public void htmEnfantDateNaissance(String classeApiMethodeMethode) {
@@ -1403,25 +1536,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputMereNomCompletPrefere(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "NomAffichage.enUS: ")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_mereNomCompletPrefere");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setMereNomCompletPrefere inputPaiementScolaire", pk, "MereNomCompletPrefere w3-input w3-border ");
-				a("name", "setMereNomCompletPrefere");
-			} else {
-				a("class", "valeurMereNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "MereNomCompletPrefere w3-input w3-border ");
-				a("name", "mereNomCompletPrefere");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setMereNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }); ");
-			}
-			a("value", strMereNomCompletPrefere())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "NomAffichage.enUS: ")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_mereNomCompletPrefere");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setMereNomCompletPrefere inputPaiementScolaire", pk, "MereNomCompletPrefere w3-input w3-border ");
+					a("name", "setMereNomCompletPrefere");
+				} else {
+					a("class", "valeurMereNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "MereNomCompletPrefere w3-input w3-border ");
+					a("name", "mereNomCompletPrefere");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setMereNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }); ");
+				}
+				a("value", strMereNomCompletPrefere())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmMereNomCompletPrefere());
+			}
+		}
 	}
 
 	public void htmMereNomCompletPrefere(String classeApiMethodeMethode) {
@@ -1520,25 +1667,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPereNomCompletPrefere(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "NomAffichage.enUS: ")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_pereNomCompletPrefere");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPereNomCompletPrefere inputPaiementScolaire", pk, "PereNomCompletPrefere w3-input w3-border ");
-				a("name", "setPereNomCompletPrefere");
-			} else {
-				a("class", "valeurPereNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "PereNomCompletPrefere w3-input w3-border ");
-				a("name", "pereNomCompletPrefere");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPereNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }); ");
-			}
-			a("value", strPereNomCompletPrefere())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "NomAffichage.enUS: ")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_pereNomCompletPrefere");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPereNomCompletPrefere inputPaiementScolaire", pk, "PereNomCompletPrefere w3-input w3-border ");
+					a("name", "setPereNomCompletPrefere");
+				} else {
+					a("class", "valeurPereNomCompletPrefere w3-input w3-border inputPaiementScolaire", pk, "PereNomCompletPrefere w3-input w3-border ");
+					a("name", "pereNomCompletPrefere");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPereNomCompletPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }); ");
+				}
+				a("value", strPereNomCompletPrefere())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPereNomCompletPrefere());
+			}
+		}
 	}
 
 	public void htmPereNomCompletPrefere(String classeApiMethodeMethode) {
@@ -2859,37 +3020,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setInscriptionPaimentChaqueMois inputPaiementScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
-			a("name", "setInscriptionPaimentChaqueMois");
-		} else {
-			a("class", "valeurInscriptionPaimentChaqueMois inputPaiementScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
-			a("name", "inscriptionPaimentChaqueMois");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentChaqueMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getInscriptionPaimentChaqueMois() != null && getInscriptionPaimentChaqueMois())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setInscriptionPaimentChaqueMois inputPaiementScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
+				a("name", "setInscriptionPaimentChaqueMois");
+			} else {
+				a("class", "valeurInscriptionPaimentChaqueMois inputPaiementScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
+				a("name", "inscriptionPaimentChaqueMois");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentChaqueMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getInscriptionPaimentChaqueMois() != null && getInscriptionPaimentChaqueMois())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmInscriptionPaimentChaqueMois());
+			}
+		}
 	}
 
 	public void htmInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
@@ -2982,37 +3157,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionPaimentComplet(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setInscriptionPaimentComplet inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-			a("name", "setInscriptionPaimentComplet");
-		} else {
-			a("class", "valeurInscriptionPaimentComplet inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-			a("name", "inscriptionPaimentComplet");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getInscriptionPaimentComplet() != null && getInscriptionPaimentComplet())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setInscriptionPaimentComplet inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
+				a("name", "setInscriptionPaimentComplet");
+			} else {
+				a("class", "valeurInscriptionPaimentComplet inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
+				a("name", "inscriptionPaimentComplet");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getInscriptionPaimentComplet() != null && getInscriptionPaimentComplet())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmInscriptionPaimentComplet());
+			}
+		}
 	}
 
 	public void htmInscriptionPaimentComplet(String classeApiMethodeMethode) {
@@ -3100,25 +3289,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementDescription(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "description")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_paiementDescription");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementDescription inputPaiementScolaire", pk, "PaiementDescription w3-input w3-border ");
-				a("name", "setPaiementDescription");
-			} else {
-				a("class", "valeurPaiementDescription w3-input w3-border inputPaiementScolaire", pk, "PaiementDescription w3-input w3-border ");
-				a("name", "paiementDescription");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDescription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDescription')); }); ");
-			}
-			a("value", strPaiementDescription())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "description")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_paiementDescription");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPaiementDescription inputPaiementScolaire", pk, "PaiementDescription w3-input w3-border ");
+					a("name", "setPaiementDescription");
+				} else {
+					a("class", "valeurPaiementDescription w3-input w3-border inputPaiementScolaire", pk, "PaiementDescription w3-input w3-border ");
+					a("name", "paiementDescription");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDescription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDescription')); }); ");
+				}
+				a("value", strPaiementDescription())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementDescription());
+			}
+		}
 	}
 
 	public void htmPaiementDescription(String classeApiMethodeMethode) {
@@ -3234,17 +3437,31 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementDate(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setPaiementDate inputPaiementScolaire", pk, "PaiementDate w3-input w3-border ")
-			.a("placeholder", "DD-MM-YYYY")
-			.a("data-timeformat", "DD-MM-YYYY")
-			.a("id", classeApiMethodeMethode, "_paiementDate")
-			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-			.a("value", paiementDate == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(paiementDate))
-			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDate', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); } ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setPaiementDate inputPaiementScolaire", pk, "PaiementDate w3-input w3-border ")
+				.a("placeholder", "DD-MM-YYYY")
+				.a("data-timeformat", "DD-MM-YYYY")
+				.a("id", classeApiMethodeMethode, "_paiementDate")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
+				.a("value", paiementDate == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(paiementDate))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDate', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); } ")
+				.fg();
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementDate());
+			}
+		}
 	}
 
 	public void htmPaiementDate(String classeApiMethodeMethode) {
@@ -3360,25 +3577,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementMontant(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "paiement montant")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_paiementMontant");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementMontant inputPaiementScolaire", pk, "PaiementMontant w3-input w3-border ");
-				a("name", "setPaiementMontant");
-			} else {
-				a("class", "valeurPaiementMontant w3-input w3-border inputPaiementScolaire", pk, "PaiementMontant w3-input w3-border ");
-				a("name", "paiementMontant");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementMontant')); }); ");
-			}
-			a("value", strPaiementMontant())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "paiement montant")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_paiementMontant");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPaiementMontant inputPaiementScolaire", pk, "PaiementMontant w3-input w3-border ");
+					a("name", "setPaiementMontant");
+				} else {
+					a("class", "valeurPaiementMontant w3-input w3-border inputPaiementScolaire", pk, "PaiementMontant w3-input w3-border ");
+					a("name", "paiementMontant");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementMontant')); }); ");
+				}
+				a("value", strPaiementMontant())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementMontant());
+			}
+		}
 	}
 
 	public void htmPaiementMontant(String classeApiMethodeMethode) {
@@ -3495,25 +3726,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMontant(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "frais montant")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_fraisMontant");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFraisMontant inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
-				a("name", "setFraisMontant");
-			} else {
-				a("class", "valeurFraisMontant w3-input w3-border inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
-				a("name", "fraisMontant");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ");
-			}
-			a("value", strFraisMontant())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "frais montant")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_fraisMontant");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setFraisMontant inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
+					a("name", "setFraisMontant");
+				} else {
+					a("class", "valeurFraisMontant w3-input w3-border inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
+					a("name", "fraisMontant");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ");
+				}
+				a("value", strFraisMontant())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisMontant());
+			}
+		}
 	}
 
 	public void htmFraisMontant(String classeApiMethodeMethode) {
@@ -3630,25 +3875,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMontantFuture(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "frais montant future")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_fraisMontantFuture");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFraisMontantFuture inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
-				a("name", "setFraisMontantFuture");
-			} else {
-				a("class", "valeurFraisMontantFuture w3-input w3-border inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
-				a("name", "fraisMontantFuture");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontantFuture', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ");
-			}
-			a("value", strFraisMontantFuture())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "frais montant future")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_fraisMontantFuture");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setFraisMontantFuture inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
+					a("name", "setFraisMontantFuture");
+				} else {
+					a("class", "valeurFraisMontantFuture w3-input w3-border inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
+					a("name", "fraisMontantFuture");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontantFuture', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ");
+				}
+				a("value", strFraisMontantFuture())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisMontantFuture());
+			}
+		}
 	}
 
 	public void htmFraisMontantFuture(String classeApiMethodeMethode) {
@@ -3752,37 +4011,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisInscription(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_fraisInscription")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_fraisInscription");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
-			a("name", "setFraisInscription");
-		} else {
-			a("class", "valeurFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
-			a("name", "fraisInscription");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisInscription', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisInscription')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getFraisInscription() != null && getFraisInscription())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisInscription")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisInscription");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
+				a("name", "setFraisInscription");
+			} else {
+				a("class", "valeurFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
+				a("name", "fraisInscription");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisInscription', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisInscription')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisInscription() != null && getFraisInscription())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisInscription());
+			}
+		}
 	}
 
 	public void htmFraisInscription(String classeApiMethodeMethode) {
@@ -3875,37 +4148,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisPremierDernier(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_fraisPremierDernier")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_fraisPremierDernier");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
-			a("name", "setFraisPremierDernier");
-		} else {
-			a("class", "valeurFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
-			a("name", "fraisPremierDernier");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisPremierDernier', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getFraisPremierDernier() != null && getFraisPremierDernier())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisPremierDernier")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisPremierDernier");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
+				a("name", "setFraisPremierDernier");
+			} else {
+				a("class", "valeurFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
+				a("name", "fraisPremierDernier");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisPremierDernier', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisPremierDernier() != null && getFraisPremierDernier())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisPremierDernier());
+			}
+		}
 	}
 
 	public void htmFraisPremierDernier(String classeApiMethodeMethode) {
@@ -3998,37 +4285,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMois(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_fraisMois")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_fraisMois");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
-			a("name", "setFraisMois");
-		} else {
-			a("class", "valeurFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
-			a("name", "fraisMois");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMois')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getFraisMois() != null && getFraisMois())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisMois")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisMois");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
+				a("name", "setFraisMois");
+			} else {
+				a("class", "valeurFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
+				a("name", "fraisMois");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMois')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisMois() != null && getFraisMois())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisMois());
+			}
+		}
 	}
 
 	public void htmFraisMois(String classeApiMethodeMethode) {
@@ -4121,37 +4422,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementEspeces(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_paiementEspeces")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_paiementEspeces");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
-			a("name", "setPaiementEspeces");
-		} else {
-			a("class", "valeurPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
-			a("name", "paiementEspeces");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementEspeces', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementEspeces')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementEspeces')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPaiementEspeces() != null && getPaiementEspeces())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_paiementEspeces")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_paiementEspeces");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
+				a("name", "setPaiementEspeces");
+			} else {
+				a("class", "valeurPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
+				a("name", "paiementEspeces");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementEspeces', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementEspeces')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementEspeces')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPaiementEspeces() != null && getPaiementEspeces())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementEspeces());
+			}
+		}
 	}
 
 	public void htmPaiementEspeces(String classeApiMethodeMethode) {
@@ -4244,37 +4559,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementCheque(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_paiementCheque")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_paiementCheque");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
-			a("name", "setPaiementCheque");
-		} else {
-			a("class", "valeurPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
-			a("name", "paiementCheque");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementCheque', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementCheque')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementCheque')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPaiementCheque() != null && getPaiementCheque())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_paiementCheque")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_paiementCheque");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
+				a("name", "setPaiementCheque");
+			} else {
+				a("class", "valeurPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
+				a("name", "paiementCheque");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementCheque', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementCheque')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementCheque')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPaiementCheque() != null && getPaiementCheque())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementCheque());
+			}
+		}
 	}
 
 	public void htmPaiementCheque(String classeApiMethodeMethode) {
@@ -4367,37 +4696,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementSysteme(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_paiementSysteme")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_paiementSysteme");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPaiementSysteme inputPaiementScolaire", pk, "PaiementSysteme w3-input w3-border ");
-			a("name", "setPaiementSysteme");
-		} else {
-			a("class", "valeurPaiementSysteme inputPaiementScolaire", pk, "PaiementSysteme w3-input w3-border ");
-			a("name", "paiementSysteme");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementSysteme', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementSysteme')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementSysteme')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPaiementSysteme() != null && getPaiementSysteme())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_paiementSysteme")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_paiementSysteme");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementSysteme inputPaiementScolaire", pk, "PaiementSysteme w3-input w3-border ");
+				a("name", "setPaiementSysteme");
+			} else {
+				a("class", "valeurPaiementSysteme inputPaiementScolaire", pk, "PaiementSysteme w3-input w3-border ");
+				a("name", "paiementSysteme");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementSysteme', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementSysteme')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementSysteme')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPaiementSysteme() != null && getPaiementSysteme())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementSysteme());
+			}
+		}
 	}
 
 	public void htmPaiementSysteme(String classeApiMethodeMethode) {
@@ -4485,25 +4828,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementPar(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "paiement par/pour")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_paiementPar");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementPar inputPaiementScolaire", pk, "PaiementPar w3-input w3-border ");
-				a("name", "setPaiementPar");
-			} else {
-				a("class", "valeurPaiementPar w3-input w3-border inputPaiementScolaire", pk, "PaiementPar w3-input w3-border ");
-				a("name", "paiementPar");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementPar', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementPar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementPar')); }); ");
-			}
-			a("value", strPaiementPar())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "paiement par/pour")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_paiementPar");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPaiementPar inputPaiementScolaire", pk, "PaiementPar w3-input w3-border ");
+					a("name", "setPaiementPar");
+				} else {
+					a("class", "valeurPaiementPar w3-input w3-border inputPaiementScolaire", pk, "PaiementPar w3-input w3-border ");
+					a("name", "paiementPar");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementPar', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementPar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementPar')); }); ");
+				}
+				a("value", strPaiementPar())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementPar());
+			}
+		}
 	}
 
 	public void htmPaiementPar(String classeApiMethodeMethode) {
@@ -4602,25 +4959,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputTransactionId(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "transaction ID")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_transactionId");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setTransactionId inputPaiementScolaire", pk, "TransactionId w3-input w3-border ");
-				a("name", "setTransactionId");
-			} else {
-				a("class", "valeurTransactionId w3-input w3-border inputPaiementScolaire", pk, "TransactionId w3-input w3-border ");
-				a("name", "transactionId");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionId')); }); ");
-			}
-			a("value", strTransactionId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "transaction ID")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_transactionId");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setTransactionId inputPaiementScolaire", pk, "TransactionId w3-input w3-border ");
+					a("name", "setTransactionId");
+				} else {
+					a("class", "valeurTransactionId w3-input w3-border inputPaiementScolaire", pk, "TransactionId w3-input w3-border ");
+					a("name", "transactionId");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionId')); }); ");
+				}
+				a("value", strTransactionId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmTransactionId());
+			}
+		}
 	}
 
 	public void htmTransactionId(String classeApiMethodeMethode) {
@@ -4719,25 +5090,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "customer profile ID")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_customerProfileId");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setCustomerProfileId inputPaiementScolaire", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "setCustomerProfileId");
-			} else {
-				a("class", "valeurCustomerProfileId w3-input w3-border inputPaiementScolaire", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "customerProfileId");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
-			}
-			a("value", strCustomerProfileId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "customer profile ID")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_customerProfileId");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setCustomerProfileId inputPaiementScolaire", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "setCustomerProfileId");
+				} else {
+					a("class", "valeurCustomerProfileId w3-input w3-border inputPaiementScolaire", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "customerProfileId");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
+				}
+				a("value", strCustomerProfileId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmCustomerProfileId());
+			}
+		}
 	}
 
 	public void htmCustomerProfileId(String classeApiMethodeMethode) {
@@ -4836,25 +5221,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputTransactionStatus(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "état de transaction")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_transactionStatus");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setTransactionStatus inputPaiementScolaire", pk, "TransactionStatus w3-input w3-border ");
-				a("name", "setTransactionStatus");
-			} else {
-				a("class", "valeurTransactionStatus w3-input w3-border inputPaiementScolaire", pk, "TransactionStatus w3-input w3-border ");
-				a("name", "transactionStatus");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionStatus', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionStatus')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionStatus')); }); ");
-			}
-			a("value", strTransactionStatus())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "état de transaction")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_transactionStatus");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setTransactionStatus inputPaiementScolaire", pk, "TransactionStatus w3-input w3-border ");
+					a("name", "setTransactionStatus");
+				} else {
+					a("class", "valeurTransactionStatus w3-input w3-border inputPaiementScolaire", pk, "TransactionStatus w3-input w3-border ");
+					a("name", "transactionStatus");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionStatus', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionStatus')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionStatus')); }); ");
+				}
+				a("value", strTransactionStatus())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmTransactionStatus());
+			}
+		}
 	}
 
 	public void htmTransactionStatus(String classeApiMethodeMethode) {
@@ -4958,37 +5357,51 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementRecu(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_paiementRecu")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_paiementRecu");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPaiementRecu inputPaiementScolaire", pk, "PaiementRecu w3-input w3-border ");
-			a("name", "setPaiementRecu");
-		} else {
-			a("class", "valeurPaiementRecu inputPaiementScolaire", pk, "PaiementRecu w3-input w3-border ");
-			a("name", "paiementRecu");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementRecu', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementRecu')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementRecu')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPaiementRecu() != null && getPaiementRecu())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_paiementRecu")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_paiementRecu");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementRecu inputPaiementScolaire", pk, "PaiementRecu w3-input w3-border ");
+				a("name", "setPaiementRecu");
+			} else {
+				a("class", "valeurPaiementRecu inputPaiementScolaire", pk, "PaiementRecu w3-input w3-border ");
+				a("name", "paiementRecu");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementRecu', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementRecu')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementRecu')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPaiementRecu() != null && getPaiementRecu())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementRecu());
+			}
+		}
 	}
 
 	public void htmPaiementRecu(String classeApiMethodeMethode) {
@@ -5076,25 +5489,39 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementNomCourt(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "nom")
-			.a("title", "La clé primaire des enfants dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_paiementNomCourt");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementNomCourt inputPaiementScolaire", pk, "PaiementNomCourt w3-input w3-border ");
-				a("name", "setPaiementNomCourt");
-			} else {
-				a("class", "valeurPaiementNomCourt w3-input w3-border inputPaiementScolaire", pk, "PaiementNomCourt w3-input w3-border ");
-				a("name", "paiementNomCourt");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementNomCourt', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }); ");
-			}
-			a("value", strPaiementNomCourt())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "nom")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_paiementNomCourt");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPaiementNomCourt inputPaiementScolaire", pk, "PaiementNomCourt w3-input w3-border ");
+					a("name", "setPaiementNomCourt");
+				} else {
+					a("class", "valeurPaiementNomCourt w3-input w3-border inputPaiementScolaire", pk, "PaiementNomCourt w3-input w3-border ");
+					a("name", "paiementNomCourt");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementNomCourt', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }); ");
+				}
+				a("value", strPaiementNomCourt())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmPaiementNomCourt());
+			}
+		}
 	}
 
 	public void htmPaiementNomCourt(String classeApiMethodeMethode) {
@@ -5216,6 +5643,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		inscriptionCleInit();
 		inscriptionRechercheInit();
 		inscription_Init();
+		utilisateurClesInit();
 		ecoleCleInit();
 		anneeCleInit();
 		saisonCleInit();
@@ -5315,6 +5743,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.inscriptionRecherche;
 			case "inscription_":
 				return oPaiementScolaire.inscription_;
+			case "utilisateurCles":
+				return oPaiementScolaire.utilisateurCles;
 			case "ecoleCle":
 				return oPaiementScolaire.ecoleCle;
 			case "anneeCle":
@@ -5595,6 +6025,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
 			if(inscriptionCle != null)
 				oPaiementScolaire.setInscriptionCle(inscriptionCle);
+
+			if(sauvegardesPaiementScolaire.contains("utilisateurCles")) {
+				List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+				if(utilisateurCles != null)
+					oPaiementScolaire.utilisateurCles.addAll(utilisateurCles);
+			}
 
 			if(sauvegardesPaiementScolaire.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
@@ -5979,6 +6415,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionCle_indexed_long", inscriptionCle);
 			document.addField("inscriptionCle_stored_long", inscriptionCle);
 		}
+		if(utilisateurCles != null) {
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_stored_longs", o);
+			}
+		}
 		if(ecoleCle != null) {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
@@ -6222,6 +6666,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementCle_indexed_long";
 			case "inscriptionCle":
 				return "inscriptionCle_indexed_long";
+			case "utilisateurCles":
+				return "utilisateurCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
@@ -6360,6 +6806,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
 		if(inscriptionCle != null)
 			oPaiementScolaire.setInscriptionCle(inscriptionCle);
+
+		List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+		if(utilisateurCles != null)
+			oPaiementScolaire.utilisateurCles.addAll(utilisateurCles);
 
 		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 		if(ecoleCle != null)

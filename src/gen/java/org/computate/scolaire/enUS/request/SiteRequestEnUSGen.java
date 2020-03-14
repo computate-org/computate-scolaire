@@ -605,6 +605,75 @@ The site configuration.
 		return userId == null ? "" : StringEscapeUtils.escapeHtml4(strUserId());
 	}
 
+	/////////////
+	// userKey //
+	/////////////
+
+	/**	L'entité « userKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long userKey;
+	@JsonIgnore
+	public Wrap<Long> userKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("userKey").o(userKey);
+
+	/**	<br/>L'entité « userKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKey">Trouver l'entité userKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userKey(Wrap<Long> c);
+
+	public Long getUserKey() {
+		return userKey;
+	}
+
+	public void setUserKey(Long userKey) {
+		this.userKey = userKey;
+		this.userKeyWrap.alreadyInitialized = true;
+	}
+	public SiteRequestEnUS setUserKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.userKey = Long.parseLong(o);
+		this.userKeyWrap.alreadyInitialized = true;
+		return (SiteRequestEnUS)this;
+	}
+	protected SiteRequestEnUS userKeyInit() {
+		if(!userKeyWrap.alreadyInitialized) {
+			_userKey(userKeyWrap);
+			if(userKey == null)
+				setUserKey(userKeyWrap.o);
+		}
+		userKeyWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public Long solrUserKey() {
+		return userKey;
+	}
+
+	public String strUserKey() {
+		return userKey == null ? "" : userKey.toString();
+	}
+
+	public String jsonUserKey() {
+		return userKey == null ? "" : userKey.toString();
+	}
+
+	public String nomAffichageUserKey() {
+		return null;
+	}
+
+	public String htmTooltipUserKey() {
+		return null;
+	}
+
+	public String htmUserKey() {
+		return userKey == null ? "" : StringEscapeUtils.escapeHtml4(strUserKey());
+	}
+
 	///////////////
 	// sessionId //
 	///////////////
@@ -1471,6 +1540,7 @@ The site configuration.
 		userVertxInit();
 		jsonPrincipalInit();
 		userIdInit();
+		userKeyInit();
 		sessionIdInit();
 		userNameInit();
 		userLastNameInit();
@@ -1555,6 +1625,8 @@ The site configuration.
 				return oSiteRequestEnUS.jsonPrincipal;
 			case "userId":
 				return oSiteRequestEnUS.userId;
+			case "userKey":
+				return oSiteRequestEnUS.userKey;
 			case "sessionId":
 				return oSiteRequestEnUS.sessionId;
 			case "userName":

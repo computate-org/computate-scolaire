@@ -734,40 +734,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 
-
-		if(listSchoolPayment != null && listSchoolPayment.size() == 1) {
-			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("onclick", "$('#deleteSchoolPaymentModal').show(); ")
-				.f().sx("Delete the payments")
-			.g("button");
-			{ e("div").a("id", "deleteSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-green ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolPaymentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Delete the payments").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							SchoolPayment o = new SchoolPayment();
-							o.setSiteRequest_(siteRequest_);
-
-							// Form DELETE
-							{ e("div").a("id", "deleteSchoolPaymentForm").f();
-								htmlFormPATCHSchoolPayment(o);
-							} g("div");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "deleteSchoolPayment(", o.getPk(), "); ")
-								.f().sx("Delete the payments")
-							.g("button");
-
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-
-		}
 		g("div");
 	}
 

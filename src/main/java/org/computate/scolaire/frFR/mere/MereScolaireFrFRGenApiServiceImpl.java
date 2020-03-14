@@ -105,24 +105,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void postMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerMereScolaire(requeteSite, b -> {
@@ -287,24 +269,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void putMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurMereScolaire(requeteSite, b -> {
@@ -595,24 +559,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void patchMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurMereScolaire(requeteSite, b -> {
@@ -989,27 +935,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void getMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurMereScolaire(requeteSite, b -> {
@@ -1076,24 +1001,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void deleteMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					rechercheMereScolaire(requeteSite, false, true, null, b -> {
@@ -1175,24 +1082,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void rechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurMereScolaire(requeteSite, b -> {
@@ -1296,27 +1185,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void pagerechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlMereScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurMereScolaire(requeteSite, b -> {
@@ -1584,6 +1452,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
 																	} else {
 																		erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
@@ -1619,14 +1488,14 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
-								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
-								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
-								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
-								jsonObject.put("customerProfileId", principalJson.getString("name"));
-								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								jsonObject.put("email", principalJson.getString("email"));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
+								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 								Boolean definir = utilisateurMereScolaireDefinir(requeteSite, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
@@ -1645,22 +1514,25 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 									requeteSite2.setSiteContexte_(siteContexte);
 									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
 									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+											UtilisateurSite utilisateurSite2 = c.result();
+											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
 																if(f.succeeded()) {
-																	requeteSite.setUtilisateurSite(utilisateurSite);
-																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
-																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
-																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
-																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																	requeteSite.setUtilisateurSite(utilisateurSite2);
+																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
 																	gestionnaireEvenements.handle(Future.succeededFuture());
 																} else {
 																	erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
@@ -1684,6 +1556,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
 									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
 									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
 							}
@@ -1729,7 +1602,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
-						+ " AND utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getUtilisateurId()).orElse("-----")));
+						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(-1L));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

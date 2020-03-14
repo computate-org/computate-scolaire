@@ -2,6 +2,8 @@ package org.computate.scolaire.frFR.utilisateur;
 
 import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
+import org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.paiement.PaiementScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -105,24 +107,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void rechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -221,24 +205,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -478,6 +444,30 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
+					case "addPaiementCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
+					case "addAllPaiementCles":
+						JsonArray addAllPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", addAllPaiementClesValeurs.getString(i)));
+						}
+						break;
+					case "setPaiementCles":
+						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles"));
+						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", setPaiementClesValeurs.getString(i)));
+						}
+						break;
+					case "removePaiementCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
 					case "setUtilisateurId":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -486,6 +476,16 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							o2.setUtilisateurId(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+						}
+						break;
+					case "setUtilisateurCle":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle"));
+						} else {
+							o2.setUtilisateurCle(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
 						}
 						break;
 					case "setUtilisateurNom":
@@ -585,24 +585,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void postUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerUtilisateurSite(requeteSite, b -> {
@@ -692,9 +674,19 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
 						}
 						break;
+					case "paiementCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+						}
+						break;
 					case "utilisateurId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurCle":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
 						break;
 					case "utilisateurNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -760,27 +752,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void pagerechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -888,6 +859,12 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				if(!pks.contains(pk)) {
 					pks.add(pk);
 					classes.add("InscriptionScolaire");
+				}
+			}
+			for(Long pk : o.getPaiementCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("PaiementScolaire");
 				}
 			}
 		}
@@ -1048,6 +1025,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
 																	} else {
 																		erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
@@ -1083,12 +1061,12 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
+								JsonObject jsonObject = new JsonObject();
 								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
 								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
 								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
 								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
-								jsonObject.put("setCustomerProfileId", principalJson.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
 								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 								Boolean definir = utilisateurUtilisateurSiteDefinir(requeteSite, jsonObject, true);
@@ -1109,22 +1087,25 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									requeteSite2.setSiteContexte_(siteContexte);
 									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
 									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+											UtilisateurSite utilisateurSite2 = c.result();
+											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
 																if(f.succeeded()) {
-																	requeteSite.setUtilisateurSite(utilisateurSite);
-																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
-																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
-																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
-																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																	requeteSite.setUtilisateurSite(utilisateurSite2);
+																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
 																	gestionnaireEvenements.handle(Future.succeededFuture());
 																} else {
 																	erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
@@ -1148,6 +1129,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
 									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
 									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
 							}
@@ -1193,7 +1175,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
-						+ " AND utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getUtilisateurId()).orElse("-----")));
+						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(-1L));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1338,6 +1320,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				listeRecherche.setC(UtilisateurSite.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{paiementCles:{terms:{field:paiementCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
@@ -1355,6 +1338,26 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
 								} else {
 									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+					for(Long pk : o.getPaiementCles()) {
+						PaiementScolaire o2 = new PaiementScolaire();
+
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite2);
+						futures.add(
+							service.futurePATCHPaiementScolaire(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("PaiementScolaire %s a échoué. ", pk));
 									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 								}
 							})

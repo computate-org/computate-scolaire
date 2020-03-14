@@ -67,6 +67,93 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public static final String SiteUser_IconeGroupe = "regular";
 	public static final String SiteUser_IconeNom = "user-cog";
 
+	//////////////
+	// userKeys //
+	//////////////
+
+	/**	L'entité « userKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
+
+	/**	<br/>L'entité « userKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKeys">Trouver l'entité userKeys dans Solr</a>
+	 * <br/>
+	 * @param userKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _userKeys(List<Long> l);
+
+	public List<Long> getUserKeys() {
+		return userKeys;
+	}
+
+	public void setUserKeys(List<Long> userKeys) {
+		this.userKeys = userKeys;
+		this.userKeysWrap.alreadyInitialized = true;
+	}
+	public SiteUser addUserKeys(Long...objets) {
+		for(Long o : objets) {
+			addUserKeys(o);
+		}
+		return (SiteUser)this;
+	}
+	public SiteUser addUserKeys(Long o) {
+		if(o != null && !userKeys.contains(o))
+			this.userKeys.add(o);
+		return (SiteUser)this;
+	}
+	public SiteUser setUserKeys(JsonArray objets) {
+		userKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUserKeys(o);
+		}
+		return (SiteUser)this;
+	}
+	public SiteUser addUserKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUserKeys(p);
+		}
+		return (SiteUser)this;
+	}
+	protected SiteUser userKeysInit() {
+		if(!userKeysWrap.alreadyInitialized) {
+			_userKeys(userKeys);
+		}
+		userKeysWrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public List<Long> solrUserKeys() {
+		return userKeys;
+	}
+
+	public String strUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String jsonUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String nomAffichageUserKeys() {
+		return null;
+	}
+
+	public String htmTooltipUserKeys() {
+		return null;
+	}
+
+	public String htmUserKeys() {
+		return userKeys == null ? "" : StringEscapeUtils.escapeHtml4(strUserKeys());
+	}
+
 	////////////////////
 	// enrollmentKeys //
 	////////////////////
@@ -213,6 +300,152 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////
+	// paymentKeys //
+	/////////////////
+
+	/**	L'entité « paymentKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> paymentKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> paymentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("paymentKeys").o(paymentKeys);
+
+	/**	<br/>L'entité « paymentKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentKeys">Trouver l'entité paymentKeys dans Solr</a>
+	 * <br/>
+	 * @param paymentKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _paymentKeys(List<Long> o);
+
+	public List<Long> getPaymentKeys() {
+		return paymentKeys;
+	}
+
+	public void setPaymentKeys(List<Long> paymentKeys) {
+		this.paymentKeys = paymentKeys;
+		this.paymentKeysWrap.alreadyInitialized = true;
+	}
+	public SiteUser addPaymentKeys(Long...objets) {
+		for(Long o : objets) {
+			addPaymentKeys(o);
+		}
+		return (SiteUser)this;
+	}
+	public SiteUser addPaymentKeys(Long o) {
+		if(o != null && !paymentKeys.contains(o))
+			this.paymentKeys.add(o);
+		return (SiteUser)this;
+	}
+	public SiteUser setPaymentKeys(JsonArray objets) {
+		paymentKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addPaymentKeys(o);
+		}
+		return (SiteUser)this;
+	}
+	public SiteUser addPaymentKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addPaymentKeys(p);
+		}
+		return (SiteUser)this;
+	}
+	protected SiteUser paymentKeysInit() {
+		if(!paymentKeysWrap.alreadyInitialized) {
+			_paymentKeys(paymentKeys);
+		}
+		paymentKeysWrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public List<Long> solrPaymentKeys() {
+		return paymentKeys;
+	}
+
+	public String strPaymentKeys() {
+		return paymentKeys == null ? "" : paymentKeys.toString();
+	}
+
+	public String jsonPaymentKeys() {
+		return paymentKeys == null ? "" : paymentKeys.toString();
+	}
+
+	public String nomAffichagePaymentKeys() {
+		return "payments";
+	}
+
+	public String htmTooltipPaymentKeys() {
+		return null;
+	}
+
+	public String htmPaymentKeys() {
+		return paymentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentKeys());
+	}
+
+	public void inputPaymentKeys(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "payments")
+				.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setPaymentKeys")
+				.a("id", classApiMethodMethod, "_paymentKeys")
+				.a("autocomplete", "off")
+				.a("oninput", "suggestSiteUserPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SiteUserPaymentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmPaymentKeys(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserPaymentKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/payment?fq=userKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fas fa-search-dollar ").f().g("i");
+								sx("payments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate payments to this site user");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputPaymentKeys(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSiteUserPaymentKeys_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postSchoolPaymentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+										.f().sx("add a payment")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////
 	// userId //
 	////////////
@@ -318,6 +551,129 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
 									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userId')); $('#", classApiMethodMethod, "_userId').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserId', null, function() { addGlow($('#", classApiMethodMethod, "_userId')); }, function() { addError($('#", classApiMethodMethod, "_userId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////
+	// userKey //
+	/////////////
+
+	/**	L'entité « userKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long userKey;
+	@JsonIgnore
+	public Wrap<Long> userKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("userKey").o(userKey);
+
+	/**	<br/>L'entité « userKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKey">Trouver l'entité userKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userKey(Wrap<Long> c);
+
+	public Long getUserKey() {
+		return userKey;
+	}
+
+	public void setUserKey(Long userKey) {
+		this.userKey = userKey;
+		this.userKeyWrap.alreadyInitialized = true;
+	}
+	public SiteUser setUserKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.userKey = Long.parseLong(o);
+		this.userKeyWrap.alreadyInitialized = true;
+		return (SiteUser)this;
+	}
+	protected SiteUser userKeyInit() {
+		if(!userKeyWrap.alreadyInitialized) {
+			_userKey(userKeyWrap);
+			if(userKey == null)
+				setUserKey(userKeyWrap.o);
+		}
+		userKeyWrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public Long solrUserKey() {
+		return userKey;
+	}
+
+	public String strUserKey() {
+		return userKey == null ? "" : userKey.toString();
+	}
+
+	public String jsonUserKey() {
+		return userKey == null ? "" : userKey.toString();
+	}
+
+	public String nomAffichageUserKey() {
+		return "user key";
+	}
+
+	public String htmTooltipUserKey() {
+		return null;
+	}
+
+	public String htmUserKey() {
+		return userKey == null ? "" : StringEscapeUtils.escapeHtml4(strUserKey());
+	}
+
+	public void inputUserKey(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "user key")
+			.a("id", classApiMethodMethod, "_userKey");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setUserKey inputSiteUser", pk, "UserKey w3-input w3-border ");
+				a("name", "setUserKey");
+			} else {
+				a("class", "valueUserKey w3-input w3-border inputSiteUser", pk, "UserKey w3-input w3-border ");
+				a("name", "userKey");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserKey', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userKey')); }, function() { addError($('#", classApiMethodMethod, "_userKey')); }); ");
+			}
+			a("value", strUserKey())
+		.fg();
+
+	}
+
+	public void htmUserKey(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserUserKey").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_userKey").a("class", "").f().sx("user key").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputUserKey(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userKey')); $('#", classApiMethodMethod, "_userKey').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserKey', null, function() { addGlow($('#", classApiMethodMethod, "_userKey')); }, function() { addError($('#", classApiMethodMethod, "_userKey')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -1318,8 +1674,11 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public void initSiteUser() {
+		userKeysInit();
 		enrollmentKeysInit();
+		paymentKeysInit();
 		userIdInit();
+		userKeyInit();
 		userNameInit();
 		userEmailInit();
 		userFirstNameInit();
@@ -1368,10 +1727,16 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public Object obtainSiteUser(String var) {
 		SiteUser oSiteUser = (SiteUser)this;
 		switch(var) {
+			case "userKeys":
+				return oSiteUser.userKeys;
 			case "enrollmentKeys":
 				return oSiteUser.enrollmentKeys;
+			case "paymentKeys":
+				return oSiteUser.paymentKeys;
 			case "userId":
 				return oSiteUser.userId;
+			case "userKey":
+				return oSiteUser.userKey;
 			case "userName":
 				return oSiteUser.userName;
 			case "userEmail":
@@ -1420,6 +1785,9 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			case "enrollmentKeys":
 				oSiteUser.addEnrollmentKeys((Long)val);
 				return val;
+			case "paymentKeys":
+				oSiteUser.addPaymentKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -1448,6 +1816,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		switch(var) {
 			case "userId":
 				setUserId(val);
+				savesSiteUser.add(var);
+				return val;
+			case "userKey":
+				setUserKey(val);
 				savesSiteUser.add(var);
 				return val;
 			case "userName":
@@ -1497,14 +1869,30 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		savesSiteUser = (List<String>)solrDocument.get("savesSiteUser_stored_strings");
 		if(savesSiteUser != null) {
 
+			if(savesSiteUser.contains("userKeys")) {
+				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+				if(userKeys != null)
+					oSiteUser.userKeys.addAll(userKeys);
+			}
+
 			List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
 			if(enrollmentKeys != null)
 				oSiteUser.enrollmentKeys.addAll(enrollmentKeys);
+
+			List<Long> paymentKeys = (List<Long>)solrDocument.get("paymentKeys_stored_longs");
+			if(paymentKeys != null)
+				oSiteUser.paymentKeys.addAll(paymentKeys);
 
 			if(savesSiteUser.contains("userId")) {
 				String userId = (String)solrDocument.get("userId_stored_string");
 				if(userId != null)
 					oSiteUser.setUserId(userId);
+			}
+
+			if(savesSiteUser.contains("userKey")) {
+				Long userKey = (Long)solrDocument.get("userKey_stored_long");
+				if(userKey != null)
+					oSiteUser.setUserKey(userKey);
 			}
 
 			if(savesSiteUser.contains("userName")) {
@@ -1636,6 +2024,14 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		if(savesSiteUser != null)
 			document.addField("savesSiteUser_stored_strings", savesSiteUser);
 
+		if(userKeys != null) {
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_stored_longs", o);
+			}
+		}
 		if(enrollmentKeys != null) {
 			for(java.lang.Long o : enrollmentKeys) {
 				document.addField("enrollmentKeys_indexed_longs", o);
@@ -1644,9 +2040,21 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				document.addField("enrollmentKeys_stored_longs", o);
 			}
 		}
+		if(paymentKeys != null) {
+			for(java.lang.Long o : paymentKeys) {
+				document.addField("paymentKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : paymentKeys) {
+				document.addField("paymentKeys_stored_longs", o);
+			}
+		}
 		if(userId != null) {
 			document.addField("userId_indexed_string", userId);
 			document.addField("userId_stored_string", userId);
+		}
+		if(userKey != null) {
+			document.addField("userKey_indexed_long", userKey);
+			document.addField("userKey_stored_long", userKey);
 		}
 		if(userName != null) {
 			document.addField("userName_indexed_string", userName);
@@ -1711,10 +2119,16 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public static String varIndexedSiteUser(String entityVar) {
 		switch(entityVar) {
+			case "userKeys":
+				return "userKeys_indexed_longs";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
+			case "paymentKeys":
+				return "paymentKeys_indexed_longs";
 			case "userId":
 				return "userId_indexed_string";
+			case "userKey":
+				return "userKey_indexed_long";
 			case "userName":
 				return "userName_indexed_string";
 			case "userEmail":
@@ -1764,13 +2178,25 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public void storeSiteUser(SolrDocument solrDocument) {
 		SiteUser oSiteUser = (SiteUser)this;
 
+		List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+		if(userKeys != null)
+			oSiteUser.userKeys.addAll(userKeys);
+
 		List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
 		if(enrollmentKeys != null)
 			oSiteUser.enrollmentKeys.addAll(enrollmentKeys);
 
+		List<Long> paymentKeys = (List<Long>)solrDocument.get("paymentKeys_stored_longs");
+		if(paymentKeys != null)
+			oSiteUser.paymentKeys.addAll(paymentKeys);
+
 		String userId = (String)solrDocument.get("userId_stored_string");
 		if(userId != null)
 			oSiteUser.setUserId(userId);
+
+		Long userKey = (Long)solrDocument.get("userKey_stored_long");
+		if(userKey != null)
+			oSiteUser.setUserKey(userKey);
 
 		String userName = (String)solrDocument.get("userName_stored_string");
 		if(userName != null)
@@ -1837,8 +2263,12 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			SiteUser original = (SiteUser)o;
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
 				apiRequest.addVars("enrollmentKeys");
+			if(!Objects.equals(paymentKeys, original.getPaymentKeys()))
+				apiRequest.addVars("paymentKeys");
 			if(!Objects.equals(userId, original.getUserId()))
 				apiRequest.addVars("userId");
+			if(!Objects.equals(userKey, original.getUserKey()))
+				apiRequest.addVars("userKey");
 			if(!Objects.equals(userName, original.getUserName()))
 				apiRequest.addVars("userName");
 			if(!Objects.equals(userEmail, original.getUserEmail()))
@@ -1860,7 +2290,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, userId, userName, userEmail, customerProfileId, userReceiveEmails, seeArchived, seeDeleted);
+		return Objects.hash(super.hashCode(), enrollmentKeys, paymentKeys, userId, userKey, userName, userEmail, customerProfileId, userReceiveEmails, seeArchived, seeDeleted);
 	}
 
 	////////////
@@ -1875,7 +2305,9 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		SiteUser that = (SiteUser)o;
 		return super.equals(o)
 				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
+				&& Objects.equals( paymentKeys, that.paymentKeys )
 				&& Objects.equals( userId, that.userId )
+				&& Objects.equals( userKey, that.userKey )
 				&& Objects.equals( userName, that.userName )
 				&& Objects.equals( userEmail, that.userEmail )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
@@ -1893,7 +2325,9 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SiteUser { ");
 		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", paymentKeys: " ).append(paymentKeys);
 		sb.append( ", userId: \"" ).append(userId).append( "\"" );
+		sb.append( ", userKey: " ).append(userKey);
 		sb.append( ", userName: \"" ).append(userName).append( "\"" );
 		sb.append( ", userEmail: \"" ).append(userEmail).append( "\"" );
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );

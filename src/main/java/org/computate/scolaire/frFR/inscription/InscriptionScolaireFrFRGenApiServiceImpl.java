@@ -119,24 +119,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void postInscriptionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerInscriptionScolaire(requeteSite, b -> {
@@ -471,24 +453,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void putInscriptionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -949,24 +913,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void patchInscriptionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -1813,27 +1759,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void getInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -1900,24 +1825,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void deleteInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					rechercheInscriptionScolaire(requeteSite, false, true, null, b -> {
@@ -1999,24 +1906,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void rechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -2120,27 +2009,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void pagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -2226,27 +2094,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void formpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -2332,27 +2179,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void pdfpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -2438,27 +2264,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void mailpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
@@ -2768,6 +2573,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
 																	} else {
 																		erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
@@ -2803,14 +2609,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
-								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
-								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
-								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
-								jsonObject.put("customerProfileId", principalJson.getString("name"));
-								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								jsonObject.put("email", principalJson.getString("email"));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
+								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 								Boolean definir = utilisateurInscriptionScolaireDefinir(requeteSite, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
@@ -2829,22 +2635,25 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									requeteSite2.setSiteContexte_(siteContexte);
 									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
 									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+											UtilisateurSite utilisateurSite2 = c.result();
+											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
 																if(f.succeeded()) {
-																	requeteSite.setUtilisateurSite(utilisateurSite);
-																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
-																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
-																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
-																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																	requeteSite.setUtilisateurSite(utilisateurSite2);
+																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
 																	gestionnaireEvenements.handle(Future.succeededFuture());
 																} else {
 																	erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
@@ -2868,6 +2677,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
 									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
 									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
 							}
@@ -2913,7 +2723,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
-						+ " AND utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getUtilisateurId()).orElse("-----")));
+						+ " OR utilisateurCle_indexed_string:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(-1L));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

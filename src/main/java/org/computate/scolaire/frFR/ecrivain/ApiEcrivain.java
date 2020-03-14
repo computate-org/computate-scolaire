@@ -507,6 +507,16 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: classRoleUtilisateur
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 **/
+	protected void _classeRoleUtilisateur(Couverture<Boolean> c) {
+		c.o((Boolean)classeDocumentSolr.get("classeRoleUtilisateur_stored_boolean"));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: classRolesFound
 	 * r: classeDocumentSolr
 	 * r.enUS: classSolrDocument
@@ -1330,6 +1340,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: appName
 	 * r: classeRoleSession
 	 * r.enUS: classRoleSession
+	 * r: classeRoleUtilisateur
+	 * r.enUS: classRoleUser
 	 */
 	public void ecrireApi(Boolean id) throws Exception {
 

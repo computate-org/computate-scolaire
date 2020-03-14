@@ -20,6 +20,7 @@ import java.time.ZoneOffset;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.Instant;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import java.time.ZoneId;
@@ -31,6 +32,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 
 /**	
@@ -46,6 +48,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageParts »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.enUS.page.part.PagePart>();
 	@JsonIgnore
 	public Wrap<List<PagePart>> pagePartsWrap = new Wrap<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
@@ -93,6 +96,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
@@ -130,6 +134,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « staticBaseUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String staticBaseUrl;
 	@JsonIgnore
 	public Wrap<String> staticBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("staticBaseUrl").o(staticBaseUrl);
@@ -191,6 +196,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageSolrDocument »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument pageSolrDocument;
 	@JsonIgnore
 	public Wrap<SolrDocument> pageSolrDocumentWrap = new Wrap<SolrDocument>().p(this).c(SolrDocument.class).var("pageSolrDocument").o(pageSolrDocument);
@@ -228,6 +234,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected AllWriter w;
 	@JsonIgnore
 	public Wrap<AllWriter> wWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w").o(w);
@@ -267,6 +274,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « contextIconGroup »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String contextIconGroup;
 	@JsonIgnore
 	public Wrap<String> contextIconGroupWrap = new Wrap<String>().p(this).c(String.class).var("contextIconGroup").o(contextIconGroup);
@@ -328,6 +336,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « contextIconName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String contextIconName;
 	@JsonIgnore
 	public Wrap<String> contextIconNameWrap = new Wrap<String>().p(this).c(String.class).var("contextIconName").o(contextIconName);
@@ -389,6 +398,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « contextIconCssClasses »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String contextIconCssClasses;
 	@JsonIgnore
 	public Wrap<String> contextIconCssClassesWrap = new Wrap<String>().p(this).c(String.class).var("contextIconCssClasses").o(contextIconCssClasses);
@@ -450,6 +460,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageVisibleToBots »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean pageVisibleToBots;
 	@JsonIgnore
 	public Wrap<Boolean> pageVisibleToBotsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("pageVisibleToBots").o(pageVisibleToBots);
@@ -516,6 +527,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageH1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH1;
 	@JsonIgnore
 	public Wrap<String> pageH1Wrap = new Wrap<String>().p(this).c(String.class).var("pageH1").o(pageH1);
@@ -577,6 +589,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageH2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH2;
 	@JsonIgnore
 	public Wrap<String> pageH2Wrap = new Wrap<String>().p(this).c(String.class).var("pageH2").o(pageH2);
@@ -638,6 +651,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageH3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH3;
 	@JsonIgnore
 	public Wrap<String> pageH3Wrap = new Wrap<String>().p(this).c(String.class).var("pageH3").o(pageH3);
@@ -699,6 +713,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « _pageH1Short »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String _pageH1Short;
 	@JsonIgnore
 	public Wrap<String> _pageH1ShortWrap = new Wrap<String>().p(this).c(String.class).var("_pageH1Short").o(_pageH1Short);
@@ -760,6 +775,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « _pageH2Short »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String _pageH2Short;
 	@JsonIgnore
 	public Wrap<String> _pageH2ShortWrap = new Wrap<String>().p(this).c(String.class).var("_pageH2Short").o(_pageH2Short);
@@ -821,6 +837,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « _pageH3Short »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String _pageH3Short;
 	@JsonIgnore
 	public Wrap<String> _pageH3ShortWrap = new Wrap<String>().p(this).c(String.class).var("_pageH3Short").o(_pageH3Short);
@@ -882,6 +899,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageTitle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageTitle;
 	@JsonIgnore
 	public Wrap<String> pageTitleWrap = new Wrap<String>().p(this).c(String.class).var("pageTitle").o(pageTitle);
@@ -943,6 +961,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUri;
 	@JsonIgnore
 	public Wrap<String> pageUriWrap = new Wrap<String>().p(this).c(String.class).var("pageUri").o(pageUri);
@@ -1004,6 +1023,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageUris »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> pageUris = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Wrap<List<String>> pageUrisWrap = new Wrap<List<String>>().p(this).c(List.class).var("pageUris").o(pageUris);
@@ -1082,6 +1102,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUrl;
 	@JsonIgnore
 	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
@@ -1143,6 +1164,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageImageUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageImageUri;
 	@JsonIgnore
 	public Wrap<String> pageImageUriWrap = new Wrap<String>().p(this).c(String.class).var("pageImageUri").o(pageImageUri);
@@ -1204,6 +1226,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageImageUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageImageUrl;
 	@JsonIgnore
 	public Wrap<String> pageImageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageImageUrl").o(pageImageUrl);
@@ -1265,6 +1288,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageVideoId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageVideoId;
 	@JsonIgnore
 	public Wrap<String> pageVideoIdWrap = new Wrap<String>().p(this).c(String.class).var("pageVideoId").o(pageVideoId);
@@ -1326,6 +1350,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageVideoUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageVideoUrl;
 	@JsonIgnore
 	public Wrap<String> pageVideoUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageVideoUrl").o(pageVideoUrl);
@@ -1387,6 +1412,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageVideoUrlEmbed »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageVideoUrlEmbed;
 	@JsonIgnore
 	public Wrap<String> pageVideoUrlEmbedWrap = new Wrap<String>().p(this).c(String.class).var("pageVideoUrlEmbed").o(pageVideoUrlEmbed);
@@ -1449,6 +1475,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer pageImageWidth;
 	@JsonIgnore
 	public Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().p(this).c(Integer.class).var("pageImageWidth").o(pageImageWidth);
@@ -1517,6 +1544,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer pageImageHeight;
 	@JsonIgnore
 	public Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().p(this).c(Integer.class).var("pageImageHeight").o(pageImageHeight);
@@ -1584,6 +1612,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageImageContentType »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageImageContentType;
 	@JsonIgnore
 	public Wrap<String> pageImageContentTypeWrap = new Wrap<String>().p(this).c(String.class).var("pageImageContentType").o(pageImageContentType);
@@ -1645,6 +1674,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageContentType »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageContentType;
 	@JsonIgnore
 	public Wrap<String> pageContentTypeWrap = new Wrap<String>().p(this).c(String.class).var("pageContentType").o(pageContentType);
@@ -1707,6 +1737,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDateTime pageCreated;
 	@JsonIgnore
 	public Wrap<LocalDateTime> pageCreatedWrap = new Wrap<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageCreated").o(pageCreated);
@@ -1785,6 +1816,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDateTime pageModified;
 	@JsonIgnore
 	public Wrap<LocalDateTime> pageModifiedWrap = new Wrap<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageModified").o(pageModified);
@@ -1862,6 +1894,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageKeywords »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageKeywords;
 	@JsonIgnore
 	public Wrap<String> pageKeywordsWrap = new Wrap<String>().p(this).c(String.class).var("pageKeywords").o(pageKeywords);
@@ -1923,6 +1956,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageDescription;
 	@JsonIgnore
 	public Wrap<String> pageDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("pageDescription").o(pageDescription);
@@ -1984,6 +2018,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageHomeUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageHomeUri;
 	@JsonIgnore
 	public Wrap<String> pageHomeUriWrap = new Wrap<String>().p(this).c(String.class).var("pageHomeUri").o(pageHomeUri);
@@ -2045,6 +2080,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageSchoolUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageSchoolUri;
 	@JsonIgnore
 	public Wrap<String> pageSchoolUriWrap = new Wrap<String>().p(this).c(String.class).var("pageSchoolUri").o(pageSchoolUri);
@@ -2106,6 +2142,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageUserUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUserUri;
 	@JsonIgnore
 	public Wrap<String> pageUserUriWrap = new Wrap<String>().p(this).c(String.class).var("pageUserUri").o(pageUserUri);
@@ -2167,6 +2204,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	/**	L'entité « pageLogoutUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageLogoutUri;
 	@JsonIgnore
 	public Wrap<String> pageLogoutUriWrap = new Wrap<String>().p(this).c(String.class).var("pageLogoutUri").o(pageLogoutUri);
@@ -2527,8 +2565,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public void apiRequestPageLayout() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
-		PageLayout original = (PageLayout)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof PageLayout) {
+			PageLayout original = (PageLayout)o;
 		}
 	}
 

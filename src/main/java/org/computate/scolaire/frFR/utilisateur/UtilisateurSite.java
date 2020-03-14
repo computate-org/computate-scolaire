@@ -46,11 +46,21 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * IconeGroupe: regular
  * IconeNom: user-cog
  * 
- * RoleSession: true
+ * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */       
+ */  
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: userKeys
+	 * Indexe: true
+	 * Stocke: true
+	 */              
+	protected void _utilisateurCles(List<Long> l) {
+		l.add(pk);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -65,6 +75,21 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 */              
 	protected void _inscriptionCles(List<Long> o) {}
 
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: paymentKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: PaiementScolaire.utilisateurCles
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
+	 * Description.enUS: The primary key of the school emergency contacts in the database. 
+	 * NomAffichage.frFR: paiements
+	 * NomAffichage.enUS: payments
+	 */              
+	protected void _paiementCles(List<Long> o) {}
+
 	/**  
 	 * Var.enUS: userId
 	 * Indexe: true
@@ -77,9 +102,27 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: siteRequest_
 	 * r: UtilisateurId
 	 * r.enUS: UserId
-	 */  
+	 */     
 	protected void _utilisateurId(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurId();
+		c.o(o);
+	}
+
+	/**  
+	 * Var.enUS: userKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: Clé primaire dans la base de données pour cet utilisateur. 
+	 * NomAffichage.frFR: utilisateur clé
+	 * NomAffichage.enUS: user key
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurCle
+	 * r.enUS: UserKey
+	 */ 
+	protected void _utilisateurCle(Couverture<Long> c) {
+		Long o = requeteSite_.getUtilisateurCle();
 		c.o(o);
 	}
 

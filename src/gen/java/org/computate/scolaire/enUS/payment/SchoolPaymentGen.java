@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.payment;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -35,6 +36,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -57,6 +59,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchoolPayment.class);
+
+	List<String> ROLES = Arrays.asList("SiteAdmin");
+	List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String SchoolPayment_UnNom = "a payment";
 	public static final String SchoolPayment_Ce = "this ";
@@ -220,17 +225,31 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentKey(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "enrollment")
-				.a("class", "valueObjectSuggest suggestEnrollmentKey w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setEnrollmentKey")
-				.a("id", classApiMethodMethod, "_enrollmentKey")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKey')) : [{'name':'fq','value':'paymentKeys:", pk, "'}], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "enrollment")
+					.a("class", "valueObjectSuggest suggestEnrollmentKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setEnrollmentKey")
+					.a("id", classApiMethodMethod, "_enrollmentKey")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKey')) : [{'name':'fq','value':'paymentKeys:", pk, "'}], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmEnrollmentKey());
+			}
+		}
 	}
 
 	public void htmEnrollmentKey(String classApiMethodMethod) {
@@ -352,6 +371,92 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		}
 		enrollment_Wrap.alreadyInitialized(true);
 		return (SchoolPayment)this;
+	}
+
+	//////////////
+	// userKeys //
+	//////////////
+
+	/**	L'entité « userKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
+
+	/**	<br/>L'entité « userKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKeys">Trouver l'entité userKeys dans Solr</a>
+	 * <br/>
+	 * @param userKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _userKeys(List<Long> l);
+
+	public List<Long> getUserKeys() {
+		return userKeys;
+	}
+
+	public void setUserKeys(List<Long> userKeys) {
+		this.userKeys = userKeys;
+		this.userKeysWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment addUserKeys(Long...objets) {
+		for(Long o : objets) {
+			addUserKeys(o);
+		}
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment addUserKeys(Long o) {
+		if(o != null && !userKeys.contains(o))
+			this.userKeys.add(o);
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setUserKeys(JsonArray objets) {
+		userKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUserKeys(o);
+		}
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment addUserKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUserKeys(p);
+		}
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment userKeysInit() {
+		if(!userKeysWrap.alreadyInitialized) {
+			_userKeys(userKeys);
+		}
+		userKeysWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public List<Long> solrUserKeys() {
+		return userKeys;
+	}
+
+	public String strUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String jsonUserKeys() {
+		return userKeys == null ? "" : userKeys.toString();
+	}
+
+	public String nomAffichageUserKeys() {
+		return null;
+	}
+
+	public String htmTooltipUserKeys() {
+		return null;
+	}
+
+	public String htmUserKeys() {
+		return userKeys == null ? "" : StringEscapeUtils.escapeHtml4(strUserKeys());
 	}
 
 	///////////////
@@ -1159,24 +1264,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChildCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "Facet: terms")
-			.a("id", classApiMethodMethod, "_childCompleteNamePreferred");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildCompleteNamePreferred inputSchoolPayment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
-				a("name", "setChildCompleteNamePreferred");
-			} else {
-				a("class", "valueChildCompleteNamePreferred w3-input w3-border inputSchoolPayment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
-				a("name", "childCompleteNamePreferred");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }); ");
-			}
-			a("value", strChildCompleteNamePreferred())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "Facet: terms")
+				.a("id", classApiMethodMethod, "_childCompleteNamePreferred");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildCompleteNamePreferred inputSchoolPayment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
+					a("name", "setChildCompleteNamePreferred");
+				} else {
+					a("class", "valueChildCompleteNamePreferred w3-input w3-border inputSchoolPayment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
+					a("name", "childCompleteNamePreferred");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }); ");
+				}
+				a("value", strChildCompleteNamePreferred())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChildCompleteNamePreferred());
+			}
+		}
 	}
 
 	public void htmChildCompleteNamePreferred(String classApiMethodMethod) {
@@ -1292,16 +1411,30 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChildBirthDate(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolPayment", pk, "ChildBirthDate w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_childBirthDate")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(childBirthDate))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolPayment", pk, "ChildBirthDate w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_childBirthDate")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(childBirthDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
+				.fg();
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChildBirthDate());
+			}
+		}
 	}
 
 	public void htmChildBirthDate(String classApiMethodMethod) {
@@ -1399,24 +1532,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputMomCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "r: inscription_")
-			.a("id", classApiMethodMethod, "_momCompleteNamePreferred");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setMomCompleteNamePreferred inputSchoolPayment", pk, "MomCompleteNamePreferred w3-input w3-border ");
-				a("name", "setMomCompleteNamePreferred");
-			} else {
-				a("class", "valueMomCompleteNamePreferred w3-input w3-border inputSchoolPayment", pk, "MomCompleteNamePreferred w3-input w3-border ");
-				a("name", "momCompleteNamePreferred");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setMomCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_momCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_momCompleteNamePreferred')); }); ");
-			}
-			a("value", strMomCompleteNamePreferred())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "r: inscription_")
+				.a("id", classApiMethodMethod, "_momCompleteNamePreferred");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setMomCompleteNamePreferred inputSchoolPayment", pk, "MomCompleteNamePreferred w3-input w3-border ");
+					a("name", "setMomCompleteNamePreferred");
+				} else {
+					a("class", "valueMomCompleteNamePreferred w3-input w3-border inputSchoolPayment", pk, "MomCompleteNamePreferred w3-input w3-border ");
+					a("name", "momCompleteNamePreferred");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setMomCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_momCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_momCompleteNamePreferred')); }); ");
+				}
+				a("value", strMomCompleteNamePreferred())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmMomCompleteNamePreferred());
+			}
+		}
 	}
 
 	public void htmMomCompleteNamePreferred(String classApiMethodMethod) {
@@ -1515,24 +1662,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputDadCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "r: inscription_")
-			.a("id", classApiMethodMethod, "_dadCompleteNamePreferred");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setDadCompleteNamePreferred inputSchoolPayment", pk, "DadCompleteNamePreferred w3-input w3-border ");
-				a("name", "setDadCompleteNamePreferred");
-			} else {
-				a("class", "valueDadCompleteNamePreferred w3-input w3-border inputSchoolPayment", pk, "DadCompleteNamePreferred w3-input w3-border ");
-				a("name", "dadCompleteNamePreferred");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDadCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_dadCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_dadCompleteNamePreferred')); }); ");
-			}
-			a("value", strDadCompleteNamePreferred())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "r: inscription_")
+				.a("id", classApiMethodMethod, "_dadCompleteNamePreferred");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setDadCompleteNamePreferred inputSchoolPayment", pk, "DadCompleteNamePreferred w3-input w3-border ");
+					a("name", "setDadCompleteNamePreferred");
+				} else {
+					a("class", "valueDadCompleteNamePreferred w3-input w3-border inputSchoolPayment", pk, "DadCompleteNamePreferred w3-input w3-border ");
+					a("name", "dadCompleteNamePreferred");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDadCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_dadCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_dadCompleteNamePreferred')); }); ");
+				}
+				a("value", strDadCompleteNamePreferred())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmDadCompleteNamePreferred());
+			}
+		}
 	}
 
 	public void htmDadCompleteNamePreferred(String classApiMethodMethod) {
@@ -2853,37 +3014,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentPaymentEachMonth(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setEnrollmentPaymentEachMonth inputSchoolPayment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
-			a("name", "setEnrollmentPaymentEachMonth");
-		} else {
-			a("class", "valueEnrollmentPaymentEachMonth inputSchoolPayment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
-			a("name", "enrollmentPaymentEachMonth");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getEnrollmentPaymentEachMonth() != null && getEnrollmentPaymentEachMonth())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentPaymentEachMonth inputSchoolPayment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
+				a("name", "setEnrollmentPaymentEachMonth");
+			} else {
+				a("class", "valueEnrollmentPaymentEachMonth inputSchoolPayment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
+				a("name", "enrollmentPaymentEachMonth");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getEnrollmentPaymentEachMonth() != null && getEnrollmentPaymentEachMonth())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmEnrollmentPaymentEachMonth());
+			}
+		}
 	}
 
 	public void htmEnrollmentPaymentEachMonth(String classApiMethodMethod) {
@@ -2976,37 +3151,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentPaymentComplete(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentComplete")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setEnrollmentPaymentComplete inputSchoolPayment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-			a("name", "setEnrollmentPaymentComplete");
-		} else {
-			a("class", "valueEnrollmentPaymentComplete inputSchoolPayment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-			a("name", "enrollmentPaymentComplete");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentPaymentComplete inputSchoolPayment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
+				a("name", "setEnrollmentPaymentComplete");
+			} else {
+				a("class", "valueEnrollmentPaymentComplete inputSchoolPayment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
+				a("name", "enrollmentPaymentComplete");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmEnrollmentPaymentComplete());
+			}
+		}
 	}
 
 	public void htmEnrollmentPaymentComplete(String classApiMethodMethod) {
@@ -3094,24 +3283,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentDescription(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "description")
-			.a("id", classApiMethodMethod, "_paymentDescription");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentDescription inputSchoolPayment", pk, "PaymentDescription w3-input w3-border ");
-				a("name", "setPaymentDescription");
-			} else {
-				a("class", "valuePaymentDescription w3-input w3-border inputSchoolPayment", pk, "PaymentDescription w3-input w3-border ");
-				a("name", "paymentDescription");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDescription', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentDescription')); }, function() { addError($('#", classApiMethodMethod, "_paymentDescription')); }); ");
-			}
-			a("value", strPaymentDescription())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "description")
+				.a("id", classApiMethodMethod, "_paymentDescription");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setPaymentDescription inputSchoolPayment", pk, "PaymentDescription w3-input w3-border ");
+					a("name", "setPaymentDescription");
+				} else {
+					a("class", "valuePaymentDescription w3-input w3-border inputSchoolPayment", pk, "PaymentDescription w3-input w3-border ");
+					a("name", "paymentDescription");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDescription', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentDescription')); }, function() { addError($('#", classApiMethodMethod, "_paymentDescription')); }); ");
+				}
+				a("value", strPaymentDescription())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentDescription());
+			}
+		}
 	}
 
 	public void htmPaymentDescription(String classApiMethodMethod) {
@@ -3227,16 +3430,30 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentDate(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setPaymentDate inputSchoolPayment", pk, "PaymentDate w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_paymentDate")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(paymentDate))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setPaymentDate inputSchoolPayment", pk, "PaymentDate w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_paymentDate")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(paymentDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ")
+				.fg();
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentDate());
+			}
+		}
 	}
 
 	public void htmPaymentDate(String classApiMethodMethod) {
@@ -3352,24 +3569,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentAmount(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "payment amount")
-			.a("id", classApiMethodMethod, "_paymentAmount");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentAmount inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
-				a("name", "setPaymentAmount");
-			} else {
-				a("class", "valuePaymentAmount w3-input w3-border inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
-				a("name", "paymentAmount");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentAmount', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentAmount')); }, function() { addError($('#", classApiMethodMethod, "_paymentAmount')); }); ");
-			}
-			a("value", strPaymentAmount())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "payment amount")
+				.a("id", classApiMethodMethod, "_paymentAmount");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setPaymentAmount inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
+					a("name", "setPaymentAmount");
+				} else {
+					a("class", "valuePaymentAmount w3-input w3-border inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
+					a("name", "paymentAmount");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentAmount', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentAmount')); }, function() { addError($('#", classApiMethodMethod, "_paymentAmount')); }); ");
+				}
+				a("value", strPaymentAmount())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentAmount());
+			}
+		}
 	}
 
 	public void htmPaymentAmount(String classApiMethodMethod) {
@@ -3486,24 +3717,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmount(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "charge amount")
-			.a("id", classApiMethodMethod, "_chargeAmount");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChargeAmount inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
-				a("name", "setChargeAmount");
-			} else {
-				a("class", "valueChargeAmount w3-input w3-border inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
-				a("name", "chargeAmount");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmount', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmount')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmount')); }); ");
-			}
-			a("value", strChargeAmount())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "charge amount")
+				.a("id", classApiMethodMethod, "_chargeAmount");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChargeAmount inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
+					a("name", "setChargeAmount");
+				} else {
+					a("class", "valueChargeAmount w3-input w3-border inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
+					a("name", "chargeAmount");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmount', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmount')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmount')); }); ");
+				}
+				a("value", strChargeAmount())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeAmount());
+			}
+		}
 	}
 
 	public void htmChargeAmount(String classApiMethodMethod) {
@@ -3620,24 +3865,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmountFuture(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "future charge amount")
-			.a("id", classApiMethodMethod, "_chargeAmountFuture");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChargeAmountFuture inputSchoolPayment", pk, "ChargeAmountFuture w3-input w3-border ");
-				a("name", "setChargeAmountFuture");
-			} else {
-				a("class", "valueChargeAmountFuture w3-input w3-border inputSchoolPayment", pk, "ChargeAmountFuture w3-input w3-border ");
-				a("name", "chargeAmountFuture");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmountFuture', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmountFuture')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmountFuture')); }); ");
-			}
-			a("value", strChargeAmountFuture())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "future charge amount")
+				.a("id", classApiMethodMethod, "_chargeAmountFuture");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChargeAmountFuture inputSchoolPayment", pk, "ChargeAmountFuture w3-input w3-border ");
+					a("name", "setChargeAmountFuture");
+				} else {
+					a("class", "valueChargeAmountFuture w3-input w3-border inputSchoolPayment", pk, "ChargeAmountFuture w3-input w3-border ");
+					a("name", "chargeAmountFuture");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmountFuture', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmountFuture')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmountFuture')); }); ");
+				}
+				a("value", strChargeAmountFuture())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeAmountFuture());
+			}
+		}
 	}
 
 	public void htmChargeAmountFuture(String classApiMethodMethod) {
@@ -3741,37 +4000,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeEnrollment(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_chargeEnrollment")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_chargeEnrollment");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
-			a("name", "setChargeEnrollment");
-		} else {
-			a("class", "valueChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
-			a("name", "chargeEnrollment");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeEnrollment', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeEnrollment')); }, function() { addError($('#", classApiMethodMethod, "_chargeEnrollment')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getChargeEnrollment() != null && getChargeEnrollment())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeEnrollment")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeEnrollment");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
+				a("name", "setChargeEnrollment");
+			} else {
+				a("class", "valueChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
+				a("name", "chargeEnrollment");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeEnrollment', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeEnrollment')); }, function() { addError($('#", classApiMethodMethod, "_chargeEnrollment')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeEnrollment() != null && getChargeEnrollment())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeEnrollment());
+			}
+		}
 	}
 
 	public void htmChargeEnrollment(String classApiMethodMethod) {
@@ -3864,37 +4137,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeFirstLast(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_chargeFirstLast")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_chargeFirstLast");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
-			a("name", "setChargeFirstLast");
-		} else {
-			a("class", "valueChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
-			a("name", "chargeFirstLast");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeFirstLast', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeFirstLast')); }, function() { addError($('#", classApiMethodMethod, "_chargeFirstLast')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getChargeFirstLast() != null && getChargeFirstLast())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeFirstLast")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeFirstLast");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
+				a("name", "setChargeFirstLast");
+			} else {
+				a("class", "valueChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
+				a("name", "chargeFirstLast");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeFirstLast', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeFirstLast')); }, function() { addError($('#", classApiMethodMethod, "_chargeFirstLast')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeFirstLast() != null && getChargeFirstLast())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeFirstLast());
+			}
+		}
 	}
 
 	public void htmChargeFirstLast(String classApiMethodMethod) {
@@ -3987,37 +4274,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeMonth(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_chargeMonth")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_chargeMonth");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
-			a("name", "setChargeMonth");
-		} else {
-			a("class", "valueChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
-			a("name", "chargeMonth");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeMonth')); }, function() { addError($('#", classApiMethodMethod, "_chargeMonth')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getChargeMonth() != null && getChargeMonth())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeMonth")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeMonth");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
+				a("name", "setChargeMonth");
+			} else {
+				a("class", "valueChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
+				a("name", "chargeMonth");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeMonth')); }, function() { addError($('#", classApiMethodMethod, "_chargeMonth')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeMonth() != null && getChargeMonth())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeMonth());
+			}
+		}
 	}
 
 	public void htmChargeMonth(String classApiMethodMethod) {
@@ -4110,37 +4411,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentCash(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_paymentCash")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_paymentCash");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setPaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
-			a("name", "setPaymentCash");
-		} else {
-			a("class", "valuePaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
-			a("name", "paymentCash");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCash', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCash')); }, function() { addError($('#", classApiMethodMethod, "_paymentCash')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getPaymentCash() != null && getPaymentCash())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_paymentCash")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_paymentCash");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
+				a("name", "setPaymentCash");
+			} else {
+				a("class", "valuePaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
+				a("name", "paymentCash");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCash', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCash')); }, function() { addError($('#", classApiMethodMethod, "_paymentCash')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getPaymentCash() != null && getPaymentCash())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentCash());
+			}
+		}
 	}
 
 	public void htmPaymentCash(String classApiMethodMethod) {
@@ -4233,37 +4548,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentCheck(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_paymentCheck")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_paymentCheck");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setPaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
-			a("name", "setPaymentCheck");
-		} else {
-			a("class", "valuePaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
-			a("name", "paymentCheck");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCheck', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCheck')); }, function() { addError($('#", classApiMethodMethod, "_paymentCheck')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getPaymentCheck() != null && getPaymentCheck())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_paymentCheck")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_paymentCheck");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
+				a("name", "setPaymentCheck");
+			} else {
+				a("class", "valuePaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
+				a("name", "paymentCheck");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentCheck', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentCheck')); }, function() { addError($('#", classApiMethodMethod, "_paymentCheck')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getPaymentCheck() != null && getPaymentCheck())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentCheck());
+			}
+		}
 	}
 
 	public void htmPaymentCheck(String classApiMethodMethod) {
@@ -4356,37 +4685,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentSystem(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_paymentSystem")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_paymentSystem");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setPaymentSystem inputSchoolPayment", pk, "PaymentSystem w3-input w3-border ");
-			a("name", "setPaymentSystem");
-		} else {
-			a("class", "valuePaymentSystem inputSchoolPayment", pk, "PaymentSystem w3-input w3-border ");
-			a("name", "paymentSystem");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentSystem', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentSystem')); }, function() { addError($('#", classApiMethodMethod, "_paymentSystem')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getPaymentSystem() != null && getPaymentSystem())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_paymentSystem")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_paymentSystem");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPaymentSystem inputSchoolPayment", pk, "PaymentSystem w3-input w3-border ");
+				a("name", "setPaymentSystem");
+			} else {
+				a("class", "valuePaymentSystem inputSchoolPayment", pk, "PaymentSystem w3-input w3-border ");
+				a("name", "paymentSystem");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentSystem', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentSystem')); }, function() { addError($('#", classApiMethodMethod, "_paymentSystem')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getPaymentSystem() != null && getPaymentSystem())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentSystem());
+			}
+		}
 	}
 
 	public void htmPaymentSystem(String classApiMethodMethod) {
@@ -4474,24 +4817,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentBy(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "payment by/for")
-			.a("id", classApiMethodMethod, "_paymentBy");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentBy inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
-				a("name", "setPaymentBy");
-			} else {
-				a("class", "valuePaymentBy w3-input w3-border inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
-				a("name", "paymentBy");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentBy', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentBy')); }, function() { addError($('#", classApiMethodMethod, "_paymentBy')); }); ");
-			}
-			a("value", strPaymentBy())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "payment by/for")
+				.a("id", classApiMethodMethod, "_paymentBy");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setPaymentBy inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
+					a("name", "setPaymentBy");
+				} else {
+					a("class", "valuePaymentBy w3-input w3-border inputSchoolPayment", pk, "PaymentBy w3-input w3-border ");
+					a("name", "paymentBy");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentBy', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentBy')); }, function() { addError($('#", classApiMethodMethod, "_paymentBy')); }); ");
+				}
+				a("value", strPaymentBy())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentBy());
+			}
+		}
 	}
 
 	public void htmPaymentBy(String classApiMethodMethod) {
@@ -4590,24 +4947,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputTransactionId(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "transaction ID")
-			.a("id", classApiMethodMethod, "_transactionId");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setTransactionId inputSchoolPayment", pk, "TransactionId w3-input w3-border ");
-				a("name", "setTransactionId");
-			} else {
-				a("class", "valueTransactionId w3-input w3-border inputSchoolPayment", pk, "TransactionId w3-input w3-border ");
-				a("name", "transactionId");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_transactionId')); }, function() { addError($('#", classApiMethodMethod, "_transactionId')); }); ");
-			}
-			a("value", strTransactionId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "transaction ID")
+				.a("id", classApiMethodMethod, "_transactionId");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setTransactionId inputSchoolPayment", pk, "TransactionId w3-input w3-border ");
+					a("name", "setTransactionId");
+				} else {
+					a("class", "valueTransactionId w3-input w3-border inputSchoolPayment", pk, "TransactionId w3-input w3-border ");
+					a("name", "transactionId");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_transactionId')); }, function() { addError($('#", classApiMethodMethod, "_transactionId')); }); ");
+				}
+				a("value", strTransactionId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmTransactionId());
+			}
+		}
 	}
 
 	public void htmTransactionId(String classApiMethodMethod) {
@@ -4706,24 +5077,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "customer profile ID")
-			.a("id", classApiMethodMethod, "_customerProfileId");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setCustomerProfileId inputSchoolPayment", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "setCustomerProfileId");
-			} else {
-				a("class", "valueCustomerProfileId w3-input w3-border inputSchoolPayment", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "customerProfileId");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
-			}
-			a("value", strCustomerProfileId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "customer profile ID")
+				.a("id", classApiMethodMethod, "_customerProfileId");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId inputSchoolPayment", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "setCustomerProfileId");
+				} else {
+					a("class", "valueCustomerProfileId w3-input w3-border inputSchoolPayment", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "customerProfileId");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
+				}
+				a("value", strCustomerProfileId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmCustomerProfileId());
+			}
+		}
 	}
 
 	public void htmCustomerProfileId(String classApiMethodMethod) {
@@ -4822,24 +5207,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputTransactionStatus(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "transaction status")
-			.a("id", classApiMethodMethod, "_transactionStatus");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setTransactionStatus inputSchoolPayment", pk, "TransactionStatus w3-input w3-border ");
-				a("name", "setTransactionStatus");
-			} else {
-				a("class", "valueTransactionStatus w3-input w3-border inputSchoolPayment", pk, "TransactionStatus w3-input w3-border ");
-				a("name", "transactionStatus");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionStatus', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_transactionStatus')); }, function() { addError($('#", classApiMethodMethod, "_transactionStatus')); }); ");
-			}
-			a("value", strTransactionStatus())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "transaction status")
+				.a("id", classApiMethodMethod, "_transactionStatus");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setTransactionStatus inputSchoolPayment", pk, "TransactionStatus w3-input w3-border ");
+					a("name", "setTransactionStatus");
+				} else {
+					a("class", "valueTransactionStatus w3-input w3-border inputSchoolPayment", pk, "TransactionStatus w3-input w3-border ");
+					a("name", "transactionStatus");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTransactionStatus', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_transactionStatus')); }, function() { addError($('#", classApiMethodMethod, "_transactionStatus')); }); ");
+				}
+				a("value", strTransactionStatus())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmTransactionStatus());
+			}
+		}
 	}
 
 	public void htmTransactionStatus(String classApiMethodMethod) {
@@ -4943,37 +5342,51 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentRecieved(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_paymentRecieved")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_paymentRecieved");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setPaymentRecieved inputSchoolPayment", pk, "PaymentRecieved w3-input w3-border ");
-			a("name", "setPaymentRecieved");
-		} else {
-			a("class", "valuePaymentRecieved inputSchoolPayment", pk, "PaymentRecieved w3-input w3-border ");
-			a("name", "paymentRecieved");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentRecieved', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentRecieved')); }, function() { addError($('#", classApiMethodMethod, "_paymentRecieved')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getPaymentRecieved() != null && getPaymentRecieved())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_paymentRecieved")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_paymentRecieved");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPaymentRecieved inputSchoolPayment", pk, "PaymentRecieved w3-input w3-border ");
+				a("name", "setPaymentRecieved");
+			} else {
+				a("class", "valuePaymentRecieved inputSchoolPayment", pk, "PaymentRecieved w3-input w3-border ");
+				a("name", "paymentRecieved");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentRecieved', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_paymentRecieved')); }, function() { addError($('#", classApiMethodMethod, "_paymentRecieved')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getPaymentRecieved() != null && getPaymentRecieved())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentRecieved());
+			}
+		}
 	}
 
 	public void htmPaymentRecieved(String classApiMethodMethod) {
@@ -5061,24 +5474,38 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentShortName(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "name")
-			.a("id", classApiMethodMethod, "_paymentShortName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentShortName inputSchoolPayment", pk, "PaymentShortName w3-input w3-border ");
-				a("name", "setPaymentShortName");
-			} else {
-				a("class", "valuePaymentShortName w3-input w3-border inputSchoolPayment", pk, "PaymentShortName w3-input w3-border ");
-				a("name", "paymentShortName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentShortName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentShortName')); }, function() { addError($('#", classApiMethodMethod, "_paymentShortName')); }); ");
-			}
-			a("value", strPaymentShortName())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "name")
+				.a("id", classApiMethodMethod, "_paymentShortName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setPaymentShortName inputSchoolPayment", pk, "PaymentShortName w3-input w3-border ");
+					a("name", "setPaymentShortName");
+				} else {
+					a("class", "valuePaymentShortName w3-input w3-border inputSchoolPayment", pk, "PaymentShortName w3-input w3-border ");
+					a("name", "paymentShortName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentShortName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_paymentShortName')); }, function() { addError($('#", classApiMethodMethod, "_paymentShortName')); }); ");
+				}
+				a("value", strPaymentShortName())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmPaymentShortName());
+			}
+		}
 	}
 
 	public void htmPaymentShortName(String classApiMethodMethod) {
@@ -5200,6 +5627,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		enrollmentKeyInit();
 		enrollmentSearchInit();
 		enrollment_Init();
+		userKeysInit();
 		schoolKeyInit();
 		yearKeyInit();
 		seasonKeyInit();
@@ -5299,6 +5727,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.enrollmentSearch;
 			case "enrollment_":
 				return oSchoolPayment.enrollment_;
+			case "userKeys":
+				return oSchoolPayment.userKeys;
 			case "schoolKey":
 				return oSchoolPayment.schoolKey;
 			case "yearKey":
@@ -5579,6 +6009,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			Long enrollmentKey = (Long)solrDocument.get("enrollmentKey_stored_long");
 			if(enrollmentKey != null)
 				oSchoolPayment.setEnrollmentKey(enrollmentKey);
+
+			if(savesSchoolPayment.contains("userKeys")) {
+				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+				if(userKeys != null)
+					oSchoolPayment.userKeys.addAll(userKeys);
+			}
 
 			if(savesSchoolPayment.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
@@ -5963,6 +6399,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("enrollmentKey_indexed_long", enrollmentKey);
 			document.addField("enrollmentKey_stored_long", enrollmentKey);
 		}
+		if(userKeys != null) {
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : userKeys) {
+				document.addField("userKeys_stored_longs", o);
+			}
+		}
 		if(schoolKey != null) {
 			document.addField("schoolKey_indexed_long", schoolKey);
 			document.addField("schoolKey_stored_long", schoolKey);
@@ -6206,6 +6650,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentKey_indexed_long";
 			case "enrollmentKey":
 				return "enrollmentKey_indexed_long";
+			case "userKeys":
+				return "userKeys_indexed_longs";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "yearKey":
@@ -6344,6 +6790,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Long enrollmentKey = (Long)solrDocument.get("enrollmentKey_stored_long");
 		if(enrollmentKey != null)
 			oSchoolPayment.setEnrollmentKey(enrollmentKey);
+
+		List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
+		if(userKeys != null)
+			oSchoolPayment.userKeys.addAll(userKeys);
 
 		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 		if(schoolKey != null)

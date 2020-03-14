@@ -96,6 +96,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsSiteUserGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/PaymentPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptSiteUserGenPage() {
@@ -104,6 +105,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
 		tl(2, "suggestSiteUserEnrollmentKeys([{'name':'fq','value':'userKeys:' + pk}], $('#listSiteUserEnrollmentKeys_Page'), pk); ");
+		tl(2, "suggestSiteUserPaymentKeys([{'name':'fq','value':'userKeys:' + pk}], $('#listSiteUserPaymentKeys_Page'), pk); ");
 		tl(1, "}");
 		tl(1, "websocketSiteUser(websocketSiteUserInner);");
 		l("});");
@@ -128,6 +130,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Page");
+			o.htmPaymentKeys("Page");
 		} g("div");
 	}
 
@@ -150,6 +153,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("POST");
+			o.htmPaymentKeys("POST");
 		} g("div");
 	}
 
@@ -170,9 +174,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUT");
+			o.htmPaymentKeys("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserId("PUT");
+			o.htmUserKey("PUT");
 			o.htmUserName("PUT");
 			o.htmUserEmail("PUT");
 		} g("div");
@@ -195,9 +201,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
+			o.htmPaymentKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserId("PATCH");
+			o.htmUserKey("PATCH");
 			o.htmUserName("PATCH");
 			o.htmUserEmail("PATCH");
 		} g("div");
@@ -222,10 +230,12 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Recherche");
+			o.htmPaymentKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Recherche");
 			o.htmUserId("Recherche");
+			o.htmUserKey("Recherche");
 			o.htmUserName("Recherche");
 			o.htmUserEmail("Recherche");
 		} g("div");

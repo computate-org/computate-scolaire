@@ -47,7 +47,12 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 	}
 
 	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		String customerProfileId = jsonObject.getString("customerProfileId");
+		String customerProfileId;
+		if(patch)
+			customerProfileId = jsonObject.getString("setCustomerProfileId");
+		else
+			customerProfileId = jsonObject.getString("customerProfileId");
+
 		if(customerProfileId == null) {
 			SiteConfig siteConfig = siteRequest.getSiteConfig_();
 			MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
@@ -58,9 +63,16 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
 			createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
 			CustomerProfileType profile = new CustomerProfileType();
-			profile.setEmail(jsonObject.getString("email"));
-			profile.setDescription(jsonObject.getString("userId"));
-			profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
+			if(patch) {
+				profile.setEmail(jsonObject.getString("setUserEmail"));
+				profile.setDescription(jsonObject.getString("setUserId"));
+				profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
+			}
+			else {
+				profile.setEmail(jsonObject.getString("userEmail"));
+				profile.setDescription(jsonObject.getString("userId"));
+				profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
+			}
 			createCustomerProfileRequest.setProfile(profile);
 	
 			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);

@@ -113,6 +113,9 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
+	protected void _userKey(Wrap<Long> c) {
+	}
+
 	protected void _sessionId(Wrap<String> c) {
 		if(operationRequest != null) {
 			String cookie = operationRequest.getHeaders().get("Cookie");

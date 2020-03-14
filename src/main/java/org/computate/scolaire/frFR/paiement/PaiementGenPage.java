@@ -735,40 +735,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 
-
-		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1) {
-			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("onclick", "$('#deletePaiementScolaireModale').show(); ")
-				.f().sx("Supprimer des paiements")
-			.g("button");
-			{ e("div").a("id", "deletePaiementScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-green ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deletePaiementScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Supprimer des paiements").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							PaiementScolaire o = new PaiementScolaire();
-							o.setRequeteSite_(requeteSite_);
-
-							// Form DELETE
-							{ e("div").a("id", "deletePaiementScolaireForm").f();
-								htmlFormPATCHPaiementScolaire(o);
-							} g("div");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "deletePaiementScolaire(", o.getPk(), "); ")
-								.f().sx("Supprimer des paiements")
-							.g("button");
-
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-
-		}
 		g("div");
 	}
 

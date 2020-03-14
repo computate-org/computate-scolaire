@@ -190,6 +190,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
+	/**	
+	 * Var.enUS: userKey
+	 ***/
+	protected void _utilisateurCle(Couverture<Long> c) {
+	}
+
 	/**   
 	 * {@inheritDoc}
 	 * Indexe: true

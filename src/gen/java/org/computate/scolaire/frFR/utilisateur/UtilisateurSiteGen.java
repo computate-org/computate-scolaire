@@ -69,6 +69,93 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static final String UtilisateurSite_IconeNom = "user-cog";
 
 	/////////////////////
+	// utilisateurCles //
+	/////////////////////
+
+	/**	L'entité « utilisateurCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
+
+	/**	<br/>L'entité « utilisateurCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCles">Trouver l'entité utilisateurCles dans Solr</a>
+	 * <br/>
+	 * @param utilisateurCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _utilisateurCles(List<Long> l);
+
+	public List<Long> getUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public void setUtilisateurCles(List<Long> utilisateurCles) {
+		this.utilisateurCles = utilisateurCles;
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public UtilisateurSite addUtilisateurCles(Long...objets) {
+		for(Long o : objets) {
+			addUtilisateurCles(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addUtilisateurCles(Long o) {
+		if(o != null && !utilisateurCles.contains(o))
+			this.utilisateurCles.add(o);
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite setUtilisateurCles(JsonArray objets) {
+		utilisateurCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addUtilisateurCles(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addUtilisateurCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addUtilisateurCles(p);
+		}
+		return (UtilisateurSite)this;
+	}
+	protected UtilisateurSite utilisateurClesInit() {
+		if(!utilisateurClesCouverture.dejaInitialise) {
+			_utilisateurCles(utilisateurCles);
+		}
+		utilisateurClesCouverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
+	public List<Long> solrUtilisateurCles() {
+		return utilisateurCles;
+	}
+
+	public String strUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String jsonUtilisateurCles() {
+		return utilisateurCles == null ? "" : utilisateurCles.toString();
+	}
+
+	public String nomAffichageUtilisateurCles() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurCles() {
+		return null;
+	}
+
+	public String htmUtilisateurCles() {
+		return utilisateurCles == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCles());
+	}
+
+	/////////////////////
 	// inscriptionCles //
 	/////////////////////
 
@@ -161,6 +248,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "inscriptions")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setInscriptionCles")
 				.a("id", classeApiMethodeMethode, "_inscriptionCles")
@@ -204,6 +292,153 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
 										.a("onclick", "postInscriptionScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 										.f().sx("ajouter une inscription")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////
+	// paiementCles //
+	//////////////////
+
+	/**	L'entité « paiementCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> paiementCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> paiementClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("paiementCles").o(paiementCles);
+
+	/**	<br/>L'entité « paiementCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementCles">Trouver l'entité paiementCles dans Solr</a>
+	 * <br/>
+	 * @param paiementCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _paiementCles(List<Long> o);
+
+	public List<Long> getPaiementCles() {
+		return paiementCles;
+	}
+
+	public void setPaiementCles(List<Long> paiementCles) {
+		this.paiementCles = paiementCles;
+		this.paiementClesCouverture.dejaInitialise = true;
+	}
+	public UtilisateurSite addPaiementCles(Long...objets) {
+		for(Long o : objets) {
+			addPaiementCles(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addPaiementCles(Long o) {
+		if(o != null && !paiementCles.contains(o))
+			this.paiementCles.add(o);
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite setPaiementCles(JsonArray objets) {
+		paiementCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addPaiementCles(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addPaiementCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addPaiementCles(p);
+		}
+		return (UtilisateurSite)this;
+	}
+	protected UtilisateurSite paiementClesInit() {
+		if(!paiementClesCouverture.dejaInitialise) {
+			_paiementCles(paiementCles);
+		}
+		paiementClesCouverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
+	public List<Long> solrPaiementCles() {
+		return paiementCles;
+	}
+
+	public String strPaiementCles() {
+		return paiementCles == null ? "" : paiementCles.toString();
+	}
+
+	public String jsonPaiementCles() {
+		return paiementCles == null ? "" : paiementCles.toString();
+	}
+
+	public String nomAffichagePaiementCles() {
+		return "paiements";
+	}
+
+	public String htmTooltipPaiementCles() {
+		return null;
+	}
+
+	public String htmPaiementCles() {
+		return paiementCles == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementCles());
+	}
+
+	public void inputPaiementCles(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "paiements")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setPaiementCles")
+				.a("id", classeApiMethodeMethode, "_paiementCles")
+				.a("autocomplete", "off")
+				.a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles')) : [{'name':'fq','value':'utilisateurCles:", pk, "'}], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmPaiementCles(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=utilisateurCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fas fa-search-dollar ").f().g("i");
+								sx("paiements");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cet utilisateur du site");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputPaiementCles(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listUtilisateurSitePaiementCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postPaiementScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+										.f().sx("ajouter un paiement")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -282,6 +517,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "utilisateur ID")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_utilisateurId");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setUtilisateurId inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
@@ -319,6 +555,130 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
 									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurId')); $('#", classeApiMethodeMethode, "_utilisateurId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////
+	// utilisateurCle //
+	////////////////////
+
+	/**	L'entité « utilisateurCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long utilisateurCle;
+	@JsonIgnore
+	public Couverture<Long> utilisateurCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("utilisateurCle").o(utilisateurCle);
+
+	/**	<br/>L'entité « utilisateurCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCle">Trouver l'entité utilisateurCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _utilisateurCle(Couverture<Long> c);
+
+	public Long getUtilisateurCle() {
+		return utilisateurCle;
+	}
+
+	public void setUtilisateurCle(Long utilisateurCle) {
+		this.utilisateurCle = utilisateurCle;
+		this.utilisateurCleCouverture.dejaInitialise = true;
+	}
+	public UtilisateurSite setUtilisateurCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.utilisateurCle = Long.parseLong(o);
+		this.utilisateurCleCouverture.dejaInitialise = true;
+		return (UtilisateurSite)this;
+	}
+	protected UtilisateurSite utilisateurCleInit() {
+		if(!utilisateurCleCouverture.dejaInitialise) {
+			_utilisateurCle(utilisateurCleCouverture);
+			if(utilisateurCle == null)
+				setUtilisateurCle(utilisateurCleCouverture.o);
+		}
+		utilisateurCleCouverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
+	public Long solrUtilisateurCle() {
+		return utilisateurCle;
+	}
+
+	public String strUtilisateurCle() {
+		return utilisateurCle == null ? "" : utilisateurCle.toString();
+	}
+
+	public String jsonUtilisateurCle() {
+		return utilisateurCle == null ? "" : utilisateurCle.toString();
+	}
+
+	public String nomAffichageUtilisateurCle() {
+		return "utilisateur clé";
+	}
+
+	public String htmTooltipUtilisateurCle() {
+		return null;
+	}
+
+	public String htmUtilisateurCle() {
+		return utilisateurCle == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCle());
+	}
+
+	public void inputUtilisateurCle(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "utilisateur clé")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_utilisateurCle");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setUtilisateurCle inputUtilisateurSite", pk, "UtilisateurCle w3-input w3-border ");
+				a("name", "setUtilisateurCle");
+			} else {
+				a("class", "valeurUtilisateurCle w3-input w3-border inputUtilisateurSite", pk, "UtilisateurCle w3-input w3-border ");
+				a("name", "utilisateurCle");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurCle', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurCle')); }); ");
+			}
+			a("value", strUtilisateurCle())
+		.fg();
+
+	}
+
+	public void htmUtilisateurCle(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurCle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_utilisateurCle").a("class", "").f().sx("utilisateur clé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputUtilisateurCle(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); $('#", classeApiMethodeMethode, "_utilisateurCle').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurCle', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurCle')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -398,6 +758,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite s = (UtilisateurSite)this;
 		e("input")
 			.a("type", "text")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_utilisateurNom");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setUtilisateurNom inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
@@ -511,6 +872,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite s = (UtilisateurSite)this;
 		e("input")
 			.a("type", "text")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_utilisateurMail");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setUtilisateurMail inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
@@ -877,6 +1239,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "customer profile ID")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_customerProfileId");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				a("class", "setCustomerProfileId inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
@@ -1319,8 +1682,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public void initUtilisateurSite() {
+		utilisateurClesInit();
 		inscriptionClesInit();
+		paiementClesInit();
 		utilisateurIdInit();
+		utilisateurCleInit();
 		utilisateurNomInit();
 		utilisateurMailInit();
 		utilisateurPrenomInit();
@@ -1369,10 +1735,16 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public Object obtenirUtilisateurSite(String var) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 		switch(var) {
+			case "utilisateurCles":
+				return oUtilisateurSite.utilisateurCles;
 			case "inscriptionCles":
 				return oUtilisateurSite.inscriptionCles;
+			case "paiementCles":
+				return oUtilisateurSite.paiementCles;
 			case "utilisateurId":
 				return oUtilisateurSite.utilisateurId;
+			case "utilisateurCle":
+				return oUtilisateurSite.utilisateurCle;
 			case "utilisateurNom":
 				return oUtilisateurSite.utilisateurNom;
 			case "utilisateurMail":
@@ -1421,6 +1793,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			case "inscriptionCles":
 				oUtilisateurSite.addInscriptionCles((Long)val);
 				return val;
+			case "paiementCles":
+				oUtilisateurSite.addPaiementCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -1449,6 +1824,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		switch(var) {
 			case "utilisateurId":
 				setUtilisateurId(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
+			case "utilisateurCle":
+				setUtilisateurCle(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "utilisateurNom":
@@ -1498,14 +1877,30 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		sauvegardesUtilisateurSite = (List<String>)solrDocument.get("sauvegardesUtilisateurSite_stored_strings");
 		if(sauvegardesUtilisateurSite != null) {
 
+			if(sauvegardesUtilisateurSite.contains("utilisateurCles")) {
+				List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+				if(utilisateurCles != null)
+					oUtilisateurSite.utilisateurCles.addAll(utilisateurCles);
+			}
+
 			List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 			if(inscriptionCles != null)
 				oUtilisateurSite.inscriptionCles.addAll(inscriptionCles);
+
+			List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
+			if(paiementCles != null)
+				oUtilisateurSite.paiementCles.addAll(paiementCles);
 
 			if(sauvegardesUtilisateurSite.contains("utilisateurId")) {
 				String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
 				if(utilisateurId != null)
 					oUtilisateurSite.setUtilisateurId(utilisateurId);
+			}
+
+			if(sauvegardesUtilisateurSite.contains("utilisateurCle")) {
+				Long utilisateurCle = (Long)solrDocument.get("utilisateurCle_stored_long");
+				if(utilisateurCle != null)
+					oUtilisateurSite.setUtilisateurCle(utilisateurCle);
 			}
 
 			if(sauvegardesUtilisateurSite.contains("utilisateurNom")) {
@@ -1637,6 +2032,14 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(sauvegardesUtilisateurSite != null)
 			document.addField("sauvegardesUtilisateurSite_stored_strings", sauvegardesUtilisateurSite);
 
+		if(utilisateurCles != null) {
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : utilisateurCles) {
+				document.addField("utilisateurCles_stored_longs", o);
+			}
+		}
 		if(inscriptionCles != null) {
 			for(java.lang.Long o : inscriptionCles) {
 				document.addField("inscriptionCles_indexed_longs", o);
@@ -1645,9 +2048,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				document.addField("inscriptionCles_stored_longs", o);
 			}
 		}
+		if(paiementCles != null) {
+			for(java.lang.Long o : paiementCles) {
+				document.addField("paiementCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : paiementCles) {
+				document.addField("paiementCles_stored_longs", o);
+			}
+		}
 		if(utilisateurId != null) {
 			document.addField("utilisateurId_indexed_string", utilisateurId);
 			document.addField("utilisateurId_stored_string", utilisateurId);
+		}
+		if(utilisateurCle != null) {
+			document.addField("utilisateurCle_indexed_long", utilisateurCle);
+			document.addField("utilisateurCle_stored_long", utilisateurCle);
 		}
 		if(utilisateurNom != null) {
 			document.addField("utilisateurNom_indexed_string", utilisateurNom);
@@ -1712,10 +2127,16 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public static String varIndexeUtilisateurSite(String entiteVar) {
 		switch(entiteVar) {
+			case "utilisateurCles":
+				return "utilisateurCles_indexed_longs";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
+			case "paiementCles":
+				return "paiementCles_indexed_longs";
 			case "utilisateurId":
 				return "utilisateurId_indexed_string";
+			case "utilisateurCle":
+				return "utilisateurCle_indexed_long";
 			case "utilisateurNom":
 				return "utilisateurNom_indexed_string";
 			case "utilisateurMail":
@@ -1765,13 +2186,25 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public void stockerUtilisateurSite(SolrDocument solrDocument) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 
+		List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
+		if(utilisateurCles != null)
+			oUtilisateurSite.utilisateurCles.addAll(utilisateurCles);
+
 		List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 		if(inscriptionCles != null)
 			oUtilisateurSite.inscriptionCles.addAll(inscriptionCles);
 
+		List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
+		if(paiementCles != null)
+			oUtilisateurSite.paiementCles.addAll(paiementCles);
+
 		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
 		if(utilisateurId != null)
 			oUtilisateurSite.setUtilisateurId(utilisateurId);
+
+		Long utilisateurCle = (Long)solrDocument.get("utilisateurCle_stored_long");
+		if(utilisateurCle != null)
+			oUtilisateurSite.setUtilisateurCle(utilisateurCle);
 
 		String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
 		if(utilisateurNom != null)
@@ -1838,8 +2271,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			UtilisateurSite original = (UtilisateurSite)o;
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
 				requeteApi.addVars("inscriptionCles");
+			if(!Objects.equals(paiementCles, original.getPaiementCles()))
+				requeteApi.addVars("paiementCles");
 			if(!Objects.equals(utilisateurId, original.getUtilisateurId()))
 				requeteApi.addVars("utilisateurId");
+			if(!Objects.equals(utilisateurCle, original.getUtilisateurCle()))
+				requeteApi.addVars("utilisateurCle");
 			if(!Objects.equals(utilisateurNom, original.getUtilisateurNom()))
 				requeteApi.addVars("utilisateurNom");
 			if(!Objects.equals(utilisateurMail, original.getUtilisateurMail()))
@@ -1861,7 +2298,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, utilisateurId, utilisateurNom, utilisateurMail, customerProfileId, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
+		return Objects.hash(super.hashCode(), inscriptionCles, paiementCles, utilisateurId, utilisateurCle, utilisateurNom, utilisateurMail, customerProfileId, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
 	}
 
 	////////////
@@ -1876,7 +2313,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite that = (UtilisateurSite)o;
 		return super.equals(o)
 				&& Objects.equals( inscriptionCles, that.inscriptionCles )
+				&& Objects.equals( paiementCles, that.paiementCles )
 				&& Objects.equals( utilisateurId, that.utilisateurId )
+				&& Objects.equals( utilisateurCle, that.utilisateurCle )
 				&& Objects.equals( utilisateurNom, that.utilisateurNom )
 				&& Objects.equals( utilisateurMail, that.utilisateurMail )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
@@ -1894,7 +2333,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("UtilisateurSite { ");
 		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( ", paiementCles: " ).append(paiementCles);
 		sb.append( ", utilisateurId: \"" ).append(utilisateurId).append( "\"" );
+		sb.append( ", utilisateurCle: " ).append(utilisateurCle);
 		sb.append( ", utilisateurNom: \"" ).append(utilisateurNom).append( "\"" );
 		sb.append( ", utilisateurMail: \"" ).append(utilisateurMail).append( "\"" );
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );

@@ -182,6 +182,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		c.o((Boolean)classSolrDocument.get("classeRoleSession_stored_boolean"));
 	}
 
+	protected void _classRoleUtilisateur(Wrap<Boolean> c) {
+		c.o((Boolean)classSolrDocument.get("classeRoleUtilisateur_stored_boolean"));
+	}
+
 	protected void _classRolesFound(Wrap<Boolean> c) {
 		c.o((Boolean)classSolrDocument.get("classeRolesTrouves_stored_boolean"));
 	}

@@ -1205,27 +1205,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void getSchoolPayment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("User");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlSchoolPayment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolPayment(siteRequest, b -> {
@@ -1286,132 +1265,12 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteSchoolPayment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
-			sqlSchoolPayment(siteRequest, a -> {
-				if(a.succeeded()) {
-					aSearchSchoolPayment(siteRequest, false, true, null, b -> {
-						if(b.succeeded()) {
-							SearchList<SchoolPayment> listSchoolPayment = b.result();
-							deleteDELETESchoolPayment(siteRequest, c -> {
-								if(c.succeeded()) {
-									response200DELETESchoolPayment(siteRequest, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolPayment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											errorSchoolPayment(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorSchoolPayment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolPayment(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorSchoolPayment(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorSchoolPayment(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void deleteDELETESchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, SchoolPayment.class.getCanonicalName(), pk, pk, pk, pk))
-					, deleteAsync
-			-> {
-				eventHandler.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void response200DELETESchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Search //
 
 	@Override
 	public void searchSchoolPayment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("User");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlSchoolPayment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolPayment(siteRequest, b -> {
@@ -1515,27 +1374,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void searchpageSchoolPayment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("User");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlSchoolPayment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolPayment(siteRequest, b -> {
@@ -1803,6 +1641,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
 																	} else {
 																		errorSchoolPayment(siteRequest, eventHandler, f);
@@ -1838,14 +1677,14 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
 								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(siteUser1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
-								jsonObject.put("customerProfileId", jsonPrincipal.getString("name"));
-								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								jsonObject.put("email", jsonPrincipal.getString("email"));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
+								jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 								Boolean define = userSchoolPaymentDefine(siteRequest, jsonObject, true);
 								if(define) {
 									SiteUser siteUser;
@@ -1864,22 +1703,25 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									siteRequest2.setSiteContext_(siteContext);
 									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
 									siteRequest2.setUserId(siteRequest.getUserId());
+									siteRequest2.setUserKey(siteRequest.getUserKey());
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
 									userService.sqlPATCHSiteUser(siteUser, c -> {
 										if(c.succeeded()) {
-											userService.defineSiteUser(siteUser, d -> {
+											SiteUser siteUser2 = c.result();
+											userService.defineSiteUser(siteUser2, d -> {
 												if(d.succeeded()) {
-													userService.attributeSiteUser(siteUser, e -> {
+													userService.attributeSiteUser(siteUser2, e -> {
 														if(e.succeeded()) {
-															userService.indexSiteUser(siteUser, f -> {
+															userService.indexSiteUser(siteUser2, f -> {
 																if(f.succeeded()) {
-																	siteRequest.setSiteUser(siteUser);
-																	siteRequest.setUserName(siteUser.getUserName());
-																	siteRequest.setUserFirstName(siteUser.getUserFirstName());
-																	siteRequest.setUserLastName(siteUser.getUserLastName());
-																	siteRequest.setUserId(siteUser.getUserId());
+																	siteRequest.setSiteUser(siteUser2);
+																	siteRequest.setUserName(siteUser2.getUserName());
+																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser2.getUserLastName());
+																	siteRequest.setUserId(siteUser2.getUserId());
+																	siteRequest.setUserKey(siteUser2.getPk());
 																	eventHandler.handle(Future.succeededFuture());
 																} else {
 																	errorSchoolPayment(siteRequest, eventHandler, f);
@@ -1903,6 +1745,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
 									siteRequest.setUserLastName(siteUser1.getUserLastName());
 									siteRequest.setUserId(siteUser1.getUserId());
+									siteRequest.setUserKey(siteUser1.getPk());
 									eventHandler.handle(Future.succeededFuture());
 								}
 							}
@@ -1952,7 +1795,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----"))
-						+ " AND userId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getUserId()).orElse("-----")));
+						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

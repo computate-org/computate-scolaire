@@ -533,7 +533,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 						SiteUser o = siteRequest_.getSiteUser();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/user").a("class", "").f();
+							{ e("a").a("href", "/user/", siteRequest_.getUserKey()).a("class", "").f();
 								e("i").a("class", "far fa-user ").f().g("i");
 								sx("my user page");
 							} g("a");

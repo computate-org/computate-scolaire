@@ -601,6 +601,75 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurId == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurId());
 	}
 
+	////////////////////
+	// utilisateurCle //
+	////////////////////
+
+	/**	L'entité « utilisateurCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long utilisateurCle;
+	@JsonIgnore
+	public Couverture<Long> utilisateurCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("utilisateurCle").o(utilisateurCle);
+
+	/**	<br/>L'entité « utilisateurCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCle">Trouver l'entité utilisateurCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _utilisateurCle(Couverture<Long> c);
+
+	public Long getUtilisateurCle() {
+		return utilisateurCle;
+	}
+
+	public void setUtilisateurCle(Long utilisateurCle) {
+		this.utilisateurCle = utilisateurCle;
+		this.utilisateurCleCouverture.dejaInitialise = true;
+	}
+	public RequeteSiteFrFR setUtilisateurCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.utilisateurCle = Long.parseLong(o);
+		this.utilisateurCleCouverture.dejaInitialise = true;
+		return (RequeteSiteFrFR)this;
+	}
+	protected RequeteSiteFrFR utilisateurCleInit() {
+		if(!utilisateurCleCouverture.dejaInitialise) {
+			_utilisateurCle(utilisateurCleCouverture);
+			if(utilisateurCle == null)
+				setUtilisateurCle(utilisateurCleCouverture.o);
+		}
+		utilisateurCleCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
+	public Long solrUtilisateurCle() {
+		return utilisateurCle;
+	}
+
+	public String strUtilisateurCle() {
+		return utilisateurCle == null ? "" : utilisateurCle.toString();
+	}
+
+	public String jsonUtilisateurCle() {
+		return utilisateurCle == null ? "" : utilisateurCle.toString();
+	}
+
+	public String nomAffichageUtilisateurCle() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurCle() {
+		return null;
+	}
+
+	public String htmUtilisateurCle() {
+		return utilisateurCle == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCle());
+	}
+
 	///////////////
 	// sessionId //
 	///////////////
@@ -1467,6 +1536,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		utilisateurVertxInit();
 		principalJsonInit();
 		utilisateurIdInit();
+		utilisateurCleInit();
 		sessionIdInit();
 		utilisateurNomInit();
 		utilisateurNomFamilleInit();
@@ -1551,6 +1621,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.principalJson;
 			case "utilisateurId":
 				return oRequeteSiteFrFR.utilisateurId;
+			case "utilisateurCle":
+				return oRequeteSiteFrFR.utilisateurCle;
 			case "sessionId":
 				return oRequeteSiteFrFR.sessionId;
 			case "utilisateurNom":

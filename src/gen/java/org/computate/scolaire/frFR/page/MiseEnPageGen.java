@@ -20,6 +20,7 @@ import java.time.ZoneOffset;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.Instant;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import java.time.ZoneId;
@@ -31,6 +32,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 
 /**	
@@ -46,6 +48,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageParts »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
 	@JsonIgnore
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
@@ -93,6 +96,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « requeteSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
@@ -130,6 +134,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « statiqueUrlBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String statiqueUrlBase;
 	@JsonIgnore
 	public Couverture<String> statiqueUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
@@ -191,6 +196,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageDocumentSolr »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument pageDocumentSolr;
 	@JsonIgnore
 	public Couverture<SolrDocument> pageDocumentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("pageDocumentSolr").o(pageDocumentSolr);
@@ -228,6 +234,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ToutEcrivain w;
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
@@ -267,6 +274,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « contexteIconeGroupe »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String contexteIconeGroupe;
 	@JsonIgnore
 	public Couverture<String> contexteIconeGroupeCouverture = new Couverture<String>().p(this).c(String.class).var("contexteIconeGroupe").o(contexteIconeGroupe);
@@ -328,6 +336,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « contexteIconeNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String contexteIconeNom;
 	@JsonIgnore
 	public Couverture<String> contexteIconeNomCouverture = new Couverture<String>().p(this).c(String.class).var("contexteIconeNom").o(contexteIconeNom);
@@ -389,6 +398,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « contexteIconeClassesCss »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String contexteIconeClassesCss;
 	@JsonIgnore
 	public Couverture<String> contexteIconeClassesCssCouverture = new Couverture<String>().p(this).c(String.class).var("contexteIconeClassesCss").o(contexteIconeClassesCss);
@@ -450,6 +460,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageVisibleAuxBots »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean pageVisibleAuxBots;
 	@JsonIgnore
 	public Couverture<Boolean> pageVisibleAuxBotsCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pageVisibleAuxBots").o(pageVisibleAuxBots);
@@ -516,6 +527,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageH1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH1;
 	@JsonIgnore
 	public Couverture<String> pageH1Couverture = new Couverture<String>().p(this).c(String.class).var("pageH1").o(pageH1);
@@ -577,6 +589,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageH2 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH2;
 	@JsonIgnore
 	public Couverture<String> pageH2Couverture = new Couverture<String>().p(this).c(String.class).var("pageH2").o(pageH2);
@@ -638,6 +651,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageH3 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH3;
 	@JsonIgnore
 	public Couverture<String> pageH3Couverture = new Couverture<String>().p(this).c(String.class).var("pageH3").o(pageH3);
@@ -699,6 +713,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageH1Court »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH1Court;
 	@JsonIgnore
 	public Couverture<String> pageH1CourtCouverture = new Couverture<String>().p(this).c(String.class).var("pageH1Court").o(pageH1Court);
@@ -760,6 +775,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageH2Court »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH2Court;
 	@JsonIgnore
 	public Couverture<String> pageH2CourtCouverture = new Couverture<String>().p(this).c(String.class).var("pageH2Court").o(pageH2Court);
@@ -821,6 +837,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageH3Court »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH3Court;
 	@JsonIgnore
 	public Couverture<String> pageH3CourtCouverture = new Couverture<String>().p(this).c(String.class).var("pageH3Court").o(pageH3Court);
@@ -882,6 +899,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageTitre »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageTitre;
 	@JsonIgnore
 	public Couverture<String> pageTitreCouverture = new Couverture<String>().p(this).c(String.class).var("pageTitre").o(pageTitre);
@@ -943,6 +961,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUri;
 	@JsonIgnore
 	public Couverture<String> pageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUri").o(pageUri);
@@ -1004,6 +1023,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageUris »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> pageUris = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Couverture<List<String>> pageUrisCouverture = new Couverture<List<String>>().p(this).c(List.class).var("pageUris").o(pageUris);
@@ -1082,6 +1102,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUrl;
 	@JsonIgnore
 	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
@@ -1143,6 +1164,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageImageUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageImageUri;
 	@JsonIgnore
 	public Couverture<String> pageImageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageImageUri").o(pageImageUri);
@@ -1204,6 +1226,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageImageUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageImageUrl;
 	@JsonIgnore
 	public Couverture<String> pageImageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageImageUrl").o(pageImageUrl);
@@ -1265,6 +1288,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageVideoId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageVideoId;
 	@JsonIgnore
 	public Couverture<String> pageVideoIdCouverture = new Couverture<String>().p(this).c(String.class).var("pageVideoId").o(pageVideoId);
@@ -1326,6 +1350,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageVideoUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageVideoUrl;
 	@JsonIgnore
 	public Couverture<String> pageVideoUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageVideoUrl").o(pageVideoUrl);
@@ -1387,6 +1412,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageVideoUrlEmbed »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageVideoUrlEmbed;
 	@JsonIgnore
 	public Couverture<String> pageVideoUrlEmbedCouverture = new Couverture<String>().p(this).c(String.class).var("pageVideoUrlEmbed").o(pageVideoUrlEmbed);
@@ -1449,6 +1475,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer pageImageLargeur;
 	@JsonIgnore
 	public Couverture<Integer> pageImageLargeurCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("pageImageLargeur").o(pageImageLargeur);
@@ -1517,6 +1544,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer pageImageHauteur;
 	@JsonIgnore
 	public Couverture<Integer> pageImageHauteurCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("pageImageHauteur").o(pageImageHauteur);
@@ -1584,6 +1612,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageImageTypeContenu »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageImageTypeContenu;
 	@JsonIgnore
 	public Couverture<String> pageImageTypeContenuCouverture = new Couverture<String>().p(this).c(String.class).var("pageImageTypeContenu").o(pageImageTypeContenu);
@@ -1645,6 +1674,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageTypeContenu »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageTypeContenu;
 	@JsonIgnore
 	public Couverture<String> pageTypeContenuCouverture = new Couverture<String>().p(this).c(String.class).var("pageTypeContenu").o(pageTypeContenu);
@@ -1707,6 +1737,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDateTime pageCree;
 	@JsonIgnore
 	public Couverture<LocalDateTime> pageCreeCouverture = new Couverture<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageCree").o(pageCree);
@@ -1785,6 +1816,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected LocalDateTime pageModifiee;
 	@JsonIgnore
 	public Couverture<LocalDateTime> pageModifieeCouverture = new Couverture<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageModifiee").o(pageModifiee);
@@ -1862,6 +1894,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageMotsCles »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageMotsCles;
 	@JsonIgnore
 	public Couverture<String> pageMotsClesCouverture = new Couverture<String>().p(this).c(String.class).var("pageMotsCles").o(pageMotsCles);
@@ -1923,6 +1956,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageDescription;
 	@JsonIgnore
 	public Couverture<String> pageDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("pageDescription").o(pageDescription);
@@ -1984,6 +2018,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageAccueilUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageAccueilUri;
 	@JsonIgnore
 	public Couverture<String> pageAccueilUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageAccueilUri").o(pageAccueilUri);
@@ -2045,6 +2080,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageEcoleUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageEcoleUri;
 	@JsonIgnore
 	public Couverture<String> pageEcoleUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageEcoleUri").o(pageEcoleUri);
@@ -2106,6 +2142,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageUtilisateurUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUtilisateurUri;
 	@JsonIgnore
 	public Couverture<String> pageUtilisateurUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUtilisateurUri").o(pageUtilisateurUri);
@@ -2167,6 +2204,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageDeconnexionUri »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageDeconnexionUri;
 	@JsonIgnore
 	public Couverture<String> pageDeconnexionUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageDeconnexionUri").o(pageDeconnexionUri);
@@ -2527,8 +2565,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 
 	public void requeteApiMiseEnPage() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		MiseEnPage original = (MiseEnPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof MiseEnPage) {
+			MiseEnPage original = (MiseEnPage)o;
 		}
 	}
 

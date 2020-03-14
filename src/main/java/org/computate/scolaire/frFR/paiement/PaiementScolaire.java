@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +33,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 
@@ -52,7 +52,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: solid
  * IconeNom: search-dollar
  * 
- * RoleSession: true
+ * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * RoleRead.frFR: User
@@ -62,7 +62,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.desc: paiementPar
  * 
  * Rows: 50
-*/       
+*/ 
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
@@ -103,12 +103,15 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
+	 * r: utilisateurCles
+	 * r.enUS: userKeys
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("paiementCles_indexed_longs:" + pk);
 		l.setC(InscriptionScolaire.class);
 		l.setStocker(true);
+		l.addFacetField("utilisateurCles_indexed_longs");
 	}
 
 	/**
@@ -122,6 +125,22 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(inscriptionRecherche.size() == 1) {
 			c.o(inscriptionRecherche.get(0));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: userKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire des utlisateurs dans la base de données. 
+	 * Description.enUS: The primary key of the users in the database. 
+	 * r: utilisateurCles
+	 * r.enUS: userKeys
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
+	 */                 
+	protected void _utilisateurCles(List<Long> l) {
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("utilisateurCles_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -27,12 +28,17 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		l.addFilterQuery("paymentKeys_indexed_longs:" + pk);
 		l.setC(SchoolEnrollment.class);
 		l.setStore(true);
+		l.addFacetField("userKeys_indexed_longs");
 	}
 
 	protected void _enrollment_(Wrap<SchoolEnrollment> c) {
 		if(enrollmentSearch.size() == 1) {
 			c.o(enrollmentSearch.get(0));
 		}
+	}
+
+	protected void _userKeys(List<Long> l) {
+		l.addAll(enrollmentSearch.getQueryResponse().getFacetField("userKeys_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
