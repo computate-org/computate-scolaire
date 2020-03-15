@@ -216,6 +216,20 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolEmail
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 2
+	 * NomAffichage.enUS: email of school
+	 * NomAffichage.frFR: mail de l'école
+	 */  
+	protected void _ecoleMail(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolLocation
 	 * Indexe: true
 	 * Stocke: true

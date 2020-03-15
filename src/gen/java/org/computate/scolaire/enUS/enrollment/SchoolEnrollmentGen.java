@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.enrollment;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -42,6 +43,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -65,6 +67,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchoolEnrollment.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SchoolEnrollment_UnNom = "an enrollment";
 	public static final String SchoolEnrollment_Ce = "this ";
@@ -391,17 +396,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputBlockKeys(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "blocks")
-				.a("class", "valueObjectSuggest suggestBlockKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setBlockKeys")
-				.a("id", classApiMethodMethod, "_blockKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentBlockKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "blocks")
+					.a("class", "valueObjectSuggest suggestBlockKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setBlockKeys")
+					.a("id", classApiMethodMethod, "_blockKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentBlockKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmBlockKeys());
+		}
 	}
 
 	public void htmBlockKeys(String classApiMethodMethod) {
@@ -433,13 +445,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentBlockKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
-										.f().sx("add a block")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+											.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+											.f().sx("add a block")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1039,17 +1056,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildKey(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "children")
-				.a("class", "valueObjectSuggest suggestChildKey w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setChildKey")
-				.a("id", classApiMethodMethod, "_childKey")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentChildKey($(this).val() ? searchSchoolChildFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentChildKey')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "children")
+					.a("class", "valueObjectSuggest suggestChildKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setChildKey")
+					.a("id", classApiMethodMethod, "_childKey")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentChildKey($(this).val() ? searchSchoolChildFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentChildKey')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmChildKey());
+		}
 	}
 
 	public void htmChildKey(String classApiMethodMethod) {
@@ -1081,13 +1105,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentChildKey_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
-										.f().sx("add a child")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
+											.f().sx("add a child")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1185,17 +1214,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputMomKeys(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "moms")
-				.a("class", "valueObjectSuggest suggestMomKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setMomKeys")
-				.a("id", classApiMethodMethod, "_momKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentMomKeys($(this).val() ? searchSchoolMomFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentMomKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "moms")
+					.a("class", "valueObjectSuggest suggestMomKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setMomKeys")
+					.a("id", classApiMethodMethod, "_momKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentMomKeys($(this).val() ? searchSchoolMomFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentMomKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmMomKeys());
+		}
 	}
 
 	public void htmMomKeys(String classApiMethodMethod) {
@@ -1227,13 +1263,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentMomKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
-										.f().sx("add a mom")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+											.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
+											.f().sx("add a mom")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1331,17 +1372,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputDadKeys(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "dads")
-				.a("class", "valueObjectSuggest suggestDadKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setDadKeys")
-				.a("id", classApiMethodMethod, "_dadKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentDadKeys($(this).val() ? searchSchoolDadFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentDadKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "dads")
+					.a("class", "valueObjectSuggest suggestDadKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setDadKeys")
+					.a("id", classApiMethodMethod, "_dadKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentDadKeys($(this).val() ? searchSchoolDadFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentDadKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmDadKeys());
+		}
 	}
 
 	public void htmDadKeys(String classApiMethodMethod) {
@@ -1373,13 +1421,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentDadKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
-										.f().sx("add a dad")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+											.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
+											.f().sx("add a dad")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1477,17 +1530,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputGuardianKeys(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "guardians")
-				.a("class", "valueObjectSuggest suggestGuardianKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setGuardianKeys")
-				.a("id", classApiMethodMethod, "_guardianKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentGuardianKeys($(this).val() ? searchSchoolGuardianFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentGuardianKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "guardians")
+					.a("class", "valueObjectSuggest suggestGuardianKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setGuardianKeys")
+					.a("id", classApiMethodMethod, "_guardianKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentGuardianKeys($(this).val() ? searchSchoolGuardianFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentGuardianKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmGuardianKeys());
+		}
 	}
 
 	public void htmGuardianKeys(String classApiMethodMethod) {
@@ -1519,13 +1579,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentGuardianKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
-										.f().sx("add a guardian")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
+											.f().sx("add a guardian")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1623,17 +1688,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputPaymentKeys(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "payments")
-				.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setPaymentKeys")
-				.a("id", classApiMethodMethod, "_paymentKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentPaymentKeys')) : [{'name':'fq','value':'enrollmentKey:", pk, "'}], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "payments")
+					.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setPaymentKeys")
+					.a("id", classApiMethodMethod, "_paymentKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentPaymentKeys')) : [{'name':'fq','value':'enrollmentKey:", pk, "'}], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmPaymentKeys());
+		}
 	}
 
 	public void htmPaymentKeys(String classApiMethodMethod) {
@@ -1665,13 +1737,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentPaymentKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKey: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
-										.f().sx("add a payment")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postSchoolPaymentVals({ enrollmentKey: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+											.f().sx("add a payment")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1838,17 +1915,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputUserKeys(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "users")
-				.a("class", "valueObjectSuggest suggestUserKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setUserKeys")
-				.a("id", classApiMethodMethod, "_userKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? searchSiteUserFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentUserKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "users")
+					.a("class", "valueObjectSuggest suggestUserKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setUserKeys")
+					.a("id", classApiMethodMethod, "_userKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? searchSiteUserFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentUserKeys')) : [{'name':'fq','value':'enrollmentKeys:", pk, "'}], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmUserKeys());
+		}
 	}
 
 	public void htmUserKeys(String classApiMethodMethod) {
@@ -1880,13 +1964,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentUserKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-										.a("onclick", "postSiteUserVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "userKeys')); });")
-										.f().sx("add a site user")
-									.g("button");
-								} g("div");
+								if(
+										userKeys.contains(siteRequest_.getUserKey())
+										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+											.a("onclick", "postSiteUserVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "userKeys')); });")
+											.f().sx("add a site user")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -3320,24 +3409,31 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildCompleteName(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "r: EnfantNomComplet")
-			.a("id", classApiMethodMethod, "_childCompleteName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildCompleteName inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
-				a("name", "setChildCompleteName");
-			} else {
-				a("class", "valueChildCompleteName w3-input w3-border inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
-				a("name", "childCompleteName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteName')); }); ");
-			}
-			a("value", strChildCompleteName())
-		.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "r: EnfantNomComplet")
+				.a("id", classApiMethodMethod, "_childCompleteName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildCompleteName inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
+					a("name", "setChildCompleteName");
+				} else {
+					a("class", "valueChildCompleteName w3-input w3-border inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
+					a("name", "childCompleteName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteName')); }); ");
+				}
+				a("value", strChildCompleteName())
+			.fg();
 
+		} else {
+			sx(htmChildCompleteName());
+		}
 	}
 
 	public void htmChildCompleteName(String classApiMethodMethod) {
@@ -3354,16 +3450,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputChildCompleteName(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childCompleteName')); $('#", classApiMethodMethod, "_childCompleteName').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_childCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childCompleteName')); $('#", classApiMethodMethod, "_childCompleteName').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_childCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteName')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3437,24 +3538,31 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "r: enfant_")
-			.a("id", classApiMethodMethod, "_childCompleteNamePreferred");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildCompleteNamePreferred inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
-				a("name", "setChildCompleteNamePreferred");
-			} else {
-				a("class", "valueChildCompleteNamePreferred w3-input w3-border inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
-				a("name", "childCompleteNamePreferred");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }); ");
-			}
-			a("value", strChildCompleteNamePreferred())
-		.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "r: enfant_")
+				.a("id", classApiMethodMethod, "_childCompleteNamePreferred");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildCompleteNamePreferred inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
+					a("name", "setChildCompleteNamePreferred");
+				} else {
+					a("class", "valueChildCompleteNamePreferred w3-input w3-border inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
+					a("name", "childCompleteNamePreferred");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildCompleteNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }); ");
+				}
+				a("value", strChildCompleteNamePreferred())
+			.fg();
 
+		} else {
+			sx(htmChildCompleteNamePreferred());
+		}
 	}
 
 	public void htmChildCompleteNamePreferred(String classApiMethodMethod) {
@@ -3471,16 +3579,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputChildCompleteNamePreferred(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); $('#", classApiMethodMethod, "_childCompleteNamePreferred').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildCompleteNamePreferred', null, function() { addGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); $('#", classApiMethodMethod, "_childCompleteNamePreferred').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildCompleteNamePreferred', null, function() { addGlow($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_childCompleteNamePreferred')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3570,16 +3683,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildBirthDate(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolEnrollment", pk, "ChildBirthDate w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_childBirthDate")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(childBirthDate))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolEnrollment", pk, "ChildBirthDate w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_childBirthDate")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(childBirthDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
+				.fg();
+		} else {
+			sx(htmChildBirthDate());
+		}
 	}
 
 	public void htmChildBirthDate(String classApiMethodMethod) {
@@ -3595,16 +3715,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputChildBirthDate(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childBirthDate')); $('#", classApiMethodMethod, "_childBirthDate').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildBirthDate', null, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childBirthDate')); $('#", classApiMethodMethod, "_childBirthDate').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildBirthDate', null, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3867,24 +3992,31 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "address")
-			.a("id", classApiMethodMethod, "_schoolAddress");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAddress inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
-				a("name", "setSchoolAddress");
-			} else {
-				a("class", "valueSchoolAddress w3-input w3-border inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
-				a("name", "schoolAddress");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
-			}
-			a("value", strSchoolAddress())
-		.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "address")
+				.a("id", classApiMethodMethod, "_schoolAddress");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolAddress inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
+					a("name", "setSchoolAddress");
+				} else {
+					a("class", "valueSchoolAddress w3-input w3-border inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
+					a("name", "schoolAddress");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+				}
+				a("value", strSchoolAddress())
+			.fg();
 
+		} else {
+			sx(htmSchoolAddress());
+		}
 	}
 
 	public void htmSchoolAddress(String classApiMethodMethod) {
@@ -3901,16 +4033,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputSchoolAddress(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -5939,37 +6076,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentApproved(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_enrollmentApproved")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_enrollmentApproved");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setEnrollmentApproved inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
-			a("name", "setEnrollmentApproved");
-		} else {
-			a("class", "valueEnrollmentApproved inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
-			a("name", "enrollmentApproved");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentApproved', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentApproved')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentApproved')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getEnrollmentApproved() != null && getEnrollmentApproved())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_enrollmentApproved")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_enrollmentApproved");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentApproved inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
+				a("name", "setEnrollmentApproved");
+			} else {
+				a("class", "valueEnrollmentApproved inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
+				a("name", "enrollmentApproved");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentApproved', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentApproved')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentApproved')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getEnrollmentApproved() != null && getEnrollmentApproved())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmEnrollmentApproved());
+		}
 	}
 
 	public void htmEnrollmentApproved(String classApiMethodMethod) {
@@ -6063,37 +6207,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentImmunizations(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_enrollmentImmunizations")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_enrollmentImmunizations");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setEnrollmentImmunizations inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
-			a("name", "setEnrollmentImmunizations");
-		} else {
-			a("class", "valueEnrollmentImmunizations inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
-			a("name", "enrollmentImmunizations");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentImmunizations', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentImmunizations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentImmunizations')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getEnrollmentImmunizations() != null && getEnrollmentImmunizations())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_enrollmentImmunizations")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_enrollmentImmunizations");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentImmunizations inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
+				a("name", "setEnrollmentImmunizations");
+			} else {
+				a("class", "valueEnrollmentImmunizations inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
+				a("name", "enrollmentImmunizations");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentImmunizations', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentImmunizations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentImmunizations')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getEnrollmentImmunizations() != null && getEnrollmentImmunizations())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmEnrollmentImmunizations());
+		}
 	}
 
 	public void htmEnrollmentImmunizations(String classApiMethodMethod) {
@@ -6187,37 +6338,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputFamilyMarried(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_familyMarried")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_familyMarried");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setFamilyMarried inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
-			a("name", "setFamilyMarried");
-		} else {
-			a("class", "valueFamilyMarried inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
-			a("name", "familyMarried");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyMarried', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familyMarried')); }, function() { addError($('#", classApiMethodMethod, "_familyMarried')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getFamilyMarried() != null && getFamilyMarried())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_familyMarried")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_familyMarried");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setFamilyMarried inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
+				a("name", "setFamilyMarried");
+			} else {
+				a("class", "valueFamilyMarried inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
+				a("name", "familyMarried");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyMarried', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familyMarried')); }, function() { addError($('#", classApiMethodMethod, "_familyMarried')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getFamilyMarried() != null && getFamilyMarried())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmFamilyMarried());
+		}
 	}
 
 	public void htmFamilyMarried(String classApiMethodMethod) {
@@ -6311,37 +6469,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputFamilySeparated(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_familySeparated")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_familySeparated");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setFamilySeparated inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
-			a("name", "setFamilySeparated");
-		} else {
-			a("class", "valueFamilySeparated inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
-			a("name", "familySeparated");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilySeparated', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familySeparated')); }, function() { addError($('#", classApiMethodMethod, "_familySeparated')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getFamilySeparated() != null && getFamilySeparated())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_familySeparated")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_familySeparated");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setFamilySeparated inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
+				a("name", "setFamilySeparated");
+			} else {
+				a("class", "valueFamilySeparated inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
+				a("name", "familySeparated");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilySeparated', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familySeparated')); }, function() { addError($('#", classApiMethodMethod, "_familySeparated')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getFamilySeparated() != null && getFamilySeparated())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmFamilySeparated());
+		}
 	}
 
 	public void htmFamilySeparated(String classApiMethodMethod) {
@@ -6435,37 +6600,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputFamilyDivorced(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_familyDivorced")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_familyDivorced");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setFamilyDivorced inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
-			a("name", "setFamilyDivorced");
-		} else {
-			a("class", "valueFamilyDivorced inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
-			a("name", "familyDivorced");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyDivorced', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familyDivorced')); }, function() { addError($('#", classApiMethodMethod, "_familyDivorced')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getFamilyDivorced() != null && getFamilyDivorced())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_familyDivorced")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_familyDivorced");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setFamilyDivorced inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
+				a("name", "setFamilyDivorced");
+			} else {
+				a("class", "valueFamilyDivorced inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
+				a("name", "familyDivorced");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyDivorced', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familyDivorced')); }, function() { addError($('#", classApiMethodMethod, "_familyDivorced')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getFamilyDivorced() != null && getFamilyDivorced())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmFamilyDivorced());
+		}
 	}
 
 	public void htmFamilyDivorced(String classApiMethodMethod) {
@@ -6554,22 +6726,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputFamilyAddress(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "family address")
-			.a("id", classApiMethodMethod, "_familyAddress");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setFamilyAddress inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
-				a("name", "setFamilyAddress");
-			} else {
-				a("class", "valueFamilyAddress w3-input w3-border inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
-				a("name", "familyAddress");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyAddress')); }, function() { addError($('#", classApiMethodMethod, "_familyAddress')); }); ");
-			}
-		f().sx(strFamilyAddress()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "family address")
+				.a("id", classApiMethodMethod, "_familyAddress");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setFamilyAddress inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
+					a("name", "setFamilyAddress");
+				} else {
+					a("class", "valueFamilyAddress w3-input w3-border inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
+					a("name", "familyAddress");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyAddress')); }, function() { addError($('#", classApiMethodMethod, "_familyAddress')); }); ");
+				}
+			f().sx(strFamilyAddress()).g("textarea");
 
+		} else {
+			sx(htmFamilyAddress());
+		}
 	}
 
 	public void htmFamilyAddress(String classApiMethodMethod) {
@@ -6586,16 +6765,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputFamilyAddress(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyAddress')); $('#", classApiMethodMethod, "_familyAddress').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setFamilyAddress', null, function() { addGlow($('#", classApiMethodMethod, "_familyAddress')); }, function() { addError($('#", classApiMethodMethod, "_familyAddress')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyAddress')); $('#", classApiMethodMethod, "_familyAddress').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setFamilyAddress', null, function() { addGlow($('#", classApiMethodMethod, "_familyAddress')); }, function() { addError($('#", classApiMethodMethod, "_familyAddress')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -6669,22 +6853,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputFamilyHowDoYouKnowTheSchool(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "how do you know the school? ")
-			.a("id", classApiMethodMethod, "_familyHowDoYouKnowTheSchool");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setFamilyHowDoYouKnowTheSchool inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
-				a("name", "setFamilyHowDoYouKnowTheSchool");
-			} else {
-				a("class", "valueFamilyHowDoYouKnowTheSchool w3-input w3-border inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
-				a("name", "familyHowDoYouKnowTheSchool");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyHowDoYouKnowTheSchool', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }, function() { addError($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }); ");
-			}
-		f().sx(strFamilyHowDoYouKnowTheSchool()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "how do you know the school? ")
+				.a("id", classApiMethodMethod, "_familyHowDoYouKnowTheSchool");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setFamilyHowDoYouKnowTheSchool inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
+					a("name", "setFamilyHowDoYouKnowTheSchool");
+				} else {
+					a("class", "valueFamilyHowDoYouKnowTheSchool w3-input w3-border inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
+					a("name", "familyHowDoYouKnowTheSchool");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyHowDoYouKnowTheSchool', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }, function() { addError($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }); ");
+				}
+			f().sx(strFamilyHowDoYouKnowTheSchool()).g("textarea");
 
+		} else {
+			sx(htmFamilyHowDoYouKnowTheSchool());
+		}
 	}
 
 	public void htmFamilyHowDoYouKnowTheSchool(String classApiMethodMethod) {
@@ -6701,16 +6892,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputFamilyHowDoYouKnowTheSchool(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); $('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setFamilyHowDoYouKnowTheSchool', null, function() { addGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }, function() { addError($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); $('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setFamilyHowDoYouKnowTheSchool', null, function() { addGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }, function() { addError($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -6784,22 +6980,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSpecialConsiderations(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "special considerations")
-			.a("id", classApiMethodMethod, "_enrollmentSpecialConsiderations");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentSpecialConsiderations inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
-				a("name", "setEnrollmentSpecialConsiderations");
-			} else {
-				a("class", "valueEnrollmentSpecialConsiderations w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
-				a("name", "enrollmentSpecialConsiderations");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSpecialConsiderations', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }); ");
-			}
-		f().sx(strEnrollmentSpecialConsiderations()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "special considerations")
+				.a("id", classApiMethodMethod, "_enrollmentSpecialConsiderations");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setEnrollmentSpecialConsiderations inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
+					a("name", "setEnrollmentSpecialConsiderations");
+				} else {
+					a("class", "valueEnrollmentSpecialConsiderations w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
+					a("name", "enrollmentSpecialConsiderations");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSpecialConsiderations', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }); ");
+				}
+			f().sx(strEnrollmentSpecialConsiderations()).g("textarea");
 
+		} else {
+			sx(htmEnrollmentSpecialConsiderations());
+		}
 	}
 
 	public void htmEnrollmentSpecialConsiderations(String classApiMethodMethod) {
@@ -6816,16 +7019,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSpecialConsiderations(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); $('#", classApiMethodMethod, "_enrollmentSpecialConsiderations').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSpecialConsiderations', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); $('#", classApiMethodMethod, "_enrollmentSpecialConsiderations').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSpecialConsiderations', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -6899,22 +7107,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildMedicalConditions(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "medical conditions")
-			.a("id", classApiMethodMethod, "_childMedicalConditions");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildMedicalConditions inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
-				a("name", "setChildMedicalConditions");
-			} else {
-				a("class", "valueChildMedicalConditions w3-input w3-border inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
-				a("name", "childMedicalConditions");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildMedicalConditions', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childMedicalConditions')); }, function() { addError($('#", classApiMethodMethod, "_childMedicalConditions')); }); ");
-			}
-		f().sx(strChildMedicalConditions()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "medical conditions")
+				.a("id", classApiMethodMethod, "_childMedicalConditions");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildMedicalConditions inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
+					a("name", "setChildMedicalConditions");
+				} else {
+					a("class", "valueChildMedicalConditions w3-input w3-border inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
+					a("name", "childMedicalConditions");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildMedicalConditions', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childMedicalConditions')); }, function() { addError($('#", classApiMethodMethod, "_childMedicalConditions')); }); ");
+				}
+			f().sx(strChildMedicalConditions()).g("textarea");
 
+		} else {
+			sx(htmChildMedicalConditions());
+		}
 	}
 
 	public void htmChildMedicalConditions(String classApiMethodMethod) {
@@ -6931,16 +7146,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputChildMedicalConditions(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childMedicalConditions')); $('#", classApiMethodMethod, "_childMedicalConditions').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildMedicalConditions', null, function() { addGlow($('#", classApiMethodMethod, "_childMedicalConditions')); }, function() { addError($('#", classApiMethodMethod, "_childMedicalConditions')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childMedicalConditions')); $('#", classApiMethodMethod, "_childMedicalConditions').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildMedicalConditions', null, function() { addGlow($('#", classApiMethodMethod, "_childMedicalConditions')); }, function() { addError($('#", classApiMethodMethod, "_childMedicalConditions')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -7014,22 +7234,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildPreviousSchoolsAttended(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "schools previously attended")
-			.a("id", classApiMethodMethod, "_childPreviousSchoolsAttended");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildPreviousSchoolsAttended inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
-				a("name", "setChildPreviousSchoolsAttended");
-			} else {
-				a("class", "valueChildPreviousSchoolsAttended w3-input w3-border inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
-				a("name", "childPreviousSchoolsAttended");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildPreviousSchoolsAttended', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }, function() { addError($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }); ");
-			}
-		f().sx(strChildPreviousSchoolsAttended()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "schools previously attended")
+				.a("id", classApiMethodMethod, "_childPreviousSchoolsAttended");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildPreviousSchoolsAttended inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
+					a("name", "setChildPreviousSchoolsAttended");
+				} else {
+					a("class", "valueChildPreviousSchoolsAttended w3-input w3-border inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
+					a("name", "childPreviousSchoolsAttended");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildPreviousSchoolsAttended', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }, function() { addError($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }); ");
+				}
+			f().sx(strChildPreviousSchoolsAttended()).g("textarea");
 
+		} else {
+			sx(htmChildPreviousSchoolsAttended());
+		}
 	}
 
 	public void htmChildPreviousSchoolsAttended(String classApiMethodMethod) {
@@ -7046,16 +7273,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputChildPreviousSchoolsAttended(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); $('#", classApiMethodMethod, "_childPreviousSchoolsAttended').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildPreviousSchoolsAttended', null, function() { addGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }, function() { addError($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); $('#", classApiMethodMethod, "_childPreviousSchoolsAttended').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildPreviousSchoolsAttended', null, function() { addGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }, function() { addError($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -7129,22 +7361,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildDescription(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "description")
-			.a("id", classApiMethodMethod, "_childDescription");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildDescription inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
-				a("name", "setChildDescription");
-			} else {
-				a("class", "valueChildDescription w3-input w3-border inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
-				a("name", "childDescription");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildDescription', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childDescription')); }, function() { addError($('#", classApiMethodMethod, "_childDescription')); }); ");
-			}
-		f().sx(strChildDescription()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "description")
+				.a("id", classApiMethodMethod, "_childDescription");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildDescription inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
+					a("name", "setChildDescription");
+				} else {
+					a("class", "valueChildDescription w3-input w3-border inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
+					a("name", "childDescription");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildDescription', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childDescription')); }, function() { addError($('#", classApiMethodMethod, "_childDescription')); }); ");
+				}
+			f().sx(strChildDescription()).g("textarea");
 
+		} else {
+			sx(htmChildDescription());
+		}
 	}
 
 	public void htmChildDescription(String classApiMethodMethod) {
@@ -7161,16 +7400,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputChildDescription(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childDescription')); $('#", classApiMethodMethod, "_childDescription').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildDescription', null, function() { addGlow($('#", classApiMethodMethod, "_childDescription')); }, function() { addError($('#", classApiMethodMethod, "_childDescription')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childDescription')); $('#", classApiMethodMethod, "_childDescription').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildDescription', null, function() { addGlow($('#", classApiMethodMethod, "_childDescription')); }, function() { addError($('#", classApiMethodMethod, "_childDescription')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -7244,22 +7488,29 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildObjectives(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("textarea")
-			.a("placeholder", "objectives")
-			.a("id", classApiMethodMethod, "_childObjectives");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildObjectives inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
-				a("name", "setChildObjectives");
-			} else {
-				a("class", "valueChildObjectives w3-input w3-border inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
-				a("name", "childObjectives");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildObjectives', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childObjectives')); }, function() { addError($('#", classApiMethodMethod, "_childObjectives')); }); ");
-			}
-		f().sx(strChildObjectives()).g("textarea");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("textarea")
+				.a("placeholder", "objectives")
+				.a("id", classApiMethodMethod, "_childObjectives");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChildObjectives inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
+					a("name", "setChildObjectives");
+				} else {
+					a("class", "valueChildObjectives w3-input w3-border inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
+					a("name", "childObjectives");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildObjectives', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childObjectives')); }, function() { addError($('#", classApiMethodMethod, "_childObjectives')); }); ");
+				}
+			f().sx(strChildObjectives()).g("textarea");
 
+		} else {
+			sx(htmChildObjectives());
+		}
 	}
 
 	public void htmChildObjectives(String classApiMethodMethod) {
@@ -7276,16 +7527,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputChildObjectives(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childObjectives')); $('#", classApiMethodMethod, "_childObjectives').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildObjectives', null, function() { addGlow($('#", classApiMethodMethod, "_childObjectives')); }, function() { addError($('#", classApiMethodMethod, "_childObjectives')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childObjectives')); $('#", classApiMethodMethod, "_childObjectives').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setChildObjectives', null, function() { addGlow($('#", classApiMethodMethod, "_childObjectives')); }, function() { addError($('#", classApiMethodMethod, "_childObjectives')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -7364,37 +7620,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputChildPottyTrained(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_childPottyTrained")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_childPottyTrained");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setChildPottyTrained inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
-			a("name", "setChildPottyTrained");
-		} else {
-			a("class", "valueChildPottyTrained inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
-			a("name", "childPottyTrained");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildPottyTrained', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_childPottyTrained')); }, function() { addError($('#", classApiMethodMethod, "_childPottyTrained')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getChildPottyTrained() != null && getChildPottyTrained())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_childPottyTrained")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_childPottyTrained");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChildPottyTrained inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
+				a("name", "setChildPottyTrained");
+			} else {
+				a("class", "valueChildPottyTrained inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
+				a("name", "childPottyTrained");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildPottyTrained', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_childPottyTrained')); }, function() { addError($('#", classApiMethodMethod, "_childPottyTrained')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChildPottyTrained() != null && getChildPottyTrained())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmChildPottyTrained());
+		}
 	}
 
 	public void htmChildPottyTrained(String classApiMethodMethod) {
@@ -7483,24 +7746,31 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentGroupName(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "group name")
-			.a("id", classApiMethodMethod, "_enrollmentGroupName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentGroupName inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
-				a("name", "setEnrollmentGroupName");
-			} else {
-				a("class", "valueEnrollmentGroupName w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
-				a("name", "enrollmentGroupName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentGroupName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentGroupName')); }); ");
-			}
-			a("value", strEnrollmentGroupName())
-		.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "group name")
+				.a("id", classApiMethodMethod, "_enrollmentGroupName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setEnrollmentGroupName inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
+					a("name", "setEnrollmentGroupName");
+				} else {
+					a("class", "valueEnrollmentGroupName w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
+					a("name", "enrollmentGroupName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentGroupName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentGroupName')); }); ");
+				}
+				a("value", strEnrollmentGroupName())
+			.fg();
 
+		} else {
+			sx(htmEnrollmentGroupName());
+		}
 	}
 
 	public void htmEnrollmentGroupName(String classApiMethodMethod) {
@@ -7517,16 +7787,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentGroupName(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); $('#", classApiMethodMethod, "_enrollmentGroupName').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentGroupName', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentGroupName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); $('#", classApiMethodMethod, "_enrollmentGroupName').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentGroupName', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentGroupName')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -7605,37 +7880,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentPaymentEachMonth(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setEnrollmentPaymentEachMonth inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
-			a("name", "setEnrollmentPaymentEachMonth");
-		} else {
-			a("class", "valueEnrollmentPaymentEachMonth inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
-			a("name", "enrollmentPaymentEachMonth");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getEnrollmentPaymentEachMonth() != null && getEnrollmentPaymentEachMonth())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentPaymentEachMonth inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
+				a("name", "setEnrollmentPaymentEachMonth");
+			} else {
+				a("class", "valueEnrollmentPaymentEachMonth inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
+				a("name", "enrollmentPaymentEachMonth");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getEnrollmentPaymentEachMonth() != null && getEnrollmentPaymentEachMonth())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmEnrollmentPaymentEachMonth());
+		}
 	}
 
 	public void htmEnrollmentPaymentEachMonth(String classApiMethodMethod) {
@@ -7729,37 +8011,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentPaymentComplete(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentComplete")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setEnrollmentPaymentComplete inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-			a("name", "setEnrollmentPaymentComplete");
-		} else {
-			a("class", "valueEnrollmentPaymentComplete inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-			a("name", "enrollmentPaymentComplete");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentPaymentComplete inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
+				a("name", "setEnrollmentPaymentComplete");
+			} else {
+				a("class", "valueEnrollmentPaymentComplete inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
+				a("name", "enrollmentPaymentComplete");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmEnrollmentPaymentComplete());
+		}
 	}
 
 	public void htmEnrollmentPaymentComplete(String classApiMethodMethod) {
@@ -7848,24 +8137,31 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "customer profile ID")
-			.a("id", classApiMethodMethod, "_customerProfileId");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setCustomerProfileId inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "setCustomerProfileId");
-			} else {
-				a("class", "valueCustomerProfileId w3-input w3-border inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "customerProfileId");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
-			}
-			a("value", strCustomerProfileId())
-		.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "customer profile ID")
+				.a("id", classApiMethodMethod, "_customerProfileId");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "setCustomerProfileId");
+				} else {
+					a("class", "valueCustomerProfileId w3-input w3-border inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "customerProfileId");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
+				}
+				a("value", strCustomerProfileId())
+			.fg();
 
+		} else {
+			sx(htmCustomerProfileId());
+		}
 	}
 
 	public void htmCustomerProfileId(String classApiMethodMethod) {
@@ -7882,16 +8178,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputCustomerProfileId(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -7981,16 +8282,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentChargeDate(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentChargeDate inputSchoolEnrollment", pk, "EnrollmentChargeDate w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentChargeDate")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentChargeDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentChargeDate))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentChargeDate', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentChargeDate inputSchoolEnrollment", pk, "EnrollmentChargeDate w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentChargeDate")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentChargeDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentChargeDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentChargeDate', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentChargeDate());
+		}
 	}
 
 	public void htmEnrollmentChargeDate(String classApiMethodMethod) {
@@ -8003,16 +8311,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentChargeDate(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); $('#", classApiMethodMethod, "_enrollmentChargeDate').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentChargeDate', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); $('#", classApiMethodMethod, "_enrollmentChargeDate').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentChargeDate', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -8424,23 +8737,30 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentParentNames(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("id", classApiMethodMethod, "_enrollmentParentNames");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentParentNames inputSchoolEnrollment", pk, "EnrollmentParentNames w3-input w3-border ");
-				a("name", "setEnrollmentParentNames");
-			} else {
-				a("class", "valueEnrollmentParentNames w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentParentNames w3-input w3-border ");
-				a("name", "enrollmentParentNames");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentParentNames', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentNames')); }); ");
-			}
-			a("value", strEnrollmentParentNames())
-		.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_enrollmentParentNames");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setEnrollmentParentNames inputSchoolEnrollment", pk, "EnrollmentParentNames w3-input w3-border ");
+					a("name", "setEnrollmentParentNames");
+				} else {
+					a("class", "valueEnrollmentParentNames w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentParentNames w3-input w3-border ");
+					a("name", "enrollmentParentNames");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentParentNames', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentNames')); }); ");
+				}
+				a("value", strEnrollmentParentNames())
+			.fg();
 
+		} else {
+			sx(htmEnrollmentParentNames());
+		}
 	}
 
 	public void htmEnrollmentParentNames(String classApiMethodMethod) {
@@ -8454,16 +8774,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentParentNames(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); $('#", classApiMethodMethod, "_enrollmentParentNames').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentParentNames', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentNames')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); $('#", classApiMethodMethod, "_enrollmentParentNames').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentParentNames', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentNames')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -8852,40 +9177,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature1(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature1");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature1) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature1");
-				a("src", StringUtils.isBlank(enrollmentSignature1) ? "data:image/png;base64," : enrollmentSignature1).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature1) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature1").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature1");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature1').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature1', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature1");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature1', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature1");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature1) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature1");
+					a("src", StringUtils.isBlank(enrollmentSignature1) ? "data:image/png;base64," : enrollmentSignature1).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature1) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature1").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature1");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature1').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature1', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature1");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature1', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature1());
+		}
 	}
 
 	public void htmEnrollmentSignature1(String classApiMethodMethod) {
@@ -8899,16 +9231,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature1(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature1')); $('#", classApiMethodMethod, "_enrollmentSignature1').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature1', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature1')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature1')); $('#", classApiMethodMethod, "_enrollmentSignature1').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature1', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature1')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -8982,40 +9319,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature2(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature2");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature2) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature2");
-				a("src", StringUtils.isBlank(enrollmentSignature2) ? "data:image/png;base64," : enrollmentSignature2).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature2) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature2").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature2");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature2').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature2', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature2");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature2', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature2");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature2) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature2");
+					a("src", StringUtils.isBlank(enrollmentSignature2) ? "data:image/png;base64," : enrollmentSignature2).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature2) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature2").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature2");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature2').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature2', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature2");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature2', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature2());
+		}
 	}
 
 	public void htmEnrollmentSignature2(String classApiMethodMethod) {
@@ -9029,16 +9373,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature2(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature2')); $('#", classApiMethodMethod, "_enrollmentSignature2').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature2', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature2')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature2')); $('#", classApiMethodMethod, "_enrollmentSignature2').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature2', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature2')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9112,40 +9461,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature3(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature3");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature3) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature3");
-				a("src", StringUtils.isBlank(enrollmentSignature3) ? "data:image/png;base64," : enrollmentSignature3).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature3) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature3").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature3");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature3').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature3', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature3");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature3', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature3");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature3) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature3");
+					a("src", StringUtils.isBlank(enrollmentSignature3) ? "data:image/png;base64," : enrollmentSignature3).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature3) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature3").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature3");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature3').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature3', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature3");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature3', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature3());
+		}
 	}
 
 	public void htmEnrollmentSignature3(String classApiMethodMethod) {
@@ -9159,16 +9515,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature3(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature3')); $('#", classApiMethodMethod, "_enrollmentSignature3').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature3', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature3')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature3')); $('#", classApiMethodMethod, "_enrollmentSignature3').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature3', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature3')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9242,40 +9603,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature4(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature4");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature4) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature4");
-				a("src", StringUtils.isBlank(enrollmentSignature4) ? "data:image/png;base64," : enrollmentSignature4).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature4) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature4").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature4");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature4').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature4', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature4");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature4', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature4");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature4) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature4");
+					a("src", StringUtils.isBlank(enrollmentSignature4) ? "data:image/png;base64," : enrollmentSignature4).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature4) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature4").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature4");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature4').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature4', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature4");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature4', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature4());
+		}
 	}
 
 	public void htmEnrollmentSignature4(String classApiMethodMethod) {
@@ -9289,16 +9657,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature4(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature4')); $('#", classApiMethodMethod, "_enrollmentSignature4').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature4', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature4')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature4')); $('#", classApiMethodMethod, "_enrollmentSignature4').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature4', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature4')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9372,40 +9745,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature5(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature5");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature5) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature5");
-				a("src", StringUtils.isBlank(enrollmentSignature5) ? "data:image/png;base64," : enrollmentSignature5).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature5) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature5").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature5");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature5').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature5', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature5");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature5', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature5");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature5) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature5");
+					a("src", StringUtils.isBlank(enrollmentSignature5) ? "data:image/png;base64," : enrollmentSignature5).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature5) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature5").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature5");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature5').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature5', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature5");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature5', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature5());
+		}
 	}
 
 	public void htmEnrollmentSignature5(String classApiMethodMethod) {
@@ -9419,16 +9799,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature5(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature5')); $('#", classApiMethodMethod, "_enrollmentSignature5').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature5', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature5')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature5')); $('#", classApiMethodMethod, "_enrollmentSignature5').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature5', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature5')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9502,40 +9887,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature6(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature6");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature6) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature6");
-				a("src", StringUtils.isBlank(enrollmentSignature6) ? "data:image/png;base64," : enrollmentSignature6).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature6) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature6").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature6");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature6').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature6', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature6");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature6', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature6");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature6) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature6");
+					a("src", StringUtils.isBlank(enrollmentSignature6) ? "data:image/png;base64," : enrollmentSignature6).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature6) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature6").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature6");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature6').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature6', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature6");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature6', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature6());
+		}
 	}
 
 	public void htmEnrollmentSignature6(String classApiMethodMethod) {
@@ -9549,16 +9941,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature6(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature6')); $('#", classApiMethodMethod, "_enrollmentSignature6').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature6', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature6')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature6')); $('#", classApiMethodMethod, "_enrollmentSignature6').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature6', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature6')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9632,40 +10029,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature7(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature7");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature7) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature7");
-				a("src", StringUtils.isBlank(enrollmentSignature7) ? "data:image/png;base64," : enrollmentSignature7).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature7) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature7").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature7");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature7').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature7', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature7");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature7', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature7");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature7) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature7");
+					a("src", StringUtils.isBlank(enrollmentSignature7) ? "data:image/png;base64," : enrollmentSignature7).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature7) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature7").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature7");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature7').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature7', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature7");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature7', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature7());
+		}
 	}
 
 	public void htmEnrollmentSignature7(String classApiMethodMethod) {
@@ -9679,16 +10083,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature7(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature7')); $('#", classApiMethodMethod, "_enrollmentSignature7').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature7', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature7')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature7')); $('#", classApiMethodMethod, "_enrollmentSignature7').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature7', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature7')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9762,40 +10171,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature8(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature8");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature8) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature8");
-				a("src", StringUtils.isBlank(enrollmentSignature8) ? "data:image/png;base64," : enrollmentSignature8).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature8) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature8").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature8");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature8').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature8', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature8");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature8', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature8");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature8) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature8");
+					a("src", StringUtils.isBlank(enrollmentSignature8) ? "data:image/png;base64," : enrollmentSignature8).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature8) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature8").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature8");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature8').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature8', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature8");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature8', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature8());
+		}
 	}
 
 	public void htmEnrollmentSignature8(String classApiMethodMethod) {
@@ -9809,16 +10225,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature8(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature8')); $('#", classApiMethodMethod, "_enrollmentSignature8').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature8', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature8')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature8')); $('#", classApiMethodMethod, "_enrollmentSignature8').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature8', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature8')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -9892,40 +10313,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature9(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature9");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature9) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature9");
-				a("src", StringUtils.isBlank(enrollmentSignature9) ? "data:image/png;base64," : enrollmentSignature9).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature9) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature9").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature9");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature9').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature9', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature9");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature9', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature9");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature9) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature9");
+					a("src", StringUtils.isBlank(enrollmentSignature9) ? "data:image/png;base64," : enrollmentSignature9).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature9) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature9").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature9");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature9').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature9', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature9");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature9', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature9());
+		}
 	}
 
 	public void htmEnrollmentSignature9(String classApiMethodMethod) {
@@ -9939,16 +10367,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature9(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature9')); $('#", classApiMethodMethod, "_enrollmentSignature9').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature9', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature9')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature9')); $('#", classApiMethodMethod, "_enrollmentSignature9').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature9', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature9')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10022,40 +10455,47 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentSignature10(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
-			e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature10");
-				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature10) ? "block" : "none", "; ");
-			f().g("div");
-			e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature10");
-				a("src", StringUtils.isBlank(enrollmentSignature10) ? "data:image/png;base64," : enrollmentSignature10).a("alt", "");
-				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature10) ? "none" : "block", "; ");
-			fg();
-		g("div");
-		e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature10").f();
-			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature10");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').show(); ");
-					s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature10').hide(); ");
-					s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10')); ");
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature10', null); ");
-					s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10')) { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('reset'); ");
-					s(" } else { ");
-					s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature({'height':200}); ");
-					s(" } ");
-				s("\"");
-				f().sx("Clear");
-			g("button");
-			e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature10");
-				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-				s(" onclick=", "\"");
-					s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('getData', 'default'); "); 
-					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature10', src); ");
-				s("\"");
-				f().sx("Accept the signature");
-			g("button");
-		g("div");
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
+				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature10");
+					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature10) ? "block" : "none", "; ");
+				f().g("div");
+				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature10");
+					a("src", StringUtils.isBlank(enrollmentSignature10) ? "data:image/png;base64," : enrollmentSignature10).a("alt", "");
+					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature10) ? "none" : "block", "; ");
+				fg();
+			g("div");
+			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature10").f();
+				e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature10");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').show(); ");
+						s("$('#signatureImgSchoolEnrollment", pk, "enrollmentSignature10').hide(); ");
+						s("removeGlow($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10')); ");
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature10', null); ");
+						s("if($('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10')) { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('reset'); ");
+						s(" } else { ");
+						s("$('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature({'height':200}); ");
+						s(" } ");
+					s("\"");
+					f().sx("Clear");
+				g("button");
+				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature10");
+					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+					s(" onclick=", "\"");
+						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('getData', 'default'); "); 
+						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature10', src); ");
+					s("\"");
+					f().sx("Accept the signature");
+				g("button");
+			g("div");
+		} else {
+			sx(htmEnrollmentSignature10());
+		}
 	}
 
 	public void htmEnrollmentSignature10(String classApiMethodMethod) {
@@ -10069,16 +10509,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 								inputEnrollmentSignature10(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature10')); $('#", classApiMethodMethod, "_enrollmentSignature10').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature10', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature10')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentSignature10')); $('#", classApiMethodMethod, "_enrollmentSignature10').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSignature10', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentSignature10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSignature10')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10168,16 +10613,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate1(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate1 inputSchoolEnrollment", pk, "EnrollmentDate1 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate1")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate1 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate1))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate1', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate1 inputSchoolEnrollment", pk, "EnrollmentDate1 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate1")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate1 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate1))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate1', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate1());
+		}
 	}
 
 	public void htmEnrollmentDate1(String classApiMethodMethod) {
@@ -10190,16 +10642,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate1(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate1')); $('#", classApiMethodMethod, "_enrollmentDate1').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate1', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate1')); $('#", classApiMethodMethod, "_enrollmentDate1').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate1', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10289,16 +10746,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate2(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate2 inputSchoolEnrollment", pk, "EnrollmentDate2 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate2")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate2 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate2))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate2', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate2 inputSchoolEnrollment", pk, "EnrollmentDate2 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate2")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate2 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate2))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate2', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate2());
+		}
 	}
 
 	public void htmEnrollmentDate2(String classApiMethodMethod) {
@@ -10311,16 +10775,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate2(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate2')); $('#", classApiMethodMethod, "_enrollmentDate2').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate2', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate2')); $('#", classApiMethodMethod, "_enrollmentDate2').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate2', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10410,16 +10879,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate3(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate3 inputSchoolEnrollment", pk, "EnrollmentDate3 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate3")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate3 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate3))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate3', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate3 inputSchoolEnrollment", pk, "EnrollmentDate3 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate3")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate3 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate3))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate3', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate3());
+		}
 	}
 
 	public void htmEnrollmentDate3(String classApiMethodMethod) {
@@ -10432,16 +10908,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate3(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate3')); $('#", classApiMethodMethod, "_enrollmentDate3').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate3', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate3')); $('#", classApiMethodMethod, "_enrollmentDate3').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate3', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10531,16 +11012,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate4(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate4 inputSchoolEnrollment", pk, "EnrollmentDate4 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate4")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate4 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate4))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate4', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate4 inputSchoolEnrollment", pk, "EnrollmentDate4 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate4")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate4 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate4))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate4', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate4());
+		}
 	}
 
 	public void htmEnrollmentDate4(String classApiMethodMethod) {
@@ -10553,16 +11041,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate4(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate4')); $('#", classApiMethodMethod, "_enrollmentDate4').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate4', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate4')); $('#", classApiMethodMethod, "_enrollmentDate4').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate4', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10652,16 +11145,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate5(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate5 inputSchoolEnrollment", pk, "EnrollmentDate5 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate5")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate5 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate5))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate5', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate5 inputSchoolEnrollment", pk, "EnrollmentDate5 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate5")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate5 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate5))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate5', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate5());
+		}
 	}
 
 	public void htmEnrollmentDate5(String classApiMethodMethod) {
@@ -10674,16 +11174,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate5(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate5')); $('#", classApiMethodMethod, "_enrollmentDate5').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate5', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate5')); $('#", classApiMethodMethod, "_enrollmentDate5').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate5', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10773,16 +11278,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate6(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate6 inputSchoolEnrollment", pk, "EnrollmentDate6 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate6")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate6 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate6))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate6', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate6 inputSchoolEnrollment", pk, "EnrollmentDate6 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate6")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate6 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate6))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate6', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate6());
+		}
 	}
 
 	public void htmEnrollmentDate6(String classApiMethodMethod) {
@@ -10795,16 +11307,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate6(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate6')); $('#", classApiMethodMethod, "_enrollmentDate6').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate6', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate6')); $('#", classApiMethodMethod, "_enrollmentDate6').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate6', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -10894,16 +11411,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate7(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate7 inputSchoolEnrollment", pk, "EnrollmentDate7 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate7")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate7 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate7))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate7', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate7 inputSchoolEnrollment", pk, "EnrollmentDate7 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate7")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate7 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate7))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate7', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate7());
+		}
 	}
 
 	public void htmEnrollmentDate7(String classApiMethodMethod) {
@@ -10916,16 +11440,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate7(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate7')); $('#", classApiMethodMethod, "_enrollmentDate7').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate7', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate7')); $('#", classApiMethodMethod, "_enrollmentDate7').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate7', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -11015,16 +11544,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate8(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate8 inputSchoolEnrollment", pk, "EnrollmentDate8 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate8")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate8 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate8))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate8', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate8 inputSchoolEnrollment", pk, "EnrollmentDate8 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate8")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate8 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate8))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate8', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate8());
+		}
 	}
 
 	public void htmEnrollmentDate8(String classApiMethodMethod) {
@@ -11037,16 +11573,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate8(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate8')); $('#", classApiMethodMethod, "_enrollmentDate8').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate8', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate8')); $('#", classApiMethodMethod, "_enrollmentDate8').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate8', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -11136,16 +11677,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate9(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate9 inputSchoolEnrollment", pk, "EnrollmentDate9 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate9")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate9 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate9))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate9', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate9 inputSchoolEnrollment", pk, "EnrollmentDate9 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate9")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate9 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate9))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate9', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate9());
+		}
 	}
 
 	public void htmEnrollmentDate9(String classApiMethodMethod) {
@@ -11158,16 +11706,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate9(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate9')); $('#", classApiMethodMethod, "_enrollmentDate9').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate9', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate9')); $('#", classApiMethodMethod, "_enrollmentDate9').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate9', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -11257,16 +11810,23 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDate10(String classApiMethodMethod) {
 		SchoolEnrollment s = (SchoolEnrollment)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setEnrollmentDate10 inputSchoolEnrollment", pk, "EnrollmentDate10 w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_enrollmentDate10")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", enrollmentDate10 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate10))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate10', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); } ")
-			.fg();
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate10 inputSchoolEnrollment", pk, "EnrollmentDate10 w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_enrollmentDate10")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", enrollmentDate10 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate10))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate10', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); } ")
+				.fg();
+		} else {
+			sx(htmEnrollmentDate10());
+		}
 	}
 
 	public void htmEnrollmentDate10(String classApiMethodMethod) {
@@ -11279,16 +11839,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnrollmentDate10(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate10')); $('#", classApiMethodMethod, "_enrollmentDate10').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate10', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDate10')); $('#", classApiMethodMethod, "_enrollmentDate10').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentDate10', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");

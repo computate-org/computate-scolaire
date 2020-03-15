@@ -1548,7 +1548,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----"))
-						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(-1L));
+						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

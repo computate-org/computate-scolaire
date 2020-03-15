@@ -1,15 +1,19 @@
 package org.computate.scolaire.enUS.page;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -2259,6 +2263,92 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return pageLogoutUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageLogoutUri());
 	}
 
+	////////////////
+	// listSchool //
+	////////////////
+
+	/**	L'entité « listSchool »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<School>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<School> listSchool = new SearchList<School>();
+	@JsonIgnore
+	public Wrap<SearchList<School>> listSchoolWrap = new Wrap<SearchList<School>>().p(this).c(SearchList.class).var("listSchool").o(listSchool);
+
+	/**	<br/>L'entité « listSchool »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<School>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchool">Trouver l'entité listSchool dans Solr</a>
+	 * <br/>
+	 * @param listSchool est l'entité déjà construit. 
+	 **/
+	protected abstract void _listSchool(SearchList<School> l);
+
+	public SearchList<School> getListSchool() {
+		return listSchool;
+	}
+
+	public void setListSchool(SearchList<School> listSchool) {
+		this.listSchool = listSchool;
+		this.listSchoolWrap.alreadyInitialized = true;
+	}
+	protected PageLayout listSchoolInit() {
+		if(!listSchoolWrap.alreadyInitialized) {
+			_listSchool(listSchool);
+		}
+		listSchool.initDeepForClass(siteRequest_);
+		listSchoolWrap.alreadyInitialized(true);
+		return (PageLayout)this;
+	}
+
+	/////////////
+	// schools //
+	/////////////
+
+	/**	L'entité « schools »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<School> schools;
+	@JsonIgnore
+	public Wrap<List<School>> schoolsWrap = new Wrap<List<School>>().p(this).c(List.class).var("schools").o(schools);
+
+	/**	<br/>L'entité « schools »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schools">Trouver l'entité schools dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schools(Wrap<List<School>> c);
+
+	public List<School> getSchools() {
+		return schools;
+	}
+
+	public void setSchools(List<School> schools) {
+		this.schools = schools;
+		this.schoolsWrap.alreadyInitialized = true;
+	}
+	public PageLayout addSchools(School...objets) {
+		for(School o : objets) {
+			addSchools(o);
+		}
+		return (PageLayout)this;
+	}
+	public PageLayout addSchools(School o) {
+		if(o != null && !schools.contains(o))
+			this.schools.add(o);
+		return (PageLayout)this;
+	}
+	protected PageLayout schoolsInit() {
+		if(!schoolsWrap.alreadyInitialized) {
+			_schools(schoolsWrap);
+			if(schools == null)
+				setSchools(schoolsWrap.o);
+		}
+		schoolsWrap.alreadyInitialized(true);
+		return (PageLayout)this;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2315,6 +2405,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		pageSchoolUriInit();
 		pageUserUriInit();
 		pageLogoutUriInit();
+		listSchoolInit();
+		schoolsInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2328,6 +2420,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void siteRequestPageLayout(SiteRequestEnUS siteRequest_) {
 		if(w != null)
 			w.setSiteRequest_(siteRequest_);
+		if(listSchool != null)
+			listSchool.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -2426,6 +2520,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.pageUserUri;
 			case "pageLogoutUri":
 				return oPageLayout.pageLogoutUri;
+			case "listSchool":
+				return oPageLayout.listSchool;
+			case "schools":
+				return oPageLayout.schools;
 			default:
 				return null;
 		}

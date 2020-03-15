@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -23,6 +24,7 @@ import org.computate.scolaire.enUS.year.YearGenPage;
 import org.computate.scolaire.enUS.block.BlockGenPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.child.ChildGenPage;
@@ -33,6 +35,7 @@ import org.computate.scolaire.enUS.mom.MomGenPage;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.payment.PaymentGenPage;
 import org.computate.scolaire.enUS.dad.DadGenPage;
+import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.season.SeasonGenPage;
 import org.computate.scolaire.enUS.session.SessionGenPage;
@@ -40,6 +43,10 @@ import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.xml.UtilXml;
 
 public class PageLayout extends PageLayoutGen<Object> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+
+	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	public static List<String> HTML_CLOSED_ELEMENTS = Arrays.asList("area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr");
 
@@ -218,6 +225,18 @@ public class PageLayout extends PageLayoutGen<Object> {
 		}
 	}
 
+	protected void _listSchool(SearchList<School> l) {
+		l.setQuery("*:*");
+		l.setC(School.class);
+		l.setStore(true);
+		l.addFilterQuery("deleted_indexed_boolean:false");
+		l.addFilterQuery("archived_indexed_boolean:false");
+	}
+
+	protected void _schools(Wrap<List<School>> c) {
+		c.o(listSchool.getList());
+	}
+
 	@Override()
 	public void  htmlMeta() {
 		e("meta").a("charset", "UTF-8").fg();
@@ -347,6 +366,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 											sx("View the source code here");
 										g("a");
 									g("div");
+									e("div").a("class", "grow-30 w3-margin ").f();
+										e("a").a("href", "https://www.openshift.com/").a("target", "_blank").f();
+											e("span").a("class", "w3-large ").f();
+												sx("Powered by ");
+											g("span");
+											e("img").a("alt", "").a("class", "w3-image ").a("style", "display: inline-block; width: 200px; margin: 0 10px;").a("src", staticBaseUrl, "/svg/openshift.svg").fg();
+										g("a");
+									g("div");
 								g("footer");
 							g("div");
 						g("div");
@@ -357,10 +384,42 @@ public class PageLayout extends PageLayoutGen<Object> {
 						menu("Menu2");
 						e("div").a("class", "w3-container ").f();
 							e("div").a("class", "w3-container w3-text-black w3-margin-top ").f();
-								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-xlarge ").f();
+								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-padding w3-xlarge w3-text-white ").f();
 									sx("Let's get connected. ");
 								g("h6");
-								e("h6").f();
+								e("div").a("class", "w3-cell-row ").f();
+									e("div").a("class", "w3-cell ").f();
+										e("a").a("target", "_blank").a("rel", "noopener noreferrer").a("data-ajax", "false").a("href", "https://www.facebook.com/littleorchardpreschool/").f();
+											e("img").a("alt", "").a("class", "grow-30 ").a("style", "display: inline-block; width: 50px; height: 50px; margin: 0 10px;").a("src", staticBaseUrl, "/svg/facebook.svg").fg();
+										g("a");
+									g("div");
+								g("div");
+								e("div").a("class", "w3-cell-row w3-text-white ").f();
+									for(int i = 0; i < schools.size(); i++) {
+										School school = schools.get(i);
+
+										e("div").a("class", "w3-cell ").f();
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx(school.getSchoolLocation()).g("span");
+											g("div");
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx("Address: ").g("span");
+												e("span").f().sx(school.getSchoolAddress()).g("span");
+											g("div");
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx("Phone: ").g("span");
+												e("span").f().sx(school.getSchoolPhoneNumber()).g("span");
+											g("div");
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx("Email: ").g("span");
+												e("span").f().sx(school.getSchoolEmail()).g("span");
+											g("div");
+										g("div");
+										if(i == 2)
+											break;
+									}
+								g("div");
+								e("h6").a("class",  "w3-padding w3-large w3-text-white ").f();
 									e("a").a("href", "#top").f();
 										sx("Up to the top. ");
 									g("a");
@@ -376,6 +435,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public void  menu(String id) {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
+
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "").a("href", pageHomeUri).f();
 					e("span").a("class", "site-menu-item").f();
@@ -384,65 +444,81 @@ public class PageLayout extends PageLayoutGen<Object> {
 				g("a");
 			g("div");
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-pink ").f();
-						e("i").a("class", "far fa-school ").f().g("i");
-						sx("schools");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					SchoolGenPage.htmlSuggestSchoolGenPage(this, id);
-				} g("div");
-			} g("div");
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-orange ").f();
-						e("i").a("class", "far fa-calendar-check ").f().g("i");
-						sx("years");
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-pink ").f();
+							e("i").a("class", "far fa-school ").f().g("i");
+							sx("schools");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						SchoolGenPage.htmlSuggestSchoolGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					YearGenPage.htmlSuggestYearGenPage(this, id);
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-orange ").f();
+							e("i").a("class", "far fa-calendar-check ").f().g("i");
+							sx("years");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						YearGenPage.htmlSuggestYearGenPage(this, id);
+					} g("div");
 				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
-						e("i").a("class", "far fa-sun ").f().g("i");
-						sx("seasons");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+							e("i").a("class", "far fa-sun ").f().g("i");
+							sx("seasons");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						SeasonGenPage.htmlSuggestSeasonGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					SeasonGenPage.htmlSuggestSeasonGenPage(this, id);
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "fad fa-graduation-cap ").f().g("i");
+							sx("sessions");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						SessionGenPage.htmlSuggestSessionGenPage(this, id);
+					} g("div");
 				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "fad fa-graduation-cap ").f().g("i");
-						sx("sessions");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-blue ").f();
+							e("i").a("class", "fad fa-birthday-cake ").f().g("i");
+							sx("ages");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						AgeGenPage.htmlSuggestAgeGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					SessionGenPage.htmlSuggestSessionGenPage(this, id);
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-indigo ").f();
+							e("i").a("class", "far fa-bell ").f().g("i");
+							sx("blocks");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						BlockGenPage.htmlSuggestBlockGenPage(this, id);
+					} g("div");
 				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-blue ").f();
-						e("i").a("class", "fad fa-birthday-cake ").f().g("i");
-						sx("ages");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "far fa-drafting-compass ").f().g("i");
+							sx("designs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						EnrollmentDesignGenPage.htmlSuggestEnrollmentDesignGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					AgeGenPage.htmlSuggestAgeGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-indigo ").f();
-						e("i").a("class", "far fa-bell ").f().g("i");
-						sx("blocks");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					BlockGenPage.htmlSuggestBlockGenPage(this, id);
-				} g("div");
-			} g("div");
+			}
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-purple ").f();
@@ -504,16 +580,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 				} g("div");
 			} g("div");
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "far fa-drafting-compass ").f().g("i");
-						sx("designs");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					EnrollmentDesignGenPage.htmlSuggestEnrollmentDesignGenPage(this, id);
-				} g("div");
-			} g("div");
-
 			if(siteRequest_.getUserId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
@@ -546,7 +612,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 								.a("class", "setSeeArchived")
 								.a("name", "setSeeArchived")
 								.a("id", "Page_seeArchived")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#Page_seeArchived')); }, function() { addError($('#Page_seeArchived')); }); ")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", siteRequest_.getUserKey(), " }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#Page_seeArchived')); }, function() { addError($('#Page_seeArchived')); }); ")
 								;
 								if(o.getSeeArchived() != null && o.getSeeArchived())
 									a("checked", "checked");
@@ -560,7 +626,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 								.a("class", "setSeeDeleted")
 								.a("name", "setSeeDeleted")
 								.a("id", "Page_seeDeleted")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#Page_seeDeleted')); }, function() { addError($('#Page_seeDeleted')); }); ")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", siteRequest_.getUserKey(), " }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#Page_seeDeleted')); }, function() { addError($('#Page_seeDeleted')); }); ")
 								;
 								if(o.getSeeDeleted() != null && o.getSeeDeleted())
 									a("checked", "checked");

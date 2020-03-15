@@ -1548,7 +1548,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
-						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(-1L));
+						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

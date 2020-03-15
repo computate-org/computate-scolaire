@@ -1,51 +1,55 @@
 package org.computate.scolaire.enUS.cluster;
 
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.Arrays;
 import java.util.Date;
 import java.time.ZonedDateTime;
-import java.time.LocalDateTime;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.time.LocalDateTime;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.lang.Object;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -53,6 +57,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class ClusterGen<DEV> extends Object {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
+
+	List<String> ROLES = Arrays.asList("SiteAdmin");
+	List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String Cluster_UnNom = "a cluster";
 	public static final String Cluster_Ce = "this ";
@@ -83,6 +90,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
@@ -120,6 +128,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageParts »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.enUS.page.part.PagePart>();
 	@JsonIgnore
 	public Wrap<List<PagePart>> pagePartsWrap = new Wrap<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
@@ -168,6 +177,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long pk;
 	@JsonIgnore
 	public Wrap<Long> pkWrap = new Wrap<Long>().p(this).c(Long.class).var("pk").o(pk);
@@ -262,6 +272,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long inheritPk;
 	@JsonIgnore
 	public Wrap<Long> inheritPkWrap = new Wrap<Long>().p(this).c(Long.class).var("inheritPk").o(inheritPk);
@@ -329,6 +340,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « id »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String id;
 	@JsonIgnore
 	public Wrap<String> idWrap = new Wrap<String>().p(this).c(String.class).var("id").o(id);
@@ -391,6 +403,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected ZonedDateTime created;
 	@JsonIgnore
 	public Wrap<ZonedDateTime> createdWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("created").o(created);
@@ -495,6 +508,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected ZonedDateTime modified;
 	@JsonIgnore
 	public Wrap<ZonedDateTime> modifiedWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modified").o(modified);
@@ -598,6 +612,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « archived »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean archived;
 	@JsonIgnore
 	public Wrap<Boolean> archivedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("archived").o(archived);
@@ -659,37 +674,51 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputArchived(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		if("Page".equals(classApiMethodMethod)) {
-			s.e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_archived")
-				.a("value", "true");
-		} else {
-			s.e("select")
-				.a("id", classApiMethodMethod, "_archived");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			s.a("class", "setArchived inputCluster", pk, "Archived w3-input w3-border ");
-			s.a("name", "setArchived");
-		} else {
-			s.a("class", "valueArchived inputCluster", pk, "Archived w3-input w3-border ");
-			s.a("name", "archived");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getArchived() != null && getArchived())
-				s.a("checked", "checked");
-			s.fg();
-		} else {
-			s.f();
-			s.e("option").a("value", "").a("selected", "selected").f().g("option");
-			s.e("option").a("value", "true").f().sx("true").g("option");
-			s.e("option").a("value", "false").f().sx("false").g("option");
-			s.g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				s.e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_archived")
+					.a("value", "true");
+			} else {
+				s.e("select")
+					.a("id", classApiMethodMethod, "_archived");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				s.a("class", "setArchived inputCluster", pk, "Archived w3-input w3-border ");
+				s.a("name", "setArchived");
+			} else {
+				s.a("class", "valueArchived inputCluster", pk, "Archived w3-input w3-border ");
+				s.a("name", "archived");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getArchived() != null && getArchived())
+					s.a("checked", "checked");
+				s.fg();
+			} else {
+				s.f();
+				s.e("option").a("value", "").a("selected", "selected").f().g("option");
+				s.e("option").a("value", "true").f().sx("true").g("option");
+				s.e("option").a("value", "false").f().sx("false").g("option");
+				s.g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				s.sx(htmArchived());
+			}
+		}
 	}
 
 	public void htmArchived(String classApiMethodMethod) {
@@ -720,6 +749,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « deleted »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean deleted;
 	@JsonIgnore
 	public Wrap<Boolean> deletedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("deleted").o(deleted);
@@ -781,37 +811,51 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputDeleted(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		if("Page".equals(classApiMethodMethod)) {
-			s.e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_deleted")
-				.a("value", "true");
-		} else {
-			s.e("select")
-				.a("id", classApiMethodMethod, "_deleted");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			s.a("class", "setDeleted inputCluster", pk, "Deleted w3-input w3-border ");
-			s.a("name", "setDeleted");
-		} else {
-			s.a("class", "valueDeleted inputCluster", pk, "Deleted w3-input w3-border ");
-			s.a("name", "deleted");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getDeleted() != null && getDeleted())
-				s.a("checked", "checked");
-			s.fg();
-		} else {
-			s.f();
-			s.e("option").a("value", "").a("selected", "selected").f().g("option");
-			s.e("option").a("value", "true").f().sx("true").g("option");
-			s.e("option").a("value", "false").f().sx("false").g("option");
-			s.g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				s.e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_deleted")
+					.a("value", "true");
+			} else {
+				s.e("select")
+					.a("id", classApiMethodMethod, "_deleted");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				s.a("class", "setDeleted inputCluster", pk, "Deleted w3-input w3-border ");
+				s.a("name", "setDeleted");
+			} else {
+				s.a("class", "valueDeleted inputCluster", pk, "Deleted w3-input w3-border ");
+				s.a("name", "deleted");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDeleted() != null && getDeleted())
+					s.a("checked", "checked");
+				s.fg();
+			} else {
+				s.f();
+				s.e("option").a("value", "").a("selected", "selected").f().g("option");
+				s.e("option").a("value", "true").f().sx("true").g("option");
+				s.e("option").a("value", "false").f().sx("false").g("option");
+				s.g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				s.sx(htmDeleted());
+			}
+		}
 	}
 
 	public void htmDeleted(String classApiMethodMethod) {
@@ -842,6 +886,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « classCanonicalName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classCanonicalName;
 	@JsonIgnore
 	public Wrap<String> classCanonicalNameWrap = new Wrap<String>().p(this).c(String.class).var("classCanonicalName").o(classCanonicalName);
@@ -903,6 +948,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « classSimpleName »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classSimpleName;
 	@JsonIgnore
 	public Wrap<String> classSimpleNameWrap = new Wrap<String>().p(this).c(String.class).var("classSimpleName").o(classSimpleName);
@@ -964,6 +1010,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « classCanonicalNames »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classCanonicalNames = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Wrap<List<String>> classCanonicalNamesWrap = new Wrap<List<String>>().p(this).c(List.class).var("classCanonicalNames").o(classCanonicalNames);
@@ -1042,6 +1089,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « sessionId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sessionId;
 	@JsonIgnore
 	public Wrap<String> sessionIdWrap = new Wrap<String>().p(this).c(String.class).var("sessionId").o(sessionId);
@@ -1103,6 +1151,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « saves »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> saves;
 	@JsonIgnore
 	public Wrap<List<String>> savesWrap = new Wrap<List<String>>().p(this).c(List.class).var("saves").o(saves);
@@ -1183,6 +1232,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objectTitle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objectTitle;
 	@JsonIgnore
 	public Wrap<String> objectTitleWrap = new Wrap<String>().p(this).c(String.class).var("objectTitle").o(objectTitle);
@@ -1267,6 +1317,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objectId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objectId;
 	@JsonIgnore
 	public Wrap<String> objectIdWrap = new Wrap<String>().p(this).c(String.class).var("objectId").o(objectId);
@@ -1354,6 +1405,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objectNameVar »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objectNameVar;
 	@JsonIgnore
 	public Wrap<String> objectNameVarWrap = new Wrap<String>().p(this).c(String.class).var("objectNameVar").o(objectNameVar);
@@ -1415,6 +1467,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objectSuggest »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objectSuggest;
 	@JsonIgnore
 	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
@@ -1476,6 +1529,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageUrlId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUrlId;
 	@JsonIgnore
 	public Wrap<String> pageUrlIdWrap = new Wrap<String>().p(this).c(String.class).var("pageUrlId").o(pageUrlId);
@@ -1537,6 +1591,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageUrlPk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUrlPk;
 	@JsonIgnore
 	public Wrap<String> pageUrlPkWrap = new Wrap<String>().p(this).c(String.class).var("pageUrlPk").o(pageUrlPk);
@@ -1598,6 +1653,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageH1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH1;
 	@JsonIgnore
 	public Wrap<String> pageH1Wrap = new Wrap<String>().p(this).c(String.class).var("pageH1").o(pageH1);

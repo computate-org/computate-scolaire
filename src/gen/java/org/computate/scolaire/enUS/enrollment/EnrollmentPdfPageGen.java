@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.enrollment;
 
 import org.computate.scolaire.enUS.wrap.Wrap;
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
@@ -10,6 +11,7 @@ import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.enrollment.EnrollmentPdfGenPage;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;

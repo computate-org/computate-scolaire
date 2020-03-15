@@ -32,6 +32,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
@@ -39,6 +41,9 @@ import java.math.MathContext;
  * NomCanonique.enUS: org.computate.scolaire.enUS.child.ChildGenPage
  **/
 public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -458,139 +463,46 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsEnfantGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listeEnfantScolaire != null && listeEnfantScolaire.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-					.a("id", "rechargerCeEnfantGenPage")
-					.a("onclick", "patchEnfantScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeEnfantGenPage')); }, function() { ajouterErreur($('#rechargerCeEnfantGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("recharger cet enfant");
-			} g("button");
-		}
+			if(listeEnfantScolaire != null && listeEnfantScolaire.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+						.a("id", "rechargerCeEnfantGenPage")
+						.a("onclick", "patchEnfantScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeEnfantGenPage')); }, function() { ajouterErreur($('#rechargerCeEnfantGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("recharger cet enfant");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#postEnfantScolaireModale').show(); ")
-			.f().sx("Créer un enfant")
-		.g("button");
-		{ e("div").a("id", "postEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Créer un enfant").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						EnfantScolaire o = new EnfantScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// Form POST
-						{ e("div").a("id", "postEnfantScolaireForm").f();
-							htmlFormPOSTEnfantScolaire(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "postEnfantScolaire($('#postEnfantScolaireForm')); ")
-							.f().sx("Créer un enfant")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#putEnfantScolaireModale').show(); ")
-			.f().sx("Dupliquer des enfants")
-		.g("button");
-		{ e("div").a("id", "putEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des enfants").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						EnfantScolaire o = new EnfantScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PUT
-						{ e("form").a("action", "").a("id", "putEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTEnfantScolaire(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putEnfantScolaire($('#putEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Dupliquer des enfants")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchEnfantScolaireModale').show(); ")
-			.f().sx("Modifier des enfants")
-		.g("button");
-		{ e("div").a("id", "patchEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modifier des enfants").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						EnfantScolaire o = new EnfantScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PATCH
-						{ e("form").a("action", "").a("id", "patchEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHEnfantScolaire(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchEnfantScolaire($('#patchEnfantScolaireFormulaireFiltres'), $('#patchEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modifier des enfants")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listeEnfantScolaire != null && listeEnfantScolaire.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("onclick", "$('#deleteEnfantScolaireModale').show(); ")
-				.f().sx("Supprimer des enfants")
+				.a("onclick", "$('#postEnfantScolaireModale').show(); ")
+				.f().sx("Créer un enfant")
 			.g("button");
-			{ e("div").a("id", "deleteEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-green ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteEnfantScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Supprimer des enfants").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Créer un enfant").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							EnfantScolaire o = new EnfantScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteEnfantScolaireForm").f();
-								htmlFormPATCHEnfantScolaire(o);
+							// Form POST
+							{ e("div").a("id", "postEnfantScolaireForm").f();
+								htmlFormPOSTEnfantScolaire(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "deleteEnfantScolaire(", o.getPk(), "); ")
-								.f().sx("Supprimer des enfants")
+								.a("onclick", "postEnfantScolaire($('#postEnfantScolaireForm')); ")
+								.f().sx("Créer un enfant")
 							.g("button");
 
 						} g("div");
@@ -598,8 +510,106 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putEnfantScolaireModale').show(); ")
+				.f().sx("Dupliquer des enfants")
+			.g("button");
+			{ e("div").a("id", "putEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des enfants").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							EnfantScolaire o = new EnfantScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PUT
+							{ e("form").a("action", "").a("id", "putEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTEnfantScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putEnfantScolaire($('#putEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Dupliquer des enfants")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#patchEnfantScolaireModale').show(); ")
+				.f().sx("Modifier des enfants")
+			.g("button");
+			{ e("div").a("id", "patchEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier des enfants").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							EnfantScolaire o = new EnfantScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PATCH
+							{ e("form").a("action", "").a("id", "patchEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHEnfantScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "patchEnfantScolaire($('#patchEnfantScolaireFormulaireFiltres'), $('#patchEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier des enfants")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			if(listeEnfantScolaire != null && listeEnfantScolaire.size() == 1) {
+				e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+					.a("onclick", "$('#deleteEnfantScolaireModale').show(); ")
+					.f().sx("Supprimer des enfants")
+				.g("button");
+				{ e("div").a("id", "deleteEnfantScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-green ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteEnfantScolaireModale').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Supprimer des enfants").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").f();
+								EnfantScolaire o = new EnfantScolaire();
+								o.setRequeteSite_(requeteSite_);
+
+								// Form DELETE
+								{ e("div").a("id", "deleteEnfantScolaireForm").f();
+									htmlFormPATCHEnfantScolaire(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+									.a("onclick", "deleteEnfantScolaire(", o.getPk(), "); ")
+									.f().sx("Supprimer des enfants")
+								.g("button");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+
+			}
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
@@ -640,12 +650,18 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolChild"
 	**/
 	public static void htmlSuggereEnfantGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "rechargerTousEnfantGenPage", id).a("href", "/enfant").a("class", "").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousEnfantGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousEnfantGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("recharger tous les enfants");
-			} p.g("a");
-		} p.g("div");
+		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), EnfantGenPage.ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), EnfantGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "rechargerTousEnfantGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousEnfantGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousEnfantGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("recharger tous les enfants");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

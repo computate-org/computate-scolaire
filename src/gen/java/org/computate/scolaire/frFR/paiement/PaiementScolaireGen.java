@@ -60,8 +60,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PaiementScolaire.class);
 
-	List<String> ROLES = Arrays.asList("SiteAdmin");
-	List<String> ROLE_READS = Arrays.asList("User");
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String PaiementScolaire_UnNom = "un paiement";
 	public static final String PaiementScolaire_Ce = "ce ";
@@ -283,13 +283,18 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCle')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCle')); });")
+											.f().sx("ajouter une inscription")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1315,16 +1320,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputEnfantNomCompletPrefere(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); $('#", classeApiMethodeMethode, "_enfantNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setEnfantNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); $('#", classeApiMethodeMethode, "_enfantNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setEnfantNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomCompletPrefere')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1454,16 +1464,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputEnfantDateNaissance(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); $('#", classeApiMethodeMethode, "_enfantDateNaissance').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setEnfantDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); $('#", classeApiMethodeMethode, "_enfantDateNaissance').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setEnfantDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1585,16 +1600,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputMereNomCompletPrefere(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); $('#", classeApiMethodeMethode, "_mereNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setMereNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); $('#", classeApiMethodeMethode, "_mereNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setMereNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_mereNomCompletPrefere')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1716,16 +1736,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputPereNomCompletPrefere(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); $('#", classeApiMethodeMethode, "_pereNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPereNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); $('#", classeApiMethodeMethode, "_pereNomCompletPrefere').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPereNomCompletPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pereNomCompletPrefere')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3338,16 +3363,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputPaiementDescription(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementDescription')); $('#", classeApiMethodeMethode, "_paiementDescription').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementDescription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDescription')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementDescription')); $('#", classeApiMethodeMethode, "_paiementDescription').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementDescription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDescription')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3477,16 +3507,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputPaiementDate(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementDate')); $('#", classeApiMethodeMethode, "_paiementDate').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementDate', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementDate')); $('#", classeApiMethodeMethode, "_paiementDate').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementDate', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3626,16 +3661,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputPaiementMontant(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementMontant')); $('#", classeApiMethodeMethode, "_paiementMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementMontant')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementMontant')); $('#", classeApiMethodeMethode, "_paiementMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementMontant')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3775,16 +3815,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputFraisMontant(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontant')); $('#", classeApiMethodeMethode, "_fraisMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontant')); $('#", classeApiMethodeMethode, "_fraisMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3924,16 +3969,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputFraisMontantFuture(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); $('#", classeApiMethodeMethode, "_fraisMontantFuture').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontantFuture', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); $('#", classeApiMethodeMethode, "_fraisMontantFuture').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontantFuture', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -4877,16 +4927,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputPaiementPar(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementPar')); $('#", classeApiMethodeMethode, "_paiementPar').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementPar', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementPar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementPar')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementPar')); $('#", classeApiMethodeMethode, "_paiementPar').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementPar', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementPar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementPar')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -5008,16 +5063,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputTransactionId(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_transactionId')); $('#", classeApiMethodeMethode, "_transactionId').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setTransactionId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_transactionId')); $('#", classeApiMethodeMethode, "_transactionId').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setTransactionId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -5139,16 +5199,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputCustomerProfileId(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -5270,16 +5335,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputTransactionStatus(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_transactionStatus')); $('#", classeApiMethodeMethode, "_transactionStatus').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setTransactionStatus', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionStatus')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionStatus')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_transactionStatus')); $('#", classeApiMethodeMethode, "_transactionStatus').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setTransactionStatus', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_transactionStatus')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_transactionStatus')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -5538,16 +5608,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 								inputPaiementNomCourt(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); $('#", classeApiMethodeMethode, "_paiementNomCourt').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementNomCourt', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); $('#", classeApiMethodeMethode, "_paiementNomCourt').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setPaiementNomCourt', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementNomCourt')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");

@@ -2,20 +2,24 @@ package org.computate.scolaire.enUS.cluster;
 
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import java.util.Arrays;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
@@ -32,6 +36,7 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 	/**	L'entité « listCluster »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<Cluster> listCluster;
 	@JsonIgnore
 	public Wrap<SearchList<Cluster>> listClusterWrap = new Wrap<SearchList<Cluster>>().p(this).c(SearchList.class).var("listCluster").o(listCluster);
@@ -71,6 +76,7 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 	/**	L'entité « cluster »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Cluster cluster;
 	@JsonIgnore
 	public Wrap<Cluster> clusterWrap = new Wrap<Cluster>().p(this).c(Cluster.class).var("cluster").o(cluster);

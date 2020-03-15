@@ -32,6 +32,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -64,6 +66,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -96,6 +100,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -128,12 +134,17 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
  * Translate: false
  **/
 public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -811,139 +822,46 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 	}
 
 	public void htmlBodyFormsEnrollmentFormGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-					.a("id", "refreshThisEnrollmentFormGenPage")
-					.a("onclick", "patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisEnrollmentFormGenPage')); }, function() { addError($('#refreshThisEnrollmentFormGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("refresh this enrollment");
-			} g("button");
-		}
+			if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+						.a("id", "refreshThisEnrollmentFormGenPage")
+						.a("onclick", "patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisEnrollmentFormGenPage')); }, function() { addError($('#refreshThisEnrollmentFormGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("refresh this enrollment");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-			.a("onclick", "$('#postSchoolEnrollmentModal').show(); ")
-			.f().sx("Create an enrollment")
-		.g("button");
-		{ e("div").a("id", "postSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-purple ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Create an enrollment").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolEnrollment o = new SchoolEnrollment();
-						o.setSiteRequest_(siteRequest_);
-
-						// Form POST
-						{ e("div").a("id", "postSchoolEnrollmentForm").f();
-							htmlFormPOSTSchoolEnrollment(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "postSchoolEnrollment($('#postSchoolEnrollmentForm')); ")
-							.f().sx("Create an enrollment")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-			.a("onclick", "$('#putSchoolEnrollmentModal').show(); ")
-			.f().sx("Duplicate the enrollments")
-		.g("button");
-		{ e("div").a("id", "putSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-purple ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Duplicate the enrollments").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolEnrollment o = new SchoolEnrollment();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PUT
-						{ e("form").a("action", "").a("id", "putSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTSchoolEnrollment(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "putSchoolEnrollment($('#putSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Duplicate the enrollments")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-			.a("onclick", "$('#patchSchoolEnrollmentModal').show(); ")
-			.f().sx("Modify the enrollments")
-		.g("button");
-		{ e("div").a("id", "patchSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-purple ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modify the enrollments").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolEnrollment o = new SchoolEnrollment();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PATCH
-						{ e("form").a("action", "").a("id", "patchSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHSchoolEnrollment(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-							.a("onclick", "patchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters'), $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modify the enrollments")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-				.a("onclick", "$('#deleteSchoolEnrollmentModal').show(); ")
-				.f().sx("Delete the enrollments")
+				.a("onclick", "$('#postSchoolEnrollmentModal').show(); ")
+				.f().sx("Create an enrollment")
 			.g("button");
-			{ e("div").a("id", "deleteSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-purple ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Delete the enrollments").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Create an enrollment").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolEnrollment o = new SchoolEnrollment();
 							o.setSiteRequest_(siteRequest_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteSchoolEnrollmentForm").f();
-								htmlFormPATCHSchoolEnrollment(o);
+							// Form POST
+							{ e("div").a("id", "postSchoolEnrollmentForm").f();
+								htmlFormPOSTSchoolEnrollment(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
-								.a("onclick", "deleteSchoolEnrollment(", o.getPk(), "); ")
-								.f().sx("Delete the enrollments")
+								.a("onclick", "postSchoolEnrollment($('#postSchoolEnrollmentForm')); ")
+								.f().sx("Create an enrollment")
 							.g("button");
 
 						} g("div");
@@ -951,19 +869,123 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+				.a("onclick", "$('#putSchoolEnrollmentModal').show(); ")
+				.f().sx("Duplicate the enrollments")
+			.g("button");
+			{ e("div").a("id", "putSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-purple ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate the enrollments").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolEnrollment o = new SchoolEnrollment();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PUT
+							{ e("form").a("action", "").a("id", "putSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTSchoolEnrollment(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+								.a("onclick", "putSchoolEnrollment($('#putSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Duplicate the enrollments")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+				.a("onclick", "$('#patchSchoolEnrollmentModal').show(); ")
+				.f().sx("Modify the enrollments")
+			.g("button");
+			{ e("div").a("id", "patchSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-purple ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modify the enrollments").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolEnrollment o = new SchoolEnrollment();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PATCH
+							{ e("form").a("action", "").a("id", "patchSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHSchoolEnrollment(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+								.a("onclick", "patchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters'), $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify the enrollments")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
+				e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+					.a("onclick", "$('#deleteSchoolEnrollmentModal').show(); ")
+					.f().sx("Delete the enrollments")
+				.g("button");
+				{ e("div").a("id", "deleteSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-purple ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Delete the enrollments").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").f();
+								SchoolEnrollment o = new SchoolEnrollment();
+								o.setSiteRequest_(siteRequest_);
+
+								// Form DELETE
+								{ e("div").a("id", "deleteSchoolEnrollmentForm").f();
+									htmlFormPATCHSchoolEnrollment(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+									.a("onclick", "deleteSchoolEnrollment(", o.getPk(), "); ")
+									.f().sx("Delete the enrollments")
+								.g("button");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+
+			}
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
 	**/
 	public static void htmlSuggestEnrollmentFormGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "refreshAllEnrollmentFormGenPage", id).a("href", "/enrollment-form").a("class", "").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentFormGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentFormGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("refresh all the enrollments");
-			} p.g("a");
-		} p.g("div");
+		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentFormGenPage.ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentFormGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "refreshAllEnrollmentFormGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentFormGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentFormGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("refresh all the enrollments");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

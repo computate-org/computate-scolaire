@@ -1,51 +1,55 @@
 package org.computate.scolaire.frFR.cluster;
 
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.Arrays;
 import java.util.Date;
 import java.time.ZonedDateTime;
-import java.time.LocalDateTime;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.time.LocalDateTime;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.lang.Object;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageH1 dans Solr</a>
@@ -53,6 +57,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class ClusterGen<DEV> extends Object {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
+
+	List<String> ROLES = Arrays.asList("SiteAdmin");
+	List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String Cluster_UnNom = "un cluster";
 	public static final String Cluster_Ce = "ce ";
@@ -84,6 +91,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
@@ -121,6 +129,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageParts »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
 	@JsonIgnore
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
@@ -169,6 +178,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long pk;
 	@JsonIgnore
 	public Couverture<Long> pkCouverture = new Couverture<Long>().p(this).c(Long.class).var("pk").o(pk);
@@ -263,6 +273,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long inheritPk;
 	@JsonIgnore
 	public Couverture<Long> inheritPkCouverture = new Couverture<Long>().p(this).c(Long.class).var("inheritPk").o(inheritPk);
@@ -330,6 +341,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « id »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String id;
 	@JsonIgnore
 	public Couverture<String> idCouverture = new Couverture<String>().p(this).c(String.class).var("id").o(id);
@@ -392,6 +404,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected ZonedDateTime cree;
 	@JsonIgnore
 	public Couverture<ZonedDateTime> creeCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("cree").o(cree);
@@ -496,6 +509,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected ZonedDateTime modifie;
 	@JsonIgnore
 	public Couverture<ZonedDateTime> modifieCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modifie").o(modifie);
@@ -599,6 +613,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « archive »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean archive;
 	@JsonIgnore
 	public Couverture<Boolean> archiveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("archive").o(archive);
@@ -660,37 +675,51 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputArchive(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			s.e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_archive")
-				.a("value", "true");
-		} else {
-			s.e("select")
-				.a("id", classeApiMethodeMethode, "_archive");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			s.a("class", "setArchive inputCluster", pk, "Archive w3-input w3-border ");
-			s.a("name", "setArchive");
-		} else {
-			s.a("class", "valeurArchive inputCluster", pk, "Archive w3-input w3-border ");
-			s.a("name", "archive");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_archive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_archive')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getArchive() != null && getArchive())
-				s.a("checked", "checked");
-			s.fg();
-		} else {
-			s.f();
-			s.e("option").a("value", "").a("selected", "selected").f().g("option");
-			s.e("option").a("value", "true").f().sx("true").g("option");
-			s.e("option").a("value", "false").f().sx("false").g("option");
-			s.g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				s.e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_archive")
+					.a("value", "true");
+			} else {
+				s.e("select")
+					.a("id", classeApiMethodeMethode, "_archive");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				s.a("class", "setArchive inputCluster", pk, "Archive w3-input w3-border ");
+				s.a("name", "setArchive");
+			} else {
+				s.a("class", "valeurArchive inputCluster", pk, "Archive w3-input w3-border ");
+				s.a("name", "archive");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_archive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_archive')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getArchive() != null && getArchive())
+					s.a("checked", "checked");
+				s.fg();
+			} else {
+				s.f();
+				s.e("option").a("value", "").a("selected", "selected").f().g("option");
+				s.e("option").a("value", "true").f().sx("true").g("option");
+				s.e("option").a("value", "false").f().sx("false").g("option");
+				s.g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				s.sx(htmArchive());
+			}
+		}
 	}
 
 	public void htmArchive(String classeApiMethodeMethode) {
@@ -721,6 +750,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « supprime »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean supprime;
 	@JsonIgnore
 	public Couverture<Boolean> supprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
@@ -782,37 +812,51 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputSupprime(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			s.e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_supprime")
-				.a("value", "true");
-		} else {
-			s.e("select")
-				.a("id", classeApiMethodeMethode, "_supprime");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			s.a("class", "setSupprime inputCluster", pk, "Supprime w3-input w3-border ");
-			s.a("name", "setSupprime");
-		} else {
-			s.a("class", "valeurSupprime inputCluster", pk, "Supprime w3-input w3-border ");
-			s.a("name", "supprime");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_supprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_supprime')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getSupprime() != null && getSupprime())
-				s.a("checked", "checked");
-			s.fg();
-		} else {
-			s.f();
-			s.e("option").a("value", "").a("selected", "selected").f().g("option");
-			s.e("option").a("value", "true").f().sx("true").g("option");
-			s.e("option").a("value", "false").f().sx("false").g("option");
-			s.g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				s.e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_supprime")
+					.a("value", "true");
+			} else {
+				s.e("select")
+					.a("id", classeApiMethodeMethode, "_supprime");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				s.a("class", "setSupprime inputCluster", pk, "Supprime w3-input w3-border ");
+				s.a("name", "setSupprime");
+			} else {
+				s.a("class", "valeurSupprime inputCluster", pk, "Supprime w3-input w3-border ");
+				s.a("name", "supprime");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_supprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_supprime')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getSupprime() != null && getSupprime())
+					s.a("checked", "checked");
+				s.fg();
+			} else {
+				s.f();
+				s.e("option").a("value", "").a("selected", "selected").f().g("option");
+				s.e("option").a("value", "true").f().sx("true").g("option");
+				s.e("option").a("value", "false").f().sx("false").g("option");
+				s.g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				s.sx(htmSupprime());
+			}
+		}
 	}
 
 	public void htmSupprime(String classeApiMethodeMethode) {
@@ -843,6 +887,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « classeNomCanonique »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeNomCanonique;
 	@JsonIgnore
 	public Couverture<String> classeNomCanoniqueCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomCanonique").o(classeNomCanonique);
@@ -904,6 +949,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « classeNomSimple »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String classeNomSimple;
 	@JsonIgnore
 	public Couverture<String> classeNomSimpleCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomSimple").o(classeNomSimple);
@@ -965,6 +1011,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « classeNomsCanoniques »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> classeNomsCanoniques = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Couverture<List<String>> classeNomsCanoniquesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeNomsCanoniques").o(classeNomsCanoniques);
@@ -1043,6 +1090,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « sessionId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sessionId;
 	@JsonIgnore
 	public Couverture<String> sessionIdCouverture = new Couverture<String>().p(this).c(String.class).var("sessionId").o(sessionId);
@@ -1104,6 +1152,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « sauvegardes »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> sauvegardes;
 	@JsonIgnore
 	public Couverture<List<String>> sauvegardesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("sauvegardes").o(sauvegardes);
@@ -1184,6 +1233,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objetTitre »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objetTitre;
 	@JsonIgnore
 	public Couverture<String> objetTitreCouverture = new Couverture<String>().p(this).c(String.class).var("objetTitre").o(objetTitre);
@@ -1268,6 +1318,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objetId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objetId;
 	@JsonIgnore
 	public Couverture<String> objetIdCouverture = new Couverture<String>().p(this).c(String.class).var("objetId").o(objetId);
@@ -1355,6 +1406,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objetNomVar »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objetNomVar;
 	@JsonIgnore
 	public Couverture<String> objetNomVarCouverture = new Couverture<String>().p(this).c(String.class).var("objetNomVar").o(objetNomVar);
@@ -1416,6 +1468,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « objetSuggere »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String objetSuggere;
 	@JsonIgnore
 	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
@@ -1477,6 +1530,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageUrlId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUrlId;
 	@JsonIgnore
 	public Couverture<String> pageUrlIdCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrlId").o(pageUrlId);
@@ -1538,6 +1592,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageUrlPk »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageUrlPk;
 	@JsonIgnore
 	public Couverture<String> pageUrlPkCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrlPk").o(pageUrlPk);
@@ -1599,6 +1654,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageH1 »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String pageH1;
 	@JsonIgnore
 	public Couverture<String> pageH1Couverture = new Couverture<String>().p(this).c(String.class).var("pageH1").o(pageH1);

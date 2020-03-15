@@ -224,6 +224,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
 						break;
+					case "schoolEmail":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
+						break;
 					case "schoolLocation":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolLocation", jsonObject.getString(entityVar), pk));
@@ -513,6 +517,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					case "schoolAdministratorName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolEmail":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
 						break;
 					case "schoolLocation":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -840,6 +848,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							o2.setSchoolAdministratorName(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.jsonSchoolAdministratorName(), pk));
+						}
+						break;
+					case "setSchoolEmail":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolEmail"));
+						} else {
+							o2.setSchoolEmail(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolEmail", o2.jsonSchoolEmail(), pk));
 						}
 						break;
 					case "setSchoolLocation":
@@ -1497,6 +1515,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
 																	} else {
 																		errorSchool(siteRequest, eventHandler, f);
@@ -1532,14 +1551,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
 								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(siteUser1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
-								jsonObject.put("customerProfileId", jsonPrincipal.getString("name"));
-								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								jsonObject.put("email", jsonPrincipal.getString("email"));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
+								jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 								Boolean define = userSchoolDefine(siteRequest, jsonObject, true);
 								if(define) {
 									SiteUser siteUser;
@@ -1558,22 +1577,25 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 									siteRequest2.setSiteContext_(siteContext);
 									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
 									siteRequest2.setUserId(siteRequest.getUserId());
+									siteRequest2.setUserKey(siteRequest.getUserKey());
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
 									userService.sqlPATCHSiteUser(siteUser, c -> {
 										if(c.succeeded()) {
-											userService.defineSiteUser(siteUser, d -> {
+											SiteUser siteUser2 = c.result();
+											userService.defineSiteUser(siteUser2, d -> {
 												if(d.succeeded()) {
-													userService.attributeSiteUser(siteUser, e -> {
+													userService.attributeSiteUser(siteUser2, e -> {
 														if(e.succeeded()) {
-															userService.indexSiteUser(siteUser, f -> {
+															userService.indexSiteUser(siteUser2, f -> {
 																if(f.succeeded()) {
-																	siteRequest.setSiteUser(siteUser);
-																	siteRequest.setUserName(siteUser.getUserName());
-																	siteRequest.setUserFirstName(siteUser.getUserFirstName());
-																	siteRequest.setUserLastName(siteUser.getUserLastName());
-																	siteRequest.setUserId(siteUser.getUserId());
+																	siteRequest.setSiteUser(siteUser2);
+																	siteRequest.setUserName(siteUser2.getUserName());
+																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser2.getUserLastName());
+																	siteRequest.setUserId(siteUser2.getUserId());
+																	siteRequest.setUserKey(siteUser2.getPk());
 																	eventHandler.handle(Future.succeededFuture());
 																} else {
 																	errorSchool(siteRequest, eventHandler, f);
@@ -1597,6 +1619,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
 									siteRequest.setUserLastName(siteUser1.getUserLastName());
 									siteRequest.setUserId(siteUser1.getUserId());
+									siteRequest.setUserKey(siteUser1.getPk());
 									eventHandler.handle(Future.succeededFuture());
 								}
 							}

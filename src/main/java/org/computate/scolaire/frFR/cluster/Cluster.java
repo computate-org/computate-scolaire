@@ -17,7 +17,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
 
 
 
-/**            
+/**          
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Modele: true
  * Api: true
@@ -52,8 +52,11 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * IconeNom: fort-awesome
  * MotCle: classeNomSimpleCluster
  * 
+ * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
+ * RoleRead.frFR: User
+ * RoleRead.enUS: User
  */               
 public class Cluster extends ClusterGen<Object> {   
 

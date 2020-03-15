@@ -62,7 +62,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.desc: paiementPar
  * 
  * Rows: 50
-*/ 
+*/   
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**

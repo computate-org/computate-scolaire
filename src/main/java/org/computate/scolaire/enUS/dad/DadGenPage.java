@@ -32,12 +32,17 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
  * Translate: false
  **/
 public class DadGenPage extends DadGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -494,139 +499,46 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsDadGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listSchoolDad != null && listSchoolDad.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-					.a("id", "refreshThisDadGenPage")
-					.a("onclick", "patchSchoolDadVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisDadGenPage')); }, function() { addError($('#refreshThisDadGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("refresh this dad");
-			} g("button");
-		}
+			if(listSchoolDad != null && listSchoolDad.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+						.a("id", "refreshThisDadGenPage")
+						.a("onclick", "patchSchoolDadVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisDadGenPage')); }, function() { addError($('#refreshThisDadGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("refresh this dad");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-			.a("onclick", "$('#postSchoolDadModal').show(); ")
-			.f().sx("Create a dad")
-		.g("button");
-		{ e("div").a("id", "postSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-light-blue ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolDadModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Create a dad").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolDad o = new SchoolDad();
-						o.setSiteRequest_(siteRequest_);
-
-						// Form POST
-						{ e("div").a("id", "postSchoolDadForm").f();
-							htmlFormPOSTSchoolDad(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "postSchoolDad($('#postSchoolDadForm')); ")
-							.f().sx("Create a dad")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-			.a("onclick", "$('#putSchoolDadModal').show(); ")
-			.f().sx("Duplicate the dads")
-		.g("button");
-		{ e("div").a("id", "putSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-light-blue ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolDadModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Duplicate the dads").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolDad o = new SchoolDad();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PUT
-						{ e("form").a("action", "").a("id", "putSchoolDadFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTSchoolDad(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "putSchoolDad($('#putSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Duplicate the dads")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-			.a("onclick", "$('#patchSchoolDadModal').show(); ")
-			.f().sx("Modify the dads")
-		.g("button");
-		{ e("div").a("id", "patchSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-light-blue ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolDadModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modify the dads").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolDad o = new SchoolDad();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PATCH
-						{ e("form").a("action", "").a("id", "patchSchoolDadFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHSchoolDad(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-							.a("onclick", "patchSchoolDad($('#patchSchoolDadFormFilters'), $('#patchSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modify the dads")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listSchoolDad != null && listSchoolDad.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-				.a("onclick", "$('#deleteSchoolDadModal').show(); ")
-				.f().sx("Delete the dads")
+				.a("onclick", "$('#postSchoolDadModal').show(); ")
+				.f().sx("Create a dad")
 			.g("button");
-			{ e("div").a("id", "deleteSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-light-blue ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolDadModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Delete the dads").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolDadModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Create a dad").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolDad o = new SchoolDad();
 							o.setSiteRequest_(siteRequest_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteSchoolDadForm").f();
-								htmlFormPATCHSchoolDad(o);
+							// Form POST
+							{ e("div").a("id", "postSchoolDadForm").f();
+								htmlFormPOSTSchoolDad(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "deleteSchoolDad(", o.getPk(), "); ")
-								.f().sx("Delete the dads")
+								.a("onclick", "postSchoolDad($('#postSchoolDadForm')); ")
+								.f().sx("Create a dad")
 							.g("button");
 
 						} g("div");
@@ -634,19 +546,123 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+				.a("onclick", "$('#putSchoolDadModal').show(); ")
+				.f().sx("Duplicate the dads")
+			.g("button");
+			{ e("div").a("id", "putSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-light-blue ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolDadModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate the dads").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolDad o = new SchoolDad();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PUT
+							{ e("form").a("action", "").a("id", "putSchoolDadFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTSchoolDad(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
+								.a("onclick", "putSchoolDad($('#putSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Duplicate the dads")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+				.a("onclick", "$('#patchSchoolDadModal').show(); ")
+				.f().sx("Modify the dads")
+			.g("button");
+			{ e("div").a("id", "patchSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-light-blue ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolDadModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modify the dads").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolDad o = new SchoolDad();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PATCH
+							{ e("form").a("action", "").a("id", "patchSchoolDadFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHSchoolDad(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
+								.a("onclick", "patchSchoolDad($('#patchSchoolDadFormFilters'), $('#patchSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify the dads")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			if(listSchoolDad != null && listSchoolDad.size() == 1) {
+				e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+					.a("onclick", "$('#deleteSchoolDadModal').show(); ")
+					.f().sx("Delete the dads")
+				.g("button");
+				{ e("div").a("id", "deleteSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-light-blue ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolDadModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Delete the dads").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").f();
+								SchoolDad o = new SchoolDad();
+								o.setSiteRequest_(siteRequest_);
+
+								// Form DELETE
+								{ e("div").a("id", "deleteSchoolDadForm").f();
+									htmlFormPATCHSchoolDad(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
+									.a("onclick", "deleteSchoolDad(", o.getPk(), "); ")
+									.f().sx("Delete the dads")
+								.g("button");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+
+			}
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
 	**/
 	public static void htmlSuggestDadGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "refreshAllDadGenPage", id).a("href", "/dad").a("class", "").a("onclick", "patchSchoolDadVals([], {}, function() { addGlow($('#refreshAllDadGenPage", id, "')); }, function() { addError($('#refreshAllDadGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("refresh all the dads");
-			} p.g("a");
-		} p.g("div");
+		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), DadGenPage.ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), DadGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "refreshAllDadGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ").a("onclick", "patchSchoolDadVals([], {}, function() { addGlow($('#refreshAllDadGenPage", id, "')); }, function() { addError($('#refreshAllDadGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("refresh all the dads");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

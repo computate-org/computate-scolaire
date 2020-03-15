@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.mere;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
@@ -13,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,6 +50,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class MereScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MereScolaire.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String MereScolaire_UnNom = "une mère";
 	public static final String MereScolaire_Ce = "cette ";
@@ -229,17 +234,24 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscriptions")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCles")
-				.a("id", classeApiMethodeMethode, "_inscriptionCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereMereScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "MereScolaireInscriptionCles')) : [{'name':'fq','value':'mereCles:", pk, "'}], $('#listMereScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "inscriptions")
+					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setInscriptionCles")
+					.a("id", classeApiMethodeMethode, "_inscriptionCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereMereScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "MereScolaireInscriptionCles')) : [{'name':'fq','value':'mereCles:", pk, "'}], $('#listMereScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmInscriptionCles());
+		}
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
@@ -271,13 +283,18 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listMereScolaireInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", pk, "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+								if(
+										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", pk, "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.f().sx("ajouter une inscription")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1097,24 +1114,31 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonnePrenom(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prénom")
-			.a("id", classeApiMethodeMethode, "_personnePrenom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenom inputMereScolaire", pk, "PersonnePrenom w3-input w3-border ");
-				a("name", "setPersonnePrenom");
-			} else {
-				a("class", "valeurPersonnePrenom w3-input w3-border inputMereScolaire", pk, "PersonnePrenom w3-input w3-border ");
-				a("name", "personnePrenom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
-			}
-			a("value", strPersonnePrenom())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prénom")
+				.a("id", classeApiMethodeMethode, "_personnePrenom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonnePrenom inputMereScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("name", "setPersonnePrenom");
+				} else {
+					a("class", "valeurPersonnePrenom w3-input w3-border inputMereScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("name", "personnePrenom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
+				}
+				a("value", strPersonnePrenom())
+			.fg();
 
+		} else {
+			sx(htmPersonnePrenom());
+		}
 	}
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
@@ -1131,16 +1155,21 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 								inputPersonnePrenom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1214,24 +1243,31 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonnePrenomPrefere(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prénom préferé")
-			.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenomPrefere inputMereScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
-				a("name", "setPersonnePrenomPrefere");
-			} else {
-				a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputMereScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
-				a("name", "personnePrenomPrefere");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
-			}
-			a("value", strPersonnePrenomPrefere())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prénom préferé")
+				.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonnePrenomPrefere inputMereScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("name", "setPersonnePrenomPrefere");
+				} else {
+					a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputMereScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("name", "personnePrenomPrefere");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
+				}
+				a("value", strPersonnePrenomPrefere())
+			.fg();
 
+		} else {
+			sx(htmPersonnePrenomPrefere());
+		}
 	}
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
@@ -1248,16 +1284,21 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 								inputPersonnePrenomPrefere(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1331,24 +1372,31 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputFamilleNom(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "nom de famille")
-			.a("id", classeApiMethodeMethode, "_familleNom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleNom inputMereScolaire", pk, "FamilleNom w3-input w3-border ");
-				a("name", "setFamilleNom");
-			} else {
-				a("class", "valeurFamilleNom w3-input w3-border inputMereScolaire", pk, "FamilleNom w3-input w3-border ");
-				a("name", "familleNom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
-			}
-			a("value", strFamilleNom())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "nom de famille")
+				.a("id", classeApiMethodeMethode, "_familleNom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setFamilleNom inputMereScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("name", "setFamilleNom");
+				} else {
+					a("class", "valeurFamilleNom w3-input w3-border inputMereScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("name", "familleNom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
+				}
+				a("value", strFamilleNom())
+			.fg();
 
+		} else {
+			sx(htmFamilleNom());
+		}
 	}
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
@@ -1365,16 +1413,21 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 								inputFamilleNom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1637,24 +1690,31 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneOccupation(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "occupation")
-			.a("id", classeApiMethodeMethode, "_personneOccupation");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneOccupation inputMereScolaire", pk, "PersonneOccupation w3-input w3-border ");
-				a("name", "setPersonneOccupation");
-			} else {
-				a("class", "valeurPersonneOccupation w3-input w3-border inputMereScolaire", pk, "PersonneOccupation w3-input w3-border ");
-				a("name", "personneOccupation");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneOccupation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ");
-			}
-			a("value", strPersonneOccupation())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "occupation")
+				.a("id", classeApiMethodeMethode, "_personneOccupation");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonneOccupation inputMereScolaire", pk, "PersonneOccupation w3-input w3-border ");
+					a("name", "setPersonneOccupation");
+				} else {
+					a("class", "valeurPersonneOccupation w3-input w3-border inputMereScolaire", pk, "PersonneOccupation w3-input w3-border ");
+					a("name", "personneOccupation");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneOccupation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ");
+				}
+				a("value", strPersonneOccupation())
+			.fg();
 
+		} else {
+			sx(htmPersonneOccupation());
+		}
 	}
 
 	public void htmPersonneOccupation(String classeApiMethodeMethode) {
@@ -1671,16 +1731,21 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 								inputPersonneOccupation(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneOccupation')); $('#", classeApiMethodeMethode, "_personneOccupation').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneOccupation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneOccupation')); $('#", classeApiMethodeMethode, "_personneOccupation').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneOccupation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1754,24 +1819,31 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneNumeroTelephone(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "numéro de téléphone")
-			.a("id", classeApiMethodeMethode, "_personneNumeroTelephone");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneNumeroTelephone inputMereScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
-				a("name", "setPersonneNumeroTelephone");
-			} else {
-				a("class", "valeurPersonneNumeroTelephone w3-input w3-border inputMereScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
-				a("name", "personneNumeroTelephone");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneNumeroTelephone', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ");
-			}
-			a("value", strPersonneNumeroTelephone())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "numéro de téléphone")
+				.a("id", classeApiMethodeMethode, "_personneNumeroTelephone");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonneNumeroTelephone inputMereScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
+					a("name", "setPersonneNumeroTelephone");
+				} else {
+					a("class", "valeurPersonneNumeroTelephone w3-input w3-border inputMereScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
+					a("name", "personneNumeroTelephone");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneNumeroTelephone', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ");
+				}
+				a("value", strPersonneNumeroTelephone())
+			.fg();
 
+		} else {
+			sx(htmPersonneNumeroTelephone());
+		}
 	}
 
 	public void htmPersonneNumeroTelephone(String classeApiMethodeMethode) {
@@ -1788,16 +1860,21 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 								inputPersonneNumeroTelephone(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); $('#", classeApiMethodeMethode, "_personneNumeroTelephone').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneNumeroTelephone', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); $('#", classeApiMethodeMethode, "_personneNumeroTelephone').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneNumeroTelephone', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1871,24 +1948,31 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneMail(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "mail")
-			.a("id", classeApiMethodeMethode, "_personneMail");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneMail inputMereScolaire", pk, "PersonneMail w3-input w3-border ");
-				a("name", "setPersonneMail");
-			} else {
-				a("class", "valeurPersonneMail w3-input w3-border inputMereScolaire", pk, "PersonneMail w3-input w3-border ");
-				a("name", "personneMail");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ");
-			}
-			a("value", strPersonneMail())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "mail")
+				.a("id", classeApiMethodeMethode, "_personneMail");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonneMail inputMereScolaire", pk, "PersonneMail w3-input w3-border ");
+					a("name", "setPersonneMail");
+				} else {
+					a("class", "valeurPersonneMail w3-input w3-border inputMereScolaire", pk, "PersonneMail w3-input w3-border ");
+					a("name", "personneMail");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ");
+				}
+				a("value", strPersonneMail())
+			.fg();
 
+		} else {
+			sx(htmPersonneMail());
+		}
 	}
 
 	public void htmPersonneMail(String classeApiMethodeMethode) {
@@ -1905,16 +1989,21 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 								inputPersonneMail(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneMail')); $('#", classeApiMethodeMethode, "_personneMail').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneMail')); $('#", classeApiMethodeMethode, "_personneMail').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2056,37 +2145,44 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneSms(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_personneSms")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_personneSms");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
-			a("name", "setPersonneSms");
-		} else {
-			a("class", "valeurPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
-			a("name", "personneSms");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneSms', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneSms')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneSms')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPersonneSms() != null && getPersonneSms())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_personneSms")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_personneSms");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
+				a("name", "setPersonneSms");
+			} else {
+				a("class", "valeurPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
+				a("name", "personneSms");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneSms', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneSms')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneSms')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPersonneSms() != null && getPersonneSms())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmPersonneSms());
+		}
 	}
 
 	public void htmPersonneSms(String classeApiMethodeMethode) {
@@ -2180,37 +2276,44 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneRecevoirMail(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_personneRecevoirMail")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_personneRecevoirMail");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
-			a("name", "setPersonneRecevoirMail");
-		} else {
-			a("class", "valeurPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
-			a("name", "personneRecevoirMail");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRecevoirMail', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPersonneRecevoirMail() != null && getPersonneRecevoirMail())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_personneRecevoirMail")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_personneRecevoirMail");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
+				a("name", "setPersonneRecevoirMail");
+			} else {
+				a("class", "valeurPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
+				a("name", "personneRecevoirMail");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRecevoirMail', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPersonneRecevoirMail() != null && getPersonneRecevoirMail())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmPersonneRecevoirMail());
+		}
 	}
 
 	public void htmPersonneRecevoirMail(String classeApiMethodeMethode) {
@@ -2304,37 +2407,44 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneContactUrgence(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_personneContactUrgence")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_personneContactUrgence");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-			a("name", "setPersonneContactUrgence");
-		} else {
-			a("class", "valeurPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-			a("name", "personneContactUrgence");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_personneContactUrgence")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_personneContactUrgence");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+				a("name", "setPersonneContactUrgence");
+			} else {
+				a("class", "valeurPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+				a("name", "personneContactUrgence");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmPersonneContactUrgence());
+		}
 	}
 
 	public void htmPersonneContactUrgence(String classeApiMethodeMethode) {
@@ -2428,37 +2538,44 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneChercher(String classeApiMethodeMethode) {
 		MereScolaire s = (MereScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_personneChercher")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_personneChercher");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
-			a("name", "setPersonneChercher");
-		} else {
-			a("class", "valeurPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
-			a("name", "personneChercher");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPersonneChercher() != null && getPersonneChercher())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_personneChercher")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_personneChercher");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
+				a("name", "setPersonneChercher");
+			} else {
+				a("class", "valeurPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
+				a("name", "personneChercher");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPersonneChercher() != null && getPersonneChercher())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmPersonneChercher());
+		}
 	}
 
 	public void htmPersonneChercher(String classeApiMethodeMethode) {

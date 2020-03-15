@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.dad;
 
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import java.util.Arrays;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
@@ -13,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.Objects;
 import org.computate.scolaire.enUS.dad.DadGenPage;
 import io.vertx.core.json.JsonArray;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;

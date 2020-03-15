@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.gardien;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
@@ -13,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,6 +50,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class GardienScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GardienScolaire.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String GardienScolaire_UnNom = "un gardien";
 	public static final String GardienScolaire_Ce = "ce ";
@@ -229,17 +234,24 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscriptions")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCles")
-				.a("id", classeApiMethodeMethode, "_inscriptionCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereGardienScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "GardienScolaireInscriptionCles')) : [{'name':'fq','value':'gardienCles:", pk, "'}], $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "inscriptions")
+					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setInscriptionCles")
+					.a("id", classeApiMethodeMethode, "_inscriptionCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereGardienScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "GardienScolaireInscriptionCles')) : [{'name':'fq','value':'gardienCles:", pk, "'}], $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmInscriptionCles());
+		}
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
@@ -271,13 +283,18 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listGardienScolaireInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ gardienCles: [ \"", pk, "\" ] }, function() { patchGardienScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+								if(
+										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postInscriptionScolaireVals({ gardienCles: [ \"", pk, "\" ] }, function() { patchGardienScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.f().sx("ajouter une inscription")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1097,24 +1114,31 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonnePrenom(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prénom")
-			.a("id", classeApiMethodeMethode, "_personnePrenom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenom inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
-				a("name", "setPersonnePrenom");
-			} else {
-				a("class", "valeurPersonnePrenom w3-input w3-border inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
-				a("name", "personnePrenom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
-			}
-			a("value", strPersonnePrenom())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prénom")
+				.a("id", classeApiMethodeMethode, "_personnePrenom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonnePrenom inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("name", "setPersonnePrenom");
+				} else {
+					a("class", "valeurPersonnePrenom w3-input w3-border inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("name", "personnePrenom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
+				}
+				a("value", strPersonnePrenom())
+			.fg();
 
+		} else {
+			sx(htmPersonnePrenom());
+		}
 	}
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
@@ -1131,16 +1155,21 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 								inputPersonnePrenom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1214,24 +1243,31 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonnePrenomPrefere(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prénom préferé")
-			.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenomPrefere inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
-				a("name", "setPersonnePrenomPrefere");
-			} else {
-				a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
-				a("name", "personnePrenomPrefere");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
-			}
-			a("value", strPersonnePrenomPrefere())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prénom préferé")
+				.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonnePrenomPrefere inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("name", "setPersonnePrenomPrefere");
+				} else {
+					a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("name", "personnePrenomPrefere");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
+				}
+				a("value", strPersonnePrenomPrefere())
+			.fg();
 
+		} else {
+			sx(htmPersonnePrenomPrefere());
+		}
 	}
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
@@ -1248,16 +1284,21 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 								inputPersonnePrenomPrefere(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1331,24 +1372,31 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputFamilleNom(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "nom de famille")
-			.a("id", classeApiMethodeMethode, "_familleNom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleNom inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
-				a("name", "setFamilleNom");
-			} else {
-				a("class", "valeurFamilleNom w3-input w3-border inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
-				a("name", "familleNom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
-			}
-			a("value", strFamilleNom())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "nom de famille")
+				.a("id", classeApiMethodeMethode, "_familleNom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setFamilleNom inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("name", "setFamilleNom");
+				} else {
+					a("class", "valeurFamilleNom w3-input w3-border inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("name", "familleNom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
+				}
+				a("value", strFamilleNom())
+			.fg();
 
+		} else {
+			sx(htmFamilleNom());
+		}
 	}
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
@@ -1365,16 +1413,21 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 								inputFamilleNom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1700,24 +1753,31 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneNumeroTelephone(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "numéro de téléphone")
-			.a("id", classeApiMethodeMethode, "_personneNumeroTelephone");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneNumeroTelephone inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
-				a("name", "setPersonneNumeroTelephone");
-			} else {
-				a("class", "valeurPersonneNumeroTelephone w3-input w3-border inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
-				a("name", "personneNumeroTelephone");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneNumeroTelephone', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ");
-			}
-			a("value", strPersonneNumeroTelephone())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "numéro de téléphone")
+				.a("id", classeApiMethodeMethode, "_personneNumeroTelephone");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonneNumeroTelephone inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
+					a("name", "setPersonneNumeroTelephone");
+				} else {
+					a("class", "valeurPersonneNumeroTelephone w3-input w3-border inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
+					a("name", "personneNumeroTelephone");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneNumeroTelephone', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ");
+				}
+				a("value", strPersonneNumeroTelephone())
+			.fg();
 
+		} else {
+			sx(htmPersonneNumeroTelephone());
+		}
 	}
 
 	public void htmPersonneNumeroTelephone(String classeApiMethodeMethode) {
@@ -1734,16 +1794,21 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 								inputPersonneNumeroTelephone(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); $('#", classeApiMethodeMethode, "_personneNumeroTelephone').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonneNumeroTelephone', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); $('#", classeApiMethodeMethode, "_personneNumeroTelephone').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonneNumeroTelephone', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1880,24 +1945,31 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneRelation(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "relation")
-			.a("id", classeApiMethodeMethode, "_personneRelation");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneRelation inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
-				a("name", "setPersonneRelation");
-			} else {
-				a("class", "valeurPersonneRelation w3-input w3-border inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
-				a("name", "personneRelation");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRelation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRelation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRelation')); }); ");
-			}
-			a("value", strPersonneRelation())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "relation")
+				.a("id", classeApiMethodeMethode, "_personneRelation");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonneRelation inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
+					a("name", "setPersonneRelation");
+				} else {
+					a("class", "valeurPersonneRelation w3-input w3-border inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
+					a("name", "personneRelation");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRelation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRelation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRelation')); }); ");
+				}
+				a("value", strPersonneRelation())
+			.fg();
 
+		} else {
+			sx(htmPersonneRelation());
+		}
 	}
 
 	public void htmPersonneRelation(String classeApiMethodeMethode) {
@@ -1914,16 +1986,21 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 								inputPersonneRelation(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneRelation')); $('#", classeApiMethodeMethode, "_personneRelation').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonneRelation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRelation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRelation')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneRelation')); $('#", classeApiMethodeMethode, "_personneRelation').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonneRelation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRelation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRelation')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2138,37 +2215,44 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneContactUrgence(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_personneContactUrgence")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_personneContactUrgence");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-			a("name", "setPersonneContactUrgence");
-		} else {
-			a("class", "valeurPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
-			a("name", "personneContactUrgence");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_personneContactUrgence")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_personneContactUrgence");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+				a("name", "setPersonneContactUrgence");
+			} else {
+				a("class", "valeurPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+				a("name", "personneContactUrgence");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmPersonneContactUrgence());
+		}
 	}
 
 	public void htmPersonneContactUrgence(String classeApiMethodeMethode) {
@@ -2262,37 +2346,44 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneChercher(String classeApiMethodeMethode) {
 		GardienScolaire s = (GardienScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_personneChercher")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_personneChercher");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
-			a("name", "setPersonneChercher");
-		} else {
-			a("class", "valeurPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
-			a("name", "personneChercher");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getPersonneChercher() != null && getPersonneChercher())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_personneChercher")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_personneChercher");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
+				a("name", "setPersonneChercher");
+			} else {
+				a("class", "valeurPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
+				a("name", "personneChercher");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPersonneChercher() != null && getPersonneChercher())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			sx(htmPersonneChercher());
+		}
 	}
 
 	public void htmPersonneChercher(String classeApiMethodeMethode) {

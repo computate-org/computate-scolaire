@@ -1,52 +1,54 @@
 package org.computate.scolaire.frFR.enfant;
 
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.lang.Long;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.time.ZoneOffset;
+import io.vertx.core.logging.Logger;
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import java.util.Set;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Objects;
+import java.util.List;
+import java.time.LocalDate;
+import org.apache.solr.client.solrj.SolrQuery;
+import java.util.Optional;
+import io.vertx.ext.sql.SQLClient;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrInputDocument;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import java.lang.Long;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.vertx.core.json.JsonObject;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
-import java.time.ZoneOffset;
-import io.vertx.core.logging.Logger;
-import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.time.Instant;
-import java.time.ZoneId;
 import org.apache.solr.client.solrj.SolrClient;
-import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
-import java.util.List;
 import java.time.temporal.ChronoUnit;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
-import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.vertx.ext.sql.SQLClient;
-import org.apache.solr.client.solrj.util.ClientUtils;
-import org.apache.solr.common.SolrInputDocument;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe childCompleteName dans Solr</a>
@@ -54,6 +56,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EnfantScolaire.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String EnfantScolaire_UnNom = "un enfant";
 	public static final String EnfantScolaire_Ce = "ce ";
@@ -235,17 +240,24 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscriptions")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCles")
-				.a("id", classeApiMethodeMethode, "_inscriptionCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereEnfantScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "EnfantScolaireInscriptionCles')) : [{'name':'fq','value':'enfantCle:", pk, "'}], $('#listEnfantScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "inscriptions")
+					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setInscriptionCles")
+					.a("id", classeApiMethodeMethode, "_inscriptionCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereEnfantScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "EnfantScolaireInscriptionCles')) : [{'name':'fq','value':'enfantCle:", pk, "'}], $('#listEnfantScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmInscriptionCles());
+		}
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
@@ -277,13 +289,18 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnfantScolaireInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ enfantCle: \"", pk, "\" }, function() { patchEnfantScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+								if(
+										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+								) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postInscriptionScolaireVals({ enfantCle: \"", pk, "\" }, function() { patchEnfantScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.f().sx("ajouter une inscription")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1103,24 +1120,31 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonnePrenom(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prénom")
-			.a("id", classeApiMethodeMethode, "_personnePrenom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenom inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
-				a("name", "setPersonnePrenom");
-			} else {
-				a("class", "valeurPersonnePrenom w3-input w3-border inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
-				a("name", "personnePrenom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
-			}
-			a("value", strPersonnePrenom())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prénom")
+				.a("id", classeApiMethodeMethode, "_personnePrenom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonnePrenom inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("name", "setPersonnePrenom");
+				} else {
+					a("class", "valeurPersonnePrenom w3-input w3-border inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("name", "personnePrenom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
+				}
+				a("value", strPersonnePrenom())
+			.fg();
 
+		} else {
+			sx(htmPersonnePrenom());
+		}
 	}
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
@@ -1137,16 +1161,21 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 								inputPersonnePrenom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1220,24 +1249,31 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonnePrenomPrefere(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prénom préferé")
-			.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenomPrefere inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
-				a("name", "setPersonnePrenomPrefere");
-			} else {
-				a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
-				a("name", "personnePrenomPrefere");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
-			}
-			a("value", strPersonnePrenomPrefere())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prénom préferé")
+				.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setPersonnePrenomPrefere inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("name", "setPersonnePrenomPrefere");
+				} else {
+					a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("name", "personnePrenomPrefere");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
+				}
+				a("value", strPersonnePrenomPrefere())
+			.fg();
 
+		} else {
+			sx(htmPersonnePrenomPrefere());
+		}
 	}
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
@@ -1254,16 +1290,21 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 								inputPersonnePrenomPrefere(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1337,24 +1378,31 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void inputFamilleNom(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "nom de famille")
-			.a("id", classeApiMethodeMethode, "_familleNom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleNom inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
-				a("name", "setFamilleNom");
-			} else {
-				a("class", "valeurFamilleNom w3-input w3-border inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
-				a("name", "familleNom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
-			}
-			a("value", strFamilleNom())
-		.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "nom de famille")
+				.a("id", classeApiMethodeMethode, "_familleNom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setFamilleNom inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("name", "setFamilleNom");
+				} else {
+					a("class", "valeurFamilleNom w3-input w3-border inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("name", "familleNom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
+				}
+				a("value", strFamilleNom())
+			.fg();
 
+		} else {
+			sx(htmFamilleNom());
+		}
 	}
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
@@ -1371,16 +1419,21 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 								inputFamilleNom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1659,16 +1712,23 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void inputPersonneDateNaissance(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setPersonneDateNaissance inputEnfantScolaire", pk, "PersonneDateNaissance w3-input w3-border ")
-			.a("placeholder", "DD-MM-YYYY")
-			.a("data-timeformat", "DD-MM-YYYY")
-			.a("id", classeApiMethodeMethode, "_personneDateNaissance")
-			.a("onclick", "enleverLueur($(this)); ")
-			.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(personneDateNaissance))
-			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); } ")
-			.fg();
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setPersonneDateNaissance inputEnfantScolaire", pk, "PersonneDateNaissance w3-input w3-border ")
+				.a("placeholder", "DD-MM-YYYY")
+				.a("data-timeformat", "DD-MM-YYYY")
+				.a("id", classeApiMethodeMethode, "_personneDateNaissance")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(personneDateNaissance))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); } ")
+				.fg();
+		} else {
+			sx(htmPersonneDateNaissance());
+		}
 	}
 
 	public void htmPersonneDateNaissance(String classeApiMethodeMethode) {
@@ -1684,16 +1744,21 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputPersonneDateNaissance(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); $('#", classeApiMethodeMethode, "_personneDateNaissance').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonneDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); $('#", classeApiMethodeMethode, "_personneDateNaissance').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonneDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");

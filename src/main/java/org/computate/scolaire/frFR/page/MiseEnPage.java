@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -24,6 +25,7 @@ import org.computate.scolaire.frFR.annee.AnneeGenPage;
 import org.computate.scolaire.frFR.bloc.BlocGenPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.ecole.EcoleGenPage;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.enfant.EnfantGenPage;
@@ -34,6 +36,7 @@ import org.computate.scolaire.frFR.mere.MereGenPage;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.paiement.PaiementGenPage;
 import org.computate.scolaire.frFR.pere.PereGenPage;
+import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.saison.SaisonGenPage;
 import org.computate.scolaire.frFR.session.SessionGenPage;
@@ -45,6 +48,9 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * MotCle: classeNomSimpleMiseEnPage
  */   
 public class MiseEnPage extends MiseEnPageGen<Object> {   
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	/**
 	 * Var.enUS: HTML_CLOSED_ELEMENTS
@@ -539,6 +545,34 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
+	 * Var.enUS: listSchool
+	 * r: supprime
+	 * r.enUS: deleted
+	 * r: archive
+	 * r.enUS: archived
+	 * r: Ecole
+	 * r.enUS: School
+	 * r: Stocker
+	 * r.enUS: Store
+	 */
+	protected void _listeEcole(ListeRecherche<Ecole> l) {
+		l.setQuery("*:*");
+		l.setC(Ecole.class);
+		l.setStocker(true);
+		l.addFilterQuery("supprime_indexed_boolean:false");
+		l.addFilterQuery("archive_indexed_boolean:false");
+	}
+
+	/**
+	 * Var.enUS: schools
+	 * r: listeEcole
+	 * r.enUS: listSchool
+	 */
+	protected void _ecoles(Couverture<List<Ecole>> c) {
+		c.o(listeEcole.getList());
+	}
+
+	/**
 	 * r: pageMotsCles
 	 * r.enUS: pageKeywords
 	 * r: pageTitre
@@ -681,6 +715,20 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: This site is open source
 	 * r: Voir le code source ici
 	 * r.enUS: View the source code here
+	 * r: statiqueUrlBase
+	 * r.enUS: staticBaseUrl
+	 * r: EcoleAddresse
+	 * r.enUS: SchoolAddress
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 * r: EcoleMail
+	 * r.enUS: SchoolEmail
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: Ecole
+	 * r.enUS: School
+	 * r: ecole
+	 * r.enUS: school
 	 */
 	@Override public void htmlMiseEnPage() {
 		e("html").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
@@ -736,6 +784,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 											sx("Voir le code source ici");
 										g("a");
 									g("div");
+									e("div").a("class", "grow-30 w3-margin ").f();
+										e("a").a("href", "https://www.openshift.com/").a("target", "_blank").f();
+											e("span").a("class", "w3-large ").f();
+												sx("Powered by ");
+											g("span");
+											e("img").a("alt", "").a("class", "w3-image ").a("style", "display: inline-block; width: 200px; margin: 0 10px;").a("src", statiqueUrlBase, "/svg/openshift.svg").fg();
+										g("a");
+									g("div");
 								g("footer");
 							g("div");
 						g("div");
@@ -746,10 +802,42 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						menu("Menu2");
 						e("div").a("class", "w3-container ").f();
 							e("div").a("class", "w3-container w3-text-black w3-margin-top ").f();
-								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-xlarge ").f();
+								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-padding w3-xlarge w3-text-white ").f();
 									sx("Let's get connected. ");
 								g("h6");
-								e("h6").f();
+								e("div").a("class", "w3-cell-row ").f();
+									e("div").a("class", "w3-cell ").f();
+										e("a").a("target", "_blank").a("rel", "noopener noreferrer").a("data-ajax", "false").a("href", "https://www.facebook.com/littleorchardpreschool/").f();
+											e("img").a("alt", "").a("class", "grow-30 ").a("style", "display: inline-block; width: 50px; height: 50px; margin: 0 10px;").a("src", statiqueUrlBase, "/svg/facebook.svg").fg();
+										g("a");
+									g("div");
+								g("div");
+								e("div").a("class", "w3-cell-row w3-text-white ").f();
+									for(int i = 0; i < ecoles.size(); i++) {
+										Ecole ecole = ecoles.get(i);
+
+										e("div").a("class", "w3-cell ").f();
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx(ecole.getEcoleEmplacement()).g("span");
+											g("div");
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx("Address: ").g("span");
+												e("span").f().sx(ecole.getEcoleAddresse()).g("span");
+											g("div");
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx("Phone: ").g("span");
+												e("span").f().sx(ecole.getEcoleNumeroTelephone()).g("span");
+											g("div");
+											e("div").f();
+												e("span").a("class", "font-weight-bold ").f().sx("Email: ").g("span");
+												e("span").f().sx(ecole.getEcoleMail()).g("span");
+											g("div");
+										g("div");
+										if(i == 2)
+											break;
+									}
+								g("div");
+								e("h6").a("class",  "w3-padding w3-large w3-text-white ").f();
 									e("a").a("href", "#top").f();
 										sx("Up to the top. ");
 									g("a");
@@ -840,6 +928,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: "/user/"
 	 * r: "ma page utilisateur"
 	 * r.enUS: "my user page"
+	 * r: UtilisateurRolesRessource
+	 * r.enUS: UserResourceRoles
+	 * r: UtilisateurRolesRoyaume
+	 * r.enUS: UserRealmRoles
 	 * r: EcoleGenPage.htmlSuggereEcoleGenPage
 	 * r.enUS: SchoolGenPage.htmlSuggestSchoolGenPage
 	 * r: AnneeGenPage.htmlSuggereAnneeGenPage
@@ -869,6 +961,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 */ 
 	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
+
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "").a("href", pageAccueilUri).f();
 					e("span").a("class", "site-menu-item").f();
@@ -877,65 +970,81 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				g("a");
 			g("div");
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-pink ").f();
-						e("i").a("class", "far fa-school ").f().g("i");
-						sx("écoles");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					EcoleGenPage.htmlSuggereEcoleGenPage(this, id);
-				} g("div");
-			} g("div");
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-orange ").f();
-						e("i").a("class", "far fa-calendar-check ").f().g("i");
-						sx("années");
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-pink ").f();
+							e("i").a("class", "far fa-school ").f().g("i");
+							sx("écoles");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						EcoleGenPage.htmlSuggereEcoleGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					AnneeGenPage.htmlSuggereAnneeGenPage(this, id);
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-orange ").f();
+							e("i").a("class", "far fa-calendar-check ").f().g("i");
+							sx("années");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						AnneeGenPage.htmlSuggereAnneeGenPage(this, id);
+					} g("div");
 				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
-						e("i").a("class", "far fa-sun ").f().g("i");
-						sx("saisons");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+							e("i").a("class", "far fa-sun ").f().g("i");
+							sx("saisons");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						SaisonGenPage.htmlSuggereSaisonGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					SaisonGenPage.htmlSuggereSaisonGenPage(this, id);
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "fad fa-graduation-cap ").f().g("i");
+							sx("sessions");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						SessionGenPage.htmlSuggereSessionGenPage(this, id);
+					} g("div");
 				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "fad fa-graduation-cap ").f().g("i");
-						sx("sessions");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-blue ").f();
+							e("i").a("class", "fad fa-birthday-cake ").f().g("i");
+							sx("âges");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						AgeGenPage.htmlSuggereAgeGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					SessionGenPage.htmlSuggereSessionGenPage(this, id);
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-indigo ").f();
+							e("i").a("class", "far fa-bell ").f().g("i");
+							sx("blocs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						BlocGenPage.htmlSuggereBlocGenPage(this, id);
+					} g("div");
 				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-blue ").f();
-						e("i").a("class", "fad fa-birthday-cake ").f().g("i");
-						sx("âges");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "far fa-drafting-compass ").f().g("i");
+							sx("designs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id);
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					AgeGenPage.htmlSuggereAgeGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-indigo ").f();
-						e("i").a("class", "far fa-bell ").f().g("i");
-						sx("blocs");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					BlocGenPage.htmlSuggereBlocGenPage(this, id);
-				} g("div");
-			} g("div");
+			}
 
 			{ e("div").a("class", "w3-dropdown-hover ").f();
 				{ e("div").a("class", "w3-button w3-hover-purple ").f();
@@ -997,16 +1106,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				} g("div");
 			} g("div");
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "far fa-drafting-compass ").f().g("i");
-						sx("designs");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id);
-				} g("div");
-			} g("div");
-
 			if(requeteSite_.getUtilisateurId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
@@ -1039,7 +1138,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								.a("class", "setVoirArchive")
 								.a("name", "setVoirArchive")
 								.a("id", "Page_voirArchive")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setVoirArchive', $(this).prop('checked'), function() { addGlow($('#Page_voirArchive')); }, function() { addError($('#Page_voirArchive')); }); ")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", requeteSite_.getUtilisateurCle(), " }], 'setVoirArchive', $(this).prop('checked'), function() { addGlow($('#Page_voirArchive')); }, function() { addError($('#Page_voirArchive')); }); ")
 								;
 								if(o.getVoirArchive() != null && o.getVoirArchive())
 									a("checked", "checked");
@@ -1053,7 +1152,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								.a("class", "setVoirSupprime")
 								.a("name", "setVoirSupprime")
 								.a("id", "Page_voirSupprime")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setVoirSupprime', $(this).prop('checked'), function() { addGlow($('#Page_voirSupprime')); }, function() { addError($('#Page_voirSupprime')); }); ")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", requeteSite_.getUtilisateurCle(), " }], 'setVoirSupprime', $(this).prop('checked'), function() { addGlow($('#Page_voirSupprime')); }, function() { addError($('#Page_voirSupprime')); }); ")
 								;
 								if(o.getVoirSupprime() != null && o.getVoirSupprime())
 									a("checked", "checked");

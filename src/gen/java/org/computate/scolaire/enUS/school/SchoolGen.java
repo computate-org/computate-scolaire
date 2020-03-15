@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.school;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -11,6 +12,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,6 +47,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class SchoolGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(School.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String School_UnNom = "a school";
 	public static final String School_Ce = "this ";
@@ -225,17 +230,21 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputYearKeys(String classApiMethodMethod) {
 		School s = (School)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "years")
-				.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setYearKeys")
-				.a("id", classApiMethodMethod, "_yearKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolYearKeys')) : [{'name':'fq','value':'schoolKey:", pk, "'}], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "years")
+					.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setYearKeys")
+					.a("id", classApiMethodMethod, "_yearKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolYearKeys')) : [{'name':'fq','value':'schoolKey:", pk, "'}], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			sx(htmYearKeys());
+		}
 	}
 
 	public void htmYearKeys(String classApiMethodMethod) {
@@ -267,13 +276,15 @@ public abstract class SchoolGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
-										.f().sx("add a year")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("onclick", "postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
+											.f().sx("add a year")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -920,24 +931,28 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolName(String classApiMethodMethod) {
 		School s = (School)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "name of the school")
-			.a("id", classApiMethodMethod, "_schoolName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolName inputSchool", pk, "SchoolName w3-input w3-border ");
-				a("name", "setSchoolName");
-			} else {
-				a("class", "valueSchoolName w3-input w3-border inputSchool", pk, "SchoolName w3-input w3-border ");
-				a("name", "schoolName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolName')); }, function() { addError($('#", classApiMethodMethod, "_schoolName')); }); ");
-			}
-			a("value", strSchoolName())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "name of the school")
+				.a("id", classApiMethodMethod, "_schoolName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolName inputSchool", pk, "SchoolName w3-input w3-border ");
+					a("name", "setSchoolName");
+				} else {
+					a("class", "valueSchoolName w3-input w3-border inputSchool", pk, "SchoolName w3-input w3-border ");
+					a("name", "schoolName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolName')); }, function() { addError($('#", classApiMethodMethod, "_schoolName')); }); ");
+				}
+				a("value", strSchoolName())
+			.fg();
 
+		} else {
+			sx(htmSchoolName());
+		}
 	}
 
 	public void htmSchoolName(String classApiMethodMethod) {
@@ -954,16 +969,18 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolName(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolName')); $('#", classApiMethodMethod, "_schoolName').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolName', null, function() { addGlow($('#", classApiMethodMethod, "_schoolName')); }, function() { addError($('#", classApiMethodMethod, "_schoolName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolName')); $('#", classApiMethodMethod, "_schoolName').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolName', null, function() { addGlow($('#", classApiMethodMethod, "_schoolName')); }, function() { addError($('#", classApiMethodMethod, "_schoolName')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1037,24 +1054,28 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolPhoneNumber(String classApiMethodMethod) {
 		School s = (School)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "phone number")
-			.a("id", classApiMethodMethod, "_schoolPhoneNumber");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolPhoneNumber inputSchool", pk, "SchoolPhoneNumber w3-input w3-border ");
-				a("name", "setSchoolPhoneNumber");
-			} else {
-				a("class", "valueSchoolPhoneNumber w3-input w3-border inputSchool", pk, "SchoolPhoneNumber w3-input w3-border ");
-				a("name", "schoolPhoneNumber");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolPhoneNumber', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_schoolPhoneNumber')); }); ");
-			}
-			a("value", strSchoolPhoneNumber())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "phone number")
+				.a("id", classApiMethodMethod, "_schoolPhoneNumber");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolPhoneNumber inputSchool", pk, "SchoolPhoneNumber w3-input w3-border ");
+					a("name", "setSchoolPhoneNumber");
+				} else {
+					a("class", "valueSchoolPhoneNumber w3-input w3-border inputSchool", pk, "SchoolPhoneNumber w3-input w3-border ");
+					a("name", "schoolPhoneNumber");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolPhoneNumber', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_schoolPhoneNumber')); }); ");
+				}
+				a("value", strSchoolPhoneNumber())
+			.fg();
 
+		} else {
+			sx(htmSchoolPhoneNumber());
+		}
 	}
 
 	public void htmSchoolPhoneNumber(String classApiMethodMethod) {
@@ -1071,16 +1092,18 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolPhoneNumber(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolPhoneNumber')); $('#", classApiMethodMethod, "_schoolPhoneNumber').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolPhoneNumber', null, function() { addGlow($('#", classApiMethodMethod, "_schoolPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_schoolPhoneNumber')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolPhoneNumber')); $('#", classApiMethodMethod, "_schoolPhoneNumber').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolPhoneNumber', null, function() { addGlow($('#", classApiMethodMethod, "_schoolPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_schoolPhoneNumber')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1154,24 +1177,28 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolAdministratorName(String classApiMethodMethod) {
 		School s = (School)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "administrator of the school")
-			.a("id", classApiMethodMethod, "_schoolAdministratorName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAdministratorName inputSchool", pk, "SchoolAdministratorName w3-input w3-border ");
-				a("name", "setSchoolAdministratorName");
-			} else {
-				a("class", "valueSchoolAdministratorName w3-input w3-border inputSchool", pk, "SchoolAdministratorName w3-input w3-border ");
-				a("name", "schoolAdministratorName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAdministratorName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAdministratorName')); }, function() { addError($('#", classApiMethodMethod, "_schoolAdministratorName')); }); ");
-			}
-			a("value", strSchoolAdministratorName())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "administrator of the school")
+				.a("id", classApiMethodMethod, "_schoolAdministratorName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolAdministratorName inputSchool", pk, "SchoolAdministratorName w3-input w3-border ");
+					a("name", "setSchoolAdministratorName");
+				} else {
+					a("class", "valueSchoolAdministratorName w3-input w3-border inputSchool", pk, "SchoolAdministratorName w3-input w3-border ");
+					a("name", "schoolAdministratorName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAdministratorName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAdministratorName')); }, function() { addError($('#", classApiMethodMethod, "_schoolAdministratorName')); }); ");
+				}
+				a("value", strSchoolAdministratorName())
+			.fg();
 
+		} else {
+			sx(htmSchoolAdministratorName());
+		}
 	}
 
 	public void htmSchoolAdministratorName(String classApiMethodMethod) {
@@ -1188,16 +1215,141 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolAdministratorName(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAdministratorName')); $('#", classApiMethodMethod, "_schoolAdministratorName').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolAdministratorName', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAdministratorName')); }, function() { addError($('#", classApiMethodMethod, "_schoolAdministratorName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAdministratorName')); $('#", classApiMethodMethod, "_schoolAdministratorName').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolAdministratorName', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAdministratorName')); }, function() { addError($('#", classApiMethodMethod, "_schoolAdministratorName')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// schoolEmail //
+	/////////////////
+
+	/**	L'entité « schoolEmail »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolEmail;
+	@JsonIgnore
+	public Wrap<String> schoolEmailWrap = new Wrap<String>().p(this).c(String.class).var("schoolEmail").o(schoolEmail);
+
+	/**	<br/>L'entité « schoolEmail »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEmail">Trouver l'entité schoolEmail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolEmail(Wrap<String> c);
+
+	public String getSchoolEmail() {
+		return schoolEmail;
+	}
+
+	public void setSchoolEmail(String schoolEmail) {
+		this.schoolEmail = schoolEmail;
+		this.schoolEmailWrap.alreadyInitialized = true;
+	}
+	protected School schoolEmailInit() {
+		if(!schoolEmailWrap.alreadyInitialized) {
+			_schoolEmail(schoolEmailWrap);
+			if(schoolEmail == null)
+				setSchoolEmail(schoolEmailWrap.o);
+		}
+		schoolEmailWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public String solrSchoolEmail() {
+		return schoolEmail;
+	}
+
+	public String strSchoolEmail() {
+		return schoolEmail == null ? "" : schoolEmail;
+	}
+
+	public String jsonSchoolEmail() {
+		return schoolEmail == null ? "" : schoolEmail;
+	}
+
+	public String nomAffichageSchoolEmail() {
+		return "email of school";
+	}
+
+	public String htmTooltipSchoolEmail() {
+		return null;
+	}
+
+	public String htmSchoolEmail() {
+		return schoolEmail == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolEmail());
+	}
+
+	public void inputSchoolEmail(String classApiMethodMethod) {
+		School s = (School)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "email of school")
+				.a("id", classApiMethodMethod, "_schoolEmail");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolEmail inputSchool", pk, "SchoolEmail w3-input w3-border ");
+					a("name", "setSchoolEmail");
+				} else {
+					a("class", "valueSchoolEmail w3-input w3-border inputSchool", pk, "SchoolEmail w3-input w3-border ");
+					a("name", "schoolEmail");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolEmail', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolEmail')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmail')); }); ");
+				}
+				a("value", strSchoolEmail())
+			.fg();
+
+		} else {
+			sx(htmSchoolEmail());
+		}
+	}
+
+	public void htmSchoolEmail(String classApiMethodMethod) {
+		School s = (School)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolEmail").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classApiMethodMethod, "_schoolEmail").a("class", "").f().sx("email of school").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSchoolEmail(classApiMethodMethod);
+							} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolEmail')); $('#", classApiMethodMethod, "_schoolEmail').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolEmail', null, function() { addGlow($('#", classApiMethodMethod, "_schoolEmail')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmail')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1271,24 +1423,28 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolLocation(String classApiMethodMethod) {
 		School s = (School)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "location")
-			.a("id", classApiMethodMethod, "_schoolLocation");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolLocation inputSchool", pk, "SchoolLocation w3-input w3-border ");
-				a("name", "setSchoolLocation");
-			} else {
-				a("class", "valueSchoolLocation w3-input w3-border inputSchool", pk, "SchoolLocation w3-input w3-border ");
-				a("name", "schoolLocation");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolLocation', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolLocation')); }, function() { addError($('#", classApiMethodMethod, "_schoolLocation')); }); ");
-			}
-			a("value", strSchoolLocation())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "location")
+				.a("id", classApiMethodMethod, "_schoolLocation");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolLocation inputSchool", pk, "SchoolLocation w3-input w3-border ");
+					a("name", "setSchoolLocation");
+				} else {
+					a("class", "valueSchoolLocation w3-input w3-border inputSchool", pk, "SchoolLocation w3-input w3-border ");
+					a("name", "schoolLocation");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolLocation', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolLocation')); }, function() { addError($('#", classApiMethodMethod, "_schoolLocation')); }); ");
+				}
+				a("value", strSchoolLocation())
+			.fg();
 
+		} else {
+			sx(htmSchoolLocation());
+		}
 	}
 
 	public void htmSchoolLocation(String classApiMethodMethod) {
@@ -1305,16 +1461,18 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolLocation(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolLocation')); $('#", classApiMethodMethod, "_schoolLocation').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolLocation', null, function() { addGlow($('#", classApiMethodMethod, "_schoolLocation')); }, function() { addError($('#", classApiMethodMethod, "_schoolLocation')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolLocation')); $('#", classApiMethodMethod, "_schoolLocation').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolLocation', null, function() { addGlow($('#", classApiMethodMethod, "_schoolLocation')); }, function() { addError($('#", classApiMethodMethod, "_schoolLocation')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1388,22 +1546,26 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
 		School s = (School)this;
-		e("textarea")
-			.a("placeholder", "address")
-			.a("id", classApiMethodMethod, "_schoolAddress");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAddress inputSchool", pk, "SchoolAddress w3-input w3-border ");
-				a("name", "setSchoolAddress");
-			} else {
-				a("class", "valueSchoolAddress w3-input w3-border inputSchool", pk, "SchoolAddress w3-input w3-border ");
-				a("name", "schoolAddress");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
-			}
-		f().sx(strSchoolAddress()).g("textarea");
+		{
+			e("textarea")
+				.a("placeholder", "address")
+				.a("id", classApiMethodMethod, "_schoolAddress");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolAddress inputSchool", pk, "SchoolAddress w3-input w3-border ");
+					a("name", "setSchoolAddress");
+				} else {
+					a("class", "valueSchoolAddress w3-input w3-border inputSchool", pk, "SchoolAddress w3-input w3-border ");
+					a("name", "schoolAddress");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+				}
+			f().sx(strSchoolAddress()).g("textarea");
 
+		} else {
+			sx(htmSchoolAddress());
+		}
 	}
 
 	public void htmSchoolAddress(String classApiMethodMethod) {
@@ -1420,16 +1582,18 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolAddress(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1597,6 +1761,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolNameInit();
 		schoolPhoneNumberInit();
 		schoolAdministratorNameInit();
+		schoolEmailInit();
 		schoolLocationInit();
 		schoolAddressInit();
 		schoolShortNameInit();
@@ -1663,6 +1828,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolPhoneNumber;
 			case "schoolAdministratorName":
 				return oSchool.schoolAdministratorName;
+			case "schoolEmail":
+				return oSchool.schoolEmail;
 			case "schoolLocation":
 				return oSchool.schoolLocation;
 			case "schoolAddress":
@@ -1735,6 +1902,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return val;
 			case "schoolAdministratorName":
 				setSchoolAdministratorName(val);
+				savesSchool.add(var);
+				return val;
+			case "schoolEmail":
+				setSchoolEmail(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolLocation":
@@ -1836,6 +2007,12 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
 				if(schoolAdministratorName != null)
 					oSchool.setSchoolAdministratorName(schoolAdministratorName);
+			}
+
+			if(savesSchool.contains("schoolEmail")) {
+				String schoolEmail = (String)solrDocument.get("schoolEmail_stored_string");
+				if(schoolEmail != null)
+					oSchool.setSchoolEmail(schoolEmail);
 			}
 
 			if(savesSchool.contains("schoolLocation")) {
@@ -2003,6 +2180,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolAdministratorName_indexed_string", schoolAdministratorName);
 			document.addField("schoolAdministratorName_stored_string", schoolAdministratorName);
 		}
+		if(schoolEmail != null) {
+			document.addField("schoolEmail_indexed_string", schoolEmail);
+			document.addField("schoolEmail_stored_string", schoolEmail);
+		}
 		if(schoolLocation != null) {
 			document.addField("schoolLocation_indexed_string", schoolLocation);
 			document.addField("schoolLocation_stored_string", schoolLocation);
@@ -2066,6 +2247,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return "schoolPhoneNumber_indexed_string";
 			case "schoolAdministratorName":
 				return "schoolAdministratorName_indexed_string";
+			case "schoolEmail":
+				return "schoolEmail_indexed_string";
 			case "schoolLocation":
 				return "schoolLocation_indexed_string";
 			case "schoolAddress":
@@ -2151,6 +2334,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		if(schoolAdministratorName != null)
 			oSchool.setSchoolAdministratorName(schoolAdministratorName);
 
+		String schoolEmail = (String)solrDocument.get("schoolEmail_stored_string");
+		if(schoolEmail != null)
+			oSchool.setSchoolEmail(schoolEmail);
+
 		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 		if(schoolLocation != null)
 			oSchool.setSchoolLocation(schoolLocation);
@@ -2187,6 +2374,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				apiRequest.addVars("schoolPhoneNumber");
 			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
 				apiRequest.addVars("schoolAdministratorName");
+			if(!Objects.equals(schoolEmail, original.getSchoolEmail()))
+				apiRequest.addVars("schoolEmail");
 			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
 				apiRequest.addVars("schoolLocation");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
@@ -2200,7 +2389,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolAdministratorName, schoolLocation, schoolAddress);
+		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolAdministratorName, schoolEmail, schoolLocation, schoolAddress);
 	}
 
 	////////////
@@ -2218,6 +2407,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				&& Objects.equals( schoolName, that.schoolName )
 				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
 				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
+				&& Objects.equals( schoolEmail, that.schoolEmail )
 				&& Objects.equals( schoolLocation, that.schoolLocation )
 				&& Objects.equals( schoolAddress, that.schoolAddress );
 	}
@@ -2234,6 +2424,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
 		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
 		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
+		sb.append( ", schoolEmail: \"" ).append(schoolEmail).append( "\"" );
 		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
 		sb.append(" }");

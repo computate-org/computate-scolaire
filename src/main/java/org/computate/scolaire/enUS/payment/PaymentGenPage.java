@@ -32,12 +32,16 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
 
 
 /**
  * Translate: false
  **/
 public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	/**
 	 * {@inheritDoc}
@@ -627,125 +631,136 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsPaymentGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listSchoolPayment != null && listSchoolPayment.size() == 1) {
-			{ e("button")
+			if(listSchoolPayment != null && listSchoolPayment.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+						.a("id", "refreshThisPaymentGenPage")
+						.a("onclick", "patchSchoolPaymentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisPaymentGenPage')); }, function() { addError($('#refreshThisPaymentGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("refresh this payment");
+				} g("button");
+			}
+
+			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-					.a("id", "refreshThisPaymentGenPage")
-					.a("onclick", "patchSchoolPaymentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisPaymentGenPage')); }, function() { addError($('#refreshThisPaymentGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("refresh this payment");
-			} g("button");
-		}
+				.a("onclick", "$('#postSchoolPaymentModal').show(); ")
+				.f().sx("Create a payment")
+			.g("button");
+			{ e("div").a("id", "postSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolPaymentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Create a payment").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolPayment o = new SchoolPayment();
+							o.setSiteRequest_(siteRequest_);
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#postSchoolPaymentModal').show(); ")
-			.f().sx("Create a payment")
-		.g("button");
-		{ e("div").a("id", "postSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolPaymentModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Create a payment").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolPayment o = new SchoolPayment();
-						o.setSiteRequest_(siteRequest_);
+							// Form POST
+							{ e("div").a("id", "postSchoolPaymentForm").f();
+								htmlFormPOSTSchoolPayment(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "postSchoolPayment($('#postSchoolPaymentForm')); ")
+								.f().sx("Create a payment")
+							.g("button");
 
-						// Form POST
-						{ e("div").a("id", "postSchoolPaymentForm").f();
-							htmlFormPOSTSchoolPayment(o);
 						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "postSchoolPayment($('#postSchoolPaymentForm')); ")
-							.f().sx("Create a payment")
-						.g("button");
-
 					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#putSchoolPaymentModal').show(); ")
-			.f().sx("Duplicate the payments")
-		.g("button");
-		{ e("div").a("id", "putSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolPaymentModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Duplicate the payments").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolPayment o = new SchoolPayment();
-						o.setSiteRequest_(siteRequest_);
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putSchoolPaymentModal').show(); ")
+				.f().sx("Duplicate the payments")
+			.g("button");
+			{ e("div").a("id", "putSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolPaymentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate the payments").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolPayment o = new SchoolPayment();
+							o.setSiteRequest_(siteRequest_);
 
-						// FormValues PUT
-						{ e("form").a("action", "").a("id", "putSchoolPaymentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTSchoolPayment(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putSchoolPayment($('#putSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Duplicate the payments")
-						.g("button");
+							// FormValues PUT
+							{ e("form").a("action", "").a("id", "putSchoolPaymentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTSchoolPayment(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putSchoolPayment($('#putSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Duplicate the payments")
+							.g("button");
 
+						} g("div");
 					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchSchoolPaymentModal').show(); ")
-			.f().sx("Modify the payments")
-		.g("button");
-		{ e("div").a("id", "patchSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolPaymentModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modify the payments").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolPayment o = new SchoolPayment();
-						o.setSiteRequest_(siteRequest_);
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#patchSchoolPaymentModal').show(); ")
+				.f().sx("Modify the payments")
+			.g("button");
+			{ e("div").a("id", "patchSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolPaymentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modify the payments").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolPayment o = new SchoolPayment();
+							o.setSiteRequest_(siteRequest_);
 
-						// FormValues PATCH
-						{ e("form").a("action", "").a("id", "patchSchoolPaymentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHSchoolPayment(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchSchoolPayment($('#patchSchoolPaymentFormFilters'), $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modify the payments")
-						.g("button");
+							// FormValues PATCH
+							{ e("form").a("action", "").a("id", "patchSchoolPaymentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHSchoolPayment(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "patchSchoolPayment($('#patchSchoolPaymentFormFilters'), $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify the payments")
+							.g("button");
 
+						} g("div");
 					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
-		g("div");
+			g("div");
+		}
 	}
 
 	/**
 	**/
 	public static void htmlSuggestPaymentGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "refreshAllPaymentGenPage", id).a("href", "/payment").a("class", "").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("refresh all the payments");
-			} p.g("a");
-		} p.g("div");
+		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PaymentGenPage.ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PaymentGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "refreshAllPaymentGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("refresh all the payments");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

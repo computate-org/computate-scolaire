@@ -32,12 +32,17 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
  * Translate: false
  **/
 public class MomGenPage extends MomGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -494,139 +499,46 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsMomGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listSchoolMom != null && listSchoolMom.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-					.a("id", "refreshThisMomGenPage")
-					.a("onclick", "patchSchoolMomVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisMomGenPage')); }, function() { addError($('#refreshThisMomGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("refresh this mom");
-			} g("button");
-		}
+			if(listSchoolMom != null && listSchoolMom.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+						.a("id", "refreshThisMomGenPage")
+						.a("onclick", "patchSchoolMomVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisMomGenPage')); }, function() { addError($('#refreshThisMomGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("refresh this mom");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#postSchoolMomModal').show(); ")
-			.f().sx("Create a mom")
-		.g("button");
-		{ e("div").a("id", "postSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-pink ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolMomModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Create a mom").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolMom o = new SchoolMom();
-						o.setSiteRequest_(siteRequest_);
-
-						// Form POST
-						{ e("div").a("id", "postSchoolMomForm").f();
-							htmlFormPOSTSchoolMom(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "postSchoolMom($('#postSchoolMomForm')); ")
-							.f().sx("Create a mom")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#putSchoolMomModal').show(); ")
-			.f().sx("Duplicate the moms")
-		.g("button");
-		{ e("div").a("id", "putSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-pink ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolMomModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Duplicate the moms").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolMom o = new SchoolMom();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PUT
-						{ e("form").a("action", "").a("id", "putSchoolMomFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTSchoolMom(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "putSchoolMom($('#putSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Duplicate the moms")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#patchSchoolMomModal').show(); ")
-			.f().sx("Modify the moms")
-		.g("button");
-		{ e("div").a("id", "patchSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-pink ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolMomModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modify the moms").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolMom o = new SchoolMom();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PATCH
-						{ e("form").a("action", "").a("id", "patchSchoolMomFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHSchoolMom(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-							.a("onclick", "patchSchoolMom($('#patchSchoolMomFormFilters'), $('#patchSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modify the moms")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listSchoolMom != null && listSchoolMom.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-				.a("onclick", "$('#deleteSchoolMomModal').show(); ")
-				.f().sx("Delete the moms")
+				.a("onclick", "$('#postSchoolMomModal').show(); ")
+				.f().sx("Create a mom")
 			.g("button");
-			{ e("div").a("id", "deleteSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-pink ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolMomModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Delete the moms").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolMomModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Create a mom").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolMom o = new SchoolMom();
 							o.setSiteRequest_(siteRequest_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteSchoolMomForm").f();
-								htmlFormPATCHSchoolMom(o);
+							// Form POST
+							{ e("div").a("id", "postSchoolMomForm").f();
+								htmlFormPOSTSchoolMom(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "deleteSchoolMom(", o.getPk(), "); ")
-								.f().sx("Delete the moms")
+								.a("onclick", "postSchoolMom($('#postSchoolMomForm')); ")
+								.f().sx("Create a mom")
 							.g("button");
 
 						} g("div");
@@ -634,19 +546,123 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+				.a("onclick", "$('#putSchoolMomModal').show(); ")
+				.f().sx("Duplicate the moms")
+			.g("button");
+			{ e("div").a("id", "putSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-pink ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolMomModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate the moms").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolMom o = new SchoolMom();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PUT
+							{ e("form").a("action", "").a("id", "putSchoolMomFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTSchoolMom(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
+								.a("onclick", "putSchoolMom($('#putSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Duplicate the moms")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+				.a("onclick", "$('#patchSchoolMomModal').show(); ")
+				.f().sx("Modify the moms")
+			.g("button");
+			{ e("div").a("id", "patchSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-pink ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolMomModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modify the moms").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolMom o = new SchoolMom();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PATCH
+							{ e("form").a("action", "").a("id", "patchSchoolMomFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHSchoolMom(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
+								.a("onclick", "patchSchoolMom($('#patchSchoolMomFormFilters'), $('#patchSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify the moms")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			if(listSchoolMom != null && listSchoolMom.size() == 1) {
+				e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+					.a("onclick", "$('#deleteSchoolMomModal').show(); ")
+					.f().sx("Delete the moms")
+				.g("button");
+				{ e("div").a("id", "deleteSchoolMomModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-pink ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolMomModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Delete the moms").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").f();
+								SchoolMom o = new SchoolMom();
+								o.setSiteRequest_(siteRequest_);
+
+								// Form DELETE
+								{ e("div").a("id", "deleteSchoolMomForm").f();
+									htmlFormPATCHSchoolMom(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
+									.a("onclick", "deleteSchoolMom(", o.getPk(), "); ")
+									.f().sx("Delete the moms")
+								.g("button");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+
+			}
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
 	**/
 	public static void htmlSuggestMomGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "refreshAllMomGenPage", id).a("href", "/mom").a("class", "").a("onclick", "patchSchoolMomVals([], {}, function() { addGlow($('#refreshAllMomGenPage", id, "')); }, function() { addError($('#refreshAllMomGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("refresh all the moms");
-			} p.g("a");
-		} p.g("div");
+		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), MomGenPage.ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), MomGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "refreshAllMomGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ").a("onclick", "patchSchoolMomVals([], {}, function() { addGlow($('#refreshAllMomGenPage", id, "')); }, function() { addError($('#refreshAllMomGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("refresh all the moms");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

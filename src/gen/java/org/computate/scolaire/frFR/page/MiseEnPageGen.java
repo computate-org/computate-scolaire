@@ -1,15 +1,19 @@
 package org.computate.scolaire.frFR.page;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
+import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -2259,6 +2263,92 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageDeconnexionUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageDeconnexionUri());
 	}
 
+	////////////////
+	// listeEcole //
+	////////////////
+
+	/**	L'entité « listeEcole »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<Ecole>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected ListeRecherche<Ecole> listeEcole = new ListeRecherche<Ecole>();
+	@JsonIgnore
+	public Couverture<ListeRecherche<Ecole>> listeEcoleCouverture = new Couverture<ListeRecherche<Ecole>>().p(this).c(ListeRecherche.class).var("listeEcole").o(listeEcole);
+
+	/**	<br/>L'entité « listeEcole »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<Ecole>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeEcole">Trouver l'entité listeEcole dans Solr</a>
+	 * <br/>
+	 * @param listeEcole est l'entité déjà construit. 
+	 **/
+	protected abstract void _listeEcole(ListeRecherche<Ecole> l);
+
+	public ListeRecherche<Ecole> getListeEcole() {
+		return listeEcole;
+	}
+
+	public void setListeEcole(ListeRecherche<Ecole> listeEcole) {
+		this.listeEcole = listeEcole;
+		this.listeEcoleCouverture.dejaInitialise = true;
+	}
+	protected MiseEnPage listeEcoleInit() {
+		if(!listeEcoleCouverture.dejaInitialise) {
+			_listeEcole(listeEcole);
+		}
+		listeEcole.initLoinPourClasse(requeteSite_);
+		listeEcoleCouverture.dejaInitialise(true);
+		return (MiseEnPage)this;
+	}
+
+	////////////
+	// ecoles //
+	////////////
+
+	/**	L'entité « ecoles »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<Ecole> ecoles;
+	@JsonIgnore
+	public Couverture<List<Ecole>> ecolesCouverture = new Couverture<List<Ecole>>().p(this).c(List.class).var("ecoles").o(ecoles);
+
+	/**	<br/>L'entité « ecoles »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoles">Trouver l'entité ecoles dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoles(Couverture<List<Ecole>> c);
+
+	public List<Ecole> getEcoles() {
+		return ecoles;
+	}
+
+	public void setEcoles(List<Ecole> ecoles) {
+		this.ecoles = ecoles;
+		this.ecolesCouverture.dejaInitialise = true;
+	}
+	public MiseEnPage addEcoles(Ecole...objets) {
+		for(Ecole o : objets) {
+			addEcoles(o);
+		}
+		return (MiseEnPage)this;
+	}
+	public MiseEnPage addEcoles(Ecole o) {
+		if(o != null && !ecoles.contains(o))
+			this.ecoles.add(o);
+		return (MiseEnPage)this;
+	}
+	protected MiseEnPage ecolesInit() {
+		if(!ecolesCouverture.dejaInitialise) {
+			_ecoles(ecolesCouverture);
+			if(ecoles == null)
+				setEcoles(ecolesCouverture.o);
+		}
+		ecolesCouverture.dejaInitialise(true);
+		return (MiseEnPage)this;
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -2315,6 +2405,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		pageEcoleUriInit();
 		pageUtilisateurUriInit();
 		pageDeconnexionUriInit();
+		listeEcoleInit();
+		ecolesInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2328,6 +2420,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public void requeteSiteMiseEnPage(RequeteSiteFrFR requeteSite_) {
 		if(w != null)
 			w.setRequeteSite_(requeteSite_);
+		if(listeEcole != null)
+			listeEcole.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2426,6 +2520,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				return oMiseEnPage.pageUtilisateurUri;
 			case "pageDeconnexionUri":
 				return oMiseEnPage.pageDeconnexionUri;
+			case "listeEcole":
+				return oMiseEnPage.listeEcole;
+			case "ecoles":
+				return oMiseEnPage.ecoles;
 			default:
 				return null;
 		}
