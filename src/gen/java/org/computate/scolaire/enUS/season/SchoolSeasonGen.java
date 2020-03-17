@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.season;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -34,6 +35,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -56,6 +58,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchoolSeason.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SchoolSeason_UnNom = "a season";
 	public static final String SchoolSeason_Ce = "this ";
@@ -307,17 +312,20 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputYearKey(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "year")
-				.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setYearKey")
-				.a("id", classApiMethodMethod, "_yearKey")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "year")
+					.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setYearKey")
+					.a("id", classApiMethodMethod, "_yearKey")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmYearKey());
+		}
 	}
 
 	public void htmYearKey(String classApiMethodMethod) {
@@ -349,13 +357,15 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ seasonKeys: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
-										.f().sx("add a year")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("onclick", "postSchoolYearVals({ seasonKeys: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+											.f().sx("add a year")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -453,17 +463,20 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSessionKeys(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "sessions")
-				.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setSessionKeys")
-				.a("id", classApiMethodMethod, "_sessionKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolSeasonSessionKeys')) : [{'name':'fq','value':'seasonKey:", pk, "'}], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "sessions")
+					.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setSessionKeys")
+					.a("id", classApiMethodMethod, "_sessionKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolSeasonSessionKeys')) : [{'name':'fq','value':'seasonKey:", pk, "'}], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmSessionKeys());
+		}
 	}
 
 	public void htmSessionKeys(String classApiMethodMethod) {
@@ -495,13 +508,15 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonSessionKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
-										.f().sx("add a session")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
+											.f().sx("add a session")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1609,16 +1624,19 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonStartDate(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker setSeasonStartDate inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
-			.a("placeholder", "MM/DD/YYYY")
-			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_seasonStartDate")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", seasonStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(seasonStartDate))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); } ")
-			.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setSeasonStartDate inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
+				.a("placeholder", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/DD/YYYY")
+				.a("id", classApiMethodMethod, "_seasonStartDate")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", seasonStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(seasonStartDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); } ")
+				.fg();
+			sx(htmSeasonStartDate());
+		}
 	}
 
 	public void htmSeasonStartDate(String classApiMethodMethod) {
@@ -1634,16 +1652,18 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputSeasonStartDate(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_seasonStartDate')); $('#", classApiMethodMethod, "_seasonStartDate').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=pk]').val() }], 'setSeasonStartDate', null, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_seasonStartDate')); $('#", classApiMethodMethod, "_seasonStartDate').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=pk]').val() }], 'setSeasonStartDate', null, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1722,37 +1742,40 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonSummer(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_seasonSummer")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_seasonSummer");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
-			a("name", "setSeasonSummer");
-		} else {
-			a("class", "valueSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
-			a("name", "seasonSummer");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonSummer', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonSummer')); }, function() { addError($('#", classApiMethodMethod, "_seasonSummer')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getSeasonSummer() != null && getSeasonSummer())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_seasonSummer")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_seasonSummer");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
+				a("name", "setSeasonSummer");
+			} else {
+				a("class", "valueSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
+				a("name", "seasonSummer");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonSummer', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonSummer')); }, function() { addError($('#", classApiMethodMethod, "_seasonSummer')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getSeasonSummer() != null && getSeasonSummer())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmSeasonSummer());
+		}
 	}
 
 	public void htmSeasonSummer(String classApiMethodMethod) {
@@ -1846,37 +1869,40 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonWinter(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_seasonWinter")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_seasonWinter");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
-			a("name", "setSeasonWinter");
-		} else {
-			a("class", "valueSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
-			a("name", "seasonWinter");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonWinter', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonWinter')); }, function() { addError($('#", classApiMethodMethod, "_seasonWinter')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getSeasonWinter() != null && getSeasonWinter())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_seasonWinter")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_seasonWinter");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
+				a("name", "setSeasonWinter");
+			} else {
+				a("class", "valueSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
+				a("name", "seasonWinter");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonWinter', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonWinter')); }, function() { addError($('#", classApiMethodMethod, "_seasonWinter')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getSeasonWinter() != null && getSeasonWinter())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmSeasonWinter());
+		}
 	}
 
 	public void htmSeasonWinter(String classApiMethodMethod) {
@@ -1970,37 +1996,40 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonFuture(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_seasonFuture")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_seasonFuture");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
-			a("name", "setSeasonFuture");
-		} else {
-			a("class", "valueSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
-			a("name", "seasonFuture");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonFuture', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonFuture')); }, function() { addError($('#", classApiMethodMethod, "_seasonFuture')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getSeasonFuture() != null && getSeasonFuture())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_seasonFuture")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_seasonFuture");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
+				a("name", "setSeasonFuture");
+			} else {
+				a("class", "valueSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
+				a("name", "seasonFuture");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonFuture', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonFuture')); }, function() { addError($('#", classApiMethodMethod, "_seasonFuture')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getSeasonFuture() != null && getSeasonFuture())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmSeasonFuture());
+		}
 	}
 
 	public void htmSeasonFuture(String classApiMethodMethod) {

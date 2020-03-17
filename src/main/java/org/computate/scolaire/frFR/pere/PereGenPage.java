@@ -611,40 +611,6 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-
-			if(listePereScolaire != null && listePereScolaire.size() == 1) {
-				e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-					.a("onclick", "$('#deletePereScolaireModale').show(); ")
-					.f().sx("Supprimer des pères")
-				.g("button");
-				{ e("div").a("id", "deletePereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-					{ e("div").a("class", "w3-modal-content ").f();
-						{ e("div").a("class", "w3-card-4 ").f();
-							{ e("header").a("class", "w3-container w3-light-blue ").f();
-								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deletePereScolaireModale').hide(); ").f().sx("×").g("span");
-								e("h2").a("class", "w3-padding ").f().sx("Supprimer des pères").g("h2");
-							} g("header");
-							{ e("div").a("class", "w3-container ").f();
-								PereScolaire o = new PereScolaire();
-								o.setRequeteSite_(requeteSite_);
-
-								// Form DELETE
-								{ e("div").a("id", "deletePereScolaireForm").f();
-									htmlFormPATCHPereScolaire(o);
-								} g("div");
-								e("button")
-									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-									.a("onclick", "deletePereScolaire(", o.getPk(), "); ")
-									.f().sx("Supprimer des pères")
-								.g("button");
-
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-
-			}
 			g("div");
 		}
 	}

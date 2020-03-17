@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.year;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
@@ -14,6 +15,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,6 +52,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class SchoolYearGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchoolYear.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SchoolYear_UnNom = "a year";
 	public static final String SchoolYear_Ce = "this ";
@@ -143,17 +148,20 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputSchoolKey(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "school")
-				.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setSchoolKey")
-				.a("id", classApiMethodMethod, "_schoolKey")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($('#suggest", classApiMethodMethod, "SchoolYearSchoolKey')) : [{'name':'fq','value':'yearKeys:", pk, "'}], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "school")
+					.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setSchoolKey")
+					.a("id", classApiMethodMethod, "_schoolKey")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($('#suggest", classApiMethodMethod, "SchoolYearSchoolKey')) : [{'name':'fq','value':'yearKeys:", pk, "'}], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmSchoolKey());
+		}
 	}
 
 	public void htmSchoolKey(String classApiMethodMethod) {
@@ -185,13 +193,15 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSchoolKey_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolVals({ yearKeys: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "schoolKey')); });")
-										.f().sx("add a school")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+											.a("onclick", "postSchoolVals({ yearKeys: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "schoolKey')); });")
+											.f().sx("add a school")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -445,17 +455,20 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputSeasonKeys(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "seasons")
-				.a("class", "valueObjectSuggest suggestSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setSeasonKeys")
-				.a("id", classApiMethodMethod, "_seasonKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolYearSeasonKeys')) : [{'name':'fq','value':'yearKey:", pk, "'}], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "seasons")
+					.a("class", "valueObjectSuggest suggestSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setSeasonKeys")
+					.a("id", classApiMethodMethod, "_seasonKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolYearSeasonKeys')) : [{'name':'fq','value':'yearKey:", pk, "'}], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmSeasonKeys());
+		}
 	}
 
 	public void htmSeasonKeys(String classApiMethodMethod) {
@@ -487,13 +500,15 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSeasonKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolSeasonVals({ yearKey: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "seasonKeys')); });")
-										.f().sx("add a season")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postSchoolSeasonVals({ yearKey: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "seasonKeys')); });")
+											.f().sx("add a season")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1342,24 +1357,27 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputYearStart(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "start of year")
-			.a("id", classApiMethodMethod, "_yearStart");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setYearStart inputSchoolYear", pk, "YearStart w3-input w3-border ");
-				a("name", "setYearStart");
-			} else {
-				a("class", "valueYearStart w3-input w3-border inputSchoolYear", pk, "YearStart w3-input w3-border ");
-				a("name", "yearStart");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearStart', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearStart')); }, function() { addError($('#", classApiMethodMethod, "_yearStart')); }); ");
-			}
-			a("value", strYearStart())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "start of year")
+				.a("id", classApiMethodMethod, "_yearStart");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setYearStart inputSchoolYear", pk, "YearStart w3-input w3-border ");
+					a("name", "setYearStart");
+				} else {
+					a("class", "valueYearStart w3-input w3-border inputSchoolYear", pk, "YearStart w3-input w3-border ");
+					a("name", "yearStart");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearStart', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearStart')); }, function() { addError($('#", classApiMethodMethod, "_yearStart')); }); ");
+				}
+				a("value", strYearStart())
+			.fg();
 
+			sx(htmYearStart());
+		}
 	}
 
 	public void htmYearStart(String classApiMethodMethod) {
@@ -1376,16 +1394,18 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 								inputYearStart(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearStart')); $('#", classApiMethodMethod, "_yearStart').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearStart', null, function() { addGlow($('#", classApiMethodMethod, "_yearStart')); }, function() { addError($('#", classApiMethodMethod, "_yearStart')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearStart')); $('#", classApiMethodMethod, "_yearStart').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearStart', null, function() { addGlow($('#", classApiMethodMethod, "_yearStart')); }, function() { addError($('#", classApiMethodMethod, "_yearStart')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1465,24 +1485,27 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputYearEnd(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "end of year")
-			.a("id", classApiMethodMethod, "_yearEnd");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setYearEnd inputSchoolYear", pk, "YearEnd w3-input w3-border ");
-				a("name", "setYearEnd");
-			} else {
-				a("class", "valueYearEnd w3-input w3-border inputSchoolYear", pk, "YearEnd w3-input w3-border ");
-				a("name", "yearEnd");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearEnd', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearEnd')); }, function() { addError($('#", classApiMethodMethod, "_yearEnd')); }); ");
-			}
-			a("value", strYearEnd())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "end of year")
+				.a("id", classApiMethodMethod, "_yearEnd");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setYearEnd inputSchoolYear", pk, "YearEnd w3-input w3-border ");
+					a("name", "setYearEnd");
+				} else {
+					a("class", "valueYearEnd w3-input w3-border inputSchoolYear", pk, "YearEnd w3-input w3-border ");
+					a("name", "yearEnd");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearEnd', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearEnd')); }, function() { addError($('#", classApiMethodMethod, "_yearEnd')); }); ");
+				}
+				a("value", strYearEnd())
+			.fg();
 
+			sx(htmYearEnd());
+		}
 	}
 
 	public void htmYearEnd(String classApiMethodMethod) {
@@ -1499,16 +1522,18 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 								inputYearEnd(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearEnd')); $('#", classApiMethodMethod, "_yearEnd').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearEnd', null, function() { addGlow($('#", classApiMethodMethod, "_yearEnd')); }, function() { addError($('#", classApiMethodMethod, "_yearEnd')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearEnd')); $('#", classApiMethodMethod, "_yearEnd').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearEnd', null, function() { addGlow($('#", classApiMethodMethod, "_yearEnd')); }, function() { addError($('#", classApiMethodMethod, "_yearEnd')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1599,24 +1624,27 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputYearEnrollmentFee(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "enrollment fee")
-			.a("id", classApiMethodMethod, "_yearEnrollmentFee");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setYearEnrollmentFee inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
-				a("name", "setYearEnrollmentFee");
-			} else {
-				a("class", "valueYearEnrollmentFee w3-input w3-border inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
-				a("name", "yearEnrollmentFee");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearEnrollmentFee', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_yearEnrollmentFee')); }); ");
-			}
-			a("value", strYearEnrollmentFee())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "enrollment fee")
+				.a("id", classApiMethodMethod, "_yearEnrollmentFee");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setYearEnrollmentFee inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
+					a("name", "setYearEnrollmentFee");
+				} else {
+					a("class", "valueYearEnrollmentFee w3-input w3-border inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
+					a("name", "yearEnrollmentFee");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearEnrollmentFee', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_yearEnrollmentFee')); }); ");
+				}
+				a("value", strYearEnrollmentFee())
+			.fg();
 
+			sx(htmYearEnrollmentFee());
+		}
 	}
 
 	public void htmYearEnrollmentFee(String classApiMethodMethod) {
@@ -1633,16 +1661,18 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 								inputYearEnrollmentFee(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); $('#", classApiMethodMethod, "_yearEnrollmentFee').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearEnrollmentFee', null, function() { addGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_yearEnrollmentFee')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); $('#", classApiMethodMethod, "_yearEnrollmentFee').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearEnrollmentFee', null, function() { addGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_yearEnrollmentFee')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");

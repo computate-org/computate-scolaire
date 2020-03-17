@@ -998,105 +998,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteEcole(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEcole(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
-			sqlEcole(requeteSite, a -> {
-				if(a.succeeded()) {
-					rechercheEcole(requeteSite, false, true, null, b -> {
-						if(b.succeeded()) {
-							ListeRecherche<Ecole> listeEcole = b.result();
-							supprimerDELETEEcole(requeteSite, c -> {
-								if(c.succeeded()) {
-									reponse200DELETEEcole(requeteSite, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurEcole(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											erreurEcole(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurEcole(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurEcole(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurEcole(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurEcole(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void supprimerDELETEEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, Ecole.class.getCanonicalName(), pk, pk, pk, pk))
-					, supprimerAsync
-			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200DELETEEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Recherche //
 
 	@Override
@@ -1637,6 +1538,35 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		return true;
 	}
 
+	public void rechercheEcoleQ(ListeRecherche<Ecole> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
+		if(!"*".equals(entiteVar)) {
+			listeRecherche.setHighlight(true);
+			listeRecherche.setHighlightSnippets(3);
+			listeRecherche.addHighlightField(varIndexe);
+			listeRecherche.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void rechercheEcoleFq(ListeRecherche<Ecole> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+	}
+
+	public void rechercheEcoleSort(ListeRecherche<Ecole> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
+	}
+
+	public void rechercheEcoleRows(ListeRecherche<Ecole> listeRecherche, Integer valeurRows) {
+		listeRecherche.setRows(valeurRows);
+	}
+
+	public void rechercheEcoleStart(ListeRecherche<Ecole> listeRecherche, Integer valeurStart) {
+		listeRecherche.setStart(valeurStart);
+	}
+
+	public void rechercheEcoleVar(ListeRecherche<Ecole> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	}
+
 	public void rechercheEcole(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<Ecole>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -1661,8 +1591,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				String valeurIndexe = null;
 				String varIndexe = null;
 				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
+				Integer valeurStart = null;
+				Integer valeurRows = null;
 				String paramNom = paramRequete.getKey();
 				Object paramValeursObjet = paramRequete.getValue();
 				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
@@ -1675,33 +1605,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								varIndexe = "*".equals(entiteVar) ? entiteVar : Ecole.varRechercheEcole(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
-								}
+								rechercheEcoleQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = Ecole.varIndexeEcole(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								rechercheEcoleFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = Ecole.varIndexeEcole(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								rechercheEcoleSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								valeurStart = (Integer)paramObjet;
+								rechercheEcoleStart(listeRecherche, valeurStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								valeurRows = (Integer)paramObjet;
+								rechercheEcoleRows(listeRecherche, valeurRows);
+								break;
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								varIndexe = Ecole.varIndexeEcole(entiteVar);
+								rechercheEcoleVar(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 						}
 					}

@@ -2,8 +2,8 @@ package org.computate.scolaire.enUS.request;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -207,5 +207,8 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _requestHeaders(Wrap<CaseInsensitiveHeaders> c) {
+	}
+
+	protected void _requestVars(Map<String, String> m) {
 	}
 }

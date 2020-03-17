@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;                                        
+package org.computate.scolaire.frFR.enfant;                                         
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -32,7 +32,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 

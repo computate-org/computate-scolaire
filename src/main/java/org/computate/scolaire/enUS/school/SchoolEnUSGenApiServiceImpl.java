@@ -998,105 +998,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
-			sqlSchool(siteRequest, a -> {
-				if(a.succeeded()) {
-					aSearchSchool(siteRequest, false, true, null, b -> {
-						if(b.succeeded()) {
-							SearchList<School> listSchool = b.result();
-							deleteDELETESchool(siteRequest, c -> {
-								if(c.succeeded()) {
-									response200DELETESchool(siteRequest, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchool(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											errorSchool(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorSchool(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchool(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorSchool(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorSchool(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void deleteDELETESchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, School.class.getCanonicalName(), pk, pk, pk, pk))
-					, deleteAsync
-			-> {
-				eventHandler.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void response200DELETESchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Search //
 
 	@Override
@@ -1640,6 +1541,35 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		return true;
 	}
 
+	public void aSearchSchoolQ(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+		if(!"*".equals(entityVar)) {
+			searchList.setHighlight(true);
+			searchList.setHighlightSnippets(3);
+			searchList.addHighlightField(varIndexed);
+			searchList.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void aSearchSchoolFq(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+	}
+
+	public void aSearchSchoolSort(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
+	}
+
+	public void aSearchSchoolRows(SearchList<School> searchList, Integer valueRows) {
+		searchList.setRows(valueRows);
+	}
+
+	public void aSearchSchoolStart(SearchList<School> searchList, Integer valueStart) {
+		searchList.setStart(valueStart);
+	}
+
+	public void aSearchSchoolVar(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	}
+
 	public void aSearchSchool(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<School>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -1664,8 +1594,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				String valueIndexed = null;
 				String varIndexed = null;
 				String valueSort = null;
-				Integer aSearchStart = null;
-				Integer aSearchNum = null;
+				Integer valueStart = null;
+				Integer valueRows = null;
 				String paramName = paramRequest.getKey();
 				Object paramValuesObject = paramRequest.getValue();
 				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
@@ -1678,33 +1608,33 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : School.varSearchSchool(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-								if(!"*".equals(entityVar)) {
-									searchList.setHighlight(true);
-									searchList.setHighlightSnippets(3);
-									searchList.addHighlightField(varIndexed);
-									searchList.setParam("hl.encoder", "html");
-								}
+								aSearchSchoolQ(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = School.varIndexedSchool(entityVar);
-								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								aSearchSchoolFq(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = School.varIndexedSchool(entityVar);
-								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
+								aSearchSchoolSort(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
-								aSearchStart = (Integer)paramObject;
-								searchList.setStart(aSearchStart);
+								valueStart = (Integer)paramObject;
+								aSearchSchoolStart(searchList, valueStart);
 								break;
 							case "rows":
-								aSearchNum = (Integer)paramObject;
-								searchList.setRows(aSearchNum);
+								valueRows = (Integer)paramObject;
+								aSearchSchoolRows(searchList, valueRows);
+								break;
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								varIndexed = School.varIndexedSchool(entityVar);
+								aSearchSchoolVar(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 						}
 					}

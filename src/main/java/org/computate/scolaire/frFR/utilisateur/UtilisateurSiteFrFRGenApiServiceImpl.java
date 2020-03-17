@@ -205,6 +205,24 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -585,6 +603,24 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void postUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerUtilisateurSite(requeteSite, b -> {
@@ -1147,7 +1183,41 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	}
 
 	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void rechercheUtilisateurSiteQ(ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
+		if(!"*".equals(entiteVar)) {
+			listeRecherche.setHighlight(true);
+			listeRecherche.setHighlightSnippets(3);
+			listeRecherche.addHighlightField(varIndexe);
+			listeRecherche.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void rechercheUtilisateurSiteFq(ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+	}
+
+	public void rechercheUtilisateurSiteSort(ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
+	}
+
+	public void rechercheUtilisateurSiteRows(ListeRecherche<UtilisateurSite> listeRecherche, Integer valeurRows) {
+		listeRecherche.setRows(valeurRows);
+	}
+
+	public void rechercheUtilisateurSiteStart(ListeRecherche<UtilisateurSite> listeRecherche, Integer valeurStart) {
+		listeRecherche.setStart(valeurStart);
+	}
+
+	public void rechercheUtilisateurSiteVar(ListeRecherche<UtilisateurSite> listeRecherche, String var, String valeur) {
+		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
 	public void rechercheUtilisateurSite(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<UtilisateurSite>>> gestionnaireEvenements) {
@@ -1160,6 +1230,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(UtilisateurSite.class);
+			listeRecherche.setRequeteSite_(requeteSite);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
@@ -1175,7 +1246,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----"))
-						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(-1L));
+						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1183,8 +1254,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				String valeurIndexe = null;
 				String varIndexe = null;
 				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
+				Integer valeurStart = null;
+				Integer valeurRows = null;
 				String paramNom = paramRequete.getKey();
 				Object paramValeursObjet = paramRequete.getValue();
 				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
@@ -1197,33 +1268,32 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								varIndexe = "*".equals(entiteVar) ? entiteVar : UtilisateurSite.varRechercheUtilisateurSite(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
-								}
+								rechercheUtilisateurSiteQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								rechercheUtilisateurSiteFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								rechercheUtilisateurSiteSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								valeurStart = (Integer)paramObjet;
+								rechercheUtilisateurSiteStart(listeRecherche, valeurStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								valeurRows = (Integer)paramObjet;
+								rechercheUtilisateurSiteRows(listeRecherche, valeurRows);
+								break;
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								rechercheUtilisateurSiteVar(listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

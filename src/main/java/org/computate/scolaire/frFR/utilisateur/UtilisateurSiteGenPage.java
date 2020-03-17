@@ -32,6 +32,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
@@ -39,6 +41,9 @@ import java.math.MathContext;
  * NomCanonique.enUS: org.computate.scolaire.enUS.user.SiteUserGenPage
  **/
 public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin", "SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -470,82 +475,87 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	public void htmlBodyFormsUtilisateurSiteGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1) {
-			{ e("button")
+			if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+						.a("id", "rechargerCeUtilisateurSiteGenPage")
+						.a("onclick", "patchUtilisateurSiteVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeUtilisateurSiteGenPage')); }, function() { ajouterErreur($('#rechargerCeUtilisateurSiteGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("recharger cet utilisateur du site");
+				} g("button");
+			}
+
+			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-					.a("id", "rechargerCeUtilisateurSiteGenPage")
-					.a("onclick", "patchUtilisateurSiteVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeUtilisateurSiteGenPage')); }, function() { ajouterErreur($('#rechargerCeUtilisateurSiteGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("recharger cet utilisateur du site");
-			} g("button");
-		}
+				.a("onclick", "$('#patchUtilisateurSiteModale').show(); ")
+				.f().sx("Modifier des utilisateurs du site")
+			.g("button");
+			{ e("div").a("id", "patchUtilisateurSiteModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier des utilisateurs du site").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							UtilisateurSite o = new UtilisateurSite();
+							o.setRequeteSite_(requeteSite_);
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-			.a("onclick", "$('#patchUtilisateurSiteModale').show(); ")
-			.f().sx("Modifier des utilisateurs du site")
-		.g("button");
-		{ e("div").a("id", "patchUtilisateurSiteModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-gray ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modifier des utilisateurs du site").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						UtilisateurSite o = new UtilisateurSite();
-						o.setRequeteSite_(requeteSite_);
+							// FormulaireValeurs PATCH
+							{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHUtilisateurSite(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+								.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier des utilisateurs du site")
+							.g("button");
 
-						// FormulaireValeurs PATCH
-						{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHUtilisateurSite(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modifier des utilisateurs du site")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-			.a("onclick", "$('#postUtilisateurSiteModale').show(); ")
-			.f().sx("Créer un utilisateur du site")
-		.g("button");
-		{ e("div").a("id", "postUtilisateurSiteModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-gray ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Créer un utilisateur du site").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						UtilisateurSite o = new UtilisateurSite();
-						o.setRequeteSite_(requeteSite_);
-
-						// Form POST
-						{ e("div").a("id", "postUtilisateurSiteForm").f();
-							htmlFormPOSTUtilisateurSite(o);
 						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "postUtilisateurSite($('#postUtilisateurSiteForm')); ")
-							.f().sx("Créer un utilisateur du site")
-						.g("button");
-
 					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
-		g("div");
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+				.a("onclick", "$('#postUtilisateurSiteModale').show(); ")
+				.f().sx("Créer un utilisateur du site")
+			.g("button");
+			{ e("div").a("id", "postUtilisateurSiteModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Créer un utilisateur du site").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							UtilisateurSite o = new UtilisateurSite();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form POST
+							{ e("div").a("id", "postUtilisateurSiteForm").f();
+								htmlFormPOSTUtilisateurSite(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+								.a("onclick", "postUtilisateurSite($('#postUtilisateurSiteForm')); ")
+								.f().sx("Créer un utilisateur du site")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+			g("div");
+		}
 	}
 
 	/**
@@ -586,12 +596,18 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	 * r.enUS: "suggestListSiteUser"
 	**/
 	public static void htmlSuggereUtilisateurSiteGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "rechargerTousUtilisateurSiteGenPage", id).a("href", "/utilisateur").a("class", "").a("onclick", "patchUtilisateurSiteVals([], {}, function() { ajouterLueur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("recharger tous les utilisateurs du site");
-			} p.g("a");
-		} p.g("div");
+		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), UtilisateurSiteGenPage.ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), UtilisateurSiteGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "rechargerTousUtilisateurSiteGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchUtilisateurSiteVals([], {}, function() { ajouterLueur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("recharger tous les utilisateurs du site");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

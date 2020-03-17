@@ -580,40 +580,6 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-
-			if(listSchool != null && listSchool.size() == 1) {
-				e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-					.a("onclick", "$('#deleteSchoolModal').show(); ")
-					.f().sx("Delete the schools")
-				.g("button");
-				{ e("div").a("id", "deleteSchoolModal").a("class", "w3-modal w3-padding-32 ").f();
-					{ e("div").a("class", "w3-modal-content ").f();
-						{ e("div").a("class", "w3-card-4 ").f();
-							{ e("header").a("class", "w3-container w3-pink ").f();
-								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolModal').hide(); ").f().sx("×").g("span");
-								e("h2").a("class", "w3-padding ").f().sx("Delete the schools").g("h2");
-							} g("header");
-							{ e("div").a("class", "w3-container ").f();
-								School o = new School();
-								o.setSiteRequest_(siteRequest_);
-
-								// Form DELETE
-								{ e("div").a("id", "deleteSchoolForm").f();
-									htmlFormPATCHSchool(o);
-								} g("div");
-								e("button")
-									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-									.a("onclick", "deleteSchool(", o.getPk(), "); ")
-									.f().sx("Delete the schools")
-								.g("button");
-
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-
-			}
 			g("div");
 		}
 	}

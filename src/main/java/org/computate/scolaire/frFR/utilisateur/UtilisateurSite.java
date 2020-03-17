@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.utilisateur;                        
+package org.computate.scolaire.frFR.utilisateur;                       
 
 import java.util.List;
 

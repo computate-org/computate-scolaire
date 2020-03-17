@@ -32,6 +32,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
@@ -39,6 +41,9 @@ import java.math.MathContext;
  * NomCanonique.enUS: org.computate.scolaire.enUS.age.AgeGenPage
  **/
 public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -449,139 +454,46 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsAgeGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listeAgeScolaire != null && listeAgeScolaire.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-					.a("id", "rechargerCeAgeGenPage")
-					.a("onclick", "patchAgeScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeAgeGenPage')); }, function() { ajouterErreur($('#rechargerCeAgeGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("recharger cet âge");
-			} g("button");
-		}
+			if(listeAgeScolaire != null && listeAgeScolaire.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+						.a("id", "rechargerCeAgeGenPage")
+						.a("onclick", "patchAgeScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeAgeGenPage')); }, function() { ajouterErreur($('#rechargerCeAgeGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("recharger cet âge");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-			.a("onclick", "$('#postAgeScolaireModale').show(); ")
-			.f().sx("Créer un âge")
-		.g("button");
-		{ e("div").a("id", "postAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-blue ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postAgeScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Créer un âge").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						AgeScolaire o = new AgeScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// Form POST
-						{ e("div").a("id", "postAgeScolaireForm").f();
-							htmlFormPOSTAgeScolaire(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-							.a("onclick", "postAgeScolaire($('#postAgeScolaireForm')); ")
-							.f().sx("Créer un âge")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-			.a("onclick", "$('#putAgeScolaireModale').show(); ")
-			.f().sx("Dupliquer des âges")
-		.g("button");
-		{ e("div").a("id", "putAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-blue ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putAgeScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des âges").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						AgeScolaire o = new AgeScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PUT
-						{ e("form").a("action", "").a("id", "putAgeScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTAgeScolaire(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-							.a("onclick", "putAgeScolaire($('#putAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Dupliquer des âges")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-			.a("onclick", "$('#patchAgeScolaireModale').show(); ")
-			.f().sx("Modifier des âges")
-		.g("button");
-		{ e("div").a("id", "patchAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-blue ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchAgeScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modifier des âges").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						AgeScolaire o = new AgeScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PATCH
-						{ e("form").a("action", "").a("id", "patchAgeScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHAgeScolaire(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-							.a("onclick", "patchAgeScolaire($('#patchAgeScolaireFormulaireFiltres'), $('#patchAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modifier des âges")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listeAgeScolaire != null && listeAgeScolaire.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-				.a("onclick", "$('#deleteAgeScolaireModale').show(); ")
-				.f().sx("Supprimer des âges")
+				.a("onclick", "$('#postAgeScolaireModale').show(); ")
+				.f().sx("Créer un âge")
 			.g("button");
-			{ e("div").a("id", "deleteAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-blue ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteAgeScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Supprimer des âges").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postAgeScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Créer un âge").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							AgeScolaire o = new AgeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteAgeScolaireForm").f();
-								htmlFormPATCHAgeScolaire(o);
+							// Form POST
+							{ e("div").a("id", "postAgeScolaireForm").f();
+								htmlFormPOSTAgeScolaire(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-								.a("onclick", "deleteAgeScolaire(", o.getPk(), "); ")
-								.f().sx("Supprimer des âges")
+								.a("onclick", "postAgeScolaire($('#postAgeScolaireForm')); ")
+								.f().sx("Créer un âge")
 							.g("button");
 
 						} g("div");
@@ -589,8 +501,72 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+				.a("onclick", "$('#putAgeScolaireModale').show(); ")
+				.f().sx("Dupliquer des âges")
+			.g("button");
+			{ e("div").a("id", "putAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-blue ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putAgeScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des âges").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							AgeScolaire o = new AgeScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PUT
+							{ e("form").a("action", "").a("id", "putAgeScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTAgeScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
+								.a("onclick", "putAgeScolaire($('#putAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Dupliquer des âges")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+				.a("onclick", "$('#patchAgeScolaireModale').show(); ")
+				.f().sx("Modifier des âges")
+			.g("button");
+			{ e("div").a("id", "patchAgeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-blue ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchAgeScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier des âges").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							AgeScolaire o = new AgeScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PATCH
+							{ e("form").a("action", "").a("id", "patchAgeScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHAgeScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
+								.a("onclick", "patchAgeScolaire($('#patchAgeScolaireFormulaireFiltres'), $('#patchAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier des âges")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
@@ -631,12 +607,18 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolAge"
 	**/
 	public static void htmlSuggereAgeGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "rechargerTousAgeGenPage", id).a("href", "/age").a("class", "").a("onclick", "patchAgeScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousAgeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousAgeGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("recharger tous les âges");
-			} p.g("a");
-		} p.g("div");
+		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AgeGenPage.ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AgeGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "rechargerTousAgeGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ").a("onclick", "patchAgeScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousAgeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousAgeGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("recharger tous les âges");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

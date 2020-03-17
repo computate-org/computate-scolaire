@@ -32,12 +32,17 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
  * Translate: false
  **/
 public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -448,139 +453,46 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsSessionGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listSchoolSession != null && listSchoolSession.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-					.a("id", "refreshThisSessionGenPage")
-					.a("onclick", "patchSchoolSessionVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisSessionGenPage')); }, function() { addError($('#refreshThisSessionGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("refresh this session");
-			} g("button");
-		}
+			if(listSchoolSession != null && listSchoolSession.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+						.a("id", "refreshThisSessionGenPage")
+						.a("onclick", "patchSchoolSessionVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisSessionGenPage')); }, function() { addError($('#refreshThisSessionGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("refresh this session");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#postSchoolSessionModal').show(); ")
-			.f().sx("Create a session")
-		.g("button");
-		{ e("div").a("id", "postSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolSessionModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Create a session").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolSession o = new SchoolSession();
-						o.setSiteRequest_(siteRequest_);
-
-						// Form POST
-						{ e("div").a("id", "postSchoolSessionForm").f();
-							htmlFormPOSTSchoolSession(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "postSchoolSession($('#postSchoolSessionForm')); ")
-							.f().sx("Create a session")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#putSchoolSessionModal').show(); ")
-			.f().sx("Duplicate the sessions")
-		.g("button");
-		{ e("div").a("id", "putSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolSessionModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Duplicate the sessions").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolSession o = new SchoolSession();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PUT
-						{ e("form").a("action", "").a("id", "putSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTSchoolSession(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "putSchoolSession($('#putSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Duplicate the sessions")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchSchoolSessionModal').show(); ")
-			.f().sx("Modify the sessions")
-		.g("button");
-		{ e("div").a("id", "patchSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-green ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSessionModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modify the sessions").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						SchoolSession o = new SchoolSession();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PATCH
-						{ e("form").a("action", "").a("id", "patchSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHSchoolSession(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-							.a("onclick", "patchSchoolSession($('#patchSchoolSessionFormFilters'), $('#patchSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modify the sessions")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listSchoolSession != null && listSchoolSession.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("onclick", "$('#deleteSchoolSessionModal').show(); ")
-				.f().sx("Delete the sessions")
+				.a("onclick", "$('#postSchoolSessionModal').show(); ")
+				.f().sx("Create a session")
 			.g("button");
-			{ e("div").a("id", "deleteSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-green ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolSessionModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Delete the sessions").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolSessionModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Create a session").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteSchoolSessionForm").f();
-								htmlFormPATCHSchoolSession(o);
+							// Form POST
+							{ e("div").a("id", "postSchoolSessionForm").f();
+								htmlFormPOSTSchoolSession(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "deleteSchoolSession(", o.getPk(), "); ")
-								.f().sx("Delete the sessions")
+								.a("onclick", "postSchoolSession($('#postSchoolSessionForm')); ")
+								.f().sx("Create a session")
 							.g("button");
 
 						} g("div");
@@ -588,19 +500,89 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putSchoolSessionModal').show(); ")
+				.f().sx("Duplicate the sessions")
+			.g("button");
+			{ e("div").a("id", "putSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolSessionModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate the sessions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolSession o = new SchoolSession();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PUT
+							{ e("form").a("action", "").a("id", "putSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTSchoolSession(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putSchoolSession($('#putSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Duplicate the sessions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#patchSchoolSessionModal').show(); ")
+				.f().sx("Modify the sessions")
+			.g("button");
+			{ e("div").a("id", "patchSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSessionModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modify the sessions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolSession o = new SchoolSession();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PATCH
+							{ e("form").a("action", "").a("id", "patchSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHSchoolSession(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "patchSchoolSession($('#patchSchoolSessionFormFilters'), $('#patchSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify the sessions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
 	**/
 	public static void htmlSuggestSessionGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "refreshAllSessionGenPage", id).a("href", "/session").a("class", "").a("onclick", "patchSchoolSessionVals([], {}, function() { addGlow($('#refreshAllSessionGenPage", id, "')); }, function() { addError($('#refreshAllSessionGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("refresh all the sessions");
-			} p.g("a");
-		} p.g("div");
+		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SessionGenPage.ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SessionGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "refreshAllSessionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolSessionVals([], {}, function() { addGlow($('#refreshAllSessionGenPage", id, "')); }, function() { addError($('#refreshAllSessionGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("refresh all the sessions");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

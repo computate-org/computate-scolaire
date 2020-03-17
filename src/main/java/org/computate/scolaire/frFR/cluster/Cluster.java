@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;             
+package org.computate.scolaire.frFR.cluster;              
 
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
@@ -33,7 +33,6 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 

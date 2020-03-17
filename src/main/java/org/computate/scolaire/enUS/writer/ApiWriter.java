@@ -658,6 +658,14 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				else
 					wPaths.tl(6, "default: ", contextRows);
 				wPaths.tl(6, "minimum: 0");
+				wPaths.tl(4, "- in: query");
+				wPaths.tl(5, "name: var");
+				wPaths.tl(5, "description: ''");
+				wPaths.tl(5, "required: false");
+				wPaths.tl(5, "schema:");
+				wPaths.tl(6, "type: array");
+				wPaths.tl(6, "items:");
+				wPaths.tl(7, "  type: string");
 			}
 		}
 

@@ -78,6 +78,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -104,11 +105,29 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void postPartHtml(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-						RequeteApi requeteApi = new RequeteApi();
+							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
@@ -326,6 +345,24 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void putPartHtml(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
@@ -674,6 +711,24 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void patchPartHtml(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
@@ -1186,6 +1241,27 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void getPartHtml(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
@@ -1246,93 +1322,30 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deletePartHtml(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
-			sqlPartHtml(requeteSite, a -> {
-				if(a.succeeded()) {
-					recherchePartHtml(requeteSite, false, true, null, b -> {
-						if(b.succeeded()) {
-							ListeRecherche<PartHtml> listePartHtml = b.result();
-							supprimerDELETEPartHtml(requeteSite, c -> {
-								if(c.succeeded()) {
-									reponse200DELETEPartHtml(requeteSite, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurPartHtml(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurPartHtml(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurPartHtml(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void supprimerDELETEPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, PartHtml.class.getCanonicalName(), pk, pk, pk, pk))
-					, supprimerAsync
-			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200DELETEPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Recherche //
 
 	@Override
 	public void recherchePartHtml(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
@@ -1436,6 +1449,27 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void pagerecherchePartHtml(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					) {
+				gestionnaireEvenements.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
@@ -1664,88 +1698,155 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						if(utilisateurValeurs == null) {
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_creer
-									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
-									, creerAsync
-							-> {
-								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUtilisateur = creerLigne.getLong(0);
-								UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-								utilisateurSite.setPk(pkUtilisateur);
+						try {
+							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+							UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
+							if(utilisateurValeurs == null) {
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								connexionSql.queryWithParams(
-										SiteContexteFrFR.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-										, definirAsync
-								-> {
-									if(definirAsync.succeeded()) {
-										try {
-											for(JsonArray definition : definirAsync.result().getResults()) {
-												utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("utilisateurId", principalJson.getString("sub"));
+								utilisateurPartHtmlDefinir(requeteSite, jsonObject, false);
+
+								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+								requeteSite2.setObjetJson(jsonObject);
+								requeteSite2.setVertx(requeteSite.getVertx());
+								requeteSite2.setSiteContexte_(siteContexte);
+								requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+
+								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
+									if(b.succeeded()) {
+										UtilisateurSite utilisateurSite = b.result();
+										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, c -> {
+											if(c.succeeded()) {
+												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+													if(d.succeeded()) {
+														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+															if(e.succeeded()) {
+																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+																	if(f.succeeded()) {
+																		requeteSite.setUtilisateurSite(utilisateurSite);
+																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
+																		gestionnaireEvenements.handle(Future.succeededFuture());
+																	} else {
+																		erreurPartHtml(requeteSite, gestionnaireEvenements, f);
+																	}
+																});
+															} else {
+																erreurPartHtml(requeteSite, gestionnaireEvenements, e);
+															}
+														});
+													} else {
+														erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+													}
+												});
+											} else {
+												erreurPartHtml(requeteSite, gestionnaireEvenements, c);
 											}
-											JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-											JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-											utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-											utilisateurSite.initLoinPourClasse(requeteSite);
-											utilisateurSite.indexerPourClasse();
-											requeteSite.setUtilisateurSite(utilisateurSite);
-											requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											requeteSite.setUtilisateurId(principalJson.getString("sub"));
-											gestionnaireEvenements.handle(Future.succeededFuture());
-										} catch(Exception e) {
-											gestionnaireEvenements.handle(Future.failedFuture(e));
-										}
+										});
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+										erreurPartHtml(requeteSite, gestionnaireEvenements, b);
 									}
 								});
-							});
-						} else {
-							Long pkUtilisateur = utilisateurValeurs.getLong(0);
-							UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setRequeteSite_(requeteSite);
-							utilisateurSite.setPk(pkUtilisateur);
+							} else {
+								Long pkUtilisateur = utilisateurValeurs.getLong(0);
+								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(UtilisateurSite.class);
+								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
+								listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
-							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-									, definirAsync
-							-> {
-								if(definirAsync.succeeded()) {
-									try {
-										for(JsonArray definition : definirAsync.result().getResults()) {
-											utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
-										}
-										JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-										JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-										utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-										utilisateurSite.initLoinPourClasse(requeteSite);
-										utilisateurSite.indexerPourClasse();
-										requeteSite.setUtilisateurSite(utilisateurSite);
-										requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-										requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-										requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-										requeteSite.setUtilisateurId(principalJson.getString("sub"));
-										gestionnaireEvenements.handle(Future.succeededFuture());
-									} catch(Exception e) {
-										gestionnaireEvenements.handle(Future.failedFuture(e));
+								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
+								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
+								Boolean definir = utilisateurPartHtmlDefinir(requeteSite, jsonObject, true);
+								if(definir) {
+									UtilisateurSite utilisateurSite;
+									if(utilisateurSite1 == null) {
+										utilisateurSite = new UtilisateurSite();
+										utilisateurSite.setPk(pkUtilisateur);
+										utilisateurSite.setRequeteSite_(requeteSite);
+									} else {
+										utilisateurSite = utilisateurSite1;
 									}
+
+									RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+									requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+									requeteSite2.setObjetJson(jsonObject);
+									requeteSite2.setVertx(requeteSite.getVertx());
+									requeteSite2.setSiteContexte_(siteContexte);
+									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
+									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
+										if(c.succeeded()) {
+											UtilisateurSite utilisateurSite2 = c.result();
+											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
+												if(d.succeeded()) {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
+														if(e.succeeded()) {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
+																if(f.succeeded()) {
+																	requeteSite.setUtilisateurSite(utilisateurSite2);
+																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
+																	gestionnaireEvenements.handle(Future.succeededFuture());
+																} else {
+																	erreurPartHtml(requeteSite, gestionnaireEvenements, f);
+																}
+															});
+														} else {
+															erreurPartHtml(requeteSite, gestionnaireEvenements, e);
+														}
+													});
+												} else {
+													erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+												}
+											});
+										} else {
+											erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+										}
+									});
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+									requeteSite.setUtilisateurSite(utilisateurSite1);
+									requeteSite.setUtilisateurNom(utilisateurSite1.getUtilisateurNom());
+									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
+									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
+									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
+									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
-							});
+							}
+						} catch(Exception e) {
+							gestionnaireEvenements.handle(Future.failedFuture(e));
 						}
 					} else {
 						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
@@ -1755,6 +1856,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
+	}
+
+	public Boolean utilisateurPartHtmlDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
+		return true;
 	}
 
 	public void recherchePartHtml(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<PartHtml>>> gestionnaireEvenements) {
@@ -1769,7 +1874,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			listeRecherche.setC(PartHtml.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
@@ -1829,8 +1934,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if(listeRecherche.getSorts().size() == 0)
-				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
+			if(listeRecherche.getSorts().size() == 0) {
+				listeRecherche.addSort("tri1_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri2_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri3_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri4_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri5_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri6_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri7_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri8_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri9_indexed_double", ORDER.asc);
+				listeRecherche.addSort("tri10_indexed_double", ORDER.asc);
+			}
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

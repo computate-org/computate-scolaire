@@ -610,40 +610,6 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-
-			if(listSchoolDad != null && listSchoolDad.size() == 1) {
-				e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-					.a("onclick", "$('#deleteSchoolDadModal').show(); ")
-					.f().sx("Delete the dads")
-				.g("button");
-				{ e("div").a("id", "deleteSchoolDadModal").a("class", "w3-modal w3-padding-32 ").f();
-					{ e("div").a("class", "w3-modal-content ").f();
-						{ e("div").a("class", "w3-card-4 ").f();
-							{ e("header").a("class", "w3-container w3-light-blue ").f();
-								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolDadModal').hide(); ").f().sx("×").g("span");
-								e("h2").a("class", "w3-padding ").f().sx("Delete the dads").g("h2");
-							} g("header");
-							{ e("div").a("class", "w3-container ").f();
-								SchoolDad o = new SchoolDad();
-								o.setSiteRequest_(siteRequest_);
-
-								// Form DELETE
-								{ e("div").a("id", "deleteSchoolDadForm").f();
-									htmlFormPATCHSchoolDad(o);
-								} g("div");
-								e("button")
-									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-									.a("onclick", "deleteSchoolDad(", o.getPk(), "); ")
-									.f().sx("Delete the dads")
-								.g("button");
-
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-
-			}
 			g("div");
 		}
 	}

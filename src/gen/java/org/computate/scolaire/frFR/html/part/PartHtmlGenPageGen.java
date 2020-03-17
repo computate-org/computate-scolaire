@@ -1,11 +1,13 @@
 package org.computate.scolaire.frFR.html.part;
 
+import java.util.Arrays;
 import org.computate.scolaire.frFR.html.part.PartHtml;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -13,10 +15,12 @@ import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
@@ -33,6 +37,7 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « listePartHtml »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<PartHtml> listePartHtml;
 	@JsonIgnore
 	public Couverture<ListeRecherche<PartHtml>> listePartHtmlCouverture = new Couverture<ListeRecherche<PartHtml>>().p(this).c(ListeRecherche.class).var("listePartHtml").o(listePartHtml);
@@ -72,6 +77,7 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 	/**	L'entité « partHtml »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected PartHtml partHtml;
 	@JsonIgnore
 	public Couverture<PartHtml> partHtmlCouverture = new Couverture<PartHtml>().p(this).c(PartHtml.class).var("partHtml").o(partHtml);

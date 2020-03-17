@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;                                     
+package org.computate.scolaire.frFR.ecole;                                         
 
 import java.util.List;
 
@@ -24,7 +24,6 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 
@@ -46,7 +45,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */         
+ */              
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**

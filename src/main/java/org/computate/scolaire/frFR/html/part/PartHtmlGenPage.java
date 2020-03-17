@@ -26,6 +26,14 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
@@ -33,6 +41,9 @@ import java.util.Optional;
  * NomCanonique.enUS: org.computate.scolaire.enUS.html.part.HtmlPartGenPage
  **/
 public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -496,40 +507,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
-					{ e("tr").f();
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("").g("th");
-					} g("tr");
-				} g("thead");
-				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listePartHtml.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listePartHtml.size(); i++) {
-						PartHtml o = listePartHtml.getList().get(i);
-						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
-						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/part-html/" + o.getPk();
-						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									{ e("span").f();
-										sx(o.strCree());
-									} g("span");
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-sun ").f().g("i");
-									{ e("span").f();
-										sx(o.strObjetTitre());
-									} g("span");
-								} g("a");
-							} g("td");
-						} g("tr");
-					}
-				} g("tbody");
-			} g("table");
+				table1PartHtmlGenPage();
 		}
 
 		if(listePartHtml != null && listePartHtml.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -561,138 +539,141 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	public void table1PartHtmlGenPage() {
+		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
+			table2PartHtmlGenPage();
+		} g("table");
+	}
+
+	public void table2PartHtmlGenPage() {
+		thead1PartHtmlGenPage();
+		tbody1PartHtmlGenPage();
+		tfoot1PartHtmlGenPage();
+	}
+
+	public void thead1PartHtmlGenPage() {
+		{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
+			thead2PartHtmlGenPage();
+		} g("thead");
+	}
+
+	public void thead2PartHtmlGenPage() {
+			{ e("tr").f();
+			if(getColonneCree()) {
+				e("th").f().sx("crée").g("th");
+			}
+			if(getColonneObjetTitre()) {
+				e("th").f().sx("").g("th");
+			}
+			} g("tr");
+	}
+
+	public void tbody1PartHtmlGenPage() {
+		{ e("tbody").f();
+			tbody2PartHtmlGenPage();
+		} g("tbody");
+	}
+
+	public void tbody2PartHtmlGenPage() {
+		Map<String, Map<String, List<String>>> highlighting = listePartHtml.getQueryResponse().getHighlighting();
+		for(int i = 0; i < listePartHtml.size(); i++) {
+			PartHtml o = listePartHtml.getList().get(i);
+			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
+			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
+			String uri = "/part-html/" + o.getPk();
+			{ e("tr").f();
+				if(getColonneCree()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							{ e("span").f();
+								sx(o.strCree());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+				if(getColonneObjetTitre()) {
+					{ e("td").f();
+						{ e("a").a("href", uri).f();
+							e("i").a("class", "far fa-sun ").f().g("i");
+							{ e("span").f();
+								sx(o.strObjetTitre());
+							} g("span");
+						} g("a");
+					} g("td");
+				}
+			} g("tr");
+		}
+	}
+
+	public void tfoot1PartHtmlGenPage() {
+		{ e("tfoot").a("class", "w3-yellow w3-hover-yellow ").f();
+			tfoot2PartHtmlGenPage();
+		} g("tfoot");
+	}
+
+	public void tfoot2PartHtmlGenPage() {
+		{ e("tr").f();
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			if(getColonneCree()) {
+				e("td").f();
+				g("td");
+			}
+			if(getColonneObjetTitre()) {
+				e("td").f();
+				g("td");
+			}
+		} g("tr");
+	}
+
+	public Boolean getColonneCree() {
+		return true;
+	}
+
+	public Boolean getColonneObjetTitre() {
+		return true;
+	}
+
 	public void htmlBodyFormsPartHtmlGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		{ e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-				.a("id", "rechargerCePartHtmlGenPage")
-				.a("onclick", "patchPartHtmlVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCePartHtmlGenPage')); }, function() { ajouterErreur($('#rechargerCePartHtmlGenPage')); }); return false; ").f();
-				e("i").a("class", "fas fa-sync-alt ").f().g("i");
-			sx("recharger ce part de HTML");
-		} g("button");
+			if(listePartHtml != null && listePartHtml.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+						.a("id", "rechargerCePartHtmlGenPage")
+						.a("onclick", "patchPartHtmlVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCePartHtmlGenPage')); }, function() { ajouterErreur($('#rechargerCePartHtmlGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("recharger ce part de HTML");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-			.a("onclick", "$('#postPartHtmlModale').show(); ")
-			.f().sx("Créer un part de HTML")
-		.g("button");
-		{ e("div").a("id", "postPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-yellow ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postPartHtmlModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Créer un part de HTML").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						PartHtml o = new PartHtml();
-						o.setRequeteSite_(requeteSite_);
-
-						// Form POST
-						{ e("div").a("id", "postPartHtmlForm").f();
-							htmlFormPOSTPartHtml(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "postPartHtml($('#postPartHtmlForm')); ")
-							.f().sx("Créer un part de HTML")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-			.a("onclick", "$('#putPartHtmlModale').show(); ")
-			.f().sx("Dupliquer des part de HTMLs")
-		.g("button");
-		{ e("div").a("id", "putPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-yellow ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putPartHtmlModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des part de HTMLs").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						PartHtml o = new PartHtml();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PUT
-						{ e("form").a("action", "").a("id", "putPartHtmlFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTPartHtml(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "putPartHtml($('#putPartHtmlFormulaireValeurs'), ", Optional.ofNullable(partHtml).map(PartHtml::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Dupliquer des part de HTMLs")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-			.a("onclick", "$('#patchPartHtmlModale').show(); ")
-			.f().sx("Modifier des part de HTMLs")
-		.g("button");
-		{ e("div").a("id", "patchPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-yellow ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchPartHtmlModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modifier des part de HTMLs").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						PartHtml o = new PartHtml();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PATCH
-						{ e("form").a("action", "").a("id", "patchPartHtmlFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHPartHtml(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-							.a("onclick", "patchPartHtml($('#patchPartHtmlFormulaireFiltres'), $('#patchPartHtmlFormulaireValeurs'), ", Optional.ofNullable(partHtml).map(PartHtml::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modifier des part de HTMLs")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listePartHtml != null && listePartHtml.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-				.a("onclick", "$('#deletePartHtmlModale').show(); ")
-				.f().sx("Supprimer des part de HTMLs")
+				.a("onclick", "$('#postPartHtmlModale').show(); ")
+				.f().sx("Créer un part de HTML")
 			.g("button");
-			{ e("div").a("id", "deletePartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-yellow ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deletePartHtmlModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Supprimer des part de HTMLs").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postPartHtmlModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Créer un part de HTML").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							PartHtml o = new PartHtml();
 							o.setRequeteSite_(requeteSite_);
 
-							// Form DELETE
-							{ e("div").a("id", "deletePartHtmlForm").f();
-								htmlFormPATCHPartHtml(o);
+							// Form POST
+							{ e("div").a("id", "postPartHtmlForm").f();
+								htmlFormPOSTPartHtml(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "deletePartHtml(", o.getPk(), "); ")
-								.f().sx("Supprimer des part de HTMLs")
+								.a("onclick", "postPartHtml($('#postPartHtmlForm')); ")
+								.f().sx("Créer un part de HTML")
 							.g("button");
 
 						} g("div");
@@ -700,8 +681,72 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putPartHtmlModale').show(); ")
+				.f().sx("Dupliquer des part de HTMLs")
+			.g("button");
+			{ e("div").a("id", "putPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-yellow ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putPartHtmlModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des part de HTMLs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							PartHtml o = new PartHtml();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PUT
+							{ e("form").a("action", "").a("id", "putPartHtmlFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTPartHtml(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("onclick", "putPartHtml($('#putPartHtmlFormulaireValeurs'), ", Optional.ofNullable(partHtml).map(PartHtml::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Dupliquer des part de HTMLs")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#patchPartHtmlModale').show(); ")
+				.f().sx("Modifier des part de HTMLs")
+			.g("button");
+			{ e("div").a("id", "patchPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-yellow ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchPartHtmlModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier des part de HTMLs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							PartHtml o = new PartHtml();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PATCH
+							{ e("form").a("action", "").a("id", "patchPartHtmlFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHPartHtml(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("onclick", "patchPartHtml($('#patchPartHtmlFormulaireFiltres'), $('#patchPartHtmlFormulaireValeurs'), ", Optional.ofNullable(partHtml).map(PartHtml::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier des part de HTMLs")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
@@ -742,12 +787,18 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListHtmlPart"
 	**/
 	public static void htmlSuggerePartHtmlGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "rechargerTousPartHtmlGenPage", id).a("href", "/part-html").a("class", "").a("onclick", "patchPartHtmlVals([], {}, function() { ajouterLueur($('#rechargerTousPartHtmlGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPartHtmlGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("recharger tous les part de HTMLs");
-			} p.g("a");
-		} p.g("div");
+		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PartHtmlGenPage.ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PartHtmlGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "rechargerTousPartHtmlGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchPartHtmlVals([], {}, function() { ajouterLueur($('#rechargerTousPartHtmlGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPartHtmlGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("recharger tous les part de HTMLs");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

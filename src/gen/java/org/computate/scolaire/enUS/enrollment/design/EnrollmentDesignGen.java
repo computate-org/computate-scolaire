@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.enrollment.design;
 
+import java.util.Arrays;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
@@ -13,6 +14,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +29,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -36,6 +39,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -47,6 +51,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EnrollmentDesign.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String EnrollmentDesign_UnNom = "an enrollment design";
 	public static final String EnrollmentDesign_Ce = "this ";
@@ -77,6 +84,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long enrollmentDesignKey;
 	@JsonIgnore
 	public Wrap<Long> enrollmentDesignKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentDesignKey").o(enrollmentDesignKey);
@@ -145,6 +153,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long yearKey;
 	@JsonIgnore
 	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
@@ -213,6 +222,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> htmlPartKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> htmlPartKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("htmlPartKeys").o(htmlPartKeys);
@@ -293,17 +303,20 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public void inputHtmlPartKeys(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "parts")
-				.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setHtmlPartKeys")
-				.a("id", classApiMethodMethod, "_htmlPartKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "parts")
+					.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setHtmlPartKeys")
+					.a("id", classApiMethodMethod, "_htmlPartKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmHtmlPartKeys());
+		}
 	}
 
 	public void htmHtmlPartKeys(String classApiMethodMethod) {
@@ -335,13 +348,15 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postHtmlPartVals({ enrollmentDesignKey: \"", pk, "\" }, function() { patchEnrollmentDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
-										.f().sx("add an HTML part")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postHtmlPartVals({ enrollmentDesignKey: \"", pk, "\" }, function() { patchEnrollmentDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
+											.f().sx("add an HTML part")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -358,6 +373,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
@@ -444,6 +460,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
@@ -481,6 +498,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SchoolYear year_;
 	@JsonIgnore
 	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
@@ -519,6 +537,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SearchList<HtmlPart> htmlPartSearch = new SearchList<HtmlPart>();
 	@JsonIgnore
 	public Wrap<SearchList<HtmlPart>> htmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("htmlPartSearch").o(htmlPartSearch);
@@ -556,6 +575,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected List<HtmlPart> htmlPartList;
 	@JsonIgnore
 	public Wrap<List<HtmlPart>> htmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("htmlPartList").o(htmlPartList);
@@ -605,6 +625,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long schoolKey;
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
@@ -673,6 +694,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolCompleteName;
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
@@ -735,6 +757,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String schoolLocation;
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
@@ -797,6 +820,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearStart;
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
@@ -865,6 +889,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer yearEnd;
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
@@ -933,6 +958,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String yearShortName;
 	@JsonIgnore
 	public Wrap<String> yearShortNameWrap = new Wrap<String>().p(this).c(String.class).var("yearShortName").o(yearShortName);
@@ -995,6 +1021,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String yearCompleteName;
 	@JsonIgnore
 	public Wrap<String> yearCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("yearCompleteName").o(yearCompleteName);
@@ -1057,6 +1084,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String enrollmentDesignCompleteName;
 	@JsonIgnore
 	public Wrap<String> enrollmentDesignCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentDesignCompleteName").o(enrollmentDesignCompleteName);
@@ -1113,24 +1141,27 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDesignCompleteName(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "name")
-			.a("id", classApiMethodMethod, "_enrollmentDesignCompleteName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentDesignCompleteName inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
-				a("name", "setEnrollmentDesignCompleteName");
-			} else {
-				a("class", "valueEnrollmentDesignCompleteName w3-input w3-border inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
-				a("name", "enrollmentDesignCompleteName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDesignCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ");
-			}
-			a("value", strEnrollmentDesignCompleteName())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "name")
+				.a("id", classApiMethodMethod, "_enrollmentDesignCompleteName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setEnrollmentDesignCompleteName inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
+					a("name", "setEnrollmentDesignCompleteName");
+				} else {
+					a("class", "valueEnrollmentDesignCompleteName w3-input w3-border inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
+					a("name", "enrollmentDesignCompleteName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDesignCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ");
+				}
+				a("value", strEnrollmentDesignCompleteName())
+			.fg();
 
+			sx(htmEnrollmentDesignCompleteName());
+		}
 	}
 
 	public void htmEnrollmentDesignCompleteName(String classApiMethodMethod) {
@@ -1147,16 +1178,18 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 								inputEnrollmentDesignCompleteName(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); $('#", classApiMethodMethod, "_enrollmentDesignCompleteName').val(null); patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:' + $('#EnrollmentDesignForm :input[name=pk]').val() }], 'setEnrollmentDesignCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); $('#", classApiMethodMethod, "_enrollmentDesignCompleteName').val(null); patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:' + $('#EnrollmentDesignForm :input[name=pk]').val() }], 'setEnrollmentDesignCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1173,6 +1206,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean designHidden;
 	@JsonIgnore
 	public Wrap<Boolean> designHiddenWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designHidden").o(designHidden);
@@ -1234,37 +1268,40 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public void inputDesignHidden(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_designHidden")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_designHidden");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
-			a("name", "setDesignHidden");
-		} else {
-			a("class", "valueDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
-			a("name", "designHidden");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignHidden', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designHidden')); }, function() { addError($('#", classApiMethodMethod, "_designHidden')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getDesignHidden() != null && getDesignHidden())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designHidden")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designHidden");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
+				a("name", "setDesignHidden");
+			} else {
+				a("class", "valueDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
+				a("name", "designHidden");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignHidden', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designHidden')); }, function() { addError($('#", classApiMethodMethod, "_designHidden')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignHidden() != null && getDesignHidden())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmDesignHidden());
+		}
 	}
 
 	public void htmDesignHidden(String classApiMethodMethod) {

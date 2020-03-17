@@ -1072,105 +1072,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					rechercheBlocScolaire(requeteSite, false, true, null, b -> {
-						if(b.succeeded()) {
-							ListeRecherche<BlocScolaire> listeBlocScolaire = b.result();
-							supprimerDELETEBlocScolaire(requeteSite, c -> {
-								if(c.succeeded()) {
-									reponse200DELETEBlocScolaire(requeteSite, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void supprimerDELETEBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, BlocScolaire.class.getCanonicalName(), pk, pk, pk, pk))
-					, supprimerAsync
-			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200DELETEBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Recherche //
 
 	@Override
@@ -1592,6 +1493,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
 																	} else {
 																		erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
@@ -1627,14 +1529,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(utilisateurSite1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
-								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
-								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
-								jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
-								jsonObject.put("customerProfileId", principalJson.getString("name"));
-								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								jsonObject.put("email", principalJson.getString("email"));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
+								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
+								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
+								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
+								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 								Boolean definir = utilisateurBlocScolaireDefinir(requeteSite, jsonObject, true);
 								if(definir) {
 									UtilisateurSite utilisateurSite;
@@ -1653,22 +1555,25 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 									requeteSite2.setSiteContexte_(siteContexte);
 									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
 									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
 										if(c.succeeded()) {
-											utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+											UtilisateurSite utilisateurSite2 = c.result();
+											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
+													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
 														if(e.succeeded()) {
-															utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
+															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
 																if(f.succeeded()) {
-																	requeteSite.setUtilisateurSite(utilisateurSite);
-																	requeteSite.setUtilisateurNom(utilisateurSite.getUtilisateurNom());
-																	requeteSite.setUtilisateurPrenom(utilisateurSite.getUtilisateurPrenom());
-																	requeteSite.setUtilisateurNomFamille(utilisateurSite.getUtilisateurNomFamille());
-																	requeteSite.setUtilisateurId(utilisateurSite.getUtilisateurId());
+																	requeteSite.setUtilisateurSite(utilisateurSite2);
+																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
 																	gestionnaireEvenements.handle(Future.succeededFuture());
 																} else {
 																	erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
@@ -1692,6 +1597,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
 									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
 									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+									requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								}
 							}

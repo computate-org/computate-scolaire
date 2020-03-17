@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.inscription.design;
 
+import java.util.Arrays;
 import org.computate.scolaire.frFR.html.part.PartHtml;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
@@ -13,6 +14,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +29,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -36,6 +39,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -47,6 +51,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DesignInscription.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String DesignInscription_UnNom = "un design d'inscription";
 	public static final String DesignInscription_Ce = "ce ";
@@ -78,6 +85,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long designInscriptionCle;
 	@JsonIgnore
 	public Couverture<Long> designInscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("designInscriptionCle").o(designInscriptionCle);
@@ -146,6 +154,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long anneeCle;
 	@JsonIgnore
 	public Couverture<Long> anneeCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("anneeCle").o(anneeCle);
@@ -214,6 +223,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> partHtmlCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> partHtmlClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("partHtmlCles").o(partHtmlCles);
@@ -294,17 +304,20 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void inputPartHtmlCles(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "parts")
-				.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setPartHtmlCles")
-				.a("id", classeApiMethodeMethode, "_partHtmlCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "parts")
+					.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setPartHtmlCles")
+					.a("id", classeApiMethodeMethode, "_partHtmlCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmPartHtmlCles());
+		}
 	}
 
 	public void htmPartHtmlCles(String classeApiMethodeMethode) {
@@ -336,13 +349,15 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postPartHtmlVals({ designInscriptionCle: \"", pk, "\" }, function() { patchDesignInscriptionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
-										.f().sx("ajouter un part de HTML")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postPartHtmlVals({ designInscriptionCle: \"", pk, "\" }, function() { patchDesignInscriptionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
+											.f().sx("ajouter un part de HTML")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -359,6 +374,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
@@ -445,6 +461,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<AnneeScolaire>(). 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<AnneeScolaire> anneeRecherche = new ListeRecherche<AnneeScolaire>();
 	@JsonIgnore
 	public Couverture<ListeRecherche<AnneeScolaire>> anneeRechercheCouverture = new Couverture<ListeRecherche<AnneeScolaire>>().p(this).c(ListeRecherche.class).var("anneeRecherche").o(anneeRecherche);
@@ -482,6 +499,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected AnneeScolaire annee_;
 	@JsonIgnore
 	public Couverture<AnneeScolaire> annee_Couverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("annee_").o(annee_);
@@ -520,6 +538,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<PartHtml>(). 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected ListeRecherche<PartHtml> partHtmlRecherche = new ListeRecherche<PartHtml>();
 	@JsonIgnore
 	public Couverture<ListeRecherche<PartHtml>> partHtmlRechercheCouverture = new Couverture<ListeRecherche<PartHtml>>().p(this).c(ListeRecherche.class).var("partHtmlRecherche").o(partHtmlRecherche);
@@ -557,6 +576,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected List<PartHtml> partHtmlListe_;
 	@JsonIgnore
 	public Couverture<List<PartHtml>> partHtmlListe_Couverture = new Couverture<List<PartHtml>>().p(this).c(List.class).var("partHtmlListe_").o(partHtmlListe_);
@@ -606,6 +626,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long ecoleCle;
 	@JsonIgnore
 	public Couverture<Long> ecoleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ecoleCle").o(ecoleCle);
@@ -674,6 +695,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNomComplet;
 	@JsonIgnore
 	public Couverture<String> ecoleNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomComplet").o(ecoleNomComplet);
@@ -736,6 +758,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String ecoleEmplacement;
 	@JsonIgnore
 	public Couverture<String> ecoleEmplacementCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleEmplacement").o(ecoleEmplacement);
@@ -798,6 +821,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer anneeDebut;
 	@JsonIgnore
 	public Couverture<Integer> anneeDebutCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeDebut").o(anneeDebut);
@@ -866,6 +890,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer anneeFin;
 	@JsonIgnore
 	public Couverture<Integer> anneeFinCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeFin").o(anneeFin);
@@ -934,6 +959,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String anneeNomCourt;
 	@JsonIgnore
 	public Couverture<String> anneeNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("anneeNomCourt").o(anneeNomCourt);
@@ -996,6 +1022,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String anneeNomComplet;
 	@JsonIgnore
 	public Couverture<String> anneeNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("anneeNomComplet").o(anneeNomComplet);
@@ -1058,6 +1085,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected String designInscriptionNomComplet;
 	@JsonIgnore
 	public Couverture<String> designInscriptionNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("designInscriptionNomComplet").o(designInscriptionNomComplet);
@@ -1114,24 +1142,27 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void inputDesignInscriptionNomComplet(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "nom")
-			.a("id", classeApiMethodeMethode, "_designInscriptionNomComplet");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setDesignInscriptionNomComplet inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
-				a("name", "setDesignInscriptionNomComplet");
-			} else {
-				a("class", "valeurDesignInscriptionNomComplet w3-input w3-border inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
-				a("name", "designInscriptionNomComplet");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchDesignInscriptionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignInscriptionNomComplet', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ");
-			}
-			a("value", strDesignInscriptionNomComplet())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "nom")
+				.a("id", classeApiMethodeMethode, "_designInscriptionNomComplet");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setDesignInscriptionNomComplet inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
+					a("name", "setDesignInscriptionNomComplet");
+				} else {
+					a("class", "valeurDesignInscriptionNomComplet w3-input w3-border inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
+					a("name", "designInscriptionNomComplet");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchDesignInscriptionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignInscriptionNomComplet', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ");
+				}
+				a("value", strDesignInscriptionNomComplet())
+			.fg();
 
+			sx(htmDesignInscriptionNomComplet());
+		}
 	}
 
 	public void htmDesignInscriptionNomComplet(String classeApiMethodeMethode) {
@@ -1148,16 +1179,18 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 								inputDesignInscriptionNomComplet(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); $('#", classeApiMethodeMethode, "_designInscriptionNomComplet').val(null); patchDesignInscriptionVal([{ name: 'fq', value: 'pk:' + $('#DesignInscriptionForm :input[name=pk]').val() }], 'setDesignInscriptionNomComplet', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); $('#", classeApiMethodeMethode, "_designInscriptionNomComplet').val(null); patchDesignInscriptionVal([{ name: 'fq', value: 'pk:' + $('#DesignInscriptionForm :input[name=pk]').val() }], 'setDesignInscriptionNomComplet', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1174,6 +1207,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean designCache;
 	@JsonIgnore
 	public Couverture<Boolean> designCacheCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("designCache").o(designCache);
@@ -1235,37 +1269,40 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void inputDesignCache(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_designCache")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_designCache");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
-			a("name", "setDesignCache");
-		} else {
-			a("class", "valeurDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
-			a("name", "designCache");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchDesignInscriptionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignCache', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designCache')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designCache')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getDesignCache() != null && getDesignCache())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_designCache")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_designCache");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
+				a("name", "setDesignCache");
+			} else {
+				a("class", "valeurDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
+				a("name", "designCache");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchDesignInscriptionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignCache', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designCache')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designCache')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getDesignCache() != null && getDesignCache())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmDesignCache());
+		}
 	}
 
 	public void htmDesignCache(String classeApiMethodeMethode) {

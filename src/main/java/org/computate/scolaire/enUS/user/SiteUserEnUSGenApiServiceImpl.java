@@ -205,6 +205,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public void patchSiteUser(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
@@ -585,6 +603,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public void postSiteUser(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
 					createSiteUser(siteRequest, b -> {
@@ -1147,7 +1183,41 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	}
 
 	public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void aSearchSiteUserQ(SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+		if(!"*".equals(entityVar)) {
+			searchList.setHighlight(true);
+			searchList.setHighlightSnippets(3);
+			searchList.addHighlightField(varIndexed);
+			searchList.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void aSearchSiteUserFq(SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+	}
+
+	public void aSearchSiteUserSort(SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
+	}
+
+	public void aSearchSiteUserRows(SearchList<SiteUser> searchList, Integer valueRows) {
+		searchList.setRows(valueRows);
+	}
+
+	public void aSearchSiteUserStart(SearchList<SiteUser> searchList, Integer valueStart) {
+		searchList.setStart(valueStart);
+	}
+
+	public void aSearchSiteUserVar(SearchList<SiteUser> searchList, String var, String value) {
+		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
 	public void aSearchSiteUser(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SiteUser>>> eventHandler) {
@@ -1160,6 +1230,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			searchList.setStore(store);
 			searchList.setQuery("*:*");
 			searchList.setC(SiteUser.class);
+			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
@@ -1175,7 +1246,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----"))
-						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(-1L));
+						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -1183,8 +1254,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				String valueIndexed = null;
 				String varIndexed = null;
 				String valueSort = null;
-				Integer aSearchStart = null;
-				Integer aSearchNum = null;
+				Integer valueStart = null;
+				Integer valueRows = null;
 				String paramName = paramRequest.getKey();
 				Object paramValuesObject = paramRequest.getValue();
 				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
@@ -1197,33 +1268,32 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								varIndexed = "*".equals(entityVar) ? entityVar : SiteUser.varSearchSiteUser(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-								if(!"*".equals(entityVar)) {
-									searchList.setHighlight(true);
-									searchList.setHighlightSnippets(3);
-									searchList.addHighlightField(varIndexed);
-									searchList.setParam("hl.encoder", "html");
-								}
+								aSearchSiteUserQ(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								aSearchSiteUserFq(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
+								aSearchSiteUserSort(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
-								aSearchStart = (Integer)paramObject;
-								searchList.setStart(aSearchStart);
+								valueStart = (Integer)paramObject;
+								aSearchSiteUserStart(searchList, valueStart);
 								break;
 							case "rows":
-								aSearchNum = (Integer)paramObject;
-								searchList.setRows(aSearchNum);
+								valueRows = (Integer)paramObject;
+								aSearchSiteUserRows(searchList, valueRows);
+								break;
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								aSearchSiteUserVar(searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

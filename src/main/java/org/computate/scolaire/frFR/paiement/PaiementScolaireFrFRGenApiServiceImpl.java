@@ -1763,7 +1763,41 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	}
 
 	public Boolean utilisateurPaiementScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void recherchePaiementScolaireQ(ListeRecherche<PaiementScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
+		if(!"*".equals(entiteVar)) {
+			listeRecherche.setHighlight(true);
+			listeRecherche.setHighlightSnippets(3);
+			listeRecherche.addHighlightField(varIndexe);
+			listeRecherche.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void recherchePaiementScolaireFq(ListeRecherche<PaiementScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+	}
+
+	public void recherchePaiementScolaireSort(ListeRecherche<PaiementScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
+	}
+
+	public void recherchePaiementScolaireRows(ListeRecherche<PaiementScolaire> listeRecherche, Integer valeurRows) {
+		listeRecherche.setRows(valeurRows);
+	}
+
+	public void recherchePaiementScolaireStart(ListeRecherche<PaiementScolaire> listeRecherche, Integer valeurStart) {
+		listeRecherche.setStart(valeurStart);
+	}
+
+	public void recherchePaiementScolaireVar(ListeRecherche<PaiementScolaire> listeRecherche, String var, String valeur) {
+		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
 	public void recherchePaiementScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<PaiementScolaire>>> gestionnaireEvenements) {
@@ -1776,6 +1810,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(PaiementScolaire.class);
+			listeRecherche.setRequeteSite_(requeteSite);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
@@ -1803,8 +1838,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				String valeurIndexe = null;
 				String varIndexe = null;
 				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
+				Integer valeurStart = null;
+				Integer valeurRows = null;
 				String paramNom = paramRequete.getKey();
 				Object paramValeursObjet = paramRequete.getValue();
 				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
@@ -1817,33 +1852,32 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								varIndexe = "*".equals(entiteVar) ? entiteVar : PaiementScolaire.varRecherchePaiementScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
-								}
+								recherchePaiementScolaireQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = PaiementScolaire.varIndexePaiementScolaire(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								recherchePaiementScolaireFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = PaiementScolaire.varIndexePaiementScolaire(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								recherchePaiementScolaireSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								valeurStart = (Integer)paramObjet;
+								recherchePaiementScolaireStart(listeRecherche, valeurStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								valeurRows = (Integer)paramObjet;
+								recherchePaiementScolaireRows(listeRecherche, valeurRows);
+								break;
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								recherchePaiementScolaireVar(listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

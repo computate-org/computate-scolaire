@@ -1763,7 +1763,41 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	}
 
 	public Boolean userSchoolPaymentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void aSearchSchoolPaymentQ(SearchList<SchoolPayment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+		if(!"*".equals(entityVar)) {
+			searchList.setHighlight(true);
+			searchList.setHighlightSnippets(3);
+			searchList.addHighlightField(varIndexed);
+			searchList.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void aSearchSchoolPaymentFq(SearchList<SchoolPayment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+	}
+
+	public void aSearchSchoolPaymentSort(SearchList<SchoolPayment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
+	}
+
+	public void aSearchSchoolPaymentRows(SearchList<SchoolPayment> searchList, Integer valueRows) {
+		searchList.setRows(valueRows);
+	}
+
+	public void aSearchSchoolPaymentStart(SearchList<SchoolPayment> searchList, Integer valueStart) {
+		searchList.setStart(valueStart);
+	}
+
+	public void aSearchSchoolPaymentVar(SearchList<SchoolPayment> searchList, String var, String value) {
+		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
 	public void aSearchSchoolPayment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolPayment>>> eventHandler) {
@@ -1776,6 +1810,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			searchList.setStore(store);
 			searchList.setQuery("*:*");
 			searchList.setC(SchoolPayment.class);
+			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
@@ -1803,8 +1838,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				String valueIndexed = null;
 				String varIndexed = null;
 				String valueSort = null;
-				Integer aSearchStart = null;
-				Integer aSearchNum = null;
+				Integer valueStart = null;
+				Integer valueRows = null;
 				String paramName = paramRequest.getKey();
 				Object paramValuesObject = paramRequest.getValue();
 				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
@@ -1817,33 +1852,32 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolPayment.varSearchSchoolPayment(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-								if(!"*".equals(entityVar)) {
-									searchList.setHighlight(true);
-									searchList.setHighlightSnippets(3);
-									searchList.addHighlightField(varIndexed);
-									searchList.setParam("hl.encoder", "html");
-								}
+								aSearchSchoolPaymentQ(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
-								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								aSearchSchoolPaymentFq(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
-								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
+								aSearchSchoolPaymentSort(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
-								aSearchStart = (Integer)paramObject;
-								searchList.setStart(aSearchStart);
+								valueStart = (Integer)paramObject;
+								aSearchSchoolPaymentStart(searchList, valueStart);
 								break;
 							case "rows":
-								aSearchNum = (Integer)paramObject;
-								searchList.setRows(aSearchNum);
+								valueRows = (Integer)paramObject;
+								aSearchSchoolPaymentRows(searchList, valueRows);
+								break;
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								aSearchSchoolPaymentVar(searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

@@ -1438,6 +1438,14 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				else
 					wChemins.tl(6, "default: ", contexteRows);
 				wChemins.tl(6, "minimum: 0");
+				wChemins.tl(4, "- in: query");
+				wChemins.tl(5, "name: var");
+				wChemins.tl(5, "description: ''");
+				wChemins.tl(5, "required: false");
+				wChemins.tl(5, "schema:");
+				wChemins.tl(6, "type: array");
+				wChemins.tl(6, "items:");
+				wChemins.tl(7, "  type: string");
 			}
 		}
 

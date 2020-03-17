@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;               
+package org.computate.scolaire.frFR.html.part;                
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -20,7 +20,6 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 

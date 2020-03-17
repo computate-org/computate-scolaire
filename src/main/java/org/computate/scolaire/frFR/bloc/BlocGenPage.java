@@ -32,6 +32,8 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
@@ -39,6 +41,9 @@ import java.math.MathContext;
  * NomCanonique.enUS: org.computate.scolaire.enUS.block.BlockGenPage
  **/
 public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
 	 * {@inheritDoc}
@@ -489,139 +494,46 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	}
 
 	public void htmlBodyFormsBlocGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listeBlocScolaire != null && listeBlocScolaire.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-					.a("id", "rechargerCeBlocGenPage")
-					.a("onclick", "patchBlocScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeBlocGenPage')); }, function() { ajouterErreur($('#rechargerCeBlocGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("recharger ce bloc");
-			} g("button");
-		}
+			if(listeBlocScolaire != null && listeBlocScolaire.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+						.a("id", "rechargerCeBlocGenPage")
+						.a("onclick", "patchBlocScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeBlocGenPage')); }, function() { ajouterErreur($('#rechargerCeBlocGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("recharger ce bloc");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-			.a("onclick", "$('#postBlocScolaireModale').show(); ")
-			.f().sx("Créer un bloc")
-		.g("button");
-		{ e("div").a("id", "postBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-indigo ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postBlocScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Créer un bloc").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						BlocScolaire o = new BlocScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// Form POST
-						{ e("div").a("id", "postBlocScolaireForm").f();
-							htmlFormPOSTBlocScolaire(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "postBlocScolaire($('#postBlocScolaireForm')); ")
-							.f().sx("Créer un bloc")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-			.a("onclick", "$('#putBlocScolaireModale').show(); ")
-			.f().sx("Dupliquer des blocs")
-		.g("button");
-		{ e("div").a("id", "putBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-indigo ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putBlocScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Dupliquer des blocs").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						BlocScolaire o = new BlocScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PUT
-						{ e("form").a("action", "").a("id", "putBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTBlocScolaire(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "putBlocScolaire($('#putBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Dupliquer des blocs")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-			.a("onclick", "$('#patchBlocScolaireModale').show(); ")
-			.f().sx("Modifier des blocs")
-		.g("button");
-		{ e("div").a("id", "patchBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-indigo ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchBlocScolaireModale').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modifier des blocs").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						BlocScolaire o = new BlocScolaire();
-						o.setRequeteSite_(requeteSite_);
-
-						// FormulaireValeurs PATCH
-						{ e("form").a("action", "").a("id", "patchBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHBlocScolaire(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-							.a("onclick", "patchBlocScolaire($('#patchBlocScolaireFormulaireFiltres'), $('#patchBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modifier des blocs")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listeBlocScolaire != null && listeBlocScolaire.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-				.a("onclick", "$('#deleteBlocScolaireModale').show(); ")
-				.f().sx("Supprimer des blocs")
+				.a("onclick", "$('#postBlocScolaireModale').show(); ")
+				.f().sx("Créer un bloc")
 			.g("button");
-			{ e("div").a("id", "deleteBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-indigo ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteBlocScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Supprimer des blocs").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postBlocScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Créer un bloc").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							BlocScolaire o = new BlocScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteBlocScolaireForm").f();
-								htmlFormPATCHBlocScolaire(o);
+							// Form POST
+							{ e("div").a("id", "postBlocScolaireForm").f();
+								htmlFormPOSTBlocScolaire(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "deleteBlocScolaire(", o.getPk(), "); ")
-								.f().sx("Supprimer des blocs")
+								.a("onclick", "postBlocScolaire($('#postBlocScolaireForm')); ")
+								.f().sx("Créer un bloc")
 							.g("button");
 
 						} g("div");
@@ -629,8 +541,72 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("onclick", "$('#putBlocScolaireModale').show(); ")
+				.f().sx("Dupliquer des blocs")
+			.g("button");
+			{ e("div").a("id", "putBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-indigo ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putBlocScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des blocs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							BlocScolaire o = new BlocScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PUT
+							{ e("form").a("action", "").a("id", "putBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTBlocScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("onclick", "putBlocScolaire($('#putBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Dupliquer des blocs")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("onclick", "$('#patchBlocScolaireModale').show(); ")
+				.f().sx("Modifier des blocs")
+			.g("button");
+			{ e("div").a("id", "patchBlocScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-indigo ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchBlocScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier des blocs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							BlocScolaire o = new BlocScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PATCH
+							{ e("form").a("action", "").a("id", "patchBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHBlocScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("onclick", "patchBlocScolaire($('#patchBlocScolaireFormulaireFiltres'), $('#patchBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier des blocs")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
@@ -671,12 +647,18 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	 * r.enUS: "suggestListSchoolBlock"
 	**/
 	public static void htmlSuggereBlocGenPage(MiseEnPage p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "rechargerTousBlocGenPage", id).a("href", "/bloc").a("class", "").a("onclick", "patchBlocScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousBlocGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousBlocGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("recharger tous les blocs");
-			} p.g("a");
-		} p.g("div");
+		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), BlocGenPage.ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), BlocGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "rechargerTousBlocGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ").a("onclick", "patchBlocScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousBlocGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousBlocGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("recharger tous les blocs");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

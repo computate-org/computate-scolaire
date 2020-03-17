@@ -2,8 +2,8 @@ package org.computate.scolaire.frFR.requete;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -400,5 +400,11 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Var.enUS: requestHeaders
 	 **/
 	protected void _requeteEnTetes(Couverture<CaseInsensitiveHeaders> c) {
+	}
+	
+	/**
+	 * Var.enUS: requestVars
+	 */
+	protected void _requeteVars(Map<String, String> m) {
 	}
 }

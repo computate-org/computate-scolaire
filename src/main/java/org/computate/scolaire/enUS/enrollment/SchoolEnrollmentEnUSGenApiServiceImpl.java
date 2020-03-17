@@ -1873,87 +1873,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					aSearchSchoolEnrollment(siteRequest, false, true, null, b -> {
-						if(b.succeeded()) {
-							SearchList<SchoolEnrollment> listSchoolEnrollment = b.result();
-							deleteDELETESchoolEnrollment(siteRequest, c -> {
-								if(c.succeeded()) {
-									response200DELETESchoolEnrollment(siteRequest, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void deleteDELETESchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, SchoolEnrollment.class.getCanonicalName(), pk, pk, pk, pk))
-					, deleteAsync
-			-> {
-				eventHandler.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void response200DELETESchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Search //
 
 	@Override
@@ -2749,7 +2668,41 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 
 	public Boolean userSchoolEnrollmentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void aSearchSchoolEnrollmentQ(SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+		if(!"*".equals(entityVar)) {
+			searchList.setHighlight(true);
+			searchList.setHighlightSnippets(3);
+			searchList.addHighlightField(varIndexed);
+			searchList.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void aSearchSchoolEnrollmentFq(SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+	}
+
+	public void aSearchSchoolEnrollmentSort(SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
+	}
+
+	public void aSearchSchoolEnrollmentRows(SearchList<SchoolEnrollment> searchList, Integer valueRows) {
+		searchList.setRows(valueRows);
+	}
+
+	public void aSearchSchoolEnrollmentStart(SearchList<SchoolEnrollment> searchList, Integer valueStart) {
+		searchList.setStart(valueStart);
+	}
+
+	public void aSearchSchoolEnrollmentVar(SearchList<SchoolEnrollment> searchList, String var, String value) {
+		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
 	public void aSearchSchoolEnrollment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolEnrollment>>> eventHandler) {
@@ -2762,6 +2715,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			searchList.setStore(store);
 			searchList.setQuery("*:*");
 			searchList.setC(SchoolEnrollment.class);
+			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
@@ -2785,8 +2739,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				String valueIndexed = null;
 				String varIndexed = null;
 				String valueSort = null;
-				Integer aSearchStart = null;
-				Integer aSearchNum = null;
+				Integer valueStart = null;
+				Integer valueRows = null;
 				String paramName = paramRequest.getKey();
 				Object paramValuesObject = paramRequest.getValue();
 				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
@@ -2799,33 +2753,32 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolEnrollment.varSearchSchoolEnrollment(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-								if(!"*".equals(entityVar)) {
-									searchList.setHighlight(true);
-									searchList.setHighlightSnippets(3);
-									searchList.addHighlightField(varIndexed);
-									searchList.setParam("hl.encoder", "html");
-								}
+								aSearchSchoolEnrollmentQ(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
-								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								aSearchSchoolEnrollmentFq(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
-								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
+								aSearchSchoolEnrollmentSort(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
-								aSearchStart = (Integer)paramObject;
-								searchList.setStart(aSearchStart);
+								valueStart = (Integer)paramObject;
+								aSearchSchoolEnrollmentStart(searchList, valueStart);
 								break;
 							case "rows":
-								aSearchNum = (Integer)paramObject;
-								searchList.setRows(aSearchNum);
+								valueRows = (Integer)paramObject;
+								aSearchSchoolEnrollmentRows(searchList, valueRows);
+								break;
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								aSearchSchoolEnrollmentVar(searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

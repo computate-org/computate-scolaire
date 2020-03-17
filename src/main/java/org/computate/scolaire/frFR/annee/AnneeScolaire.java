@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                                       
+package org.computate.scolaire.frFR.annee;                                        
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -26,7 +26,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 

@@ -1873,87 +1873,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
-			sqlInscriptionScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, null, b -> {
-						if(b.succeeded()) {
-							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = b.result();
-							supprimerDELETEInscriptionScolaire(requeteSite, c -> {
-								if(c.succeeded()) {
-									reponse200DELETEInscriptionScolaire(requeteSite, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurInscriptionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void supprimerDELETEInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, InscriptionScolaire.class.getCanonicalName(), pk, pk, pk, pk))
-					, supprimerAsync
-			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200DELETEInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			JsonObject json = new JsonObject();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Recherche //
 
 	@Override
@@ -2749,7 +2668,41 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	}
 
 	public Boolean utilisateurInscriptionScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void rechercheInscriptionScolaireQ(ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
+		if(!"*".equals(entiteVar)) {
+			listeRecherche.setHighlight(true);
+			listeRecherche.setHighlightSnippets(3);
+			listeRecherche.addHighlightField(varIndexe);
+			listeRecherche.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void rechercheInscriptionScolaireFq(ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+	}
+
+	public void rechercheInscriptionScolaireSort(ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
+	}
+
+	public void rechercheInscriptionScolaireRows(ListeRecherche<InscriptionScolaire> listeRecherche, Integer valeurRows) {
+		listeRecherche.setRows(valeurRows);
+	}
+
+	public void rechercheInscriptionScolaireStart(ListeRecherche<InscriptionScolaire> listeRecherche, Integer valeurStart) {
+		listeRecherche.setStart(valeurStart);
+	}
+
+	public void rechercheInscriptionScolaireVar(ListeRecherche<InscriptionScolaire> listeRecherche, String var, String valeur) {
+		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
 	public void rechercheInscriptionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<InscriptionScolaire>>> gestionnaireEvenements) {
@@ -2762,6 +2715,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(InscriptionScolaire.class);
+			listeRecherche.setRequeteSite_(requeteSite);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
@@ -2785,8 +2739,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				String valeurIndexe = null;
 				String varIndexe = null;
 				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
+				Integer valeurStart = null;
+				Integer valeurRows = null;
 				String paramNom = paramRequete.getKey();
 				Object paramValeursObjet = paramRequete.getValue();
 				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
@@ -2799,33 +2753,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								varIndexe = "*".equals(entiteVar) ? entiteVar : InscriptionScolaire.varRechercheInscriptionScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
-								}
+								rechercheInscriptionScolaireQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = InscriptionScolaire.varIndexeInscriptionScolaire(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								rechercheInscriptionScolaireFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = InscriptionScolaire.varIndexeInscriptionScolaire(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								rechercheInscriptionScolaireSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								valeurStart = (Integer)paramObjet;
+								rechercheInscriptionScolaireStart(listeRecherche, valeurStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								valeurRows = (Integer)paramObjet;
+								rechercheInscriptionScolaireRows(listeRecherche, valeurRows);
+								break;
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								rechercheInscriptionScolaireVar(listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

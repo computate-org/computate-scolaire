@@ -101,7 +101,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 }

@@ -982,105 +982,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		}
 	}
 
-	// DELETE //
-
-	@Override
-	public void deleteSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					aSearchSchoolSeason(siteRequest, false, true, null, b -> {
-						if(b.succeeded()) {
-							SearchList<SchoolSeason> listSchoolSeason = b.result();
-							deleteDELETESchoolSeason(siteRequest, c -> {
-								if(c.succeeded()) {
-									response200DELETESchoolSeason(siteRequest, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolSeason(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
-										} else {
-											errorSchoolSeason(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorSchoolSeason(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void deleteDELETESchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, SchoolSeason.class.getCanonicalName(), pk, pk, pk, pk))
-					, deleteAsync
-			-> {
-				eventHandler.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void response200DELETESchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			JsonObject json = new JsonObject();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// Search //
 
 	@Override
@@ -1505,6 +1406,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
 																	} else {
 																		errorSchoolSeason(siteRequest, eventHandler, f);
@@ -1540,14 +1442,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
 								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								JsonObject jsonObject = Optional.ofNullable(siteUser1).map(u -> JsonObject.mapFrom(u)).orElse(new JsonObject());
-								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
-								jsonObject.put("customerProfileId", jsonPrincipal.getString("name"));
-								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								jsonObject.put("email", jsonPrincipal.getString("email"));
+								JsonObject jsonObject = new JsonObject();
+								jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
+								jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
+								jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
+								jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
+								jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
+								jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
+								jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 								Boolean define = userSchoolSeasonDefine(siteRequest, jsonObject, true);
 								if(define) {
 									SiteUser siteUser;
@@ -1566,22 +1468,25 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									siteRequest2.setSiteContext_(siteContext);
 									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
 									siteRequest2.setUserId(siteRequest.getUserId());
+									siteRequest2.setUserKey(siteRequest.getUserKey());
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
 									userService.sqlPATCHSiteUser(siteUser, c -> {
 										if(c.succeeded()) {
-											userService.defineSiteUser(siteUser, d -> {
+											SiteUser siteUser2 = c.result();
+											userService.defineSiteUser(siteUser2, d -> {
 												if(d.succeeded()) {
-													userService.attributeSiteUser(siteUser, e -> {
+													userService.attributeSiteUser(siteUser2, e -> {
 														if(e.succeeded()) {
-															userService.indexSiteUser(siteUser, f -> {
+															userService.indexSiteUser(siteUser2, f -> {
 																if(f.succeeded()) {
-																	siteRequest.setSiteUser(siteUser);
-																	siteRequest.setUserName(siteUser.getUserName());
-																	siteRequest.setUserFirstName(siteUser.getUserFirstName());
-																	siteRequest.setUserLastName(siteUser.getUserLastName());
-																	siteRequest.setUserId(siteUser.getUserId());
+																	siteRequest.setSiteUser(siteUser2);
+																	siteRequest.setUserName(siteUser2.getUserName());
+																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser2.getUserLastName());
+																	siteRequest.setUserId(siteUser2.getUserId());
+																	siteRequest.setUserKey(siteUser2.getPk());
 																	eventHandler.handle(Future.succeededFuture());
 																} else {
 																	errorSchoolSeason(siteRequest, eventHandler, f);
@@ -1605,6 +1510,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
 									siteRequest.setUserLastName(siteUser1.getUserLastName());
 									siteRequest.setUserId(siteUser1.getUserId());
+									siteRequest.setUserKey(siteUser1.getPk());
 									eventHandler.handle(Future.succeededFuture());
 								}
 							}

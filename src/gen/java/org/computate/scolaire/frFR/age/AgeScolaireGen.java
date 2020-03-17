@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.age;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.frFR.session.SessionScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
@@ -34,6 +35,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -56,6 +58,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class AgeScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AgeScolaire.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String AgeScolaire_UnNom = "un âge";
 	public static final String AgeScolaire_Ce = "ce ";
@@ -322,18 +327,21 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocCles(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "blocs")
-				.a("title", "L'année scolaire de la saison scolaire. ")
-				.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setBlocCles")
-				.a("id", classeApiMethodeMethode, "_blocCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireBlocCles')) : [{'name':'fq','value':'ageCle:", pk, "'}], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "blocs")
+					.a("title", "L'année scolaire de la saison scolaire. ")
+					.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setBlocCles")
+					.a("id", classeApiMethodeMethode, "_blocCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireBlocCles')) : [{'name':'fq','value':'ageCle:", pk, "'}], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmBlocCles());
+		}
 	}
 
 	public void htmBlocCles(String classeApiMethodeMethode) {
@@ -365,13 +373,15 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAgeScolaireBlocCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
-										.f().sx("ajouter un bloc")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+											.a("onclick", "postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+											.f().sx("ajouter un bloc")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -796,18 +806,21 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputSessionCle(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "session")
-				.a("title", "L'année scolaire de la saison scolaire. ")
-				.a("class", "valeur suggereSessionCle w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setSessionCle")
-				.a("id", classeApiMethodeMethode, "_sessionCle")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireSessionCle')) : [{'name':'fq','value':'ageCles:", pk, "'}], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "session")
+					.a("title", "L'année scolaire de la saison scolaire. ")
+					.a("class", "valeur suggereSessionCle w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setSessionCle")
+					.a("id", classeApiMethodeMethode, "_sessionCle")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireSessionCle')) : [{'name':'fq','value':'ageCles:", pk, "'}], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmSessionCle());
+		}
 	}
 
 	public void htmSessionCle(String classeApiMethodeMethode) {
@@ -839,13 +852,15 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAgeScolaireSessionCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
-										.f().sx("ajouter une session")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
+											.f().sx("ajouter une session")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1388,25 +1403,28 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "addresse")
-			.a("title", "L'année scolaire de la saison scolaire. ")
-			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAddresse inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
-				a("name", "setEcoleAddresse");
-			} else {
-				a("class", "valeurEcoleAddresse w3-input w3-border inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
-				a("name", "ecoleAddresse");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
-			}
-			a("value", strEcoleAddresse())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "addresse")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("id", classeApiMethodeMethode, "_ecoleAddresse");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEcoleAddresse inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("name", "setEcoleAddresse");
+				} else {
+					a("class", "valeurEcoleAddresse w3-input w3-border inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("name", "ecoleAddresse");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
+				}
+				a("value", strEcoleAddresse())
+			.fg();
 
+			sx(htmEcoleAddresse());
+		}
 	}
 
 	public void htmEcoleAddresse(String classeApiMethodeMethode) {
@@ -1423,16 +1441,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 								inputEcoleAddresse(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2411,25 +2431,28 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeDebut(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "début du groupe d'âge")
-			.a("title", "L'année scolaire de la saison scolaire. ")
-			.a("id", classeApiMethodeMethode, "_ageDebut");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setAgeDebut inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
-				a("name", "setAgeDebut");
-			} else {
-				a("class", "valeurAgeDebut w3-input w3-border inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
-				a("name", "ageDebut");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ");
-			}
-			a("value", strAgeDebut())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "début du groupe d'âge")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("id", classeApiMethodeMethode, "_ageDebut");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setAgeDebut inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
+					a("name", "setAgeDebut");
+				} else {
+					a("class", "valeurAgeDebut w3-input w3-border inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
+					a("name", "ageDebut");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ");
+				}
+				a("value", strAgeDebut())
+			.fg();
 
+			sx(htmAgeDebut());
+		}
 	}
 
 	public void htmAgeDebut(String classeApiMethodeMethode) {
@@ -2446,16 +2469,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 								inputAgeDebut(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageDebut')); $('#", classeApiMethodeMethode, "_ageDebut').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageDebut')); $('#", classeApiMethodeMethode, "_ageDebut').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2535,25 +2560,28 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeFin(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "fin du groupe d'âge")
-			.a("title", "L'année scolaire de la saison scolaire. ")
-			.a("id", classeApiMethodeMethode, "_ageFin");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setAgeFin inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
-				a("name", "setAgeFin");
-			} else {
-				a("class", "valeurAgeFin w3-input w3-border inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
-				a("name", "ageFin");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ");
-			}
-			a("value", strAgeFin())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "fin du groupe d'âge")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("id", classeApiMethodeMethode, "_ageFin");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setAgeFin inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
+					a("name", "setAgeFin");
+				} else {
+					a("class", "valeurAgeFin w3-input w3-border inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
+					a("name", "ageFin");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ");
+				}
+				a("value", strAgeFin())
+			.fg();
 
+			sx(htmAgeFin());
+		}
 	}
 
 	public void htmAgeFin(String classeApiMethodeMethode) {
@@ -2570,16 +2598,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 								inputAgeFin(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageFin')); $('#", classeApiMethodeMethode, "_ageFin').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageFin')); $('#", classeApiMethodeMethode, "_ageFin').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");

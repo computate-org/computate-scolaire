@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.bloc;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -36,6 +37,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -58,6 +60,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class BlocScolaireGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BlocScolaire.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String BlocScolaire_UnNom = "un bloc";
 	public static final String BlocScolaire_Ce = "ce ";
@@ -307,18 +312,21 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscriptions")
-				.a("title", "L'année scolaire de la saison scolaire. ")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCles")
-				.a("id", classeApiMethodeMethode, "_inscriptionCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "inscriptions")
+					.a("title", "L'année scolaire de la saison scolaire. ")
+					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setInscriptionCles")
+					.a("id", classeApiMethodeMethode, "_inscriptionCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmInscriptionCles());
+		}
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
@@ -350,13 +358,15 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listBlocScolaireInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.f().sx("ajouter une inscription")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -986,18 +996,21 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeCle(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "âge")
-				.a("title", "L'année scolaire de la saison scolaire. ")
-				.a("class", "valeur suggereAgeCle w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setAgeCle")
-				.a("id", classeApiMethodeMethode, "_ageCle")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireAgeCle')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "âge")
+					.a("title", "L'année scolaire de la saison scolaire. ")
+					.a("class", "valeur suggereAgeCle w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setAgeCle")
+					.a("id", classeApiMethodeMethode, "_ageCle")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireAgeCle')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmAgeCle());
+		}
 	}
 
 	public void htmAgeCle(String classeApiMethodeMethode) {
@@ -1029,13 +1042,15 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listBlocScolaireAgeCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-										.a("onclick", "postAgeScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCle')); });")
-										.f().sx("ajouter un âge")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+											.a("onclick", "postAgeScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCle')); });")
+											.f().sx("ajouter un âge")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1647,25 +1662,28 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "addresse")
-			.a("title", "L'année scolaire de la saison scolaire. ")
-			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAddresse inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
-				a("name", "setEcoleAddresse");
-			} else {
-				a("class", "valeurEcoleAddresse w3-input w3-border inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
-				a("name", "ecoleAddresse");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
-			}
-			a("value", strEcoleAddresse())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "addresse")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("id", classeApiMethodeMethode, "_ecoleAddresse");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEcoleAddresse inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("name", "setEcoleAddresse");
+				} else {
+					a("class", "valeurEcoleAddresse w3-input w3-border inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("name", "ecoleAddresse");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
+				}
+				a("value", strEcoleAddresse())
+			.fg();
 
+			sx(htmEcoleAddresse());
+		}
 	}
 
 	public void htmEcoleAddresse(String classeApiMethodeMethode) {
@@ -1682,16 +1700,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 								inputEcoleAddresse(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2873,15 +2893,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocHeureDebut(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border timepicker setBlocHeureDebut inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ")
-			.a("placeholder", "HH:MM AM")
-			.a("id", classeApiMethodeMethode, "_blocHeureDebut")
-			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")			.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureDebut))
-			.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
-			.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border timepicker setBlocHeureDebut inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ")
+				.a("placeholder", "HH:MM AM")
+				.a("id", classeApiMethodeMethode, "_blocHeureDebut")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureDebut))
+				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
+				.fg();
+			sx(htmBlocHeureDebut());
+		}
 	}
 
 	public void htmBlocHeureDebut(String classeApiMethodeMethode) {
@@ -2897,16 +2920,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputBlocHeureDebut(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); $('#", classeApiMethodeMethode, "_blocHeureDebut').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setBlocHeureDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); $('#", classeApiMethodeMethode, "_blocHeureDebut').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setBlocHeureDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2989,15 +3014,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocHeureFin(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border timepicker setBlocHeureFin inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ")
-			.a("placeholder", "HH:MM AM")
-			.a("id", classeApiMethodeMethode, "_blocHeureFin")
-			.a("onclick", "enleverLueur($(this)); ")
-			.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")			.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureFin))
-			.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
-			.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border timepicker setBlocHeureFin inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ")
+				.a("placeholder", "HH:MM AM")
+				.a("id", classeApiMethodeMethode, "_blocHeureFin")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureFin))
+				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
+				.fg();
+			sx(htmBlocHeureFin());
+		}
 	}
 
 	public void htmBlocHeureFin(String classeApiMethodeMethode) {
@@ -3013,16 +3041,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputBlocHeureFin(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); $('#", classeApiMethodeMethode, "_blocHeureFin').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setBlocHeureFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); $('#", classeApiMethodeMethode, "_blocHeureFin').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setBlocHeureFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3113,25 +3143,28 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocPrixParMois(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "prix par mois")
-			.a("title", "L'année scolaire de la saison scolaire. ")
-			.a("id", classeApiMethodeMethode, "_blocPrixParMois");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocPrixParMois inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
-				a("name", "setBlocPrixParMois");
-			} else {
-				a("class", "valeurBlocPrixParMois w3-input w3-border inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
-				a("name", "blocPrixParMois");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocPrixParMois', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }); ");
-			}
-			a("value", strBlocPrixParMois())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "prix par mois")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("id", classeApiMethodeMethode, "_blocPrixParMois");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setBlocPrixParMois inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
+					a("name", "setBlocPrixParMois");
+				} else {
+					a("class", "valeurBlocPrixParMois w3-input w3-border inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
+					a("name", "blocPrixParMois");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocPrixParMois', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }); ");
+				}
+				a("value", strBlocPrixParMois())
+			.fg();
 
+			sx(htmBlocPrixParMois());
+		}
 	}
 
 	public void htmBlocPrixParMois(String classeApiMethodeMethode) {
@@ -3148,16 +3181,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 								inputBlocPrixParMois(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_blocPrixParMois')); $('#", classeApiMethodeMethode, "_blocPrixParMois').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setBlocPrixParMois', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_blocPrixParMois')); $('#", classeApiMethodeMethode, "_blocPrixParMois').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=pk]').val() }], 'setBlocPrixParMois', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocPrixParMois')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3302,37 +3337,40 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocLundi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_blocLundi")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_blocLundi");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
-			a("name", "setBlocLundi");
-		} else {
-			a("class", "valeurBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
-			a("name", "blocLundi");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocLundi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocLundi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocLundi')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getBlocLundi() != null && getBlocLundi())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_blocLundi")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_blocLundi");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
+				a("name", "setBlocLundi");
+			} else {
+				a("class", "valeurBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
+				a("name", "blocLundi");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocLundi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocLundi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocLundi')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getBlocLundi() != null && getBlocLundi())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlocLundi());
+		}
 	}
 
 	public void htmBlocLundi(String classeApiMethodeMethode) {
@@ -3425,37 +3463,40 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocMardi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_blocMardi")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_blocMardi");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
-			a("name", "setBlocMardi");
-		} else {
-			a("class", "valeurBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
-			a("name", "blocMardi");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocMardi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocMardi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocMardi')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getBlocMardi() != null && getBlocMardi())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_blocMardi")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_blocMardi");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
+				a("name", "setBlocMardi");
+			} else {
+				a("class", "valeurBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
+				a("name", "blocMardi");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocMardi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocMardi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocMardi')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getBlocMardi() != null && getBlocMardi())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlocMardi());
+		}
 	}
 
 	public void htmBlocMardi(String classeApiMethodeMethode) {
@@ -3548,37 +3589,40 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocMercredi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_blocMercredi")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_blocMercredi");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
-			a("name", "setBlocMercredi");
-		} else {
-			a("class", "valeurBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
-			a("name", "blocMercredi");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocMercredi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocMercredi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocMercredi')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getBlocMercredi() != null && getBlocMercredi())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_blocMercredi")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_blocMercredi");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
+				a("name", "setBlocMercredi");
+			} else {
+				a("class", "valeurBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
+				a("name", "blocMercredi");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocMercredi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocMercredi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocMercredi')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getBlocMercredi() != null && getBlocMercredi())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlocMercredi());
+		}
 	}
 
 	public void htmBlocMercredi(String classeApiMethodeMethode) {
@@ -3671,37 +3715,40 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocJeudi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_blocJeudi")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_blocJeudi");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
-			a("name", "setBlocJeudi");
-		} else {
-			a("class", "valeurBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
-			a("name", "blocJeudi");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocJeudi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocJeudi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocJeudi')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getBlocJeudi() != null && getBlocJeudi())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_blocJeudi")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_blocJeudi");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
+				a("name", "setBlocJeudi");
+			} else {
+				a("class", "valeurBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
+				a("name", "blocJeudi");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocJeudi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocJeudi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocJeudi')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getBlocJeudi() != null && getBlocJeudi())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlocJeudi());
+		}
 	}
 
 	public void htmBlocJeudi(String classeApiMethodeMethode) {
@@ -3794,37 +3841,40 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocVendredi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_blocVendredi")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_blocVendredi");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
-			a("name", "setBlocVendredi");
-		} else {
-			a("class", "valeurBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
-			a("name", "blocVendredi");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocVendredi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocVendredi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocVendredi')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getBlocVendredi() != null && getBlocVendredi())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_blocVendredi")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_blocVendredi");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
+				a("name", "setBlocVendredi");
+			} else {
+				a("class", "valeurBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
+				a("name", "blocVendredi");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocVendredi', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocVendredi')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocVendredi')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getBlocVendredi() != null && getBlocVendredi())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlocVendredi());
+		}
 	}
 
 	public void htmBlocVendredi(String classeApiMethodeMethode) {

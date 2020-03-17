@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.utilisateur;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -10,6 +11,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,6 +47,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilisateurSite.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin", "SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String UtilisateurSite_UnNom = "un utilisateur du site";
 	public static final String UtilisateurSite_Ce = "ce ";
@@ -244,18 +249,30 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "inscriptions")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setInscriptionCles")
-				.a("id", classeApiMethodeMethode, "_inscriptionCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles')) : [{'name':'fq','value':'utilisateurCles:", pk, "'}], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "inscriptions")
+					.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setInscriptionCles")
+					.a("id", classeApiMethodeMethode, "_inscriptionCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles')) : [{'name':'fq','value':'utilisateurCles:", pk, "'}], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmInscriptionCles());
+			}
+		}
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
@@ -287,13 +304,18 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postInscriptionScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.f().sx("ajouter une inscription")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -391,18 +413,30 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputPaiementCles(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "paiements")
-				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-				.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setPaiementCles")
-				.a("id", classeApiMethodeMethode, "_paiementCles")
-				.a("autocomplete", "off")
-				.a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles')) : [{'name':'fq','value':'utilisateurCles:", pk, "'}], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "paiements")
+					.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+					.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setPaiementCles")
+					.a("id", classeApiMethodeMethode, "_paiementCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles')) : [{'name':'fq','value':'utilisateurCles:", pk, "'}], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmPaiementCles());
+			}
+		}
 	}
 
 	public void htmPaiementCles(String classeApiMethodeMethode) {
@@ -434,13 +468,18 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listUtilisateurSitePaiementCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postPaiementScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
-										.f().sx("ajouter un paiement")
-									.g("button");
-								} g("div");
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postPaiementScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+											.f().sx("ajouter un paiement")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -514,25 +553,37 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputUtilisateurId(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "utilisateur ID")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_utilisateurId");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurId inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
-				a("name", "setUtilisateurId");
-			} else {
-				a("class", "valeurUtilisateurId w3-input w3-border inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
-				a("name", "utilisateurId");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ");
-			}
-			a("value", strUtilisateurId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "utilisateur ID")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_utilisateurId");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setUtilisateurId inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
+					a("name", "setUtilisateurId");
+				} else {
+					a("class", "valeurUtilisateurId w3-input w3-border inputUtilisateurSite", pk, "UtilisateurId w3-input w3-border ");
+					a("name", "utilisateurId");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ");
+				}
+				a("value", strUtilisateurId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmUtilisateurId());
+			}
+		}
 	}
 
 	public void htmUtilisateurId(String classeApiMethodeMethode) {
@@ -549,16 +600,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 								inputUtilisateurId(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurId')); $('#", classeApiMethodeMethode, "_utilisateurId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurId')); $('#", classeApiMethodeMethode, "_utilisateurId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -638,25 +694,37 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputUtilisateurCle(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "utilisateur clé")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_utilisateurCle");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurCle inputUtilisateurSite", pk, "UtilisateurCle w3-input w3-border ");
-				a("name", "setUtilisateurCle");
-			} else {
-				a("class", "valeurUtilisateurCle w3-input w3-border inputUtilisateurSite", pk, "UtilisateurCle w3-input w3-border ");
-				a("name", "utilisateurCle");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurCle', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurCle')); }); ");
-			}
-			a("value", strUtilisateurCle())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "utilisateur clé")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_utilisateurCle");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setUtilisateurCle inputUtilisateurSite", pk, "UtilisateurCle w3-input w3-border ");
+					a("name", "setUtilisateurCle");
+				} else {
+					a("class", "valeurUtilisateurCle w3-input w3-border inputUtilisateurSite", pk, "UtilisateurCle w3-input w3-border ");
+					a("name", "utilisateurCle");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurCle', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurCle')); }); ");
+				}
+				a("value", strUtilisateurCle())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmUtilisateurCle());
+			}
+		}
 	}
 
 	public void htmUtilisateurCle(String classeApiMethodeMethode) {
@@ -673,16 +741,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 								inputUtilisateurCle(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); $('#", classeApiMethodeMethode, "_utilisateurCle').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurCle', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurCle')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); $('#", classeApiMethodeMethode, "_utilisateurCle').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurCle', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurCle')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -756,24 +829,36 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputUtilisateurNom(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "text")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_utilisateurNom");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurNom inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
-				a("name", "setUtilisateurNom");
-			} else {
-				a("class", "valeurUtilisateurNom w3-input w3-border inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
-				a("name", "utilisateurNom");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurNom')); }); ");
-			}
-			a("value", strUtilisateurNom())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_utilisateurNom");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setUtilisateurNom inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
+					a("name", "setUtilisateurNom");
+				} else {
+					a("class", "valeurUtilisateurNom w3-input w3-border inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
+					a("name", "utilisateurNom");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurNom')); }); ");
+				}
+				a("value", strUtilisateurNom())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmUtilisateurNom());
+			}
+		}
 	}
 
 	public void htmUtilisateurNom(String classeApiMethodeMethode) {
@@ -787,16 +872,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 								inputUtilisateurNom(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); $('#", classeApiMethodeMethode, "_utilisateurNom').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurNom')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); $('#", classeApiMethodeMethode, "_utilisateurNom').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurNom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -870,24 +960,36 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputUtilisateurMail(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "text")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_utilisateurMail");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurMail inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
-				a("name", "setUtilisateurMail");
-			} else {
-				a("class", "valeurUtilisateurMail w3-input w3-border inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
-				a("name", "utilisateurMail");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurMail')); }); ");
-			}
-			a("value", strUtilisateurMail())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_utilisateurMail");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setUtilisateurMail inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
+					a("name", "setUtilisateurMail");
+				} else {
+					a("class", "valeurUtilisateurMail w3-input w3-border inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
+					a("name", "utilisateurMail");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurMail')); }); ");
+				}
+				a("value", strUtilisateurMail())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmUtilisateurMail());
+			}
+		}
 	}
 
 	public void htmUtilisateurMail(String classeApiMethodeMethode) {
@@ -901,16 +1003,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 								inputUtilisateurMail(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); $('#", classeApiMethodeMethode, "_utilisateurMail').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurMail')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); $('#", classeApiMethodeMethode, "_utilisateurMail').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setUtilisateurMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurMail')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1236,25 +1343,37 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "customer profile ID")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_customerProfileId");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setCustomerProfileId inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "setCustomerProfileId");
-			} else {
-				a("class", "valeurCustomerProfileId w3-input w3-border inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "customerProfileId");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
-			}
-			a("value", strCustomerProfileId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "customer profile ID")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_customerProfileId");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setCustomerProfileId inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "setCustomerProfileId");
+				} else {
+					a("class", "valeurCustomerProfileId w3-input w3-border inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "customerProfileId");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
+				}
+				a("value", strCustomerProfileId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmCustomerProfileId());
+			}
+		}
 	}
 
 	public void htmCustomerProfileId(String classeApiMethodeMethode) {
@@ -1271,16 +1390,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 								inputCustomerProfileId(classeApiMethodeMethode);
 							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1359,37 +1483,49 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputUtilisateurRecevoirCourriels(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
-			a("name", "setUtilisateurRecevoirCourriels");
-		} else {
-			a("class", "valeurUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
-			a("name", "utilisateurRecevoirCourriels");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurRecevoirCourriels', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getUtilisateurRecevoirCourriels() != null && getUtilisateurRecevoirCourriels())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
+				a("name", "setUtilisateurRecevoirCourriels");
+			} else {
+				a("class", "valeurUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
+				a("name", "utilisateurRecevoirCourriels");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUtilisateurRecevoirCourriels', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_utilisateurRecevoirCourriels')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getUtilisateurRecevoirCourriels() != null && getUtilisateurRecevoirCourriels())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmUtilisateurRecevoirCourriels());
+			}
+		}
 	}
 
 	public void htmUtilisateurRecevoirCourriels(String classeApiMethodeMethode) {
@@ -1483,37 +1619,49 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputVoirArchive(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_voirArchive")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_voirArchive");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
-			a("name", "setVoirArchive");
-		} else {
-			a("class", "valeurVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
-			a("name", "voirArchive");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirArchive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirArchive')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getVoirArchive() != null && getVoirArchive())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_voirArchive")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_voirArchive");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
+				a("name", "setVoirArchive");
+			} else {
+				a("class", "valeurVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
+				a("name", "voirArchive");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirArchive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirArchive')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getVoirArchive() != null && getVoirArchive())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmVoirArchive());
+			}
+		}
 	}
 
 	public void htmVoirArchive(String classeApiMethodeMethode) {
@@ -1607,37 +1755,49 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void inputVoirSupprime(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		if("Page".equals(classeApiMethodeMethode)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classeApiMethodeMethode, "_voirSupprime")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classeApiMethodeMethode, "_voirSupprime");
-		}
-		if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-			a("class", "setVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
-			a("name", "setVoirSupprime");
-		} else {
-			a("class", "valeurVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
-			a("name", "voirSupprime");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirSupprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirSupprime')); }); ");
-		}
-		if("Page".equals(classeApiMethodeMethode)) {
-			if(getVoirSupprime() != null && getVoirSupprime())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_voirSupprime")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_voirSupprime");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
+				a("name", "setVoirSupprime");
+			} else {
+				a("class", "valeurVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
+				a("name", "voirSupprime");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchUtilisateurSiteVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setVoirSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_voirSupprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_voirSupprime')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getVoirSupprime() != null && getVoirSupprime())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmVoirSupprime());
+			}
+		}
 	}
 
 	public void htmVoirSupprime(String classeApiMethodeMethode) {

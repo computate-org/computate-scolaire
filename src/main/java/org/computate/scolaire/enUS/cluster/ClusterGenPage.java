@@ -31,12 +31,17 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
 
 
 /**
  * Translate: false
  **/
 public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	/**
 	 * {@inheritDoc}
@@ -395,139 +400,46 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 	}
 
 	public void htmlBodyFormsClusterGenPage() {
-		e("div").a("class", "w3-margin-top ").f();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("div").a("class", "w3-margin-top ").f();
 
-		if(listCluster != null && listCluster.size() == 1) {
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-					.a("id", "refreshThisClusterGenPage")
-					.a("onclick", "patchClusterVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisClusterGenPage')); }, function() { addError($('#refreshThisClusterGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				sx("refresh this cluster");
-			} g("button");
-		}
+			if(listCluster != null && listCluster.size() == 1) {
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+						.a("id", "refreshThisClusterGenPage")
+						.a("onclick", "patchClusterVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisClusterGenPage')); }, function() { addError($('#refreshThisClusterGenPage')); }); return false; ").f();
+						e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					sx("refresh this cluster");
+				} g("button");
+			}
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-			.a("onclick", "$('#postClusterModal').show(); ")
-			.f().sx("Create a cluster")
-		.g("button");
-		{ e("div").a("id", "postClusterModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-gray ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postClusterModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Create a cluster").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						Cluster o = new Cluster();
-						o.setSiteRequest_(siteRequest_);
-
-						// Form POST
-						{ e("div").a("id", "postClusterForm").f();
-							htmlFormPOSTCluster(o);
-						} g("div");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "postCluster($('#postClusterForm')); ")
-							.f().sx("Create a cluster")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-			.a("onclick", "$('#putClusterModal').show(); ")
-			.f().sx("Duplicate the clusters")
-		.g("button");
-		{ e("div").a("id", "putClusterModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-gray ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putClusterModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Duplicate the clusters").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						Cluster o = new Cluster();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PUT
-						{ e("form").a("action", "").a("id", "putClusterFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPUTCluster(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "putCluster($('#putClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), "); ")
-							.f().sx("Duplicate the clusters")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-			.a("onclick", "$('#patchClusterModal').show(); ")
-			.f().sx("Modify the clusters")
-		.g("button");
-		{ e("div").a("id", "patchClusterModal").a("class", "w3-modal w3-padding-32 ").f();
-			{ e("div").a("class", "w3-modal-content ").f();
-				{ e("div").a("class", "w3-card-4 ").f();
-					{ e("header").a("class", "w3-container w3-gray ").f();
-						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchClusterModal').hide(); ").f().sx("×").g("span");
-						e("h2").a("class", "w3-padding ").f().sx("Modify the clusters").g("h2");
-					} g("header");
-					{ e("div").a("class", "w3-container ").f();
-						Cluster o = new Cluster();
-						o.setSiteRequest_(siteRequest_);
-
-						// FormValues PATCH
-						{ e("form").a("action", "").a("id", "patchClusterFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-							htmlFormPATCHCluster(o);
-						} g("form");
-						e("button")
-							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-							.a("onclick", "patchCluster($('#patchClusterFormFilters'), $('#patchClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-							.f().sx("Modify the clusters")
-						.g("button");
-
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-
-
-		if(listCluster != null && listCluster.size() == 1) {
 			e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-				.a("onclick", "$('#deleteClusterModal').show(); ")
-				.f().sx("Delete the clusters")
+				.a("onclick", "$('#postClusterModal').show(); ")
+				.f().sx("Create a cluster")
 			.g("button");
-			{ e("div").a("id", "deleteClusterModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "postClusterModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteClusterModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Delete the clusters").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postClusterModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Create a cluster").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							Cluster o = new Cluster();
 							o.setSiteRequest_(siteRequest_);
 
-							// Form DELETE
-							{ e("div").a("id", "deleteClusterForm").f();
-								htmlFormPATCHCluster(o);
+							// Form POST
+							{ e("div").a("id", "postClusterForm").f();
+								htmlFormPOSTCluster(o);
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "deleteCluster(", o.getPk(), "); ")
-								.f().sx("Delete the clusters")
+								.a("onclick", "postCluster($('#postClusterForm')); ")
+								.f().sx("Create a cluster")
 							.g("button");
 
 						} g("div");
@@ -535,19 +447,89 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 				} g("div");
 			} g("div");
 
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+				.a("onclick", "$('#putClusterModal').show(); ")
+				.f().sx("Duplicate the clusters")
+			.g("button");
+			{ e("div").a("id", "putClusterModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putClusterModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate the clusters").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							Cluster o = new Cluster();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PUT
+							{ e("form").a("action", "").a("id", "putClusterFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPUTCluster(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+								.a("onclick", "putCluster($('#putClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), "); ")
+								.f().sx("Duplicate the clusters")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+				.a("onclick", "$('#patchClusterModal').show(); ")
+				.f().sx("Modify the clusters")
+			.g("button");
+			{ e("div").a("id", "patchClusterModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchClusterModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modify the clusters").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							Cluster o = new Cluster();
+							o.setSiteRequest_(siteRequest_);
+
+							// FormValues PATCH
+							{ e("form").a("action", "").a("id", "patchClusterFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHCluster(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+								.a("onclick", "patchCluster($('#patchClusterFormFilters'), $('#patchClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify the clusters")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+			g("div");
 		}
-		g("div");
 	}
 
 	/**
 	**/
 	public static void htmlSuggestClusterGenPage(PageLayout p, String id) {
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("id", "refreshAllClusterGenPage", id).a("href", "/cluster").a("class", "").a("onclick", "patchClusterVals([], {}, function() { addGlow($('#refreshAllClusterGenPage", id, "')); }, function() { addError($('#refreshAllClusterGenPage", id, "')); }); return false; ").f();
-				p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-				p.sx("refresh all the clusters");
-			} p.g("a");
-		} p.g("div");
+		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ClusterGenPage.ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ClusterGenPage.ROLES)
+				) {
+			{ p.e("div").a("class", "").f();
+				{ p.e("button").a("id", "refreshAllClusterGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchClusterVals([], {}, function() { addGlow($('#refreshAllClusterGenPage", id, "')); }, function() { addError($('#refreshAllClusterGenPage", id, "')); }); ").f();
+					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+					p.sx("refresh all the clusters");
+				} p.g("button");
+			} p.g("div");
+		}
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
 				{ p.e("span").f();

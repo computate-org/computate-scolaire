@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription.design;            
+package org.computate.scolaire.frFR.inscription.design;             
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 

@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.user;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,6 +11,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,6 +47,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  **/
 public abstract class SiteUserGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SiteUser.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin", "SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SiteUser_UnNom = "a site user";
 	public static final String SiteUser_Ce = "this ";
@@ -243,17 +248,29 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputEnrollmentKeys(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "enrollments")
-				.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setEnrollmentKeys")
-				.a("id", classApiMethodMethod, "_enrollmentKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSiteUserEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SiteUserEnrollmentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "enrollments")
+					.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setEnrollmentKeys")
+					.a("id", classApiMethodMethod, "_enrollmentKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSiteUserEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SiteUserEnrollmentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmEnrollmentKeys());
+			}
+		}
 	}
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
@@ -285,13 +302,18 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSiteUserEnrollmentKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postSchoolEnrollmentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
-										.f().sx("add an enrollment")
-									.g("button");
-								} g("div");
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postSchoolEnrollmentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+											.f().sx("add an enrollment")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -389,17 +411,29 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputPaymentKeys(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "payments")
-				.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setPaymentKeys")
-				.a("id", classApiMethodMethod, "_paymentKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSiteUserPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SiteUserPaymentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "payments")
+					.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setPaymentKeys")
+					.a("id", classApiMethodMethod, "_paymentKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSiteUserPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SiteUserPaymentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmPaymentKeys());
+			}
+		}
 	}
 
 	public void htmPaymentKeys(String classApiMethodMethod) {
@@ -431,13 +465,18 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSiteUserPaymentKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
-										.f().sx("add a payment")
-									.g("button");
-								} g("div");
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postSchoolPaymentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+											.f().sx("add a payment")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -511,24 +550,36 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputUserId(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "user ID")
-			.a("id", classApiMethodMethod, "_userId");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserId inputSiteUser", pk, "UserId w3-input w3-border ");
-				a("name", "setUserId");
-			} else {
-				a("class", "valueUserId w3-input w3-border inputSiteUser", pk, "UserId w3-input w3-border ");
-				a("name", "userId");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userId')); }, function() { addError($('#", classApiMethodMethod, "_userId')); }); ");
-			}
-			a("value", strUserId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "user ID")
+				.a("id", classApiMethodMethod, "_userId");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setUserId inputSiteUser", pk, "UserId w3-input w3-border ");
+					a("name", "setUserId");
+				} else {
+					a("class", "valueUserId w3-input w3-border inputSiteUser", pk, "UserId w3-input w3-border ");
+					a("name", "userId");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userId')); }, function() { addError($('#", classApiMethodMethod, "_userId')); }); ");
+				}
+				a("value", strUserId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmUserId());
+			}
+		}
 	}
 
 	public void htmUserId(String classApiMethodMethod) {
@@ -545,16 +596,21 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 								inputUserId(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userId')); $('#", classApiMethodMethod, "_userId').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserId', null, function() { addGlow($('#", classApiMethodMethod, "_userId')); }, function() { addError($('#", classApiMethodMethod, "_userId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userId')); $('#", classApiMethodMethod, "_userId').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserId', null, function() { addGlow($('#", classApiMethodMethod, "_userId')); }, function() { addError($('#", classApiMethodMethod, "_userId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -634,24 +690,36 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputUserKey(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "user key")
-			.a("id", classApiMethodMethod, "_userKey");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserKey inputSiteUser", pk, "UserKey w3-input w3-border ");
-				a("name", "setUserKey");
-			} else {
-				a("class", "valueUserKey w3-input w3-border inputSiteUser", pk, "UserKey w3-input w3-border ");
-				a("name", "userKey");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserKey', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userKey')); }, function() { addError($('#", classApiMethodMethod, "_userKey')); }); ");
-			}
-			a("value", strUserKey())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "user key")
+				.a("id", classApiMethodMethod, "_userKey");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setUserKey inputSiteUser", pk, "UserKey w3-input w3-border ");
+					a("name", "setUserKey");
+				} else {
+					a("class", "valueUserKey w3-input w3-border inputSiteUser", pk, "UserKey w3-input w3-border ");
+					a("name", "userKey");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserKey', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userKey')); }, function() { addError($('#", classApiMethodMethod, "_userKey')); }); ");
+				}
+				a("value", strUserKey())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmUserKey());
+			}
+		}
 	}
 
 	public void htmUserKey(String classApiMethodMethod) {
@@ -668,16 +736,21 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 								inputUserKey(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userKey')); $('#", classApiMethodMethod, "_userKey').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserKey', null, function() { addGlow($('#", classApiMethodMethod, "_userKey')); }, function() { addError($('#", classApiMethodMethod, "_userKey')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userKey')); $('#", classApiMethodMethod, "_userKey').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserKey', null, function() { addGlow($('#", classApiMethodMethod, "_userKey')); }, function() { addError($('#", classApiMethodMethod, "_userKey')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -751,23 +824,35 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputUserName(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "text")
-			.a("id", classApiMethodMethod, "_userName");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserName inputSiteUser", pk, "UserName w3-input w3-border ");
-				a("name", "setUserName");
-			} else {
-				a("class", "valueUserName w3-input w3-border inputSiteUser", pk, "UserName w3-input w3-border ");
-				a("name", "userName");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userName')); }, function() { addError($('#", classApiMethodMethod, "_userName')); }); ");
-			}
-			a("value", strUserName())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_userName");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setUserName inputSiteUser", pk, "UserName w3-input w3-border ");
+					a("name", "setUserName");
+				} else {
+					a("class", "valueUserName w3-input w3-border inputSiteUser", pk, "UserName w3-input w3-border ");
+					a("name", "userName");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userName')); }, function() { addError($('#", classApiMethodMethod, "_userName')); }); ");
+				}
+				a("value", strUserName())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmUserName());
+			}
+		}
 	}
 
 	public void htmUserName(String classApiMethodMethod) {
@@ -781,16 +866,21 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 								inputUserName(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userName')); $('#", classApiMethodMethod, "_userName').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserName', null, function() { addGlow($('#", classApiMethodMethod, "_userName')); }, function() { addError($('#", classApiMethodMethod, "_userName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userName')); $('#", classApiMethodMethod, "_userName').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserName', null, function() { addGlow($('#", classApiMethodMethod, "_userName')); }, function() { addError($('#", classApiMethodMethod, "_userName')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -864,23 +954,35 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputUserEmail(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "text")
-			.a("id", classApiMethodMethod, "_userEmail");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserEmail inputSiteUser", pk, "UserEmail w3-input w3-border ");
-				a("name", "setUserEmail");
-			} else {
-				a("class", "valueUserEmail w3-input w3-border inputSiteUser", pk, "UserEmail w3-input w3-border ");
-				a("name", "userEmail");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserEmail', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userEmail')); }, function() { addError($('#", classApiMethodMethod, "_userEmail')); }); ");
-			}
-			a("value", strUserEmail())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_userEmail");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setUserEmail inputSiteUser", pk, "UserEmail w3-input w3-border ");
+					a("name", "setUserEmail");
+				} else {
+					a("class", "valueUserEmail w3-input w3-border inputSiteUser", pk, "UserEmail w3-input w3-border ");
+					a("name", "userEmail");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserEmail', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_userEmail')); }, function() { addError($('#", classApiMethodMethod, "_userEmail')); }); ");
+				}
+				a("value", strUserEmail())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmUserEmail());
+			}
+		}
 	}
 
 	public void htmUserEmail(String classApiMethodMethod) {
@@ -894,16 +996,21 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 								inputUserEmail(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userEmail')); $('#", classApiMethodMethod, "_userEmail').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserEmail', null, function() { addGlow($('#", classApiMethodMethod, "_userEmail')); }, function() { addError($('#", classApiMethodMethod, "_userEmail')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_userEmail')); $('#", classApiMethodMethod, "_userEmail').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setUserEmail', null, function() { addGlow($('#", classApiMethodMethod, "_userEmail')); }, function() { addError($('#", classApiMethodMethod, "_userEmail')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1229,24 +1336,36 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "customer profile ID")
-			.a("id", classApiMethodMethod, "_customerProfileId");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setCustomerProfileId inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "setCustomerProfileId");
-			} else {
-				a("class", "valueCustomerProfileId w3-input w3-border inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
-				a("name", "customerProfileId");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
-			}
-			a("value", strCustomerProfileId())
-		.fg();
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "customer profile ID")
+				.a("id", classApiMethodMethod, "_customerProfileId");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "setCustomerProfileId");
+				} else {
+					a("class", "valueCustomerProfileId w3-input w3-border inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
+					a("name", "customerProfileId");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ");
+				}
+				a("value", strCustomerProfileId())
+			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmCustomerProfileId());
+			}
+		}
 	}
 
 	public void htmCustomerProfileId(String classApiMethodMethod) {
@@ -1263,16 +1382,21 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 								inputCustomerProfileId(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId')); $('#", classApiMethodMethod, "_customerProfileId').val(null); patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -1351,37 +1475,49 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputUserReceiveEmails(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_userReceiveEmails")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_userReceiveEmails");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
-			a("name", "setUserReceiveEmails");
-		} else {
-			a("class", "valueUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
-			a("name", "userReceiveEmails");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserReceiveEmails', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_userReceiveEmails')); }, function() { addError($('#", classApiMethodMethod, "_userReceiveEmails')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getUserReceiveEmails() != null && getUserReceiveEmails())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_userReceiveEmails")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_userReceiveEmails");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
+				a("name", "setUserReceiveEmails");
+			} else {
+				a("class", "valueUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
+				a("name", "userReceiveEmails");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserReceiveEmails', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_userReceiveEmails')); }, function() { addError($('#", classApiMethodMethod, "_userReceiveEmails')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getUserReceiveEmails() != null && getUserReceiveEmails())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmUserReceiveEmails());
+			}
+		}
 	}
 
 	public void htmUserReceiveEmails(String classApiMethodMethod) {
@@ -1475,37 +1611,49 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputSeeArchived(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_seeArchived")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_seeArchived");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
-			a("name", "setSeeArchived");
-		} else {
-			a("class", "valueSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
-			a("name", "seeArchived");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeArchived')); }, function() { addError($('#", classApiMethodMethod, "_seeArchived')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getSeeArchived() != null && getSeeArchived())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_seeArchived")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_seeArchived");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
+				a("name", "setSeeArchived");
+			} else {
+				a("class", "valueSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
+				a("name", "seeArchived");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeArchived')); }, function() { addError($('#", classApiMethodMethod, "_seeArchived')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getSeeArchived() != null && getSeeArchived())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmSeeArchived());
+			}
+		}
 	}
 
 	public void htmSeeArchived(String classApiMethodMethod) {
@@ -1599,37 +1747,49 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void inputSeeDeleted(String classApiMethodMethod) {
 		SiteUser s = (SiteUser)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_seeDeleted")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_seeDeleted");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
-			a("name", "setSeeDeleted");
-		} else {
-			a("class", "valueSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
-			a("name", "seeDeleted");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeDeleted')); }, function() { addError($('#", classApiMethodMethod, "_seeDeleted')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getSeeDeleted() != null && getSeeDeleted())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_seeDeleted")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_seeDeleted");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
+				a("name", "setSeeDeleted");
+			} else {
+				a("class", "valueSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
+				a("name", "seeDeleted");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeDeleted')); }, function() { addError($('#", classApiMethodMethod, "_seeDeleted')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getSeeDeleted() != null && getSeeDeleted())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				sx(htmSeeDeleted());
+			}
+		}
 	}
 
 	public void htmSeeDeleted(String classApiMethodMethod) {

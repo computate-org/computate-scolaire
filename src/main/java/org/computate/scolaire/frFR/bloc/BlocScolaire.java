@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;                          
+package org.computate.scolaire.frFR.bloc;                           
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,7 +30,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
- * ApiMethode: DELETE
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 

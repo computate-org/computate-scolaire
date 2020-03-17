@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.requete;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.solr.common.SolrDocumentList;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -10,8 +11,10 @@ import java.text.NumberFormat;
 import java.util.Stack;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -1502,6 +1505,42 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	/////////////////
+	// requeteVars //
+	/////////////////
+
+	/**	L'entité « requeteVars »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Map<String, String>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Map<String, String> requeteVars = new java.util.HashMap<java.lang.String, java.lang.String>();
+	@JsonIgnore
+	public Couverture<Map<String, String>> requeteVarsCouverture = new Couverture<Map<String, String>>().p(this).c(Map.class).var("requeteVars").o(requeteVars);
+
+	/**	<br/>L'entité « requeteVars »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut Map<String, String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteVars">Trouver l'entité requeteVars dans Solr</a>
+	 * <br/>
+	 * @param requeteVars est l'entité déjà construit. 
+	 **/
+	protected abstract void _requeteVars(Map<String, String> m);
+
+	public Map<String, String> getRequeteVars() {
+		return requeteVars;
+	}
+
+	public void setRequeteVars(Map<String, String> requeteVars) {
+		this.requeteVars = requeteVars;
+		this.requeteVarsCouverture.dejaInitialise = true;
+	}
+	protected RequeteSiteFrFR requeteVarsInit() {
+		if(!requeteVarsCouverture.dejaInitialise) {
+			_requeteVars(requeteVars);
+		}
+		requeteVarsCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -1552,6 +1591,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		requetePkInit();
 		connexionSqlInit();
 		requeteEnTetesInit();
+		requeteVarsInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1653,6 +1693,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.connexionSql;
 			case "requeteEnTetes":
 				return oRequeteSiteFrFR.requeteEnTetes;
+			case "requeteVars":
+				return oRequeteSiteFrFR.requeteVars;
 			default:
 				return null;
 		}

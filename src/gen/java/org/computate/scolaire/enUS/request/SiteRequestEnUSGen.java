@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.request;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.solr.common.SolrDocumentList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,8 +11,10 @@ import java.text.NumberFormat;
 import java.util.Stack;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -1506,6 +1509,42 @@ The site configuration.
 		return (SiteRequestEnUS)this;
 	}
 
+	/////////////////
+	// requestVars //
+	/////////////////
+
+	/**	L'entité « requestVars »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Map<String, String>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Map<String, String> requestVars = new java.util.HashMap<java.lang.String, java.lang.String>();
+	@JsonIgnore
+	public Wrap<Map<String, String>> requestVarsWrap = new Wrap<Map<String, String>>().p(this).c(Map.class).var("requestVars").o(requestVars);
+
+	/**	<br/>L'entité « requestVars »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut Map<String, String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:requestVars">Trouver l'entité requestVars dans Solr</a>
+	 * <br/>
+	 * @param requestVars est l'entité déjà construit. 
+	 **/
+	protected abstract void _requestVars(Map<String, String> m);
+
+	public Map<String, String> getRequestVars() {
+		return requestVars;
+	}
+
+	public void setRequestVars(Map<String, String> requestVars) {
+		this.requestVars = requestVars;
+		this.requestVarsWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS requestVarsInit() {
+		if(!requestVarsWrap.alreadyInitialized) {
+			_requestVars(requestVars);
+		}
+		requestVarsWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -1556,6 +1595,7 @@ The site configuration.
 		requestPkInit();
 		sqlConnectionInit();
 		requestHeadersInit();
+		requestVarsInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -1657,6 +1697,8 @@ The site configuration.
 				return oSiteRequestEnUS.sqlConnection;
 			case "requestHeaders":
 				return oSiteRequestEnUS.requestHeaders;
+			case "requestVars":
+				return oSiteRequestEnUS.requestVars;
 			default:
 				return null;
 		}

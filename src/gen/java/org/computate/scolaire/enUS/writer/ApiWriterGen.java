@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.writer;
 
 import org.computate.scolaire.enUS.writer.AllWriters;
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.vertx.AppSwagger2;
@@ -11,6 +12,7 @@ import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;

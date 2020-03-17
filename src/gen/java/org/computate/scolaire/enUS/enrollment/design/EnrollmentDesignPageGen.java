@@ -3,19 +3,23 @@ package org.computate.scolaire.enUS.enrollment.design;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignGenPage;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import java.util.Arrays;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	

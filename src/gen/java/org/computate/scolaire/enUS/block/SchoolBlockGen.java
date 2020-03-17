@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.block;
 
+import java.util.Arrays;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -36,6 +37,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -58,6 +60,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  **/
 public abstract class SchoolBlockGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SchoolBlock.class);
+
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SchoolBlock_UnNom = "a block";
 	public static final String SchoolBlock_Ce = "this ";
@@ -306,17 +311,20 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputEnrollmentKeys(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "enrollments")
-				.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setEnrollmentKeys")
-				.a("id", classApiMethodMethod, "_enrollmentKeys")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "enrollments")
+					.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setEnrollmentKeys")
+					.a("id", classApiMethodMethod, "_enrollmentKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmEnrollmentKeys());
+		}
 	}
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
@@ -348,13 +356,15 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockEnrollmentKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postSchoolEnrollmentVals({ blockKeys: [ \"", pk, "\" ] }, function() { patchSchoolBlockVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
-										.f().sx("add an enrollment")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postSchoolEnrollmentVals({ blockKeys: [ \"", pk, "\" ] }, function() { patchSchoolBlockVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+											.f().sx("add an enrollment")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -984,17 +994,20 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputAgeKey(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "age")
-				.a("class", "valueObjectSuggest suggestAgeKey w3-input w3-border w3-cell w3-cell-middle ")
-				.a("name", "setAgeKey")
-				.a("id", classApiMethodMethod, "_ageKey")
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
-			.fg();
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "age")
+					.a("class", "valueObjectSuggest suggestAgeKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setAgeKey")
+					.a("id", classApiMethodMethod, "_ageKey")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
 
+			sx(htmAgeKey());
+		}
 	}
 
 	public void htmAgeKey(String classApiMethodMethod) {
@@ -1026,13 +1039,15 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockAgeKey_", classApiMethodMethod).f();
 								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-										.a("onclick", "postSchoolAgeVals({ blockKeys: [ \"", pk, "\" ] }, function() { patchSchoolBlockVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "ageKey')); });")
-										.f().sx("add an age")
-									.g("button");
-								} g("div");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+											.a("onclick", "postSchoolAgeVals({ blockKeys: [ \"", pk, "\" ] }, function() { patchSchoolBlockVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "ageKey')); });")
+											.f().sx("add an age")
+										.g("button");
+									} g("div");
+								}
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1644,24 +1659,27 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "address")
-			.a("id", classApiMethodMethod, "_schoolAddress");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAddress inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
-				a("name", "setSchoolAddress");
-			} else {
-				a("class", "valueSchoolAddress w3-input w3-border inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
-				a("name", "schoolAddress");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
-			}
-			a("value", strSchoolAddress())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "address")
+				.a("id", classApiMethodMethod, "_schoolAddress");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolAddress inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
+					a("name", "setSchoolAddress");
+				} else {
+					a("class", "valueSchoolAddress w3-input w3-border inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
+					a("name", "schoolAddress");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+				}
+				a("value", strSchoolAddress())
+			.fg();
 
+			sx(htmSchoolAddress());
+		}
 	}
 
 	public void htmSchoolAddress(String classApiMethodMethod) {
@@ -1678,16 +1696,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 								inputSchoolAddress(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2869,15 +2889,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockStartTime(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border timepicker setBlockStartTime inputSchoolBlock", pk, "BlockStartTime w3-input w3-border ")
-			.a("placeholder", "HH:MM AM")
-			.a("id", classApiMethodMethod, "_blockStartTime")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", blockStartTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(blockStartTime))
-			.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
-			.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border timepicker setBlockStartTime inputSchoolBlock", pk, "BlockStartTime w3-input w3-border ")
+				.a("placeholder", "HH:MM AM")
+				.a("id", classApiMethodMethod, "_blockStartTime")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", blockStartTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(blockStartTime))
+				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
+				.fg();
+			sx(htmBlockStartTime());
+		}
 	}
 
 	public void htmBlockStartTime(String classApiMethodMethod) {
@@ -2893,16 +2916,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputBlockStartTime(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockStartTime')); $('#", classApiMethodMethod, "_blockStartTime').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockStartTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockStartTime')); $('#", classApiMethodMethod, "_blockStartTime').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockStartTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -2985,15 +3010,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockEndTime(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "text")
-			.a("class", "w3-input w3-border timepicker setBlockEndTime inputSchoolBlock", pk, "BlockEndTime w3-input w3-border ")
-			.a("placeholder", "HH:MM AM")
-			.a("id", classApiMethodMethod, "_blockEndTime")
-			.a("onclick", "removeGlow($(this)); ")
-			.a("value", blockEndTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(blockEndTime))
-			.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
-			.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border timepicker setBlockEndTime inputSchoolBlock", pk, "BlockEndTime w3-input w3-border ")
+				.a("placeholder", "HH:MM AM")
+				.a("id", classApiMethodMethod, "_blockEndTime")
+				.a("onclick", "removeGlow($(this)); ")
+				.a("value", blockEndTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(blockEndTime))
+				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
+				.fg();
+			sx(htmBlockEndTime());
+		}
 	}
 
 	public void htmBlockEndTime(String classApiMethodMethod) {
@@ -3009,16 +3037,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputBlockEndTime(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockEndTime')); $('#", classApiMethodMethod, "_blockEndTime').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockEndTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockEndTime')); $('#", classApiMethodMethod, "_blockEndTime').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockEndTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3109,24 +3139,27 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockPricePerMonth(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "price per month")
-			.a("id", classApiMethodMethod, "_blockPricePerMonth");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockPricePerMonth inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
-				a("name", "setBlockPricePerMonth");
-			} else {
-				a("class", "valueBlockPricePerMonth w3-input w3-border inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
-				a("name", "blockPricePerMonth");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockPricePerMonth', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ");
-			}
-			a("value", strBlockPricePerMonth())
-		.fg();
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "price per month")
+				.a("id", classApiMethodMethod, "_blockPricePerMonth");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setBlockPricePerMonth inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
+					a("name", "setBlockPricePerMonth");
+				} else {
+					a("class", "valueBlockPricePerMonth w3-input w3-border inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
+					a("name", "blockPricePerMonth");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockPricePerMonth', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ");
+				}
+				a("value", strBlockPricePerMonth())
+			.fg();
 
+			sx(htmBlockPricePerMonth());
+		}
 	}
 
 	public void htmBlockPricePerMonth(String classApiMethodMethod) {
@@ -3143,16 +3176,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 								inputBlockPricePerMonth(classApiMethodMethod);
 							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); $('#", classApiMethodMethod, "_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockPricePerMonth', null, function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); $('#", classApiMethodMethod, "_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockPricePerMonth', null, function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");
@@ -3297,37 +3332,40 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockMonday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_blockMonday")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_blockMonday");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
-			a("name", "setBlockMonday");
-		} else {
-			a("class", "valueBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
-			a("name", "blockMonday");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockMonday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockMonday')); }, function() { addError($('#", classApiMethodMethod, "_blockMonday')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getBlockMonday() != null && getBlockMonday())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_blockMonday")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_blockMonday");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
+				a("name", "setBlockMonday");
+			} else {
+				a("class", "valueBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
+				a("name", "blockMonday");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockMonday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockMonday')); }, function() { addError($('#", classApiMethodMethod, "_blockMonday')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getBlockMonday() != null && getBlockMonday())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlockMonday());
+		}
 	}
 
 	public void htmBlockMonday(String classApiMethodMethod) {
@@ -3420,37 +3458,40 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockTuesday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_blockTuesday")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_blockTuesday");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
-			a("name", "setBlockTuesday");
-		} else {
-			a("class", "valueBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
-			a("name", "blockTuesday");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockTuesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockTuesday')); }, function() { addError($('#", classApiMethodMethod, "_blockTuesday')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getBlockTuesday() != null && getBlockTuesday())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_blockTuesday")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_blockTuesday");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
+				a("name", "setBlockTuesday");
+			} else {
+				a("class", "valueBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
+				a("name", "blockTuesday");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockTuesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockTuesday')); }, function() { addError($('#", classApiMethodMethod, "_blockTuesday')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getBlockTuesday() != null && getBlockTuesday())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlockTuesday());
+		}
 	}
 
 	public void htmBlockTuesday(String classApiMethodMethod) {
@@ -3543,37 +3584,40 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockWednesday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_blockWednesday")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_blockWednesday");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
-			a("name", "setBlockWednesday");
-		} else {
-			a("class", "valueBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
-			a("name", "blockWednesday");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockWednesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockWednesday')); }, function() { addError($('#", classApiMethodMethod, "_blockWednesday')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getBlockWednesday() != null && getBlockWednesday())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_blockWednesday")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_blockWednesday");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
+				a("name", "setBlockWednesday");
+			} else {
+				a("class", "valueBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
+				a("name", "blockWednesday");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockWednesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockWednesday')); }, function() { addError($('#", classApiMethodMethod, "_blockWednesday')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getBlockWednesday() != null && getBlockWednesday())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlockWednesday());
+		}
 	}
 
 	public void htmBlockWednesday(String classApiMethodMethod) {
@@ -3666,37 +3710,40 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockThursday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_blockThursday")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_blockThursday");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
-			a("name", "setBlockThursday");
-		} else {
-			a("class", "valueBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
-			a("name", "blockThursday");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockThursday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockThursday')); }, function() { addError($('#", classApiMethodMethod, "_blockThursday')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getBlockThursday() != null && getBlockThursday())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_blockThursday")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_blockThursday");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
+				a("name", "setBlockThursday");
+			} else {
+				a("class", "valueBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
+				a("name", "blockThursday");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockThursday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockThursday')); }, function() { addError($('#", classApiMethodMethod, "_blockThursday')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getBlockThursday() != null && getBlockThursday())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlockThursday());
+		}
 	}
 
 	public void htmBlockThursday(String classApiMethodMethod) {
@@ -3789,37 +3836,40 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockFriday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		if("Page".equals(classApiMethodMethod)) {
-			e("input")
-				.a("type", "checkbox")
-				.a("id", classApiMethodMethod, "_blockFriday")
-				.a("value", "true");
-		} else {
-			e("select")
-				.a("id", classApiMethodMethod, "_blockFriday");
-		}
-		if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-			a("class", "setBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
-			a("name", "setBlockFriday");
-		} else {
-			a("class", "valueBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
-			a("name", "blockFriday");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockFriday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockFriday')); }, function() { addError($('#", classApiMethodMethod, "_blockFriday')); }); ");
-		}
-		if("Page".equals(classApiMethodMethod)) {
-			if(getBlockFriday() != null && getBlockFriday())
-				a("checked", "checked");
-			fg();
-		} else {
-			f();
-			e("option").a("value", "").a("selected", "selected").f().g("option");
-			e("option").a("value", "true").f().sx("true").g("option");
-			e("option").a("value", "false").f().sx("false").g("option");
-			g("select");
-		}
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_blockFriday")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_blockFriday");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
+				a("name", "setBlockFriday");
+			} else {
+				a("class", "valueBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
+				a("name", "blockFriday");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockFriday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockFriday')); }, function() { addError($('#", classApiMethodMethod, "_blockFriday')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getBlockFriday() != null && getBlockFriday())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
 
+			sx(htmBlockFriday());
+		}
 	}
 
 	public void htmBlockFriday(String classApiMethodMethod) {
