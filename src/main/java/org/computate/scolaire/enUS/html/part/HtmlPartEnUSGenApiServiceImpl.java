@@ -125,54 +125,23 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 			sqlHtmlPart(siteRequest, a -> {
 				if(a.succeeded()) {
-					createHtmlPart(siteRequest, b -> {
+					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							HtmlPart htmlPart = b.result();
-							sqlPOSTHtmlPart(htmlPart, c -> {
+							postHtmlPartFuture(siteRequest, c -> {
 								if(c.succeeded()) {
-									defineHtmlPart(htmlPart, d -> {
+									HtmlPart htmlPart = c.result();
+									apiRequestHtmlPart(htmlPart);
+									postHtmlPartResponse(htmlPart, d -> {
 										if(d.succeeded()) {
-											attributeHtmlPart(htmlPart, e -> {
-												if(e.succeeded()) {
-													indexHtmlPart(htmlPart, f -> {
-														if(f.succeeded()) {
-															response200POSTHtmlPart(htmlPart, g -> {
-																if(f.succeeded()) {
-																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
-																	sqlConnection.commit(h -> {
-																		if(a.succeeded()) {
-																			sqlConnection.close(i -> {
-																				if(a.succeeded()) {
-																					apiRequestHtmlPart(htmlPart);
-																					htmlPart.apiRequestHtmlPart();
-																					siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
-																					eventHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					errorHtmlPart(siteRequest, eventHandler, i);
-																				}
-																			});
-																		} else {
-																			errorHtmlPart(siteRequest, eventHandler, h);
-																		}
-																	});
-																} else {
-																	errorHtmlPart(siteRequest, eventHandler, g);
-																}
-															});
-														} else {
-															errorHtmlPart(siteRequest, eventHandler, f);
-														}
-													});
-												} else {
-													errorHtmlPart(siteRequest, eventHandler, e);
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postHtmlPart %s succeeded. "));
 										} else {
+											LOGGER.error(String.format("postHtmlPart %s failed. ", d.cause()));
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
 									});
@@ -191,6 +160,37 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		} catch(Exception e) {
 			errorHtmlPart(null, eventHandler, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<HtmlPart> postHtmlPartFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<HtmlPart>> eventHandler) {
+		Promise<HtmlPart> promise = Promise.promise();
+		try {
+			createHtmlPart(siteRequest, a -> {
+				if(a.succeeded()) {
+					HtmlPart htmlPart = a.result();
+					sqlPOSTHtmlPart(htmlPart, b -> {
+						if(b.succeeded()) {
+							defineIndexHtmlPart(htmlPart, c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(htmlPart));
+									promise.complete(htmlPart);
+								} else {
+									errorHtmlPart(siteRequest, null, c);
+								}
+							});
+						} else {
+							errorHtmlPart(siteRequest, null, b);
+						}
+					});
+				} else {
+					errorHtmlPart(siteRequest, null, a);
+				}
+			});
+		} catch(Exception e) {
+			errorHtmlPart(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTHtmlPart(HtmlPart o, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -329,6 +329,32 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+	public void postHtmlPartResponse(HtmlPart htmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = htmlPart.getSiteRequest_();
+		response200POSTHtmlPart(htmlPart, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = apiRequestHtmlPart(htmlPart);
+								htmlPart.apiRequestHtmlPart();
+								siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorHtmlPart(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200POSTHtmlPart(HtmlPart o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
@@ -367,17 +393,17 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchHtmlPart(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<HtmlPart> listHtmlPart = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listHtmlPart.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listHtmlPart.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -386,24 +412,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 															try {
 																listPUTHtmlPart(apiRequest, listHtmlPart, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		putHtmlPartResponse(listHtmlPart, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putHtmlPart succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putHtmlPart failed. ", g.cause()));
+																				errorHtmlPart(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -418,7 +435,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 												}, resultHandler -> {
 												}
 											);
-											response200PUTHtmlPart(apiRequest, eventHandler);
 										} else {
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
@@ -440,6 +456,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+
 	public void listPUTHtmlPart(ApiRequest apiRequest, SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
@@ -447,8 +464,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		if(jsonArray.size() == 0) {
 			listHtmlPart.getList().forEach(o -> {
 				futures.add(
-					futurePUTHtmlPart(siteRequest, JsonObject.mapFrom(o), a -> {
+					putHtmlPartFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 						if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
 						} else {
 							errorHtmlPart(siteRequest, eventHandler, a);
 						}
@@ -462,7 +481,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 						listPUTHtmlPart(apiRequest, listHtmlPart, eventHandler);
 					} else {
-						response200PUTHtmlPart(apiRequest, eventHandler);
+						response200PUTHtmlPart(listHtmlPart, eventHandler);
 					}
 				} else {
 					errorHtmlPart(listHtmlPart.getSiteRequest_(), eventHandler, a);
@@ -472,8 +491,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			jsonArray.forEach(o -> {
 				JsonObject jsonObject = (JsonObject)o;
 				futures.add(
-					futurePUTHtmlPart(siteRequest, jsonObject, a -> {
+					putHtmlPartFuture(siteRequest, jsonObject, a -> {
 						if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
 						} else {
 							errorHtmlPart(siteRequest, eventHandler, a);
 						}
@@ -483,7 +504,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTHtmlPart(apiRequest, eventHandler);
+					response200PUTHtmlPart(listHtmlPart, eventHandler);
 				} else {
 					errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
@@ -491,15 +512,17 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public Future<HtmlPart> futurePUTHtmlPart(SiteRequestEnUS siteRequest, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-		JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-		jsonPatch.stream().forEach(o -> {
-			jsonObject.put(o.getKey(), o.getValue());
-			jsonObject.getJsonArray("saves").add(o.getKey());
-		});
+	public Future<HtmlPart> putHtmlPartFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<HtmlPart>> eventHandler) {
 		Promise<HtmlPart> promise = Promise.promise();
 		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+
+			});
 			createHtmlPart(siteRequest, a -> {
 				if(a.succeeded()) {
 					HtmlPart htmlPart = a.result();
@@ -511,10 +534,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 										if(d.succeeded()) {
 											indexHtmlPart(htmlPart, e -> {
 												if(e.succeeded()) {
-													apiRequestHtmlPart(htmlPart);
-													htmlPart.apiRequestHtmlPart();
+													eventHandler.handle(Future.succeededFuture(htmlPart));
 													promise.complete(htmlPart);
-													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -535,30 +556,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorHtmlPart(null, null, Future.failedFuture(e));
 		}
-	}
-
-	public void remplacerPUTHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<HtmlPart>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_clear
-					, new JsonArray(Arrays.asList(pk, HtmlPart.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				HtmlPart o = new HtmlPart();
-				o.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
+		return promise.future();
 	}
 
 	public void sqlPUTHtmlPart(HtmlPart o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -697,8 +698,35 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void response200PUTHtmlPart(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		response200PUTHtmlPart(listHtmlPart, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorHtmlPart(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -733,6 +761,11 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -750,16 +783,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listHtmlPart.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listHtmlPart.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listHtmlPart.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											if(listHtmlPart.size() == 1) {
 												HtmlPart o = listHtmlPart.get(0);
 												apiRequest.setPk(o.getPk());
 												apiRequest.setOriginal(o);
 												apiRequestHtmlPart(o);
+											o.apiRequestHtmlPart();
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -769,24 +798,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 															try {
 																listPATCHHtmlPart(apiRequest, listHtmlPart, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchHtmlPartResponse(listHtmlPart, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchHtmlPart succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("patchHtmlPart failed. ", g.cause()));
+																				errorHtmlPart(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -801,7 +821,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHHtmlPart(apiRequest, eventHandler);
 										} else {
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
@@ -823,13 +842,16 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+
 	public void listPATCHHtmlPart(ApiRequest apiRequest, SearchList<HtmlPart> listHtmlPart, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 		listHtmlPart.getList().forEach(o -> {
 			futures.add(
-				futurePATCHHtmlPart(o, a -> {
+				patchHtmlPartFuture(o, a -> {
 					if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
 					} else {
 						errorHtmlPart(siteRequest, eventHandler, a);
 					}
@@ -843,7 +865,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHHtmlPart(apiRequest, listHtmlPart, dt, eventHandler);
 				} else {
-					response200PATCHHtmlPart(apiRequest, eventHandler);
+					response200PATCHHtmlPart(listHtmlPart, eventHandler);
 				}
 			} else {
 				errorHtmlPart(listHtmlPart.getSiteRequest_(), eventHandler, a);
@@ -851,9 +873,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		});
 	}
 
-	public Future<HtmlPart> futurePATCHHtmlPart(HtmlPart o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public Future<HtmlPart> patchHtmlPartFuture(HtmlPart o, Handler<AsyncResult<HtmlPart>> eventHandler) {
 		Promise<HtmlPart> promise = Promise.promise();
 		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHHtmlPart(o, a -> {
 				if(a.succeeded()) {
 					HtmlPart htmlPart = a.result();
@@ -863,10 +886,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(c.succeeded()) {
 									indexHtmlPart(htmlPart, d -> {
 										if(d.succeeded()) {
-											apiRequestHtmlPart(htmlPart);
-											htmlPart.apiRequestHtmlPart();
-											promise.complete(o);
-											eventHandler.handle(Future.succeededFuture(d.result()));
+											eventHandler.handle(Future.succeededFuture(htmlPart));
+											promise.complete(htmlPart);
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -883,10 +904,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorHtmlPart(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHHtmlPart(HtmlPart o, Handler<AsyncResult<HtmlPart>> eventHandler) {
@@ -1225,9 +1246,35 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void response200PATCHHtmlPart(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		response200PATCHHtmlPart(listHtmlPart, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorHtmlPart(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PATCHHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -1269,27 +1316,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							aSearchHtmlPart(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<HtmlPart> listHtmlPart = c.result();
-									response200GETHtmlPart(listHtmlPart, d -> {
+									getHtmlPartResponse(listHtmlPart, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorHtmlPart(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("getHtmlPart succeeded. "));
 										} else {
+											LOGGER.error(String.format("getHtmlPart failed. ", d.cause()));
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
 									});
@@ -1310,6 +1342,30 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+
+	public void getHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		response200GETHtmlPart(listHtmlPart, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorHtmlPart(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200GETHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
@@ -1356,27 +1412,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							aSearchHtmlPart(siteRequest, false, true, "/api/html-part", c -> {
 								if(c.succeeded()) {
 									SearchList<HtmlPart> listHtmlPart = c.result();
-									response200SearchHtmlPart(listHtmlPart, d -> {
+									searchHtmlPartResponse(listHtmlPart, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorHtmlPart(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchHtmlPart succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchHtmlPart failed. ", d.cause()));
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
 									});
@@ -1397,6 +1438,30 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+
+	public void searchHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		response200SearchHtmlPart(listHtmlPart, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorHtmlPart(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
@@ -1480,27 +1545,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							aSearchHtmlPart(siteRequest, false, true, "/html-part", c -> {
 								if(c.succeeded()) {
 									SearchList<HtmlPart> listHtmlPart = c.result();
-									response200SearchPageHtmlPart(listHtmlPart, d -> {
+									searchpageHtmlPartResponse(listHtmlPart, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorHtmlPart(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchpageHtmlPart succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchpageHtmlPart failed. ", d.cause()));
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
 									});
@@ -1521,6 +1571,30 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+
+	public void searchpageHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		response200SearchPageHtmlPart(listHtmlPart, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorHtmlPart(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchPageHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
@@ -1547,7 +1621,33 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<HtmlPart> defineIndexHtmlPart(HtmlPart htmlPart, Handler<AsyncResult<HtmlPart>> eventHandler) {
+		Promise<HtmlPart> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = htmlPart.getSiteRequest_();
+		defineHtmlPart(htmlPart, c -> {
+			if(c.succeeded()) {
+				attributeHtmlPart(htmlPart, d -> {
+					if(d.succeeded()) {
+						indexHtmlPart(htmlPart, e -> {
+							if(e.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(htmlPart));
+								promise.complete(htmlPart);
+							} else {
+								errorHtmlPart(siteRequest, null, e);
+							}
+						});
+					} else {
+						errorHtmlPart(siteRequest, null, d);
+					}
+				});
+			} else {
+				errorHtmlPart(siteRequest, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void createHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<HtmlPart>> eventHandler) {
 		try {
@@ -1571,7 +1671,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void apiRequestHtmlPart(HtmlPart o) {
+	public ApiRequest apiRequestHtmlPart(HtmlPart o) {
 		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
@@ -1583,6 +1683,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				}
 			}
 		}
+		return apiRequest;
 	}
 
 	public void errorHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1862,7 +1963,41 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 	public Boolean userHtmlPartDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void aSearchHtmlPartQ(SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+		if(!"*".equals(entityVar)) {
+			searchList.setHighlight(true);
+			searchList.setHighlightSnippets(3);
+			searchList.addHighlightField(varIndexed);
+			searchList.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void aSearchHtmlPartFq(SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+	}
+
+	public void aSearchHtmlPartSort(SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
+	}
+
+	public void aSearchHtmlPartRows(SearchList<HtmlPart> searchList, Integer valueRows) {
+		searchList.setRows(valueRows);
+	}
+
+	public void aSearchHtmlPartStart(SearchList<HtmlPart> searchList, Integer valueStart) {
+		searchList.setStart(valueStart);
+	}
+
+	public void aSearchHtmlPartVar(SearchList<HtmlPart> searchList, String var, String value) {
+		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
 	public void aSearchHtmlPart(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<HtmlPart>>> eventHandler) {
@@ -1875,6 +2010,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			searchList.setStore(store);
 			searchList.setQuery("*:*");
 			searchList.setC(HtmlPart.class);
+			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
@@ -1889,8 +2025,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				String valueIndexed = null;
 				String varIndexed = null;
 				String valueSort = null;
-				Integer aSearchStart = null;
-				Integer aSearchNum = null;
+				Integer valueStart = null;
+				Integer valueRows = null;
 				String paramName = paramRequest.getKey();
 				Object paramValuesObject = paramRequest.getValue();
 				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
@@ -1903,33 +2039,32 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								varIndexed = "*".equals(entityVar) ? entityVar : HtmlPart.varSearchHtmlPart(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-								if(!"*".equals(entityVar)) {
-									searchList.setHighlight(true);
-									searchList.setHighlightSnippets(3);
-									searchList.addHighlightField(varIndexed);
-									searchList.setParam("hl.encoder", "html");
-								}
+								aSearchHtmlPartQ(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
-								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								aSearchHtmlPartFq(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
-								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
+								aSearchHtmlPartSort(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
-								aSearchStart = (Integer)paramObject;
-								searchList.setStart(aSearchStart);
+								valueStart = (Integer)paramObject;
+								aSearchHtmlPartStart(searchList, valueStart);
 								break;
 							case "rows":
-								aSearchNum = (Integer)paramObject;
-								searchList.setRows(aSearchNum);
+								valueRows = (Integer)paramObject;
+								aSearchHtmlPartRows(searchList, valueRows);
+								break;
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								aSearchHtmlPartVar(searchList, entityVar, valueIndexed);
 								break;
 						}
 					}
@@ -2047,7 +2182,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					o2.setPk(pk);
 					o2.setSiteRequest_(siteRequest2);
 					futures.add(
-						service.futurePATCHEnrollmentDesign(o2, a -> {
+						service.patchEnrollmentDesignFuture(o2, a -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("EnrollmentDesign %s refreshed. ", pk));
 							} else {
@@ -2065,7 +2200,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						List<Future> futures2 = new ArrayList<>();
 						for(HtmlPart o2 : searchList.getList()) {
 							futures2.add(
-								service.futurePATCHHtmlPart(o2, b -> {
+								service.patchHtmlPartFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("HtmlPart %s refreshed. ", o2.getPk()));
 									} else {

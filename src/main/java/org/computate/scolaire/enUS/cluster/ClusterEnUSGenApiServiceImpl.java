@@ -123,54 +123,23 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
-					createCluster(siteRequest, b -> {
+					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							Cluster cluster = b.result();
-							sqlPOSTCluster(cluster, c -> {
+							postClusterFuture(siteRequest, c -> {
 								if(c.succeeded()) {
-									defineCluster(cluster, d -> {
+									Cluster cluster = c.result();
+									apiRequestCluster(cluster);
+									postClusterResponse(cluster, d -> {
 										if(d.succeeded()) {
-											attributeCluster(cluster, e -> {
-												if(e.succeeded()) {
-													indexCluster(cluster, f -> {
-														if(f.succeeded()) {
-															response200POSTCluster(cluster, g -> {
-																if(f.succeeded()) {
-																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
-																	sqlConnection.commit(h -> {
-																		if(a.succeeded()) {
-																			sqlConnection.close(i -> {
-																				if(a.succeeded()) {
-																					apiRequestCluster(cluster);
-																					cluster.apiRequestCluster();
-																					siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
-																					eventHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					errorCluster(siteRequest, eventHandler, i);
-																				}
-																			});
-																		} else {
-																			errorCluster(siteRequest, eventHandler, h);
-																		}
-																	});
-																} else {
-																	errorCluster(siteRequest, eventHandler, g);
-																}
-															});
-														} else {
-															errorCluster(siteRequest, eventHandler, f);
-														}
-													});
-												} else {
-													errorCluster(siteRequest, eventHandler, e);
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postCluster succeeded. "));
 										} else {
+											LOGGER.error(String.format("postCluster failed. ", d.cause()));
 											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
@@ -189,6 +158,37 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		} catch(Exception e) {
 			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<Cluster> postClusterFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<Cluster>> eventHandler) {
+		Promise<Cluster> promise = Promise.promise();
+		try {
+			createCluster(siteRequest, a -> {
+				if(a.succeeded()) {
+					Cluster cluster = a.result();
+					sqlPOSTCluster(cluster, b -> {
+						if(b.succeeded()) {
+							defineIndexCluster(cluster, c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(cluster));
+									promise.complete(cluster);
+								} else {
+									errorCluster(siteRequest, null, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, null, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, null, a);
+				}
+			});
+		} catch(Exception e) {
+			errorCluster(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -239,6 +239,32 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
+	public void postClusterResponse(Cluster cluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = cluster.getSiteRequest_();
+		response200POSTCluster(cluster, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = apiRequestCluster(cluster);
+								cluster.apiRequestCluster();
+								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorCluster(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
@@ -277,17 +303,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchCluster(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<Cluster> listCluster = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listCluster.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listCluster.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listCluster.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -296,24 +322,15 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 															try {
 																listPUTCluster(apiRequest, listCluster, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		putClusterResponse(listCluster, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putCluster succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putCluster failed. ", g.cause()));
+																				errorCluster(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -328,7 +345,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 												}, resultHandler -> {
 												}
 											);
-											response200PUTCluster(apiRequest, eventHandler);
 										} else {
 											errorCluster(siteRequest, eventHandler, d);
 										}
@@ -350,6 +366,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
+
 	public void listPUTCluster(ApiRequest apiRequest, SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
@@ -357,8 +374,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		if(jsonArray.size() == 0) {
 			listCluster.getList().forEach(o -> {
 				futures.add(
-					futurePUTCluster(siteRequest, JsonObject.mapFrom(o), a -> {
+					putClusterFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 						if(a.succeeded()) {
+							Cluster cluster = a.result();
+							apiRequestCluster(cluster);
 						} else {
 							errorCluster(siteRequest, eventHandler, a);
 						}
@@ -372,7 +391,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 						listPUTCluster(apiRequest, listCluster, eventHandler);
 					} else {
-						response200PUTCluster(apiRequest, eventHandler);
+						response200PUTCluster(listCluster, eventHandler);
 					}
 				} else {
 					errorCluster(listCluster.getSiteRequest_(), eventHandler, a);
@@ -382,8 +401,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			jsonArray.forEach(o -> {
 				JsonObject jsonObject = (JsonObject)o;
 				futures.add(
-					futurePUTCluster(siteRequest, jsonObject, a -> {
+					putClusterFuture(siteRequest, jsonObject, a -> {
 						if(a.succeeded()) {
+							Cluster cluster = a.result();
+							apiRequestCluster(cluster);
 						} else {
 							errorCluster(siteRequest, eventHandler, a);
 						}
@@ -393,7 +414,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTCluster(apiRequest, eventHandler);
+					response200PUTCluster(listCluster, eventHandler);
 				} else {
 					errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
@@ -401,15 +422,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public Future<Cluster> futurePUTCluster(SiteRequestEnUS siteRequest, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-		JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-		jsonPatch.stream().forEach(o -> {
-			jsonObject.put(o.getKey(), o.getValue());
-			jsonObject.getJsonArray("saves").add(o.getKey());
-		});
+	public Future<Cluster> putClusterFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<Cluster>> eventHandler) {
 		Promise<Cluster> promise = Promise.promise();
 		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+
+			});
 			createCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
@@ -421,10 +444,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 										if(d.succeeded()) {
 											indexCluster(cluster, e -> {
 												if(e.succeeded()) {
-													apiRequestCluster(cluster);
-													cluster.apiRequestCluster();
+													eventHandler.handle(Future.succeededFuture(cluster));
 													promise.complete(cluster);
-													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -445,30 +466,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorCluster(null, null, Future.failedFuture(e));
 		}
-	}
-
-	public void remplacerPUTCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<Cluster>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_clear
-					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				Cluster o = new Cluster();
-				o.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
+		return promise.future();
 	}
 
 	public void sqlPUTCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -519,8 +520,35 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void response200PUTCluster(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		response200PUTCluster(listCluster, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorCluster(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -555,6 +583,11 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -572,16 +605,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listCluster.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listCluster.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listCluster.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listCluster.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											if(listCluster.size() == 1) {
 												Cluster o = listCluster.get(0);
 												apiRequest.setPk(o.getPk());
 												apiRequest.setOriginal(o);
 												apiRequestCluster(o);
+											o.apiRequestCluster();
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -591,24 +620,15 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 															try {
 																listPATCHCluster(apiRequest, listCluster, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchClusterResponse(listCluster, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchCluster succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("patchCluster failed. ", g.cause()));
+																				errorCluster(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -623,7 +643,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHCluster(apiRequest, eventHandler);
 										} else {
 											errorCluster(siteRequest, eventHandler, d);
 										}
@@ -645,13 +664,16 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
+
 	public void listPATCHCluster(ApiRequest apiRequest, SearchList<Cluster> listCluster, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
 		listCluster.getList().forEach(o -> {
 			futures.add(
-				futurePATCHCluster(o, a -> {
+				patchClusterFuture(o, a -> {
 					if(a.succeeded()) {
+							Cluster cluster = a.result();
+							apiRequestCluster(cluster);
 					} else {
 						errorCluster(siteRequest, eventHandler, a);
 					}
@@ -665,7 +687,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHCluster(apiRequest, listCluster, dt, eventHandler);
 				} else {
-					response200PATCHCluster(apiRequest, eventHandler);
+					response200PATCHCluster(listCluster, eventHandler);
 				}
 			} else {
 				errorCluster(listCluster.getSiteRequest_(), eventHandler, a);
@@ -673,9 +695,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		});
 	}
 
-	public Future<Cluster> futurePATCHCluster(Cluster o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public Future<Cluster> patchClusterFuture(Cluster o, Handler<AsyncResult<Cluster>> eventHandler) {
 		Promise<Cluster> promise = Promise.promise();
 		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHCluster(o, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
@@ -685,10 +708,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								if(c.succeeded()) {
 									indexCluster(cluster, d -> {
 										if(d.succeeded()) {
-											apiRequestCluster(cluster);
-											cluster.apiRequestCluster();
-											promise.complete(o);
-											eventHandler.handle(Future.succeededFuture(d.result()));
+											eventHandler.handle(Future.succeededFuture(cluster));
+											promise.complete(cluster);
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -705,10 +726,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorCluster(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHCluster(Cluster o, Handler<AsyncResult<Cluster>> eventHandler) {
@@ -787,9 +808,35 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void response200PATCHCluster(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		response200PATCHCluster(listCluster, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorCluster(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PATCHCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -810,27 +857,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							aSearchCluster(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
-									response200GETCluster(listCluster, d -> {
+									getClusterResponse(listCluster, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorCluster(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("getCluster succeeded. "));
 										} else {
+											LOGGER.error(String.format("getCluster failed. ", d.cause()));
 											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
@@ -851,6 +883,30 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
+
+	public void getClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		response200GETCluster(listCluster, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorCluster(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200GETCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
@@ -876,27 +932,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							aSearchCluster(siteRequest, false, true, "/api/cluster", c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
-									response200SearchCluster(listCluster, d -> {
+									searchClusterResponse(listCluster, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorCluster(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchCluster succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchCluster failed. ", d.cause()));
 											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
@@ -917,6 +958,30 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
+
+	public void searchClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		response200SearchCluster(listCluster, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorCluster(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
@@ -979,27 +1044,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							aSearchCluster(siteRequest, false, true, "/cluster", c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
-									response200SearchPageCluster(listCluster, d -> {
+									searchpageClusterResponse(listCluster, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorCluster(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchpageCluster succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchpageCluster failed. ", d.cause()));
 											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
@@ -1020,6 +1070,30 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
+
+	public void searchpageClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		response200SearchPageCluster(listCluster, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorCluster(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchPageCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
@@ -1046,7 +1120,33 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<Cluster> defineIndexCluster(Cluster cluster, Handler<AsyncResult<Cluster>> eventHandler) {
+		Promise<Cluster> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = cluster.getSiteRequest_();
+		defineCluster(cluster, c -> {
+			if(c.succeeded()) {
+				attributeCluster(cluster, d -> {
+					if(d.succeeded()) {
+						indexCluster(cluster, e -> {
+							if(e.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(cluster));
+								promise.complete(cluster);
+							} else {
+								errorCluster(siteRequest, null, e);
+							}
+						});
+					} else {
+						errorCluster(siteRequest, null, d);
+					}
+				});
+			} else {
+				errorCluster(siteRequest, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void createCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<Cluster>> eventHandler) {
 		try {
@@ -1070,12 +1170,13 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void apiRequestCluster(Cluster o) {
+	public ApiRequest apiRequestCluster(Cluster o) {
 		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
 			List<String> classes = apiRequest.getClasses();
 		}
+		return apiRequest;
 	}
 
 	public void errorCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1355,7 +1456,41 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 	public Boolean userClusterDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void aSearchClusterQ(SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+		if(!"*".equals(entityVar)) {
+			searchList.setHighlight(true);
+			searchList.setHighlightSnippets(3);
+			searchList.addHighlightField(varIndexed);
+			searchList.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void aSearchClusterFq(SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+	}
+
+	public void aSearchClusterSort(SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
+	}
+
+	public void aSearchClusterRows(SearchList<Cluster> searchList, Integer valueRows) {
+		searchList.setRows(valueRows);
+	}
+
+	public void aSearchClusterStart(SearchList<Cluster> searchList, Integer valueStart) {
+		searchList.setStart(valueStart);
+	}
+
+	public void aSearchClusterVar(SearchList<Cluster> searchList, String var, String value) {
+		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
 	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
@@ -1368,6 +1503,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			searchList.setStore(store);
 			searchList.setQuery("*:*");
 			searchList.setC(Cluster.class);
+			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
@@ -1391,8 +1527,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				String valueIndexed = null;
 				String varIndexed = null;
 				String valueSort = null;
-				Integer aSearchStart = null;
-				Integer aSearchNum = null;
+				Integer valueStart = null;
+				Integer valueRows = null;
 				String paramName = paramRequest.getKey();
 				Object paramValuesObject = paramRequest.getValue();
 				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
@@ -1405,33 +1541,32 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : Cluster.varSearchCluster(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-								if(!"*".equals(entityVar)) {
-									searchList.setHighlight(true);
-									searchList.setHighlightSnippets(3);
-									searchList.addHighlightField(varIndexed);
-									searchList.setParam("hl.encoder", "html");
-								}
+								aSearchClusterQ(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = Cluster.varIndexedCluster(entityVar);
-								searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+								aSearchClusterFq(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = Cluster.varIndexedCluster(entityVar);
-								searchList.addSort(varIndexed, ORDER.valueOf(valueSort));
+								aSearchClusterSort(searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
-								aSearchStart = (Integer)paramObject;
-								searchList.setStart(aSearchStart);
+								valueStart = (Integer)paramObject;
+								aSearchClusterStart(searchList, valueStart);
 								break;
 							case "rows":
-								aSearchNum = (Integer)paramObject;
-								searchList.setRows(aSearchNum);
+								valueRows = (Integer)paramObject;
+								aSearchClusterRows(searchList, valueRows);
+								break;
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								aSearchClusterVar(searchList, entityVar, valueIndexed);
 								break;
 						}
 					}
@@ -1538,7 +1673,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						List<Future> futures2 = new ArrayList<>();
 						for(Cluster o2 : searchList.getList()) {
 							futures2.add(
-								service.futurePATCHCluster(o2, b -> {
+								service.patchClusterFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("Cluster %s refreshed. ", o2.getPk()));
 									} else {

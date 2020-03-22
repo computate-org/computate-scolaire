@@ -324,7 +324,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmYearKey());
 		}
 	}
 
@@ -475,7 +474,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolSeasonSessionKeys')) : [{'name':'fq','value':'seasonKey:", pk, "'}], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSessionKeys());
 		}
 	}
 
@@ -1635,7 +1633,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				.a("value", seasonStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(seasonStartDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); } ")
 				.fg();
-			sx(htmSeasonStartDate());
 		}
 	}
 
@@ -1774,7 +1771,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmSeasonSummer());
 		}
 	}
 
@@ -1901,7 +1897,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmSeasonWinter());
 		}
 	}
 
@@ -2028,7 +2023,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmSeasonFuture());
 		}
 	}
 

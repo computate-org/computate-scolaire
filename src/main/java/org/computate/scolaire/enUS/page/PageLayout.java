@@ -510,12 +510,52 @@ public class PageLayout extends PageLayoutGen<Object> {
 				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-green ").f();
+					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
 							e("i").a("class", "far fa-drafting-compass ").f().g("i");
 							sx("designs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 						EnrollmentDesignGenPage.htmlSuggestEnrollmentDesignGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-orange ").f();
+							e("i").a("class", "far fa-child ").f().g("i");
+							sx("children");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						ChildGenPage.htmlSuggestChildGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-pink ").f();
+							e("i").a("class", "far fa-female ").f().g("i");
+							sx("moms");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						MomGenPage.htmlSuggestMomGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
+							e("i").a("class", "far fa-male ").f().g("i");
+							sx("dads");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						DadGenPage.htmlSuggestDadGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+							e("i").a("class", "far fa-phone ").f().g("i");
+							sx("guardians");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						GuardianGenPage.htmlSuggestGuardianGenPage(this, id);
 					} g("div");
 				} g("div");
 			}
@@ -527,46 +567,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 					EnrollmentGenPage.htmlSuggestEnrollmentGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "far fa-child ").f().g("i");
-						sx("children");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					ChildGenPage.htmlSuggestChildGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-pink ").f();
-						e("i").a("class", "far fa-female ").f().g("i");
-						sx("moms");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					MomGenPage.htmlSuggestMomGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
-						e("i").a("class", "far fa-male ").f().g("i");
-						sx("dads");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					DadGenPage.htmlSuggestDadGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-orange ").f();
-						e("i").a("class", "far fa-phone ").f().g("i");
-						sx("guardians");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					GuardianGenPage.htmlSuggestGuardianGenPage(this, id);
 				} g("div");
 			} g("div");
 

@@ -796,7 +796,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	//		if(classeMotsClesTrouves && classeMotsCles.contains(classApiMethod + ".request")) {
 				wSchemas.tl(tabsSchema, classApiOperationIdMethodRequest, ":");
 				wSchemas.tl(tabsSchema + 1, "allOf:");
-				if(BooleanUtils.isTrue(classExtendsBase)) {
+				if(BooleanUtils.isTrue(classExtendsBase) && StringUtils.isNotBlank(classSuperApiOperationIdMethodRequest)) {
 					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodRequest, "\"");
 				}
 				wSchemas.tl(tabsSchema + 2, "- type: object");
@@ -815,7 +815,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 					wSchemas.tl(tabsSchema + 2, "- format: binary");
 				}
 				else {
-					if(BooleanUtils.isTrue(classExtendsBase)) {
+					if(BooleanUtils.isTrue(classExtendsBase) && StringUtils.isNotBlank(classSuperApiOperationIdMethodResponse)) {
 						wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodResponse, "\"");
 					}
 		

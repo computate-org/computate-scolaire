@@ -126,6 +126,19 @@ public class Cluster extends ClusterGen<Object> {
 		c.o(b.toString());
 	}
 
+	protected void _objectText(Wrap<String> c) { 
+		StringBuilder b = new StringBuilder();
+		if(pk != null)
+			b.append(" ").append(pk);
+		if(objectNameVar != null)
+			b.append(" ").append(objectNameVar);
+		if(objectId != null)
+			b.append(" ").append(objectId);
+		if(objectTitle != null)
+			b.append(" ").append(objectTitle);
+		c.o(b.toString());
+	}
+
 	protected void _pageUrlId(Wrap<String> c) {
 		if(objectId != null) {
 			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/" + objectNameVar + "/" + objectId;

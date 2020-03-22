@@ -242,7 +242,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolYearKeys')) : [{'name':'fq','value':'schoolKey:", pk, "'}], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmYearKeys());
 		}
 	}
 
@@ -949,7 +948,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolName())
 			.fg();
 
-			sx(htmSchoolName());
 		}
 	}
 
@@ -1071,7 +1069,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolPhoneNumber())
 			.fg();
 
-			sx(htmSchoolPhoneNumber());
 		}
 	}
 
@@ -1193,7 +1190,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolAdministratorName())
 			.fg();
 
-			sx(htmSchoolAdministratorName());
 		}
 	}
 
@@ -1315,7 +1311,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolEmail())
 			.fg();
 
-			sx(htmSchoolEmail());
 		}
 	}
 
@@ -1437,7 +1432,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolLocation())
 			.fg();
 
-			sx(htmSchoolLocation());
 		}
 	}
 
@@ -1557,7 +1551,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				}
 			f().sx(strSchoolAddress()).g("textarea");
 
-			sx(htmSchoolAddress());
 		}
 	}
 

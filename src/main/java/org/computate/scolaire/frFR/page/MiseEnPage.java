@@ -1036,12 +1036,52 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-green ").f();
+					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
 							e("i").a("class", "far fa-drafting-compass ").f().g("i");
 							sx("designs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 						DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-orange ").f();
+							e("i").a("class", "far fa-child ").f().g("i");
+							sx("enfants");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						EnfantGenPage.htmlSuggereEnfantGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-pink ").f();
+							e("i").a("class", "far fa-female ").f().g("i");
+							sx("mères");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						MereGenPage.htmlSuggereMereGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
+							e("i").a("class", "far fa-male ").f().g("i");
+							sx("pères");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						PereGenPage.htmlSuggerePereGenPage(this, id);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+							e("i").a("class", "far fa-phone ").f().g("i");
+							sx("gardiens");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						GardienGenPage.htmlSuggereGardienGenPage(this, id);
 					} g("div");
 				} g("div");
 			}
@@ -1053,46 +1093,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 					InscriptionGenPage.htmlSuggereInscriptionGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "far fa-child ").f().g("i");
-						sx("enfants");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					EnfantGenPage.htmlSuggereEnfantGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-pink ").f();
-						e("i").a("class", "far fa-female ").f().g("i");
-						sx("mères");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					MereGenPage.htmlSuggereMereGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
-						e("i").a("class", "far fa-male ").f().g("i");
-						sx("pères");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					PereGenPage.htmlSuggerePereGenPage(this, id);
-				} g("div");
-			} g("div");
-
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-orange ").f();
-						e("i").a("class", "far fa-phone ").f().g("i");
-						sx("gardiens");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					GardienGenPage.htmlSuggereGardienGenPage(this, id);
 				} g("div");
 			} g("div");
 

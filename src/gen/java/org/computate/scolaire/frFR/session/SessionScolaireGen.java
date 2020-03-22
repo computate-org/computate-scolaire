@@ -340,7 +340,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireAgeCles')) : [{'name':'fq','value':'sessionCle:", pk, "'}], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmAgeCles());
 		}
 	}
 
@@ -819,7 +818,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireSaisonCle')) : [{'name':'fq','value':'sessionCles:", pk, "'}], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSaisonCle());
 		}
 	}
 
@@ -1354,7 +1352,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				a("value", strEcoleAddresse())
 			.fg();
 
-			sx(htmEcoleAddresse());
 		}
 	}
 
@@ -2164,7 +2161,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("value", sessionJourDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(sessionJourDebut))
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionJourDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionJourDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionJourDebut')); }); } ")
 				.fg();
-			sx(htmSessionJourDebut());
 		}
 	}
 
@@ -2294,7 +2290,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("value", sessionJourFin == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(sessionJourFin))
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionJourFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionJourFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionJourFin')); }); } ")
 				.fg();
-			sx(htmSessionJourFin());
 		}
 	}
 

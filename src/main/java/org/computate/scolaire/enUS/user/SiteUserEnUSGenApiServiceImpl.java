@@ -114,27 +114,12 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							aSearchSiteUser(siteRequest, false, true, "/api/user", c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
-									response200SearchSiteUser(listSiteUser, d -> {
+									searchSiteUserResponse(listSiteUser, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSiteUser(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchSiteUser succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchSiteUser failed. ", d.cause()));
 											errorSiteUser(siteRequest, eventHandler, d);
 										}
 									});
@@ -155,6 +140,30 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
+
+	public void searchSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+		response200SearchSiteUser(listSiteUser, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSiteUser(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSiteUser(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSiteUser(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
@@ -227,6 +236,11 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -244,16 +258,12 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSiteUser.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSiteUser.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSiteUser.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											if(listSiteUser.size() == 1) {
 												SiteUser o = listSiteUser.get(0);
 												apiRequest.setPk(o.getPk());
 												apiRequest.setOriginal(o);
 												apiRequestSiteUser(o);
+											o.apiRequestSiteUser();
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -263,24 +273,15 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 															try {
 																listPATCHSiteUser(apiRequest, listSiteUser, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchSiteUserResponse(listSiteUser, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchSiteUser succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("patchSiteUser failed. ", g.cause()));
+																				errorSiteUser(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -295,7 +296,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSiteUser(apiRequest, eventHandler);
 										} else {
 											errorSiteUser(siteRequest, eventHandler, d);
 										}
@@ -317,13 +317,16 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
+
 	public void listPATCHSiteUser(ApiRequest apiRequest, SearchList<SiteUser> listSiteUser, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
 		listSiteUser.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSiteUser(o, a -> {
+				patchSiteUserFuture(o, a -> {
 					if(a.succeeded()) {
+							SiteUser siteUser = a.result();
+							apiRequestSiteUser(siteUser);
 					} else {
 						errorSiteUser(siteRequest, eventHandler, a);
 					}
@@ -337,7 +340,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSiteUser(apiRequest, listSiteUser, dt, eventHandler);
 				} else {
-					response200PATCHSiteUser(apiRequest, eventHandler);
+					response200PATCHSiteUser(listSiteUser, eventHandler);
 				}
 			} else {
 				errorSiteUser(listSiteUser.getSiteRequest_(), eventHandler, a);
@@ -345,9 +348,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 	}
 
-	public Future<SiteUser> futurePATCHSiteUser(SiteUser o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public Future<SiteUser> patchSiteUserFuture(SiteUser o, Handler<AsyncResult<SiteUser>> eventHandler) {
 		Promise<SiteUser> promise = Promise.promise();
 		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSiteUser(o, a -> {
 				if(a.succeeded()) {
 					SiteUser siteUser = a.result();
@@ -357,10 +361,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(c.succeeded()) {
 									indexSiteUser(siteUser, d -> {
 										if(d.succeeded()) {
-											apiRequestSiteUser(siteUser);
-											siteUser.apiRequestSiteUser();
-											promise.complete(o);
-											eventHandler.handle(Future.succeededFuture(d.result()));
+											eventHandler.handle(Future.succeededFuture(siteUser));
+											promise.complete(siteUser);
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -377,10 +379,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorSiteUser(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHSiteUser(SiteUser o, Handler<AsyncResult<SiteUser>> eventHandler) {
@@ -587,9 +589,35 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void response200PATCHSiteUser(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+		response200PATCHSiteUser(listSiteUser, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSiteUser(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSiteUser(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSiteUser(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PATCHSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -623,54 +651,23 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 			sqlSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
-					createSiteUser(siteRequest, b -> {
+					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							SiteUser siteUser = b.result();
-							sqlPOSTSiteUser(siteUser, c -> {
+							postSiteUserFuture(siteRequest, c -> {
 								if(c.succeeded()) {
-									defineSiteUser(siteUser, d -> {
+									SiteUser siteUser = c.result();
+									apiRequestSiteUser(siteUser);
+									postSiteUserResponse(siteUser, d -> {
 										if(d.succeeded()) {
-											attributeSiteUser(siteUser, e -> {
-												if(e.succeeded()) {
-													indexSiteUser(siteUser, f -> {
-														if(f.succeeded()) {
-															response200POSTSiteUser(siteUser, g -> {
-																if(f.succeeded()) {
-																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
-																	sqlConnection.commit(h -> {
-																		if(a.succeeded()) {
-																			sqlConnection.close(i -> {
-																				if(a.succeeded()) {
-																					apiRequestSiteUser(siteUser);
-																					siteUser.apiRequestSiteUser();
-																					siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
-																					eventHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					errorSiteUser(siteRequest, eventHandler, i);
-																				}
-																			});
-																		} else {
-																			errorSiteUser(siteRequest, eventHandler, h);
-																		}
-																	});
-																} else {
-																	errorSiteUser(siteRequest, eventHandler, g);
-																}
-															});
-														} else {
-															errorSiteUser(siteRequest, eventHandler, f);
-														}
-													});
-												} else {
-													errorSiteUser(siteRequest, eventHandler, e);
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postSiteUser succeeded. "));
 										} else {
+											LOGGER.error(String.format("postSiteUser failed. ", d.cause()));
 											errorSiteUser(siteRequest, eventHandler, d);
 										}
 									});
@@ -689,6 +686,37 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		} catch(Exception e) {
 			errorSiteUser(null, eventHandler, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<SiteUser> postSiteUserFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SiteUser>> eventHandler) {
+		Promise<SiteUser> promise = Promise.promise();
+		try {
+			createSiteUser(siteRequest, a -> {
+				if(a.succeeded()) {
+					SiteUser siteUser = a.result();
+					sqlPOSTSiteUser(siteUser, b -> {
+						if(b.succeeded()) {
+							defineIndexSiteUser(siteUser, c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(siteUser));
+									promise.complete(siteUser);
+								} else {
+									errorSiteUser(siteRequest, null, c);
+								}
+							});
+						} else {
+							errorSiteUser(siteRequest, null, b);
+						}
+					});
+				} else {
+					errorSiteUser(siteRequest, null, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSiteUser(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -767,6 +795,32 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
+	public void postSiteUserResponse(SiteUser siteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = siteUser.getSiteRequest_();
+		response200POSTSiteUser(siteUser, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = apiRequestSiteUser(siteUser);
+								siteUser.apiRequestSiteUser();
+								siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSiteUser(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSiteUser(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSiteUser(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200POSTSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
@@ -795,27 +849,12 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							aSearchSiteUser(siteRequest, false, true, "/user", c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
-									response200SearchPageSiteUser(listSiteUser, d -> {
+									searchpageSiteUserResponse(listSiteUser, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSiteUser(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchpageSiteUser succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchpageSiteUser failed. ", d.cause()));
 											errorSiteUser(siteRequest, eventHandler, d);
 										}
 									});
@@ -836,6 +875,30 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
+
+	public void searchpageSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+		response200SearchPageSiteUser(listSiteUser, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSiteUser(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSiteUser(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSiteUser(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchPageSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
@@ -862,7 +925,33 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<SiteUser> defineIndexSiteUser(SiteUser siteUser, Handler<AsyncResult<SiteUser>> eventHandler) {
+		Promise<SiteUser> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = siteUser.getSiteRequest_();
+		defineSiteUser(siteUser, c -> {
+			if(c.succeeded()) {
+				attributeSiteUser(siteUser, d -> {
+					if(d.succeeded()) {
+						indexSiteUser(siteUser, e -> {
+							if(e.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(siteUser));
+								promise.complete(siteUser);
+							} else {
+								errorSiteUser(siteRequest, null, e);
+							}
+						});
+					} else {
+						errorSiteUser(siteRequest, null, d);
+					}
+				});
+			} else {
+				errorSiteUser(siteRequest, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void createSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<SiteUser>> eventHandler) {
 		try {
@@ -886,7 +975,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void apiRequestSiteUser(SiteUser o) {
+	public ApiRequest apiRequestSiteUser(SiteUser o) {
 		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
@@ -904,6 +993,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			}
 		}
+		return apiRequest;
 	}
 
 	public void errorSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1403,7 +1493,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolEnrollment(o2, a -> {
+							service.patchSchoolEnrollmentFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
 								} else {
@@ -1423,7 +1513,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolPayment(o2, a -> {
+							service.patchSchoolPaymentFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
 								} else {
@@ -1442,7 +1532,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						List<Future> futures2 = new ArrayList<>();
 						for(SiteUser o2 : searchList.getList()) {
 							futures2.add(
-								service.futurePATCHSiteUser(o2, b -> {
+								service.patchSiteUserFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SiteUser %s refreshed. ", o2.getPk()));
 									} else {

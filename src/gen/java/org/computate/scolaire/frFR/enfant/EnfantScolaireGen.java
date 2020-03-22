@@ -78,7 +78,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public static final String EnfantScolaire_DeNom = "d'enfant";
 	public static final String EnfantScolaire_NomAdjectifSingulier = "enfant";
 	public static final String EnfantScolaire_NomAdjectifPluriel = "enfants";
-	public static final String EnfantScolaire_Couleur = "green";
+	public static final String EnfantScolaire_Couleur = "orange";
 	public static final String EnfantScolaire_IconeGroupe = "regular";
 	public static final String EnfantScolaire_IconeNom = "child";
 
@@ -262,7 +262,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EnfantScolaireInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1149,11 +1149,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EnfantScolairePersonnePrenom").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_personnePrenom").a("class", "").f().sx("prénom").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1169,7 +1169,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1278,11 +1278,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EnfantScolairePersonnePrenomPrefere").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_personnePrenomPrefere").a("class", "").f().sx("prénom préferé").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1298,7 +1298,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1407,11 +1407,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EnfantScolaireFamilleNom").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_familleNom").a("class", "").f().sx("nom de famille").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1427,7 +1427,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1733,11 +1733,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneDateNaissance(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EnfantScolairePersonneDateNaissance").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", classeApiMethodeMethode, "_personneDateNaissance").a("class", "").f().sx("date de naissance").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
@@ -1752,7 +1752,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); $('#", classeApiMethodeMethode, "_personneDateNaissance').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setPersonneDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1836,11 +1836,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneAgeEnSeptembre(String classeApiMethodeMethode) {
 		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("class", "").f().sx("âge").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();

@@ -162,7 +162,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereAnneeScolaireEcoleCle($(this).val() ? rechercherEcoleFiltres($('#suggere", classeApiMethodeMethode, "AnneeScolaireEcoleCle')) : [{'name':'fq','value':'anneeCles:", pk, "'}], $('#listAnneeScolaireEcoleCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmEcoleCle());
 		}
 	}
 
@@ -470,7 +469,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereAnneeScolaireSaisonCles($(this).val() ? rechercherSaisonScolaireFiltres($('#suggere", classeApiMethodeMethode, "AnneeScolaireSaisonCles')) : [{'name':'fq','value':'anneeCle:", pk, "'}], $('#listAnneeScolaireSaisonCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSaisonCles());
 		}
 	}
 
@@ -1380,7 +1378,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				a("value", strAnneeDebut())
 			.fg();
 
-			sx(htmAnneeDebut());
 		}
 	}
 
@@ -1509,7 +1506,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				a("value", strAnneeFin())
 			.fg();
 
-			sx(htmAnneeFin());
 		}
 	}
 
@@ -1649,7 +1645,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				a("value", strAnneeFraisInscription())
 			.fg();
 
-			sx(htmAnneeFraisInscription());
 		}
 	}
 

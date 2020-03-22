@@ -125,54 +125,23 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 			sqlPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerPartHtml(requeteSite, b -> {
+					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
 							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							PartHtml partHtml = b.result();
-							sqlPOSTPartHtml(partHtml, c -> {
+							postPartHtmlFuture(requeteSite, c -> {
 								if(c.succeeded()) {
-									definirPartHtml(partHtml, d -> {
+									PartHtml partHtml = c.result();
+									requeteApiPartHtml(partHtml);
+									postPartHtmlReponse(partHtml, d -> {
 										if(d.succeeded()) {
-											attribuerPartHtml(partHtml, e -> {
-												if(e.succeeded()) {
-													indexerPartHtml(partHtml, f -> {
-														if(f.succeeded()) {
-															reponse200POSTPartHtml(partHtml, g -> {
-																if(f.succeeded()) {
-																	SQLConnection connexionSql = requeteSite.getConnexionSql();
-																	connexionSql.commit(h -> {
-																		if(a.succeeded()) {
-																			connexionSql.close(i -> {
-																				if(a.succeeded()) {
-																					requeteApiPartHtml(partHtml);
-																					partHtml.requeteApiPartHtml();
-																					requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
-																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					erreurPartHtml(requeteSite, gestionnaireEvenements, i);
-																				}
-																			});
-																		} else {
-																			erreurPartHtml(requeteSite, gestionnaireEvenements, h);
-																		}
-																	});
-																} else {
-																	erreurPartHtml(requeteSite, gestionnaireEvenements, g);
-																}
-															});
-														} else {
-															erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-														}
-													});
-												} else {
-													erreurPartHtml(requeteSite, gestionnaireEvenements, e);
-												}
-											});
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postPartHtml %s a réussi. "));
 										} else {
+											LOGGER.error(String.format("postPartHtml %s a échoué. ", d.cause()));
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -191,6 +160,37 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		} catch(Exception e) {
 			erreurPartHtml(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<PartHtml> postPartHtmlFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
+		Promise<PartHtml> promise = Promise.promise();
+		try {
+			creerPartHtml(requeteSite, a -> {
+				if(a.succeeded()) {
+					PartHtml partHtml = a.result();
+					sqlPOSTPartHtml(partHtml, b -> {
+						if(b.succeeded()) {
+							definirIndexerPartHtml(partHtml, c -> {
+								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(partHtml));
+									promise.complete(partHtml);
+								} else {
+									erreurPartHtml(requeteSite, null, c);
+								}
+							});
+						} else {
+							erreurPartHtml(requeteSite, null, b);
+						}
+					});
+				} else {
+					erreurPartHtml(requeteSite, null, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurPartHtml(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTPartHtml(PartHtml o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -329,6 +329,32 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+	public void postPartHtmlReponse(PartHtml partHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = partHtml.getRequeteSite_();
+		reponse200POSTPartHtml(partHtml, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								RequeteApi requeteApi = requeteApiPartHtml(partHtml);
+								partHtml.requeteApiPartHtml();
+								requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200POSTPartHtml(PartHtml o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
@@ -367,17 +393,17 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									recherchePartHtml(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<PartHtml> listePartHtml = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listePartHtml.getRows());
-											requeteApi.setNumFound(Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePartHtml.size())));
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -386,24 +412,15 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 															try {
 																listePUTPartHtml(requeteApi, listePartHtml, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
-																		if(connexionSql2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			connexionSql2.commit(g -> {
-																				if(f.succeeded()) {
-																					connexionSql2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		putPartHtmlReponse(listePartHtml, g -> {
+																			if(g.succeeded()) {
+																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putPartHtml a réussi. "));
+																			} else {
+																				LOGGER.error(String.format("putPartHtml a échoué. ", g.cause()));
+																				erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -418,7 +435,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												}, resultHandler -> {
 												}
 											);
-											reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
@@ -440,6 +456,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+
 	public void listePUTPartHtml(RequeteApi requeteApi, ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
@@ -447,8 +464,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		if(jsonArray.size() == 0) {
 			listePartHtml.getList().forEach(o -> {
 				futures.add(
-					futurePUTPartHtml(requeteSite, JsonObject.mapFrom(o), a -> {
+					putPartHtmlFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 						if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
 						} else {
 							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
 						}
@@ -462,7 +481,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 						listePUTPartHtml(requeteApi, listePartHtml, gestionnaireEvenements);
 					} else {
-						reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
+						reponse200PUTPartHtml(listePartHtml, gestionnaireEvenements);
 					}
 				} else {
 					erreurPartHtml(listePartHtml.getRequeteSite_(), gestionnaireEvenements, a);
@@ -472,8 +491,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			jsonArray.forEach(o -> {
 				JsonObject jsonObject = (JsonObject)o;
 				futures.add(
-					futurePUTPartHtml(requeteSite, jsonObject, a -> {
+					putPartHtmlFuture(requeteSite, jsonObject, a -> {
 						if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
 						} else {
 							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
 						}
@@ -483,7 +504,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
-					reponse200PUTPartHtml(requeteApi, gestionnaireEvenements);
+					reponse200PUTPartHtml(listePartHtml, gestionnaireEvenements);
 				} else {
 					erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 				}
@@ -491,15 +512,17 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public Future<PartHtml> futurePUTPartHtml(RequeteSiteFrFR requeteSite, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
-		JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-		jsonPatch.stream().forEach(o -> {
-			jsonObject.put(o.getKey(), o.getValue());
-			jsonObject.getJsonArray("sauvegardes").add(o.getKey());
-		});
+	public Future<PartHtml> putPartHtmlFuture(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
 		Promise<PartHtml> promise = Promise.promise();
 		try {
+
+			jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("sauvegardes").add(o.getKey());
+
+			});
 			creerPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					PartHtml partHtml = a.result();
@@ -511,10 +534,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 										if(d.succeeded()) {
 											indexerPartHtml(partHtml, e -> {
 												if(e.succeeded()) {
-													requeteApiPartHtml(partHtml);
-													partHtml.requeteApiPartHtml();
+													gestionnaireEvenements.handle(Future.succeededFuture(partHtml));
 													promise.complete(partHtml);
-													gestionnaireEvenements.handle(Future.succeededFuture(e.result()));
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
 												}
@@ -535,30 +556,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			erreurPartHtml(null, null, Future.failedFuture(e));
 		}
-	}
-
-	public void remplacerPUTPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_vider
-					, new JsonArray(Arrays.asList(pk, PartHtml.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				PartHtml o = new PartHtml();
-				o.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
+		return promise.future();
 	}
 
 	public void sqlPUTPartHtml(PartHtml o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -697,8 +698,35 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public void reponse200PUTPartHtml(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void putPartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+		reponse200PUTPartHtml(listePartHtml, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								RequeteApi requeteApi = requeteSite.getRequeteApi_();
+								requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
+	public void reponse200PUTPartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(requeteApi))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -733,6 +761,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -750,16 +783,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listePartHtml.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listePartHtml.getRows());
-											requeteApi.setNumFound(Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePartHtml.size())));
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
 											if(listePartHtml.size() == 1) {
 												PartHtml o = listePartHtml.get(0);
 												requeteApi.setPk(o.getPk());
 												requeteApi.setOriginal(o);
 												requeteApiPartHtml(o);
+											o.requeteApiPartHtml();
 											}
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -769,24 +798,15 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 															try {
 																listePATCHPartHtml(requeteApi, listePartHtml, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
-																		if(connexionSql2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			connexionSql2.commit(g -> {
-																				if(f.succeeded()) {
-																					connexionSql2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchPartHtmlReponse(listePartHtml, g -> {
+																			if(g.succeeded()) {
+																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchPartHtml a réussi. "));
+																			} else {
+																				LOGGER.error(String.format("patchPartHtml a échoué. ", g.cause()));
+																				erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -801,7 +821,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												}, resultHandler -> {
 												}
 											);
-											reponse200PATCHPartHtml(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
@@ -823,13 +842,16 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+
 	public void listePATCHPartHtml(RequeteApi requeteApi, ListeRecherche<PartHtml> listePartHtml, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 		listePartHtml.getList().forEach(o -> {
 			futures.add(
-				futurePATCHPartHtml(o, a -> {
+				patchPartHtmlFuture(o, a -> {
 					if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
 					} else {
 						erreurPartHtml(requeteSite, gestionnaireEvenements, a);
 					}
@@ -843,7 +865,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHPartHtml(requeteApi, listePartHtml, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHPartHtml(requeteApi, gestionnaireEvenements);
+					reponse200PATCHPartHtml(listePartHtml, gestionnaireEvenements);
 				}
 			} else {
 				erreurPartHtml(listePartHtml.getRequeteSite_(), gestionnaireEvenements, a);
@@ -851,9 +873,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		});
 	}
 
-	public Future<PartHtml> futurePATCHPartHtml(PartHtml o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public Future<PartHtml> patchPartHtmlFuture(PartHtml o, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
 		Promise<PartHtml> promise = Promise.promise();
 		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			sqlPATCHPartHtml(o, a -> {
 				if(a.succeeded()) {
 					PartHtml partHtml = a.result();
@@ -863,10 +886,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(c.succeeded()) {
 									indexerPartHtml(partHtml, d -> {
 										if(d.succeeded()) {
-											requeteApiPartHtml(partHtml);
-											partHtml.requeteApiPartHtml();
-											promise.complete(o);
-											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											gestionnaireEvenements.handle(Future.succeededFuture(partHtml));
+											promise.complete(partHtml);
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
@@ -883,10 +904,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			erreurPartHtml(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHPartHtml(PartHtml o, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
@@ -1225,9 +1246,35 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public void reponse200PATCHPartHtml(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void patchPartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+		reponse200PATCHPartHtml(listePartHtml, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								RequeteApi requeteApi = requeteSite.getRequeteApi_();
+								requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
+	public void reponse200PATCHPartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
+			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -1269,27 +1316,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							recherchePartHtml(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PartHtml> listePartHtml = c.result();
-									reponse200GETPartHtml(listePartHtml, d -> {
+									getPartHtmlReponse(listePartHtml, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("getPartHtml a réussi. "));
 										} else {
+											LOGGER.error(String.format("getPartHtml a échoué. ", d.cause()));
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -1310,6 +1342,30 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+
+	public void getPartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+		reponse200GETPartHtml(listePartHtml, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200GETPartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
@@ -1330,9 +1386,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1353,27 +1412,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							recherchePartHtml(requeteSite, false, true, "/api/part-html", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PartHtml> listePartHtml = c.result();
-									reponse200RecherchePartHtml(listePartHtml, d -> {
+									recherchePartHtmlReponse(listePartHtml, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("recherchePartHtml a réussi. "));
 										} else {
+											LOGGER.error(String.format("recherchePartHtml a échoué. ", d.cause()));
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -1394,6 +1438,30 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+
+	public void recherchePartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+		reponse200RecherchePartHtml(listePartHtml, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200RecherchePartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
@@ -1477,27 +1545,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							recherchePartHtml(requeteSite, false, true, "/part-html", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PartHtml> listePartHtml = c.result();
-									reponse200PageRecherchePartHtml(listePartHtml, d -> {
+									pagerecherchePartHtmlReponse(listePartHtml, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("pagerecherchePartHtml a réussi. "));
 										} else {
+											LOGGER.error(String.format("pagerecherchePartHtml a échoué. ", d.cause()));
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -1518,6 +1571,30 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+
+	public void pagerecherchePartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
+		reponse200PageRecherchePartHtml(listePartHtml, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200PageRecherchePartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
@@ -1544,7 +1621,33 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<PartHtml> definirIndexerPartHtml(PartHtml partHtml, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
+		Promise<PartHtml> promise = Promise.promise();
+		RequeteSiteFrFR requeteSite = partHtml.getRequeteSite_();
+		definirPartHtml(partHtml, c -> {
+			if(c.succeeded()) {
+				attribuerPartHtml(partHtml, d -> {
+					if(d.succeeded()) {
+						indexerPartHtml(partHtml, e -> {
+							if(e.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(partHtml));
+								promise.complete(partHtml);
+							} else {
+								erreurPartHtml(requeteSite, null, e);
+							}
+						});
+					} else {
+						erreurPartHtml(requeteSite, null, d);
+					}
+				});
+			} else {
+				erreurPartHtml(requeteSite, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void creerPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
 		try {
@@ -1568,7 +1671,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public void requeteApiPartHtml(PartHtml o) {
+	public RequeteApi requeteApiPartHtml(PartHtml o) {
 		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
 		if(requeteApi != null) {
 			List<Long> pks = requeteApi.getPks();
@@ -1580,6 +1683,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				}
 			}
 		}
+		return requeteApi;
 	}
 
 	public void erreurPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1859,7 +1963,41 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	}
 
 	public Boolean utilisateurPartHtmlDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void recherchePartHtmlQ(ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
+		if(!"*".equals(entiteVar)) {
+			listeRecherche.setHighlight(true);
+			listeRecherche.setHighlightSnippets(3);
+			listeRecherche.addHighlightField(varIndexe);
+			listeRecherche.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void recherchePartHtmlFq(ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+	}
+
+	public void recherchePartHtmlSort(ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
+	}
+
+	public void recherchePartHtmlRows(ListeRecherche<PartHtml> listeRecherche, Integer valeurRows) {
+		listeRecherche.setRows(valeurRows);
+	}
+
+	public void recherchePartHtmlStart(ListeRecherche<PartHtml> listeRecherche, Integer valeurStart) {
+		listeRecherche.setStart(valeurStart);
+	}
+
+	public void recherchePartHtmlVar(ListeRecherche<PartHtml> listeRecherche, String var, String valeur) {
+		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
 	public void recherchePartHtml(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<PartHtml>>> gestionnaireEvenements) {
@@ -1872,6 +2010,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(PartHtml.class);
+			listeRecherche.setRequeteSite_(requeteSite);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
@@ -1886,8 +2025,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				String valeurIndexe = null;
 				String varIndexe = null;
 				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
+				Integer valeurStart = null;
+				Integer valeurRows = null;
 				String paramNom = paramRequete.getKey();
 				Object paramValeursObjet = paramRequete.getValue();
 				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
@@ -1900,33 +2039,32 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								varIndexe = "*".equals(entiteVar) ? entiteVar : PartHtml.varRecherchePartHtml(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
-								}
+								recherchePartHtmlQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = PartHtml.varIndexePartHtml(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								recherchePartHtmlFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = PartHtml.varIndexePartHtml(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								recherchePartHtmlSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								valeurStart = (Integer)paramObjet;
+								recherchePartHtmlStart(listeRecherche, valeurStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								valeurRows = (Integer)paramObjet;
+								recherchePartHtmlRows(listeRecherche, valeurRows);
+								break;
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								recherchePartHtmlVar(listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}
@@ -2044,7 +2182,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					o2.setPk(pk);
 					o2.setRequeteSite_(requeteSite2);
 					futures.add(
-						service.futurePATCHDesignInscription(o2, a -> {
+						service.patchDesignInscriptionFuture(o2, a -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("DesignInscription %s rechargé. ", pk));
 							} else {
@@ -2062,7 +2200,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						List<Future> futures2 = new ArrayList<>();
 						for(PartHtml o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.futurePATCHPartHtml(o2, b -> {
+								service.patchPartHtmlFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("PartHtml %s rechargé. ", o2.getPk()));
 									} else {

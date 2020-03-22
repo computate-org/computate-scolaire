@@ -277,7 +277,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -441,7 +441,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmPaiementCles(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -588,7 +588,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmUtilisateurId(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurId").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -729,7 +729,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmUtilisateurCle(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurCle").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -863,7 +863,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmUtilisateurNom(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurNom").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -994,7 +994,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmUtilisateurMail(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurMail").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1378,7 +1378,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmCustomerProfileId(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteCustomerProfileId").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1530,7 +1530,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmUtilisateurRecevoirCourriels(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteUtilisateurRecevoirCourriels").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1666,7 +1666,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmVoirArchive(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteVoirArchive").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1802,7 +1802,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void htmVoirSupprime(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteVoirSupprime").f();
 					{ e("div").a("class", "w3-card ").f();

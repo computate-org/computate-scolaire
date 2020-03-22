@@ -340,7 +340,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireBlocCles')) : [{'name':'fq','value':'ageCle:", pk, "'}], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmBlocCles());
 		}
 	}
 
@@ -819,7 +818,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireSessionCle')) : [{'name':'fq','value':'ageCles:", pk, "'}], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSessionCle());
 		}
 	}
 
@@ -1423,7 +1421,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				a("value", strEcoleAddresse())
 			.fg();
 
-			sx(htmEcoleAddresse());
 		}
 	}
 
@@ -2451,7 +2448,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				a("value", strAgeDebut())
 			.fg();
 
-			sx(htmAgeDebut());
 		}
 	}
 
@@ -2580,7 +2576,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				a("value", strAgeFin())
 			.fg();
 
-			sx(htmAgeFin());
 		}
 	}
 

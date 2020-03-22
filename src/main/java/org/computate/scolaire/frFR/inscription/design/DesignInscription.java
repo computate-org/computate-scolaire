@@ -40,7 +40,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * UnNom.frFR: un design d'inscription
  * UnNom.enUS: an enrollment design
- * Couleur: indigo
+ * Couleur: khaki
  * IconeGroupe: regular
  * IconeNom: drafting-compass
  * NomVar.frFR: design-inscription

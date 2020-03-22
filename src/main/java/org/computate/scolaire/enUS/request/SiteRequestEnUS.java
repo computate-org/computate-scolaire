@@ -172,7 +172,6 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 
 	protected void _userResourceRoles(List<String> o) {
 		JsonArray roles = Optional.ofNullable(userResource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
-		System.out.println(String.format("ROLES: %s", roles));
 		roles.stream().forEach(r -> {
 			addUserResourceRoles((String)r);
 		});
@@ -210,5 +209,21 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _requestVars(Map<String, String> m) {
+	}
+
+	public SiteRequestEnUS copy() {
+		SiteRequestEnUS o = new SiteRequestEnUS();
+		o.setSiteContext_(siteContext_);
+		o.setApiRequest_(apiRequest_);
+		o.setJsonObject(jsonObject);
+		o.setSolrQuery(solrQuery);
+		o.setOperationRequest(operationRequest);
+		o.setUserKey(userKey);
+		o.setSolrDocument(solrDocument);
+		o.setPageAdmin(pageAdmin);
+		o.setSqlConnection(sqlConnection);
+		o.setRequestHeaders(requestHeaders);
+		o.setRequestVars(requestVars);
+		return o;
 	}
 }

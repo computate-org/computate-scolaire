@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;                                         
+package org.computate.scolaire.frFR.enfant;                                        
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -48,7 +48,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.frFR: un enfant
  * UnNom.enUS: a child
  * NomPluriel.enUS: children
- * Couleur: green
+ * Couleur: orange
  * IconeGroupe: regular
  * IconeNom: child
  * 

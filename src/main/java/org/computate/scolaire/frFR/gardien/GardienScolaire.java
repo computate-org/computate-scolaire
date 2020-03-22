@@ -134,6 +134,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 		l.addFacetField("saisonCle_indexed_long");
 		l.addFacetField("sessionCle_indexed_long");
 		l.addFacetField("ageCle_indexed_long");
+		l.addFacetField("utilisateurCles_indexed_longs");
 	}
 
 	/**

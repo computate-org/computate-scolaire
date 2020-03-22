@@ -321,7 +321,6 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * **/
 	protected void _utilisateurRolesRessource(List<String> o) {
 		JsonArray roles = Optional.ofNullable(utilisateurRessource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
-		System.out.println(String.format("ROLES: %s", roles));
 		roles.stream().forEach(r -> {
 			addUtilisateurRolesRessource((String)r);
 		});
@@ -406,5 +405,65 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Var.enUS: requestVars
 	 */
 	protected void _requeteVars(Map<String, String> m) {
+	}
+
+	/**
+	 * r: RequeteSiteFrFR
+	 * r.enUS: SiteRequestEnUS
+	 * r: SiteContexte
+	 * r.enUS: SiteContext
+	 * r: siteContexte
+	 * r.enUS: siteContext
+	 * r: RequeteApi
+	 * r.enUS: ApiRequest
+	 * r: requeteApi
+	 * r.enUS: apiRequest
+	 * r: ObjetJson
+	 * r.enUS: JsonObject
+	 * r: objetJson
+	 * r.enUS: jsonObject
+	 * r: RechercheSolr
+	 * r.enUS: SolrQuery
+	 * r: rechercheSolr
+	 * r.enUS: solrQuery
+	 * r: OperationRequete
+	 * r.enUS: OperationRequest
+	 * r: operationRequete
+	 * r.enUS: operationRequest
+	 * r: UtilisateurCle
+	 * r.enUS: UserKey
+	 * r: utilisateurCle
+	 * r.enUS: userKey
+	 * r: DocumentSolr
+	 * r.enUS: SolrDocument
+	 * r: documentSolr
+	 * r.enUS: solrDocument
+	 * r: ConnexionSql
+	 * r.enUS: SqlConnection
+	 * r: connexionSql
+	 * r.enUS: sqlConnection
+	 * r: RequeteEnTetes
+	 * r.enUS: RequestHeaders
+	 * r: requeteEnTetes
+	 * r.enUS: requestHeaders
+	 * r: RequeteVars
+	 * r.enUS: RequestVars
+	 * r: requeteVars
+	 * r.enUS: requestVars
+	 */
+	public RequeteSiteFrFR copy() {
+		RequeteSiteFrFR o = new RequeteSiteFrFR();
+		o.setSiteContexte_(siteContexte_);
+		o.setRequeteApi_(requeteApi_);
+		o.setObjetJson(objetJson);
+		o.setRechercheSolr(rechercheSolr);
+		o.setOperationRequete(operationRequete);
+		o.setUtilisateurCle(utilisateurCle);
+		o.setDocumentSolr(documentSolr);
+		o.setPageAdmin(pageAdmin);
+		o.setConnexionSql(connexionSql);
+		o.setRequeteEnTetes(requeteEnTetes);
+		o.setRequeteVars(requeteVars);
+		return o;
 	}
 }

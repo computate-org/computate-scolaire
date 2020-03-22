@@ -604,7 +604,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		if(listeInscriptionScolaire == null || listeInscriptionScolaire.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+				{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("inscriptions").g("span");
@@ -612,7 +612,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			} g("h1");
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("h2").f();
-				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-purple ").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-blue-gray ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("aucune inscription trouvée").g("span");
@@ -623,7 +623,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			requeteSite_.setRequetePk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+					{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 						if(contexteIconeClassesCss != null)
 							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -633,14 +633,14 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-purple ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-blue-gray ").f();
 						e("span").a("class", " ").f().sx(pageH2).g("span");
 					} g("span");
 				} g("h2");
 			}
 			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-purple ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-blue-gray ").f();
 						e("span").a("class", " ").f().sx(pageH3).g("span");
 					} g("span");
 				} g("h3");
@@ -648,7 +648,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+				{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -740,7 +740,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 	}
 
 	public void thead1InscriptionFormGenPage() {
-		{ e("thead").a("class", "w3-purple w3-hover-purple ").f();
+		{ e("thead").a("class", "w3-blue-gray w3-hover-blue-gray ").f();
 			thead2InscriptionFormGenPage();
 		} g("thead");
 	}
@@ -794,7 +794,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 	}
 
 	public void tfoot1InscriptionFormGenPage() {
-		{ e("tfoot").a("class", "w3-purple w3-hover-purple ").f();
+		{ e("tfoot").a("class", "w3-blue-gray w3-hover-blue-gray ").f();
 			tfoot2InscriptionFormGenPage();
 		} g("tfoot");
 	}
@@ -830,7 +830,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 			if(listeInscriptionScolaire != null && listeInscriptionScolaire.size() == 1) {
 				{ e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 						.a("id", "rechargerCetteInscriptionFormGenPage")
 						.a("onclick", "patchInscriptionScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteInscriptionFormGenPage')); }, function() { ajouterErreur($('#rechargerCetteInscriptionFormGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
@@ -839,14 +839,14 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			}
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#postInscriptionScolaireModale').show(); ")
 				.f().sx("Créer une inscription")
 			.g("button");
 			{ e("div").a("id", "postInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-purple ").f();
+						{ e("header").a("class", "w3-container w3-blue-gray ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer une inscription").g("h2");
 						} g("header");
@@ -859,7 +859,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 								htmlFormPOSTInscriptionScolaire(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
 								.a("onclick", "postInscriptionScolaire($('#postInscriptionScolaireForm')); ")
 								.f().sx("Créer une inscription")
 							.g("button");
@@ -871,14 +871,14 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#putInscriptionScolaireModale').show(); ")
 				.f().sx("Dupliquer des inscriptions")
 			.g("button");
 			{ e("div").a("id", "putInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-purple ").f();
+						{ e("header").a("class", "w3-container w3-blue-gray ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des inscriptions").g("h2");
 						} g("header");
@@ -891,7 +891,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 								htmlFormPUTInscriptionScolaire(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
 								.a("onclick", "putInscriptionScolaire($('#putInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
 								.f().sx("Dupliquer des inscriptions")
 							.g("button");
@@ -903,14 +903,14 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#patchInscriptionScolaireModale').show(); ")
 				.f().sx("Modifier des inscriptions")
 			.g("button");
 			{ e("div").a("id", "patchInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-purple ").f();
+						{ e("header").a("class", "w3-container w3-blue-gray ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier des inscriptions").g("h2");
 						} g("header");
@@ -923,8 +923,40 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 								htmlFormPATCHInscriptionScolaire(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-purple ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
 								.a("onclick", "patchInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres'), $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier des inscriptions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+				.a("onclick", "$('#patchpaiementsInscriptionScolaireModale').show(); ")
+				.f().sx("Modifier des inscriptions")
+			.g("button");
+			{ e("div").a("id", "patchpaiementsInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-blue-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchpaiementsInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier des inscriptions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							InscriptionScolaire o = new InscriptionScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// FormulaireValeurs PATCH
+							{ e("form").a("action", "").a("id", "patchpaiementsInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
+								htmlFormPATCHInscriptionScolaire(o);
+							} g("form");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+								.a("onclick", "patchpaiementsInscriptionScolaire($('#patchpaiementsInscriptionScolaireFormulaireFiltres'), $('#patchpaiementsInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des inscriptions")
 							.g("button");
 
@@ -946,7 +978,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), InscriptionFormGenPage.ROLES)
 				) {
 			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerToutesInscriptionFormGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionFormGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionFormGenPage", id, "')); }); ").f();
+				{ p.e("button").a("id", "rechargerToutesInscriptionFormGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionFormGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionFormGenPage", id, "')); }); ").f();
 					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("recharger toutes les inscriptions");
 				} p.g("button");

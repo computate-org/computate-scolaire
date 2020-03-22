@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;              
+package org.computate.scolaire.frFR.cluster;             
 
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
@@ -319,6 +319,32 @@ public class Cluster extends ClusterGen<Object> {
 	 * r.enUS: objectTitle
 	 */     
 	protected void _objetSuggere(Couverture<String> c) { 
+		StringBuilder b = new StringBuilder();
+		if(pk != null)
+			b.append(" ").append(pk);
+		if(objetNomVar != null)
+			b.append(" ").append(objetNomVar);
+		if(objetId != null)
+			b.append(" ").append(objetId);
+		if(objetTitre != null)
+			b.append(" ").append(objetTitre);
+		c.o(b.toString());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: objectText
+	 * Texte: true
+	 * r: objetNomVar
+	 * r.enUS: objectNameVar
+	 * r: objetId
+	 * r.enUS: objectId
+	 * r: objetTitre
+	 * r.enUS: objectTitle
+	 * r: objetSuggere
+	 * r.enUS: objectSuggest
+	 */    
+	protected void _objetTexte(Couverture<String> c) { 
 		StringBuilder b = new StringBuilder();
 		if(pk != null)
 			b.append(" ").append(pk);

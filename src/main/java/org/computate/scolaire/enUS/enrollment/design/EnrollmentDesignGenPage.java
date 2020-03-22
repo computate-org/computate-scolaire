@@ -221,7 +221,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 		if(listEnrollmentDesign == null || listEnrollmentDesign.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/enrollment-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+				{ e("a").a("href", "/enrollment-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("enrollment designs").g("span");
@@ -229,7 +229,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 			} g("h1");
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("h2").f();
-				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("no enrollment design found").g("span");
@@ -240,7 +240,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 			siteRequest_.setRequestPk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/enrollment-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+					{ e("a").a("href", "/enrollment-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 						if(contextIconCssClasses != null)
 							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -250,14 +250,14 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 						e("span").a("class", " ").f().sx(pageH2).g("span");
 					} g("span");
 				} g("h2");
 			}
 			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 						e("span").a("class", " ").f().sx(pageH3).g("span");
 					} g("span");
 				} g("h3");
@@ -265,7 +265,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/enrollment-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+				{ e("a").a("href", "/enrollment-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -357,7 +357,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 	}
 
 	public void thead1EnrollmentDesignGenPage() {
-		{ e("thead").a("class", "w3-indigo w3-hover-indigo ").f();
+		{ e("thead").a("class", "w3-khaki w3-hover-khaki ").f();
 			thead2EnrollmentDesignGenPage();
 		} g("thead");
 	}
@@ -411,7 +411,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 	}
 
 	public void tfoot1EnrollmentDesignGenPage() {
-		{ e("tfoot").a("class", "w3-indigo w3-hover-indigo ").f();
+		{ e("tfoot").a("class", "w3-khaki w3-hover-khaki ").f();
 			tfoot2EnrollmentDesignGenPage();
 		} g("tfoot");
 	}
@@ -447,7 +447,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 
 			if(listEnrollmentDesign != null && listEnrollmentDesign.size() == 1) {
 				{ e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 						.a("id", "refreshThisEnrollmentDesignGenPage")
 						.a("onclick", "patchEnrollmentDesignVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisEnrollmentDesignGenPage')); }, function() { addError($('#refreshThisEnrollmentDesignGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
@@ -456,14 +456,14 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 			}
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#postEnrollmentDesignModal').show(); ")
 				.f().sx("Create an enrollment design")
 			.g("button");
 			{ e("div").a("id", "postEnrollmentDesignModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-indigo ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEnrollmentDesignModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create an enrollment design").g("h2");
 						} g("header");
@@ -476,7 +476,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 								htmlFormPOSTEnrollmentDesign(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "postEnrollmentDesign($('#postEnrollmentDesignForm')); ")
 								.f().sx("Create an enrollment design")
 							.g("button");
@@ -488,14 +488,14 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#putEnrollmentDesignModal').show(); ")
 				.f().sx("Duplicate the enrollment designs")
 			.g("button");
 			{ e("div").a("id", "putEnrollmentDesignModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-indigo ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putEnrollmentDesignModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate the enrollment designs").g("h2");
 						} g("header");
@@ -508,7 +508,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 								htmlFormPUTEnrollmentDesign(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "putEnrollmentDesign($('#putEnrollmentDesignFormValues'), ", Optional.ofNullable(enrollmentDesign).map(EnrollmentDesign::getPk).map(a -> a.toString()).orElse("null"), "); ")
 								.f().sx("Duplicate the enrollment designs")
 							.g("button");
@@ -520,14 +520,14 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#patchEnrollmentDesignModal').show(); ")
 				.f().sx("Modify the enrollment designs")
 			.g("button");
 			{ e("div").a("id", "patchEnrollmentDesignModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-indigo ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEnrollmentDesignModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify the enrollment designs").g("h2");
 						} g("header");
@@ -540,7 +540,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 								htmlFormPATCHEnrollmentDesign(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchEnrollmentDesign($('#patchEnrollmentDesignFormFilters'), $('#patchEnrollmentDesignFormValues'), ", Optional.ofNullable(enrollmentDesign).map(EnrollmentDesign::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the enrollment designs")
 							.g("button");
@@ -563,7 +563,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentDesignGenPage.ROLES)
 				) {
 			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "refreshAllEnrollmentDesignGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ").a("onclick", "patchEnrollmentDesignVals([], {}, function() { addGlow($('#refreshAllEnrollmentDesignGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentDesignGenPage", id, "')); }); ").f();
+				{ p.e("button").a("id", "refreshAllEnrollmentDesignGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchEnrollmentDesignVals([], {}, function() { addGlow($('#refreshAllEnrollmentDesignGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentDesignGenPage", id, "')); }); ").f();
 					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("refresh all the enrollment designs");
 				} p.g("button");

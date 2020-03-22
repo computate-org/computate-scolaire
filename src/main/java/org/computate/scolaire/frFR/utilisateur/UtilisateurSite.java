@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.utilisateur;                       
+package org.computate.scolaire.frFR.utilisateur;                      
 
 import java.util.List;
 
@@ -280,7 +280,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: userEmail
 	 * r: utilisateurNom
 	 * r.enUS: userName
-	 */
+	 */ 
 	@Override 
 	protected void _objetTitre(Couverture<String> c) {
 		c.o(utilisateurNomComplet + " " + utilisateurMail + " " + utilisateurNom);

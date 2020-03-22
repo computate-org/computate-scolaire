@@ -49,6 +49,12 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 
+ * ApiMethode.frFR: PATCHPaiements
+ * ApiUriPATCHPayments.frFR: /inscription/paiements
+ * 
+ * ApiMethode.enUS: PATCHPayments
+ * ApiUriPATCHPayments.enUS: /enrollment/payments
+ * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: InscriptionPage
  * PageSuperPageRecherche.frFR: ClusterPage
@@ -95,7 +101,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
- * Couleur: purple
+ * Couleur: blue-gray
  * IconeGroupe: solid
  * IconeNom: edit
  * 
@@ -621,7 +627,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: gardienRecherche
 	 * r.enUS: guardianSearch
 	 * Ignorer: true
-	 */      
+	 */    
 	protected void _gardiens(Couverture<List<GardienScolaire>> c) {
 		c.o(gardienRecherche.getList());
 	}

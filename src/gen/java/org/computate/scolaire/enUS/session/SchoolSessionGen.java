@@ -338,7 +338,6 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolSessionAgeKeys($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolSessionAgeKeys')) : [{'name':'fq','value':'sessionKey:", pk, "'}], $('#listSchoolSessionAgeKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmAgeKeys());
 		}
 	}
 
@@ -816,7 +815,6 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolSessionSeasonKey($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolSessionSeasonKey')) : [{'name':'fq','value':'sessionKeys:", pk, "'}], $('#listSchoolSessionSeasonKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSeasonKey());
 		}
 	}
 
@@ -1350,7 +1348,6 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				a("value", strSchoolAddress())
 			.fg();
 
-			sx(htmSchoolAddress());
 		}
 	}
 
@@ -2159,7 +2156,6 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("value", sessionStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionStartDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDate')); }); } ")
 				.fg();
-			sx(htmSessionStartDate());
 		}
 	}
 
@@ -2288,7 +2284,6 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("value", sessionEndDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionEndDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionEndDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDate')); }); } ")
 				.fg();
-			sx(htmSessionEndDate());
 		}
 	}
 

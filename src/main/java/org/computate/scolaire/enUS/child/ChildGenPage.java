@@ -244,7 +244,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		if(listSchoolChild == null || listSchoolChild.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/child").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+				{ e("a").a("href", "/child").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange w3-hover-orange ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("children").g("span");
@@ -252,7 +252,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("h2").f();
-				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-orange ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("no child found").g("span");
@@ -263,7 +263,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 			siteRequest_.setRequestPk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/child").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+					{ e("a").a("href", "/child").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange w3-hover-orange ").f();
 						if(contextIconCssClasses != null)
 							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -273,14 +273,14 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-orange ").f();
 						e("span").a("class", " ").f().sx(pageH2).g("span");
 					} g("span");
 				} g("h2");
 			}
 			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-orange ").f();
 						e("span").a("class", " ").f().sx(pageH3).g("span");
 					} g("span");
 				} g("h3");
@@ -288,7 +288,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/child").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+				{ e("a").a("href", "/child").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange w3-hover-orange ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -380,7 +380,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	}
 
 	public void thead1ChildGenPage() {
-		{ e("thead").a("class", "w3-green w3-hover-green ").f();
+		{ e("thead").a("class", "w3-orange w3-hover-orange ").f();
 			thead2ChildGenPage();
 		} g("thead");
 	}
@@ -434,7 +434,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	}
 
 	public void tfoot1ChildGenPage() {
-		{ e("tfoot").a("class", "w3-green w3-hover-green ").f();
+		{ e("tfoot").a("class", "w3-orange w3-hover-orange ").f();
 			tfoot2ChildGenPage();
 		} g("tfoot");
 	}
@@ -470,7 +470,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 			if(listSchoolChild != null && listSchoolChild.size() == 1) {
 				{ e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 						.a("id", "refreshThisChildGenPage")
 						.a("onclick", "patchSchoolChildVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisChildGenPage')); }, function() { addError($('#refreshThisChildGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
@@ -479,14 +479,14 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 			}
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 				.a("onclick", "$('#postSchoolChildModal').show(); ")
 				.f().sx("Create a child")
 			.g("button");
 			{ e("div").a("id", "postSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-green ").f();
+						{ e("header").a("class", "w3-container w3-orange ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolChildModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a child").g("h2");
 						} g("header");
@@ -499,7 +499,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 								htmlFormPOSTSchoolChild(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
 								.a("onclick", "postSchoolChild($('#postSchoolChildForm')); ")
 								.f().sx("Create a child")
 							.g("button");
@@ -511,14 +511,14 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 				.a("onclick", "$('#putSchoolChildModal').show(); ")
 				.f().sx("Duplicate the children")
 			.g("button");
 			{ e("div").a("id", "putSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-green ").f();
+						{ e("header").a("class", "w3-container w3-orange ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolChildModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate the children").g("h2");
 						} g("header");
@@ -531,7 +531,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 								htmlFormPUTSchoolChild(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
 								.a("onclick", "putSchoolChild($('#putSchoolChildFormValues'), ", Optional.ofNullable(schoolChild).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), "); ")
 								.f().sx("Duplicate the children")
 							.g("button");
@@ -543,14 +543,14 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 				.a("onclick", "$('#patchSchoolChildModal').show(); ")
 				.f().sx("Modify the children")
 			.g("button");
 			{ e("div").a("id", "patchSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-green ").f();
+						{ e("header").a("class", "w3-container w3-orange ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolChildModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify the children").g("h2");
 						} g("header");
@@ -563,7 +563,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 								htmlFormPATCHSchoolChild(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
 								.a("onclick", "patchSchoolChild($('#patchSchoolChildFormFilters'), $('#patchSchoolChildFormValues'), ", Optional.ofNullable(schoolChild).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the children")
 							.g("button");
@@ -586,7 +586,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ChildGenPage.ROLES)
 				) {
 			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "refreshAllChildGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolChildVals([], {}, function() { addGlow($('#refreshAllChildGenPage", id, "')); }, function() { addError($('#refreshAllChildGenPage", id, "')); }); ").f();
+				{ p.e("button").a("id", "refreshAllChildGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ").a("onclick", "patchSchoolChildVals([], {}, function() { addGlow($('#refreshAllChildGenPage", id, "')); }, function() { addError($('#refreshAllChildGenPage", id, "')); }); ").f();
 					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("refresh all the children");
 				} p.g("button");

@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -227,6 +228,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmFraisInscription("PUT");
 			o.htmFraisPremierDernier("PUT");
 			o.htmFraisMois("PUT");
+			o.htmFraisRetard("PUT");
 			o.htmPaiementNomCourt("PUT");
 		} g("div");
 	}
@@ -272,6 +274,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmFraisInscription("PATCH");
 			o.htmFraisPremierDernier("PATCH");
 			o.htmFraisMois("PATCH");
+			o.htmFraisRetard("PATCH");
 			o.htmPaiementNomCourt("PATCH");
 		} g("div");
 	}
@@ -320,6 +323,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmFraisInscription("Recherche");
 			o.htmFraisPremierDernier("Recherche");
 			o.htmFraisMois("Recherche");
+			o.htmFraisRetard("Recherche");
 			o.htmPaiementNomCourt("Recherche");
 		} g("div");
 	}
@@ -384,7 +388,8 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listePaiementScolaire.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listePaiementScolaire.getQuery(), "_suggested", "");
+					String q = listePaiementScolaire.getQuery();
+					String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
 					Integer rows1 = listePaiementScolaire.getRows();
 					Integer start1 = listePaiementScolaire.getStart();
 					Integer start2 = start1 - rows1;
@@ -392,11 +397,20 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : listePaiementScolaire.getFilterQueries()) {
+						if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
+							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : listePaiementScolaire.getSorts()) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/paiement?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/paiement?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -404,19 +418,19 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/paiement?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/paiement?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/paiement?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/paiement?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/paiement?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/paiement?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -424,6 +438,46 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 				} g("div");
 				table1PaiementGenPage();
 		}
+
+		{ e("div").a("class", "").f();
+			{ e("form").a("id", "PaiementScolaireForm").a("style", "display: inline-block; width: 100%; ").a("method", "GET").a("action", "/paiement").a("onsubmit", "event.preventDefault(); rechercher($('#rechercheObjetTexte')); return false; ").f();
+				{ e("div").a("class", "w3-bar ").f();
+					e("input").a("type", "text")
+						.a("placeholder", "rechercher paiements")
+						.a("title", "")
+						.a("class", "rechercheObjetTexte w3-input w3-border w3-bar-item ")
+						.a("name", "objetTexte")
+						.a("id", "rechercheObjetTexte");
+					operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						String paramNom = paramRequete.getKey();
+						Object paramValeursObjet = paramRequete.getValue();
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										if("objetTexte".equals(entiteVar))
+											a("value", URLDecoder.decode(valeurIndexe, "UTF-8"));
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					});
+					fg();
+					{ e("button")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+						.f();
+						e("i").a("class", "fas fa-search ").f().g("i");
+					} g("button");
+				} g("div");
+			} g("form");
+		} g("div");
 
 		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			PaiementScolaire o = listePaiementScolaire.first();
@@ -649,11 +703,13 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("onclick", "$('#postPaiementScolaireModale').show(); ")
-				.f().sx("Créer un paiement")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Créer un paiement");
+			} g("button");
 			{ e("div").a("id", "postPaiementScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -681,11 +737,13 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("onclick", "$('#putPaiementScolaireModale').show(); ")
-				.f().sx("Dupliquer des paiements")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer des paiements");
+			} g("button");
 			{ e("div").a("id", "putPaiementScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -713,11 +771,13 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("onclick", "$('#patchPaiementScolaireModale').show(); ")
-				.f().sx("Modifier des paiements")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modifier des paiements");
+			} g("button");
 			{ e("div").a("id", "patchPaiementScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -785,8 +845,27 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	 * r: "suggereListPaiementScolaire"
 	 * r.enUS: "suggestListSchoolPayment"
 	**/
-	public static void htmlSuggerePaiementGenPage(MiseEnPage p, String id) {
+	public static void htmlSuggerePaiementGenPage(MiseEnPage p, String id, ListeRecherche<PaiementScolaire> listePaiementScolaire) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
+		String q = Optional.ofNullable(listePaiementScolaire).map(l -> l.getQuery()).orElse("*:*");
+		String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
+		Integer rows1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getRows()).orElse(10);
+		Integer start1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getStart()).orElse(1);
+		Integer start2 = start1 - rows1;
+		Integer start3 = start1 + rows1;
+		Integer rows2 = rows1 / 2;
+		Integer rows3 = rows1 * 2;
+		start2 = start2 < 0 ? 0 : start2;
+		StringBuilder fqs = new StringBuilder();
+		for(String fq : Optional.ofNullable(listePaiementScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+			if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
+				fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+		}
+		StringBuilder sorts = new StringBuilder();
+		for(SortClause sort : Optional.ofNullable(listePaiementScolaire.getSorts()).orElse(Arrays.asList())) {
+			sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+		}
+
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PaiementGenPage.ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PaiementGenPage.ROLES)
@@ -819,6 +898,12 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 				.a("autocomplete", "off")
 				.a("oninput", "suggerePaiementScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPaiementScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 				.fg();
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+					.a("onclick", "window.location.href = '/paiement?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					e("i").a("class", "fas fa-search ").f().g("i");
+				} g("button");
 
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();

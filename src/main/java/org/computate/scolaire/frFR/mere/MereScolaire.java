@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mere;                                
+package org.computate.scolaire.frFR.mere;                               
 
 import java.util.List;
 import java.util.stream.Collectors;

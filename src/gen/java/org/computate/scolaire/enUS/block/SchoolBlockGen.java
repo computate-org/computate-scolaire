@@ -323,7 +323,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmEnrollmentKeys());
 		}
 	}
 
@@ -1006,7 +1005,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmAgeKey());
 		}
 	}
 
@@ -1678,7 +1676,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("value", strSchoolAddress())
 			.fg();
 
-			sx(htmSchoolAddress());
 		}
 	}
 
@@ -2899,7 +2896,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("value", blockStartTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(blockStartTime))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
 				.fg();
-			sx(htmBlockStartTime());
 		}
 	}
 
@@ -3020,7 +3016,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("value", blockEndTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(blockEndTime))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
 				.fg();
-			sx(htmBlockEndTime());
 		}
 	}
 
@@ -3158,7 +3153,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("value", strBlockPricePerMonth())
 			.fg();
 
-			sx(htmBlockPricePerMonth());
 		}
 	}
 
@@ -3364,7 +3358,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlockMonday());
 		}
 	}
 
@@ -3490,7 +3483,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlockTuesday());
 		}
 	}
 
@@ -3616,7 +3608,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlockWednesday());
 		}
 	}
 
@@ -3742,7 +3733,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlockThursday());
 		}
 	}
 
@@ -3868,7 +3858,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlockFriday());
 		}
 	}
 

@@ -326,7 +326,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereSaisonScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($('#suggere", classeApiMethodeMethode, "SaisonScolaireAnneeCle')) : [{'name':'fq','value':'saisonCles:", pk, "'}], $('#listSaisonScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmAnneeCle());
 		}
 	}
 
@@ -478,7 +477,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereSaisonScolaireSessionCles($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "SaisonScolaireSessionCles')) : [{'name':'fq','value':'saisonCle:", pk, "'}], $('#listSaisonScolaireSessionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSessionCles());
 		}
 	}
 
@@ -1639,7 +1637,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				.a("value", saisonJourDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(saisonJourDebut))
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonJourDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonJourDebut')); }); } ")
 				.fg();
-			sx(htmSaisonJourDebut());
 		}
 	}
 
@@ -1778,7 +1775,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmSaisonEte());
 		}
 	}
 
@@ -1905,7 +1901,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmSaisonHiver());
 		}
 	}
 
@@ -2032,7 +2027,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmSaisonFuture());
 		}
 	}
 

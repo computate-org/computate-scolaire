@@ -338,7 +338,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolAgeBlockKeys')) : [{'name':'fq','value':'ageKey:", pk, "'}], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmBlockKeys());
 		}
 	}
 
@@ -816,7 +815,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolAgeSessionKey($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolAgeSessionKey')) : [{'name':'fq','value':'ageKeys:", pk, "'}], $('#listSchoolAgeSessionKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSessionKey());
 		}
 	}
 
@@ -1419,7 +1417,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				a("value", strSchoolAddress())
 			.fg();
 
-			sx(htmSchoolAddress());
 		}
 	}
 
@@ -2446,7 +2443,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				a("value", strAgeStart())
 			.fg();
 
-			sx(htmAgeStart());
 		}
 	}
 
@@ -2574,7 +2570,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				a("value", strAgeEnd())
 			.fg();
 
-			sx(htmAgeEnd());
 		}
 	}
 

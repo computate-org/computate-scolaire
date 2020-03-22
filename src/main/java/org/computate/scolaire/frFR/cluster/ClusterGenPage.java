@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -244,11 +245,20 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : listeCluster.getFilterQueries()) {
+						if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
+							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_indexed_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : listeCluster.getSorts()) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_indexed_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/cluster?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/cluster?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -256,19 +266,19 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/cluster?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/cluster?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/cluster?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/cluster?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/cluster?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/cluster?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -276,6 +286,46 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				} g("div");
 				table1ClusterGenPage();
 		}
+
+		{ e("div").a("class", "").f();
+			{ e("form").a("id", "ClusterForm").a("style", "display: inline-block; width: 100%; ").a("method", "GET").a("action", "/cluster").a("onsubmit", "event.preventDefault(); rechercher($('#rechercheObjetTexte')); return false; ").f();
+				{ e("div").a("class", "w3-bar ").f();
+					e("input").a("type", "text")
+						.a("placeholder", "rechercher clusters")
+						.a("title", "")
+						.a("class", "rechercheObjetTexte w3-input w3-border w3-bar-item ")
+						.a("name", "objetTexte")
+						.a("id", "rechercheObjetTexte");
+					operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						String paramNom = paramRequete.getKey();
+						Object paramValeursObjet = paramRequete.getValue();
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										if("objetTexte".equals(entiteVar))
+											a("value", URLDecoder.decode(valeurIndexe, "UTF-8"));
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					});
+					fg();
+					{ e("button")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+						.f();
+						e("i").a("class", "fas fa-search ").f().g("i");
+					} g("button");
+				} g("div");
+			} g("form");
+		} g("div");
 
 		if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			Cluster o = listeCluster.first();
@@ -417,11 +467,13 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
 				.a("onclick", "$('#postClusterModale').show(); ")
-				.f().sx("Créer un cluster")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Créer un cluster");
+			} g("button");
 			{ e("div").a("id", "postClusterModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -449,11 +501,13 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
 				.a("onclick", "$('#putClusterModale').show(); ")
-				.f().sx("Dupliquer des clusters")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer des clusters");
+			} g("button");
 			{ e("div").a("id", "putClusterModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -481,11 +535,13 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
 				.a("onclick", "$('#patchClusterModale').show(); ")
-				.f().sx("Modifier des clusters")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modifier des clusters");
+			} g("button");
 			{ e("div").a("id", "patchClusterModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();

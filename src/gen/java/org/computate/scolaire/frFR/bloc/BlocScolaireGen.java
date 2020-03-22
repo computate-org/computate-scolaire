@@ -325,7 +325,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmInscriptionCles());
 		}
 	}
 
@@ -1009,7 +1008,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireAgeCle')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmAgeCle());
 		}
 	}
 
@@ -1682,7 +1680,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				a("value", strEcoleAddresse())
 			.fg();
 
-			sx(htmEcoleAddresse());
 		}
 	}
 
@@ -2903,7 +2900,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureDebut))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
 				.fg();
-			sx(htmBlocHeureDebut());
 		}
 	}
 
@@ -3024,7 +3020,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureFin))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
 				.fg();
-			sx(htmBlocHeureFin());
 		}
 	}
 
@@ -3163,7 +3158,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				a("value", strBlocPrixParMois())
 			.fg();
 
-			sx(htmBlocPrixParMois());
 		}
 	}
 
@@ -3369,7 +3363,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlocLundi());
 		}
 	}
 
@@ -3495,7 +3488,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlocMardi());
 		}
 	}
 
@@ -3621,7 +3613,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlocMercredi());
 		}
 	}
 
@@ -3747,7 +3738,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlocJeudi());
 		}
 	}
 
@@ -3873,7 +3863,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmBlocVendredi());
 		}
 	}
 

@@ -222,7 +222,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		if(listeDesignInscription == null || listeDesignInscription.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/design-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+				{ e("a").a("href", "/design-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("design d'inscriptions").g("span");
@@ -230,7 +230,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			} g("h1");
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("h2").f();
-				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("aucun design d'inscription trouvé").g("span");
@@ -241,7 +241,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			requeteSite_.setRequetePk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/design-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+					{ e("a").a("href", "/design-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 						if(contexteIconeClassesCss != null)
 							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -251,14 +251,14 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 						e("span").a("class", " ").f().sx(pageH2).g("span");
 					} g("span");
 				} g("h2");
 			}
 			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 						e("span").a("class", " ").f().sx(pageH3).g("span");
 					} g("span");
 				} g("h3");
@@ -266,7 +266,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/design-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+				{ e("a").a("href", "/design-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -358,7 +358,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	}
 
 	public void thead1DesignInscriptionGenPage() {
-		{ e("thead").a("class", "w3-indigo w3-hover-indigo ").f();
+		{ e("thead").a("class", "w3-khaki w3-hover-khaki ").f();
 			thead2DesignInscriptionGenPage();
 		} g("thead");
 	}
@@ -412,7 +412,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	}
 
 	public void tfoot1DesignInscriptionGenPage() {
-		{ e("tfoot").a("class", "w3-indigo w3-hover-indigo ").f();
+		{ e("tfoot").a("class", "w3-khaki w3-hover-khaki ").f();
 			tfoot2DesignInscriptionGenPage();
 		} g("tfoot");
 	}
@@ -448,7 +448,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 			if(listeDesignInscription != null && listeDesignInscription.size() == 1) {
 				{ e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 						.a("id", "rechargerCeDesignInscriptionGenPage")
 						.a("onclick", "patchDesignInscriptionVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeDesignInscriptionGenPage')); }, function() { ajouterErreur($('#rechargerCeDesignInscriptionGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
@@ -457,14 +457,14 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			}
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#postDesignInscriptionModale').show(); ")
 				.f().sx("Créer un design d'inscription")
 			.g("button");
 			{ e("div").a("id", "postDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-indigo ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postDesignInscriptionModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un design d'inscription").g("h2");
 						} g("header");
@@ -477,7 +477,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 								htmlFormPOSTDesignInscription(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "postDesignInscription($('#postDesignInscriptionForm')); ")
 								.f().sx("Créer un design d'inscription")
 							.g("button");
@@ -489,14 +489,14 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#putDesignInscriptionModale').show(); ")
 				.f().sx("Dupliquer des design d'inscriptions")
 			.g("button");
 			{ e("div").a("id", "putDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-indigo ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putDesignInscriptionModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des design d'inscriptions").g("h2");
 						} g("header");
@@ -509,7 +509,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 								htmlFormPUTDesignInscription(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "putDesignInscription($('#putDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), "); ")
 								.f().sx("Dupliquer des design d'inscriptions")
 							.g("button");
@@ -521,14 +521,14 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 
 			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#patchDesignInscriptionModale').show(); ")
 				.f().sx("Modifier des design d'inscriptions")
 			.g("button");
 			{ e("div").a("id", "patchDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-indigo ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchDesignInscriptionModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier des design d'inscriptions").g("h2");
 						} g("header");
@@ -541,7 +541,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 								htmlFormPATCHDesignInscription(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchDesignInscription($('#patchDesignInscriptionFormulaireFiltres'), $('#patchDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des design d'inscriptions")
 							.g("button");
@@ -599,7 +599,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), DesignInscriptionGenPage.ROLES)
 				) {
 			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerTousDesignInscriptionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ").a("onclick", "patchDesignInscriptionVals([], {}, function() { ajouterLueur($('#rechargerTousDesignInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignInscriptionGenPage", id, "')); }); ").f();
+				{ p.e("button").a("id", "rechargerTousDesignInscriptionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchDesignInscriptionVals([], {}, function() { ajouterLueur($('#rechargerTousDesignInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignInscriptionGenPage", id, "')); }); ").f();
 					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					p.sx("recharger tous les design d'inscriptions");
 				} p.g("button");

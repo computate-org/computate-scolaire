@@ -101,12 +101,14 @@ import net.authorize.api.contract.v1.BatchDetailsType;
 import net.authorize.api.contract.v1.CustomerProfileIdType;
 import net.authorize.api.contract.v1.GetSettledBatchListRequest;
 import net.authorize.api.contract.v1.GetSettledBatchListResponse;
+import net.authorize.api.contract.v1.GetTransactionDetailsResponse;
 import net.authorize.api.contract.v1.GetTransactionListForCustomerRequest;
 import net.authorize.api.contract.v1.GetTransactionListRequest;
 import net.authorize.api.contract.v1.GetTransactionListResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
 import net.authorize.api.contract.v1.MessageTypeEnum;
 import net.authorize.api.contract.v1.Paging;
+import net.authorize.api.contract.v1.TransactionDetailsType;
 import net.authorize.api.contract.v1.TransactionListOrderFieldEnum;
 import net.authorize.api.contract.v1.TransactionListSorting;
 import net.authorize.api.contract.v1.TransactionSummaryType;
@@ -562,7 +564,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 												schoolEnrollment.setPk(enrollmentKey);
 												schoolEnrollment.setSiteRequest_(siteRequest);
 												futures.add(
-													enrollmentService.futurePATCHSchoolEnrollment(schoolEnrollment, d -> {
+													enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("enrollment %s refreshed. ", enrollmentKey));
 														} else {
@@ -681,10 +683,10 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			List<LocalDate> paymentsDue = Optional.ofNullable((SimpleOrderedMap)facets.get("paymentDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(ZoneId.of(configSite.getSiteZone())).toLocalDate(), Collectors.toList()));
 			LocalDate sessionStartDate = schoolEnrollment.getSessionStartDate();
 			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
-			LocalDate fraisJourDebut = sessionStartDate.plusWeeks(1).withDayOfMonth(25);
-			LocalDate fraisJourFin = sessionEndDate.minusWeeks(1).minusMonths(2).withDayOfMonth(25);
+			LocalDate chargeStartDate = sessionStartDate.plusWeeks(1).withDayOfMonth(25);
+			LocalDate chargeEndDate = sessionEndDate.minusWeeks(1).minusMonths(2).withDayOfMonth(25);
 			Long enrollmentKey = schoolEnrollment.getPk();
-			long numMonths = ChronoUnit.MONTHS.between(fraisJourDebut, fraisJourFin);
+			long numMonths = ChronoUnit.MONTHS.between(chargeStartDate, chargeEndDate);
 			List<Future> futures = new ArrayList<>();
 
 			if(chargeEnrollment == 0) {
@@ -705,7 +707,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-				futures.add(futureAuthorizeNetChargePOST(o, paymentService, siteRequest2, b -> {
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
 					} else {
@@ -732,7 +734,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-				futures.add(futureAuthorizeNetChargePOST(o, paymentService, siteRequest2, b -> {
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
 					} else {
@@ -742,7 +744,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				}));
 			}
 			for(long i = 0; i <= numMonths; i++) {
-				LocalDate paymentDate = fraisJourDebut.plusMonths(i);
+				LocalDate paymentDate = chargeStartDate.plusMonths(i);
 				if(!paymentsDue.contains(paymentDate)) {
 					SchoolPayment o = new SchoolPayment();
 					o.setSiteRequest_(siteRequest);
@@ -761,7 +763,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 					siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-					futures.add(futureAuthorizeNetChargePOST(o, paymentService, siteRequest2, b -> {
+					futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
 						if(b.succeeded()) {
 							LOGGER.info(String.format("charge %s created for enrollment %s. ", paymentDate, enrollmentKey));
 						} else {
@@ -867,46 +869,6 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		}
 	}
 
-	public Future<SchoolPayment> futureAuthorizeNetChargePOST(SchoolPayment o, SchoolPaymentEnUSGenApiServiceImpl paymentService, SiteRequestEnUS siteRequest, Handler<AsyncResult<Void>> a) {
-		Promise<SchoolPayment> promise = Promise.promise();
-		Long enrollmentKey = o.getEnrollmentKey();
-		paymentService.createSchoolPayment(siteRequest, b -> {
-			if(b.succeeded()) {
-				SchoolPayment schoolPayment = b.result();
-				paymentService.sqlPOSTSchoolPayment(schoolPayment, c -> {
-					if(c.succeeded()) {
-						paymentService.defineSchoolPayment(schoolPayment, d -> {
-							if(d.succeeded()) {
-								paymentService.attributeSchoolPayment(schoolPayment, e -> {
-									if(e.succeeded()) {
-										paymentService.indexSchoolPayment(schoolPayment, f -> {
-											if(c.succeeded()) {
-												promise.complete(schoolPayment);
-												LOGGER.info(String.format("charge %s created %s for enrollment %s. ", schoolPayment.getPk(), schoolPayment.getPaymentDate(), enrollmentKey));
-											} else {
-												LOGGER.error(String.format("Creating charge has failed for enrollment %s. ", enrollmentKey), c.cause());
-												promise.fail(c.cause());
-											}
-										});
-									} else {
-										errorAppVertx(siteRequest, e);
-									}
-								});
-							} else {
-								errorAppVertx(siteRequest, d);
-							}
-						});
-					} else {
-						errorAppVertx(siteRequest, c);
-					}
-				});
-			} else {
-				errorAppVertx(siteRequest, b);
-			}
-		});
-		return promise.future();
-	}
-
 	/**	
 	 *	Configure payments with Authorize.net. 
 	 **/
@@ -999,7 +961,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 												schoolEnrollment.setPk(enrollmentKey);
 												schoolEnrollment.setSiteRequest_(siteRequest);
 												futures.add(
-													enrollmentService.futurePATCHSchoolEnrollment(schoolEnrollment, d -> {
+													enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("enrollment %s refreshed. ", enrollmentKey));
 														} else {
@@ -1015,7 +977,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 													LOGGER.info(String.format("There are %s payments to reload. ", enrollmentKeys.size()));
 													for(SchoolPayment payment : listeRecherche.getList()) {
 														futuresPayment.add(
-															paymentService.futurePATCHSchoolPayment(payment, e -> {
+															paymentService.patchSchoolPaymentFuture(payment, e -> {
 																if(e.succeeded()) {
 																	LOGGER.info(String.format("payment %s refreshed. ", payment.getPk()));
 																} else {
@@ -1193,6 +1155,10 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			payment.setCustomerProfileId(Optional.ofNullable(transaction.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
 			payment.setTransactionStatus(transaction.getTransactionStatus());
 			payment.setPaymentBy(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
+
+			// TODO: TEMP
+			GetTransactionDetailsResponse getTransactionDetailsResponse = new GetTransactionDetailsResponse();
+			TransactionDetailsType transactionDetails = getTransactionDetailsResponse.getTransaction();
 
 			if(schoolEnrollment != null) {
 				payment.setEnrollmentKey(schoolEnrollment.getPk());

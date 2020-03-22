@@ -105,12 +105,14 @@ import net.authorize.api.contract.v1.BatchDetailsType;
 import net.authorize.api.contract.v1.CustomerProfileIdType;
 import net.authorize.api.contract.v1.GetSettledBatchListRequest;
 import net.authorize.api.contract.v1.GetSettledBatchListResponse;
+import net.authorize.api.contract.v1.GetTransactionDetailsResponse;
 import net.authorize.api.contract.v1.GetTransactionListForCustomerRequest;
 import net.authorize.api.contract.v1.GetTransactionListRequest;
 import net.authorize.api.contract.v1.GetTransactionListResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
 import net.authorize.api.contract.v1.MessageTypeEnum;
 import net.authorize.api.contract.v1.Paging;
+import net.authorize.api.contract.v1.TransactionDetailsType;
 import net.authorize.api.contract.v1.TransactionListOrderFieldEnum;
 import net.authorize.api.contract.v1.TransactionListSorting;
 import net.authorize.api.contract.v1.TransactionSummaryType;
@@ -1066,7 +1068,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 												inscriptionScolaire.setPk(inscriptionCle);
 												inscriptionScolaire.setRequeteSite_(requeteSite);
 												futures.add(
-													inscriptionService.futurePATCHInscriptionScolaire(inscriptionScolaire, d -> {
+													inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
 														} else {
@@ -1305,6 +1307,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: "Creating payments for customer %s succeeded. "
 	 * r: futureAuthorizeNetFraisPOST
 	 * r.enUS: futureAuthorizeNetChargePOST
+	 * r: fraisJourDebut
+	 * r.enUS: chargeStartDate
+	 * r: fraisJourFin
+	 * r.enUS: chargeEndDate
 	 * 
 	 * r: FraisPremierDernier
 	 * r.enUS: ChargeFirstLast
@@ -1368,7 +1374,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 				requeteSite2.setObjetJson(JsonObject.mapFrom(o));
 
-				futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
+				futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("frais %s créé pour inscription %s. ", sessionJourDebut, inscriptionCle));
 					} else {
@@ -1395,7 +1401,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 				requeteSite2.setObjetJson(JsonObject.mapFrom(o));
 
-				futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
+				futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("frais %s créé pour inscription %s. ", sessionJourDebut, inscriptionCle));
 					} else {
@@ -1424,7 +1430,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 					requeteSite2.setObjetJson(JsonObject.mapFrom(o));
 
-					futures.add(futureAuthorizeNetFraisPOST(o, paiementService, requeteSite2, b -> {
+					futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, b -> {
 						if(b.succeeded()) {
 							LOGGER.info(String.format("frais %s créé pour inscription %s. ", paiementDate, inscriptionCle));
 						} else {
@@ -1564,89 +1570,6 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			a.handle(Future.failedFuture(e));
 			return Future.failedFuture(e);
 		}
-	}
-
-	/**
-	 * Var.enUS: futureAuthorizeNetChargePOST
-	 * Param2.var.enUS: paymentService
-	 * Param3.var.enUS: siteRequest
-	 * 
-	 * r: inscriptionCle
-	 * r.enUS: enrollmentKey
-	 * r: paiementScolaire
-	 * r.enUS: schoolPayment
-	 * r: InscriptionCle
-	 * r.enUS: EnrollmentKey
-	 * r: sqlPOSTPaiementScolaire
-	 * r.enUS: sqlPOSTSchoolPayment
-	 * r: paiementService
-	 * r.enUS: paymentService
-	 * r: definirPaiementScolaire
-	 * r.enUS: defineSchoolPayment
-	 * r: attribuerPaiementScolaire
-	 * r.enUS: attributeSchoolPayment
-	 * r: indexerPaiementScolaire
-	 * r.enUS: indexSchoolPayment
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: creerPaiementScolaire
-	 * r.enUS: createSchoolPayment
-	 * r: erreurAppliVertx
-	 * r.enUS: errorAppVertx
-	 * r: erreurPaiementScolaire
-	 * r.enUS: errorSchoolPayment
-	 * r: PaiementDate
-	 * r.enUS: PaymentDate
-	 * r: "frais %s créé %s pour inscription %s. "
-	 * r.enUS: "charge %s created %s for enrollment %s. "
-	 * r: "créer frais a échoué pour inscription %s. "
-	 * r.enUS: "Creating charge has failed for enrollment %s. "
-	 * 
-	 * r: PaiementScolaire
-	 * r.enUS: SchoolPayment
-	 */
-	public Future<PaiementScolaire> futureAuthorizeNetFraisPOST(
-			PaiementScolaire o
-			, PaiementScolaireFrFRGenApiServiceImpl paiementService
-			, RequeteSiteFrFR requeteSite
-			,  Handler<AsyncResult<Void>> a) {
-		Promise<PaiementScolaire> promise = Promise.promise();
-		Long inscriptionCle = o.getInscriptionCle();
-		paiementService.creerPaiementScolaire(requeteSite, b -> {
-			if(b.succeeded()) {
-				PaiementScolaire paiementScolaire = b.result();
-				paiementService.sqlPOSTPaiementScolaire(paiementScolaire, c -> {
-					if(c.succeeded()) {
-						paiementService.definirPaiementScolaire(paiementScolaire, d -> {
-							if(d.succeeded()) {
-								paiementService.attribuerPaiementScolaire(paiementScolaire, e -> {
-									if(e.succeeded()) {
-										paiementService.indexerPaiementScolaire(paiementScolaire, f -> {
-											if(c.succeeded()) {
-												promise.complete(paiementScolaire);
-												LOGGER.info(String.format("frais %s créé %s pour inscription %s. ", paiementScolaire.getPk(), paiementScolaire.getPaiementDate(), inscriptionCle));
-											} else {
-												LOGGER.error(String.format("créer frais a échoué pour inscription %s. ", inscriptionCle), c.cause());
-												promise.fail(c.cause());
-											}
-										});
-									} else {
-										erreurAppliVertx(requeteSite, e);
-									}
-								});
-							} else {
-								erreurAppliVertx(requeteSite, d);
-							}
-						});
-					} else {
-						erreurAppliVertx(requeteSite, c);
-					}
-				});
-			} else {
-				erreurAppliVertx(requeteSite, b);
-			}
-		});
-		return promise.future();
 	}
 
 	/**
@@ -1880,7 +1803,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 												inscriptionScolaire.setPk(inscriptionCle);
 												inscriptionScolaire.setRequeteSite_(requeteSite);
 												futures.add(
-													inscriptionService.futurePATCHInscriptionScolaire(inscriptionScolaire, d -> {
+													inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
 														} else {
@@ -1896,7 +1819,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 													LOGGER.info(String.format("Il y a %s paiements à recharger. ", inscriptionCles.size()));
 													for(PaiementScolaire paiement : listeRecherche.getList()) {
 														futuresPaiement.add(
-															paiementService.futurePATCHPaiementScolaire(paiement, e -> {
+															paiementService.patchPaiementScolaireFuture(paiement, e -> {
 																if(e.succeeded()) {
 																	LOGGER.info(String.format("paiement %s rechargé. ", paiement.getPk()));
 																} else {
@@ -2193,6 +2116,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			paiement.setCustomerProfileId(Optional.ofNullable(transaction.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
 			paiement.setTransactionStatus(transaction.getTransactionStatus());
 			paiement.setPaiementPar(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
+
+			// TODO: TEMP
+			GetTransactionDetailsResponse getTransactionDetailsResponse = new GetTransactionDetailsResponse();
+			TransactionDetailsType transactionDetails = getTransactionDetailsResponse.getTransaction();
 
 			if(inscriptionScolaire != null) {
 				paiement.setInscriptionCle(inscriptionScolaire.getPk());

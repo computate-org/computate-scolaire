@@ -244,7 +244,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmPk(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ s.e("div").a("class", "w3-padding ").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -480,7 +480,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmCreated(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ s.e("div").a("class", "w3-padding ").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -585,7 +585,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmModified(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ s.e("div").a("class", "w3-padding ").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -723,7 +723,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmArchived(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ s.e("div").a("class", "w3-padding ").f();
 				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterArchived").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -860,7 +860,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmDeleted(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ s.e("div").a("class", "w3-padding ").f();
 				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterDeleted").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -1293,7 +1293,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmObjectTitle(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ s.e("div").a("class", "w3-padding ").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -1378,7 +1378,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void htmObjectId(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ s.e("div").a("class", "w3-padding ").f();
 					{ s.e("div").a("class", "w3-card ").f();
@@ -1520,6 +1520,68 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmObjectSuggest() {
 		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
+	}
+
+	////////////////
+	// objectText //
+	////////////////
+
+	/**	L'entité « objectText »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String objectText;
+	@JsonIgnore
+	public Wrap<String> objectTextWrap = new Wrap<String>().p(this).c(String.class).var("objectText").o(objectText);
+
+	/**	<br/>L'entité « objectText »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectText">Trouver l'entité objectText dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _objectText(Wrap<String> c);
+
+	public String getObjectText() {
+		return objectText;
+	}
+
+	public void setObjectText(String objectText) {
+		this.objectText = objectText;
+		this.objectTextWrap.alreadyInitialized = true;
+	}
+	protected Cluster objectTextInit() {
+		if(!objectTextWrap.alreadyInitialized) {
+			_objectText(objectTextWrap);
+			if(objectText == null)
+				setObjectText(objectTextWrap.o);
+		}
+		objectTextWrap.alreadyInitialized(true);
+		return (Cluster)this;
+	}
+
+	public String solrObjectText() {
+		return objectText;
+	}
+
+	public String strObjectText() {
+		return objectText == null ? "" : objectText;
+	}
+
+	public String jsonObjectText() {
+		return objectText == null ? "" : objectText;
+	}
+
+	public String nomAffichageObjectText() {
+		return null;
+	}
+
+	public String htmTooltipObjectText() {
+		return null;
+	}
+
+	public String htmObjectText() {
+		return objectText == null ? "" : StringEscapeUtils.escapeHtml4(strObjectText());
 	}
 
 	///////////////
@@ -1746,6 +1808,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		objectIdInit();
 		objectNameVarInit();
 		objectSuggestInit();
+		objectTextInit();
 		pageUrlIdInit();
 		pageUrlPkInit();
 		pageH1Init();
@@ -1822,6 +1885,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.objectNameVar;
 			case "objectSuggest":
 				return oCluster.objectSuggest;
+			case "objectText":
+				return oCluster.objectText;
 			case "pageUrlId":
 				return oCluster.pageUrlId;
 			case "pageUrlPk":
@@ -2147,6 +2212,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(objectSuggest != null) {
 			document.addField("objectSuggest_suggested", objectSuggest);
 		}
+		if(objectText != null) {
+			document.addField("objectText_text_enUS", objectText.toString());
+			document.addField("objectText_indexed_string", objectText);
+		}
 		if(pageUrlId != null) {
 			document.addField("pageUrlId_indexed_string", pageUrlId);
 			document.addField("pageUrlId_stored_string", pageUrlId);
@@ -2206,6 +2275,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return "objectId_indexed_string";
 			case "objectSuggest":
 				return "objectSuggest_indexed_string";
+			case "objectText":
+				return "objectText_indexed_string";
 			case "pageUrlId":
 				return "pageUrlId_indexed_string";
 			case "pageUrlPk":
@@ -2217,6 +2288,8 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public static String varSearchCluster(String entityVar) {
 		switch(entityVar) {
+			case "objectText":
+				return "objectText_text_enUS";
 			case "objectSuggest":
 				return "objectSuggest_suggested";
 			default:
@@ -2300,6 +2373,10 @@ public abstract class ClusterGen<DEV> extends Object {
 
 		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
 		oCluster.setObjectSuggest(objectSuggest);
+
+		String objectText = (String)solrDocument.get("objectText_stored_string");
+		if(objectText != null)
+			oCluster.setObjectText(objectText);
 
 		String pageUrlId = (String)solrDocument.get("pageUrlId_stored_string");
 		if(pageUrlId != null)

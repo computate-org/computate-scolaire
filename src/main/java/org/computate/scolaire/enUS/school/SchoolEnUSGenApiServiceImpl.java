@@ -125,54 +125,23 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 			sqlSchool(siteRequest, a -> {
 				if(a.succeeded()) {
-					createSchool(siteRequest, b -> {
+					userSchool(siteRequest, b -> {
 						if(b.succeeded()) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							School school = b.result();
-							sqlPOSTSchool(school, c -> {
+							postSchoolFuture(siteRequest, c -> {
 								if(c.succeeded()) {
-									defineSchool(school, d -> {
+									School school = c.result();
+									apiRequestSchool(school);
+									postSchoolResponse(school, d -> {
 										if(d.succeeded()) {
-											attributeSchool(school, e -> {
-												if(e.succeeded()) {
-													indexSchool(school, f -> {
-														if(f.succeeded()) {
-															response200POSTSchool(school, g -> {
-																if(f.succeeded()) {
-																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
-																	sqlConnection.commit(h -> {
-																		if(a.succeeded()) {
-																			sqlConnection.close(i -> {
-																				if(a.succeeded()) {
-																					apiRequestSchool(school);
-																					school.apiRequestSchool();
-																					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
-																					eventHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					errorSchool(siteRequest, eventHandler, i);
-																				}
-																			});
-																		} else {
-																			errorSchool(siteRequest, eventHandler, h);
-																		}
-																	});
-																} else {
-																	errorSchool(siteRequest, eventHandler, g);
-																}
-															});
-														} else {
-															errorSchool(siteRequest, eventHandler, f);
-														}
-													});
-												} else {
-													errorSchool(siteRequest, eventHandler, e);
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postSchool %s succeeded. "));
 										} else {
+											LOGGER.error(String.format("postSchool %s failed. ", d.cause()));
 											errorSchool(siteRequest, eventHandler, d);
 										}
 									});
@@ -191,6 +160,37 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		} catch(Exception e) {
 			errorSchool(null, eventHandler, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<School> postSchoolFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<School>> eventHandler) {
+		Promise<School> promise = Promise.promise();
+		try {
+			createSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					School school = a.result();
+					sqlPOSTSchool(school, b -> {
+						if(b.succeeded()) {
+							defineIndexSchool(school, c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(school));
+									promise.complete(school);
+								} else {
+									errorSchool(siteRequest, null, c);
+								}
+							});
+						} else {
+							errorSchool(siteRequest, null, b);
+						}
+					});
+				} else {
+					errorSchool(siteRequest, null, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -255,6 +255,32 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+	public void postSchoolResponse(School school, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = school.getSiteRequest_();
+		response200POSTSchool(school, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = apiRequestSchool(school);
+								school.apiRequestSchool();
+								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200POSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
@@ -293,17 +319,17 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(a.succeeded()) {
 					userSchool(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchool(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<School> listSchool = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchool.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -312,24 +338,15 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 															try {
 																listPUTSchool(apiRequest, listSchool, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		putSchoolResponse(listSchool, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putSchool succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putSchool failed. ", g.cause()));
+																				errorSchool(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -344,7 +361,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												}, resultHandler -> {
 												}
 											);
-											response200PUTSchool(apiRequest, eventHandler);
 										} else {
 											errorSchool(siteRequest, eventHandler, d);
 										}
@@ -366,6 +382,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+
 	public void listPUTSchool(ApiRequest apiRequest, SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
@@ -373,8 +390,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		if(jsonArray.size() == 0) {
 			listSchool.getList().forEach(o -> {
 				futures.add(
-					futurePUTSchool(siteRequest, JsonObject.mapFrom(o), a -> {
+					putSchoolFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 						if(a.succeeded()) {
+							School school = a.result();
+							apiRequestSchool(school);
 						} else {
 							errorSchool(siteRequest, eventHandler, a);
 						}
@@ -388,7 +407,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 						listPUTSchool(apiRequest, listSchool, eventHandler);
 					} else {
-						response200PUTSchool(apiRequest, eventHandler);
+						response200PUTSchool(listSchool, eventHandler);
 					}
 				} else {
 					errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
@@ -398,8 +417,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			jsonArray.forEach(o -> {
 				JsonObject jsonObject = (JsonObject)o;
 				futures.add(
-					futurePUTSchool(siteRequest, jsonObject, a -> {
+					putSchoolFuture(siteRequest, jsonObject, a -> {
 						if(a.succeeded()) {
+							School school = a.result();
+							apiRequestSchool(school);
 						} else {
 							errorSchool(siteRequest, eventHandler, a);
 						}
@@ -409,7 +430,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTSchool(apiRequest, eventHandler);
+					response200PUTSchool(listSchool, eventHandler);
 				} else {
 					errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
@@ -417,15 +438,17 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public Future<School> futurePUTSchool(SiteRequestEnUS siteRequest, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-		JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-		jsonPatch.stream().forEach(o -> {
-			jsonObject.put(o.getKey(), o.getValue());
-			jsonObject.getJsonArray("saves").add(o.getKey());
-		});
+	public Future<School> putSchoolFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<School>> eventHandler) {
 		Promise<School> promise = Promise.promise();
 		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+
+			});
 			createSchool(siteRequest, a -> {
 				if(a.succeeded()) {
 					School school = a.result();
@@ -437,10 +460,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 										if(d.succeeded()) {
 											indexSchool(school, e -> {
 												if(e.succeeded()) {
-													apiRequestSchool(school);
-													school.apiRequestSchool();
+													eventHandler.handle(Future.succeededFuture(school));
 													promise.complete(school);
-													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -461,30 +482,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorSchool(null, null, Future.failedFuture(e));
 		}
-	}
-
-	public void remplacerPUTSchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<School>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_clear
-					, new JsonArray(Arrays.asList(pk, School.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				School o = new School();
-				o.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
+		return promise.future();
 	}
 
 	public void sqlPUTSchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -549,8 +550,35 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void response200PUTSchool(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200PUTSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -585,6 +613,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(a.succeeded()) {
 					userSchool(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -602,16 +635,12 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchool.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											if(listSchool.size() == 1) {
 												School o = listSchool.get(0);
 												apiRequest.setPk(o.getPk());
 												apiRequest.setOriginal(o);
 												apiRequestSchool(o);
+											o.apiRequestSchool();
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -621,24 +650,15 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 															try {
 																listPATCHSchool(apiRequest, listSchool, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchSchoolResponse(listSchool, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchSchool succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("patchSchool failed. ", g.cause()));
+																				errorSchool(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -653,7 +673,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchool(apiRequest, eventHandler);
 										} else {
 											errorSchool(siteRequest, eventHandler, d);
 										}
@@ -675,13 +694,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+
 	public void listPATCHSchool(ApiRequest apiRequest, SearchList<School> listSchool, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
 		listSchool.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchool(o, a -> {
+				patchSchoolFuture(o, a -> {
 					if(a.succeeded()) {
+							School school = a.result();
+							apiRequestSchool(school);
 					} else {
 						errorSchool(siteRequest, eventHandler, a);
 					}
@@ -695,7 +717,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSchool(apiRequest, listSchool, dt, eventHandler);
 				} else {
-					response200PATCHSchool(apiRequest, eventHandler);
+					response200PATCHSchool(listSchool, eventHandler);
 				}
 			} else {
 				errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
@@ -703,9 +725,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 	}
 
-	public Future<School> futurePATCHSchool(School o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public Future<School> patchSchoolFuture(School o, Handler<AsyncResult<School>> eventHandler) {
 		Promise<School> promise = Promise.promise();
 		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSchool(o, a -> {
 				if(a.succeeded()) {
 					School school = a.result();
@@ -715,10 +738,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								if(c.succeeded()) {
 									indexSchool(school, d -> {
 										if(d.succeeded()) {
-											apiRequestSchool(school);
-											school.apiRequestSchool();
-											promise.complete(o);
-											eventHandler.handle(Future.succeededFuture(d.result()));
+											eventHandler.handle(Future.succeededFuture(school));
+											promise.complete(school);
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -735,10 +756,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorSchool(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHSchool(School o, Handler<AsyncResult<School>> eventHandler) {
@@ -901,9 +922,35 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void response200PATCHSchool(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200PATCHSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PATCHSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -945,27 +992,12 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							aSearchSchool(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<School> listSchool = c.result();
-									response200GETSchool(listSchool, d -> {
+									getSchoolResponse(listSchool, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchool(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("getSchool succeeded. "));
 										} else {
+											LOGGER.error(String.format("getSchool failed. ", d.cause()));
 											errorSchool(siteRequest, eventHandler, d);
 										}
 									});
@@ -986,6 +1018,30 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+
+	public void getSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200GETSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200GETSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
@@ -1032,27 +1088,12 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							aSearchSchool(siteRequest, false, true, "/api/school", c -> {
 								if(c.succeeded()) {
 									SearchList<School> listSchool = c.result();
-									response200SearchSchool(listSchool, d -> {
+									searchSchoolResponse(listSchool, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchool(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchSchool succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchSchool failed. ", d.cause()));
 											errorSchool(siteRequest, eventHandler, d);
 										}
 									});
@@ -1073,6 +1114,30 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+
+	public void searchSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200SearchSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
@@ -1156,27 +1221,12 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							aSearchSchool(siteRequest, false, true, "/school", c -> {
 								if(c.succeeded()) {
 									SearchList<School> listSchool = c.result();
-									response200SearchPageSchool(listSchool, d -> {
+									searchpageSchoolResponse(listSchool, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchool(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchpageSchool succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchpageSchool failed. ", d.cause()));
 											errorSchool(siteRequest, eventHandler, d);
 										}
 									});
@@ -1197,6 +1247,30 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+
+	public void searchpageSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200SearchPageSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchPageSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
@@ -1223,7 +1297,33 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<School> defineIndexSchool(School school, Handler<AsyncResult<School>> eventHandler) {
+		Promise<School> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = school.getSiteRequest_();
+		defineSchool(school, c -> {
+			if(c.succeeded()) {
+				attributeSchool(school, d -> {
+					if(d.succeeded()) {
+						indexSchool(school, e -> {
+							if(e.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(school));
+								promise.complete(school);
+							} else {
+								errorSchool(siteRequest, null, e);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, null, d);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void createSchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<School>> eventHandler) {
 		try {
@@ -1247,7 +1347,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void apiRequestSchool(School o) {
+	public ApiRequest apiRequestSchool(School o) {
 		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
@@ -1259,6 +1359,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 			}
 		}
+		return apiRequest;
 	}
 
 	public void errorSchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1538,7 +1639,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	}
 
 	public Boolean userSchoolDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
 	}
 
 	public void aSearchSchoolQ(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
@@ -1567,7 +1672,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolVar(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolVar(SearchList<School> searchList, String var, String value) {
+		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
 	public void aSearchSchool(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<School>>> eventHandler) {
@@ -1580,6 +1686,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			searchList.setStore(store);
 			searchList.setQuery("*:*");
 			searchList.setC(School.class);
+			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null)
 				searchList.addFields(entityList);
 			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
@@ -1633,8 +1740,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = School.varIndexedSchool(entityVar);
-								aSearchSchoolVar(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolVar(searchList, entityVar, valueIndexed);
 								break;
 						}
 					}
@@ -1743,7 +1849,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolYear(o2, a -> {
+							service.patchSchoolYearFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
 								} else {
@@ -1762,7 +1868,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						List<Future> futures2 = new ArrayList<>();
 						for(School o2 : searchList.getList()) {
 							futures2.add(
-								service.futurePATCHSchool(o2, b -> {
+								service.patchSchoolFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("School %s refreshed. ", o2.getPk()));
 									} else {

@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -226,6 +227,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmChargeEnrollment("PUT");
 			o.htmChargeFirstLast("PUT");
 			o.htmChargeMonth("PUT");
+			o.htmChargeLateFee("PUT");
 			o.htmPaymentShortName("PUT");
 		} g("div");
 	}
@@ -271,6 +273,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmChargeEnrollment("PATCH");
 			o.htmChargeFirstLast("PATCH");
 			o.htmChargeMonth("PATCH");
+			o.htmChargeLateFee("PATCH");
 			o.htmPaymentShortName("PATCH");
 		} g("div");
 	}
@@ -319,6 +322,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmChargeEnrollment("Recherche");
 			o.htmChargeFirstLast("Recherche");
 			o.htmChargeMonth("Recherche");
+			o.htmChargeLateFee("Recherche");
 			o.htmPaymentShortName("Recherche");
 		} g("div");
 	}
@@ -383,7 +387,8 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listSchoolPayment.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listSchoolPayment.getQuery(), "_suggested", "");
+					String q = listSchoolPayment.getQuery();
+					String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
 					Integer rows1 = listSchoolPayment.getRows();
 					Integer start1 = listSchoolPayment.getStart();
 					Integer start2 = start1 - rows1;
@@ -391,11 +396,20 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : listSchoolPayment.getFilterQueries()) {
+						if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_"))
+							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : listSchoolPayment.getSorts()) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/payment?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/payment?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -403,19 +417,19 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/payment?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/payment?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/payment?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/payment?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/payment?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/payment?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -423,6 +437,46 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				} g("div");
 				table1PaymentGenPage();
 		}
+
+		{ e("div").a("class", "").f();
+			{ e("form").a("id", "SchoolPaymentForm").a("style", "display: inline-block; width: 100%; ").a("method", "GET").a("action", "/payment").a("onsubmit", "event.preventDefault(); search($('#aSearchObjectText')); return false; ").f();
+				{ e("div").a("class", "w3-bar ").f();
+					e("input").a("type", "text")
+						.a("placeholder", "")
+						.a("title", "")
+						.a("class", "aSearchObjectText w3-input w3-border w3-bar-item ")
+						.a("name", "objectText")
+						.a("id", "aSearchObjectText");
+					operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+						String entityVar = null;
+						String valueIndexed = null;
+						String paramName = paramRequest.getKey();
+						Object paramObjectValues = paramRequest.getValue();
+						JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
+
+						try {
+							for(Object paramObject : paramObjects) {
+								switch(paramName) {
+									case "q":
+										entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+										valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+										if("objectText".equals(entityVar))
+											a("value", URLDecoder.decode(valueIndexed, "UTF-8"));
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					});
+					fg();
+					{ e("button")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+						.f();
+						e("i").a("class", "fas fa-search ").f().g("i");
+					} g("button");
+				} g("div");
+			} g("form");
+		} g("div");
 
 		if(listSchoolPayment != null && listSchoolPayment.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			SchoolPayment o = listSchoolPayment.first();
@@ -648,11 +702,13 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("onclick", "$('#postSchoolPaymentModal').show(); ")
-				.f().sx("Create a payment")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Create a payment");
+			} g("button");
 			{ e("div").a("id", "postSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -680,11 +736,13 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("onclick", "$('#putSchoolPaymentModal').show(); ")
-				.f().sx("Duplicate the payments")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate the payments");
+			} g("button");
 			{ e("div").a("id", "putSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -712,11 +770,13 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 				.a("onclick", "$('#patchSchoolPaymentModal').show(); ")
-				.f().sx("Modify the payments")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modify the payments");
+			} g("button");
 			{ e("div").a("id", "patchSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -749,8 +809,27 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 	/**
 	**/
-	public static void htmlSuggestPaymentGenPage(PageLayout p, String id) {
+	public static void htmlSuggestPaymentGenPage(PageLayout p, String id, SearchList<SchoolPayment> listSchoolPayment) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
+		String q = Optional.ofNullable(listSchoolPayment).map(l -> l.getQuery()).orElse("*:*");
+		String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
+		Integer rows1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getRows()).orElse(10);
+		Integer start1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getStart()).orElse(1);
+		Integer start2 = start1 - rows1;
+		Integer start3 = start1 + rows1;
+		Integer rows2 = rows1 / 2;
+		Integer rows3 = rows1 * 2;
+		start2 = start2 < 0 ? 0 : start2;
+		StringBuilder fqs = new StringBuilder();
+		for(String fq : Optional.ofNullable(listSchoolPayment).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+			if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_"))
+				fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+		}
+		StringBuilder sorts = new StringBuilder();
+		for(SortClause sort : Optional.ofNullable(listSchoolPayment.getSorts()).orElse(Arrays.asList())) {
+			sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+		}
+
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PaymentGenPage.ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PaymentGenPage.ROLES)
@@ -782,6 +861,12 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				.a("autocomplete", "off")
 				.a("oninput", "suggestSchoolPaymentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 				.fg();
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+					.a("onclick", "window.location.href = '/payment?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					e("i").a("class", "fas fa-search ").f().g("i");
+				} g("button");
 
 		} p.g("div");
 		{ p.e("div").a("class", "w3-cell-row ").f();

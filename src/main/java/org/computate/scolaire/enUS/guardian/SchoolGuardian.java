@@ -37,6 +37,7 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 		l.addFacetField("seasonKey_indexed_long");
 		l.addFacetField("sessionKey_indexed_long");
 		l.addFacetField("ageKey_indexed_long");
+		l.addFacetField("userKeys_indexed_longs");
 	}
 
 	protected void _enrollments(List<SchoolEnrollment> l) {

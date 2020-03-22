@@ -160,7 +160,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($('#suggest", classApiMethodMethod, "SchoolYearSchoolKey')) : [{'name':'fq','value':'yearKeys:", pk, "'}], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSchoolKey());
 		}
 	}
 
@@ -467,7 +466,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolYearSeasonKeys')) : [{'name':'fq','value':'yearKey:", pk, "'}], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmSeasonKeys());
 		}
 	}
 
@@ -1376,7 +1374,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				a("value", strYearStart())
 			.fg();
 
-			sx(htmYearStart());
 		}
 	}
 
@@ -1504,7 +1501,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				a("value", strYearEnd())
 			.fg();
 
-			sx(htmYearEnd());
 		}
 	}
 
@@ -1643,7 +1639,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				a("value", strYearEnrollmentFee())
 			.fg();
 
-			sx(htmYearEnrollmentFee());
 		}
 	}
 

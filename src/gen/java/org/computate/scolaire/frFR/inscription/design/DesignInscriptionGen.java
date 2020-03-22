@@ -73,7 +73,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	public static final String DesignInscription_DeNom = "de design d'inscription";
 	public static final String DesignInscription_NomAdjectifSingulier = "design d'inscription";
 	public static final String DesignInscription_NomAdjectifPluriel = "design d'inscriptions";
-	public static final String DesignInscription_Couleur = "indigo";
+	public static final String DesignInscription_Couleur = "khaki";
 	public static final String DesignInscription_IconeGroupe = "regular";
 	public static final String DesignInscription_IconeNom = "drafting-compass";
 
@@ -316,13 +316,12 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 					.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmPartHtmlCles());
 		}
 	}
 
 	public void htmPartHtmlCles(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1161,17 +1160,16 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				a("value", strDesignInscriptionNomComplet())
 			.fg();
 
-			sx(htmDesignInscriptionNomComplet());
 		}
 	}
 
 	public void htmDesignInscriptionNomComplet(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionDesignInscriptionNomComplet").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_designInscriptionNomComplet").a("class", "").f().sx("nom").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1184,7 +1182,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); $('#", classeApiMethodeMethode, "_designInscriptionNomComplet').val(null); patchDesignInscriptionVal([{ name: 'fq', value: 'pk:' + $('#DesignInscriptionForm :input[name=pk]').val() }], 'setDesignInscriptionNomComplet', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1301,17 +1299,16 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmDesignCache());
 		}
 	}
 
 	public void htmDesignCache(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionDesignCache").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_designCache").a("class", "").f().sx("caché").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();

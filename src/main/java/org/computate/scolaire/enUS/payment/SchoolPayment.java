@@ -233,6 +233,10 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _chargeLateFee(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	protected void _paymentCash(Wrap<Boolean> c) {
 		c.o(false);
 	}
@@ -272,6 +276,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(String.format("%s + %s tuition", fd.format(enrollment_.getSessionStartDate().plusWeeks(1)), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeEnrollment)
 				o.append(String.format("%s-%s enrollment fee", enrollment_.getSessionStartDate().getYear(), enrollment_.getSessionEndDate().getYear()));
+			else if(enrollment_ != null && chargeLateFee)
+				o.append("");
 			else
 				o.append(String.format("%s tuition", fd.format(paymentDate.plusMonths(1))));
 		}
@@ -291,7 +297,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 
 	protected void _paymentCompleteName(Wrap<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
-		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
+		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.US);
 		fn.setMaximumFractionDigits(0);
 
 		StringBuilder o = new StringBuilder();
@@ -300,6 +306,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(String.format("%s %s + %s tuition", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeEnrollment)
 				o.append(String.format("%s %s-%s enrollment fee", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+			else if(enrollment_ != null && chargeLateFee)
+				o.append(String.format("%s", fn.format(chargeAmount)));
 			else
 				o.append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 

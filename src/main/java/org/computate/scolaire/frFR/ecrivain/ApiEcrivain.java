@@ -1576,7 +1576,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	//		if(classeMotsClesTrouves && classeMotsCles.contains(classeApiMethode + ".request")) {
 				wSchemas.tl(tabsSchema, classeApiOperationIdMethodeRequete, ":");
 				wSchemas.tl(tabsSchema + 1, "allOf:");
-				if(BooleanUtils.isTrue(classeEtendBase)) {
+				if(BooleanUtils.isTrue(classeEtendBase) && StringUtils.isNotBlank(classeSuperApiOperationIdMethodeRequete)) {
 					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classeSuperApiOperationIdMethodeRequete, "\"");
 				}
 				wSchemas.tl(tabsSchema + 2, "- type: object");
@@ -1595,7 +1595,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 					wSchemas.tl(tabsSchema + 2, "- format: binary");
 				}
 				else {
-					if(BooleanUtils.isTrue(classeEtendBase)) {
+					if(BooleanUtils.isTrue(classeEtendBase) && StringUtils.isNotBlank(classeSuperApiOperationIdMethodeReponse)) {
 						wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classeSuperApiOperationIdMethodeReponse, "\"");
 					}
 		

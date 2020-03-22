@@ -244,7 +244,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($('#suggere", classeApiMethodeMethode, "EcoleAnneeCles')) : [{'name':'fq','value':'ecoleCle:", pk, "'}], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmAnneeCles());
 		}
 	}
 
@@ -952,7 +951,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				a("value", strEcoleNom())
 			.fg();
 
-			sx(htmEcoleNom());
 		}
 	}
 
@@ -1075,7 +1073,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				a("value", strEcoleNumeroTelephone())
 			.fg();
 
-			sx(htmEcoleNumeroTelephone());
 		}
 	}
 
@@ -1198,7 +1195,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				a("value", strEcoleAdministrateurNom())
 			.fg();
 
-			sx(htmEcoleAdministrateurNom());
 		}
 	}
 
@@ -1321,7 +1317,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				a("value", strEcoleMail())
 			.fg();
 
-			sx(htmEcoleMail());
 		}
 	}
 
@@ -1444,7 +1439,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				a("value", strEcoleEmplacement())
 			.fg();
 
-			sx(htmEcoleEmplacement());
 		}
 	}
 
@@ -1565,7 +1559,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				}
 			f().sx(strEcoleAddresse()).g("textarea");
 
-			sx(htmEcoleAddresse());
 		}
 	}
 

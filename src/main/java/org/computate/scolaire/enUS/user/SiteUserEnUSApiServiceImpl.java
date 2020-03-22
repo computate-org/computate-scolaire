@@ -77,6 +77,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 	
 			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
 			GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+//			GetTransactionListForCustomerController.setEnvironment(Environment.SANDBOX);
 			controller.execute();
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(controller.getResults().toString());
@@ -88,7 +89,8 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 					customerProfileId = matcher.group(1);
 				}
 				else {
-					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+//					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+					LOGGER.error(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
 				}
 			}
 			else {

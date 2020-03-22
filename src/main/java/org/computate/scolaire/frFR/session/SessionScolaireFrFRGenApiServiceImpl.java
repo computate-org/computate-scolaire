@@ -127,54 +127,23 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 			sqlSessionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerSessionScolaire(requeteSite, b -> {
+					utilisateurSessionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
 							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							SessionScolaire sessionScolaire = b.result();
-							sqlPOSTSessionScolaire(sessionScolaire, c -> {
+							postSessionScolaireFuture(requeteSite, c -> {
 								if(c.succeeded()) {
-									definirSessionScolaire(sessionScolaire, d -> {
+									SessionScolaire sessionScolaire = c.result();
+									requeteApiSessionScolaire(sessionScolaire);
+									postSessionScolaireReponse(sessionScolaire, d -> {
 										if(d.succeeded()) {
-											attribuerSessionScolaire(sessionScolaire, e -> {
-												if(e.succeeded()) {
-													indexerSessionScolaire(sessionScolaire, f -> {
-														if(f.succeeded()) {
-															reponse200POSTSessionScolaire(sessionScolaire, g -> {
-																if(f.succeeded()) {
-																	SQLConnection connexionSql = requeteSite.getConnexionSql();
-																	connexionSql.commit(h -> {
-																		if(a.succeeded()) {
-																			connexionSql.close(i -> {
-																				if(a.succeeded()) {
-																					requeteApiSessionScolaire(sessionScolaire);
-																					sessionScolaire.requeteApiSessionScolaire();
-																					requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
-																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					erreurSessionScolaire(requeteSite, gestionnaireEvenements, i);
-																				}
-																			});
-																		} else {
-																			erreurSessionScolaire(requeteSite, gestionnaireEvenements, h);
-																		}
-																	});
-																} else {
-																	erreurSessionScolaire(requeteSite, gestionnaireEvenements, g);
-																}
-															});
-														} else {
-															erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
-														}
-													});
-												} else {
-													erreurSessionScolaire(requeteSite, gestionnaireEvenements, e);
-												}
-											});
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postSessionScolaire %s a réussi. "));
 										} else {
+											LOGGER.error(String.format("postSessionScolaire %s a échoué. ", d.cause()));
 											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -193,6 +162,37 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		} catch(Exception e) {
 			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<SessionScolaire> postSessionScolaireFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
+		Promise<SessionScolaire> promise = Promise.promise();
+		try {
+			creerSessionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SessionScolaire sessionScolaire = a.result();
+					sqlPOSTSessionScolaire(sessionScolaire, b -> {
+						if(b.succeeded()) {
+							definirIndexerSessionScolaire(sessionScolaire, c -> {
+								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
+									promise.complete(sessionScolaire);
+								} else {
+									erreurSessionScolaire(requeteSite, null, c);
+								}
+							});
+						} else {
+							erreurSessionScolaire(requeteSite, null, b);
+						}
+					});
+				} else {
+					erreurSessionScolaire(requeteSite, null, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurSessionScolaire(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -249,6 +249,32 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
+	public void postSessionScolaireReponse(SessionScolaire sessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = sessionScolaire.getRequeteSite_();
+		reponse200POSTSessionScolaire(sessionScolaire, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								RequeteApi requeteApi = requeteApiSessionScolaire(sessionScolaire);
+								sessionScolaire.requeteApiSessionScolaire();
+								requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200POSTSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
@@ -287,17 +313,17 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurSessionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheSessionScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<SessionScolaire> listeSessionScolaire = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listeSessionScolaire.getRows());
-											requeteApi.setNumFound(Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeSessionScolaire.size())));
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -306,24 +332,15 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 															try {
 																listePUTSessionScolaire(requeteApi, listeSessionScolaire, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
-																		if(connexionSql2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			connexionSql2.commit(g -> {
-																				if(f.succeeded()) {
-																					connexionSql2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		putSessionScolaireReponse(listeSessionScolaire, g -> {
+																			if(g.succeeded()) {
+																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putSessionScolaire a réussi. "));
+																			} else {
+																				LOGGER.error(String.format("putSessionScolaire a échoué. ", g.cause()));
+																				erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -338,7 +355,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 												}, resultHandler -> {
 												}
 											);
-											reponse200PUTSessionScolaire(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
@@ -360,6 +376,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
+
 	public void listePUTSessionScolaire(RequeteApi requeteApi, ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
@@ -367,8 +384,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		if(jsonArray.size() == 0) {
 			listeSessionScolaire.getList().forEach(o -> {
 				futures.add(
-					futurePUTSessionScolaire(requeteSite, JsonObject.mapFrom(o), a -> {
+					putSessionScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 						if(a.succeeded()) {
+							SessionScolaire sessionScolaire = a.result();
+							requeteApiSessionScolaire(sessionScolaire);
 						} else {
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 						}
@@ -382,7 +401,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 						listePUTSessionScolaire(requeteApi, listeSessionScolaire, gestionnaireEvenements);
 					} else {
-						reponse200PUTSessionScolaire(requeteApi, gestionnaireEvenements);
+						reponse200PUTSessionScolaire(listeSessionScolaire, gestionnaireEvenements);
 					}
 				} else {
 					erreurSessionScolaire(listeSessionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -392,8 +411,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			jsonArray.forEach(o -> {
 				JsonObject jsonObject = (JsonObject)o;
 				futures.add(
-					futurePUTSessionScolaire(requeteSite, jsonObject, a -> {
+					putSessionScolaireFuture(requeteSite, jsonObject, a -> {
 						if(a.succeeded()) {
+							SessionScolaire sessionScolaire = a.result();
+							requeteApiSessionScolaire(sessionScolaire);
 						} else {
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 						}
@@ -403,7 +424,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
-					reponse200PUTSessionScolaire(requeteApi, gestionnaireEvenements);
+					reponse200PUTSessionScolaire(listeSessionScolaire, gestionnaireEvenements);
 				} else {
 					erreurSessionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 				}
@@ -411,15 +432,17 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public Future<SessionScolaire> futurePUTSessionScolaire(RequeteSiteFrFR requeteSite, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
-		JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-		jsonPatch.stream().forEach(o -> {
-			jsonObject.put(o.getKey(), o.getValue());
-			jsonObject.getJsonArray("sauvegardes").add(o.getKey());
-		});
+	public Future<SessionScolaire> putSessionScolaireFuture(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
 		Promise<SessionScolaire> promise = Promise.promise();
 		try {
+
+			jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("sauvegardes").add(o.getKey());
+
+			});
 			creerSessionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					SessionScolaire sessionScolaire = a.result();
@@ -431,10 +454,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 										if(d.succeeded()) {
 											indexerSessionScolaire(sessionScolaire, e -> {
 												if(e.succeeded()) {
-													requeteApiSessionScolaire(sessionScolaire);
-													sessionScolaire.requeteApiSessionScolaire();
+													gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
 													promise.complete(sessionScolaire);
-													gestionnaireEvenements.handle(Future.succeededFuture(e.result()));
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
 												}
@@ -455,30 +476,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			erreurSessionScolaire(null, null, Future.failedFuture(e));
 		}
-	}
-
-	public void remplacerPUTSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_vider
-					, new JsonArray(Arrays.asList(pk, SessionScolaire.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				SessionScolaire o = new SessionScolaire();
-				o.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
+		return promise.future();
 	}
 
 	public void sqlPUTSessionScolaire(SessionScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -535,8 +536,35 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void reponse200PUTSessionScolaire(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void putSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		reponse200PUTSessionScolaire(listeSessionScolaire, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								RequeteApi requeteApi = requeteSite.getRequeteApi_();
+								requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
+	public void reponse200PUTSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(requeteApi))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -571,6 +599,11 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurSessionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -588,16 +621,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listeSessionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listeSessionScolaire.getRows());
-											requeteApi.setNumFound(Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeSessionScolaire.size())));
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
 											if(listeSessionScolaire.size() == 1) {
 												SessionScolaire o = listeSessionScolaire.get(0);
 												requeteApi.setPk(o.getPk());
 												requeteApi.setOriginal(o);
 												requeteApiSessionScolaire(o);
+											o.requeteApiSessionScolaire();
 											}
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -607,24 +636,15 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 															try {
 																listePATCHSessionScolaire(requeteApi, listeSessionScolaire, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
-																		if(connexionSql2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			connexionSql2.commit(g -> {
-																				if(f.succeeded()) {
-																					connexionSql2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchSessionScolaireReponse(listeSessionScolaire, g -> {
+																			if(g.succeeded()) {
+																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchSessionScolaire a réussi. "));
+																			} else {
+																				LOGGER.error(String.format("patchSessionScolaire a échoué. ", g.cause()));
+																				erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -639,7 +659,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 												}, resultHandler -> {
 												}
 											);
-											reponse200PATCHSessionScolaire(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
@@ -661,13 +680,16 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
+
 	public void listePATCHSessionScolaire(RequeteApi requeteApi, ListeRecherche<SessionScolaire> listeSessionScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
 		listeSessionScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSessionScolaire(o, a -> {
+				patchSessionScolaireFuture(o, a -> {
 					if(a.succeeded()) {
+							SessionScolaire sessionScolaire = a.result();
+							requeteApiSessionScolaire(sessionScolaire);
 					} else {
 						erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 					}
@@ -681,7 +703,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHSessionScolaire(requeteApi, listeSessionScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHSessionScolaire(requeteApi, gestionnaireEvenements);
+					reponse200PATCHSessionScolaire(listeSessionScolaire, gestionnaireEvenements);
 				}
 			} else {
 				erreurSessionScolaire(listeSessionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -689,9 +711,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		});
 	}
 
-	public Future<SessionScolaire> futurePATCHSessionScolaire(SessionScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public Future<SessionScolaire> patchSessionScolaireFuture(SessionScolaire o, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
 		Promise<SessionScolaire> promise = Promise.promise();
 		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			sqlPATCHSessionScolaire(o, a -> {
 				if(a.succeeded()) {
 					SessionScolaire sessionScolaire = a.result();
@@ -701,10 +724,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								if(c.succeeded()) {
 									indexerSessionScolaire(sessionScolaire, d -> {
 										if(d.succeeded()) {
-											requeteApiSessionScolaire(sessionScolaire);
-											sessionScolaire.requeteApiSessionScolaire();
-											promise.complete(o);
-											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
+											promise.complete(sessionScolaire);
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
@@ -721,10 +742,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			erreurSessionScolaire(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHSessionScolaire(SessionScolaire o, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
@@ -867,9 +888,35 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void reponse200PATCHSessionScolaire(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void patchSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		reponse200PATCHSessionScolaire(listeSessionScolaire, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								RequeteApi requeteApi = requeteSite.getRequeteApi_();
+								requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
+	public void reponse200PATCHSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
+			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -911,27 +958,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							rechercheSessionScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
-									reponse200GETSessionScolaire(listeSessionScolaire, d -> {
+									getSessionScolaireReponse(listeSessionScolaire, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("getSessionScolaire a réussi. "));
 										} else {
+											LOGGER.error(String.format("getSessionScolaire a échoué. ", d.cause()));
 											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -952,6 +984,30 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
+
+	public void getSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		reponse200GETSessionScolaire(listeSessionScolaire, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200GETSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
@@ -972,9 +1028,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleReads = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -995,27 +1054,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							rechercheSessionScolaire(requeteSite, false, true, "/api/session", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
-									reponse200RechercheSessionScolaire(listeSessionScolaire, d -> {
+									rechercheSessionScolaireReponse(listeSessionScolaire, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("rechercheSessionScolaire a réussi. "));
 										} else {
+											LOGGER.error(String.format("rechercheSessionScolaire a échoué. ", d.cause()));
 											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -1036,6 +1080,30 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
+
+	public void rechercheSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		reponse200RechercheSessionScolaire(listeSessionScolaire, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200RechercheSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
@@ -1119,27 +1187,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							rechercheSessionScolaire(requeteSite, false, true, "/session", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
-									reponse200PageRechercheSessionScolaire(listeSessionScolaire, d -> {
+									pagerechercheSessionScolaireReponse(listeSessionScolaire, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("pagerechercheSessionScolaire a réussi. "));
 										} else {
+											LOGGER.error(String.format("pagerechercheSessionScolaire a échoué. ", d.cause()));
 											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -1160,6 +1213,30 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
+
+	public void pagerechercheSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		reponse200PageRechercheSessionScolaire(listeSessionScolaire, a -> {
+			if(a.succeeded()) {
+				SQLConnection connexionSql = requeteSite.getConnexionSql();
+				connexionSql.commit(b -> {
+					if(b.succeeded()) {
+						connexionSql.close(c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+							} else {
+								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+			}
+		});
+	}
 	public void reponse200PageRechercheSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
@@ -1186,7 +1263,33 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<SessionScolaire> definirIndexerSessionScolaire(SessionScolaire sessionScolaire, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
+		Promise<SessionScolaire> promise = Promise.promise();
+		RequeteSiteFrFR requeteSite = sessionScolaire.getRequeteSite_();
+		definirSessionScolaire(sessionScolaire, c -> {
+			if(c.succeeded()) {
+				attribuerSessionScolaire(sessionScolaire, d -> {
+					if(d.succeeded()) {
+						indexerSessionScolaire(sessionScolaire, e -> {
+							if(e.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
+								promise.complete(sessionScolaire);
+							} else {
+								erreurSessionScolaire(requeteSite, null, e);
+							}
+						});
+					} else {
+						erreurSessionScolaire(requeteSite, null, d);
+					}
+				});
+			} else {
+				erreurSessionScolaire(requeteSite, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void creerSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
 		try {
@@ -1210,7 +1313,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void requeteApiSessionScolaire(SessionScolaire o) {
+	public RequeteApi requeteApiSessionScolaire(SessionScolaire o) {
 		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
 		if(requeteApi != null) {
 			List<Long> pks = requeteApi.getPks();
@@ -1228,6 +1331,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				}
 			}
 		}
+		return requeteApi;
 	}
 
 	public void erreurSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1507,7 +1611,41 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	}
 
 	public Boolean utilisateurSessionScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
-		return true;
+		if(patch) {
+			return jsonObject.getString("setCustomerProfileId") == null;
+		} else {
+			return jsonObject.getString("customerProfileId") == null;
+		}
+	}
+
+	public void rechercheSessionScolaireQ(ListeRecherche<SessionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
+		if(!"*".equals(entiteVar)) {
+			listeRecherche.setHighlight(true);
+			listeRecherche.setHighlightSnippets(3);
+			listeRecherche.addHighlightField(varIndexe);
+			listeRecherche.setParam("hl.encoder", "html");
+		}
+	}
+
+	public void rechercheSessionScolaireFq(ListeRecherche<SessionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+	}
+
+	public void rechercheSessionScolaireSort(ListeRecherche<SessionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
+	}
+
+	public void rechercheSessionScolaireRows(ListeRecherche<SessionScolaire> listeRecherche, Integer valeurRows) {
+		listeRecherche.setRows(valeurRows);
+	}
+
+	public void rechercheSessionScolaireStart(ListeRecherche<SessionScolaire> listeRecherche, Integer valeurStart) {
+		listeRecherche.setStart(valeurStart);
+	}
+
+	public void rechercheSessionScolaireVar(ListeRecherche<SessionScolaire> listeRecherche, String var, String valeur) {
+		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
 	public void rechercheSessionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<SessionScolaire>>> gestionnaireEvenements) {
@@ -1520,6 +1658,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(SessionScolaire.class);
+			listeRecherche.setRequeteSite_(requeteSite);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
@@ -1534,8 +1673,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				String valeurIndexe = null;
 				String varIndexe = null;
 				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
+				Integer valeurStart = null;
+				Integer valeurRows = null;
 				String paramNom = paramRequete.getKey();
 				Object paramValeursObjet = paramRequete.getValue();
 				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
@@ -1548,33 +1687,32 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								varIndexe = "*".equals(entiteVar) ? entiteVar : SessionScolaire.varRechercheSessionScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
-								}
+								rechercheSessionScolaireQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = SessionScolaire.varIndexeSessionScolaire(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								rechercheSessionScolaireFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = SessionScolaire.varIndexeSessionScolaire(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								rechercheSessionScolaireSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								valeurStart = (Integer)paramObjet;
+								rechercheSessionScolaireStart(listeRecherche, valeurStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								valeurRows = (Integer)paramObjet;
+								rechercheSessionScolaireRows(listeRecherche, valeurRows);
+								break;
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								rechercheSessionScolaireVar(listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}
@@ -1684,7 +1822,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.futurePATCHAgeScolaire(o2, a -> {
+							service.patchAgeScolaireFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("AgeScolaire %s rechargé. ", pk));
 								} else {
@@ -1704,7 +1842,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					o2.setPk(pk);
 					o2.setRequeteSite_(requeteSite2);
 					futures.add(
-						service.futurePATCHSaisonScolaire(o2, a -> {
+						service.patchSaisonScolaireFuture(o2, a -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("SaisonScolaire %s rechargé. ", pk));
 							} else {
@@ -1722,7 +1860,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						List<Future> futures2 = new ArrayList<>();
 						for(SessionScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.futurePATCHSessionScolaire(o2, b -> {
+								service.patchSessionScolaireFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SessionScolaire %s rechargé. ", o2.getPk()));
 									} else {

@@ -37,6 +37,15 @@ import net.authorize.api.controller.base.ApiOperationBase;
  **/
 public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 
+	@Override public void htmlFormPageSiteUser(SiteUser o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			super.htmlFormPageSiteUser(o);
+		}
+	}
+
 	protected void _enrollmentDesignSearch(SearchList<EnrollmentDesign> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("deleted_indexed_boolean:false");
@@ -166,7 +175,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				createCustomerProfileRequest.setHostedProfileSettings(settings);
 		
 				GetHostedProfilePageController controller = new GetHostedProfilePageController(createCustomerProfileRequest);
-				GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+//				GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+				GetTransactionListForCustomerController.setEnvironment(Environment.SANDBOX);
 				controller.execute();
 				if(controller.getErrorResponse() != null)
 					controller.toString();
@@ -174,24 +184,27 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				else {
 					GetHostedProfilePageResponse response = controller.getApiResponse();
 					if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
-						throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+//						throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+						System.err.println(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
 					}
-					{ e("h1").f();
-						{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
-							if(contextIconCssClasses != null)
-								e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-							e("span").a("class", " ").f().sx("make payments").g("span");
-						} g("a");
-					} g("h1");
-					{ e("div").a("class", "").f();
-						e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
-						{ e("form").a("method", "post").a("target", "_blank").a("action", "https://accept.authorize.net/customer/manage").f();
-							e("input").a("type", "hidden").a("name", "token").a("value", response.getToken()).fg();
-			//				e("input").a("type", "hidden").a("name", "paymentProfileId").a("value", response.getToken()).fg();
-							e("button").a("type", "submit").f().sx("Manage payments").g("button");
-						} g("form");
-						e("div").a("class", "").f().sx("Click here to manage payments in a new tab. ").g("div");
-					} g("div");
+					else {
+						{ e("h1").f();
+							{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
+								if(contextIconCssClasses != null)
+									e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+								e("span").a("class", " ").f().sx("make payments").g("span");
+							} g("a");
+						} g("h1");
+						{ e("div").a("class", "").f();
+							e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
+							{ e("form").a("method", "post").a("target", "_blank").a("action", "https://accept.authorize.net/customer/manage").f();
+								e("input").a("type", "hidden").a("name", "token").a("value", response.getToken()).fg();
+				//				e("input").a("type", "hidden").a("name", "paymentProfileId").a("value", response.getToken()).fg();
+								e("button").a("type", "submit").f().sx("Manage payments").g("button");
+							} g("form");
+							e("div").a("class", "").f().sx("Click here to manage payments in a new tab. ").g("div");
+						} g("div");
+					}
 				}
 			}
 		}

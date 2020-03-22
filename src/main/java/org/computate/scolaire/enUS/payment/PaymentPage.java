@@ -29,7 +29,7 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 		BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
 		BigDecimal sum_chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
 		if(sum_chargeAmount.subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) <= 0) {
-			e("div").a("class", "w3-panel w3-yellow ").f();
+			e("div").a("class", "w3-panel w3-green ").f();
 			sx("You are current with all payments. Thank you! ");
 			g("div");
 		}

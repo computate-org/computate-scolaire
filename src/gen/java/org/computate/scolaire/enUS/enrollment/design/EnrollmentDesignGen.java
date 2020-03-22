@@ -72,7 +72,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	public static final String EnrollmentDesign_UnNomAdjectif = "an enrollment design";
 	public static final String EnrollmentDesign_NomAdjectifSingulier = "enrollment design";
 	public static final String EnrollmentDesign_NomAdjectifPluriel = "enrollment designs";
-	public static final String EnrollmentDesign_Couleur = "indigo";
+	public static final String EnrollmentDesign_Couleur = "khaki";
 	public static final String EnrollmentDesign_IconeGroupe = "regular";
 	public static final String EnrollmentDesign_IconeNom = "drafting-compass";
 
@@ -315,13 +315,12 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 					.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmHtmlPartKeys());
 		}
 	}
 
 	public void htmHtmlPartKeys(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1160,17 +1159,16 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				a("value", strEnrollmentDesignCompleteName())
 			.fg();
 
-			sx(htmEnrollmentDesignCompleteName());
 		}
 	}
 
 	public void htmEnrollmentDesignCompleteName(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignEnrollmentDesignCompleteName").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classApiMethodMethod, "_enrollmentDesignCompleteName").a("class", "").f().sx("name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1183,7 +1181,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); $('#", classApiMethodMethod, "_enrollmentDesignCompleteName').val(null); patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:' + $('#EnrollmentDesignForm :input[name=pk]').val() }], 'setEnrollmentDesignCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1300,17 +1298,16 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmDesignHidden());
 		}
 	}
 
 	public void htmDesignHidden(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignDesignHidden").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classApiMethodMethod, "_designHidden").a("class", "").f().sx("hidden").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();

@@ -139,54 +139,23 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					createSchoolEnrollment(siteRequest, b -> {
+					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							SchoolEnrollment schoolEnrollment = b.result();
-							sqlPOSTSchoolEnrollment(schoolEnrollment, c -> {
+							postSchoolEnrollmentFuture(siteRequest, c -> {
 								if(c.succeeded()) {
-									defineSchoolEnrollment(schoolEnrollment, d -> {
+									SchoolEnrollment schoolEnrollment = c.result();
+									apiRequestSchoolEnrollment(schoolEnrollment);
+									postSchoolEnrollmentResponse(schoolEnrollment, d -> {
 										if(d.succeeded()) {
-											attributeSchoolEnrollment(schoolEnrollment, e -> {
-												if(e.succeeded()) {
-													indexSchoolEnrollment(schoolEnrollment, f -> {
-														if(f.succeeded()) {
-															response200POSTSchoolEnrollment(schoolEnrollment, g -> {
-																if(f.succeeded()) {
-																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
-																	sqlConnection.commit(h -> {
-																		if(a.succeeded()) {
-																			sqlConnection.close(i -> {
-																				if(a.succeeded()) {
-																					apiRequestSchoolEnrollment(schoolEnrollment);
-																					schoolEnrollment.apiRequestSchoolEnrollment();
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-																					eventHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					errorSchoolEnrollment(siteRequest, eventHandler, i);
-																				}
-																			});
-																		} else {
-																			errorSchoolEnrollment(siteRequest, eventHandler, h);
-																		}
-																	});
-																} else {
-																	errorSchoolEnrollment(siteRequest, eventHandler, g);
-																}
-															});
-														} else {
-															errorSchoolEnrollment(siteRequest, eventHandler, f);
-														}
-													});
-												} else {
-													errorSchoolEnrollment(siteRequest, eventHandler, e);
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("postSchoolEnrollment succeeded. "));
 										} else {
+											LOGGER.error(String.format("postSchoolEnrollment failed. ", d.cause()));
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
 									});
@@ -205,6 +174,37 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		} catch(Exception e) {
 			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
 		}
+	}
+
+
+	public Future<SchoolEnrollment> postSchoolEnrollmentFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+		Promise<SchoolEnrollment> promise = Promise.promise();
+		try {
+			createSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					SchoolEnrollment schoolEnrollment = a.result();
+					sqlPOSTSchoolEnrollment(schoolEnrollment, b -> {
+						if(b.succeeded()) {
+							defineIndexSchoolEnrollment(schoolEnrollment, c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+									promise.complete(schoolEnrollment);
+								} else {
+									errorSchoolEnrollment(siteRequest, null, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, null, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, null, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolEnrollment(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 
 	public void sqlPOSTSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -455,6 +455,32 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+	public void postSchoolEnrollmentResponse(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
+		response200POSTSchoolEnrollment(schoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = apiRequestSchoolEnrollment(schoolEnrollment);
+								schoolEnrollment.apiRequestSchoolEnrollment();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200POSTSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
@@ -493,17 +519,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolEnrollment(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolEnrollment.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolEnrollment.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -512,24 +538,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 															try {
 																listPUTSchoolEnrollment(apiRequest, listSchoolEnrollment, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		putSchoolEnrollmentResponse(listSchoolEnrollment, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putSchoolEnrollment succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putSchoolEnrollment failed. ", g.cause()));
+																				errorSchoolEnrollment(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -544,7 +561,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												}, resultHandler -> {
 												}
 											);
-											response200PUTSchoolEnrollment(apiRequest, eventHandler);
 										} else {
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
@@ -566,6 +582,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
 	public void listPUTSchoolEnrollment(ApiRequest apiRequest, SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -573,8 +590,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		if(jsonArray.size() == 0) {
 			listSchoolEnrollment.getList().forEach(o -> {
 				futures.add(
-					futurePUTSchoolEnrollment(siteRequest, JsonObject.mapFrom(o), a -> {
+					putSchoolEnrollmentFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 						if(a.succeeded()) {
+							SchoolEnrollment schoolEnrollment = a.result();
+							apiRequestSchoolEnrollment(schoolEnrollment);
 						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, a);
 						}
@@ -588,7 +607,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 						listPUTSchoolEnrollment(apiRequest, listSchoolEnrollment, eventHandler);
 					} else {
-						response200PUTSchoolEnrollment(apiRequest, eventHandler);
+						response200PUTSchoolEnrollment(listSchoolEnrollment, eventHandler);
 					}
 				} else {
 					errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
@@ -598,8 +617,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			jsonArray.forEach(o -> {
 				JsonObject jsonObject = (JsonObject)o;
 				futures.add(
-					futurePUTSchoolEnrollment(siteRequest, jsonObject, a -> {
+					putSchoolEnrollmentFuture(siteRequest, jsonObject, a -> {
 						if(a.succeeded()) {
+							SchoolEnrollment schoolEnrollment = a.result();
+							apiRequestSchoolEnrollment(schoolEnrollment);
 						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, a);
 						}
@@ -609,7 +630,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTSchoolEnrollment(apiRequest, eventHandler);
+					response200PUTSchoolEnrollment(listSchoolEnrollment, eventHandler);
 				} else {
 					errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
@@ -617,15 +638,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public Future<SchoolEnrollment> futurePUTSchoolEnrollment(SiteRequestEnUS siteRequest, JsonObject jsonObject,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-		JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-		jsonPatch.stream().forEach(o -> {
-			jsonObject.put(o.getKey(), o.getValue());
-			jsonObject.getJsonArray("saves").add(o.getKey());
-		});
+	public Future<SchoolEnrollment> putSchoolEnrollmentFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		Promise<SchoolEnrollment> promise = Promise.promise();
 		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+
+			});
 			createSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
@@ -637,10 +660,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										if(d.succeeded()) {
 											indexSchoolEnrollment(schoolEnrollment, e -> {
 												if(e.succeeded()) {
-													apiRequestSchoolEnrollment(schoolEnrollment);
-													schoolEnrollment.apiRequestSchoolEnrollment();
+													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
 													promise.complete(schoolEnrollment);
-													eventHandler.handle(Future.succeededFuture(e.result()));
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -661,30 +682,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorSchoolEnrollment(null, null, Future.failedFuture(e));
 		}
-	}
-
-	public void remplacerPUTSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long pk = siteRequest.getRequestPk();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_clear
-					, new JsonArray(Arrays.asList(pk, SchoolEnrollment.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				SchoolEnrollment o = new SchoolEnrollment();
-				o.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
+		return promise.future();
 	}
 
 	public void sqlPUTSchoolEnrollment(SchoolEnrollment o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -935,8 +936,35 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void response200PUTSchoolEnrollment(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200PUTSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -971,6 +999,11 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -988,16 +1021,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolEnrollment.getRows());
-											apiRequest.setNumFound(Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolEnrollment.size())));
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolEnrollment.size() == 1) {
 												SchoolEnrollment o = listSchoolEnrollment.get(0);
 												apiRequest.setPk(o.getPk());
 												apiRequest.setOriginal(o);
 												apiRequestSchoolEnrollment(o);
+											o.apiRequestSchoolEnrollment();
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -1007,24 +1036,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 															try {
 																listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
 																	if(f.succeeded()) {
-																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
-																		if(sqlConnection2 == null) {
-																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																		} else {
-																			sqlConnection2.commit(g -> {
-																				if(f.succeeded()) {
-																					sqlConnection2.close(h -> {
-																						if(g.succeeded()) {
-																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
-																						} else {
-																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
-																						}
-																					});
-																				} else {
-																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
-																				}
-																			});
-																		}
+																		patchSchoolEnrollmentResponse(listSchoolEnrollment, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchSchoolEnrollment succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("patchSchoolEnrollment failed. ", g.cause()));
+																				errorSchoolEnrollment(siteRequest, eventHandler, d);
+																			}
+																		});
 																	} else {
 																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
 																	}
@@ -1039,7 +1059,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolEnrollment(apiRequest, eventHandler);
 										} else {
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
@@ -1061,13 +1080,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
 	public void listPATCHSchoolEnrollment(ApiRequest apiRequest, SearchList<SchoolEnrollment> listSchoolEnrollment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolEnrollment(o, a -> {
+				patchSchoolEnrollmentFuture(o, a -> {
 					if(a.succeeded()) {
+							SchoolEnrollment schoolEnrollment = a.result();
+							apiRequestSchoolEnrollment(schoolEnrollment);
 					} else {
 						errorSchoolEnrollment(siteRequest, eventHandler, a);
 					}
@@ -1081,7 +1103,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
 				} else {
-					response200PATCHSchoolEnrollment(apiRequest, eventHandler);
+					response200PATCHSchoolEnrollment(listSchoolEnrollment, eventHandler);
 				}
 			} else {
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
@@ -1089,9 +1111,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		});
 	}
 
-	public Future<SchoolEnrollment> futurePATCHSchoolEnrollment(SchoolEnrollment o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public Future<SchoolEnrollment> patchSchoolEnrollmentFuture(SchoolEnrollment o, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		Promise<SchoolEnrollment> promise = Promise.promise();
 		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSchoolEnrollment(o, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
@@ -1101,10 +1124,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(c.succeeded()) {
 									indexSchoolEnrollment(schoolEnrollment, d -> {
 										if(d.succeeded()) {
-											apiRequestSchoolEnrollment(schoolEnrollment);
-											schoolEnrollment.apiRequestSchoolEnrollment();
-											promise.complete(o);
-											eventHandler.handle(Future.succeededFuture(d.result()));
+											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+											promise.complete(schoolEnrollment);
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -1121,10 +1142,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
-			return promise.future();
 		} catch(Exception e) {
-			return Future.failedFuture(e);
+			errorSchoolEnrollment(null, null, Future.failedFuture(e));
 		}
+		return promise.future();
 	}
 
 	public void sqlPATCHSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
@@ -1797,9 +1818,35 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void response200PATCHSchoolEnrollment(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200PATCHSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PATCHSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
 		} catch(Exception e) {
@@ -1820,27 +1867,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							aSearchSchoolEnrollment(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									response200GETSchoolEnrollment(listSchoolEnrollment, d -> {
+									getSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("getSchoolEnrollment succeeded. "));
 										} else {
+											LOGGER.error(String.format("getSchoolEnrollment failed. ", d.cause()));
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
 									});
@@ -1861,6 +1893,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
+	public void getSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200GETSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200GETSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -1886,27 +1942,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									response200SearchSchoolEnrollment(listSchoolEnrollment, d -> {
+									searchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchSchoolEnrollment succeeded. "));
 										} else {
+											LOGGER.error(String.format("searchSchoolEnrollment failed. ", d.cause()));
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
 									});
@@ -1927,6 +1968,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
+	public void searchSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200SearchSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -1971,44 +2036,94 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	// SearchPage //
+	// PATCHPayments //
 
 	@Override
-	public void searchpageSchoolEnrollmentId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		searchpageSchoolEnrollment(operationRequest, eventHandler);
-	}
-
-	@Override
-	public void searchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchpaymentsSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment", c -> {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									response200SearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
+									aSearchSchoolEnrollment(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
+											SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modified");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+
+											if(listSchoolEnrollment.size() == 1) {
+												SchoolEnrollment o = listSchoolEnrollment.get(0);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolEnrollment(o);
+											o.apiRequestSchoolEnrollment();
 											}
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolEnrollment(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
+																	if(f.succeeded()) {
+																		patchpaymentsSchoolEnrollmentResponse(listSchoolEnrollment, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("patchpaymentsSchoolEnrollment succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", g.cause()));
+																				errorSchoolEnrollment(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
 										} else {
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
@@ -2030,6 +2145,848 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
+	public void listPATCHPaymentsSchoolEnrollment(ApiRequest apiRequest, SearchList<SchoolEnrollment> listSchoolEnrollment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		listSchoolEnrollment.getList().forEach(o -> {
+			futures.add(
+				patchpaymentsSchoolEnrollmentFuture(o, a -> {
+					if(a.succeeded()) {
+							SchoolEnrollment schoolEnrollment = a.result();
+							apiRequestSchoolEnrollment(schoolEnrollment);
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolEnrollment.size());
+				if(listSchoolEnrollment.next(dt)) {
+					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
+				} else {
+					response200PATCHPaymentsSchoolEnrollment(listSchoolEnrollment, eventHandler);
+				}
+			} else {
+				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<SchoolEnrollment> patchpaymentsSchoolEnrollmentFuture(SchoolEnrollment o, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+		Promise<SchoolEnrollment> promise = Promise.promise();
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			sqlPATCHPaymentsSchoolEnrollment(o, a -> {
+				if(a.succeeded()) {
+					SchoolEnrollment schoolEnrollment = a.result();
+					defineSchoolEnrollment(schoolEnrollment, b -> {
+						if(b.succeeded()) {
+							attributeSchoolEnrollment(schoolEnrollment, c -> {
+								if(c.succeeded()) {
+									indexSchoolEnrollment(schoolEnrollment, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+											promise.complete(schoolEnrollment);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolEnrollment(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPATCHPaymentsSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			JsonObject requestJson = siteRequest.getJsonObject();
+			StringBuilder patchSql = new StringBuilder();
+			List<Object> patchSqlParams = new ArrayList<Object>();
+			Set<String> methodNames = requestJson.fieldNames();
+			SchoolEnrollment o2 = new SchoolEnrollment();
+
+			patchSql.append(SiteContextEnUS.SQL_modify);
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.SchoolEnrollment"));
+			for(String methodName : methodNames) {
+				switch(methodName) {
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
+					case "setModified":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+						} else {
+							o2.setModified(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
+						}
+						break;
+					case "setArchived":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
+						}
+						break;
+					case "setDeleted":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+						}
+						break;
+					case "setYearKey":
+						o2.setYearKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						break;
+					case "removeYearKey":
+						o2.setYearKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						break;
+					case "addBlockKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "addAllBlockKeys":
+						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", addAllBlockKeysValues.getString(i)));
+						}
+						break;
+					case "setBlockKeys":
+						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys"));
+						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", setBlockKeysValues.getString(i)));
+						}
+						break;
+					case "removeBlockKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "setChildKey":
+						o2.setChildKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						break;
+					case "removeChildKey":
+						o2.setChildKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						break;
+					case "addMomKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						break;
+					case "addAllMomKeys":
+						JsonArray addAllMomKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllMomKeysValues.getString(i), "momKeys", pk));
+						}
+						break;
+					case "setMomKeys":
+						JsonArray setMomKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setMomKeysValues.getString(i), "momKeys", pk));
+						}
+						break;
+					case "removeMomKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						break;
+					case "addDadKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "addAllDadKeys":
+						JsonArray addAllDadKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", addAllDadKeysValues.getString(i)));
+						}
+						break;
+					case "setDadKeys":
+						JsonArray setDadKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys"));
+						for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", setDadKeysValues.getString(i)));
+						}
+						break;
+					case "removeDadKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "addGuardianKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						break;
+					case "addAllGuardianKeys":
+						JsonArray addAllGuardianKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllGuardianKeysValues.getString(i), "guardianKeys", pk));
+						}
+						break;
+					case "setGuardianKeys":
+						JsonArray setGuardianKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setGuardianKeysValues.getString(i), "guardianKeys", pk));
+						}
+						break;
+					case "removeGuardianKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						break;
+					case "addPaymentKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						break;
+					case "addAllPaymentKeys":
+						JsonArray addAllPaymentKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKey", addAllPaymentKeysValues.getString(i), "paymentKeys", pk));
+						}
+						break;
+					case "setPaymentKeys":
+						JsonArray setPaymentKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKey", setPaymentKeysValues.getString(i), "paymentKeys", pk));
+						}
+						break;
+					case "removePaymentKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						break;
+					case "addUserKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						break;
+					case "addAllUserKeys":
+						JsonArray addAllUserKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllUserKeysValues.getString(i), "userKeys", pk));
+						}
+						break;
+					case "setUserKeys":
+						JsonArray setUserKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setUserKeysValues.getString(i), "userKeys", pk));
+						}
+						break;
+					case "removeUserKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						break;
+					case "setChildCompleteName":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteName"));
+						} else {
+							o2.setChildCompleteName(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childCompleteName", o2.jsonChildCompleteName(), pk));
+						}
+						break;
+					case "setChildCompleteNamePreferred":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred"));
+						} else {
+							o2.setChildCompleteNamePreferred(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred(), pk));
+						}
+						break;
+					case "setChildBirthDate":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childBirthDate"));
+						} else {
+							o2.setChildBirthDate(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childBirthDate", o2.jsonChildBirthDate(), pk));
+						}
+						break;
+					case "setSchoolAddress":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
+						} else {
+							o2.setSchoolAddress(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.jsonSchoolAddress(), pk));
+						}
+						break;
+					case "setEnrollmentApproved":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved"));
+						} else {
+							o2.setEnrollmentApproved(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentApproved", o2.jsonEnrollmentApproved(), pk));
+						}
+						break;
+					case "setEnrollmentImmunizations":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations"));
+						} else {
+							o2.setEnrollmentImmunizations(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentImmunizations", o2.jsonEnrollmentImmunizations(), pk));
+						}
+						break;
+					case "setFamilyMarried":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "familyMarried"));
+						} else {
+							o2.setFamilyMarried(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("familyMarried", o2.jsonFamilyMarried(), pk));
+						}
+						break;
+					case "setFamilySeparated":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "familySeparated"));
+						} else {
+							o2.setFamilySeparated(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("familySeparated", o2.jsonFamilySeparated(), pk));
+						}
+						break;
+					case "setFamilyDivorced":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "familyDivorced"));
+						} else {
+							o2.setFamilyDivorced(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("familyDivorced", o2.jsonFamilyDivorced(), pk));
+						}
+						break;
+					case "setFamilyAddress":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "familyAddress"));
+						} else {
+							o2.setFamilyAddress(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("familyAddress", o2.jsonFamilyAddress(), pk));
+						}
+						break;
+					case "setFamilyHowDoYouKnowTheSchool":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool"));
+						} else {
+							o2.setFamilyHowDoYouKnowTheSchool(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool(), pk));
+						}
+						break;
+					case "setEnrollmentSpecialConsiderations":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations"));
+						} else {
+							o2.setEnrollmentSpecialConsiderations(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations(), pk));
+						}
+						break;
+					case "setChildMedicalConditions":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions"));
+						} else {
+							o2.setChildMedicalConditions(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childMedicalConditions", o2.jsonChildMedicalConditions(), pk));
+						}
+						break;
+					case "setChildPreviousSchoolsAttended":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended"));
+						} else {
+							o2.setChildPreviousSchoolsAttended(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended(), pk));
+						}
+						break;
+					case "setChildDescription":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childDescription"));
+						} else {
+							o2.setChildDescription(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childDescription", o2.jsonChildDescription(), pk));
+						}
+						break;
+					case "setChildObjectives":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childObjectives"));
+						} else {
+							o2.setChildObjectives(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childObjectives", o2.jsonChildObjectives(), pk));
+						}
+						break;
+					case "setChildPottyTrained":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childPottyTrained"));
+						} else {
+							o2.setChildPottyTrained(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childPottyTrained", o2.jsonChildPottyTrained(), pk));
+						}
+						break;
+					case "setEnrollmentGroupName":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName"));
+						} else {
+							o2.setEnrollmentGroupName(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentGroupName", o2.jsonEnrollmentGroupName(), pk));
+						}
+						break;
+					case "setEnrollmentPaymentEachMonth":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth"));
+						} else {
+							o2.setEnrollmentPaymentEachMonth(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth(), pk));
+						}
+						break;
+					case "setEnrollmentPaymentComplete":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete"));
+						} else {
+							o2.setEnrollmentPaymentComplete(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete(), pk));
+						}
+						break;
+					case "setCustomerProfileId":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+						} else {
+							o2.setCustomerProfileId(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+						}
+						break;
+					case "setEnrollmentChargeDate":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate"));
+						} else {
+							o2.setEnrollmentChargeDate(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentChargeDate", o2.jsonEnrollmentChargeDate(), pk));
+						}
+						break;
+					case "setEnrollmentParentNames":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentParentNames"));
+						} else {
+							o2.setEnrollmentParentNames(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentParentNames", o2.jsonEnrollmentParentNames(), pk));
+						}
+						break;
+					case "setEnrollmentSignature1":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1"));
+						} else {
+							o2.setEnrollmentSignature1(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature1", o2.jsonEnrollmentSignature1(), pk));
+						}
+						break;
+					case "setEnrollmentSignature2":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2"));
+						} else {
+							o2.setEnrollmentSignature2(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature2", o2.jsonEnrollmentSignature2(), pk));
+						}
+						break;
+					case "setEnrollmentSignature3":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3"));
+						} else {
+							o2.setEnrollmentSignature3(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature3", o2.jsonEnrollmentSignature3(), pk));
+						}
+						break;
+					case "setEnrollmentSignature4":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4"));
+						} else {
+							o2.setEnrollmentSignature4(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature4", o2.jsonEnrollmentSignature4(), pk));
+						}
+						break;
+					case "setEnrollmentSignature5":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5"));
+						} else {
+							o2.setEnrollmentSignature5(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature5", o2.jsonEnrollmentSignature5(), pk));
+						}
+						break;
+					case "setEnrollmentSignature6":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6"));
+						} else {
+							o2.setEnrollmentSignature6(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature6", o2.jsonEnrollmentSignature6(), pk));
+						}
+						break;
+					case "setEnrollmentSignature7":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7"));
+						} else {
+							o2.setEnrollmentSignature7(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature7", o2.jsonEnrollmentSignature7(), pk));
+						}
+						break;
+					case "setEnrollmentSignature8":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8"));
+						} else {
+							o2.setEnrollmentSignature8(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature8", o2.jsonEnrollmentSignature8(), pk));
+						}
+						break;
+					case "setEnrollmentSignature9":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9"));
+						} else {
+							o2.setEnrollmentSignature9(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature9", o2.jsonEnrollmentSignature9(), pk));
+						}
+						break;
+					case "setEnrollmentSignature10":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10"));
+						} else {
+							o2.setEnrollmentSignature10(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature10", o2.jsonEnrollmentSignature10(), pk));
+						}
+						break;
+					case "setEnrollmentDate1":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1"));
+						} else {
+							o2.setEnrollmentDate1(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate1", o2.jsonEnrollmentDate1(), pk));
+						}
+						break;
+					case "setEnrollmentDate2":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2"));
+						} else {
+							o2.setEnrollmentDate2(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate2", o2.jsonEnrollmentDate2(), pk));
+						}
+						break;
+					case "setEnrollmentDate3":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3"));
+						} else {
+							o2.setEnrollmentDate3(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate3", o2.jsonEnrollmentDate3(), pk));
+						}
+						break;
+					case "setEnrollmentDate4":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4"));
+						} else {
+							o2.setEnrollmentDate4(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate4", o2.jsonEnrollmentDate4(), pk));
+						}
+						break;
+					case "setEnrollmentDate5":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5"));
+						} else {
+							o2.setEnrollmentDate5(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate5", o2.jsonEnrollmentDate5(), pk));
+						}
+						break;
+					case "setEnrollmentDate6":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6"));
+						} else {
+							o2.setEnrollmentDate6(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate6", o2.jsonEnrollmentDate6(), pk));
+						}
+						break;
+					case "setEnrollmentDate7":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7"));
+						} else {
+							o2.setEnrollmentDate7(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate7", o2.jsonEnrollmentDate7(), pk));
+						}
+						break;
+					case "setEnrollmentDate8":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8"));
+						} else {
+							o2.setEnrollmentDate8(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate8", o2.jsonEnrollmentDate8(), pk));
+						}
+						break;
+					case "setEnrollmentDate9":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9"));
+						} else {
+							o2.setEnrollmentDate9(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate9", o2.jsonEnrollmentDate9(), pk));
+						}
+						break;
+					case "setEnrollmentDate10":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10"));
+						} else {
+							o2.setEnrollmentDate10(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate10", o2.jsonEnrollmentDate10(), pk));
+						}
+						break;
+				}
+			}
+			sqlConnection.queryWithParams(
+					patchSql.toString()
+					, new JsonArray(patchSqlParams)
+					, patchAsync
+			-> {
+				if(patchAsync.succeeded()) {
+					SchoolEnrollment o3 = new SchoolEnrollment();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void patchpaymentsSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200PATCHPaymentsSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PATCHPaymentsSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// SearchPage //
+
+	@Override
+	public void searchpageSchoolEnrollmentId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		searchpageSchoolEnrollment(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void searchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+			sqlSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolEnrollment(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+									searchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchpageSchoolEnrollment succeeded. "));
+										} else {
+											LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", d.cause()));
+											errorSchoolEnrollment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void searchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200SearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200SearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -2074,27 +3031,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment-form", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									response200FormSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
+									formsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("formsearchpageSchoolEnrollment succeeded. "));
 										} else {
+											LOGGER.error(String.format("formsearchpageSchoolEnrollment failed. ", d.cause()));
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
 									});
@@ -2115,6 +3057,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
+	public void formsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200FormSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200FormSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -2159,27 +3125,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment-pdf", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									response200PdfSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
+									pdfsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("pdfsearchpageSchoolEnrollment succeeded. "));
 										} else {
+											LOGGER.error(String.format("pdfsearchpageSchoolEnrollment failed. ", d.cause()));
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
 									});
@@ -2200,6 +3151,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
+	public void pdfsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200PdfSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200PdfSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -2244,27 +3219,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment-email", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									response200EmailSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
+									emailsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
-													}
-												});
-											}
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("emailsearchpageSchoolEnrollment succeeded. "));
 										} else {
+											LOGGER.error(String.format("emailsearchpageSchoolEnrollment failed. ", d.cause()));
 											errorSchoolEnrollment(siteRequest, eventHandler, d);
 										}
 									});
@@ -2285,6 +3245,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+
+	public void emailsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		response200EmailSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolEnrollment(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, eventHandler, a);
+			}
+		});
+	}
 	public void response200EmailSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
@@ -2311,7 +3295,33 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	// Partagé //
+	// General //
+
+	public Future<SchoolEnrollment> defineIndexSchoolEnrollment(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+		Promise<SchoolEnrollment> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
+		defineSchoolEnrollment(schoolEnrollment, c -> {
+			if(c.succeeded()) {
+				attributeSchoolEnrollment(schoolEnrollment, d -> {
+					if(d.succeeded()) {
+						indexSchoolEnrollment(schoolEnrollment, e -> {
+							if(e.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+								promise.complete(schoolEnrollment);
+							} else {
+								errorSchoolEnrollment(siteRequest, null, e);
+							}
+						});
+					} else {
+						errorSchoolEnrollment(siteRequest, null, d);
+					}
+				});
+			} else {
+				errorSchoolEnrollment(siteRequest, null, c);
+			}
+		});
+		return promise.future();
+	}
 
 	public void createSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		try {
@@ -2335,7 +3345,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void apiRequestSchoolEnrollment(SchoolEnrollment o) {
+	public ApiRequest apiRequestSchoolEnrollment(SchoolEnrollment o) {
 		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
@@ -2389,6 +3399,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			}
 		}
+		return apiRequest;
 	}
 
 	public void errorSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -2894,7 +3905,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					o2.setPk(pk);
 					o2.setSiteRequest_(siteRequest2);
 					futures.add(
-						service.futurePATCHSchoolYear(o2, a -> {
+						service.patchSchoolYearFuture(o2, a -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
 							} else {
@@ -2913,7 +3924,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolBlock(o2, a -> {
+							service.patchSchoolBlockFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolBlock %s refreshed. ", pk));
 								} else {
@@ -2933,7 +3944,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					o2.setPk(pk);
 					o2.setSiteRequest_(siteRequest2);
 					futures.add(
-						service.futurePATCHSchoolChild(o2, a -> {
+						service.patchSchoolChildFuture(o2, a -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("SchoolChild %s refreshed. ", pk));
 							} else {
@@ -2952,7 +3963,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolMom(o2, a -> {
+							service.patchSchoolMomFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolMom %s refreshed. ", pk));
 								} else {
@@ -2972,7 +3983,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolDad(o2, a -> {
+							service.patchSchoolDadFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolDad %s refreshed. ", pk));
 								} else {
@@ -2992,7 +4003,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolGuardian(o2, a -> {
+							service.patchSchoolGuardianFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolGuardian %s refreshed. ", pk));
 								} else {
@@ -3012,7 +4023,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSchoolPayment(o2, a -> {
+							service.patchSchoolPaymentFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
 								} else {
@@ -3032,7 +4043,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.futurePATCHSiteUser(o2, a -> {
+							service.patchSiteUserFuture(o2, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SiteUser %s refreshed. ", pk));
 								} else {
@@ -3051,7 +4062,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolEnrollment o2 : searchList.getList()) {
 							futures2.add(
-								service.futurePATCHSchoolEnrollment(o2, b -> {
+								service.patchSchoolEnrollmentFuture(o2, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", o2.getPk()));
 									} else {

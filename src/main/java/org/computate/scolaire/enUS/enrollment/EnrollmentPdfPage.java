@@ -73,15 +73,7 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 	 * 
 	 **/
 	protected void _listEnrollmentDesign(SearchList<EnrollmentDesign> l) {
-		String design = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getOperationRequest)
-				.map(OperationRequest::getParams).map(r -> r.getJsonObject("query"))
-				.orElse(new JsonObject()).stream().filter(o -> "fq".equals(o.getKey()))
-				.findFirst().map(o -> o.getValue())
-				.map(o -> o instanceof JsonArray ? (JsonArray)o : new JsonArray().add(o))
-				.orElse(new JsonArray()).stream()
-				.filter(o -> ((String)o).startsWith("design:"))
-				.findFirst().map(o -> StringUtils.substringAfter((String)o, "design:"))
-				.orElse(null);
+		String design = siteRequest_.getRequestVars().get("design");
 
 		l.setQuery("*:*");
 		l.addFilterQuery("enrollmentDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(design));

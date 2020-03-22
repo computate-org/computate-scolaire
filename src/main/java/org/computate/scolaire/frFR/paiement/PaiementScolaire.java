@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;        
+package org.computate.scolaire.frFR.paiement;               
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -74,7 +74,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school payment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */               
+	 */         
 	protected void _paiementCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -91,7 +91,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: inscription
 	 * NomAffichage.enUS: enrollment
-	 */            
+	 */    
 	protected void _inscriptionCle(Couverture<Long> c) {}
 
 	/**
@@ -105,7 +105,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Ignorer: true
 	 * r: utilisateurCles
 	 * r.enUS: userKeys
-	 */
+	 */   
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("paiementCles_indexed_longs:" + pk);
@@ -138,7 +138,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: userKeys
 	 * r: inscriptionRecherche
 	 * r.enUS: enrollmentSearch
-	 */                 
+	 */               
 	protected void _utilisateurCles(List<Long> l) {
 		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("utilisateurCles_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
@@ -859,6 +859,19 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: chargeLateFee
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * NomAffichage.frFR: frais de retard
+	 * NomAffichage.enUS: late fee
+	 */                    
+	protected void _fraisRetard(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: paymentCash
 	 * Indexe: true
 	 * Stocke: true
@@ -1004,6 +1017,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentValue
 	 * r: fraisMontant
 	 * r.enUS: chargeAmount
+	 * r: fraisRetard
+	 * r.enUS: chargeLateFee
 	 * r: " par chèque"
 	 * r.enUS: " by check"
 	 * r: " par espèces"
@@ -1046,6 +1061,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(String.format("Frais de %s + %s", fd.format(inscription_.getSessionJourDebut().plusWeeks(1)), fd.format(inscription_.getSessionJourFin())));
 			else if(inscription_ != null && fraisInscription)
 				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionJourDebut().getYear(), inscription_.getSessionJourFin().getYear()));
+			else if(inscription_ != null && fraisRetard)
+				o.append("");
 			else
 				o.append(String.format("Frais de %s", fd.format(paiementDate.plusMonths(1))));
 		}
@@ -1094,6 +1111,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentValue
 	 * r: fraisMontant
 	 * r.enUS: chargeAmount
+	 * r: fraisRetard
+	 * r.enUS: chargeLateFee
 	 * r: " par chèque"
 	 * r.enUS: " by check"
 	 * r: " par espèces"
@@ -1124,10 +1143,10 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: " payment"
 	 * r: " pour %s"
 	 * r.enUS: " for %s"
-	 */    
+	 */           
 	protected void _paiementNomComplet(Couverture<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
-		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.FRANCE);
+		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.FRANCE);
 		fn.setMaximumFractionDigits(0);
 
 		StringBuilder o = new StringBuilder();
@@ -1136,6 +1155,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
 			else if(inscription_ != null && fraisInscription)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+			else if(inscription_ != null && fraisRetard)
+				o.append(String.format("%s", fn.format(fraisMontant)));
 			else
 				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate.plusMonths(1))));
 
@@ -1166,7 +1187,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: _objectTitle
 	 * r: paiementNomComplet
 	 * r.enUS: paymentCompleteName
-	 */
+	 */            
 	@Override
 	protected void _objetTitre(Couverture<String> c) {
 		c.o(paiementNomComplet);

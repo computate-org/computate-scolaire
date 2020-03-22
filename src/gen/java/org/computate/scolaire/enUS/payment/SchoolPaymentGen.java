@@ -254,12 +254,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmEnrollmentKey(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKey").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/enrollment?fq=paymentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+							{ e("a").a("href", "/enrollment?fq=paymentKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue-gray w3-hover-blue-gray ").f();
 								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("enrollment");
 							} g("a");
@@ -287,7 +287,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 											.a("onclick", "postSchoolEnrollmentVals({ paymentKeys: [ \"", pk, "\" ] }, function() { patchSchoolPaymentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKey')); });")
 											.f().sx("add an enrollment")
 										.g("button");
@@ -1305,7 +1305,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChildCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChildCompleteNamePreferred").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1449,7 +1449,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChildBirthDate(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChildBirthDate").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1583,7 +1583,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmMomCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentMomCompleteNamePreferred").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1718,7 +1718,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmDadCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentDadCompleteNamePreferred").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3088,7 +3088,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmEnrollmentPaymentEachMonth(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentEnrollmentPaymentEachMonth").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3225,7 +3225,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmEnrollmentPaymentComplete(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentEnrollmentPaymentComplete").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3344,7 +3344,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentDescription(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentDescription").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3488,7 +3488,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentDate(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentDate").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3640,7 +3640,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentAmount(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentAmount").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3793,7 +3793,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChargeAmount(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmount").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3946,7 +3946,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChargeAmountFuture(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountFuture").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4099,7 +4099,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChargeEnrollment(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeEnrollment").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4236,7 +4236,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChargeFirstLast(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeFirstLast").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4373,7 +4373,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmChargeMonth(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeMonth").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4384,6 +4384,143 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputChargeMonth(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////
+	// chargeLateFee //
+	///////////////////
+
+	/**	L'entité « chargeLateFee »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean chargeLateFee;
+	@JsonIgnore
+	public Wrap<Boolean> chargeLateFeeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeLateFee").o(chargeLateFee);
+
+	/**	<br/>L'entité « chargeLateFee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeLateFee">Trouver l'entité chargeLateFee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeLateFee(Wrap<Boolean> c);
+
+	public Boolean getChargeLateFee() {
+		return chargeLateFee;
+	}
+
+	public void setChargeLateFee(Boolean chargeLateFee) {
+		this.chargeLateFee = chargeLateFee;
+		this.chargeLateFeeWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeLateFee(String o) {
+		this.chargeLateFee = Boolean.parseBoolean(o);
+		this.chargeLateFeeWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeLateFeeInit() {
+		if(!chargeLateFeeWrap.alreadyInitialized) {
+			_chargeLateFee(chargeLateFeeWrap);
+			if(chargeLateFee == null)
+				setChargeLateFee(chargeLateFeeWrap.o);
+		}
+		chargeLateFeeWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Boolean solrChargeLateFee() {
+		return chargeLateFee;
+	}
+
+	public String strChargeLateFee() {
+		return chargeLateFee == null ? "" : chargeLateFee.toString();
+	}
+
+	public String jsonChargeLateFee() {
+		return chargeLateFee == null ? "" : chargeLateFee.toString();
+	}
+
+	public String nomAffichageChargeLateFee() {
+		return "late fee";
+	}
+
+	public String htmTooltipChargeLateFee() {
+		return null;
+	}
+
+	public String htmChargeLateFee() {
+		return chargeLateFee == null ? "" : StringEscapeUtils.escapeHtml4(strChargeLateFee());
+	}
+
+	public void inputChargeLateFee(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeLateFee")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeLateFee");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeLateFee inputSchoolPayment", pk, "ChargeLateFee w3-input w3-border ");
+				a("name", "setChargeLateFee");
+			} else {
+				a("class", "valueChargeLateFee inputSchoolPayment", pk, "ChargeLateFee w3-input w3-border ");
+				a("name", "chargeLateFee");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeLateFee', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeLateFee')); }, function() { addError($('#", classApiMethodMethod, "_chargeLateFee')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeLateFee() != null && getChargeLateFee())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeLateFee());
+			}
+		}
+	}
+
+	public void htmChargeLateFee(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeLateFee").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeLateFee").a("class", "").f().sx("late fee").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeLateFee(classApiMethodMethod);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -4510,7 +4647,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentCash(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentCash").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4647,7 +4784,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentCheck(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentCheck").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4784,7 +4921,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentSystem(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentSystem").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -4903,7 +5040,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentBy(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentBy").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -5038,7 +5175,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmTransactionId(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentTransactionId").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -5173,7 +5310,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmCustomerProfileId(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentCustomerProfileId").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -5308,7 +5445,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmTransactionStatus(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentTransactionStatus").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -5461,7 +5598,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentRecieved(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentRecieved").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -5580,7 +5717,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void htmPaymentShortName(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentShortName").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -5744,6 +5881,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		chargeEnrollmentInit();
 		chargeFirstLastInit();
 		chargeMonthInit();
+		chargeLateFeeInit();
 		paymentCashInit();
 		paymentCheckInit();
 		paymentSystemInit();
@@ -5886,6 +6024,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.chargeFirstLast;
 			case "chargeMonth":
 				return oSchoolPayment.chargeMonth;
+			case "chargeLateFee":
+				return oSchoolPayment.chargeLateFee;
 			case "paymentCash":
 				return oSchoolPayment.paymentCash;
 			case "paymentCheck":
@@ -6014,6 +6154,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return val;
 			case "chargeMonth":
 				setChargeMonth(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeLateFee":
+				setChargeLateFee(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentCash":
@@ -6337,6 +6481,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setChargeMonth(chargeMonth);
 			}
 
+			if(savesSchoolPayment.contains("chargeLateFee")) {
+				Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
+				if(chargeLateFee != null)
+					oSchoolPayment.setChargeLateFee(chargeLateFee);
+			}
+
 			if(savesSchoolPayment.contains("paymentCash")) {
 				Boolean paymentCash = (Boolean)solrDocument.get("paymentCash_stored_boolean");
 				if(paymentCash != null)
@@ -6658,6 +6808,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("chargeMonth_indexed_boolean", chargeMonth);
 			document.addField("chargeMonth_stored_boolean", chargeMonth);
 		}
+		if(chargeLateFee != null) {
+			document.addField("chargeLateFee_indexed_boolean", chargeLateFee);
+			document.addField("chargeLateFee_stored_boolean", chargeLateFee);
+		}
 		if(paymentCash != null) {
 			document.addField("paymentCash_indexed_boolean", paymentCash);
 			document.addField("paymentCash_stored_boolean", paymentCash);
@@ -6809,6 +6963,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "chargeFirstLast_indexed_boolean";
 			case "chargeMonth":
 				return "chargeMonth_indexed_boolean";
+			case "chargeLateFee":
+				return "chargeLateFee_indexed_boolean";
 			case "paymentCash":
 				return "paymentCash_indexed_boolean";
 			case "paymentCheck":
@@ -7034,6 +7190,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(chargeMonth != null)
 			oSchoolPayment.setChargeMonth(chargeMonth);
 
+		Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
+		if(chargeLateFee != null)
+			oSchoolPayment.setChargeLateFee(chargeLateFee);
+
 		Boolean paymentCash = (Boolean)solrDocument.get("paymentCash_stored_boolean");
 		if(paymentCash != null)
 			oSchoolPayment.setPaymentCash(paymentCash);
@@ -7116,6 +7276,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("chargeFirstLast");
 			if(!Objects.equals(chargeMonth, original.getChargeMonth()))
 				apiRequest.addVars("chargeMonth");
+			if(!Objects.equals(chargeLateFee, original.getChargeLateFee()))
+				apiRequest.addVars("chargeLateFee");
 			if(!Objects.equals(paymentCash, original.getPaymentCash()))
 				apiRequest.addVars("paymentCash");
 			if(!Objects.equals(paymentCheck, original.getPaymentCheck()))
@@ -7143,7 +7305,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, chargeAmount, chargeAmountFuture, chargeEnrollment, chargeFirstLast, chargeMonth, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, paymentShortName);
+		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, chargeAmount, chargeAmountFuture, chargeEnrollment, chargeFirstLast, chargeMonth, chargeLateFee, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, paymentShortName);
 	}
 
 	////////////
@@ -7172,6 +7334,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( chargeEnrollment, that.chargeEnrollment )
 				&& Objects.equals( chargeFirstLast, that.chargeFirstLast )
 				&& Objects.equals( chargeMonth, that.chargeMonth )
+				&& Objects.equals( chargeLateFee, that.chargeLateFee )
 				&& Objects.equals( paymentCash, that.paymentCash )
 				&& Objects.equals( paymentCheck, that.paymentCheck )
 				&& Objects.equals( paymentSystem, that.paymentSystem )
@@ -7206,6 +7369,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", chargeEnrollment: " ).append(chargeEnrollment);
 		sb.append( ", chargeFirstLast: " ).append(chargeFirstLast);
 		sb.append( ", chargeMonth: " ).append(chargeMonth);
+		sb.append( ", chargeLateFee: " ).append(chargeLateFee);
 		sb.append( ", paymentCash: " ).append(paymentCash);
 		sb.append( ", paymentCheck: " ).append(paymentCheck);
 		sb.append( ", paymentSystem: " ).append(paymentSystem);

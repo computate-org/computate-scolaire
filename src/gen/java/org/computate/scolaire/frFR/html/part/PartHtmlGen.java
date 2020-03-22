@@ -227,7 +227,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
-			sx(htmDesignInscriptionCle());
 		}
 	}
 
@@ -360,7 +359,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlLien())
 			.fg();
 
-			sx(htmHtmlLien());
 		}
 	}
 
@@ -481,7 +479,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlElement())
 			.fg();
 
-			sx(htmHtmlElement());
 		}
 	}
 
@@ -602,7 +599,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlId())
 			.fg();
 
-			sx(htmHtmlId());
 		}
 	}
 
@@ -723,7 +719,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlClasses())
 			.fg();
 
-			sx(htmHtmlClasses());
 		}
 	}
 
@@ -844,7 +839,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlStyle())
 			.fg();
 
-			sx(htmHtmlStyle());
 		}
 	}
 
@@ -963,7 +957,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlAvant()).g("textarea");
 
-			sx(htmHtmlAvant());
 		}
 	}
 
@@ -1082,7 +1075,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlApres()).g("textarea");
 
-			sx(htmHtmlApres());
 		}
 	}
 
@@ -1201,7 +1193,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlTexte()).g("textarea");
 
-			sx(htmHtmlTexte());
 		}
 	}
 
@@ -1322,7 +1313,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVar())
 			.fg();
 
-			sx(htmHtmlVar());
 		}
 	}
 
@@ -1443,7 +1433,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarSpan())
 			.fg();
 
-			sx(htmHtmlVarSpan());
 		}
 	}
 
@@ -1564,7 +1553,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarForm())
 			.fg();
 
-			sx(htmHtmlVarForm());
 		}
 	}
 
@@ -1685,7 +1673,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarInput())
 			.fg();
 
-			sx(htmHtmlVarInput());
 		}
 	}
 
@@ -1806,7 +1793,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarForEach())
 			.fg();
 
-			sx(htmHtmlVarForEach());
 		}
 	}
 
@@ -1945,7 +1931,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmHtmlExclure());
 		}
 	}
 
@@ -2071,7 +2056,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				g("select");
 			}
 
-			sx(htmPdfExclure());
 		}
 	}
 
@@ -2186,7 +2170,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri1())
 			.fg();
 
-			sx(htmTri1());
 		}
 	}
 
@@ -2314,7 +2297,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri2())
 			.fg();
 
-			sx(htmTri2());
 		}
 	}
 
@@ -2442,7 +2424,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri3())
 			.fg();
 
-			sx(htmTri3());
 		}
 	}
 
@@ -2570,7 +2551,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri4())
 			.fg();
 
-			sx(htmTri4());
 		}
 	}
 
@@ -2698,7 +2678,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri5())
 			.fg();
 
-			sx(htmTri5());
 		}
 	}
 
@@ -2826,7 +2805,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri6())
 			.fg();
 
-			sx(htmTri6());
 		}
 	}
 
@@ -2954,7 +2932,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri7())
 			.fg();
 
-			sx(htmTri7());
 		}
 	}
 
@@ -3082,7 +3059,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri8())
 			.fg();
 
-			sx(htmTri8());
 		}
 	}
 
@@ -3210,7 +3186,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri9())
 			.fg();
 
-			sx(htmTri9());
 		}
 	}
 
@@ -3338,7 +3313,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri10())
 			.fg();
 
-			sx(htmTri10());
 		}
 	}
 
