@@ -5,7 +5,6 @@ import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.school.School;
-import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolYear extends SchoolYearGen<Cluster> {
@@ -77,13 +76,6 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	}
 
 	protected void _enrollmentFormKey(Wrap<Long> c) {
-	}
-
-	protected void _enrollmentFormSearch(SearchList<DesignInscription> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("enrollmentFormKeys_indexed_longs:" + pk);
-		l.setC(EnrollmentDesign.class);
-		l.setStore(true);
 	}
 
 	protected void _yearStart(Wrap<Integer> c) {}

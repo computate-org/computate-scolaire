@@ -42,7 +42,6 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
-import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -1246,44 +1245,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return enrollmentFormKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentFormKey());
 	}
 
-	//////////////////////////
-	// enrollmentFormSearch //
-	//////////////////////////
-
-	/**	L'entité « enrollmentFormSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<DesignInscription>(). 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<DesignInscription> enrollmentFormSearch = new SearchList<DesignInscription>();
-	@JsonIgnore
-	public Wrap<SearchList<DesignInscription>> enrollmentFormSearchWrap = new Wrap<SearchList<DesignInscription>>().p(this).c(SearchList.class).var("enrollmentFormSearch").o(enrollmentFormSearch);
-
-	/**	<br/>L'entité « enrollmentFormSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<DesignInscription>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormSearch">Trouver l'entité enrollmentFormSearch dans Solr</a>
-	 * <br/>
-	 * @param enrollmentFormSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _enrollmentFormSearch(SearchList<DesignInscription> l);
-
-	public SearchList<DesignInscription> getEnrollmentFormSearch() {
-		return enrollmentFormSearch;
-	}
-
-	public void setEnrollmentFormSearch(SearchList<DesignInscription> enrollmentFormSearch) {
-		this.enrollmentFormSearch = enrollmentFormSearch;
-		this.enrollmentFormSearchWrap.alreadyInitialized = true;
-	}
-	protected SchoolYear enrollmentFormSearchInit() {
-		if(!enrollmentFormSearchWrap.alreadyInitialized) {
-			_enrollmentFormSearch(enrollmentFormSearch);
-		}
-		enrollmentFormSearch.initDeepForClass(siteRequest_);
-		enrollmentFormSearchWrap.alreadyInitialized(true);
-		return (SchoolYear)this;
-	}
-
 	///////////////
 	// yearStart //
 	///////////////
@@ -1887,7 +1848,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		schoolPhoneNumberInit();
 		schoolAdministratorNameInit();
 		enrollmentFormKeyInit();
-		enrollmentFormSearchInit();
 		yearStartInit();
 		yearEndInit();
 		yearEnrollmentFeeInit();
@@ -1908,8 +1868,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			super.siteRequestCluster(siteRequest_);
 		if(schoolSearch != null)
 			schoolSearch.setSiteRequest_(siteRequest_);
-		if(enrollmentFormSearch != null)
-			enrollmentFormSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -1968,8 +1926,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.schoolAdministratorName;
 			case "enrollmentFormKey":
 				return oSchoolYear.enrollmentFormKey;
-			case "enrollmentFormSearch":
-				return oSchoolYear.enrollmentFormSearch;
 			case "yearStart":
 				return oSchoolYear.yearStart;
 			case "yearEnd":

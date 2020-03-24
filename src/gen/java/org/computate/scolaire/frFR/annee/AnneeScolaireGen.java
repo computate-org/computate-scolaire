@@ -42,7 +42,6 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
-import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -1249,44 +1248,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
 	}
 
-	//////////////////////////////
-	// formInscriptionRecherche //
-	//////////////////////////////
-
-	/**	L'entité « formInscriptionRecherche »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<DesignInscription>(). 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected ListeRecherche<DesignInscription> formInscriptionRecherche = new ListeRecherche<DesignInscription>();
-	@JsonIgnore
-	public Couverture<ListeRecherche<DesignInscription>> formInscriptionRechercheCouverture = new Couverture<ListeRecherche<DesignInscription>>().p(this).c(ListeRecherche.class).var("formInscriptionRecherche").o(formInscriptionRecherche);
-
-	/**	<br/>L'entité « formInscriptionRecherche »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<DesignInscription>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionRecherche">Trouver l'entité formInscriptionRecherche dans Solr</a>
-	 * <br/>
-	 * @param formInscriptionRecherche est l'entité déjà construit. 
-	 **/
-	protected abstract void _formInscriptionRecherche(ListeRecherche<DesignInscription> l);
-
-	public ListeRecherche<DesignInscription> getFormInscriptionRecherche() {
-		return formInscriptionRecherche;
-	}
-
-	public void setFormInscriptionRecherche(ListeRecherche<DesignInscription> formInscriptionRecherche) {
-		this.formInscriptionRecherche = formInscriptionRecherche;
-		this.formInscriptionRechercheCouverture.dejaInitialise = true;
-	}
-	protected AnneeScolaire formInscriptionRechercheInit() {
-		if(!formInscriptionRechercheCouverture.dejaInitialise) {
-			_formInscriptionRecherche(formInscriptionRecherche);
-		}
-		formInscriptionRecherche.initLoinPourClasse(requeteSite_);
-		formInscriptionRechercheCouverture.dejaInitialise(true);
-		return (AnneeScolaire)this;
-	}
-
 	////////////////
 	// anneeDebut //
 	////////////////
@@ -1893,7 +1854,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		ecoleNumeroTelephoneInit();
 		ecoleAdministrateurNomInit();
 		formInscriptionCleInit();
-		formInscriptionRechercheInit();
 		anneeDebutInit();
 		anneeFinInit();
 		anneeFraisInscriptionInit();
@@ -1914,8 +1874,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(ecoleRecherche != null)
 			ecoleRecherche.setRequeteSite_(requeteSite_);
-		if(formInscriptionRecherche != null)
-			formInscriptionRecherche.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1974,8 +1932,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.ecoleAdministrateurNom;
 			case "formInscriptionCle":
 				return oAnneeScolaire.formInscriptionCle;
-			case "formInscriptionRecherche":
-				return oAnneeScolaire.formInscriptionRecherche;
 			case "anneeDebut":
 				return oAnneeScolaire.anneeDebut;
 			case "anneeFin":

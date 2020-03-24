@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                                   
+package org.computate.scolaire.frFR.annee;                                    
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
-import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -281,25 +280,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: enrollment form
 	 */               
 	protected void _formInscriptionCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * Var.enUS: enrollmentFormSearch
-	 * r: formInscriptionCles
-	 * r.enUS: enrollmentFormKeys
-	 * r: FormInscription
-	 * r.enUS: EnrollmentForm
-	 * r: setStocker
-	 * r.enUS: setStore
-	 * Ignorer: true
-	 * r: DesignInscription
-	 * r.enUS: EnrollmentDesign
-	 */   
-	protected void _formInscriptionRecherche(ListeRecherche<DesignInscription> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("formInscriptionCles_indexed_longs:" + pk);
-		l.setC(DesignInscription.class);
-		l.setStocker(true);
 	}
 
 	/**
