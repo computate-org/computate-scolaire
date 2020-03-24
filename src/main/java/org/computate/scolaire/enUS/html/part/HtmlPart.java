@@ -12,6 +12,9 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	protected void _enrollmentDesignKey(Wrap<Long> c) {
 	}
 
+	protected void _pageDesignKey(Wrap<Long> c) {
+	}
+
 	protected void _htmlLink(Wrap<String> c) {
 	}
 

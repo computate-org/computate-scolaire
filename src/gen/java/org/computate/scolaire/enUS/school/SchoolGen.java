@@ -247,7 +247,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmYearKeys(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearKeys").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -953,7 +953,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmSchoolName(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolName").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1074,7 +1074,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmSchoolPhoneNumber(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolPhoneNumber").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1195,7 +1195,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmSchoolAdministratorName(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolAdministratorName").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1316,7 +1316,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmSchoolEmail(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolEmail").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1437,7 +1437,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmSchoolLocation(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolLocation").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1556,7 +1556,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void htmSchoolAddress(String classApiMethodMethod) {
 		School s = (School)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolAddress").f();
 					{ e("div").a("class", "w3-card ").f();

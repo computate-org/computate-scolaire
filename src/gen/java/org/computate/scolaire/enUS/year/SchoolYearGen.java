@@ -42,7 +42,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -165,7 +165,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void htmSchoolKey(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearSchoolKey").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -471,7 +471,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void htmSeasonKeys(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearSeasonKeys").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1251,27 +1251,27 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	//////////////////////////
 
 	/**	L'entité « enrollmentFormSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<DesignInscription>(). 
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected SearchList<EnrollmentDesign> enrollmentFormSearch = new SearchList<EnrollmentDesign>();
+	protected SearchList<DesignInscription> enrollmentFormSearch = new SearchList<DesignInscription>();
 	@JsonIgnore
-	public Wrap<SearchList<EnrollmentDesign>> enrollmentFormSearchWrap = new Wrap<SearchList<EnrollmentDesign>>().p(this).c(SearchList.class).var("enrollmentFormSearch").o(enrollmentFormSearch);
+	public Wrap<SearchList<DesignInscription>> enrollmentFormSearchWrap = new Wrap<SearchList<DesignInscription>>().p(this).c(SearchList.class).var("enrollmentFormSearch").o(enrollmentFormSearch);
 
 	/**	<br/>L'entité « enrollmentFormSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<DesignInscription>(). 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormSearch">Trouver l'entité enrollmentFormSearch dans Solr</a>
 	 * <br/>
 	 * @param enrollmentFormSearch est l'entité déjà construit. 
 	 **/
-	protected abstract void _enrollmentFormSearch(SearchList<EnrollmentDesign> l);
+	protected abstract void _enrollmentFormSearch(SearchList<DesignInscription> l);
 
-	public SearchList<EnrollmentDesign> getEnrollmentFormSearch() {
+	public SearchList<DesignInscription> getEnrollmentFormSearch() {
 		return enrollmentFormSearch;
 	}
 
-	public void setEnrollmentFormSearch(SearchList<EnrollmentDesign> enrollmentFormSearch) {
+	public void setEnrollmentFormSearch(SearchList<DesignInscription> enrollmentFormSearch) {
 		this.enrollmentFormSearch = enrollmentFormSearch;
 		this.enrollmentFormSearchWrap.alreadyInitialized = true;
 	}
@@ -1379,7 +1379,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void htmYearStart(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearYearStart").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1506,7 +1506,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void htmYearEnd(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearYearEnd").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1644,7 +1644,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void htmYearEnrollmentFee(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolYearYearEnrollmentFee").f();
 					{ e("div").a("class", "w3-card ").f();

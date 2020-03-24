@@ -232,12 +232,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmDesignInscriptionCle(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
 								e("i").a("class", "far fa-drafting-compass ").f().g("i");
 								sx("design d'inscription");
 							} g("a");
@@ -262,9 +262,141 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 											.a("onclick", "postDesignInscriptionVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designInscriptionCle')); });")
 											.f().sx("ajouter un design d'inscription")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////
+	// designPageCle //
+	///////////////////
+
+	/**	L'entité « designPageCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long designPageCle;
+	@JsonIgnore
+	public Couverture<Long> designPageCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("designPageCle").o(designPageCle);
+
+	/**	<br/>L'entité « designPageCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCle">Trouver l'entité designPageCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _designPageCle(Couverture<Long> c);
+
+	public Long getDesignPageCle() {
+		return designPageCle;
+	}
+
+	public void setDesignPageCle(Long designPageCle) {
+		this.designPageCle = designPageCle;
+		this.designPageCleCouverture.dejaInitialise = true;
+	}
+	public PartHtml setDesignPageCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.designPageCle = Long.parseLong(o);
+		this.designPageCleCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	protected PartHtml designPageCleInit() {
+		if(!designPageCleCouverture.dejaInitialise) {
+			_designPageCle(designPageCleCouverture);
+			if(designPageCle == null)
+				setDesignPageCle(designPageCleCouverture.o);
+		}
+		designPageCleCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+
+	public Long solrDesignPageCle() {
+		return designPageCle;
+	}
+
+	public String strDesignPageCle() {
+		return designPageCle == null ? "" : designPageCle.toString();
+	}
+
+	public String jsonDesignPageCle() {
+		return designPageCle == null ? "" : designPageCle.toString();
+	}
+
+	public String nomAffichageDesignPageCle() {
+		return "design de page";
+	}
+
+	public String htmTooltipDesignPageCle() {
+		return null;
+	}
+
+	public String htmDesignPageCle() {
+		return designPageCle == null ? "" : StringEscapeUtils.escapeHtml4(strDesignPageCle());
+	}
+
+	public void inputDesignPageCle(String classeApiMethodeMethode) {
+		PartHtml s = (PartHtml)this;
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "design de page")
+					.a("class", "valeur suggereDesignPageCle w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setDesignPageCle")
+					.a("id", classeApiMethodeMethode, "_designPageCle")
+					.a("autocomplete", "off")
+					.a("oninput", "suggerePartHtmlDesignPageCle($(this).val() ? rechercherDesignPageFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignPageCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignPageCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
+
+		}
+	}
+
+	public void htmDesignPageCle(String classeApiMethodeMethode) {
+		PartHtml s = (PartHtml)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlDesignPageCle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
+								e("i").a("class", "far fa-drafting-compass ").f().g("i");
+								sx("design de page");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier un design de page a ce part de HTML");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputDesignPageCle(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPartHtmlDesignPageCle_", classeApiMethodeMethode).f();
+								} g("ul");
+								{
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+											.a("onclick", "postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCle')); });")
+											.f().sx("ajouter un design de page")
 										.g("button");
 									} g("div");
 								}
@@ -364,7 +496,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlLien(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlLien").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -484,7 +616,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlElement(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlElement").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -604,7 +736,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlId(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlId").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -724,7 +856,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlClasses(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlClasses").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -844,7 +976,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlStyle(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlStyle").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -962,7 +1094,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlAvant(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlAvant").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1080,7 +1212,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlApres(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlApres").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1198,7 +1330,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlTexte(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlTexte").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1318,7 +1450,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlVar(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVar").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1438,7 +1570,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlVarSpan(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarSpan").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1558,7 +1690,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlVarForm(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarForm").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1678,7 +1810,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlVarInput(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarInput").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1798,7 +1930,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlVarForEach(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarForEach").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1936,7 +2068,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmHtmlExclure(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlExclure").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2061,7 +2193,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmPdfExclure(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlPdfExclure").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2175,7 +2307,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri1(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri1").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2302,7 +2434,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri2(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri2").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2429,7 +2561,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri3(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri3").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2556,7 +2688,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri4(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri4").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2683,7 +2815,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri5(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri5").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2810,7 +2942,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri6(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri6").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2937,7 +3069,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri7(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri7").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3064,7 +3196,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri8(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri8").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3191,7 +3323,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri9(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri9").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3318,7 +3450,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void htmTri10(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri10").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3373,6 +3505,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public void initPartHtml() {
 		partHtmlCleInit();
 		designInscriptionCleInit();
+		designPageCleInit();
 		htmlLienInit();
 		htmlElementInit();
 		htmlIdInit();
@@ -3440,6 +3573,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return oPartHtml.partHtmlCle;
 			case "designInscriptionCle":
 				return oPartHtml.designInscriptionCle;
+			case "designPageCle":
+				return oPartHtml.designPageCle;
 			case "htmlLien":
 				return oPartHtml.htmlLien;
 			case "htmlElement":
@@ -3517,6 +3652,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		switch(var) {
 			case "designInscriptionCle":
 				oPartHtml.setDesignInscriptionCle((Long)val);
+				return val;
+			case "designPageCle":
+				oPartHtml.setDesignPageCle((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3676,6 +3814,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			Long designInscriptionCle = (Long)solrDocument.get("designInscriptionCle_stored_long");
 			if(designInscriptionCle != null)
 				oPartHtml.setDesignInscriptionCle(designInscriptionCle);
+
+			Long designPageCle = (Long)solrDocument.get("designPageCle_stored_long");
+			if(designPageCle != null)
+				oPartHtml.setDesignPageCle(designPageCle);
 
 			if(sauvegardesPartHtml.contains("htmlLien")) {
 				String htmlLien = (String)solrDocument.get("htmlLien_stored_string");
@@ -3904,6 +4046,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			document.addField("designInscriptionCle_indexed_long", designInscriptionCle);
 			document.addField("designInscriptionCle_stored_long", designInscriptionCle);
 		}
+		if(designPageCle != null) {
+			document.addField("designPageCle_indexed_long", designPageCle);
+			document.addField("designPageCle_stored_long", designPageCle);
+		}
 		if(htmlLien != null) {
 			document.addField("htmlLien_indexed_string", htmlLien);
 			document.addField("htmlLien_stored_string", htmlLien);
@@ -4031,6 +4177,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return "partHtmlCle_indexed_long";
 			case "designInscriptionCle":
 				return "designInscriptionCle_indexed_long";
+			case "designPageCle":
+				return "designPageCle_indexed_long";
 			case "htmlLien":
 				return "htmlLien_indexed_string";
 			case "htmlElement":
@@ -4117,6 +4265,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		Long designInscriptionCle = (Long)solrDocument.get("designInscriptionCle_stored_long");
 		if(designInscriptionCle != null)
 			oPartHtml.setDesignInscriptionCle(designInscriptionCle);
+
+		Long designPageCle = (Long)solrDocument.get("designPageCle_stored_long");
+		if(designPageCle != null)
+			oPartHtml.setDesignPageCle(designPageCle);
 
 		String htmlLien = (String)solrDocument.get("htmlLien_stored_string");
 		if(htmlLien != null)
@@ -4232,6 +4384,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			PartHtml original = (PartHtml)o;
 			if(!Objects.equals(designInscriptionCle, original.getDesignInscriptionCle()))
 				requeteApi.addVars("designInscriptionCle");
+			if(!Objects.equals(designPageCle, original.getDesignPageCle()))
+				requeteApi.addVars("designPageCle");
 			if(!Objects.equals(htmlLien, original.getHtmlLien()))
 				requeteApi.addVars("htmlLien");
 			if(!Objects.equals(htmlElement, original.getHtmlElement()))
@@ -4291,7 +4445,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), designInscriptionCle, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclure, pdfExclure, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
+		return Objects.hash(super.hashCode(), designInscriptionCle, designPageCle, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclure, pdfExclure, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
 	}
 
 	////////////
@@ -4306,6 +4460,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		PartHtml that = (PartHtml)o;
 		return super.equals(o)
 				&& Objects.equals( designInscriptionCle, that.designInscriptionCle )
+				&& Objects.equals( designPageCle, that.designPageCle )
 				&& Objects.equals( htmlLien, that.htmlLien )
 				&& Objects.equals( htmlElement, that.htmlElement )
 				&& Objects.equals( htmlId, that.htmlId )
@@ -4342,6 +4497,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("PartHtml { ");
 		sb.append( "designInscriptionCle: " ).append(designInscriptionCle);
+		sb.append( ", designPageCle: " ).append(designPageCle);
 		sb.append( ", htmlLien: \"" ).append(htmlLien).append( "\"" );
 		sb.append( ", htmlElement: \"" ).append(htmlElement).append( "\"" );
 		sb.append( ", htmlId: \"" ).append(htmlId).append( "\"" );

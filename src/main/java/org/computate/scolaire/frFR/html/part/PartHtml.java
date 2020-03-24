@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;              
+package org.computate.scolaire.frFR.html.part;           
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -84,6 +84,20 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: enrollment design
 	*/          
 	protected void _designInscriptionCle(Couverture<Long> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: pageDesignKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: DesignPage.partHtmlCles
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 1
+	 * NomAffichage.frFR: design de page
+	 * NomAffichage.enUS: page design
+	*/         
+	protected void _designPageCle(Couverture<Long> c) {
 	}
 
 	/**

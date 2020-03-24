@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -110,7 +111,14 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggerePereScolaireInscriptionCles([{'name':'fq','value':'pereCles:' + pk}], $('#listPereScolaireInscriptionCles_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggerePereScolaireInscriptionCles([{'name':'fq','value':'pereCles:' + pk}], $('#listPereScolaireInscriptionCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggerePereScolaireInscriptionCles([{'name':'fq','value':'pereCles:' + pk}], $('#listPereScolaireInscriptionCles_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketPereScolaire(websocketPereScolaireInner);");
 		l("});");
@@ -334,20 +342,60 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listePereScolaire.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listePereScolaire.getQuery(), "_suggested", "");
-					Integer rows1 = listePereScolaire.getRows();
-					Integer start1 = listePereScolaire.getStart();
+					String q = "*:*";
+					String query1 = "objetTexte";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramNom : queryParams.fieldNames()) {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						Object paramValeursObjet = queryParams.getValue(paramNom);
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										q = (String)paramObjet;
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										query1 = entiteVar.equals("*") ? query1 : entiteVar;
+										query2 = valeurIndexe;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listePereScolaire).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listePereScolaire).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : Optional.ofNullable(listePereScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : Optional.ofNullable(listePereScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/pere?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/pere?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -355,19 +403,19 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/pere?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/pere?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/pere?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/pere?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/pere?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/pere?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -401,7 +449,6 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsPereGenPage();
-		htmlSuggerePereGenPage(this, null);
 		g("div");
 	}
 
@@ -516,11 +563,13 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
 				.a("onclick", "$('#postPereScolaireModale').show(); ")
-				.f().sx("Créer un père")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Créer un père");
+			} g("button");
 			{ e("div").a("id", "postPereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -548,11 +597,13 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
 				.a("onclick", "$('#putPereScolaireModale').show(); ")
-				.f().sx("Dupliquer des pères")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer des pères");
+			} g("button");
 			{ e("div").a("id", "putPereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -580,11 +631,13 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
 				.a("onclick", "$('#patchPereScolaireModale').show(); ")
-				.f().sx("Modifier des pères")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modifier des pères");
+			} g("button");
 			{ e("div").a("id", "patchPereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -613,6 +666,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 
 			g("div");
 		}
+		htmlSuggerePereGenPage(this, null, listePereScolaire);
 	}
 
 	/**
@@ -645,61 +699,125 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	 * r.enUS: addError
 	 * r: suggerePereScolaireObjetSuggere
 	 * r.enUS: suggestSchoolDadObjectSuggest
+	 * r: textePereScolaireObjetTexte
+	 * r.enUS: textSchoolDadObjectText
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
+	 * r: 'objetTexte:'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListPereScolaire'
 	 * r.enUS: '#suggestListSchoolDad'
 	 * r: "suggereListPereScolaire"
 	 * r.enUS: "suggestListSchoolDad"
 	**/
-	public static void htmlSuggerePereGenPage(MiseEnPage p, String id) {
+	public static void htmlSuggerePereGenPage(MiseEnPage p, String id, ListeRecherche<PereScolaire> listePereScolaire) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PereGenPage.ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PereGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerTousPereGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ").a("onclick", "patchPereScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPereGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPereGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les pères");
+		try {
+			OperationRequest operationRequete = requeteSite_.getOperationRequete();
+			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objetTexte";
+			String query2 = "";
+			for(String paramNom : queryParams.fieldNames()) {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				Object paramValeursObjet = queryParams.getValue(paramNom);
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "q":
+								q = (String)paramObjet;
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								query1 = entiteVar.equals("*") ? query1 : entiteVar;
+								query2 = valeurIndexe.equals("*") ? "" : valeurIndexe;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listePereScolaire).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listePereScolaire).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listePereScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listePereScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PereGenPage.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PereGenPage.ROLES)
+					) {
+				if(listePereScolaire == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "rechargerTousPereGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ").a("onclick", "patchPereScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPereGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPereGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("recharger tous les pères");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("rechercher pères : ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("placeholder", "rechercher pères")
+					.a("class", "suggerePereScolaire w3-input w3-border w3-bar-item ")
+					.a("name", "suggerePereScolaire")
+					.a("id", "suggerePereScolaire", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggerePereScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPereScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/pere?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listePereScolaire != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
+					.a("onclick", "window.location.href = '/pere?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPereScolaire", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/pere").a("class", "").f();
+					p.e("i").a("class", "far fa-male ").f().g("i");
+					p.sx("voir tous les pères");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("rechercher pères : ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("placeholder", "rechercher pères")
-				.a("class", "suggerePereScolaire w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggerePereScolaire")
-				.a("id", "suggerePereScolaire", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggerePereScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPereScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPereScolaire", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/pere").a("class", "").f();
-				p.e("i").a("class", "far fa-male ").f().g("i");
-				p.sx("voir tous les pères");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

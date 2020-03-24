@@ -111,7 +111,14 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggerePaiementScolaireInscriptionCle([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCle_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggerePaiementScolaireInscriptionCle([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggerePaiementScolaireInscriptionCle([{'name':'fq','value':'paiementCles:' + pk}], $('#listPaiementScolaireInscriptionCle_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketPaiementScolaire(websocketPaiementScolaireInner);");
 		l("});");
@@ -387,23 +394,53 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listePaiementScolaire.getQueryResponse().getResults().getNumFound();
-					String q = listePaiementScolaire.getQuery();
-					String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
-					Integer rows1 = listePaiementScolaire.getRows();
-					Integer start1 = listePaiementScolaire.getStart();
+					String q = "*:*";
+					String query1 = "objetTexte";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramNom : queryParams.fieldNames()) {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						Object paramValeursObjet = queryParams.getValue(paramNom);
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										q = (String)paramObjet;
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										query1 = entiteVar.equals("*") ? query1 : entiteVar;
+										query2 = valeurIndexe;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
 					StringBuilder fqs = new StringBuilder();
-					for(String fq : listePaiementScolaire.getFilterQueries()) {
-						if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
-							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+					for(String fq : Optional.ofNullable(listePaiementScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
 					}
 					StringBuilder sorts = new StringBuilder();
-					for(SortClause sort : listePaiementScolaire.getSorts()) {
+					for(SortClause sort : Optional.ofNullable(listePaiementScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
 						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
 					}
 
@@ -439,46 +476,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 				table1PaiementGenPage();
 		}
 
-		{ e("div").a("class", "").f();
-			{ e("form").a("id", "PaiementScolaireForm").a("style", "display: inline-block; width: 100%; ").a("method", "GET").a("action", "/paiement").a("onsubmit", "event.preventDefault(); rechercher($('#rechercheObjetTexte')); return false; ").f();
-				{ e("div").a("class", "w3-bar ").f();
-					e("input").a("type", "text")
-						.a("placeholder", "rechercher paiements")
-						.a("title", "")
-						.a("class", "rechercheObjetTexte w3-input w3-border w3-bar-item ")
-						.a("name", "objetTexte")
-						.a("id", "rechercheObjetTexte");
-					operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-						String entiteVar = null;
-						String valeurIndexe = null;
-						String paramNom = paramRequete.getKey();
-						Object paramValeursObjet = paramRequete.getValue();
-						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-						try {
-							for(Object paramObjet : paramObjets) {
-								switch(paramNom) {
-									case "q":
-										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-										if("objetTexte".equals(entiteVar))
-											a("value", URLDecoder.decode(valeurIndexe, "UTF-8"));
-								}
-							}
-						} catch(Exception e) {
-							ExceptionUtils.rethrow(e);
-						}
-					});
-					fg();
-					{ e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-						.f();
-						e("i").a("class", "fas fa-search ").f().g("i");
-					} g("button");
-				} g("div");
-			} g("form");
-		} g("div");
-
 		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			PaiementScolaire o = listePaiementScolaire.first();
 
@@ -504,7 +501,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsPaiementGenPage();
-		htmlSuggerePaiementGenPage(this, null);
 		g("div");
 	}
 
@@ -806,6 +802,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 
 			g("div");
 		}
+		htmlSuggerePaiementGenPage(this, null, listePaiementScolaire);
 	}
 
 	/**
@@ -838,8 +835,12 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	 * r.enUS: addError
 	 * r: suggerePaiementScolaireObjetSuggere
 	 * r.enUS: suggestSchoolPaymentObjectSuggest
+	 * r: textePaiementScolaireObjetTexte
+	 * r.enUS: textSchoolPaymentObjectText
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
+	 * r: 'objetTexte:'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListPaiementScolaire'
 	 * r.enUS: '#suggestListSchoolPayment'
 	 * r: "suggereListPaiementScolaire"
@@ -847,77 +848,112 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	**/
 	public static void htmlSuggerePaiementGenPage(MiseEnPage p, String id, ListeRecherche<PaiementScolaire> listePaiementScolaire) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
-		String q = Optional.ofNullable(listePaiementScolaire).map(l -> l.getQuery()).orElse("*:*");
-		String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
-		Integer rows1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getRows()).orElse(10);
-		Integer start1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getStart()).orElse(1);
-		Integer start2 = start1 - rows1;
-		Integer start3 = start1 + rows1;
-		Integer rows2 = rows1 / 2;
-		Integer rows3 = rows1 * 2;
-		start2 = start2 < 0 ? 0 : start2;
-		StringBuilder fqs = new StringBuilder();
-		for(String fq : Optional.ofNullable(listePaiementScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
-			if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
-				fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
-		}
-		StringBuilder sorts = new StringBuilder();
-		for(SortClause sort : Optional.ofNullable(listePaiementScolaire.getSorts()).orElse(Arrays.asList())) {
-			sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
-		}
+		try {
+			OperationRequest operationRequete = requeteSite_.getOperationRequete();
+			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objetTexte";
+			String query2 = "";
+			for(String paramNom : queryParams.fieldNames()) {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				Object paramValeursObjet = queryParams.getValue(paramNom);
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
 
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PaiementGenPage.ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PaiementGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerTousPaiementGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchPaiementScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPaiementGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPaiementGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les paiements");
-				} p.g("button");
-			} p.g("div");
-		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("rechercher paiements : ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "q":
+								q = (String)paramObjet;
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								query1 = entiteVar.equals("*") ? query1 : entiteVar;
+								query2 = valeurIndexe.equals("*") ? "" : valeurIndexe;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
 
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("placeholder", "rechercher paiements")
-				.a("class", "suggerePaiementScolaire w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggerePaiementScolaire")
-				.a("id", "suggerePaiementScolaire", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggerePaiementScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPaiementScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-				.fg();
-				{ e("button")
+			Integer rows1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listePaiementScolaire).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listePaiementScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listePaiementScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PaiementGenPage.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PaiementGenPage.ROLES)
+					) {
+				if(listePaiementScolaire == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "rechargerTousPaiementGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchPaiementScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousPaiementGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPaiementGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("recharger tous les paiements");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("rechercher paiements : ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("placeholder", "rechercher paiements")
+					.a("class", "suggerePaiementScolaire w3-input w3-border w3-bar-item ")
+					.a("name", "suggerePaiementScolaire")
+					.a("id", "suggerePaiementScolaire", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggerePaiementScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPaiementScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/paiement?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listePaiementScolaire != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-					.a("onclick", "window.location.href = '/paiement?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/paiement?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
-					e("i").a("class", "fas fa-search ").f().g("i");
-				} g("button");
+					p.e("i").a("class", "fas fa-search ").f().g("i");
+				} p.g("button");
 
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPaiementScolaire", id).f();
-				} p.g("ul");
 			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/paiement").a("class", "").f();
-				p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
-				p.sx("voir tous les paiements");
-			} p.g("a");
-		} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPaiementScolaire", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/paiement").a("class", "").f();
+					p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
+					p.sx("voir tous les paiements");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
+		}
 	}
 
 }

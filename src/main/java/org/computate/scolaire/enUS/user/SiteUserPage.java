@@ -34,7 +34,7 @@ import net.authorize.api.controller.base.ApiOperationBase;
 
 /**
  * Translate: false
- **/
+ **/ 
 public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 
 	@Override public void htmlFormPageSiteUser(SiteUser o) {
@@ -43,6 +43,21 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			super.htmlFormPageSiteUser(o);
+		}
+		else {
+			{ e("div").a("class", "w3-cell-row ").f();
+				o.htmEnrollmentKeys("Page");
+				o.htmPaymentKeys("Page");
+			} g("div");
+		}
+	}
+
+	@Override public void htmlBodyFormsSiteUserGenPage() {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			super.htmlBodyFormsSiteUserGenPage();
 		}
 	}
 
@@ -229,7 +244,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 								{ e("div").a("class", "w3-cell w3-mobile ").f();
 									for(EnrollmentDesign enrollmentDesign : enrollmentDesigns) {
 										try {
-											String url = "/enrollment-form?fq=design:" + URLEncoder.encode(enrollmentDesign.getEnrollmentDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
+											String url = "/enrollment-form?var=design:" + URLEncoder.encode(enrollmentDesign.getEnrollmentDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
 											{ e("div").a("class", "w3-cell-row ").f();
 												{ e("a").a("href", url).a("class", "").f();
 													e("span").a("class", " ").f().sx(enrollmentDesign.getEnrollmentDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");

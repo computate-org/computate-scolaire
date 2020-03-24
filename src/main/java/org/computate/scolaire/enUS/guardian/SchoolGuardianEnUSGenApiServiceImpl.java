@@ -139,9 +139,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 									postSchoolGuardianResponse(schoolGuardian, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postSchoolGuardian %s succeeded. "));
+											LOGGER.info(String.format("postSchoolGuardian succeeded. "));
 										} else {
-											LOGGER.error(String.format("postSchoolGuardian %s failed. ", d.cause()));
+											LOGGER.error(String.format("postSchoolGuardian failed. ", d.cause()));
 											errorSchoolGuardian(siteRequest, eventHandler, d);
 										}
 									});

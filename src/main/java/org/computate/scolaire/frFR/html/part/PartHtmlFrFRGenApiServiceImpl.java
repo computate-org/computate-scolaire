@@ -2,6 +2,8 @@ package org.computate.scolaire.frFR.html.part;
 
 import org.computate.scolaire.frFR.inscription.design.DesignInscriptionFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.inscription.design.DesignInscription;
+import org.computate.scolaire.frFR.design.DesignPageFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.design.DesignPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -139,9 +141,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									postPartHtmlReponse(partHtml, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postPartHtml %s a réussi. "));
+											LOGGER.info(String.format("postPartHtml a réussi. "));
 										} else {
-											LOGGER.error(String.format("postPartHtml %s a échoué. ", d.cause()));
+											LOGGER.error(String.format("postPartHtml a échoué. ", d.cause()));
 											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 										}
 									});
@@ -209,6 +211,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "designInscriptionCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
+					case "designPageCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
 					case "htmlLien":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -359,7 +365,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = JsonObject.mapFrom(o);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -579,6 +585,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
+					case "designPageCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
 					case "htmlLien":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlLien", jsonObject.getString(entiteVar), pk));
@@ -727,7 +737,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		try {
 			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(requeteApi))));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -974,6 +984,16 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						o2.setDesignInscriptionCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", o2.getDesignInscriptionCle()));
+						break;
+					case "setDesignPageCle":
+						o2.setDesignPageCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", o2.getDesignPageCle()));
+						break;
+					case "removeDesignPageCle":
+						o2.setDesignPageCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", o2.getDesignPageCle()));
 						break;
 					case "setHtmlLien":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -1276,7 +1296,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			JsonObject json = JsonObject.mapFrom(requeteApi);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1372,7 +1392,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			SolrDocumentList documentsSolr = listePartHtml.getSolrDocumentList();
 
 			JsonObject json = JsonObject.mapFrom(listePartHtml.getList().stream().findFirst().orElse(null));
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1500,7 +1520,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			if(exceptionRecherche != null) {
 				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1680,6 +1700,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(!pks.contains(o.getDesignInscriptionCle())) {
 					pks.add(o.getDesignInscriptionCle());
 					classes.add("DesignInscription");
+				}
+			}
+			if(o.getDesignPageCle() != null) {
+				if(!pks.contains(o.getDesignPageCle())) {
+					pks.add(o.getDesignPageCle());
+					classes.add("DesignPage");
 				}
 			}
 		}
@@ -2170,6 +2196,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				listeRecherche.setC(PartHtml.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{designInscriptionCle:{terms:{field:designInscriptionCle_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{designPageCle:{terms:{field:designPageCle_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
@@ -2187,6 +2214,25 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								LOGGER.info(String.format("DesignInscription %s rechargé. ", pk));
 							} else {
 								LOGGER.info(String.format("DesignInscription %s a échoué. ", pk));
+								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				{
+					DesignPage o2 = new DesignPage();
+					DesignPageFrFRGenApiServiceImpl service = new DesignPageFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+					Long pk = o.getDesignPageCle();
+
+					o2.setPk(pk);
+					o2.setRequeteSite_(requeteSite2);
+					futures.add(
+						service.patchDesignPageFuture(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
+							} else {
+								LOGGER.info(String.format("DesignPage %s a échoué. ", pk));
 								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 							}
 						})

@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -109,7 +110,14 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggestSchoolYearKeys([{'name':'fq','value':'schoolKey:' + pk}], $('#listSchoolYearKeys_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolYearKeys([{'name':'fq','value':'schoolKey:' + pk}], $('#listSchoolYearKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolYearKeys([{'name':'fq','value':'schoolKey:' + pk}], $('#listSchoolYearKeys_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketSchool(websocketSchoolInner);");
 		l("});");
@@ -303,20 +311,60 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchool.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listSchool.getQuery(), "_suggested", "");
-					Integer rows1 = listSchool.getRows();
-					Integer start1 = listSchool.getStart();
+					String q = "*:*";
+					String query1 = "objectText";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramName : queryParams.fieldNames()) {
+						String entityVar = null;
+						String valueIndexed = null;
+						Object paramObjectValues = queryParams.getValue(paramName);
+						JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
+
+						try {
+							for(Object paramObject : paramObjects) {
+								switch(paramName) {
+									case "q":
+										q = (String)paramObject;
+										entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+										valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+										query1 = entityVar.equals("*") ? query1 : entityVar;
+										query2 = valueIndexed;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listSchool).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listSchool).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : Optional.ofNullable(listSchool).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : Optional.ofNullable(listSchool).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/school?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/school?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -324,19 +372,19 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/school?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/school?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/school?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/school?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/school?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/school?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -370,7 +418,6 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsSchoolGenPage();
-		htmlSuggestSchoolGenPage(this, null);
 		g("div");
 	}
 
@@ -485,11 +532,13 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 				.a("onclick", "$('#postSchoolModal').show(); ")
-				.f().sx("Create a school")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Create a school");
+			} g("button");
 			{ e("div").a("id", "postSchoolModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -517,11 +566,13 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 				.a("onclick", "$('#putSchoolModal').show(); ")
-				.f().sx("Duplicate the schools")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate the schools");
+			} g("button");
 			{ e("div").a("id", "putSchoolModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -549,11 +600,13 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 				.a("onclick", "$('#patchSchoolModal').show(); ")
-				.f().sx("Modify the schools")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modify the schools");
+			} g("button");
 			{ e("div").a("id", "patchSchoolModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -582,57 +635,118 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 			g("div");
 		}
+		htmlSuggestSchoolGenPage(this, null, listSchool);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestSchoolGenPage(PageLayout p, String id) {
+	public static void htmlSuggestSchoolGenPage(PageLayout p, String id, SearchList<School> listSchool) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolGenPage.ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "refreshAllSchoolGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ").a("onclick", "patchSchoolVals([], {}, function() { addGlow($('#refreshAllSchoolGenPage", id, "')); }, function() { addError($('#refreshAllSchoolGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the schools");
+		try {
+			OperationRequest operationRequest = siteRequest_.getOperationRequest();
+			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objectText";
+			String query2 = "";
+			for(String paramName : queryParams.fieldNames()) {
+				String entityVar = null;
+				String valueIndexed = null;
+				Object paramObjectValues = queryParams.getValue(paramName);
+				JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
+
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "q":
+								q = (String)paramObject;
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								query1 = entityVar.equals("*") ? query1 : entityVar;
+								query2 = valueIndexed.equals("*") ? "" : valueIndexed;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listSchool).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listSchool).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listSchool).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listSchool).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolGenPage.ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolGenPage.ROLES)
+					) {
+				if(listSchool == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "refreshAllSchoolGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ").a("onclick", "patchSchoolVals([], {}, function() { addGlow($('#refreshAllSchoolGenPage", id, "')); }, function() { addError($('#refreshAllSchoolGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("refresh all the schools");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("search schools: ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("class", "suggestSchool w3-input w3-border w3-bar-item ")
+					.a("name", "suggestSchool")
+					.a("id", "suggestSchool", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchool", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/school?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listSchool != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+					.a("onclick", "window.location.href = '/school?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchool", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/school").a("class", "").f();
+					p.e("i").a("class", "far fa-school ").f().g("i");
+					p.sx("see all the schools");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("search schools: ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("class", "suggestSchool w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggestSchool")
-				.a("id", "suggestSchool", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchool", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchool", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/school").a("class", "").f();
-				p.e("i").a("class", "far fa-school ").f().g("i");
-				p.sx("see all the schools");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

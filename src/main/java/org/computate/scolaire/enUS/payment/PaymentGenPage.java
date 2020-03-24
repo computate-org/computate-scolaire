@@ -110,7 +110,14 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggestSchoolPaymentEnrollmentKey([{'name':'fq','value':'paymentKeys:' + pk}], $('#listSchoolPaymentEnrollmentKey_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolPaymentEnrollmentKey([{'name':'fq','value':'paymentKeys:' + pk}], $('#listSchoolPaymentEnrollmentKey_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolPaymentEnrollmentKey([{'name':'fq','value':'paymentKeys:' + pk}], $('#listSchoolPaymentEnrollmentKey_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketSchoolPayment(websocketSchoolPaymentInner);");
 		l("});");
@@ -386,23 +393,53 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolPayment.getQueryResponse().getResults().getNumFound();
-					String q = listSchoolPayment.getQuery();
-					String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
-					Integer rows1 = listSchoolPayment.getRows();
-					Integer start1 = listSchoolPayment.getStart();
+					String q = "*:*";
+					String query1 = "objectText";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramName : queryParams.fieldNames()) {
+						String entityVar = null;
+						String valueIndexed = null;
+						Object paramObjectValues = queryParams.getValue(paramName);
+						JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
+
+						try {
+							for(Object paramObject : paramObjects) {
+								switch(paramName) {
+									case "q":
+										q = (String)paramObject;
+										entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+										valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+										query1 = entityVar.equals("*") ? query1 : entityVar;
+										query2 = valueIndexed;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
 					StringBuilder fqs = new StringBuilder();
-					for(String fq : listSchoolPayment.getFilterQueries()) {
-						if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_"))
-							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+					for(String fq : Optional.ofNullable(listSchoolPayment).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
 					}
 					StringBuilder sorts = new StringBuilder();
-					for(SortClause sort : listSchoolPayment.getSorts()) {
+					for(SortClause sort : Optional.ofNullable(listSchoolPayment).map(l -> l.getSorts()).orElse(Arrays.asList())) {
 						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
 					}
 
@@ -438,46 +475,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				table1PaymentGenPage();
 		}
 
-		{ e("div").a("class", "").f();
-			{ e("form").a("id", "SchoolPaymentForm").a("style", "display: inline-block; width: 100%; ").a("method", "GET").a("action", "/payment").a("onsubmit", "event.preventDefault(); search($('#aSearchObjectText')); return false; ").f();
-				{ e("div").a("class", "w3-bar ").f();
-					e("input").a("type", "text")
-						.a("placeholder", "")
-						.a("title", "")
-						.a("class", "aSearchObjectText w3-input w3-border w3-bar-item ")
-						.a("name", "objectText")
-						.a("id", "aSearchObjectText");
-					operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-						String entityVar = null;
-						String valueIndexed = null;
-						String paramName = paramRequest.getKey();
-						Object paramObjectValues = paramRequest.getValue();
-						JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
-
-						try {
-							for(Object paramObject : paramObjects) {
-								switch(paramName) {
-									case "q":
-										entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-										valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-										if("objectText".equals(entityVar))
-											a("value", URLDecoder.decode(valueIndexed, "UTF-8"));
-								}
-							}
-						} catch(Exception e) {
-							ExceptionUtils.rethrow(e);
-						}
-					});
-					fg();
-					{ e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-						.f();
-						e("i").a("class", "fas fa-search ").f().g("i");
-					} g("button");
-				} g("div");
-			} g("form");
-		} g("div");
-
 		if(listSchoolPayment != null && listSchoolPayment.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			SchoolPayment o = listSchoolPayment.first();
 
@@ -503,7 +500,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsPaymentGenPage();
-		htmlSuggestPaymentGenPage(this, null);
 		g("div");
 	}
 
@@ -805,82 +801,118 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 			g("div");
 		}
+		htmlSuggestPaymentGenPage(this, null, listSchoolPayment);
 	}
 
 	/**
 	**/
 	public static void htmlSuggestPaymentGenPage(PageLayout p, String id, SearchList<SchoolPayment> listSchoolPayment) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
-		String q = Optional.ofNullable(listSchoolPayment).map(l -> l.getQuery()).orElse("*:*");
-		String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
-		Integer rows1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getRows()).orElse(10);
-		Integer start1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getStart()).orElse(1);
-		Integer start2 = start1 - rows1;
-		Integer start3 = start1 + rows1;
-		Integer rows2 = rows1 / 2;
-		Integer rows3 = rows1 * 2;
-		start2 = start2 < 0 ? 0 : start2;
-		StringBuilder fqs = new StringBuilder();
-		for(String fq : Optional.ofNullable(listSchoolPayment).map(l -> l.getFilterQueries()).orElse(new String[0])) {
-			if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_"))
-				fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
-		}
-		StringBuilder sorts = new StringBuilder();
-		for(SortClause sort : Optional.ofNullable(listSchoolPayment.getSorts()).orElse(Arrays.asList())) {
-			sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
-		}
+		try {
+			OperationRequest operationRequest = siteRequest_.getOperationRequest();
+			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objectText";
+			String query2 = "";
+			for(String paramName : queryParams.fieldNames()) {
+				String entityVar = null;
+				String valueIndexed = null;
+				Object paramObjectValues = queryParams.getValue(paramName);
+				JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
 
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PaymentGenPage.ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PaymentGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "refreshAllPaymentGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the payments");
-				} p.g("button");
-			} p.g("div");
-		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("search payments: ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "q":
+								q = (String)paramObject;
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								query1 = entityVar.equals("*") ? query1 : entityVar;
+								query2 = valueIndexed.equals("*") ? "" : valueIndexed;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
 
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("class", "suggestSchoolPayment w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggestSchoolPayment")
-				.a("id", "suggestSchoolPayment", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolPaymentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-				.fg();
-				{ e("button")
+			Integer rows1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listSchoolPayment).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listSchoolPayment).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listSchoolPayment).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PaymentGenPage.ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PaymentGenPage.ROLES)
+					) {
+				if(listSchoolPayment == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "refreshAllPaymentGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("refresh all the payments");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("search payments: ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("class", "suggestSchoolPayment w3-input w3-border w3-bar-item ")
+					.a("name", "suggestSchoolPayment")
+					.a("id", "suggestSchoolPayment", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolPaymentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/payment?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listSchoolPayment != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-					.a("onclick", "window.location.href = '/payment?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/payment?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
-					e("i").a("class", "fas fa-search ").f().g("i");
-				} g("button");
+					p.e("i").a("class", "fas fa-search ").f().g("i");
+				} p.g("button");
 
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolPayment", id).f();
-				} p.g("ul");
 			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/payment").a("class", "").f();
-				p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
-				p.sx("see all the payments");
-			} p.g("a");
-		} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolPayment", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/payment").a("class", "").f();
+					p.e("i").a("class", "fas fa-search-dollar ").f().g("i");
+					p.sx("see all the payments");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
+		}
 	}
 
 }

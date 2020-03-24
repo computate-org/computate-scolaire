@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -111,8 +112,22 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk); ");
-		tl(2, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireSaisonCles_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireSaisonCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireSaisonCles_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketAnneeScolaire(websocketAnneeScolaireInner);");
 		l("});");
@@ -286,20 +301,60 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeAnneeScolaire.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listeAnneeScolaire.getQuery(), "_suggested", "");
-					Integer rows1 = listeAnneeScolaire.getRows();
-					Integer start1 = listeAnneeScolaire.getStart();
+					String q = "*:*";
+					String query1 = "objetTexte";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramNom : queryParams.fieldNames()) {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						Object paramValeursObjet = queryParams.getValue(paramNom);
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										q = (String)paramObjet;
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										query1 = entiteVar.equals("*") ? query1 : entiteVar;
+										query2 = valeurIndexe;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listeAnneeScolaire).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listeAnneeScolaire).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : Optional.ofNullable(listeAnneeScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : Optional.ofNullable(listeAnneeScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/annee?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/annee?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -307,19 +362,19 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/annee?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/annee?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/annee?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/annee?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/annee?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/annee?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -353,7 +408,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsAnneeGenPage();
-		htmlSuggereAnneeGenPage(this, null);
 		g("div");
 	}
 
@@ -468,11 +522,13 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 				.a("onclick", "$('#postAnneeScolaireModale').show(); ")
-				.f().sx("Créer une année")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Créer une année");
+			} g("button");
 			{ e("div").a("id", "postAnneeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -500,11 +556,13 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 				.a("onclick", "$('#putAnneeScolaireModale').show(); ")
-				.f().sx("Dupliquer des années")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer des années");
+			} g("button");
 			{ e("div").a("id", "putAnneeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -532,11 +590,13 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 				.a("onclick", "$('#patchAnneeScolaireModale').show(); ")
-				.f().sx("Modifier des années")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modifier des années");
+			} g("button");
 			{ e("div").a("id", "patchAnneeScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -565,6 +625,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 
 			g("div");
 		}
+		htmlSuggereAnneeGenPage(this, null, listeAnneeScolaire);
 	}
 
 	/**
@@ -597,61 +658,125 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	 * r.enUS: addError
 	 * r: suggereAnneeScolaireObjetSuggere
 	 * r.enUS: suggestSchoolYearObjectSuggest
+	 * r: texteAnneeScolaireObjetTexte
+	 * r.enUS: textSchoolYearObjectText
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
+	 * r: 'objetTexte:'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListAnneeScolaire'
 	 * r.enUS: '#suggestListSchoolYear'
 	 * r: "suggereListAnneeScolaire"
 	 * r.enUS: "suggestListSchoolYear"
 	**/
-	public static void htmlSuggereAnneeGenPage(MiseEnPage p, String id) {
+	public static void htmlSuggereAnneeGenPage(MiseEnPage p, String id, ListeRecherche<AnneeScolaire> listeAnneeScolaire) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeGenPage.ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerToutesAnneeGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ").a("onclick", "patchAnneeScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesAnneeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesAnneeGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger toutes les années");
+		try {
+			OperationRequest operationRequete = requeteSite_.getOperationRequete();
+			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objetTexte";
+			String query2 = "";
+			for(String paramNom : queryParams.fieldNames()) {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				Object paramValeursObjet = queryParams.getValue(paramNom);
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "q":
+								q = (String)paramObjet;
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								query1 = entiteVar.equals("*") ? query1 : entiteVar;
+								query2 = valeurIndexe.equals("*") ? "" : valeurIndexe;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listeAnneeScolaire).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listeAnneeScolaire).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listeAnneeScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listeAnneeScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeGenPage.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeGenPage.ROLES)
+					) {
+				if(listeAnneeScolaire == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "rechargerToutesAnneeGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ").a("onclick", "patchAnneeScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesAnneeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesAnneeGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("recharger toutes les années");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("rechercher années : ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("placeholder", "rechercher années")
+					.a("class", "suggereAnneeScolaire w3-input w3-border w3-bar-item ")
+					.a("name", "suggereAnneeScolaire")
+					.a("id", "suggereAnneeScolaire", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggereAnneeScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListAnneeScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/annee?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listeAnneeScolaire != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+					.a("onclick", "window.location.href = '/annee?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListAnneeScolaire", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/annee").a("class", "").f();
+					p.e("i").a("class", "far fa-calendar-check ").f().g("i");
+					p.sx("voir toutes les années");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("rechercher années : ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("placeholder", "rechercher années")
-				.a("class", "suggereAnneeScolaire w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggereAnneeScolaire")
-				.a("id", "suggereAnneeScolaire", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggereAnneeScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListAnneeScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListAnneeScolaire", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/annee").a("class", "").f();
-				p.e("i").a("class", "far fa-calendar-check ").f().g("i");
-				p.sx("voir toutes les années");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

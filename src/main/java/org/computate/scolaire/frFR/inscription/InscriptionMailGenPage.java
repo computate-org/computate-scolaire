@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -68,6 +69,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -102,6 +104,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -136,6 +139,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -218,14 +222,70 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk); ");
-		tl(2, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk); ");
-		tl(2, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk); ");
-		tl(2, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk); ");
-		tl(2, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk); ");
-		tl(2, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCle:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk); ");
-		tl(2, "suggereInscriptionScolaireUtilisateurCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireUtilisateurCles_Page'), pk); ");
-		tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCle:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCle:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireUtilisateurCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireUtilisateurCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireUtilisateurCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireUtilisateurCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk, false); ");
+		}
 		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}); ");
 		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}); ");
 		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature({'height':200}); ");
@@ -656,20 +716,60 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeInscriptionScolaire.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listeInscriptionScolaire.getQuery(), "_suggested", "");
-					Integer rows1 = listeInscriptionScolaire.getRows();
-					Integer start1 = listeInscriptionScolaire.getStart();
+					String q = "*:*";
+					String query1 = "objetTexte";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramNom : queryParams.fieldNames()) {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						Object paramValeursObjet = queryParams.getValue(paramNom);
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										q = (String)paramObjet;
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										query1 = entiteVar.equals("*") ? query1 : entiteVar;
+										query2 = valeurIndexe;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription-mail?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/inscription-mail?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -677,19 +777,19 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription-mail?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/inscription-mail?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/inscription-mail?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/inscription-mail?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription-mail?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/inscription-mail?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -723,7 +823,6 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 
 		}
 		htmlBodyFormsInscriptionMailGenPage();
-		htmlSuggereInscriptionMailGenPage(this, null);
 		g("div");
 	}
 
@@ -838,11 +937,13 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#postInscriptionScolaireModale').show(); ")
-				.f().sx("Créer une inscription")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Créer une inscription");
+			} g("button");
 			{ e("div").a("id", "postInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -870,11 +971,13 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#putInscriptionScolaireModale').show(); ")
-				.f().sx("Dupliquer des inscriptions")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer des inscriptions");
+			} g("button");
 			{ e("div").a("id", "putInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -902,11 +1005,13 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#patchInscriptionScolaireModale').show(); ")
-				.f().sx("Modifier des inscriptions")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modifier des inscriptions");
+			} g("button");
 			{ e("div").a("id", "patchInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -933,92 +1038,121 @@ public class InscriptionMailGenPage extends InscriptionMailGenPageGen<ClusterPag
 				} g("div");
 			} g("div");
 
-
-			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-				.a("onclick", "$('#patchpaiementsInscriptionScolaireModale').show(); ")
-				.f().sx("Modifier des inscriptions")
-			.g("button");
-			{ e("div").a("id", "patchpaiementsInscriptionScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-blue-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchpaiementsInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modifier des inscriptions").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							InscriptionScolaire o = new InscriptionScolaire();
-							o.setRequeteSite_(requeteSite_);
-
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchpaiementsInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHInscriptionScolaire(o);
-							} g("form");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchpaiementsInscriptionScolaire($('#patchpaiementsInscriptionScolaireFormulaireFiltres'), $('#patchpaiementsInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modifier des inscriptions")
-							.g("button");
-
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-
 			g("div");
 		}
+		htmlSuggereInscriptionMailGenPage(this, null, listeInscriptionScolaire);
 	}
 
 	/**
 	**/
-	public static void htmlSuggereInscriptionMailGenPage(MiseEnPage p, String id) {
+	public static void htmlSuggereInscriptionMailGenPage(MiseEnPage p, String id, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), InscriptionMailGenPage.ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), InscriptionMailGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerToutesInscriptionMailGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionMailGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionMailGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger toutes les inscriptions");
+		try {
+			OperationRequest operationRequete = requeteSite_.getOperationRequete();
+			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objetTexte";
+			String query2 = "";
+			for(String paramNom : queryParams.fieldNames()) {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				Object paramValeursObjet = queryParams.getValue(paramNom);
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "q":
+								q = (String)paramObjet;
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								query1 = entiteVar.equals("*") ? query1 : entiteVar;
+								query2 = valeurIndexe.equals("*") ? "" : valeurIndexe;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listeInscriptionScolaire).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), InscriptionMailGenPage.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), InscriptionMailGenPage.ROLES)
+					) {
+				if(listeInscriptionScolaire == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "rechargerToutesInscriptionMailGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionMailGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionMailGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("recharger toutes les inscriptions");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("rechercher inscriptions : ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("placeholder", "rechercher inscriptions")
+					.a("class", "suggereInscriptionScolaire w3-input w3-border w3-bar-item ")
+					.a("name", "suggereInscriptionScolaire")
+					.a("id", "suggereInscriptionScolaire", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/inscription-mail?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listeInscriptionScolaire != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+					.a("onclick", "window.location.href = '/inscription-mail?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListInscriptionScolaire", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/inscription-mail").a("class", "").f();
+					p.e("i").a("class", "fas fa-edit ").f().g("i");
+					p.sx("voir toutes les inscriptions");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("rechercher inscriptions : ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("placeholder", "rechercher inscriptions")
-				.a("class", "suggereInscriptionScolaire w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggereInscriptionScolaire")
-				.a("id", "suggereInscriptionScolaire", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListInscriptionScolaire", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/inscription-mail").a("class", "").f();
-				p.e("i").a("class", "fas fa-edit ").f().g("i");
-				p.sx("voir toutes les inscriptions");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

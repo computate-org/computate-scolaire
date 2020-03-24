@@ -330,12 +330,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=blocCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+							{ e("a").a("href", "?fq=blocCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue-gray w3-hover-blue-gray ").f();
 								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("inscriptions");
 							} g("a");
@@ -360,7 +360,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 											.a("onclick", "postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
@@ -1013,7 +1013,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmAgeCle(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireAgeCle").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1685,7 +1685,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmEcoleAddresse(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireEcoleAddresse").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2905,7 +2905,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocHeureDebut(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocHeureDebut").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3025,7 +3025,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocHeureFin(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocHeureFin").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3163,7 +3163,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocPrixParMois(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocPrixParMois").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3368,7 +3368,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocLundi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocLundi").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3493,7 +3493,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocMardi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocMardi").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3618,7 +3618,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocMercredi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocMercredi").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3743,7 +3743,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocJeudi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocJeudi").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -3868,7 +3868,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void htmBlocVendredi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "BlocScolaireBlocVendredi").f();
 					{ e("div").a("class", "w3-card ").f();

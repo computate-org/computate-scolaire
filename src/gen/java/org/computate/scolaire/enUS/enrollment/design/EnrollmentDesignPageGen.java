@@ -45,13 +45,12 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 
 	public void initDeepEnrollmentDesignPage() {
 		initEnrollmentDesignPage();
-		super.initDeepEnrollmentDesignGenPage(siteRequest_);
 	}
 
 	public void initEnrollmentDesignPage() {
 	}
 
-	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
 		initDeepEnrollmentDesignPage(siteRequest_);
 	}
 
@@ -60,7 +59,6 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 	/////////////////
 
 	public void siteRequestEnrollmentDesignPage(SiteRequestEnUS siteRequest_) {
-			super.siteRequestEnrollmentDesignGenPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -71,7 +69,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 	// obtain //
 	/////////////
 
-	@Override public Object obtainForClass(String var) {
+	public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -88,7 +86,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 		EnrollmentDesignPage oEnrollmentDesignPage = (EnrollmentDesignPage)this;
 		switch(var) {
 			default:
-				return super.obtainEnrollmentDesignGenPage(var);
+				return null;
 		}
 	}
 
@@ -96,7 +94,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 	// attribute //
 	///////////////
 
-	@Override public boolean attributeForClass(String var, Object val) {
+	public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -113,7 +111,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 		EnrollmentDesignPage oEnrollmentDesignPage = (EnrollmentDesignPage)this;
 		switch(var) {
 			default:
-				return super.attributeEnrollmentDesignGenPage(var, val);
+				return null;
 		}
 	}
 
@@ -121,7 +119,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 	// define //
 	/////////////
 
-	@Override public boolean defineForClass(String var, String val) {
+	public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
@@ -139,92 +137,8 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 	public Object defineEnrollmentDesignPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.defineEnrollmentDesignGenPage(var, val);
+				return null;
 		}
-	}
-
-	/////////////////
-	// htmlScripts //
-	/////////////////
-
-	@Override public void htmlScripts() {
-		htmlScriptsEnrollmentDesignPage();
-		super.htmlScripts();
-	}
-
-	public void htmlScriptsEnrollmentDesignPage() {
-	}
-
-	////////////////
-	// htmlScript //
-	////////////////
-
-	@Override public void htmlScript() {
-		htmlScriptEnrollmentDesignPage();
-		super.htmlScript();
-	}
-
-	public void htmlScriptEnrollmentDesignPage() {
-	}
-
-	//////////////
-	// htmlBody //
-	//////////////
-
-	@Override public void htmlBody() {
-		htmlBodyEnrollmentDesignPage();
-		super.htmlBody();
-	}
-
-	public void htmlBodyEnrollmentDesignPage() {
-	}
-
-	//////////
-	// html //
-	//////////
-
-	@Override public void html() {
-		htmlEnrollmentDesignPage();
-		super.html();
-	}
-
-	public void htmlEnrollmentDesignPage() {
-	}
-
-	//////////////
-	// htmlMeta //
-	//////////////
-
-	@Override public void htmlMeta() {
-		htmlMetaEnrollmentDesignPage();
-		super.htmlMeta();
-	}
-
-	public void htmlMetaEnrollmentDesignPage() {
-	}
-
-	////////////////
-	// htmlStyles //
-	////////////////
-
-	@Override public void htmlStyles() {
-		htmlStylesEnrollmentDesignPage();
-		super.htmlStyles();
-	}
-
-	public void htmlStylesEnrollmentDesignPage() {
-	}
-
-	///////////////
-	// htmlStyle //
-	///////////////
-
-	@Override public void htmlStyle() {
-		htmlStyleEnrollmentDesignPage();
-		super.htmlStyle();
-	}
-
-	public void htmlStyleEnrollmentDesignPage() {
 	}
 
 	//////////////////
@@ -236,7 +150,6 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof EnrollmentDesignPage) {
 			EnrollmentDesignPage original = (EnrollmentDesignPage)o;
-			super.apiRequestEnrollmentDesignGenPage();
 		}
 	}
 
@@ -245,7 +158,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash();
 	}
 
 	////////////
@@ -258,7 +171,7 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 		if(!(o instanceof EnrollmentDesignPage))
 			return false;
 		EnrollmentDesignPage that = (EnrollmentDesignPage)o;
-		return super.equals(o);
+		return true;
 	}
 
 	//////////////
@@ -267,7 +180,6 @@ public abstract class EnrollmentDesignPageGen<DEV> extends EnrollmentDesignGenPa
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString() + "\n");
 		sb.append("EnrollmentDesignPage { ");
 		sb.append(" }");
 		return sb.toString();

@@ -139,9 +139,9 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 									postGardienScolaireReponse(gardienScolaire, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postGardienScolaire %s a réussi. "));
+											LOGGER.info(String.format("postGardienScolaire a réussi. "));
 										} else {
-											LOGGER.error(String.format("postGardienScolaire %s a échoué. ", d.cause()));
+											LOGGER.error(String.format("postGardienScolaire a échoué. ", d.cause()));
 											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});

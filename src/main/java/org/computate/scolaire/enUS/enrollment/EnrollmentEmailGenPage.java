@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -68,6 +69,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -102,6 +104,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -136,6 +139,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -218,14 +222,70 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentMomKeys_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk); ");
-		tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentMomKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentMomKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, false); ");
+		}
 		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}); ");
 		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}); ");
 		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature({'height':200}); ");
@@ -656,20 +716,60 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolEnrollment.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listSchoolEnrollment.getQuery(), "_suggested", "");
-					Integer rows1 = listSchoolEnrollment.getRows();
-					Integer start1 = listSchoolEnrollment.getStart();
+					String q = "*:*";
+					String query1 = "objectText";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramName : queryParams.fieldNames()) {
+						String entityVar = null;
+						String valueIndexed = null;
+						Object paramObjectValues = queryParams.getValue(paramName);
+						JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
+
+						try {
+							for(Object paramObject : paramObjects) {
+								switch(paramName) {
+									case "q":
+										q = (String)paramObject;
+										entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+										valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+										query1 = entityVar.equals("*") ? query1 : entityVar;
+										query2 = valueIndexed;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listSchoolEnrollment).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listSchoolEnrollment).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : Optional.ofNullable(listSchoolEnrollment).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : Optional.ofNullable(listSchoolEnrollment).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/enrollment-email?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/enrollment-email?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -677,19 +777,19 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/enrollment-email?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/enrollment-email?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/enrollment-email?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/enrollment-email?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/enrollment-email?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/enrollment-email?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -723,7 +823,6 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 
 		}
 		htmlBodyFormsEnrollmentEmailGenPage();
-		htmlSuggestEnrollmentEmailGenPage(this, null);
 		g("div");
 	}
 
@@ -838,11 +937,13 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#postSchoolEnrollmentModal').show(); ")
-				.f().sx("Create an enrollment")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Create an enrollment");
+			} g("button");
 			{ e("div").a("id", "postSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -870,11 +971,13 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#putSchoolEnrollmentModal').show(); ")
-				.f().sx("Duplicate the enrollments")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate the enrollments");
+			} g("button");
 			{ e("div").a("id", "putSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -902,11 +1005,13 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 				.a("onclick", "$('#patchSchoolEnrollmentModal').show(); ")
-				.f().sx("Modify the enrollments")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modify the enrollments");
+			} g("button");
 			{ e("div").a("id", "patchSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -933,91 +1038,120 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 				} g("div");
 			} g("div");
 
-
-			e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-				.a("onclick", "$('#patchpaymentsSchoolEnrollmentModal').show(); ")
-				.f().sx("Modify the enrollments")
-			.g("button");
-			{ e("div").a("id", "patchpaymentsSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-blue-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchpaymentsSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the enrollments").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							SchoolEnrollment o = new SchoolEnrollment();
-							o.setSiteRequest_(siteRequest_);
-
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchpaymentsSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolEnrollment(o);
-							} g("form");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchpaymentsSchoolEnrollment($('#patchpaymentsSchoolEnrollmentFormFilters'), $('#patchpaymentsSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the enrollments")
-							.g("button");
-
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-
 			g("div");
 		}
+		htmlSuggestEnrollmentEmailGenPage(this, null, listSchoolEnrollment);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestEnrollmentEmailGenPage(PageLayout p, String id) {
+	public static void htmlSuggestEnrollmentEmailGenPage(PageLayout p, String id, SearchList<SchoolEnrollment> listSchoolEnrollment) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentEmailGenPage.ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentEmailGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "refreshAllEnrollmentEmailGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentEmailGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentEmailGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("refresh all the enrollments");
+		try {
+			OperationRequest operationRequest = siteRequest_.getOperationRequest();
+			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objectText";
+			String query2 = "";
+			for(String paramName : queryParams.fieldNames()) {
+				String entityVar = null;
+				String valueIndexed = null;
+				Object paramObjectValues = queryParams.getValue(paramName);
+				JsonArray paramObjects = paramObjectValues instanceof JsonArray ? (JsonArray)paramObjectValues : new JsonArray().add(paramObjectValues);
+
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "q":
+								q = (String)paramObject;
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								query1 = entityVar.equals("*") ? query1 : entityVar;
+								query2 = valueIndexed.equals("*") ? "" : valueIndexed;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listSchoolEnrollment).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listSchoolEnrollment).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listSchoolEnrollment).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listSchoolEnrollment).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentEmailGenPage.ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentEmailGenPage.ROLES)
+					) {
+				if(listSchoolEnrollment == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "refreshAllEnrollmentEmailGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentEmailGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentEmailGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("refresh all the enrollments");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("search enrollments: ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("class", "suggestSchoolEnrollment w3-input w3-border w3-bar-item ")
+					.a("name", "suggestSchoolEnrollment")
+					.a("id", "suggestSchoolEnrollment", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolEnrollmentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/enrollment-email?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listSchoolEnrollment != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+					.a("onclick", "window.location.href = '/enrollment-email?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolEnrollment", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/enrollment-email").a("class", "").f();
+					p.e("i").a("class", "fas fa-edit ").f().g("i");
+					p.sx("see all the enrollments");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("search enrollments: ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("class", "suggestSchoolEnrollment w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggestSchoolEnrollment")
-				.a("id", "suggestSchoolEnrollment", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggestSchoolEnrollmentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolEnrollment", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/enrollment-email").a("class", "").f();
-				p.e("i").a("class", "fas fa-edit ").f().g("i");
-				p.sx("see all the enrollments");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

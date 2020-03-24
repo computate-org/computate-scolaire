@@ -2,6 +2,8 @@ package org.computate.scolaire.enUS.html.part;
 
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.enUS.design.PageDesignEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -139,9 +141,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 									postHtmlPartResponse(htmlPart, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postHtmlPart %s succeeded. "));
+											LOGGER.info(String.format("postHtmlPart succeeded. "));
 										} else {
-											LOGGER.error(String.format("postHtmlPart %s failed. ", d.cause()));
+											LOGGER.error(String.format("postHtmlPart failed. ", d.cause()));
 											errorHtmlPart(siteRequest, eventHandler, d);
 										}
 									});
@@ -209,6 +211,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "enrollmentDesignKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						break;
+					case "pageDesignKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar)), "pageDesignKey", pk));
 						break;
 					case "htmlLink":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -359,7 +365,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -579,6 +585,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						postSql.append(SiteContextEnUS.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar))));
 						break;
+					case "pageDesignKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar)), "pageDesignKey", pk));
+						break;
 					case "htmlLink":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlLink", jsonObject.getString(entityVar), pk));
@@ -727,7 +737,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		try {
 			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -974,6 +984,16 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						o2.setEnrollmentDesignKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", o2.getEnrollmentDesignKey()));
+						break;
+					case "setPageDesignKey":
+						o2.setPageDesignKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", o2.getPageDesignKey(), "pageDesignKey", pk));
+						break;
+					case "removePageDesignKey":
+						o2.setPageDesignKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", o2.getPageDesignKey(), "pageDesignKey", pk));
 						break;
 					case "setHtmlLink":
 						if(requestJson.getString(methodName) == null) {
@@ -1276,7 +1296,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1372,7 +1392,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SolrDocumentList solrDocuments = listHtmlPart.getSolrDocumentList();
 
 			JsonObject json = JsonObject.mapFrom(listHtmlPart.getList().stream().findFirst().orElse(null));
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1500,7 +1520,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			if(exceptionSearch != null) {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1680,6 +1700,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(!pks.contains(o.getEnrollmentDesignKey())) {
 					pks.add(o.getEnrollmentDesignKey());
 					classes.add("EnrollmentDesign");
+				}
+			}
+			if(o.getPageDesignKey() != null) {
+				if(!pks.contains(o.getPageDesignKey())) {
+					pks.add(o.getPageDesignKey());
+					classes.add("PageDesign");
 				}
 			}
 		}
@@ -2170,6 +2196,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				searchList.setC(HtmlPart.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				searchList.add("json.facet", "{enrollmentDesignKey:{terms:{field:enrollmentDesignKey_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{pageDesignKey:{terms:{field:pageDesignKey_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
@@ -2187,6 +2214,25 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								LOGGER.info(String.format("EnrollmentDesign %s refreshed. ", pk));
 							} else {
 								LOGGER.info(String.format("EnrollmentDesign %s failed. ", pk));
+								eventHandler.handle(Future.failedFuture(a.cause()));
+							}
+						})
+					);
+				}
+
+				{
+					PageDesign o2 = new PageDesign();
+					PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+					Long pk = o.getPageDesignKey();
+
+					o2.setPk(pk);
+					o2.setSiteRequest_(siteRequest2);
+					futures.add(
+						service.patchPageDesignFuture(o2, a -> {
+							if(a.succeeded()) {
+								LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
+							} else {
+								LOGGER.info(String.format("PageDesign %s failed. ", pk));
 								eventHandler.handle(Future.failedFuture(a.cause()));
 							}
 						})

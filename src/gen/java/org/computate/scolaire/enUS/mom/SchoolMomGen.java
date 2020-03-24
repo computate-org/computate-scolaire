@@ -255,12 +255,12 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomEnrollmentKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/enrollment?fq=momKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+							{ e("a").a("href", "/enrollment?fq=momKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue-gray w3-hover-blue-gray ").f();
 								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("enrollments");
 							} g("a");
@@ -288,7 +288,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 											.a("onclick", "postSchoolEnrollmentVals({ momKeys: [ \"", pk, "\" ] }, function() { patchSchoolMomVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 											.f().sx("add an enrollment")
 										.g("button");
@@ -1142,7 +1142,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonFirstName(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonFirstName").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1271,7 +1271,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonFirstNamePreferred(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonFirstNamePreferred").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1400,7 +1400,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmFamilyName(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomFamilyName").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1718,7 +1718,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonOccupation(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonOccupation").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1847,7 +1847,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonPhoneNumber(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonPhoneNumber").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1976,7 +1976,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonEmail(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonEmail").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2186,7 +2186,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonSms(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonSms").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2317,7 +2317,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonReceiveEmail(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonReceiveEmail").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2448,7 +2448,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonEmergencyContact(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonEmergencyContact").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2579,7 +2579,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 
 	public void htmPersonPickup(String classApiMethodMethod) {
 		SchoolMom s = (SchoolMom)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPersonPickup").f();
 					{ e("div").a("class", "w3-card ").f();

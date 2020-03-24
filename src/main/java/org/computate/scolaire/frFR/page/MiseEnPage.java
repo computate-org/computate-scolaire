@@ -981,7 +981,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("écoles");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						EcoleGenPage.htmlSuggereEcoleGenPage(this, id);
+						EcoleGenPage.htmlSuggereEcoleGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -991,7 +991,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("années");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						AnneeGenPage.htmlSuggereAnneeGenPage(this, id);
+						AnneeGenPage.htmlSuggereAnneeGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1001,7 +1001,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("saisons");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SaisonGenPage.htmlSuggereSaisonGenPage(this, id);
+						SaisonGenPage.htmlSuggereSaisonGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1011,7 +1011,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("sessions");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SessionGenPage.htmlSuggereSessionGenPage(this, id);
+						SessionGenPage.htmlSuggereSessionGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1021,7 +1021,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("âges");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						AgeGenPage.htmlSuggereAgeGenPage(this, id);
+						AgeGenPage.htmlSuggereAgeGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1031,7 +1031,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("blocs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						BlocGenPage.htmlSuggereBlocGenPage(this, id);
+						BlocGenPage.htmlSuggereBlocGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1041,7 +1041,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("designs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id);
+						DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1051,7 +1051,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("enfants");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						EnfantGenPage.htmlSuggereEnfantGenPage(this, id);
+						EnfantGenPage.htmlSuggereEnfantGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1061,7 +1061,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("mères");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						MereGenPage.htmlSuggereMereGenPage(this, id);
+						MereGenPage.htmlSuggereMereGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1071,7 +1071,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("pères");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						PereGenPage.htmlSuggerePereGenPage(this, id);
+						PereGenPage.htmlSuggerePereGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1081,7 +1081,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("gardiens");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						GardienGenPage.htmlSuggereGardienGenPage(this, id);
+						GardienGenPage.htmlSuggereGardienGenPage(this, id, null);
 					} g("div");
 				} g("div");
 			}
@@ -1092,7 +1092,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						sx("inscriptions");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					InscriptionGenPage.htmlSuggereInscriptionGenPage(this, id);
+					InscriptionGenPage.htmlSuggereInscriptionGenPage(this, id, null);
 				} g("div");
 			} g("div");
 
@@ -1102,7 +1102,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						sx("paiements");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					PaiementGenPage.htmlSuggerePaiementGenPage(this, id);
+					PaiementGenPage.htmlSuggerePaiementGenPage(this, id, null);
 				} g("div");
 			} g("div");
 

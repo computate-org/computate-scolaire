@@ -237,7 +237,8 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeCluster.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listeCluster.getQuery(), "_suggested", "");
+					String q = listeCluster.getQuery();
+					String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
 					Integer rows1 = listeCluster.getRows();
 					Integer start1 = listeCluster.getStart();
 					Integer start2 = start1 - rows1;
@@ -248,11 +249,11 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					StringBuilder fqs = new StringBuilder();
 					for(String fq : listeCluster.getFilterQueries()) {
 						if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
-							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_indexed_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
 					}
 					StringBuilder sorts = new StringBuilder();
 					for(SortClause sort : listeCluster.getSorts()) {
-						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_indexed_")).append(" ").append(sort.getOrder().name());
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
 					}
 
 					if(start1 == 0) {
@@ -287,46 +288,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				table1ClusterGenPage();
 		}
 
-		{ e("div").a("class", "").f();
-			{ e("form").a("id", "ClusterForm").a("style", "display: inline-block; width: 100%; ").a("method", "GET").a("action", "/cluster").a("onsubmit", "event.preventDefault(); rechercher($('#rechercheObjetTexte')); return false; ").f();
-				{ e("div").a("class", "w3-bar ").f();
-					e("input").a("type", "text")
-						.a("placeholder", "rechercher clusters")
-						.a("title", "")
-						.a("class", "rechercheObjetTexte w3-input w3-border w3-bar-item ")
-						.a("name", "objetTexte")
-						.a("id", "rechercheObjetTexte");
-					operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-						String entiteVar = null;
-						String valeurIndexe = null;
-						String paramNom = paramRequete.getKey();
-						Object paramValeursObjet = paramRequete.getValue();
-						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-						try {
-							for(Object paramObjet : paramObjets) {
-								switch(paramNom) {
-									case "q":
-										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-										if("objetTexte".equals(entiteVar))
-											a("value", URLDecoder.decode(valeurIndexe, "UTF-8"));
-								}
-							}
-						} catch(Exception e) {
-							ExceptionUtils.rethrow(e);
-						}
-					});
-					fg();
-					{ e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-						.f();
-						e("i").a("class", "fas fa-search ").f().g("i");
-					} g("button");
-				} g("div");
-			} g("form");
-		} g("div");
-
 		if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			Cluster o = listeCluster.first();
 
@@ -352,7 +313,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 		}
 		htmlBodyFormsClusterGenPage();
-		htmlSuggereClusterGenPage(this, null);
+		htmlSuggereClusterGenPage(this, null, listeCluster);
 		g("div");
 	}
 
@@ -602,61 +563,125 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	 * r.enUS: addError
 	 * r: suggereClusterObjetSuggere
 	 * r.enUS: suggestClusterObjectSuggest
+	 * r: texteClusterObjetTexte
+	 * r.enUS: textClusterObjectText
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
+	 * r: 'objetTexte:'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListCluster'
 	 * r.enUS: '#suggestListCluster'
 	 * r: "suggereListCluster"
 	 * r.enUS: "suggestListCluster"
 	**/
-	public static void htmlSuggereClusterGenPage(MiseEnPage p, String id) {
+	public static void htmlSuggereClusterGenPage(MiseEnPage p, String id, ListeRecherche<Cluster> listeCluster) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ClusterGenPage.ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ClusterGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerTousClusterGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchClusterVals([], {}, function() { ajouterLueur($('#rechargerTousClusterGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousClusterGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les clusters");
+		try {
+			OperationRequest operationRequete = requeteSite_.getOperationRequete();
+			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objetTexte";
+			String query2 = "";
+			for(String paramNom : queryParams.fieldNames()) {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				Object paramValeursObjet = queryParams.getValue(paramNom);
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "q":
+								q = (String)paramObjet;
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								query1 = entiteVar.equals("*") ? query1 : entiteVar;
+								query2 = valeurIndexe.equals("*") ? "" : valeurIndexe;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listeCluster).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listeCluster).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listeCluster).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listeCluster).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ClusterGenPage.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ClusterGenPage.ROLES)
+					) {
+				if(listeCluster == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "rechargerTousClusterGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchClusterVals([], {}, function() { ajouterLueur($('#rechargerTousClusterGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousClusterGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("recharger tous les clusters");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("rechercher clusters : ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("placeholder", "rechercher clusters")
+					.a("class", "suggereCluster w3-input w3-border w3-bar-item ")
+					.a("name", "suggereCluster")
+					.a("id", "suggereCluster", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggereClusterObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListCluster", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/cluster?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listeCluster != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+					.a("onclick", "window.location.href = '/cluster?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListCluster", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/cluster").a("class", "").f();
+					p.e("i").a("class", "far fa-fort-awesome ").f().g("i");
+					p.sx("voir tous les clusters");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("rechercher clusters : ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("placeholder", "rechercher clusters")
-				.a("class", "suggereCluster w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggereCluster")
-				.a("id", "suggereCluster", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggereClusterObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListCluster", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListCluster", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/cluster").a("class", "").f();
-				p.e("i").a("class", "far fa-fort-awesome ").f().g("i");
-				p.sx("voir tous les clusters");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

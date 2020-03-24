@@ -167,7 +167,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void htmEcoleCle(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireEcoleCle").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -474,7 +474,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void htmSaisonCles(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSaisonCles").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1383,7 +1383,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void htmAnneeDebut(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAnneeDebut").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1511,7 +1511,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void htmAnneeFin(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAnneeFin").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1650,7 +1650,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void htmAnneeFraisInscription(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAnneeFraisInscription").f();
 					{ e("div").a("class", "w3-card ").f();

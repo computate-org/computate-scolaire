@@ -200,8 +200,6 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 			if(enrollmentDesign == null)
 				setEnrollmentDesign(enrollmentDesignWrap.o);
 		}
-		if(enrollmentDesign != null)
-			enrollmentDesign.initDeepForClass(siteRequest_);
 		enrollmentDesignWrap.alreadyInitialized(true);
 		return (EnrollmentEmailPage)this;
 	}
@@ -1537,8 +1535,6 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 			w2.setSiteRequest_(siteRequest_);
 		if(listEnrollmentDesign != null)
 			listEnrollmentDesign.setSiteRequest_(siteRequest_);
-		if(enrollmentDesign != null)
-			enrollmentDesign.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)

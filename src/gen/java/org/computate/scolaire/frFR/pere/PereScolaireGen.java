@@ -256,12 +256,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolaireInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=pereCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+							{ e("a").a("href", "?fq=pereCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue-gray w3-hover-blue-gray ").f();
 								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("inscriptions");
 							} g("a");
@@ -289,7 +289,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
 											.a("onclick", "postInscriptionScolaireVals({ pereCles: [ \"", pk, "\" ] }, function() { patchPereScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
@@ -1143,7 +1143,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonnePrenom").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1272,7 +1272,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonnePrenomPrefere").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1401,7 +1401,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolaireFamilleNom").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1719,7 +1719,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneOccupation(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneOccupation").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1848,7 +1848,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneNumeroTelephone(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneNumeroTelephone").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1977,7 +1977,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneMail(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneMail").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2187,7 +2187,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneSms(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneSms").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2318,7 +2318,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneRecevoirMail(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneRecevoirMail").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2449,7 +2449,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneContactUrgence(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneContactUrgence").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2580,7 +2580,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 
 	public void htmPersonneChercher(String classeApiMethodeMethode) {
 		PereScolaire s = (PereScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PereScolairePersonneChercher").f();
 					{ e("div").a("class", "w3-card ").f();

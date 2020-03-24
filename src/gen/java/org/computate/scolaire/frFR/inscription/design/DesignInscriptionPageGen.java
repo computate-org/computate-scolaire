@@ -45,13 +45,12 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 
 	public void initLoinDesignInscriptionPage() {
 		initDesignInscriptionPage();
-		super.initLoinDesignInscriptionGenPage(requeteSite_);
 	}
 
 	public void initDesignInscriptionPage() {
 	}
 
-	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
+	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
 		initLoinDesignInscriptionPage(requeteSite_);
 	}
 
@@ -60,7 +59,6 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 	/////////////////
 
 	public void requeteSiteDesignInscriptionPage(RequeteSiteFrFR requeteSite_) {
-			super.requeteSiteDesignInscriptionGenPage(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -71,7 +69,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 	// obtenir //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	public Object obtenirPourClasse(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -88,7 +86,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 		DesignInscriptionPage oDesignInscriptionPage = (DesignInscriptionPage)this;
 		switch(var) {
 			default:
-				return super.obtenirDesignInscriptionGenPage(var);
+				return null;
 		}
 	}
 
@@ -96,7 +94,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 	// attribuer //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	public boolean attribuerPourClasse(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -113,7 +111,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 		DesignInscriptionPage oDesignInscriptionPage = (DesignInscriptionPage)this;
 		switch(var) {
 			default:
-				return super.attribuerDesignInscriptionGenPage(var, val);
+				return null;
 		}
 	}
 
@@ -121,7 +119,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 	// definir //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	public boolean definirPourClasse(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
@@ -139,92 +137,8 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 	public Object definirDesignInscriptionPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirDesignInscriptionGenPage(var, val);
+				return null;
 		}
-	}
-
-	/////////////////
-	// htmlScripts //
-	/////////////////
-
-	@Override public void htmlScripts() {
-		htmlScriptsDesignInscriptionPage();
-		super.htmlScripts();
-	}
-
-	public void htmlScriptsDesignInscriptionPage() {
-	}
-
-	////////////////
-	// htmlScript //
-	////////////////
-
-	@Override public void htmlScript() {
-		htmlScriptDesignInscriptionPage();
-		super.htmlScript();
-	}
-
-	public void htmlScriptDesignInscriptionPage() {
-	}
-
-	//////////////
-	// htmlBody //
-	//////////////
-
-	@Override public void htmlBody() {
-		htmlBodyDesignInscriptionPage();
-		super.htmlBody();
-	}
-
-	public void htmlBodyDesignInscriptionPage() {
-	}
-
-	//////////
-	// html //
-	//////////
-
-	@Override public void html() {
-		htmlDesignInscriptionPage();
-		super.html();
-	}
-
-	public void htmlDesignInscriptionPage() {
-	}
-
-	//////////////
-	// htmlMeta //
-	//////////////
-
-	@Override public void htmlMeta() {
-		htmlMetaDesignInscriptionPage();
-		super.htmlMeta();
-	}
-
-	public void htmlMetaDesignInscriptionPage() {
-	}
-
-	////////////////
-	// htmlStyles //
-	////////////////
-
-	@Override public void htmlStyles() {
-		htmlStylesDesignInscriptionPage();
-		super.htmlStyles();
-	}
-
-	public void htmlStylesDesignInscriptionPage() {
-	}
-
-	///////////////
-	// htmlStyle //
-	///////////////
-
-	@Override public void htmlStyle() {
-		htmlStyleDesignInscriptionPage();
-		super.htmlStyle();
-	}
-
-	public void htmlStyleDesignInscriptionPage() {
 	}
 
 	//////////////////
@@ -236,7 +150,6 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof DesignInscriptionPage) {
 			DesignInscriptionPage original = (DesignInscriptionPage)o;
-			super.requeteApiDesignInscriptionGenPage();
 		}
 	}
 
@@ -245,7 +158,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash();
 	}
 
 	////////////
@@ -258,7 +171,7 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 		if(!(o instanceof DesignInscriptionPage))
 			return false;
 		DesignInscriptionPage that = (DesignInscriptionPage)o;
-		return super.equals(o);
+		return true;
 	}
 
 	//////////////
@@ -267,7 +180,6 @@ public abstract class DesignInscriptionPageGen<DEV> extends DesignInscriptionGen
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString() + "\n");
 		sb.append("DesignInscriptionPage { ");
 		sb.append(" }");
 		return sb.toString();

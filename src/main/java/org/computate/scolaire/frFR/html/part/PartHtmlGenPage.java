@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -102,6 +103,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsPartHtmlGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PartHtmlPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/DesignInscriptionPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/DesignPagePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptPartHtmlGenPage() {
@@ -109,7 +111,22 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		tl(2, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignInscriptionCle_Page'), pk); ");
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignInscriptionCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignInscriptionCle_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggerePartHtmlDesignPageCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignPageCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggerePartHtmlDesignPageCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignPageCle_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketPartHtml(websocketPartHtmlInner);");
 		l("});");
@@ -128,6 +145,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionCle("Page");
+			o.htmDesignPageCle("Page");
 			o.htmHtmlLien("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -187,6 +205,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionCle("POST");
+			o.htmDesignPageCle("POST");
 			o.htmHtmlLien("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -244,6 +263,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionCle("PUT");
+			o.htmDesignPageCle("PUT");
 			o.htmHtmlLien("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -301,6 +321,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionCle("PATCH");
+			o.htmDesignPageCle("PATCH");
 			o.htmHtmlLien("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -360,6 +381,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionCle("Recherche");
+			o.htmDesignPageCle("Recherche");
 			o.htmHtmlLien("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -468,20 +490,60 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listePartHtml.getQueryResponse().getResults().getNumFound();
-					String query = StringUtils.replace(listePartHtml.getQuery(), "_suggested", "");
-					Integer rows1 = listePartHtml.getRows();
-					Integer start1 = listePartHtml.getStart();
+					String q = "*:*";
+					String query1 = "objetTexte";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramNom : queryParams.fieldNames()) {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						Object paramValeursObjet = queryParams.getValue(paramNom);
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										q = (String)paramObjet;
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										query1 = entiteVar.equals("*") ? query1 : entiteVar;
+										query2 = valeurIndexe;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listePartHtml).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listePartHtml).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
+					StringBuilder fqs = new StringBuilder();
+					for(String fq : Optional.ofNullable(listePartHtml).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
+					}
+					StringBuilder sorts = new StringBuilder();
+					for(SortClause sort : Optional.ofNullable(listePartHtml).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+					}
 
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/part-html?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/part-html?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -489,19 +551,19 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/part-html?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/part-html?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/part-html?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/part-html?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/part-html?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/part-html?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -535,7 +597,6 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsPartHtmlGenPage();
-		htmlSuggerePartHtmlGenPage(this, null);
 		g("div");
 	}
 
@@ -650,11 +711,13 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 				} g("button");
 			}
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 				.a("onclick", "$('#postPartHtmlModale').show(); ")
-				.f().sx("Créer un part de HTML")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-file-plus ").f().g("i");
+				sx("Créer un part de HTML");
+			} g("button");
 			{ e("div").a("id", "postPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -682,11 +745,13 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 				.a("onclick", "$('#putPartHtmlModale').show(); ")
-				.f().sx("Dupliquer des part de HTMLs")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer des part de HTMLs");
+			} g("button");
 			{ e("div").a("id", "putPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -714,11 +779,13 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			} g("div");
 
 
-			e("button")
+			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 				.a("onclick", "$('#patchPartHtmlModale').show(); ")
-				.f().sx("Modifier des part de HTMLs")
-			.g("button");
+				.f();
+				e("i").a("class", "fas fa-edit ").f().g("i");
+				sx("Modifier des part de HTMLs");
+			} g("button");
 			{ e("div").a("id", "patchPartHtmlModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
@@ -747,6 +814,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 			g("div");
 		}
+		htmlSuggerePartHtmlGenPage(this, null, listePartHtml);
 	}
 
 	/**
@@ -779,61 +847,125 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	 * r.enUS: addError
 	 * r: suggerePartHtmlObjetSuggere
 	 * r.enUS: suggestHtmlPartObjectSuggest
+	 * r: textePartHtmlObjetTexte
+	 * r.enUS: textHtmlPartObjectText
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
+	 * r: 'objetTexte:'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListPartHtml'
 	 * r.enUS: '#suggestListHtmlPart'
 	 * r: "suggereListPartHtml"
 	 * r.enUS: "suggestListHtmlPart"
 	**/
-	public static void htmlSuggerePartHtmlGenPage(MiseEnPage p, String id) {
+	public static void htmlSuggerePartHtmlGenPage(MiseEnPage p, String id, ListeRecherche<PartHtml> listePartHtml) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PartHtmlGenPage.ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PartHtmlGenPage.ROLES)
-				) {
-			{ p.e("div").a("class", "").f();
-				{ p.e("button").a("id", "rechargerTousPartHtmlGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchPartHtmlVals([], {}, function() { ajouterLueur($('#rechargerTousPartHtmlGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPartHtmlGenPage", id, "')); }); ").f();
-					p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
-					p.sx("recharger tous les part de HTMLs");
+		try {
+			OperationRequest operationRequete = requeteSite_.getOperationRequete();
+			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
+			String q = "*:*";
+			String query1 = "objetTexte";
+			String query2 = "";
+			for(String paramNom : queryParams.fieldNames()) {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				Object paramValeursObjet = queryParams.getValue(paramNom);
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "q":
+								q = (String)paramObjet;
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								query1 = entiteVar.equals("*") ? query1 : entiteVar;
+								query2 = valeurIndexe.equals("*") ? "" : valeurIndexe;
+						}
+					}
+				} catch(Exception e) {
+					ExceptionUtils.rethrow(e);
+				}
+			}
+
+			Integer rows1 = Optional.ofNullable(listePartHtml).map(l -> l.getRows()).orElse(10);
+			Integer start1 = Optional.ofNullable(listePartHtml).map(l -> l.getStart()).orElse(1);
+			Integer start2 = start1 - rows1;
+			Integer start3 = start1 + rows1;
+			Integer rows2 = rows1 / 2;
+			Integer rows3 = rows1 * 2;
+			start2 = start2 < 0 ? 0 : start2;
+			StringBuilder fqs = new StringBuilder();
+			for(String fq : Optional.ofNullable(listePartHtml).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+				if(!StringUtils.contains(fq, "(")) {
+					String fq1 = StringUtils.substringBefore(fq, "_");
+					String fq2 = StringUtils.substringAfter(fq, ":");
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+						fqs.append("&fq=").append(fq1).append(":").append(fq2);
+				}
+			}
+			StringBuilder sorts = new StringBuilder();
+			for(SortClause sort : Optional.ofNullable(listePartHtml).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+				sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
+			}
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PartHtmlGenPage.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PartHtmlGenPage.ROLES)
+					) {
+				if(listePartHtml == null) {
+					{ p.e("div").a("class", "").f();
+						{ p.e("button").a("id", "rechargerTousPartHtmlGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchPartHtmlVals([], {}, function() { ajouterLueur($('#rechargerTousPartHtmlGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousPartHtmlGenPage", id, "')); }); ").f();
+							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
+							p.sx("recharger tous les part de HTMLs");
+						} p.g("button");
+					} p.g("div");
+				}
+			}
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell ").f();
+					{ p.e("span").f();
+						p.sx("rechercher part de HTMLs : ");
+					} p.g("span");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-bar ").f();
+
+				p.e("input")
+					.a("type", "text")
+					.a("placeholder", "rechercher part de HTMLs")
+					.a("class", "suggerePartHtml w3-input w3-border w3-bar-item ")
+					.a("name", "suggerePartHtml")
+					.a("id", "suggerePartHtml", id)
+					.a("autocomplete", "off")
+					.a("oninput", "suggerePartHtmlObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartHtml", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/part-html?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+				if(listePartHtml != null)
+					p.a("value", query2);
+				p.fg();
+				{ p.e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+					.a("onclick", "window.location.href = '/part-html?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.f();
+					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
+
 			} p.g("div");
+			{ p.e("div").a("class", "w3-cell-row ").f();
+				{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+					{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPartHtml", id).f();
+					} p.g("ul");
+				} p.g("div");
+			} p.g("div");
+			{ p.e("div").a("class", "").f();
+				{ p.e("a").a("href", "/part-html").a("class", "").f();
+					p.e("i").a("class", "far fa-sun ").f().g("i");
+					p.sx("voir tous les part de HTMLs");
+				} p.g("a");
+			} p.g("div");
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
 		}
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("span").f();
-					p.sx("rechercher part de HTMLs : ");
-				} p.g("span");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "w3-bar ").f();
-
-			{ p.e("span").a("class", "w3-bar-item w3-padding-small ").f();
-				p.e("i").a("class", "far fa-search w3-xlarge w3-cell w3-cell-middle ").f().g("i");
-			} p.g("span");
-			p.e("input")
-				.a("type", "text")
-				.a("placeholder", "rechercher part de HTMLs")
-				.a("class", "suggerePartHtml w3-input w3-border w3-bar-item w3-padding-small ")
-				.a("name", "suggerePartHtml")
-				.a("id", "suggerePartHtml", id)
-				.a("autocomplete", "off")
-				.a("oninput", "suggerePartHtmlObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartHtml", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-				.fg();
-
-		} p.g("div");
-		{ p.e("div").a("class", "w3-cell-row ").f();
-			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListPartHtml", id).f();
-				} p.g("ul");
-			} p.g("div");
-		} p.g("div");
-		{ p.e("div").a("class", "").f();
-			{ p.e("a").a("href", "/part-html").a("class", "").f();
-				p.e("i").a("class", "far fa-sun ").f().g("i");
-				p.sx("voir tous les part de HTMLs");
-			} p.g("a");
-		} p.g("div");
 	}
 
 }

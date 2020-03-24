@@ -331,7 +331,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void htmAnneeCle(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireAnneeCle").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -482,7 +482,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void htmSessionCles(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireSessionCles").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1642,7 +1642,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void htmSaisonJourDebut(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireSaisonJourDebut").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1780,7 +1780,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void htmSaisonEte(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireSaisonEte").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -1906,7 +1906,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void htmSaisonHiver(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireSaisonHiver").f();
 					{ e("div").a("class", "w3-card ").f();
@@ -2032,7 +2032,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void htmSaisonFuture(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireSaisonFuture").f();
 					{ e("div").a("class", "w3-card ").f();

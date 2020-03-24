@@ -120,8 +120,6 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 			if(enrollmentDesign == null)
 				setEnrollmentDesign(enrollmentDesignWrap.o);
 		}
-		if(enrollmentDesign != null)
-			enrollmentDesign.initDeepForClass(siteRequest_);
 		enrollmentDesignWrap.alreadyInitialized(true);
 		return (EnrollmentFormPage)this;
 	}
@@ -1631,8 +1629,6 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 			super.siteRequestEnrollmentFormGenPage(siteRequest_);
 		if(listEnrollmentDesign != null)
 			listEnrollmentDesign.setSiteRequest_(siteRequest_);
-		if(enrollmentDesign != null)
-			enrollmentDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentBlock != null)

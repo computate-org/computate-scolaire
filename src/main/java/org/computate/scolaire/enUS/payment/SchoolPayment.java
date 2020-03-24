@@ -299,8 +299,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.US);
 		fn.setMaximumFractionDigits(0);
-
 		StringBuilder o = new StringBuilder();
+
 		if(chargeAmount != null) {
 			if(enrollment_ != null && chargeFirstLast)
 				o.append(String.format("%s %s + %s tuition", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
@@ -334,7 +334,44 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	@Override()
-	protected void  _objectTitle(Wrap<String> c) {
-		c.o(paymentCompleteName);
+	protected void  _objectText(Wrap<String> c) {
+		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
+		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.US);
+		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("EEEE EEE MMMM MMM d yyyy", Locale.US);
+		fn.setMaximumFractionDigits(0);
+		StringBuilder o = new StringBuilder();
+
+		if(chargeAmount != null) {
+			if(paymentDate != null)
+				o.append(" ").append(paymentDate.format(fd2));
+			if(enrollment_ != null && chargeFirstLast)
+				o.append(String.format("%s frais de %s + %s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+			else if(enrollment_ != null && chargeEnrollment)
+				o.append(String.format("%s frais d'inscription %s-%s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+			else if(enrollment_ != null && chargeLateFee)
+				o.append(String.format("%s", fn.format(chargeAmount)));
+			else
+				o.append(String.format("%s frais de %s", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
+
+			if(childCompleteNamePreferred != null)
+				o.append(String.format(" for %s", childCompleteNamePreferred));
+		}
+		if(paymentAmount != null) {
+			o.append(fn.format(paymentAmount));
+			if(paymentDate != null)
+				o.append(" ").append(paymentDate.format(fd2));
+			o.append(" paiement");
+			if(childCompleteNamePreferred != null)
+				o.append(String.format(" for %s", childCompleteNamePreferred));
+			if(BooleanUtils.isTrue(paymentCheck))
+				o.append(" by check");
+			if(BooleanUtils.isTrue(paymentCash))
+				o.append(" by cash");
+			if(BooleanUtils.isTrue(paymentSystem))
+				o.append(" by authorize.net");
+		}
+		if(!StringUtils.isEmpty(paymentDescription))
+			o.append(" ").append(paymentDescription);
+		c.o(o.toString());
 	}
 }
