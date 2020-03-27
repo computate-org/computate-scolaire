@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.guardian;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -639,12 +639,12 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestGuardianGenPage(this, null, listSchoolGuardian);
+		htmlSuggestedGuardianGenPage(this, null, listSchoolGuardian);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestGuardianGenPage(PageLayout p, String id, SearchList<SchoolGuardian> listSchoolGuardian) {
+	public static void htmlSuggestedGuardianGenPage(PageLayout p, String id, SearchList<SchoolGuardian> listSchoolGuardian) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

@@ -99,7 +99,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl
+ * CanonicalName.frFR: org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEnUSGenApiService {
 
@@ -3902,18 +3902,20 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getYearKey();
 
-					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest2);
-					futures.add(
-						service.patchSchoolYearFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
-							} else {
-								LOGGER.info(String.format("SchoolYear %s failed. ", pk));
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchSchoolYearFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolYear %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				{
@@ -3941,18 +3943,20 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getChildKey();
 
-					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest2);
-					futures.add(
-						service.patchSchoolChildFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("SchoolChild %s refreshed. ", pk));
-							} else {
-								LOGGER.info(String.format("SchoolChild %s failed. ", pk));
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchSchoolChildFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolChild %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolChild %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				{

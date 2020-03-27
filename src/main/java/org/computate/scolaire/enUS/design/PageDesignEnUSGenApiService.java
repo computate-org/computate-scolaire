@@ -14,7 +14,7 @@ import io.vertx.ext.web.api.OperationResponse;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.design.DesignPageFrFRGenApiService
+ * CanonicalName.frFR: org.computate.scolaire.frFR.design.DesignPageFrFRGenApiService
  * Gen: false
  **/
 @WebApiServiceGen
@@ -40,4 +40,6 @@ public interface PageDesignEnUSGenApiService {
 	public void searchPageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void searchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void searchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void designdisplaysearchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void designdisplaysearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

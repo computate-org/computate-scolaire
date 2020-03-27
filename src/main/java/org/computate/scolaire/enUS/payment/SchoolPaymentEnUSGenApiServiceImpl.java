@@ -85,7 +85,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRGenApiServiceImpl
+ * CanonicalName.frFR: org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenApiService {
 
@@ -2103,18 +2103,20 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getEnrollmentKey();
 
-					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest2);
-					futures.add(
-						service.patchSchoolEnrollmentFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
-							} else {
-								LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchSchoolEnrollmentFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {

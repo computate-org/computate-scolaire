@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.enrollment.design;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -605,12 +605,12 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 
 			g("div");
 		}
-		htmlSuggestEnrollmentDesignGenPage(this, null, listEnrollmentDesign);
+		htmlSuggestedEnrollmentDesignGenPage(this, null, listEnrollmentDesign);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestEnrollmentDesignGenPage(PageLayout p, String id, SearchList<EnrollmentDesign> listEnrollmentDesign) {
+	public static void htmlSuggestedEnrollmentDesignGenPage(PageLayout p, String id, SearchList<EnrollmentDesign> listEnrollmentDesign) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
@@ -665,14 +665,12 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentDesignGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentDesignGenPage.ROLES)
 					) {
-				if(listEnrollmentDesign == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllEnrollmentDesignGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchEnrollmentDesignVals([], {}, function() { addGlow($('#refreshAllEnrollmentDesignGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentDesignGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the enrollment designs");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

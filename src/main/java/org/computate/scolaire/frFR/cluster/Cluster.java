@@ -17,7 +17,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
 
 
 
-/**          
+/**         
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Modele: true
  * Api: true
@@ -54,9 +54,9 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- * RoleRead.frFR: User
- * RoleRead.enUS: User
- */               
+ * RoleLire.frFR: User
+ * RoleLire.enUS: User
+ */                
 public class Cluster extends ClusterGen<Object> {   
 
 	/**
@@ -293,6 +293,8 @@ public class Cluster extends ClusterGen<Object> {
 	 * Var.enUS: objectNameVar
 	 * r: objetId
 	 * r.enUS: objectId
+	 * r: NomVar
+	 * r.enUS: NameVar
 	 * **/   
 	protected void _objetNomVar(Couverture<String> c)  {
 		if(objetId != null) {
@@ -411,6 +413,8 @@ public class Cluster extends ClusterGen<Object> {
 	 * r.enUS: ": "
 	 * r: objetTitre
 	 * r.enUS: objectTitle
+	 * r: NomSingulier
+	 * r.enUS: NameSingular
 	 */ 
 	protected void _pageH1(Couverture<String> c)  {
 		try {

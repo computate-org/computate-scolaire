@@ -66,7 +66,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public static final String PereScolaire_TousNom = "tous les pères";
 	public static final String PereScolaire_RechercherTousNomPar = "rechercher pères par ";
 	public static final String PereScolaire_RechercherTousNom = "rechercher pères";
-	public static final String PereScolaire_LesNoms = "les pères";
+	public static final String PereScolaire_LesNom = "les pères";
 	public static final String PereScolaire_AucunNomTrouve = "aucun père trouvé";
 	public static final String PereScolaire_NomVar = "père";
 	public static final String PereScolaire_DeNom = "de père";

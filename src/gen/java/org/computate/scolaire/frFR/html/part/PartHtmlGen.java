@@ -64,7 +64,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public static final String PartHtml_TousNom = "tous les part de HTMLs";
 	public static final String PartHtml_RechercherTousNomPar = "rechercher part de HTMLs par ";
 	public static final String PartHtml_RechercherTousNom = "rechercher part de HTMLs";
-	public static final String PartHtml_LesNoms = "les part de HTMLs";
+	public static final String PartHtml_LesNom = "les part de HTMLs";
 	public static final String PartHtml_AucunNomTrouve = "aucun part de HTML trouvé";
 	public static final String PartHtml_NomVar = "part-html";
 	public static final String PartHtml_DeNom = "de part de HTML";
@@ -73,7 +73,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public static final String PartHtml_Couleur = "yellow";
 	public static final String PartHtml_IconeGroupe = "regular";
 	public static final String PartHtml_IconeNom = "sun";
-	public static final Integer PartHtml_Rows = 1000000;
+	public static final Integer PartHtml_Lignes = 1000000;
 
 	/////////////////
 	// partHtmlCle //
@@ -224,7 +224,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("name", "setDesignInscriptionCle")
 					.a("id", classeApiMethodeMethode, "_designInscriptionCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle')) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -356,7 +356,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("name", "setDesignPageCle")
 					.a("id", classeApiMethodeMethode, "_designPageCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePartHtmlDesignPageCle($(this).val() ? rechercherDesignPageFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignPageCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignPageCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggerePartHtmlDesignPageCle($(this).val() ? rechercherDesignPageFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignPageCle')) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}

@@ -73,7 +73,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	public static final String Cluster_TousNom = "tous les clusters";
 	public static final String Cluster_RechercherTousNomPar = "rechercher clusters par ";
 	public static final String Cluster_RechercherTousNom = "rechercher clusters";
-	public static final String Cluster_LesNoms = "les clusters";
+	public static final String Cluster_LesNom = "les clusters";
 	public static final String Cluster_AucunNomTrouve = "aucun cluster trouvé";
 	public static final String Cluster_NomVar = "cluster";
 	public static final String Cluster_DeNom = "de cluster";

@@ -55,26 +55,26 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolYear_UnNom = "a year";
-	public static final String SchoolYear_Ce = "this ";
-	public static final String SchoolYear_CeNom = "this year";
-	public static final String SchoolYear_Un = "a ";
-	public static final String SchoolYear_LeNom = "the year";
-	public static final String SchoolYear_NomSingulier = "year";
-	public static final String SchoolYear_NomPluriel = "years";
-	public static final String SchoolYear_NomActuel = "current year";
-	public static final String SchoolYear_TousNom = "all the years";
-	public static final String SchoolYear_RechercherTousNomPar = "search years by ";
-	public static final String SchoolYear_LesNoms = "the years";
-	public static final String SchoolYear_AucunNomTrouve = "no year found";
-	public static final String SchoolYear_NomVar = "year";
-	public static final String SchoolYear_DeNom = "of year";
-	public static final String SchoolYear_UnNomAdjectif = "a year";
-	public static final String SchoolYear_NomAdjectifSingulier = "year";
-	public static final String SchoolYear_NomAdjectifPluriel = "years";
-	public static final String SchoolYear_Couleur = "orange";
-	public static final String SchoolYear_IconeGroupe = "regular";
-	public static final String SchoolYear_IconeNom = "calendar-check";
+	public static final String SchoolYear_AName = "a year";
+	public static final String SchoolYear_This = "this ";
+	public static final String SchoolYear_ThisName = "this year";
+	public static final String SchoolYear_A = "a ";
+	public static final String SchoolYear_TheName = "the year";
+	public static final String SchoolYear_NameSingular = "year";
+	public static final String SchoolYear_NamePlural = "years";
+	public static final String SchoolYear_NameActual = "current year";
+	public static final String SchoolYear_AllName = "all the years";
+	public static final String SchoolYear_SearchAllNameBy = "search years by ";
+	public static final String SchoolYear_ThePluralName = "the years";
+	public static final String SchoolYear_NoNameFound = "no year found";
+	public static final String SchoolYear_NameVar = "year";
+	public static final String SchoolYear_OfName = "of year";
+	public static final String SchoolYear_ANameAdjective = "a year";
+	public static final String SchoolYear_NameAdjectiveSingular = "year";
+	public static final String SchoolYear_NameAdjectivePlural = "years";
+	public static final String SchoolYear_Color = "orange";
+	public static final String SchoolYear_IconGroup = "regular";
+	public static final String SchoolYear_IconName = "calendar-check";
 
 	///////////////
 	// schoolKey //
@@ -2366,10 +2366,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolYear(String entityVar) {
+	public static String varSuggestedSchoolYear(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

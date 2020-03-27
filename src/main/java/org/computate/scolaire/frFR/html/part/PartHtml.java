@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;           
+package org.computate.scolaire.frFR.html.part;              
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -50,12 +50,12 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri8
  * Tri.asc: tri9
  * Tri.asc: tri10
- * Rows: 1000000
+ * Lignes: 1000000
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * 
-*/                        
+*/                  
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -96,7 +96,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: design de page
 	 * NomAffichage.enUS: page design
-	*/         
+	*/       
 	protected void _designPageCle(Couverture<Long> c) {
 	}
 

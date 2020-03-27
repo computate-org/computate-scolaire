@@ -62,26 +62,26 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolAge_UnNom = "an age";
-	public static final String SchoolAge_Ce = "this ";
-	public static final String SchoolAge_CeNom = "this age";
-	public static final String SchoolAge_Un = "a ";
-	public static final String SchoolAge_LeNom = "theage";
-	public static final String SchoolAge_NomSingulier = "age";
-	public static final String SchoolAge_NomPluriel = "ages";
-	public static final String SchoolAge_NomActuel = "current age";
-	public static final String SchoolAge_TousNom = "all the ages";
-	public static final String SchoolAge_RechercherTousNomPar = "search ages by ";
-	public static final String SchoolAge_LesNoms = "the ages";
-	public static final String SchoolAge_AucunNomTrouve = "no age found";
-	public static final String SchoolAge_NomVar = "age";
-	public static final String SchoolAge_DeNom = "of age";
-	public static final String SchoolAge_UnNomAdjectif = "an age";
-	public static final String SchoolAge_NomAdjectifSingulier = "age";
-	public static final String SchoolAge_NomAdjectifPluriel = "ages";
-	public static final String SchoolAge_Couleur = "blue";
-	public static final String SchoolAge_IconeGroupe = "duotone";
-	public static final String SchoolAge_IconeNom = "birthday-cake";
+	public static final String SchoolAge_AName = "an age";
+	public static final String SchoolAge_This = "this ";
+	public static final String SchoolAge_ThisName = "this age";
+	public static final String SchoolAge_A = "a ";
+	public static final String SchoolAge_TheName = "theage";
+	public static final String SchoolAge_NameSingular = "age";
+	public static final String SchoolAge_NamePlural = "ages";
+	public static final String SchoolAge_NameActual = "current age";
+	public static final String SchoolAge_AllName = "all the ages";
+	public static final String SchoolAge_SearchAllNameBy = "search ages by ";
+	public static final String SchoolAge_ThePluralName = "the ages";
+	public static final String SchoolAge_NoNameFound = "no age found";
+	public static final String SchoolAge_NameVar = "age";
+	public static final String SchoolAge_OfName = "of age";
+	public static final String SchoolAge_ANameAdjective = "an age";
+	public static final String SchoolAge_NameAdjectiveSingular = "age";
+	public static final String SchoolAge_NameAdjectivePlural = "ages";
+	public static final String SchoolAge_Color = "blue";
+	public static final String SchoolAge_IconGroup = "duotone";
+	public static final String SchoolAge_IconName = "birthday-cake";
 
 	////////////
 	// ageKey //
@@ -3493,10 +3493,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolAge(String entityVar) {
+	public static String varSuggestedSchoolAge(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

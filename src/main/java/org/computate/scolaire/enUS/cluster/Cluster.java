@@ -105,7 +105,7 @@ public class Cluster extends ClusterGen<Object> {
 			Class<?> cl = getClass();
 
 			try {
-				String o = toId((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomVar").get(this));
+				String o = toId((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NameVar").get(this));
 				c.o(o);
 			} catch (Exception e) {
 				ExceptionUtils.rethrow(e);
@@ -156,7 +156,7 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _pageH1(Wrap<String> c) {
 		try {
 			Class<?> cl = getClass();
-			c.o((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomSingulier").get(this) + ": " + objectTitle);
+			c.o((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NameSingular").get(this) + ": " + objectTitle);
 		} catch (Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

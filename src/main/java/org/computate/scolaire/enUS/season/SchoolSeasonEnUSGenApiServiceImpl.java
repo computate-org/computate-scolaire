@@ -87,7 +87,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.saison.SaisonScolaireFrFRGenApiServiceImpl
+ * CanonicalName.frFR: org.computate.scolaire.frFR.saison.SaisonScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApiService {
 
@@ -950,12 +950,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1046,12 +1046,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1179,12 +1179,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1837,18 +1837,20 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getYearKey();
 
-					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest2);
-					futures.add(
-						service.patchSchoolYearFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
-							} else {
-								LOGGER.info(String.format("SchoolYear %s failed. ", pk));
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchSchoolYearFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("SchoolYear %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				{

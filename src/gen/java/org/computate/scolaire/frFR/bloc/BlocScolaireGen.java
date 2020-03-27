@@ -76,7 +76,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public static final String BlocScolaire_TousNom = "tous les blocs";
 	public static final String BlocScolaire_RechercherTousNomPar = "rechercher blocs par ";
 	public static final String BlocScolaire_RechercherTousNom = "rechercher blocs";
-	public static final String BlocScolaire_LesNoms = "les blocs";
+	public static final String BlocScolaire_LesNom = "les blocs";
 	public static final String BlocScolaire_AucunNomTrouve = "aucun bloc trouvé";
 	public static final String BlocScolaire_NomVar = "bloc";
 	public static final String BlocScolaire_DeNom = "de bloc";

@@ -62,26 +62,26 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolSession_UnNom = "a session";
-	public static final String SchoolSession_Ce = "this ";
-	public static final String SchoolSession_CeNom = "this session";
-	public static final String SchoolSession_Un = "a ";
-	public static final String SchoolSession_LeNom = "the session";
-	public static final String SchoolSession_NomSingulier = "session";
-	public static final String SchoolSession_NomPluriel = "sessions";
-	public static final String SchoolSession_NomActuel = "current session";
-	public static final String SchoolSession_TousNom = "all the sessions";
-	public static final String SchoolSession_RechercherTousNomPar = "search sessions by ";
-	public static final String SchoolSession_LesNoms = "the sessions";
-	public static final String SchoolSession_AucunNomTrouve = "no session found";
-	public static final String SchoolSession_NomVar = "session";
-	public static final String SchoolSession_DeNom = "of session";
-	public static final String SchoolSession_UnNomAdjectif = "a session";
-	public static final String SchoolSession_NomAdjectifSingulier = "session";
-	public static final String SchoolSession_NomAdjectifPluriel = "sessions";
-	public static final String SchoolSession_Couleur = "green";
-	public static final String SchoolSession_IconeGroupe = "duotone";
-	public static final String SchoolSession_IconeNom = "graduation-cap";
+	public static final String SchoolSession_AName = "a session";
+	public static final String SchoolSession_This = "this ";
+	public static final String SchoolSession_ThisName = "this session";
+	public static final String SchoolSession_A = "a ";
+	public static final String SchoolSession_TheName = "the session";
+	public static final String SchoolSession_NameSingular = "session";
+	public static final String SchoolSession_NamePlural = "sessions";
+	public static final String SchoolSession_NameActual = "current session";
+	public static final String SchoolSession_AllName = "all the sessions";
+	public static final String SchoolSession_SearchAllNameBy = "search sessions by ";
+	public static final String SchoolSession_ThePluralName = "the sessions";
+	public static final String SchoolSession_NoNameFound = "no session found";
+	public static final String SchoolSession_NameVar = "session";
+	public static final String SchoolSession_OfName = "of session";
+	public static final String SchoolSession_ANameAdjective = "a session";
+	public static final String SchoolSession_NameAdjectiveSingular = "session";
+	public static final String SchoolSession_NameAdjectivePlural = "sessions";
+	public static final String SchoolSession_Color = "green";
+	public static final String SchoolSession_IconGroup = "duotone";
+	public static final String SchoolSession_IconName = "graduation-cap";
 
 	////////////////
 	// sessionKey //
@@ -3146,10 +3146,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolSession(String entityVar) {
+	public static String varSuggestedSchoolSession(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

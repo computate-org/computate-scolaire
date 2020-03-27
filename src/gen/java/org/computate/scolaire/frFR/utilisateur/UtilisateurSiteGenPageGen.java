@@ -269,8 +269,6 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void htmlBodyUtilisateurSiteGenPage() {
-		if(utilisateurSite != null)
-			utilisateurSite.htmlBody();
 	}
 
 	//////////

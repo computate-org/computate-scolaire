@@ -85,7 +85,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
- * classeNomCanonique.enUS: org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiServiceImpl
+ * NomCanonique.enUS: org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiServiceImpl
  **/
 public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGenApiService {
 

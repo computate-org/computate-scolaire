@@ -85,7 +85,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.design.DesignPageFrFRGenApiServiceImpl
+ * CanonicalName.frFR: org.computate.scolaire.frFR.design.DesignPageFrFRGenApiServiceImpl
  **/
 public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiService {
 
@@ -269,7 +269,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -547,7 +547,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		try {
 			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(JsonObject.mapFrom(apiRequest))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -880,7 +880,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			JsonObject json = JsonObject.mapFrom(apiRequest);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -894,12 +894,12 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -976,7 +976,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			SolrDocumentList solrDocuments = listPageDesign.getSolrDocumentList();
 
 			JsonObject json = JsonObject.mapFrom(listPageDesign.getList().stream().findFirst().orElse(null));
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -990,12 +990,12 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1104,7 +1104,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			if(exceptionSearch != null) {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Optional.ofNullable(json).orElse(new JsonObject()))));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1123,12 +1123,12 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1218,6 +1218,121 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			page.setListPageDesign(listPageDesign);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepPageDesignPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// DesignDisplaySearchPage //
+
+	@Override
+	public void designdisplaysearchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		designdisplaysearchpagePageDesign(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void designdisplaysearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleLires = Arrays.asList("");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					userPageDesign(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchPageDesign(siteRequest, false, true, "/page", c -> {
+								if(c.succeeded()) {
+									SearchList<PageDesign> listPageDesign = c.result();
+									designdisplaysearchpagePageDesignResponse(listPageDesign, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("designdisplaysearchpagePageDesign succeeded. "));
+										} else {
+											LOGGER.error(String.format("designdisplaysearchpagePageDesign failed. ", d.cause()));
+											errorPageDesign(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorPageDesign(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void designdisplaysearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		response200DesignDisplaySearchPagePageDesign(listPageDesign, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorPageDesign(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorPageDesign(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorPageDesign(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200DesignDisplaySearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
+			DesignDisplayPage page = new DesignDisplayPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/page");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listPageDesign.size() == 1)
+				siteRequest.setRequestPk(listPageDesign.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListPageDesign(listPageDesign);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepDesignDisplayPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {

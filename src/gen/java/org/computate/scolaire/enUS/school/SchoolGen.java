@@ -51,26 +51,26 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String School_UnNom = "a school";
-	public static final String School_Ce = "this ";
-	public static final String School_CeNom = "this school";
-	public static final String School_Un = "a ";
-	public static final String School_LeNom = "the school";
-	public static final String School_NomSingulier = "school";
-	public static final String School_NomPluriel = "schools";
-	public static final String School_NomActuel = "current school";
-	public static final String School_TousNom = "all the schools";
-	public static final String School_RechercherTousNomPar = "search schools by ";
-	public static final String School_LesNoms = "the schools";
-	public static final String School_AucunNomTrouve = "no school found";
-	public static final String School_NomVar = "school";
-	public static final String School_DeNom = "of school";
-	public static final String School_UnNomAdjectif = "a school";
-	public static final String School_NomAdjectifSingulier = "school";
-	public static final String School_NomAdjectifPluriel = "schools";
-	public static final String School_Couleur = "pink";
-	public static final String School_IconeGroupe = "regular";
-	public static final String School_IconeNom = "school";
+	public static final String School_AName = "a school";
+	public static final String School_This = "this ";
+	public static final String School_ThisName = "this school";
+	public static final String School_A = "a ";
+	public static final String School_TheName = "the school";
+	public static final String School_NameSingular = "school";
+	public static final String School_NamePlural = "schools";
+	public static final String School_NameActual = "current school";
+	public static final String School_AllName = "all the schools";
+	public static final String School_SearchAllNameBy = "search schools by ";
+	public static final String School_ThePluralName = "the schools";
+	public static final String School_NoNameFound = "no school found";
+	public static final String School_NameVar = "school";
+	public static final String School_OfName = "of school";
+	public static final String School_ANameAdjective = "a school";
+	public static final String School_NameAdjectiveSingular = "school";
+	public static final String School_NameAdjectivePlural = "schools";
+	public static final String School_Color = "pink";
+	public static final String School_IconGroup = "regular";
+	public static final String School_IconName = "school";
 
 	///////////////
 	// schoolKey //
@@ -2255,10 +2255,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchool(String entityVar) {
+	public static String varSuggestedSchool(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

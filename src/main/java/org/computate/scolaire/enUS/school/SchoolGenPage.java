@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.school;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -442,7 +442,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 	public void thead2SchoolGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("created").g("th");
+				e("th").f().sx("").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -635,12 +635,12 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestSchoolGenPage(this, null, listSchool);
+		htmlSuggestedSchoolGenPage(this, null, listSchool);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestSchoolGenPage(PageLayout p, String id, SearchList<School> listSchool) {
+	public static void htmlSuggestedSchoolGenPage(PageLayout p, String id, SearchList<School> listSchool) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

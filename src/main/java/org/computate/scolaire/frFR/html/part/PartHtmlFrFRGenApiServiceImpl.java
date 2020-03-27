@@ -87,7 +87,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
- * classeNomCanonique.enUS: org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiServiceImpl
+ * NomCanonique.enUS: org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiServiceImpl
  **/
 public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService {
 
@@ -1310,12 +1310,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1406,12 +1406,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1539,12 +1539,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPartHtml(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -2206,18 +2206,20 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					DesignInscriptionFrFRGenApiServiceImpl service = new DesignInscriptionFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getDesignInscriptionCle();
 
-					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite2);
-					futures.add(
-						service.patchDesignInscriptionFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("DesignInscription %s rechargé. ", pk));
-							} else {
-								LOGGER.info(String.format("DesignInscription %s a échoué. ", pk));
-								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite2);
+						futures.add(
+							service.patchDesignInscriptionFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("DesignInscription %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("DesignInscription %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				{
@@ -2225,18 +2227,20 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					DesignPageFrFRGenApiServiceImpl service = new DesignPageFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getDesignPageCle();
 
-					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite2);
-					futures.add(
-						service.patchDesignPageFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
-							} else {
-								LOGGER.info(String.format("DesignPage %s a échoué. ", pk));
-								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite2);
+						futures.add(
+							service.patchDesignPageFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("DesignPage %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {

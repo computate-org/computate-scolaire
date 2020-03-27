@@ -52,26 +52,26 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String HtmlPart_UnNom = "an HTML part";
-	public static final String HtmlPart_Ce = "this ";
-	public static final String HtmlPart_CeNom = "this HTML part";
-	public static final String HtmlPart_Un = "a ";
-	public static final String HtmlPart_LeNom = "theHTML part";
-	public static final String HtmlPart_NomSingulier = "HTML part";
-	public static final String HtmlPart_NomPluriel = "HTML parts";
-	public static final String HtmlPart_NomActuel = "current HTML part";
-	public static final String HtmlPart_TousNom = "all the HTML parts";
-	public static final String HtmlPart_RechercherTousNomPar = "search HTML parts by ";
-	public static final String HtmlPart_LesNoms = "the HTML parts";
-	public static final String HtmlPart_AucunNomTrouve = "no HTML part found";
-	public static final String HtmlPart_NomVar = "html-part";
-	public static final String HtmlPart_DeNom = "of HTML part";
-	public static final String HtmlPart_UnNomAdjectif = "an HTML part";
-	public static final String HtmlPart_NomAdjectifSingulier = "HTML part";
-	public static final String HtmlPart_NomAdjectifPluriel = "HTML parts";
-	public static final String HtmlPart_Couleur = "yellow";
-	public static final String HtmlPart_IconeGroupe = "regular";
-	public static final String HtmlPart_IconeNom = "sun";
+	public static final String HtmlPart_AName = "an HTML part";
+	public static final String HtmlPart_This = "this ";
+	public static final String HtmlPart_ThisName = "this HTML part";
+	public static final String HtmlPart_A = "a ";
+	public static final String HtmlPart_TheName = "theHTML part";
+	public static final String HtmlPart_NameSingular = "HTML part";
+	public static final String HtmlPart_NamePlural = "HTML parts";
+	public static final String HtmlPart_NameActual = "current HTML part";
+	public static final String HtmlPart_AllName = "all the HTML parts";
+	public static final String HtmlPart_SearchAllNameBy = "search HTML parts by ";
+	public static final String HtmlPart_ThePluralName = "the HTML parts";
+	public static final String HtmlPart_NoNameFound = "no HTML part found";
+	public static final String HtmlPart_NameVar = "html-part";
+	public static final String HtmlPart_OfName = "of HTML part";
+	public static final String HtmlPart_ANameAdjective = "an HTML part";
+	public static final String HtmlPart_NameAdjectiveSingular = "HTML part";
+	public static final String HtmlPart_NameAdjectivePlural = "HTML parts";
+	public static final String HtmlPart_Color = "yellow";
+	public static final String HtmlPart_IconGroup = "regular";
+	public static final String HtmlPart_IconName = "sun";
 	public static final Integer HtmlPart_Rows = 1000000;
 
 	/////////////////
@@ -223,7 +223,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentDesignKey")
 					.a("id", classApiMethodMethod, "_enrollmentDesignKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestHtmlPartEnrollmentDesignKey($(this).val() ? searchEnrollmentDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartEnrollmentDesignKey')) : [{'name':'fq','value':'htmlPartKeys:", pk, "'}], $('#listHtmlPartEnrollmentDesignKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestHtmlPartEnrollmentDesignKey($(this).val() ? searchEnrollmentDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartEnrollmentDesignKey')) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartEnrollmentDesignKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -355,7 +355,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("name", "setPageDesignKey")
 					.a("id", classApiMethodMethod, "_pageDesignKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestHtmlPartPageDesignKey($(this).val() ? searchPageDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartPageDesignKey')) : [{'name':'fq','value':'htmlPartKeys:", pk, "'}], $('#listHtmlPartPageDesignKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestHtmlPartPageDesignKey($(this).val() ? searchPageDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartPageDesignKey')) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -4240,10 +4240,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestHtmlPart(String entityVar) {
+	public static String varSuggestedHtmlPart(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

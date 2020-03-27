@@ -67,7 +67,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	public static final String AnneeScolaire_TousNom = "toutes les années";
 	public static final String AnneeScolaire_RechercherTousNomPar = "rechercher années par ";
 	public static final String AnneeScolaire_RechercherTousNom = "rechercher années";
-	public static final String AnneeScolaire_LesNoms = "les années";
+	public static final String AnneeScolaire_LesNom = "les années";
 	public static final String AnneeScolaire_AucunNomTrouve = "aucune année trouvée";
 	public static final String AnneeScolaire_NomVar = "année";
 	public static final String AnneeScolaire_DeNom = "d'année";

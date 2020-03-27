@@ -74,7 +74,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public static final String SessionScolaire_TousNom = "toutes les sessions";
 	public static final String SessionScolaire_RechercherTousNomPar = "rechercher sessions par ";
 	public static final String SessionScolaire_RechercherTousNom = "rechercher sessions";
-	public static final String SessionScolaire_LesNoms = "les sessions";
+	public static final String SessionScolaire_LesNom = "les sessions";
 	public static final String SessionScolaire_AucunNomTrouve = "aucune session trouvée";
 	public static final String SessionScolaire_NomVar = "session";
 	public static final String SessionScolaire_DeNom = "de session";

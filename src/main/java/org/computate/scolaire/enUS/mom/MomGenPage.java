@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.mom;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -665,12 +665,12 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestMomGenPage(this, null, listSchoolMom);
+		htmlSuggestedMomGenPage(this, null, listSchoolMom);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestMomGenPage(PageLayout p, String id, SearchList<SchoolMom> listSchoolMom) {
+	public static void htmlSuggestedMomGenPage(PageLayout p, String id, SearchList<SchoolMom> listSchoolMom) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.block;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -473,7 +473,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	public void thead2BlockGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("created").g("th");
+				e("th").f().sx("").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -666,12 +666,12 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestBlockGenPage(this, null, listSchoolBlock);
+		htmlSuggestedBlockGenPage(this, null, listSchoolBlock);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestBlockGenPage(PageLayout p, String id, SearchList<SchoolBlock> listSchoolBlock) {
+	public static void htmlSuggestedBlockGenPage(PageLayout p, String id, SearchList<SchoolBlock> listSchoolBlock) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

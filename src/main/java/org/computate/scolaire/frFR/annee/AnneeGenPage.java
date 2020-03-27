@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.annee;
 
 import org.computate.scolaire.frFR.cluster.ClusterPage;
+import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -629,7 +629,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	}
 
 	/**
-	 * Var.enUS: htmlSuggestYearGenPage
+	 * Var.enUS: htmlSuggestedYearGenPage
 	 * r: "/annee"
 	 * r.enUS: "/year"
 	 * r: "voir toutes les années"

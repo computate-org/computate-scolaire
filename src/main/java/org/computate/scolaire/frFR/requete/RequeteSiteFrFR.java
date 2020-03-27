@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.requete; 
+package org.computate.scolaire.frFR.requete;  
 
 import java.io.IOException;
 import java.io.Serializable;

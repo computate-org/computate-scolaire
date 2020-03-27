@@ -60,26 +60,26 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolChild_UnNom = "a child";
-	public static final String SchoolChild_Ce = "this ";
-	public static final String SchoolChild_CeNom = "this child";
-	public static final String SchoolChild_Un = "a ";
-	public static final String SchoolChild_LeNom = "the child";
-	public static final String SchoolChild_NomSingulier = "child";
-	public static final String SchoolChild_NomPluriel = "children";
-	public static final String SchoolChild_NomActuel = "current child";
-	public static final String SchoolChild_TousNom = "all the children";
-	public static final String SchoolChild_RechercherTousNomPar = "search children by ";
-	public static final String SchoolChild_LesNoms = "the children";
-	public static final String SchoolChild_AucunNomTrouve = "no child found";
-	public static final String SchoolChild_NomVar = "child";
-	public static final String SchoolChild_DeNom = "of child";
-	public static final String SchoolChild_UnNomAdjectif = "a child";
-	public static final String SchoolChild_NomAdjectifSingulier = "child";
-	public static final String SchoolChild_NomAdjectifPluriel = "children";
-	public static final String SchoolChild_Couleur = "orange";
-	public static final String SchoolChild_IconeGroupe = "regular";
-	public static final String SchoolChild_IconeNom = "child";
+	public static final String SchoolChild_AName = "a child";
+	public static final String SchoolChild_This = "this ";
+	public static final String SchoolChild_ThisName = "this child";
+	public static final String SchoolChild_A = "a ";
+	public static final String SchoolChild_TheName = "the child";
+	public static final String SchoolChild_NameSingular = "child";
+	public static final String SchoolChild_NamePlural = "children";
+	public static final String SchoolChild_NameActual = "current child";
+	public static final String SchoolChild_AllName = "all the children";
+	public static final String SchoolChild_SearchAllNameBy = "search children by ";
+	public static final String SchoolChild_ThePluralName = "the children";
+	public static final String SchoolChild_NoNameFound = "no child found";
+	public static final String SchoolChild_NameVar = "child";
+	public static final String SchoolChild_OfName = "of child";
+	public static final String SchoolChild_ANameAdjective = "a child";
+	public static final String SchoolChild_NameAdjectiveSingular = "child";
+	public static final String SchoolChild_NameAdjectivePlural = "children";
+	public static final String SchoolChild_Color = "orange";
+	public static final String SchoolChild_IconGroup = "regular";
+	public static final String SchoolChild_IconName = "child";
 
 	//////////////
 	// childKey //
@@ -2493,10 +2493,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolChild(String entityVar) {
+	public static String varSuggestedSchoolChild(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

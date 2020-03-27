@@ -54,26 +54,26 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolDad_UnNom = "a dad";
-	public static final String SchoolDad_Ce = "this ";
-	public static final String SchoolDad_CeNom = "this dad";
-	public static final String SchoolDad_Un = "a ";
-	public static final String SchoolDad_LeNom = "the dad";
-	public static final String SchoolDad_NomSingulier = "dad";
-	public static final String SchoolDad_NomPluriel = "dads";
-	public static final String SchoolDad_NomActuel = "current dad";
-	public static final String SchoolDad_TousNom = "all the dads";
-	public static final String SchoolDad_RechercherTousNomPar = "search dads by ";
-	public static final String SchoolDad_LesNoms = "the dads";
-	public static final String SchoolDad_AucunNomTrouve = "no dad found";
-	public static final String SchoolDad_NomVar = "dad";
-	public static final String SchoolDad_DeNom = "of dad";
-	public static final String SchoolDad_UnNomAdjectif = "a dad";
-	public static final String SchoolDad_NomAdjectifSingulier = "dad";
-	public static final String SchoolDad_NomAdjectifPluriel = "dads";
-	public static final String SchoolDad_Couleur = "light-blue";
-	public static final String SchoolDad_IconeGroupe = "regular";
-	public static final String SchoolDad_IconeNom = "male";
+	public static final String SchoolDad_AName = "a dad";
+	public static final String SchoolDad_This = "this ";
+	public static final String SchoolDad_ThisName = "this dad";
+	public static final String SchoolDad_A = "a ";
+	public static final String SchoolDad_TheName = "the dad";
+	public static final String SchoolDad_NameSingular = "dad";
+	public static final String SchoolDad_NamePlural = "dads";
+	public static final String SchoolDad_NameActual = "current dad";
+	public static final String SchoolDad_AllName = "all the dads";
+	public static final String SchoolDad_SearchAllNameBy = "search dads by ";
+	public static final String SchoolDad_ThePluralName = "the dads";
+	public static final String SchoolDad_NoNameFound = "no dad found";
+	public static final String SchoolDad_NameVar = "dad";
+	public static final String SchoolDad_OfName = "of dad";
+	public static final String SchoolDad_ANameAdjective = "a dad";
+	public static final String SchoolDad_NameAdjectiveSingular = "dad";
+	public static final String SchoolDad_NameAdjectivePlural = "dads";
+	public static final String SchoolDad_Color = "light-blue";
+	public static final String SchoolDad_IconGroup = "regular";
+	public static final String SchoolDad_IconName = "male";
 
 	////////////
 	// dadKey //
@@ -3350,10 +3350,10 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolDad(String entityVar) {
+	public static String varSuggestedSchoolDad(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

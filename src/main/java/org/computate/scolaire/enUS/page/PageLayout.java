@@ -455,7 +455,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("schools");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SchoolGenPage.htmlSuggestSchoolGenPage(this, id, null);
+						SchoolGenPage.htmlSuggestedSchoolGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -465,7 +465,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("years");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						YearGenPage.htmlSuggestYearGenPage(this, id, null);
+						YearGenPage.htmlSuggestedYearGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -475,7 +475,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("seasons");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SeasonGenPage.htmlSuggestSeasonGenPage(this, id, null);
+						SeasonGenPage.htmlSuggestedSeasonGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -485,7 +485,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("sessions");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SessionGenPage.htmlSuggestSessionGenPage(this, id, null);
+						SessionGenPage.htmlSuggestedSessionGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -495,7 +495,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("ages");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						AgeGenPage.htmlSuggestAgeGenPage(this, id, null);
+						AgeGenPage.htmlSuggestedAgeGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -505,7 +505,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("blocks");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						BlockGenPage.htmlSuggestBlockGenPage(this, id, null);
+						BlockGenPage.htmlSuggestedBlockGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -515,7 +515,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("designs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						EnrollmentDesignGenPage.htmlSuggestEnrollmentDesignGenPage(this, id, null);
+						EnrollmentDesignGenPage.htmlSuggestedEnrollmentDesignGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -525,7 +525,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("children");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						ChildGenPage.htmlSuggestChildGenPage(this, id, null);
+						ChildGenPage.htmlSuggestedChildGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -535,7 +535,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("moms");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						MomGenPage.htmlSuggestMomGenPage(this, id, null);
+						MomGenPage.htmlSuggestedMomGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -545,7 +545,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("dads");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						DadGenPage.htmlSuggestDadGenPage(this, id, null);
+						DadGenPage.htmlSuggestedDadGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -555,7 +555,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("guardians");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						GuardianGenPage.htmlSuggestGuardianGenPage(this, id, null);
+						GuardianGenPage.htmlSuggestedGuardianGenPage(this, id, null);
 					} g("div");
 				} g("div");
 			}
@@ -566,7 +566,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 						sx("enrollments");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					EnrollmentGenPage.htmlSuggestEnrollmentGenPage(this, id, null);
+					EnrollmentGenPage.htmlSuggestedEnrollmentGenPage(this, id, null);
 				} g("div");
 			} g("div");
 
@@ -576,7 +576,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 						sx("payments");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					PaymentGenPage.htmlSuggestPaymentGenPage(this, id, null);
+					PaymentGenPage.htmlSuggestedPaymentGenPage(this, id, null);
 				} g("div");
 			} g("div");
 

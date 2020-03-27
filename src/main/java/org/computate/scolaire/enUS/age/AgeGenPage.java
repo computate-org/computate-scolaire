@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.age;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -433,7 +433,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	public void thead2AgeGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("created").g("th");
+				e("th").f().sx("").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -626,12 +626,12 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestAgeGenPage(this, null, listSchoolAge);
+		htmlSuggestedAgeGenPage(this, null, listSchoolAge);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestAgeGenPage(PageLayout p, String id, SearchList<SchoolAge> listSchoolAge) {
+	public static void htmlSuggestedAgeGenPage(PageLayout p, String id, SearchList<SchoolAge> listSchoolAge) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

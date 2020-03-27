@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.inscription.design;
 
 import org.computate.scolaire.frFR.cluster.ClusterPage;
+import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -610,7 +610,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	}
 
 	/**
-	 * Var.enUS: htmlSuggestEnrollmentDesignGenPage
+	 * Var.enUS: htmlSuggestedEnrollmentDesignGenPage
 	 * r: "/design-inscription"
 	 * r.enUS: "/enrollment-design"
 	 * r: "voir tous les design d'inscriptions"
@@ -705,14 +705,12 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), DesignInscriptionGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), DesignInscriptionGenPage.ROLES)
 					) {
-				if(listeDesignInscription == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerTousDesignInscriptionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchDesignInscriptionVals([], {}, function() { ajouterLueur($('#rechargerTousDesignInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignInscriptionGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger tous les design d'inscriptions");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

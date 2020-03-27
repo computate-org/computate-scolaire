@@ -83,7 +83,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public static final String InscriptionScolaire_TousNom = "toutes les inscriptions";
 	public static final String InscriptionScolaire_RechercherTousNomPar = "rechercher inscriptions par ";
 	public static final String InscriptionScolaire_RechercherTousNom = "rechercher inscriptions";
-	public static final String InscriptionScolaire_LesNoms = "les inscriptions";
+	public static final String InscriptionScolaire_LesNom = "les inscriptions";
 	public static final String InscriptionScolaire_AucunNomTrouve = "aucune inscription trouvée";
 	public static final String InscriptionScolaire_NomVar = "inscription";
 	public static final String InscriptionScolaire_DeNom = "d'inscription";

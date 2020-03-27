@@ -87,7 +87,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.html.part.PartHtmlFrFRGenApiServiceImpl
+ * CanonicalName.frFR: org.computate.scolaire.frFR.html.part.PartHtmlFrFRGenApiServiceImpl
  **/
 public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService {
 
@@ -1310,12 +1310,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForHtmlPart(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1406,12 +1406,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForHtmlPart(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1539,12 +1539,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForHtmlPart(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleReads)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleReads)
+					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
 					) {
 				eventHandler.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -2206,18 +2206,20 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					EnrollmentDesignEnUSGenApiServiceImpl service = new EnrollmentDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getEnrollmentDesignKey();
 
-					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest2);
-					futures.add(
-						service.patchEnrollmentDesignFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("EnrollmentDesign %s refreshed. ", pk));
-							} else {
-								LOGGER.info(String.format("EnrollmentDesign %s failed. ", pk));
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchEnrollmentDesignFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("EnrollmentDesign %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("EnrollmentDesign %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				{
@@ -2225,18 +2227,20 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					Long pk = o.getPageDesignKey();
 
-					o2.setPk(pk);
-					o2.setSiteRequest_(siteRequest2);
-					futures.add(
-						service.patchPageDesignFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
-							} else {
-								LOGGER.info(String.format("PageDesign %s failed. ", pk));
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchPageDesignFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("PageDesign %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {

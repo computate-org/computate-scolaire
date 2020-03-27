@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.design;
 
 import org.computate.scolaire.frFR.cluster.ClusterPage;
+import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -610,7 +610,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 	}
 
 	/**
-	 * Var.enUS: htmlSuggestPageDesignGenPage
+	 * Var.enUS: htmlSuggestedPageDesignGenPage
 	 * r: "/design-page"
 	 * r.enUS: "/page-design"
 	 * r: "voir tous les design de pages"
@@ -705,14 +705,12 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), DesignPageGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), DesignPageGenPage.ROLES)
 					) {
-				if(listeDesignPage == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerTousDesignPageGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchDesignPageVals([], {}, function() { ajouterLueur($('#rechargerTousDesignPageGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousDesignPageGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger tous les design de pages");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

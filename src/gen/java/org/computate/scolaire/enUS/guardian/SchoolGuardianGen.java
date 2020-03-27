@@ -54,26 +54,26 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolGuardian_UnNom = "a guardian";
-	public static final String SchoolGuardian_Ce = "this ";
-	public static final String SchoolGuardian_CeNom = "this guardian";
-	public static final String SchoolGuardian_Un = "a ";
-	public static final String SchoolGuardian_LeNom = "the guardian";
-	public static final String SchoolGuardian_NomSingulier = "guardian";
-	public static final String SchoolGuardian_NomPluriel = "guardians";
-	public static final String SchoolGuardian_NomActuel = "current guardian";
-	public static final String SchoolGuardian_TousNom = "all the guardians";
-	public static final String SchoolGuardian_RechercherTousNomPar = "search guardians by ";
-	public static final String SchoolGuardian_LesNoms = "the guardians";
-	public static final String SchoolGuardian_AucunNomTrouve = "no guardian found";
-	public static final String SchoolGuardian_NomVar = "guardian";
-	public static final String SchoolGuardian_DeNom = "of guardian";
-	public static final String SchoolGuardian_UnNomAdjectif = "a guardian";
-	public static final String SchoolGuardian_NomAdjectifSingulier = "guardian";
-	public static final String SchoolGuardian_NomAdjectifPluriel = "guardians";
-	public static final String SchoolGuardian_Couleur = "yellow";
-	public static final String SchoolGuardian_IconeGroupe = "regular";
-	public static final String SchoolGuardian_IconeNom = "phone";
+	public static final String SchoolGuardian_AName = "a guardian";
+	public static final String SchoolGuardian_This = "this ";
+	public static final String SchoolGuardian_ThisName = "this guardian";
+	public static final String SchoolGuardian_A = "a ";
+	public static final String SchoolGuardian_TheName = "the guardian";
+	public static final String SchoolGuardian_NameSingular = "guardian";
+	public static final String SchoolGuardian_NamePlural = "guardians";
+	public static final String SchoolGuardian_NameActual = "current guardian";
+	public static final String SchoolGuardian_AllName = "all the guardians";
+	public static final String SchoolGuardian_SearchAllNameBy = "search guardians by ";
+	public static final String SchoolGuardian_ThePluralName = "the guardians";
+	public static final String SchoolGuardian_NoNameFound = "no guardian found";
+	public static final String SchoolGuardian_NameVar = "guardian";
+	public static final String SchoolGuardian_OfName = "of guardian";
+	public static final String SchoolGuardian_ANameAdjective = "a guardian";
+	public static final String SchoolGuardian_NameAdjectiveSingular = "guardian";
+	public static final String SchoolGuardian_NameAdjectivePlural = "guardians";
+	public static final String SchoolGuardian_Color = "yellow";
+	public static final String SchoolGuardian_IconGroup = "regular";
+	public static final String SchoolGuardian_IconName = "phone";
 
 	/////////////////
 	// guardianKey //
@@ -3146,10 +3146,10 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolGuardian(String entityVar) {
+	public static String varSuggestedSchoolGuardian(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.age;                   
+package org.computate.scolaire.frFR.age;                     
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -48,7 +48,7 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                                                  
+*/                                            
 public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**

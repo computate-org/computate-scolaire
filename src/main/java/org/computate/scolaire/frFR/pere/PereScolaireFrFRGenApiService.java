@@ -14,7 +14,7 @@ import io.vertx.ext.web.api.OperationResponse;
 
 /**
  * Traduire: false
- * classeNomCanonique.enUS: org.computate.scolaire.enUS.dad.SchoolDadEnUSGenApiService
+ * NomCanonique.enUS: org.computate.scolaire.enUS.dad.SchoolDadEnUSGenApiService
  * Gen: false
  **/
 @WebApiServiceGen

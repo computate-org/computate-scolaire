@@ -55,13 +55,13 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- * RoleRead.frFR: User
- * RoleRead.enUS: User
+ * RoleLire.frFR: User
+ * RoleLire.enUS: User
  * 
  * Tri.desc: paiementDate
  * Tri.desc: paiementPar
  * 
- * Rows: 50
+ * Lignes: 50
 */   
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 

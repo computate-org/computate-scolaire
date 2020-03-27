@@ -62,28 +62,28 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolSeason_UnNom = "a season";
-	public static final String SchoolSeason_Ce = "this ";
-	public static final String SchoolSeason_CeNom = "this season";
-	public static final String SchoolSeason_Un = "a ";
-	public static final String SchoolSeason_LeNom = "the season";
-	public static final String SchoolSeason_NomSingulier = "season";
-	public static final String SchoolSeason_NomPluriel = "seasons";
-	public static final String SchoolSeason_NomActuel = "current season";
-	public static final String SchoolSeason_TousNom = "all the seasons";
-	public static final String SchoolSeason_RechercherTousNomPar = "search seasons by ";
-	public static final String SchoolSeason_LesNoms = "the seasons";
-	public static final String SchoolSeason_AucunNomTrouve = "no season found";
-	public static final String SchoolSeason_NomVar = "season";
-	public static final String SchoolSeason_DeNom = "of season";
-	public static final String SchoolSeason_AdjectifPluriel = "school";
-	public static final String SchoolSeason_AdjectifVar = "school";
-	public static final String SchoolSeason_UnNomAdjectif = "a school season";
-	public static final String SchoolSeason_NomAdjectifSingulier = "school season";
-	public static final String SchoolSeason_NomAdjectifPluriel = "school seasons";
-	public static final String SchoolSeason_Couleur = "yellow";
-	public static final String SchoolSeason_IconeGroupe = "regular";
-	public static final String SchoolSeason_IconeNom = "sun";
+	public static final String SchoolSeason_AName = "a season";
+	public static final String SchoolSeason_This = "this ";
+	public static final String SchoolSeason_ThisName = "this season";
+	public static final String SchoolSeason_A = "a ";
+	public static final String SchoolSeason_TheName = "the season";
+	public static final String SchoolSeason_NameSingular = "season";
+	public static final String SchoolSeason_NamePlural = "seasons";
+	public static final String SchoolSeason_NameActual = "current season";
+	public static final String SchoolSeason_AllName = "all the seasons";
+	public static final String SchoolSeason_SearchAllNameBy = "search seasons by ";
+	public static final String SchoolSeason_ThePluralName = "the seasons";
+	public static final String SchoolSeason_NoNameFound = "no season found";
+	public static final String SchoolSeason_NameVar = "season";
+	public static final String SchoolSeason_OfName = "of season";
+	public static final String SchoolSeason_AdjectivePlural = "school";
+	public static final String SchoolSeason_AdjectiveVar = "school";
+	public static final String SchoolSeason_ANameAdjective = "a school season";
+	public static final String SchoolSeason_NameAdjectiveSingular = "school season";
+	public static final String SchoolSeason_NameAdjectivePlural = "school seasons";
+	public static final String SchoolSeason_Color = "yellow";
+	public static final String SchoolSeason_IconGroup = "regular";
+	public static final String SchoolSeason_IconName = "sun";
 
 	///////////////
 	// seasonKey //
@@ -2804,10 +2804,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolSeason(String entityVar) {
+	public static String varSuggestedSchoolSeason(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

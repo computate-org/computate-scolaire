@@ -61,26 +61,26 @@ public abstract class ClusterGen<DEV> extends Object {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
-	public static final String Cluster_UnNom = "a cluster";
-	public static final String Cluster_Ce = "this ";
-	public static final String Cluster_CeNom = "this cluster";
-	public static final String Cluster_Un = "a ";
-	public static final String Cluster_LeNom = "the cluster";
-	public static final String Cluster_NomSingulier = "cluster";
-	public static final String Cluster_NomPluriel = "clusters";
-	public static final String Cluster_NomActuel = "current cluster";
-	public static final String Cluster_TousNom = "all the clusters";
-	public static final String Cluster_RechercherTousNomPar = "search clusters by ";
-	public static final String Cluster_LesNoms = "the clusters";
-	public static final String Cluster_AucunNomTrouve = "no cluster found";
-	public static final String Cluster_NomVar = "cluster";
-	public static final String Cluster_DeNom = "of cluster";
-	public static final String Cluster_UnNomAdjectif = "a cluster";
-	public static final String Cluster_NomAdjectifSingulier = "cluster";
-	public static final String Cluster_NomAdjectifPluriel = "clusters";
-	public static final String Cluster_Couleur = "gray";
-	public static final String Cluster_IconeGroupe = "regular";
-	public static final String Cluster_IconeNom = "fort-awesome";
+	public static final String Cluster_AName = "a cluster";
+	public static final String Cluster_This = "this ";
+	public static final String Cluster_ThisName = "this cluster";
+	public static final String Cluster_A = "a ";
+	public static final String Cluster_TheName = "the cluster";
+	public static final String Cluster_NameSingular = "cluster";
+	public static final String Cluster_NamePlural = "clusters";
+	public static final String Cluster_NameActual = "current cluster";
+	public static final String Cluster_AllName = "all the clusters";
+	public static final String Cluster_SearchAllNameBy = "search clusters by ";
+	public static final String Cluster_ThePluralName = "the clusters";
+	public static final String Cluster_NoNameFound = "no cluster found";
+	public static final String Cluster_NameVar = "cluster";
+	public static final String Cluster_OfName = "of cluster";
+	public static final String Cluster_ANameAdjective = "a cluster";
+	public static final String Cluster_NameAdjectiveSingular = "cluster";
+	public static final String Cluster_NameAdjectivePlural = "clusters";
+	public static final String Cluster_Color = "gray";
+	public static final String Cluster_IconGroup = "regular";
+	public static final String Cluster_IconName = "fort-awesome";
 
 	//////////////////
 	// siteRequest_ //
@@ -2297,7 +2297,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
-	public static String varSuggestCluster(String entityVar) {
+	public static String varSuggestedCluster(String entityVar) {
 		switch(entityVar) {
 			case "objectSuggest":
 				return "objectSuggest_suggested";

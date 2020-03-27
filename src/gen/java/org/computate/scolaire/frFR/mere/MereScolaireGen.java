@@ -66,7 +66,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public static final String MereScolaire_TousNom = "toutes les mères";
 	public static final String MereScolaire_RechercherTousNomPar = "rechercher mères par ";
 	public static final String MereScolaire_RechercherTousNom = "rechercher mères";
-	public static final String MereScolaire_LesNoms = "les mères";
+	public static final String MereScolaire_LesNom = "les mères";
 	public static final String MereScolaire_AucunNomTrouve = "aucune mère trouvée";
 	public static final String MereScolaire_NomVar = "mère";
 	public static final String MereScolaire_DeNom = "de mère";

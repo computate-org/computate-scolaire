@@ -933,31 +933,31 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: UtilisateurRolesRoyaume
 	 * r.enUS: UserRealmRoles
 	 * r: EcoleGenPage.htmlSuggereEcoleGenPage
-	 * r.enUS: SchoolGenPage.htmlSuggestSchoolGenPage
+	 * r.enUS: SchoolGenPage.htmlSuggestedSchoolGenPage
 	 * r: AnneeGenPage.htmlSuggereAnneeGenPage
-	 * r.enUS: YearGenPage.htmlSuggestYearGenPage
+	 * r.enUS: YearGenPage.htmlSuggestedYearGenPage
 	 * r: SaisonGenPage.htmlSuggereSaisonGenPage
-	 * r.enUS: SeasonGenPage.htmlSuggestSeasonGenPage
+	 * r.enUS: SeasonGenPage.htmlSuggestedSeasonGenPage
 	 * r: SessionGenPage.htmlSuggereSessionGenPage
-	 * r.enUS: SessionGenPage.htmlSuggestSessionGenPage
+	 * r.enUS: SessionGenPage.htmlSuggestedSessionGenPage
 	 * r: AgeGenPage.htmlSuggereAgeGenPage
-	 * r.enUS: AgeGenPage.htmlSuggestAgeGenPage
+	 * r.enUS: AgeGenPage.htmlSuggestedAgeGenPage
 	 * r: BlocGenPage.htmlSuggereBlocGenPage
-	 * r.enUS: BlockGenPage.htmlSuggestBlockGenPage
+	 * r.enUS: BlockGenPage.htmlSuggestedBlockGenPage
 	 * r: InscriptionGenPage.htmlSuggereInscriptionGenPage
-	 * r.enUS: EnrollmentGenPage.htmlSuggestEnrollmentGenPage
+	 * r.enUS: EnrollmentGenPage.htmlSuggestedEnrollmentGenPage
 	 * r: PaiementGenPage.htmlSuggerePaiementGenPage
-	 * r.enUS: PaymentGenPage.htmlSuggestPaymentGenPage
+	 * r.enUS: PaymentGenPage.htmlSuggestedPaymentGenPage
 	 * r: MereGenPage.htmlSuggereMereGenPage
-	 * r.enUS: MomGenPage.htmlSuggestMomGenPage
+	 * r.enUS: MomGenPage.htmlSuggestedMomGenPage
 	 * r: PereGenPage.htmlSuggerePereGenPage
-	 * r.enUS: DadGenPage.htmlSuggestDadGenPage
+	 * r.enUS: DadGenPage.htmlSuggestedDadGenPage
 	 * r: GardienGenPage.htmlSuggereGardienGenPage
-	 * r.enUS: GuardianGenPage.htmlSuggestGuardianGenPage
+	 * r.enUS: GuardianGenPage.htmlSuggestedGuardianGenPage
 	 * r: EnfantGenPage.htmlSuggereEnfantGenPage
-	 * r.enUS: ChildGenPage.htmlSuggestChildGenPage
+	 * r.enUS: ChildGenPage.htmlSuggestedChildGenPage
 	 * r: DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage
-	 * r.enUS: EnrollmentDesignGenPage.htmlSuggestEnrollmentDesignGenPage
+	 * r.enUS: EnrollmentDesignGenPage.htmlSuggestedEnrollmentDesignGenPage
 	 */ 
 	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();

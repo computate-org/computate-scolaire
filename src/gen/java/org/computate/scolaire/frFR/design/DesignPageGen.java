@@ -65,7 +65,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public static final String DesignPage_TousNom = "tous les design de pages";
 	public static final String DesignPage_RechercherTousNomPar = "rechercher design de pages par ";
 	public static final String DesignPage_RechercherTousNom = "rechercher design de pages";
-	public static final String DesignPage_LesNoms = "les design de pages";
+	public static final String DesignPage_LesNom = "les design de pages";
 	public static final String DesignPage_AucunNomTrouve = "aucun design de page trouvé";
 	public static final String DesignPage_NomVar = "design-page";
 	public static final String DesignPage_DeNom = "de design de page";
@@ -242,7 +242,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					.a("name", "setPartHtmlCles")
 					.a("id", classeApiMethodeMethode, "_partHtmlCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles')) : [{'name':'fq','value':'designPageCle:", pk, "'}], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles')) : [", pk == null ? "" : "{'name':'fq','value':'designPageCle:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}

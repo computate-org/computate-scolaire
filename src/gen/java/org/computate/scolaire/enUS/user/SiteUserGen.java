@@ -51,26 +51,26 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin", "SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SiteUser_UnNom = "a site user";
-	public static final String SiteUser_Ce = "this ";
-	public static final String SiteUser_CeNom = "this site user";
-	public static final String SiteUser_Un = "a ";
-	public static final String SiteUser_LeNom = "the site user";
-	public static final String SiteUser_NomSingulier = "site user";
-	public static final String SiteUser_NomPluriel = "site users";
-	public static final String SiteUser_NomActuel = "current site user";
-	public static final String SiteUser_TousNom = "all the site users";
-	public static final String SiteUser_RechercherTousNomPar = "search site users by ";
-	public static final String SiteUser_LesNoms = "the site users";
-	public static final String SiteUser_AucunNomTrouve = "no site user found";
-	public static final String SiteUser_NomVar = "siteUser";
-	public static final String SiteUser_DeNom = "of site user";
-	public static final String SiteUser_UnNomAdjectif = "a site user";
-	public static final String SiteUser_NomAdjectifSingulier = "site user";
-	public static final String SiteUser_NomAdjectifPluriel = "site users";
-	public static final String SiteUser_Couleur = "gray";
-	public static final String SiteUser_IconeGroupe = "regular";
-	public static final String SiteUser_IconeNom = "user-cog";
+	public static final String SiteUser_AName = "a site user";
+	public static final String SiteUser_This = "this ";
+	public static final String SiteUser_ThisName = "this site user";
+	public static final String SiteUser_A = "a ";
+	public static final String SiteUser_TheName = "the site user";
+	public static final String SiteUser_NameSingular = "site user";
+	public static final String SiteUser_NamePlural = "site users";
+	public static final String SiteUser_NameActual = "current site user";
+	public static final String SiteUser_AllName = "all the site users";
+	public static final String SiteUser_SearchAllNameBy = "search site users by ";
+	public static final String SiteUser_ThePluralName = "the site users";
+	public static final String SiteUser_NoNameFound = "no site user found";
+	public static final String SiteUser_NameVar = "siteUser";
+	public static final String SiteUser_OfName = "of site user";
+	public static final String SiteUser_ANameAdjective = "a site user";
+	public static final String SiteUser_NameAdjectiveSingular = "site user";
+	public static final String SiteUser_NameAdjectivePlural = "site users";
+	public static final String SiteUser_Color = "gray";
+	public static final String SiteUser_IconGroup = "regular";
+	public static final String SiteUser_IconName = "user-cog";
 
 	//////////////
 	// userKeys //
@@ -2321,10 +2321,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSiteUser(String entityVar) {
+	public static String varSuggestedSiteUser(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

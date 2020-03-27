@@ -66,7 +66,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	public static final String GardienScolaire_TousNom = "tous les gardiens";
 	public static final String GardienScolaire_RechercherTousNomPar = "rechercher gardiens par ";
 	public static final String GardienScolaire_RechercherTousNom = "rechercher gardiens";
-	public static final String GardienScolaire_LesNoms = "les gardiens";
+	public static final String GardienScolaire_LesNom = "les gardiens";
 	public static final String GardienScolaire_AucunNomTrouve = "aucun gardien trouvé";
 	public static final String GardienScolaire_NomVar = "gardien";
 	public static final String GardienScolaire_DeNom = "de gardien";

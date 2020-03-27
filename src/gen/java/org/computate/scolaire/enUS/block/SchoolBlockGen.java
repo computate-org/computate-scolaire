@@ -64,26 +64,26 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolBlock_UnNom = "a block";
-	public static final String SchoolBlock_Ce = "this ";
-	public static final String SchoolBlock_CeNom = "this block";
-	public static final String SchoolBlock_Un = "a ";
-	public static final String SchoolBlock_LeNom = "the block";
-	public static final String SchoolBlock_NomSingulier = "block";
-	public static final String SchoolBlock_NomPluriel = "blocks";
-	public static final String SchoolBlock_NomActuel = "current block";
-	public static final String SchoolBlock_TousNom = "all the blocks";
-	public static final String SchoolBlock_RechercherTousNomPar = "search blocks by ";
-	public static final String SchoolBlock_LesNoms = "the blocks";
-	public static final String SchoolBlock_AucunNomTrouve = "no block found";
-	public static final String SchoolBlock_NomVar = "block";
-	public static final String SchoolBlock_DeNom = "of block";
-	public static final String SchoolBlock_UnNomAdjectif = "a block";
-	public static final String SchoolBlock_NomAdjectifSingulier = "block";
-	public static final String SchoolBlock_NomAdjectifPluriel = "blocks";
-	public static final String SchoolBlock_Couleur = "indigo";
-	public static final String SchoolBlock_IconeGroupe = "regular";
-	public static final String SchoolBlock_IconeNom = "bell";
+	public static final String SchoolBlock_AName = "a block";
+	public static final String SchoolBlock_This = "this ";
+	public static final String SchoolBlock_ThisName = "this block";
+	public static final String SchoolBlock_A = "a ";
+	public static final String SchoolBlock_TheName = "the block";
+	public static final String SchoolBlock_NameSingular = "block";
+	public static final String SchoolBlock_NamePlural = "blocks";
+	public static final String SchoolBlock_NameActual = "current block";
+	public static final String SchoolBlock_AllName = "all the blocks";
+	public static final String SchoolBlock_SearchAllNameBy = "search blocks by ";
+	public static final String SchoolBlock_ThePluralName = "the blocks";
+	public static final String SchoolBlock_NoNameFound = "no block found";
+	public static final String SchoolBlock_NameVar = "block";
+	public static final String SchoolBlock_OfName = "of block";
+	public static final String SchoolBlock_ANameAdjective = "a block";
+	public static final String SchoolBlock_NameAdjectiveSingular = "block";
+	public static final String SchoolBlock_NameAdjectivePlural = "blocks";
+	public static final String SchoolBlock_Color = "indigo";
+	public static final String SchoolBlock_IconGroup = "regular";
+	public static final String SchoolBlock_IconName = "bell";
 
 	//////////////
 	// blockKey //
@@ -5378,10 +5378,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolBlock(String entityVar) {
+	public static String varSuggestedSchoolBlock(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

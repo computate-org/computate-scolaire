@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.session;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -433,7 +433,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	public void thead2SessionGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("created").g("th");
+				e("th").f().sx("").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -626,12 +626,12 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestSessionGenPage(this, null, listSchoolSession);
+		htmlSuggestedSessionGenPage(this, null, listSchoolSession);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestSessionGenPage(PageLayout p, String id, SearchList<SchoolSession> listSchoolSession) {
+	public static void htmlSuggestedSessionGenPage(PageLayout p, String id, SearchList<SchoolSession> listSchoolSession) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

@@ -67,7 +67,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	public static final String DesignInscription_TousNom = "tous les design d'inscriptions";
 	public static final String DesignInscription_RechercherTousNomPar = "rechercher design d'inscriptions par ";
 	public static final String DesignInscription_RechercherTousNom = "rechercher design d'inscriptions";
-	public static final String DesignInscription_LesNoms = "les design d'inscriptions";
+	public static final String DesignInscription_LesNom = "les design d'inscriptions";
 	public static final String DesignInscription_AucunNomTrouve = "aucun design d'inscription trouvé";
 	public static final String DesignInscription_NomVar = "design-inscription";
 	public static final String DesignInscription_DeNom = "de design d'inscription";

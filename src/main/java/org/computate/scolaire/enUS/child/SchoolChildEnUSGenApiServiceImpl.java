@@ -85,7 +85,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 
 /**
  * Translate: false
- * classCanonicalName.frFR: org.computate.scolaire.frFR.enfant.EnfantScolaireFrFRGenApiServiceImpl
+ * CanonicalName.frFR: org.computate.scolaire.frFR.enfant.EnfantScolaireFrFRGenApiServiceImpl
  **/
 public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiService {
 

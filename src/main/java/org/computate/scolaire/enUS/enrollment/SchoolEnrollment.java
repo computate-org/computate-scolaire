@@ -265,6 +265,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		if(child_ != null)
 			c.o(child_.getPersonBirthDate());
 	}
+	@Override public String strChildBirthDate() {
+		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.US));
+	}
 
 	protected void _schoolName(Wrap<String> c) {
 		if(year_ != null)

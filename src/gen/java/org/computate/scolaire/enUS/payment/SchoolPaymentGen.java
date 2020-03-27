@@ -63,26 +63,26 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
-	public static final String SchoolPayment_UnNom = "a payment";
-	public static final String SchoolPayment_Ce = "this ";
-	public static final String SchoolPayment_CeNom = "this payment";
-	public static final String SchoolPayment_Un = "a ";
-	public static final String SchoolPayment_LeNom = "the payment";
-	public static final String SchoolPayment_NomSingulier = "payment";
-	public static final String SchoolPayment_NomPluriel = "payments";
-	public static final String SchoolPayment_NomActuel = "current payment";
-	public static final String SchoolPayment_TousNom = "all the payments";
-	public static final String SchoolPayment_RechercherTousNomPar = "search payments by ";
-	public static final String SchoolPayment_LesNoms = "the payments";
-	public static final String SchoolPayment_AucunNomTrouve = "no payment found";
-	public static final String SchoolPayment_NomVar = "payment";
-	public static final String SchoolPayment_DeNom = "of payment";
-	public static final String SchoolPayment_UnNomAdjectif = "a payment";
-	public static final String SchoolPayment_NomAdjectifSingulier = "payment";
-	public static final String SchoolPayment_NomAdjectifPluriel = "payments";
-	public static final String SchoolPayment_Couleur = "green";
-	public static final String SchoolPayment_IconeGroupe = "solid";
-	public static final String SchoolPayment_IconeNom = "search-dollar";
+	public static final String SchoolPayment_AName = "a payment";
+	public static final String SchoolPayment_This = "this ";
+	public static final String SchoolPayment_ThisName = "this payment";
+	public static final String SchoolPayment_A = "a ";
+	public static final String SchoolPayment_TheName = "the payment";
+	public static final String SchoolPayment_NameSingular = "payment";
+	public static final String SchoolPayment_NamePlural = "payments";
+	public static final String SchoolPayment_NameActual = "current payment";
+	public static final String SchoolPayment_AllName = "all the payments";
+	public static final String SchoolPayment_SearchAllNameBy = "search payments by ";
+	public static final String SchoolPayment_ThePluralName = "the payments";
+	public static final String SchoolPayment_NoNameFound = "no payment found";
+	public static final String SchoolPayment_NameVar = "payment";
+	public static final String SchoolPayment_OfName = "of payment";
+	public static final String SchoolPayment_ANameAdjective = "a payment";
+	public static final String SchoolPayment_NameAdjectiveSingular = "payment";
+	public static final String SchoolPayment_NameAdjectivePlural = "payments";
+	public static final String SchoolPayment_Color = "green";
+	public static final String SchoolPayment_IconGroup = "solid";
+	public static final String SchoolPayment_IconName = "search-dollar";
 	public static final Integer SchoolPayment_Rows = 50;
 
 	////////////////
@@ -6997,10 +6997,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolPayment(String entityVar) {
+	public static String varSuggestedSchoolPayment(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

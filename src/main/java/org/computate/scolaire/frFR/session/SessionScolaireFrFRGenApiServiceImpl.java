@@ -87,7 +87,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
- * classeNomCanonique.enUS: org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiServiceImpl
+ * NomCanonique.enUS: org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiServiceImpl
  **/
 public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFRGenApiService {
 
@@ -932,12 +932,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1028,12 +1028,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1161,12 +1161,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleReads = Arrays.asList("");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleReads)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleReads)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
 					) {
 				gestionnaireEvenements.handle(Future.succeededFuture(
 					new OperationResponse(401, "UNAUTHORIZED", 
@@ -1839,18 +1839,20 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					SaisonScolaireFrFRGenApiServiceImpl service = new SaisonScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getSaisonCle();
 
-					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite2);
-					futures.add(
-						service.patchSaisonScolaireFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("SaisonScolaire %s rechargé. ", pk));
-							} else {
-								LOGGER.info(String.format("SaisonScolaire %s a échoué. ", pk));
-								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite2);
+						futures.add(
+							service.patchSaisonScolaireFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("SaisonScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("SaisonScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {

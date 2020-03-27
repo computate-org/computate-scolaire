@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.vertx;    
+package org.computate.scolaire.frFR.vertx;      
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +34,7 @@ import org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRGenApiService;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.computate.scolaire.frFR.design.DesignPageFrFRGenApiService;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
 import org.computate.scolaire.frFR.enfant.EnfantScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.gardien.GardienScolaireFrFRGenApiService;
@@ -88,7 +89,6 @@ import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.api.contract.RouterFactoryOptions;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
@@ -96,7 +96,6 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.impl.CookieHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
-import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfBatchDetailsType;
@@ -124,7 +123,7 @@ import net.authorize.api.controller.base.ApiOperationBase;
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppVertx
  * enUS: A Java class to start the Vert.x application as a main method. 
- */    
+ */      
 public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	public final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -1503,7 +1502,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteRequest
 	 * r: requeteSite
 	 * r.enUS: siteRequest
-	 */
+	 */ 
 	public Future<Void> futureAuthorizeNetInscriptionPaiements(
 			MerchantAuthenticationType merchantAuthenticationType
 			, InscriptionScolaire inscriptionScolaire
@@ -2303,6 +2302,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolPaymentEnUSGenApiService
 	 * r: DesignInscriptionFrFRGenApiService
 	 * r.enUS: EnrollmentDesignEnUSGenApiService
+	 * r: DesignPageFrFRGenApiService
+	 * r.enUS: PageDesignEnUSGenApiService
 	 * r: PartHtmlFrFRGenApiService
 	 * r.enUS: HtmlPartEnUSGenApiService
 	 * r: enregistrerService
@@ -2329,6 +2330,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		GardienScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		PaiementScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		DesignInscriptionFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		DesignPageFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		PartHtmlFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getRouteur();

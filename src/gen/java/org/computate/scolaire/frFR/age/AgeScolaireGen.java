@@ -74,7 +74,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public static final String AgeScolaire_TousNom = "tous les âges";
 	public static final String AgeScolaire_RechercherTousNomPar = "rechercher âges par ";
 	public static final String AgeScolaire_RechercherTousNom = "rechercher âges";
-	public static final String AgeScolaire_LesNoms = "les âges";
+	public static final String AgeScolaire_LesNom = "les âges";
 	public static final String AgeScolaire_AucunNomTrouve = "aucun âge trouvé";
 	public static final String AgeScolaire_NomVar = "âge";
 	public static final String AgeScolaire_DeNom = "d'âge";

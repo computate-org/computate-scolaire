@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.design;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,41 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.core.json.JsonArray;
+import java.net.URLDecoder;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
+import java.util.List;
+import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.page.PageLayout;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
+import java.io.IOException;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.wrap.Wrap;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -605,12 +640,12 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestPageDesignGenPage(this, null, listPageDesign);
+		htmlSuggestedPageDesignGenPage(this, null, listPageDesign);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestPageDesignGenPage(PageLayout p, String id, SearchList<PageDesign> listPageDesign) {
+	public static void htmlSuggestedPageDesignGenPage(PageLayout p, String id, SearchList<PageDesign> listPageDesign) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
@@ -665,14 +700,12 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PageDesignGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PageDesignGenPage.ROLES)
 					) {
-				if(listPageDesign == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllPageDesignGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchPageDesignVals([], {}, function() { addGlow($('#refreshAllPageDesignGenPage", id, "')); }, function() { addError($('#refreshAllPageDesignGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the page designs");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

@@ -75,7 +75,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public static final String PaiementScolaire_TousNom = "tous les paiements";
 	public static final String PaiementScolaire_RechercherTousNomPar = "rechercher paiements par ";
 	public static final String PaiementScolaire_RechercherTousNom = "rechercher paiements";
-	public static final String PaiementScolaire_LesNoms = "les paiements";
+	public static final String PaiementScolaire_LesNom = "les paiements";
 	public static final String PaiementScolaire_AucunNomTrouve = "aucun paiement trouvé";
 	public static final String PaiementScolaire_NomVar = "paiement";
 	public static final String PaiementScolaire_DeNom = "de paiement";
@@ -84,7 +84,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public static final String PaiementScolaire_Couleur = "green";
 	public static final String PaiementScolaire_IconeGroupe = "solid";
 	public static final String PaiementScolaire_IconeNom = "search-dollar";
-	public static final Integer PaiementScolaire_Rows = 50;
+	public static final Integer PaiementScolaire_Lignes = 50;
 
 	/////////////////
 	// paiementCle //

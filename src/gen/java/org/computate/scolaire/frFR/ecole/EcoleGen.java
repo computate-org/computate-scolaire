@@ -63,7 +63,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	public static final String Ecole_TousNom = "toutes les écoles";
 	public static final String Ecole_RechercherTousNomPar = "rechercher écoles par ";
 	public static final String Ecole_RechercherTousNom = "rechercher écoles";
-	public static final String Ecole_LesNoms = "les écoles";
+	public static final String Ecole_LesNom = "les écoles";
 	public static final String Ecole_AucunNomTrouve = "aucune école trouvée";
 	public static final String Ecole_NomVar = "école";
 	public static final String Ecole_DeNom = "d'école";

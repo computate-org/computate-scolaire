@@ -200,6 +200,8 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 			if(enrollmentDesign == null)
 				setEnrollmentDesign(enrollmentDesignWrap.o);
 		}
+		if(enrollmentDesign != null)
+			enrollmentDesign.initDeepForClass(siteRequest_);
 		enrollmentDesignWrap.alreadyInitialized(true);
 		return (EnrollmentPdfPage)this;
 	}
@@ -1715,6 +1717,8 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 			w2.setSiteRequest_(siteRequest_);
 		if(listEnrollmentDesign != null)
 			listEnrollmentDesign.setSiteRequest_(siteRequest_);
+		if(enrollmentDesign != null)
+			enrollmentDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentBlock != null)

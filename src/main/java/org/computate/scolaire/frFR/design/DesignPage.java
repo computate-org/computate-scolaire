@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;       
+package org.computate.scolaire.frFR.design;          
 
 import java.util.List;
 
@@ -38,6 +38,11 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /page-design
  * 
+ * ApiMethode.enUS: DesignDisplaySearchPage
+ * PageDesignDisplaySearchPage.enUS: DesignDisplayPage
+ * PageSuperDesignDisplaySearchPage.enUS: ClusterPage
+ * ApiUriDesignDisplaySearchPage.enUS: /page
+ * 
  * UnNom.frFR: un design de page
  * UnNom.enUS: a page design
  * Couleur: khaki
@@ -48,7 +53,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                       
+*/                 
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
@@ -91,7 +96,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
-	 */            
+	 */              
 	protected void _partHtmlCles(List<Long> o) {}
 //
 //	/**

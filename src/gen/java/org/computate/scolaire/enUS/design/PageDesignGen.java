@@ -53,26 +53,26 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String PageDesign_UnNom = "a page design";
-	public static final String PageDesign_Ce = "this ";
-	public static final String PageDesign_CeNom = "this page design";
-	public static final String PageDesign_Un = "a ";
-	public static final String PageDesign_LeNom = "the page design";
-	public static final String PageDesign_NomSingulier = "page design";
-	public static final String PageDesign_NomPluriel = "page designs";
-	public static final String PageDesign_NomActuel = "current page design";
-	public static final String PageDesign_TousNom = "all the page designs";
-	public static final String PageDesign_RechercherTousNomPar = "search page designs by ";
-	public static final String PageDesign_LesNoms = "the page designs";
-	public static final String PageDesign_AucunNomTrouve = "no page design found";
-	public static final String PageDesign_NomVar = "page-design";
-	public static final String PageDesign_DeNom = "of page design";
-	public static final String PageDesign_UnNomAdjectif = "a page design";
-	public static final String PageDesign_NomAdjectifSingulier = "page design";
-	public static final String PageDesign_NomAdjectifPluriel = "page designs";
-	public static final String PageDesign_Couleur = "khaki";
-	public static final String PageDesign_IconeGroupe = "regular";
-	public static final String PageDesign_IconeNom = "drafting-compass";
+	public static final String PageDesign_AName = "a page design";
+	public static final String PageDesign_This = "this ";
+	public static final String PageDesign_ThisName = "this page design";
+	public static final String PageDesign_A = "a ";
+	public static final String PageDesign_TheName = "the page design";
+	public static final String PageDesign_NameSingular = "page design";
+	public static final String PageDesign_NamePlural = "page designs";
+	public static final String PageDesign_NameActual = "current page design";
+	public static final String PageDesign_AllName = "all the page designs";
+	public static final String PageDesign_SearchAllNameBy = "search page designs by ";
+	public static final String PageDesign_ThePluralName = "the page designs";
+	public static final String PageDesign_NoNameFound = "no page design found";
+	public static final String PageDesign_NameVar = "page-design";
+	public static final String PageDesign_OfName = "of page design";
+	public static final String PageDesign_ANameAdjective = "a page design";
+	public static final String PageDesign_NameAdjectiveSingular = "page design";
+	public static final String PageDesign_NameAdjectivePlural = "page designs";
+	public static final String PageDesign_Color = "khaki";
+	public static final String PageDesign_IconGroup = "regular";
+	public static final String PageDesign_IconName = "drafting-compass";
 
 	///////////////////
 	// pageDesignKey //
@@ -241,7 +241,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					.a("name", "setHtmlPartKeys")
 					.a("id", classApiMethodMethod, "_htmlPartKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "PageDesignHtmlPartKeys')) : [{'name':'fq','value':'pageDesignKey:", pk, "'}], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "PageDesignHtmlPartKeys')) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKey:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -946,10 +946,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestPageDesign(String entityVar) {
+	public static String varSuggestedPageDesign(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

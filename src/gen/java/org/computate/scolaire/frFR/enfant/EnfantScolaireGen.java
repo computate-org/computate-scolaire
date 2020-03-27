@@ -72,7 +72,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public static final String EnfantScolaire_TousNom = "tous les enfants";
 	public static final String EnfantScolaire_RechercherTousNomPar = "rechercher enfants par ";
 	public static final String EnfantScolaire_RechercherTousNom = "rechercher enfants";
-	public static final String EnfantScolaire_LesNoms = "les enfants";
+	public static final String EnfantScolaire_LesNom = "les enfants";
 	public static final String EnfantScolaire_AucunNomTrouve = "aucun enfant trouvé";
 	public static final String EnfantScolaire_NomVar = "enfant";
 	public static final String EnfantScolaire_DeNom = "d'enfant";

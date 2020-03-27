@@ -71,26 +71,26 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolEnrollment_UnNom = "an enrollment";
-	public static final String SchoolEnrollment_Ce = "this ";
-	public static final String SchoolEnrollment_CeNom = "this enrollment";
-	public static final String SchoolEnrollment_Un = "a ";
-	public static final String SchoolEnrollment_LeNom = "theenrollment";
-	public static final String SchoolEnrollment_NomSingulier = "enrollment";
-	public static final String SchoolEnrollment_NomPluriel = "enrollments";
-	public static final String SchoolEnrollment_NomActuel = "current enrollment";
-	public static final String SchoolEnrollment_TousNom = "all the enrollments";
-	public static final String SchoolEnrollment_RechercherTousNomPar = "search enrollments by ";
-	public static final String SchoolEnrollment_LesNoms = "the enrollments";
-	public static final String SchoolEnrollment_AucunNomTrouve = "no enrollment found";
-	public static final String SchoolEnrollment_NomVar = "enrollment";
-	public static final String SchoolEnrollment_DeNom = "of enrollment";
-	public static final String SchoolEnrollment_UnNomAdjectif = "an enrollment";
-	public static final String SchoolEnrollment_NomAdjectifSingulier = "enrollment";
-	public static final String SchoolEnrollment_NomAdjectifPluriel = "enrollments";
-	public static final String SchoolEnrollment_Couleur = "blue-gray";
-	public static final String SchoolEnrollment_IconeGroupe = "solid";
-	public static final String SchoolEnrollment_IconeNom = "edit";
+	public static final String SchoolEnrollment_AName = "an enrollment";
+	public static final String SchoolEnrollment_This = "this ";
+	public static final String SchoolEnrollment_ThisName = "this enrollment";
+	public static final String SchoolEnrollment_A = "a ";
+	public static final String SchoolEnrollment_TheName = "theenrollment";
+	public static final String SchoolEnrollment_NameSingular = "enrollment";
+	public static final String SchoolEnrollment_NamePlural = "enrollments";
+	public static final String SchoolEnrollment_NameActual = "current enrollment";
+	public static final String SchoolEnrollment_AllName = "all the enrollments";
+	public static final String SchoolEnrollment_SearchAllNameBy = "search enrollments by ";
+	public static final String SchoolEnrollment_ThePluralName = "the enrollments";
+	public static final String SchoolEnrollment_NoNameFound = "no enrollment found";
+	public static final String SchoolEnrollment_NameVar = "enrollment";
+	public static final String SchoolEnrollment_OfName = "of enrollment";
+	public static final String SchoolEnrollment_ANameAdjective = "an enrollment";
+	public static final String SchoolEnrollment_NameAdjectiveSingular = "enrollment";
+	public static final String SchoolEnrollment_NameAdjectivePlural = "enrollments";
+	public static final String SchoolEnrollment_Color = "blue-gray";
+	public static final String SchoolEnrollment_IconGroup = "solid";
+	public static final String SchoolEnrollment_IconName = "edit";
 
 	///////////////////
 	// enrollmentKey //
@@ -14388,10 +14388,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolEnrollment(String entityVar) {
+	public static String varSuggestedSchoolEnrollment(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

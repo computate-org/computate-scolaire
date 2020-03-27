@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.season;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -436,7 +436,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	public void thead2SeasonGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("created").g("th");
+				e("th").f().sx("").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -629,12 +629,12 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestSeasonGenPage(this, null, listSchoolSeason);
+		htmlSuggestedSeasonGenPage(this, null, listSchoolSeason);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestSeasonGenPage(PageLayout p, String id, SearchList<SchoolSeason> listSchoolSeason) {
+	public static void htmlSuggestedSeasonGenPage(PageLayout p, String id, SearchList<SchoolSeason> listSchoolSeason) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

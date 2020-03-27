@@ -74,7 +74,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	public static final String SaisonScolaire_TousNom = "toutes les saisons";
 	public static final String SaisonScolaire_RechercherTousNomPar = "rechercher saisons par ";
 	public static final String SaisonScolaire_RechercherTousNom = "rechercher saisons";
-	public static final String SaisonScolaire_LesNoms = "les saisons";
+	public static final String SaisonScolaire_LesNom = "les saisons";
 	public static final String SaisonScolaire_AucunNomTrouve = "aucune saison trouvée";
 	public static final String SaisonScolaire_NomVar = "saison";
 	public static final String SaisonScolaire_DeNom = "de saison";

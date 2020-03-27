@@ -85,7 +85,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
 /**
  * Traduire: false
- * classeNomCanonique.enUS: org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl
+ * NomCanonique.enUS: org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl
  **/
 public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFrFRGenApiService {
 
@@ -2103,18 +2103,20 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getInscriptionCle();
 
-					o2.setPk(pk);
-					o2.setRequeteSite_(requeteSite2);
-					futures.add(
-						service.patchInscriptionScolaireFuture(o2, a -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
-							} else {
-								LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
-								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-							}
-						})
-					);
+					if(pk != null) {
+						o2.setPk(pk);
+						o2.setRequeteSite_(requeteSite2);
+						futures.add(
+							service.patchInscriptionScolaireFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
+								} else {
+									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {

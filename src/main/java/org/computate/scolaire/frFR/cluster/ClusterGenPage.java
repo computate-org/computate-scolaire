@@ -236,23 +236,53 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
+					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeCluster.getQueryResponse().getResults().getNumFound();
-					String q = listeCluster.getQuery();
-					String query = StringUtils.substringBefore(q, "_") + ":" + StringUtils.substringAfter(q, ":");
-					Integer rows1 = listeCluster.getRows();
-					Integer start1 = listeCluster.getStart();
+					String q = "*:*";
+					String query1 = "objetTexte";
+					String query2 = "";
+					String query = "*:*";
+					for(String paramNom : queryParams.fieldNames()) {
+						String entiteVar = null;
+						String valeurIndexe = null;
+						Object paramValeursObjet = queryParams.getValue(paramNom);
+						JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+						try {
+							for(Object paramObjet : paramObjets) {
+								switch(paramNom) {
+									case "q":
+										q = (String)paramObjet;
+										entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+										valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+										query1 = entiteVar.equals("*") ? query1 : entiteVar;
+										query2 = valeurIndexe;
+										query = query1 + ":" + query2;
+								}
+							}
+						} catch(Exception e) {
+							ExceptionUtils.rethrow(e);
+						}
+					}
+
+					Integer rows1 = Optional.ofNullable(listeCluster).map(l -> l.getRows()).orElse(10);
+					Integer start1 = Optional.ofNullable(listeCluster).map(l -> l.getStart()).orElse(1);
 					Integer start2 = start1 - rows1;
 					Integer start3 = start1 + rows1;
 					Integer rows2 = rows1 / 2;
 					Integer rows3 = rows1 * 2;
 					start2 = start2 < 0 ? 0 : start2;
 					StringBuilder fqs = new StringBuilder();
-					for(String fq : listeCluster.getFilterQueries()) {
-						if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
-							fqs.append("&fq=").append(StringUtils.substringBefore(fq, "_")).append(":").append(StringUtils.substringAfter(fq, ":"));
+					for(String fq : Optional.ofNullable(listeCluster).map(l -> l.getFilterQueries()).orElse(new String[0])) {
+						if(!StringUtils.contains(fq, "(")) {
+							String fq1 = StringUtils.substringBefore(fq, "_");
+							String fq2 = StringUtils.substringAfter(fq, ":");
+							if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
+								fqs.append("&fq=").append(fq1).append(":").append(fq2);
+						}
 					}
 					StringBuilder sorts = new StringBuilder();
-					for(SortClause sort : listeCluster.getSorts()) {
+					for(SortClause sort : Optional.ofNullable(listeCluster).map(l -> l.getSorts()).orElse(Arrays.asList())) {
 						sorts.append("&sort=").append(StringUtils.substringBefore(sort.getItem(), "_")).append(" ").append(sort.getOrder().name());
 					}
 
@@ -313,7 +343,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 		}
 		htmlBodyFormsClusterGenPage();
-		htmlSuggereClusterGenPage(this, null, listeCluster);
 		g("div");
 	}
 
@@ -531,10 +560,11 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 			g("div");
 		}
+		htmlSuggereClusterGenPage(this, null, listeCluster);
 	}
 
 	/**
-	 * Var.enUS: htmlSuggestClusterGenPage
+	 * Var.enUS: htmlSuggestedClusterGenPage
 	 * r: "/cluster"
 	 * r.enUS: "/cluster"
 	 * r: "voir tous les clusters"
@@ -616,7 +646,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				if(!StringUtils.contains(fq, "(")) {
 					String fq1 = StringUtils.substringBefore(fq, "_");
 					String fq2 = StringUtils.substringAfter(fq, ":");
-					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_"))
+					if(!StringUtils.startsWithAny(fq, "classeNomsCanoniques_", "archive_", "supprime_", "sessionId", "utilisateurCles"))
 						fqs.append("&fq=").append(fq1).append(":").append(fq2);
 				}
 			}

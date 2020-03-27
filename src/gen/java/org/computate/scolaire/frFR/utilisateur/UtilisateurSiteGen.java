@@ -63,7 +63,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static final String UtilisateurSite_TousNom = "tous les utilisateurs du site";
 	public static final String UtilisateurSite_RechercherTousNomPar = "rechercher utilisateurs du site par ";
 	public static final String UtilisateurSite_RechercherTousNom = "rechercher utilisateurs du site";
-	public static final String UtilisateurSite_LesNoms = "les utilisateurs du site";
+	public static final String UtilisateurSite_LesNom = "les utilisateurs du site";
 	public static final String UtilisateurSite_AucunNomTrouve = "aucun utilisateur du site trouvé";
 	public static final String UtilisateurSite_NomVar = "utilisateurDuSite";
 	public static final String UtilisateurSite_DeNom = "d'utilisateur du site";

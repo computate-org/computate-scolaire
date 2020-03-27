@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.payment;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -801,12 +801,12 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestPaymentGenPage(this, null, listSchoolPayment);
+		htmlSuggestedPaymentGenPage(this, null, listSchoolPayment);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestPaymentGenPage(PageLayout p, String id, SearchList<SchoolPayment> listSchoolPayment) {
+	public static void htmlSuggestedPaymentGenPage(PageLayout p, String id, SearchList<SchoolPayment> listSchoolPayment) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();

@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.html.part;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -10,7 +11,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -813,12 +813,12 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestHtmlPartGenPage(this, null, listHtmlPart);
+		htmlSuggestedHtmlPartGenPage(this, null, listHtmlPart);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestHtmlPartGenPage(PageLayout p, String id, SearchList<HtmlPart> listHtmlPart) {
+	public static void htmlSuggestedHtmlPartGenPage(PageLayout p, String id, SearchList<HtmlPart> listHtmlPart) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
@@ -873,14 +873,12 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), HtmlPartGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), HtmlPartGenPage.ROLES)
 					) {
-				if(listHtmlPart == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllHtmlPartGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchHtmlPartVals([], {}, function() { addGlow($('#refreshAllHtmlPartGenPage", id, "')); }, function() { addError($('#refreshAllHtmlPartGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the HTML parts");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

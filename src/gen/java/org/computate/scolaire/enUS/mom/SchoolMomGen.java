@@ -54,26 +54,26 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String SchoolMom_UnNom = "a mom";
-	public static final String SchoolMom_Ce = "this ";
-	public static final String SchoolMom_CeNom = "this mom";
-	public static final String SchoolMom_Un = "a ";
-	public static final String SchoolMom_LeNom = "the mom";
-	public static final String SchoolMom_NomSingulier = "mom";
-	public static final String SchoolMom_NomPluriel = "moms";
-	public static final String SchoolMom_NomActuel = "current mom";
-	public static final String SchoolMom_TousNom = "all the moms";
-	public static final String SchoolMom_RechercherTousNomPar = "search moms by ";
-	public static final String SchoolMom_LesNoms = "the moms";
-	public static final String SchoolMom_AucunNomTrouve = "no mom found";
-	public static final String SchoolMom_NomVar = "mom";
-	public static final String SchoolMom_DeNom = "of mom";
-	public static final String SchoolMom_UnNomAdjectif = "a mom";
-	public static final String SchoolMom_NomAdjectifSingulier = "mom";
-	public static final String SchoolMom_NomAdjectifPluriel = "moms";
-	public static final String SchoolMom_Couleur = "pink";
-	public static final String SchoolMom_IconeGroupe = "regular";
-	public static final String SchoolMom_IconeNom = "female";
+	public static final String SchoolMom_AName = "a mom";
+	public static final String SchoolMom_This = "this ";
+	public static final String SchoolMom_ThisName = "this mom";
+	public static final String SchoolMom_A = "a ";
+	public static final String SchoolMom_TheName = "the mom";
+	public static final String SchoolMom_NameSingular = "mom";
+	public static final String SchoolMom_NamePlural = "moms";
+	public static final String SchoolMom_NameActual = "current mom";
+	public static final String SchoolMom_AllName = "all the moms";
+	public static final String SchoolMom_SearchAllNameBy = "search moms by ";
+	public static final String SchoolMom_ThePluralName = "the moms";
+	public static final String SchoolMom_NoNameFound = "no mom found";
+	public static final String SchoolMom_NameVar = "mom";
+	public static final String SchoolMom_OfName = "of mom";
+	public static final String SchoolMom_ANameAdjective = "a mom";
+	public static final String SchoolMom_NameAdjectiveSingular = "mom";
+	public static final String SchoolMom_NameAdjectivePlural = "moms";
+	public static final String SchoolMom_Color = "pink";
+	public static final String SchoolMom_IconGroup = "regular";
+	public static final String SchoolMom_IconName = "female";
 
 	////////////
 	// momKey //
@@ -3350,10 +3350,10 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestSchoolMom(String entityVar) {
+	public static String varSuggestedSchoolMom(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 

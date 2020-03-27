@@ -55,26 +55,26 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
-	public static final String EnrollmentDesign_UnNom = "an enrollment design";
-	public static final String EnrollmentDesign_Ce = "this ";
-	public static final String EnrollmentDesign_CeNom = "this enrollment design";
-	public static final String EnrollmentDesign_Un = "a ";
-	public static final String EnrollmentDesign_LeNom = "theenrollment design";
-	public static final String EnrollmentDesign_NomSingulier = "enrollment design";
-	public static final String EnrollmentDesign_NomPluriel = "enrollment designs";
-	public static final String EnrollmentDesign_NomActuel = "current enrollment design";
-	public static final String EnrollmentDesign_TousNom = "all the enrollment designs";
-	public static final String EnrollmentDesign_RechercherTousNomPar = "search enrollment designs by ";
-	public static final String EnrollmentDesign_LesNoms = "the enrollment designs";
-	public static final String EnrollmentDesign_AucunNomTrouve = "no enrollment design found";
-	public static final String EnrollmentDesign_NomVar = "enrollment-design";
-	public static final String EnrollmentDesign_DeNom = "of enrollment design";
-	public static final String EnrollmentDesign_UnNomAdjectif = "an enrollment design";
-	public static final String EnrollmentDesign_NomAdjectifSingulier = "enrollment design";
-	public static final String EnrollmentDesign_NomAdjectifPluriel = "enrollment designs";
-	public static final String EnrollmentDesign_Couleur = "khaki";
-	public static final String EnrollmentDesign_IconeGroupe = "regular";
-	public static final String EnrollmentDesign_IconeNom = "drafting-compass";
+	public static final String EnrollmentDesign_AName = "an enrollment design";
+	public static final String EnrollmentDesign_This = "this ";
+	public static final String EnrollmentDesign_ThisName = "this enrollment design";
+	public static final String EnrollmentDesign_A = "a ";
+	public static final String EnrollmentDesign_TheName = "theenrollment design";
+	public static final String EnrollmentDesign_NameSingular = "enrollment design";
+	public static final String EnrollmentDesign_NamePlural = "enrollment designs";
+	public static final String EnrollmentDesign_NameActual = "current enrollment design";
+	public static final String EnrollmentDesign_AllName = "all the enrollment designs";
+	public static final String EnrollmentDesign_SearchAllNameBy = "search enrollment designs by ";
+	public static final String EnrollmentDesign_ThePluralName = "the enrollment designs";
+	public static final String EnrollmentDesign_NoNameFound = "no enrollment design found";
+	public static final String EnrollmentDesign_NameVar = "enrollment-design";
+	public static final String EnrollmentDesign_OfName = "of enrollment design";
+	public static final String EnrollmentDesign_ANameAdjective = "an enrollment design";
+	public static final String EnrollmentDesign_NameAdjectiveSingular = "enrollment design";
+	public static final String EnrollmentDesign_NameAdjectivePlural = "enrollment designs";
+	public static final String EnrollmentDesign_Color = "khaki";
+	public static final String EnrollmentDesign_IconGroup = "regular";
+	public static final String EnrollmentDesign_IconName = "drafting-compass";
 
 	/////////////////////////
 	// enrollmentDesignKey //
@@ -1787,10 +1787,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		}
 	}
 
-	public static String varSuggestEnrollmentDesign(String entityVar) {
+	public static String varSuggestedEnrollmentDesign(String entityVar) {
 		switch(entityVar) {
 			default:
-				return Cluster.varSuggestCluster(entityVar);
+				return Cluster.varSuggestedCluster(entityVar);
 		}
 	}
 
