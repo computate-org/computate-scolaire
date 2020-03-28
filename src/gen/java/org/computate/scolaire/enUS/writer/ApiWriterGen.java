@@ -2242,6 +2242,73 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classKeywords == null ? "" : StringEscapeUtils.escapeHtml4(strClassKeywords());
 	}
 
+	/////////////////////
+	// classPublicRead //
+	/////////////////////
+
+	/**	L'entité « classPublicRead »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean classPublicRead;
+	@JsonIgnore
+	public Wrap<Boolean> classPublicReadWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classPublicRead").o(classPublicRead);
+
+	/**	<br/>L'entité « classPublicRead »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classPublicRead">Trouver l'entité classPublicRead dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classPublicRead(Wrap<Boolean> c);
+
+	public Boolean getClassPublicRead() {
+		return classPublicRead;
+	}
+
+	public void setClassPublicRead(Boolean classPublicRead) {
+		this.classPublicRead = classPublicRead;
+		this.classPublicReadWrap.alreadyInitialized = true;
+	}
+	public ApiWriter setClassPublicRead(String o) {
+		this.classPublicRead = Boolean.parseBoolean(o);
+		this.classPublicReadWrap.alreadyInitialized = true;
+		return (ApiWriter)this;
+	}
+	protected ApiWriter classPublicReadInit() {
+		if(!classPublicReadWrap.alreadyInitialized) {
+			_classPublicRead(classPublicReadWrap);
+			if(classPublicRead == null)
+				setClassPublicRead(classPublicReadWrap.o);
+		}
+		classPublicReadWrap.alreadyInitialized(true);
+		return (ApiWriter)this;
+	}
+
+	public Boolean solrClassPublicRead() {
+		return classPublicRead;
+	}
+
+	public String strClassPublicRead() {
+		return classPublicRead == null ? "" : classPublicRead.toString();
+	}
+
+	public String jsonClassPublicRead() {
+		return classPublicRead == null ? "" : classPublicRead.toString();
+	}
+
+	public String nomAffichageClassPublicRead() {
+		return null;
+	}
+
+	public String htmTooltipClassPublicRead() {
+		return null;
+	}
+
+	public String htmClassPublicRead() {
+		return classPublicRead == null ? "" : StringEscapeUtils.escapeHtml4(strClassPublicRead());
+	}
+
 	//////////////////////
 	// classRoleSession //
 	//////////////////////
@@ -2765,6 +2832,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		classPageCanonicalNameMethodInit();
 		classKeywordsFoundInit();
 		classKeywordsInit();
+		classPublicReadInit();
 		classRoleSessionInit();
 		classRoleUtilisateurInit();
 		classRolesFoundInit();
@@ -2913,6 +2981,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 				return oApiWriter.classKeywordsFound;
 			case "classKeywords":
 				return oApiWriter.classKeywords;
+			case "classPublicRead":
+				return oApiWriter.classPublicRead;
 			case "classRoleSession":
 				return oApiWriter.classRoleSession;
 			case "classRoleUtilisateur":

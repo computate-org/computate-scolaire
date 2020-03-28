@@ -25,13 +25,13 @@ import org.computate.scolaire.frFR.annee.AnneeGenPage;
 import org.computate.scolaire.frFR.bloc.BlocGenPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.design.DesignPageGenPage;
 import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.ecole.EcoleGenPage;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.enfant.EnfantGenPage;
 import org.computate.scolaire.frFR.gardien.GardienGenPage;
 import org.computate.scolaire.frFR.inscription.InscriptionGenPage;
-import org.computate.scolaire.frFR.inscription.design.DesignInscriptionGenPage;
 import org.computate.scolaire.frFR.mere.MereGenPage;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.paiement.PaiementGenPage;
@@ -136,6 +136,20 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: siteRequest_
 	 **/ 
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: siteBaseUrl
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 **/ 
+	protected void _siteUrlBase(Couverture<String> c) {
+		c.o(requeteSite_.getConfigSite_().getSiteUrlBase());
 	}
 
 	/**
@@ -573,6 +587,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
+	 * Var.enUS: school_
+	 * r: listeEcole
+	 * r.enUS: listSchool
+	 */
+	protected void _ecole_(Couverture<Ecole> c) {
+//		c.o(listeEcole.getList().stream().findFirst().orElse(null));
+	}
+
+	/**
 	 * r: pageMotsCles
 	 * r.enUS: pageKeywords
 	 * r: pageTitre
@@ -870,6 +893,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: SeeDeleted
 	 * r: langue
 	 * r.enUS: language
+	 * r: ecrireConnecterDeconnecter
+	 * r.enUS: writeLoginLogout
 	 * r: accueil
 	 * r.enUS: home
 	 * r: à propos
@@ -956,8 +981,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: GuardianGenPage.htmlSuggestedGuardianGenPage
 	 * r: EnfantGenPage.htmlSuggereEnfantGenPage
 	 * r.enUS: ChildGenPage.htmlSuggestedChildGenPage
-	 * r: DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage
-	 * r.enUS: EnrollmentDesignGenPage.htmlSuggestedEnrollmentDesignGenPage
+	 * r: DesignPageGenPage.htmlSuggereDesignPageGenPage
+	 * r.enUS: PageDesignGenPage.htmlSuggestedPageDesignGenPage
 	 */ 
 	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
@@ -1041,7 +1066,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("designs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						DesignInscriptionGenPage.htmlSuggereDesignInscriptionGenPage(this, id, null);
+						DesignPageGenPage.htmlSuggereDesignPageGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -1105,71 +1130,186 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					PaiementGenPage.htmlSuggerePaiementGenPage(this, id, null);
 				} g("div");
 			} g("div");
+		g("div");
+		ecrireConnecterDeconnecter();
+	} 
 
-			if(requeteSite_.getUtilisateurId() == null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
-						e("span").a("class", "site-menu-item").f();
-							sx("Connexion");
-						g("span");
-					g("a");
-				g("div");
-			}
-			if(requeteSite_.getUtilisateurId() != null) {
+	/**
+	 * Var.enUS: writeLoginLogout
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: pageUtilisateurUri
+	 * r.enUS: pageUserUri
+	 * r: UtilisateurId
+	 * r.enUS: UserId
+	 * r: UtilisateurNom
+	 * r.enUS: UserName
+	 * r: UtilisateurSite
+	 * r.enUS: SiteUser
+	 * r: UtilisateurCle
+	 * r.enUS: UserKey
+	 * r: voir archivé
+	 * r.enUS: see archived
+	 * r: voirArchive
+	 * r.enUS: seeArchived
+	 * r: VoirArchive
+	 * r.enUS: SeeArchived
+	 * r: voir supprimé
+	 * r.enUS: see deleted
+	 * r: voirSupprime
+	 * r.enUS: seeDeleted
+	 * r: VoirSupprime
+	 * r.enUS: SeeDeleted
+	 * r: langue
+	 * r.enUS: language
+	 * r: ecrireConnecterDeconnecter
+	 * r.enUS: writeLoginLogout
+	 * r: accueil
+	 * r.enUS: home
+	 * r: à propos
+	 * r.enUS: about
+	 * r: se connecter
+	 * r.enUS: login
+	 * r: se déconnecter
+	 * r.enUS: logout
+	 * r: statiqueUrlBase
+	 * r.enUS: staticBaseUrl
+	 * r: pageAccueilUri
+	 * r.enUS: pageHomeUri
+	 * r: pageDeconnexionUri
+	 * r.enUS: pageLogoutUri
+	 * r: "Accueil"
+	 * r.enUS: "Home"
+	 * r: "Déconnexion"
+	 * r.enUS: "Logout"
+	 * r: "Connexion"
+	 * r.enUS: "Login"
+	 * r: "écoles"
+	 * r.enUS: "schools"
+	 * r: "années"
+	 * r.enUS: "years"
+	 * r: "saisons"
+	 * r.enUS: "seasons"
+	 * r: "sessions"
+	 * r.enUS: "sessions"
+	 * r: "âges"
+	 * r.enUS: "ages"
+	 * r: "blocs"
+	 * r.enUS: "blocks"
+	 * r: "inscriptions"
+	 * r.enUS: "enrollments"
+	 * r: "paiements"
+	 * r.enUS: "payments"
+	 * r: "mères"
+	 * r.enUS: "moms"
+	 * r: "pères"
+	 * r.enUS: "dads"
+	 * r: "gardiens"
+	 * r.enUS: "guardians"
+	 * r: "enfants"
+	 * r.enUS: "children"
+	 * r: "designs"
+	 * r.enUS: "designs"
+	 * r: "/utilisateur/"
+	 * r.enUS: "/user/"
+	 * r: "ma page utilisateur"
+	 * r.enUS: "my user page"
+	 * r: UtilisateurRolesRessource
+	 * r.enUS: UserResourceRoles
+	 * r: UtilisateurRolesRoyaume
+	 * r.enUS: UserRealmRoles
+	 * r: EcoleGenPage.htmlSuggereEcoleGenPage
+	 * r.enUS: SchoolGenPage.htmlSuggestedSchoolGenPage
+	 * r: AnneeGenPage.htmlSuggereAnneeGenPage
+	 * r.enUS: YearGenPage.htmlSuggestedYearGenPage
+	 * r: SaisonGenPage.htmlSuggereSaisonGenPage
+	 * r.enUS: SeasonGenPage.htmlSuggestedSeasonGenPage
+	 * r: SessionGenPage.htmlSuggereSessionGenPage
+	 * r.enUS: SessionGenPage.htmlSuggestedSessionGenPage
+	 * r: AgeGenPage.htmlSuggereAgeGenPage
+	 * r.enUS: AgeGenPage.htmlSuggestedAgeGenPage
+	 * r: BlocGenPage.htmlSuggereBlocGenPage
+	 * r.enUS: BlockGenPage.htmlSuggestedBlockGenPage
+	 * r: InscriptionGenPage.htmlSuggereInscriptionGenPage
+	 * r.enUS: EnrollmentGenPage.htmlSuggestedEnrollmentGenPage
+	 * r: PaiementGenPage.htmlSuggerePaiementGenPage
+	 * r.enUS: PaymentGenPage.htmlSuggestedPaymentGenPage
+	 * r: MereGenPage.htmlSuggereMereGenPage
+	 * r.enUS: MomGenPage.htmlSuggestedMomGenPage
+	 * r: PereGenPage.htmlSuggerePereGenPage
+	 * r.enUS: DadGenPage.htmlSuggestedDadGenPage
+	 * r: GardienGenPage.htmlSuggereGardienGenPage
+	 * r.enUS: GuardianGenPage.htmlSuggestedGuardianGenPage
+	 * r: EnfantGenPage.htmlSuggereEnfantGenPage
+	 * r.enUS: ChildGenPage.htmlSuggestedChildGenPage
+	 * r: DesignPageGenPage.htmlSuggereDesignPageGenPage
+	 * r.enUS: PageDesignGenPage.htmlSuggestedPageDesignGenPage
+	 */
+	public void ecrireConnecterDeconnecter() {
 
-				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-green ").f();
-							e("i").a("class", "far fa-user-cog ").f().g("i");
-							sx(requeteSite_.getUtilisateurNom());
+		if(requeteSite_.getUtilisateurId() == null) {
+			e("div").a("class", "site-bar-item w3-bar-item ").f();
+				e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
+					e("span").a("class", "site-menu-item").f();
+						sx("Connexion");
+					g("span");
+				g("a");
+			g("div");
+		}
+		if(requeteSite_.getUtilisateurId() != null) {
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "far fa-user-cog ").f().g("i");
+						sx(requeteSite_.getUtilisateurNom());
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					UtilisateurSite o = requeteSite_.getUtilisateurSite();
+					{ e("div").a("class", "w3-cell-row ").f();
+						{ e("a").a("href", "/utilisateur/", requeteSite_.getUtilisateurCle()).a("class", "").f();
+							e("i").a("class", "far fa-user ").f().g("i");
+							sx("ma page utilisateur");
+						} g("a");
 					} g("div");
-					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						UtilisateurSite o = requeteSite_.getUtilisateurSite();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/utilisateur/", requeteSite_.getUtilisateurCle()).a("class", "").f();
-								e("i").a("class", "far fa-user ").f().g("i");
-								sx("ma page utilisateur");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-							e("input")
-								.a("type", "checkbox")
-								.a("value", "true")
-								.a("class", "setVoirArchive")
-								.a("name", "setVoirArchive")
-								.a("id", "Page_voirArchive")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", requeteSite_.getUtilisateurCle(), " }], 'setVoirArchive', $(this).prop('checked'), function() { addGlow($('#Page_voirArchive')); }, function() { addError($('#Page_voirArchive')); }); ")
-								;
-								if(o.getVoirArchive() != null && o.getVoirArchive())
-									a("checked", "checked");
-							fg();
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
-							e("input")
-								.a("type", "checkbox")
-								.a("value", "true")
-								.a("class", "setVoirSupprime")
-								.a("name", "setVoirSupprime")
-								.a("id", "Page_voirSupprime")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", requeteSite_.getUtilisateurCle(), " }], 'setVoirSupprime', $(this).prop('checked'), function() { addGlow($('#Page_voirSupprime')); }, function() { addError($('#Page_voirSupprime')); }); ")
-								;
-								if(o.getVoirSupprime() != null && o.getVoirSupprime())
-									a("checked", "checked");
-							fg();
-						} g("div");
+					{ e("div").a("class", "w3-cell-row ").f();
+						e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
+						e("input")
+							.a("type", "checkbox")
+							.a("value", "true")
+							.a("class", "setVoirArchive")
+							.a("name", "setVoirArchive")
+							.a("id", "Page_voirArchive")
+							.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", requeteSite_.getUtilisateurCle(), " }], 'setVoirArchive', $(this).prop('checked'), function() { addGlow($('#Page_voirArchive')); }, function() { addError($('#Page_voirArchive')); }); ")
+							;
+							if(o.getVoirArchive() != null && o.getVoirArchive())
+								a("checked", "checked");
+						fg();
+					} g("div");
+					{ e("div").a("class", "w3-cell-row ").f();
+						e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
+						e("input")
+							.a("type", "checkbox")
+							.a("value", "true")
+							.a("class", "setVoirSupprime")
+							.a("name", "setVoirSupprime")
+							.a("id", "Page_voirSupprime")
+							.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", requeteSite_.getUtilisateurCle(), " }], 'setVoirSupprime', $(this).prop('checked'), function() { addGlow($('#Page_voirSupprime')); }, function() { addError($('#Page_voirSupprime')); }); ")
+							;
+							if(o.getVoirSupprime() != null && o.getVoirSupprime())
+								a("checked", "checked");
+						fg();
 					} g("div");
 				} g("div");
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "w3-padding ").a("href", pageDeconnexionUri).f();
-						e("span").a("class", "site-menu-item").f();
-							sx("Déconnexion");
-						g("span");
-					g("a");
-				g("div");
-			}
-		g("div");
-	} 
+			} g("div");
+			e("div").a("class", "site-bar-item w3-bar-item ").f();
+				e("a").a("class", "w3-padding ").a("href", pageDeconnexionUri).f();
+					e("span").a("class", "site-menu-item").f();
+						sx("Déconnexion");
+					g("span");
+				g("a");
+			g("div");
+		}
+	}
 
 	/**  
 	 * var.enUS: sharePage
@@ -1560,66 +1700,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * r: VoirArchive
-	 * r.enUS: SeeArchived
-	 * r: VoirSupprime
-	 * r.enUS: SeeDeleted
-	 */
-	public void htmlFormOptionsUtilisateurSite(UtilisateurSite o) {
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "voirArchiveForm").a("style", "display: inline-block; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "voirArchive")
-						.a("id", "Page_voirArchive")
-						.a("value", "false")
-					.fg();
-
-					e("input")
-						.a("type", "checkbox")
-						.a("value", "true")
-						.a("class", "setVoirArchive")
-						.a("name", "setVoirArchive")
-						.a("id", "Page_voirArchive")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirArchiveForm')); ")
-						;
-						if(o.getVoirArchive() != null && o.getVoirArchive())
-							a("checked", "checked");
-					fg();
-
-					e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-				} g("form");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "voirSupprimeForm").a("style", "display: inline-block; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "voirSupprime")
-						.a("id", "Page_voirSupprime")
-						.a("value", "false")
-					.fg();
-
-					e("input");
-						a("type", "checkbox");
-						a("value", "true");
-						a("class", "setVoirSupprime");
-						a("name", "setVoirSupprime");
-						a("id", "Page_voirSupprime");
-						a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirSupprimeForm')); ");
-						if(o.getVoirSupprime() != null && o.getVoirSupprime())
-							a("checked", "checked");
-					fg();
-
-					e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
-				} g("form");
-			} g("div");
-		} g("div");
-	}
-
-	/**
 	 * r: obtenirPourClasse
 	 * r.enUS: obtainForClass
 	 * r: pageTypeContenu
@@ -1632,6 +1712,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: SiteConfig
 	 * r: StatiqueUrlBase
 	 * r.enUS: StaticBaseUrl
+	 * r: ecrireConnecterDeconnecter
+	 * r.enUS: writeLoginLogout
 	 */
 	public Integer htmlPageLayout2(List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
 
@@ -1830,6 +1912,9 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						} catch (Exception e) {
 							throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 						}
+					}
+					if(htmlPart.getLoginLogout()) {
+						ecrireConnecterDeconnecter();
 					}
 					s(htmlPart.getHtmlAfter());
 				}

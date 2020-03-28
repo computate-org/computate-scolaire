@@ -1,7 +1,5 @@
 package org.computate.scolaire.enUS.html.part;
 
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignEnUSGenApiServiceImpl;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.design.PageDesignEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -208,13 +206,11 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "enrollmentDesignKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar))));
-						break;
-					case "pageDesignKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar)), "pageDesignKey", pk));
+					case "pageDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+						}
 						break;
 					case "htmlLink":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -275,6 +271,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "pdfExclude":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("pdfExclude", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "loginLogout":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("loginLogout", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "sort1":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -581,13 +581,11 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				for(Integer i = 0; i < entityVars.size(); i++) {
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
-					case "enrollmentDesignKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar))));
-						break;
-					case "pageDesignKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(jsonObject.getString(entityVar)), "pageDesignKey", pk));
+					case "pageDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+						}
 						break;
 					case "htmlLink":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -648,6 +646,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "pdfExclude":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("pdfExclude", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "loginLogout":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("loginLogout", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "sort1":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -975,25 +977,29 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
-					case "setEnrollmentDesignKey":
-						o2.setEnrollmentDesignKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", o2.getEnrollmentDesignKey()));
+					case "addPageDesignKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(requestJson.getString(methodName)), "pageDesignKeys", pk));
 						break;
-					case "removeEnrollmentDesignKey":
-						o2.setEnrollmentDesignKey(requestJson.getString(methodName));
+					case "addAllPageDesignKeys":
+						JsonArray addAllPageDesignKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllPageDesignKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", addAllPageDesignKeysValues.getString(i), "pageDesignKeys", pk));
+						}
+						break;
+					case "setPageDesignKeys":
+						JsonArray setPageDesignKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(requestJson.getString(methodName)), "pageDesignKeys", pk));
+						for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", setPageDesignKeysValues.getString(i), "pageDesignKeys", pk));
+						}
+						break;
+					case "removePageDesignKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentDesignKey", pk, "htmlPartKeys", o2.getEnrollmentDesignKey()));
-						break;
-					case "setPageDesignKey":
-						o2.setPageDesignKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA2);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", o2.getPageDesignKey(), "pageDesignKey", pk));
-						break;
-					case "removePageDesignKey":
-						o2.setPageDesignKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", o2.getPageDesignKey(), "pageDesignKey", pk));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(requestJson.getString(methodName)), "pageDesignKeys", pk));
 						break;
 					case "setHtmlLink":
 						if(requestJson.getString(methodName) == null) {
@@ -1143,6 +1149,16 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							o2.setPdfExclude(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("pdfExclude", o2.jsonPdfExclude(), pk));
+						}
+						break;
+					case "setLoginLogout":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "loginLogout"));
+						} else {
+							o2.setLoginLogout(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("loginLogout", o2.jsonLoginLogout(), pk));
 						}
 						break;
 					case "setSort1":
@@ -1696,15 +1712,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
 			List<String> classes = apiRequest.getClasses();
-			if(o.getEnrollmentDesignKey() != null) {
-				if(!pks.contains(o.getEnrollmentDesignKey())) {
-					pks.add(o.getEnrollmentDesignKey());
-					classes.add("EnrollmentDesign");
-				}
-			}
-			if(o.getPageDesignKey() != null) {
-				if(!pks.contains(o.getPageDesignKey())) {
-					pks.add(o.getPageDesignKey());
+			for(Long pk : o.getPageDesignKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
 					classes.add("PageDesign");
 				}
 			}
@@ -1996,7 +2006,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void aSearchHtmlPartQ(SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchHtmlPartQ(String classApiUriMethod, SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -2006,23 +2016,27 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void aSearchHtmlPartFq(SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchHtmlPartFq(String classApiUriMethod, SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchHtmlPartSort(SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchHtmlPartSort(String classApiUriMethod, SearchList<HtmlPart> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchHtmlPartRows(SearchList<HtmlPart> searchList, Integer valueRows) {
+	public void aSearchHtmlPartRows(String classApiUriMethod, SearchList<HtmlPart> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchHtmlPartStart(SearchList<HtmlPart> searchList, Integer valueStart) {
+	public void aSearchHtmlPartStart(String classApiUriMethod, SearchList<HtmlPart> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchHtmlPartVar(SearchList<HtmlPart> searchList, String var, String value) {
+	public void aSearchHtmlPartVar(String classApiUriMethod, SearchList<HtmlPart> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -2065,32 +2079,32 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								varIndexed = "*".equals(entityVar) ? entityVar : HtmlPart.varSearchHtmlPart(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchHtmlPartQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchHtmlPartQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
-								aSearchHtmlPartFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchHtmlPartFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
-								aSearchHtmlPartSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchHtmlPartSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchHtmlPartStart(searchList, valueStart);
+								aSearchHtmlPartStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchHtmlPartRows(searchList, valueRows);
+								aSearchHtmlPartRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchHtmlPartVar(searchList, entityVar, valueIndexed);
+								aSearchHtmlPartVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}
@@ -2195,39 +2209,16 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				searchList.setQuery("*:*");
 				searchList.setC(HtmlPart.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
-				searchList.add("json.facet", "{enrollmentDesignKey:{terms:{field:enrollmentDesignKey_indexed_longs, limit:1000}}}");
-				searchList.add("json.facet", "{pageDesignKey:{terms:{field:pageDesignKey_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{pageDesignKeys:{terms:{field:pageDesignKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
 				{
-					EnrollmentDesign o2 = new EnrollmentDesign();
-					EnrollmentDesignEnUSGenApiServiceImpl service = new EnrollmentDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-					Long pk = o.getEnrollmentDesignKey();
-
-					if(pk != null) {
-						o2.setPk(pk);
-						o2.setSiteRequest_(siteRequest2);
-						futures.add(
-							service.patchEnrollmentDesignFuture(o2, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("EnrollmentDesign %s refreshed. ", pk));
-								} else {
-									LOGGER.info(String.format("EnrollmentDesign %s failed. ", pk));
-									eventHandler.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
-					}
-				}
-
-				{
-					PageDesign o2 = new PageDesign();
 					PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-					Long pk = o.getPageDesignKey();
+					for(Long pk : o.getPageDesignKeys()) {
+						PageDesign o2 = new PageDesign();
 
-					if(pk != null) {
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(

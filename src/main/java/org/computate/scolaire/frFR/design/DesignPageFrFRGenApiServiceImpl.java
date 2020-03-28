@@ -209,7 +209,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "partHtmlCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("designPageCle", l, "partHtmlCles", pk));
+							postSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
 						}
 						break;
 					case "designPageNomComplet":
@@ -488,7 +488,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "partHtmlCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("designPageCle", l, "partHtmlCles", pk));
+							postSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
 						}
 						break;
 					case "designPageNomComplet":
@@ -787,27 +787,27 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "addPartHtmlCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("designPageCle", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
+						patchSqlParams.addAll(Arrays.asList("designPageCles", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
 						break;
 					case "addAllPartHtmlCles":
 						JsonArray addAllPartHtmlClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllPartHtmlClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("designPageCle", addAllPartHtmlClesValeurs.getString(i), "partHtmlCles", pk));
+							patchSqlParams.addAll(Arrays.asList("designPageCles", addAllPartHtmlClesValeurs.getString(i), "partHtmlCles", pk));
 						}
 						break;
 					case "setPartHtmlCles":
 						JsonArray setPartHtmlClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("designPageCle", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
+						patchSqlParams.addAll(Arrays.asList("designPageCles", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
 						for(Integer i = 0; i <  setPartHtmlClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("designPageCle", setPartHtmlClesValeurs.getString(i), "partHtmlCles", pk));
+							patchSqlParams.addAll(Arrays.asList("designPageCles", setPartHtmlClesValeurs.getString(i), "partHtmlCles", pk));
 						}
 						break;
 					case "removePartHtmlCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("designPageCle", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
+						patchSqlParams.addAll(Arrays.asList("designPageCles", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
 						break;
 					case "setDesignPageNomComplet":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -892,27 +892,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	public void getDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
@@ -988,27 +967,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	public void rechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
@@ -1121,27 +1079,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	public void pagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
@@ -1574,7 +1511,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		}
 	}
 
-	public void rechercheDesignPageQ(ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheDesignPageQ(String classeApiUriMethode, ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -1584,23 +1521,27 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		}
 	}
 
-	public void rechercheDesignPageFq(ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheDesignPageFq(String classeApiUriMethode, ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheDesignPageSort(ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheDesignPageSort(String classeApiUriMethode, ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheDesignPageRows(ListeRecherche<DesignPage> listeRecherche, Integer valeurRows) {
+	public void rechercheDesignPageRows(String classeApiUriMethode, ListeRecherche<DesignPage> listeRecherche, Integer valeurRows) {
 		listeRecherche.setRows(valeurRows);
 	}
 
-	public void rechercheDesignPageStart(ListeRecherche<DesignPage> listeRecherche, Integer valeurStart) {
+	public void rechercheDesignPageStart(String classeApiUriMethode, ListeRecherche<DesignPage> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheDesignPageVar(ListeRecherche<DesignPage> listeRecherche, String var, String valeur) {
+	public void rechercheDesignPageVar(String classeApiUriMethode, ListeRecherche<DesignPage> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
@@ -1643,32 +1584,32 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								varIndexe = "*".equals(entiteVar) ? entiteVar : DesignPage.varRechercheDesignPage(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheDesignPageQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheDesignPageQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = DesignPage.varIndexeDesignPage(entiteVar);
-								rechercheDesignPageFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheDesignPageFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = DesignPage.varIndexeDesignPage(entiteVar);
-								rechercheDesignPageSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheDesignPageSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheDesignPageStart(listeRecherche, valeurStart);
+								rechercheDesignPageStart(classeApiUriMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheDesignPageRows(listeRecherche, valeurRows);
+								rechercheDesignPageRows(classeApiUriMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheDesignPageVar(listeRecherche, entiteVar, valeurIndexe);
+								rechercheDesignPageVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

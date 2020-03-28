@@ -149,9 +149,9 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKey:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, true); ");
+			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, true); ");
 		} else {
-			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKey:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, false); ");
+			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketPageDesign(websocketPageDesignInner);");
@@ -629,7 +629,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "patchPageDesign($('#patchPageDesignFormFilters'), $('#patchPageDesignFormValues'), ", Optional.ofNullable(pageDesign).map(PageDesign::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchPageDesign(null, $('#patchPageDesignFormValues'), ", Optional.ofNullable(pageDesign).map(PageDesign::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the page designs")
 							.g("button");
 

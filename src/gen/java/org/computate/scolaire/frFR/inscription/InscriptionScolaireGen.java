@@ -410,7 +410,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setBlocCles")
 					.a("id", classeApiMethodeMethode, "_blocCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireBlocCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireBlocCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1071,7 +1071,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setEnfantCle")
 					.a("id", classeApiMethodeMethode, "_enfantCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireEnfantCle')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireEnfantCle')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1230,7 +1230,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setMereCles")
 					.a("id", classeApiMethodeMethode, "_mereCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireMereCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireMereCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1389,7 +1389,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setPereCles")
 					.a("id", classeApiMethodeMethode, "_pereCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePereCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePereCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1548,7 +1548,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setGardienCles")
 					.a("id", classeApiMethodeMethode, "_gardienCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireGardienCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireGardienCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1707,7 +1707,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setPaiementCles")
 					.a("id", classeApiMethodeMethode, "_paiementCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles')) : [{'name':'fq','value':'inscriptionCle:", pk, "'}], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1935,7 +1935,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setUtilisateurCles")
 					.a("id", classeApiMethodeMethode, "_utilisateurCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireUtilisateurCles')) : [{'name':'fq','value':'inscriptionCles:", pk, "'}], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireUtilisateurCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -3747,6 +3747,144 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	/////////////////////////
+	// enfantMoisNaissance //
+	/////////////////////////
+
+	/**	L'entité « enfantMoisNaissance »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer enfantMoisNaissance;
+	@JsonIgnore
+	public Couverture<Integer> enfantMoisNaissanceCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("enfantMoisNaissance").o(enfantMoisNaissance);
+
+	/**	<br/>L'entité « enfantMoisNaissance »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantMoisNaissance">Trouver l'entité enfantMoisNaissance dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantMoisNaissance(Couverture<Integer> c);
+
+	public Integer getEnfantMoisNaissance() {
+		return enfantMoisNaissance;
+	}
+
+	public void setEnfantMoisNaissance(Integer enfantMoisNaissance) {
+		this.enfantMoisNaissance = enfantMoisNaissance;
+		this.enfantMoisNaissanceCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setEnfantMoisNaissance(String o) {
+		if(NumberUtils.isParsable(o))
+			this.enfantMoisNaissance = Integer.parseInt(o);
+		this.enfantMoisNaissanceCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire enfantMoisNaissanceInit() {
+		if(!enfantMoisNaissanceCouverture.dejaInitialise) {
+			_enfantMoisNaissance(enfantMoisNaissanceCouverture);
+			if(enfantMoisNaissance == null)
+				setEnfantMoisNaissance(enfantMoisNaissanceCouverture.o);
+		}
+		enfantMoisNaissanceCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Integer solrEnfantMoisNaissance() {
+		return enfantMoisNaissance;
+	}
+
+	public String strEnfantMoisNaissance() {
+		return enfantMoisNaissance == null ? "" : enfantMoisNaissance.toString();
+	}
+
+	public String jsonEnfantMoisNaissance() {
+		return enfantMoisNaissance == null ? "" : enfantMoisNaissance.toString();
+	}
+
+	public String nomAffichageEnfantMoisNaissance() {
+		return null;
+	}
+
+	public String htmTooltipEnfantMoisNaissance() {
+		return null;
+	}
+
+	public String htmEnfantMoisNaissance() {
+		return enfantMoisNaissance == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantMoisNaissance());
+	}
+
+	/////////////////////////
+	// enfantJourNaissance //
+	/////////////////////////
+
+	/**	L'entité « enfantJourNaissance »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer enfantJourNaissance;
+	@JsonIgnore
+	public Couverture<Integer> enfantJourNaissanceCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("enfantJourNaissance").o(enfantJourNaissance);
+
+	/**	<br/>L'entité « enfantJourNaissance »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantJourNaissance">Trouver l'entité enfantJourNaissance dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantJourNaissance(Couverture<Integer> c);
+
+	public Integer getEnfantJourNaissance() {
+		return enfantJourNaissance;
+	}
+
+	public void setEnfantJourNaissance(Integer enfantJourNaissance) {
+		this.enfantJourNaissance = enfantJourNaissance;
+		this.enfantJourNaissanceCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setEnfantJourNaissance(String o) {
+		if(NumberUtils.isParsable(o))
+			this.enfantJourNaissance = Integer.parseInt(o);
+		this.enfantJourNaissanceCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire enfantJourNaissanceInit() {
+		if(!enfantJourNaissanceCouverture.dejaInitialise) {
+			_enfantJourNaissance(enfantJourNaissanceCouverture);
+			if(enfantJourNaissance == null)
+				setEnfantJourNaissance(enfantJourNaissanceCouverture.o);
+		}
+		enfantJourNaissanceCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Integer solrEnfantJourNaissance() {
+		return enfantJourNaissance;
+	}
+
+	public String strEnfantJourNaissance() {
+		return enfantJourNaissance == null ? "" : enfantJourNaissance.toString();
+	}
+
+	public String jsonEnfantJourNaissance() {
+		return enfantJourNaissance == null ? "" : enfantJourNaissance.toString();
+	}
+
+	public String nomAffichageEnfantJourNaissance() {
+		return null;
+	}
+
+	public String htmTooltipEnfantJourNaissance() {
+		return null;
+	}
+
+	public String htmEnfantJourNaissance() {
+		return enfantJourNaissance == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantJourNaissance());
 	}
 
 	//////////////
@@ -12270,6 +12408,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfantNomCompletInit();
 		enfantNomCompletPrefereInit();
 		enfantDateNaissanceInit();
+		enfantMoisNaissanceInit();
+		enfantJourNaissanceInit();
 		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
@@ -12504,6 +12644,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.enfantNomCompletPrefere;
 			case "enfantDateNaissance":
 				return oInscriptionScolaire.enfantDateNaissance;
+			case "enfantMoisNaissance":
+				return oInscriptionScolaire.enfantMoisNaissance;
+			case "enfantJourNaissance":
+				return oInscriptionScolaire.enfantJourNaissance;
 			case "ecoleNom":
 				return oInscriptionScolaire.ecoleNom;
 			case "ecoleNomComplet":
@@ -13126,6 +13270,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
 				if(enfantDateNaissance != null)
 					oInscriptionScolaire.setEnfantDateNaissance(enfantDateNaissance);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantMoisNaissance")) {
+				Integer enfantMoisNaissance = (Integer)solrDocument.get("enfantMoisNaissance_stored_int");
+				if(enfantMoisNaissance != null)
+					oInscriptionScolaire.setEnfantMoisNaissance(enfantMoisNaissance);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantJourNaissance")) {
+				Integer enfantJourNaissance = (Integer)solrDocument.get("enfantJourNaissance_stored_int");
+				if(enfantJourNaissance != null)
+					oInscriptionScolaire.setEnfantJourNaissance(enfantJourNaissance);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("ecoleNom")) {
@@ -13857,6 +14013,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("enfantDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("enfantDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(enfantMoisNaissance != null) {
+			document.addField("enfantMoisNaissance_indexed_int", enfantMoisNaissance);
+			document.addField("enfantMoisNaissance_stored_int", enfantMoisNaissance);
+		}
+		if(enfantJourNaissance != null) {
+			document.addField("enfantJourNaissance_indexed_int", enfantJourNaissance);
+			document.addField("enfantJourNaissance_stored_int", enfantJourNaissance);
+		}
 		if(ecoleNom != null) {
 			document.addField("ecoleNom_indexed_string", ecoleNom);
 			document.addField("ecoleNom_stored_string", ecoleNom);
@@ -14271,6 +14435,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "enfantNomCompletPrefere_indexed_string";
 			case "enfantDateNaissance":
 				return "enfantDateNaissance_indexed_date";
+			case "enfantMoisNaissance":
+				return "enfantMoisNaissance_indexed_int";
+			case "enfantJourNaissance":
+				return "enfantJourNaissance_indexed_int";
 			case "ecoleNom":
 				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
@@ -14569,6 +14737,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
 		if(enfantDateNaissance != null)
 			oInscriptionScolaire.setEnfantDateNaissance(enfantDateNaissance);
+
+		Integer enfantMoisNaissance = (Integer)solrDocument.get("enfantMoisNaissance_stored_int");
+		if(enfantMoisNaissance != null)
+			oInscriptionScolaire.setEnfantMoisNaissance(enfantMoisNaissance);
+
+		Integer enfantJourNaissance = (Integer)solrDocument.get("enfantJourNaissance_stored_int");
+		if(enfantJourNaissance != null)
+			oInscriptionScolaire.setEnfantJourNaissance(enfantJourNaissance);
 
 		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 		if(ecoleNom != null)

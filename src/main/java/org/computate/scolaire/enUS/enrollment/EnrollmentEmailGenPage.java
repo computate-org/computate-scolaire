@@ -847,7 +847,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 	public void thead2EnrollmentEmailGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("").g("th");
+				e("th").f().sx("created").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -1029,7 +1029,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters'), $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the enrollments")
 							.g("button");
 
@@ -1100,14 +1100,12 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentEmailGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentEmailGenPage.ROLES)
 					) {
-				if(listSchoolEnrollment == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllEnrollmentEmailGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentEmailGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentEmailGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the enrollments");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

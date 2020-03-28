@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.html.part;
 
+import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 
@@ -9,10 +10,7 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 		c.o(pk);
 	}
 
-	protected void _enrollmentDesignKey(Wrap<Long> c) {
-	}
-
-	protected void _pageDesignKey(Wrap<Long> c) {
+	protected void _pageDesignKeys(List<Long> c) {
 	}
 
 	protected void _htmlLink(Wrap<String> c) {
@@ -70,6 +68,10 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	}
 
 	protected void _pdfExclude(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _loginLogout(Wrap<Boolean> c) {
 		c.o(false);
 	}
 

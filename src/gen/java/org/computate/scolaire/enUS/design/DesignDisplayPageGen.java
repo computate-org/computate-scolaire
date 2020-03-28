@@ -49,43 +49,6 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  **/
 public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 
-	////////////////////
-	// listPageDesign //
-	////////////////////
-
-	/**	L'entité « listPageDesign »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<PageDesign> listPageDesign = new SearchList<PageDesign>();
-	@JsonIgnore
-	public Wrap<SearchList<PageDesign>> listPageDesignWrap = new Wrap<SearchList<PageDesign>>().p(this).c(SearchList.class).var("listPageDesign").o(listPageDesign);
-
-	/**	<br/>L'entité « listPageDesign »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listPageDesign">Trouver l'entité listPageDesign dans Solr</a>
-	 * <br/>
-	 * @param listPageDesign est l'entité déjà construit. 
-	 **/
-	protected abstract void _listPageDesign(SearchList<PageDesign> l);
-
-	public SearchList<PageDesign> getListPageDesign() {
-		return listPageDesign;
-	}
-
-	public void setListPageDesign(SearchList<PageDesign> listPageDesign) {
-		this.listPageDesign = listPageDesign;
-		this.listPageDesignWrap.alreadyInitialized = true;
-	}
-	protected DesignDisplayPage listPageDesignInit() {
-		if(!listPageDesignWrap.alreadyInitialized) {
-			_listPageDesign(listPageDesign);
-		}
-		listPageDesign.initDeepForClass(siteRequest_);
-		listPageDesignWrap.alreadyInitialized(true);
-		return (DesignDisplayPage)this;
-	}
-
 	////////////////
 	// pageDesign //
 	////////////////
@@ -124,6 +87,68 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			pageDesign.initDeepForClass(siteRequest_);
 		pageDesignWrap.alreadyInitialized(true);
 		return (DesignDisplayPage)this;
+	}
+
+	//////////////
+	// designId //
+	//////////////
+
+	/**	L'entité « designId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String designId;
+	@JsonIgnore
+	public Wrap<String> designIdWrap = new Wrap<String>().p(this).c(String.class).var("designId").o(designId);
+
+	/**	<br/>L'entité « designId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designId">Trouver l'entité designId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _designId(Wrap<String> c);
+
+	public String getDesignId() {
+		return designId;
+	}
+
+	public void setDesignId(String designId) {
+		this.designId = designId;
+		this.designIdWrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage designIdInit() {
+		if(!designIdWrap.alreadyInitialized) {
+			_designId(designIdWrap);
+			if(designId == null)
+				setDesignId(designIdWrap.o);
+		}
+		designIdWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public String solrDesignId() {
+		return designId;
+	}
+
+	public String strDesignId() {
+		return designId == null ? "" : designId;
+	}
+
+	public String jsonDesignId() {
+		return designId == null ? "" : designId;
+	}
+
+	public String nomAffichageDesignId() {
+		return null;
+	}
+
+	public String htmTooltipDesignId() {
+		return null;
+	}
+
+	public String htmDesignId() {
+		return designId == null ? "" : StringEscapeUtils.escapeHtml4(strDesignId());
 	}
 
 	//////////////////////
@@ -1626,8 +1651,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public void initDesignDisplayPage() {
-		listPageDesignInit();
 		pageDesignInit();
+		designIdInit();
 		enrollmentSearchInit();
 		schoolEnrollmentInit();
 		enrollmentsInit();
@@ -1670,8 +1695,6 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 
 	public void siteRequestDesignDisplayPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestDesignDisplayGenPage(siteRequest_);
-		if(listPageDesign != null)
-			listPageDesign.setSiteRequest_(siteRequest_);
 		if(pageDesign != null)
 			pageDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
@@ -1722,10 +1745,10 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public Object obtainDesignDisplayPage(String var) {
 		DesignDisplayPage oDesignDisplayPage = (DesignDisplayPage)this;
 		switch(var) {
-			case "listPageDesign":
-				return oDesignDisplayPage.listPageDesign;
 			case "pageDesign":
 				return oDesignDisplayPage.pageDesign;
+			case "designId":
+				return oDesignDisplayPage.designId;
 			case "enrollmentSearch":
 				return oDesignDisplayPage.enrollmentSearch;
 			case "schoolEnrollment":

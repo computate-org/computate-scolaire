@@ -101,7 +101,6 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsHtmlPartGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/HtmlPartPage.js").f().g("script");
-		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentDesignPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
 	}
 
@@ -114,17 +113,9 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestHtmlPartEnrollmentDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartEnrollmentDesignKey_Page'), pk, true); ");
+			tl(2, "suggestHtmlPartPageDesignKeys([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartPageDesignKeys_Page'), pk, true); ");
 		} else {
-			tl(2, "suggestHtmlPartEnrollmentDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartEnrollmentDesignKey_Page'), pk, false); ");
-		}
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			tl(2, "suggestHtmlPartPageDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartPageDesignKey_Page'), pk, true); ");
-		} else {
-			tl(2, "suggestHtmlPartPageDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartPageDesignKey_Page'), pk, false); ");
+			tl(2, "suggestHtmlPartPageDesignKeys([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartPageDesignKeys_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketHtmlPart(websocketHtmlPartInner);");
@@ -143,8 +134,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmDeleted("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentDesignKey("Page");
-			o.htmPageDesignKey("Page");
+			o.htmPageDesignKeys("Page");
 			o.htmHtmlLink("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -174,6 +164,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmHtmlVarForEach("Page");
 			o.htmHtmlExclude("Page");
 			o.htmPdfExclude("Page");
+			o.htmLoginLogout("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSort1("Page");
@@ -203,8 +194,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmDeleted("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentDesignKey("POST");
-			o.htmPageDesignKey("POST");
+			o.htmPageDesignKeys("POST");
 			o.htmHtmlLink("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -234,6 +224,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmHtmlVarForEach("POST");
 			o.htmHtmlExclude("POST");
 			o.htmPdfExclude("POST");
+			o.htmLoginLogout("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSort1("POST");
@@ -261,8 +252,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmDeleted("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentDesignKey("PUT");
-			o.htmPageDesignKey("PUT");
+			o.htmPageDesignKeys("PUT");
 			o.htmHtmlLink("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -292,6 +282,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmHtmlVarForEach("PUT");
 			o.htmHtmlExclude("PUT");
 			o.htmPdfExclude("PUT");
+			o.htmLoginLogout("PUT");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSort1("PUT");
@@ -319,8 +310,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmDeleted("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentDesignKey("PATCH");
-			o.htmPageDesignKey("PATCH");
+			o.htmPageDesignKeys("PATCH");
 			o.htmHtmlLink("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -350,6 +340,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmHtmlVarForEach("PATCH");
 			o.htmHtmlExclude("PATCH");
 			o.htmPdfExclude("PATCH");
+			o.htmLoginLogout("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSort1("PATCH");
@@ -379,8 +370,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmDeleted("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentDesignKey("Recherche");
-			o.htmPageDesignKey("Recherche");
+			o.htmPageDesignKeys("Recherche");
 			o.htmHtmlLink("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -410,6 +400,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmHtmlVarForEach("Recherche");
 			o.htmHtmlExclude("Recherche");
 			o.htmPdfExclude("Recherche");
+			o.htmLoginLogout("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSort1("Recherche");
@@ -802,7 +793,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchHtmlPart($('#patchHtmlPartFormFilters'), $('#patchHtmlPartFormValues'), ", Optional.ofNullable(htmlPart).map(HtmlPart::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchHtmlPart(null, $('#patchHtmlPartFormValues'), ", Optional.ofNullable(htmlPart).map(HtmlPart::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the HTML parts")
 							.g("button");
 

@@ -1,4 +1,6 @@
-package org.computate.scolaire.frFR.html.part;              
+package org.computate.scolaire.frFR.html.part;               
+
+import java.util.List;
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -55,7 +57,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * 
-*/                  
+*/                   
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -71,33 +73,45 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	protected void _partHtmlCle(Couverture<Long> c) {
 		c.o(pk);
 	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: enrollmentDesignKeys
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * Attribuer: DesignInscription.partHtmlCles
+//	 * NomAffichage.frFR: designs d'inscription
+//	 * NomAffichage.enUS: enrollment designs
+//	*/          
+//	protected void _designInscriptionCles(Couverture<Long> c) {
+//	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: pageDesignKey
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * Attribuer: DesignPage.partHtmlCles
+//	 * HtmlLigne: 3
+//	 * HtmlCelulle: 1
+//	 * NomAffichage.frFR: design de page
+//	 * NomAffichage.enUS: page design
+//	*/    
+//	protected void _designPageCle(Couverture<Long> c) {
+//	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: enrollmentDesignKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: DesignInscription.partHtmlCles
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
-	 * NomAffichage.frFR: design d'inscription
-	 * NomAffichage.enUS: enrollment design
-	*/          
-	protected void _designInscriptionCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: pageDesignKey
+	 * Var.enUS: pageDesignKeys
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: DesignPage.partHtmlCles
 	 * HtmlLigne: 3
 	 * HtmlCelulle: 1
-	 * NomAffichage.frFR: design de page
-	 * NomAffichage.enUS: page design
-	*/       
-	protected void _designPageCle(Couverture<Long> c) {
+	 * NomAffichage.frFR: designs de page
+	 * NomAffichage.enUS: page designs
+	*/     
+	protected void _designPageCles(List<Long> c) {
 	}
 
 	/**
@@ -110,7 +124,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCelulle: 3
-	 */               
+	 */                
 	protected void _htmlLien(Couverture<String> c) {
 	}
 
@@ -325,6 +339,21 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * HtmlCelulle: 3
 	 */            
 	protected void _pdfExclure(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: loginLogout
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: login/logout
+	 * NomAffichage.frFR: se connecter / se deconnecter
+	 * Definir: true
+	 * HtmlLigne: 10
+	 * HtmlCelulle: 4
+	 */            
+	protected void _connecterDeconnecter(Couverture<Boolean> c) {
 		c.o(false);
 	}
 

@@ -1030,7 +1030,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchInscriptionScolaire($('#patchInscriptionScolaireFormulaireFiltres'), $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchInscriptionScolaire(null, $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des inscriptions")
 							.g("button");
 
@@ -1140,14 +1140,12 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), InscriptionGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), InscriptionGenPage.ROLES)
 					) {
-				if(listeInscriptionScolaire == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerToutesInscriptionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger toutes les inscriptions");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

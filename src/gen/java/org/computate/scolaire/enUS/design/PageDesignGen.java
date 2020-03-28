@@ -232,7 +232,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 	public void inputHtmlPartKeys(String classApiMethodMethod) {
 		PageDesign s = (PageDesign)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -241,9 +244,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					.a("name", "setHtmlPartKeys")
 					.a("id", classApiMethodMethod, "_htmlPartKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "PageDesignHtmlPartKeys')) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKey:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "PageDesignHtmlPartKeys')) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKeys:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			sx(htmHtmlPartKeys());
 		}
 	}
 
@@ -254,7 +259,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignHtmlPartKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/html-part?fq=pageDesignKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+							{ e("a").a("href", "/html-part?fq=pageDesignKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
 								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("parts");
 							} g("a");
@@ -276,11 +281,14 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPageDesignHtmlPartKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postHtmlPartVals({ pageDesignKey: \"", pk, "\" }, function() { patchPageDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
+											.a("onclick", "postHtmlPartVals({ pageDesignKeys: [ \"", pk, "\" ] }, function() { patchPageDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
 											.f().sx("add an HTML part")
 										.g("button");
 									} g("div");
@@ -446,7 +454,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 	public void inputPageDesignCompleteName(String classApiMethodMethod) {
 		PageDesign s = (PageDesign)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "name")
@@ -465,6 +476,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				a("value", strPageDesignCompleteName())
 			.fg();
 
+		} else {
+			sx(htmPageDesignCompleteName());
 		}
 	}
 
@@ -482,7 +495,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 								inputPageDesignCompleteName(classApiMethodMethod);
 							} g("div");
-							{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -572,7 +588,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 	public void inputDesignHidden(String classApiMethodMethod) {
 		PageDesign s = (PageDesign)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -604,6 +623,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
+			sx(htmDesignHidden());
 		}
 	}
 

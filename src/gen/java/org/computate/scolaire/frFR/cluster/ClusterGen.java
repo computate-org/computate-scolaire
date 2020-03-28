@@ -2283,7 +2283,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			case "pageUrlPk":
 				return "pageUrlPk_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return null;
 		}
 	}
 
@@ -2294,7 +2294,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			case "objetSuggere":
 				return "objetSuggere_suggested";
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return null;
 		}
 	}
 
@@ -2303,7 +2303,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			case "objetSuggere":
 				return "objetSuggere_suggested";
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return null;
 		}
 	}
 

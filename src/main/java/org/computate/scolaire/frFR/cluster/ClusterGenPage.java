@@ -549,7 +549,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchCluster($('#patchClusterFormulaireFiltres'), $('#patchClusterFormulaireValeurs'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchCluster(null, $('#patchClusterFormulaireValeurs'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des clusters")
 							.g("button");
 
@@ -659,14 +659,12 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ClusterGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ClusterGenPage.ROLES)
 					) {
-				if(listeCluster == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerTousClusterGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchClusterVals([], {}, function() { ajouterLueur($('#rechargerTousClusterGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousClusterGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger tous les clusters");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

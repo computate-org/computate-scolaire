@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;          
+package org.computate.scolaire.frFR.design;             
 
 import java.util.List;
 
@@ -53,7 +53,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                 
+ * PublicLire: true
+*/                
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
@@ -91,12 +92,12 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: htmlPartKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: PartHtml.designPageCle
+	 * Attribuer: PartHtml.designPageCles
 	 * HtmlLigne: 4
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
-	 */              
+	 */            
 	protected void _partHtmlCles(List<Long> o) {}
 //
 //	/**
@@ -154,7 +155,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 */
 	protected void _partHtmlRecherche(ListeRecherche<PartHtml> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("designPageCle_indexed_long:" + pk);
+		l.addFilterQuery("designPageCles_indexed_longs:" + pk);
 		l.setC(PartHtml.class);
 		l.setStocker(true);
 	}

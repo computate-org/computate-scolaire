@@ -143,258 +143,144 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlPartKey == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlPartKey());
 	}
 
-	/////////////////////////
-	// enrollmentDesignKey //
-	/////////////////////////
+	////////////////////
+	// pageDesignKeys //
+	////////////////////
 
-	/**	L'entité « enrollmentDesignKey »
-	 *	 is defined as null before being initialized. 
+	/**	L'entité « pageDesignKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Long enrollmentDesignKey;
+	protected List<Long> pageDesignKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
-	public Wrap<Long> enrollmentDesignKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentDesignKey").o(enrollmentDesignKey);
+	public Wrap<List<Long>> pageDesignKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("pageDesignKeys").o(pageDesignKeys);
 
-	/**	<br/>L'entité « enrollmentDesignKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDesignKey">Trouver l'entité enrollmentDesignKey dans Solr</a>
+	/**	<br/>L'entité « pageDesignKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesignKeys">Trouver l'entité pageDesignKeys dans Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param pageDesignKeys est l'entité déjà construit. 
 	 **/
-	protected abstract void _enrollmentDesignKey(Wrap<Long> c);
+	protected abstract void _pageDesignKeys(List<Long> c);
 
-	public Long getEnrollmentDesignKey() {
-		return enrollmentDesignKey;
+	public List<Long> getPageDesignKeys() {
+		return pageDesignKeys;
 	}
 
-	public void setEnrollmentDesignKey(Long enrollmentDesignKey) {
-		this.enrollmentDesignKey = enrollmentDesignKey;
-		this.enrollmentDesignKeyWrap.alreadyInitialized = true;
+	public void setPageDesignKeys(List<Long> pageDesignKeys) {
+		this.pageDesignKeys = pageDesignKeys;
+		this.pageDesignKeysWrap.alreadyInitialized = true;
 	}
-	public HtmlPart setEnrollmentDesignKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.enrollmentDesignKey = Long.parseLong(o);
-		this.enrollmentDesignKeyWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
-	}
-	protected HtmlPart enrollmentDesignKeyInit() {
-		if(!enrollmentDesignKeyWrap.alreadyInitialized) {
-			_enrollmentDesignKey(enrollmentDesignKeyWrap);
-			if(enrollmentDesignKey == null)
-				setEnrollmentDesignKey(enrollmentDesignKeyWrap.o);
+	public HtmlPart addPageDesignKeys(Long...objets) {
+		for(Long o : objets) {
+			addPageDesignKeys(o);
 		}
-		enrollmentDesignKeyWrap.alreadyInitialized(true);
+		return (HtmlPart)this;
+	}
+	public HtmlPart addPageDesignKeys(Long o) {
+		if(o != null && !pageDesignKeys.contains(o))
+			this.pageDesignKeys.add(o);
+		return (HtmlPart)this;
+	}
+	public HtmlPart setPageDesignKeys(JsonArray objets) {
+		pageDesignKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addPageDesignKeys(o);
+		}
+		return (HtmlPart)this;
+	}
+	public HtmlPart addPageDesignKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addPageDesignKeys(p);
+		}
+		return (HtmlPart)this;
+	}
+	protected HtmlPart pageDesignKeysInit() {
+		if(!pageDesignKeysWrap.alreadyInitialized) {
+			_pageDesignKeys(pageDesignKeys);
+		}
+		pageDesignKeysWrap.alreadyInitialized(true);
 		return (HtmlPart)this;
 	}
 
-	public Long solrEnrollmentDesignKey() {
-		return enrollmentDesignKey;
+	public List<Long> solrPageDesignKeys() {
+		return pageDesignKeys;
 	}
 
-	public String strEnrollmentDesignKey() {
-		return enrollmentDesignKey == null ? "" : enrollmentDesignKey.toString();
+	public String strPageDesignKeys() {
+		return pageDesignKeys == null ? "" : pageDesignKeys.toString();
 	}
 
-	public String jsonEnrollmentDesignKey() {
-		return enrollmentDesignKey == null ? "" : enrollmentDesignKey.toString();
+	public String jsonPageDesignKeys() {
+		return pageDesignKeys == null ? "" : pageDesignKeys.toString();
 	}
 
-	public String nomAffichageEnrollmentDesignKey() {
-		return "enrollment design";
+	public String nomAffichagePageDesignKeys() {
+		return "page designs";
 	}
 
-	public String htmTooltipEnrollmentDesignKey() {
+	public String htmTooltipPageDesignKeys() {
 		return null;
 	}
 
-	public String htmEnrollmentDesignKey() {
-		return enrollmentDesignKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentDesignKey());
+	public String htmPageDesignKeys() {
+		return pageDesignKeys == null ? "" : StringEscapeUtils.escapeHtml4(strPageDesignKeys());
 	}
 
-	public void inputEnrollmentDesignKey(String classApiMethodMethod) {
+	public void inputPageDesignKeys(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
 		{
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
-					.a("placeholder", "enrollment design")
-					.a("class", "valueObjectSuggest suggestEnrollmentDesignKey w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setEnrollmentDesignKey")
-					.a("id", classApiMethodMethod, "_enrollmentDesignKey")
+					.a("placeholder", "page designs")
+					.a("class", "valueObjectSuggest suggestPageDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setPageDesignKeys")
+					.a("id", classApiMethodMethod, "_pageDesignKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestHtmlPartEnrollmentDesignKey($(this).val() ? searchEnrollmentDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartEnrollmentDesignKey')) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartEnrollmentDesignKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestHtmlPartPageDesignKeys($(this).val() ? searchPageDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartPageDesignKeys')) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
 	}
 
-	public void htmEnrollmentDesignKey(String classApiMethodMethod) {
+	public void htmPageDesignKeys(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "HtmlPartEnrollmentDesignKey").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/enrollment-design?fq=htmlPartKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
-								e("i").a("class", "far fa-drafting-compass ").f().g("i");
-								sx("enrollment design");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relate an enrollment design to this HTML part");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputEnrollmentDesignKey(classApiMethodMethod);
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listHtmlPartEnrollmentDesignKey_", classApiMethodMethod).f();
-								} g("ul");
-								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postEnrollmentDesignVals({ htmlPartKeys: [ \"", pk, "\" ] }, function() { patchHtmlPartVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentDesignKey')); });")
-											.f().sx("add an enrollment design")
-										.g("button");
-									} g("div");
-								}
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////////
-	// pageDesignKey //
-	///////////////////
-
-	/**	L'entité « pageDesignKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long pageDesignKey;
-	@JsonIgnore
-	public Wrap<Long> pageDesignKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("pageDesignKey").o(pageDesignKey);
-
-	/**	<br/>L'entité « pageDesignKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesignKey">Trouver l'entité pageDesignKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageDesignKey(Wrap<Long> c);
-
-	public Long getPageDesignKey() {
-		return pageDesignKey;
-	}
-
-	public void setPageDesignKey(Long pageDesignKey) {
-		this.pageDesignKey = pageDesignKey;
-		this.pageDesignKeyWrap.alreadyInitialized = true;
-	}
-	public HtmlPart setPageDesignKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.pageDesignKey = Long.parseLong(o);
-		this.pageDesignKeyWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
-	}
-	protected HtmlPart pageDesignKeyInit() {
-		if(!pageDesignKeyWrap.alreadyInitialized) {
-			_pageDesignKey(pageDesignKeyWrap);
-			if(pageDesignKey == null)
-				setPageDesignKey(pageDesignKeyWrap.o);
-		}
-		pageDesignKeyWrap.alreadyInitialized(true);
-		return (HtmlPart)this;
-	}
-
-	public Long solrPageDesignKey() {
-		return pageDesignKey;
-	}
-
-	public String strPageDesignKey() {
-		return pageDesignKey == null ? "" : pageDesignKey.toString();
-	}
-
-	public String jsonPageDesignKey() {
-		return pageDesignKey == null ? "" : pageDesignKey.toString();
-	}
-
-	public String nomAffichagePageDesignKey() {
-		return "page design";
-	}
-
-	public String htmTooltipPageDesignKey() {
-		return null;
-	}
-
-	public String htmPageDesignKey() {
-		return pageDesignKey == null ? "" : StringEscapeUtils.escapeHtml4(strPageDesignKey());
-	}
-
-	public void inputPageDesignKey(String classApiMethodMethod) {
-		HtmlPart s = (HtmlPart)this;
-		{
-			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "page design")
-					.a("class", "valueObjectSuggest suggestPageDesignKey w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setPageDesignKey")
-					.a("id", classApiMethodMethod, "_pageDesignKey")
-					.a("autocomplete", "off")
-					.a("oninput", "suggestHtmlPartPageDesignKey($(this).val() ? searchPageDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartPageDesignKey')) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKey_", classApiMethodMethod, "'), ", pk, "); ")
-				.fg();
-
-		}
-	}
-
-	public void htmPageDesignKey(String classApiMethodMethod) {
-		HtmlPart s = (HtmlPart)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "HtmlPartPageDesignKey").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "HtmlPartPageDesignKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "/page-design?fq=htmlPartKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
 								e("i").a("class", "far fa-drafting-compass ").f().g("i");
-								sx("page design");
+								sx("page designs");
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("h5").a("class", "w3-cell ").f();
-								sx("relate a page design to this HTML part");
+								sx("relate page designs to this HTML part");
 							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-cell-row ").f();
 
-								inputPageDesignKey(classApiMethodMethod);
+								inputPageDesignKeys(classApiMethodMethod);
 								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listHtmlPartPageDesignKey_", classApiMethodMethod).f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listHtmlPartPageDesignKeys_", classApiMethodMethod).f();
 								} g("ul");
 								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postPageDesignVals({ htmlPartKeys: [ \"", pk, "\" ] }, function() { patchHtmlPartVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "pageDesignKey')); });")
+											.a("onclick", "postPageDesignVals({ htmlPartKeys: [ \"", pk, "\" ] }, function() { patchHtmlPartVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "pageDesignKeys')); });")
 											.f().sx("add a page design")
 										.g("button");
 									} g("div");
@@ -414,6 +300,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlLink »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlLink;
 	@JsonIgnore
@@ -534,6 +421,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlElement »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlElement;
 	@JsonIgnore
@@ -654,6 +542,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlId;
 	@JsonIgnore
@@ -774,6 +663,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlClasses »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlClasses;
 	@JsonIgnore
@@ -894,6 +784,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlStyle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlStyle;
 	@JsonIgnore
@@ -1014,6 +905,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlBefore »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlBefore;
 	@JsonIgnore
@@ -1132,6 +1024,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlAfter »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlAfter;
 	@JsonIgnore
@@ -1250,6 +1143,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlText »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlText;
 	@JsonIgnore
@@ -1368,6 +1262,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlVar »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVar;
 	@JsonIgnore
@@ -1488,6 +1383,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarSpan »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarSpan;
 	@JsonIgnore
@@ -1608,6 +1504,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarForm »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarForm;
 	@JsonIgnore
@@ -1728,6 +1625,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarInput »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarInput;
 	@JsonIgnore
@@ -1848,6 +1746,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarForEach »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarForEach;
 	@JsonIgnore
@@ -1968,6 +1867,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « htmlExclude »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean htmlExclude;
 	@JsonIgnore
@@ -2093,6 +1993,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	/**	L'entité « pdfExclude »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean pdfExclude;
 	@JsonIgnore
@@ -2203,6 +2104,132 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputPdfExclude(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// loginLogout //
+	/////////////////
+
+	/**	L'entité « loginLogout »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean loginLogout;
+	@JsonIgnore
+	public Wrap<Boolean> loginLogoutWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("loginLogout").o(loginLogout);
+
+	/**	<br/>L'entité « loginLogout »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:loginLogout">Trouver l'entité loginLogout dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _loginLogout(Wrap<Boolean> c);
+
+	public Boolean getLoginLogout() {
+		return loginLogout;
+	}
+
+	public void setLoginLogout(Boolean loginLogout) {
+		this.loginLogout = loginLogout;
+		this.loginLogoutWrap.alreadyInitialized = true;
+	}
+	public HtmlPart setLoginLogout(String o) {
+		this.loginLogout = Boolean.parseBoolean(o);
+		this.loginLogoutWrap.alreadyInitialized = true;
+		return (HtmlPart)this;
+	}
+	protected HtmlPart loginLogoutInit() {
+		if(!loginLogoutWrap.alreadyInitialized) {
+			_loginLogout(loginLogoutWrap);
+			if(loginLogout == null)
+				setLoginLogout(loginLogoutWrap.o);
+		}
+		loginLogoutWrap.alreadyInitialized(true);
+		return (HtmlPart)this;
+	}
+
+	public Boolean solrLoginLogout() {
+		return loginLogout;
+	}
+
+	public String strLoginLogout() {
+		return loginLogout == null ? "" : loginLogout.toString();
+	}
+
+	public String jsonLoginLogout() {
+		return loginLogout == null ? "" : loginLogout.toString();
+	}
+
+	public String nomAffichageLoginLogout() {
+		return "login/logout";
+	}
+
+	public String htmTooltipLoginLogout() {
+		return null;
+	}
+
+	public String htmLoginLogout() {
+		return loginLogout == null ? "" : StringEscapeUtils.escapeHtml4(strLoginLogout());
+	}
+
+	public void inputLoginLogout(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
+		{
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_loginLogout")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_loginLogout");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setLoginLogout inputHtmlPart", pk, "LoginLogout w3-input w3-border ");
+				a("name", "setLoginLogout");
+			} else {
+				a("class", "valueLoginLogout inputHtmlPart", pk, "LoginLogout w3-input w3-border ");
+				a("name", "loginLogout");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setLoginLogout', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_loginLogout')); }, function() { addError($('#", classApiMethodMethod, "_loginLogout')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getLoginLogout() != null && getLoginLogout())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		}
+	}
+
+	public void htmLoginLogout(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "HtmlPartLoginLogout").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_loginLogout").a("class", "").f().sx("login/logout").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputLoginLogout(classApiMethodMethod);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -3503,8 +3530,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void initHtmlPart() {
 		htmlPartKeyInit();
-		enrollmentDesignKeyInit();
-		pageDesignKeyInit();
+		pageDesignKeysInit();
 		htmlLinkInit();
 		htmlElementInit();
 		htmlIdInit();
@@ -3520,6 +3546,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		htmlVarForEachInit();
 		htmlExcludeInit();
 		pdfExcludeInit();
+		loginLogoutInit();
 		sort1Init();
 		sort2Init();
 		sort3Init();
@@ -3570,10 +3597,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		switch(var) {
 			case "htmlPartKey":
 				return oHtmlPart.htmlPartKey;
-			case "enrollmentDesignKey":
-				return oHtmlPart.enrollmentDesignKey;
-			case "pageDesignKey":
-				return oHtmlPart.pageDesignKey;
+			case "pageDesignKeys":
+				return oHtmlPart.pageDesignKeys;
 			case "htmlLink":
 				return oHtmlPart.htmlLink;
 			case "htmlElement":
@@ -3604,6 +3629,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				return oHtmlPart.htmlExclude;
 			case "pdfExclude":
 				return oHtmlPart.pdfExclude;
+			case "loginLogout":
+				return oHtmlPart.loginLogout;
 			case "sort1":
 				return oHtmlPart.sort1;
 			case "sort2":
@@ -3649,11 +3676,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public Object attributeHtmlPart(String var, Object val) {
 		HtmlPart oHtmlPart = (HtmlPart)this;
 		switch(var) {
-			case "enrollmentDesignKey":
-				oHtmlPart.setEnrollmentDesignKey((Long)val);
-				return val;
-			case "pageDesignKey":
-				oHtmlPart.setPageDesignKey((Long)val);
+			case "pageDesignKeys":
+				oHtmlPart.addPageDesignKeys((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -3741,6 +3765,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				setPdfExclude(val);
 				savesHtmlPart.add(var);
 				return val;
+			case "loginLogout":
+				setLoginLogout(val);
+				savesHtmlPart.add(var);
+				return val;
 			case "sort1":
 				setSort1(val);
 				savesHtmlPart.add(var);
@@ -3810,13 +3838,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					oHtmlPart.setHtmlPartKey(htmlPartKey);
 			}
 
-			Long enrollmentDesignKey = (Long)solrDocument.get("enrollmentDesignKey_stored_long");
-			if(enrollmentDesignKey != null)
-				oHtmlPart.setEnrollmentDesignKey(enrollmentDesignKey);
-
-			Long pageDesignKey = (Long)solrDocument.get("pageDesignKey_stored_long");
-			if(pageDesignKey != null)
-				oHtmlPart.setPageDesignKey(pageDesignKey);
+			List<Long> pageDesignKeys = (List<Long>)solrDocument.get("pageDesignKeys_stored_longs");
+			if(pageDesignKeys != null)
+				oHtmlPart.pageDesignKeys.addAll(pageDesignKeys);
 
 			if(savesHtmlPart.contains("htmlLink")) {
 				String htmlLink = (String)solrDocument.get("htmlLink_stored_string");
@@ -3906,6 +3930,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				Boolean pdfExclude = (Boolean)solrDocument.get("pdfExclude_stored_boolean");
 				if(pdfExclude != null)
 					oHtmlPart.setPdfExclude(pdfExclude);
+			}
+
+			if(savesHtmlPart.contains("loginLogout")) {
+				Boolean loginLogout = (Boolean)solrDocument.get("loginLogout_stored_boolean");
+				if(loginLogout != null)
+					oHtmlPart.setLoginLogout(loginLogout);
 			}
 
 			if(savesHtmlPart.contains("sort1")) {
@@ -4041,13 +4071,13 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			document.addField("htmlPartKey_indexed_long", htmlPartKey);
 			document.addField("htmlPartKey_stored_long", htmlPartKey);
 		}
-		if(enrollmentDesignKey != null) {
-			document.addField("enrollmentDesignKey_indexed_long", enrollmentDesignKey);
-			document.addField("enrollmentDesignKey_stored_long", enrollmentDesignKey);
-		}
-		if(pageDesignKey != null) {
-			document.addField("pageDesignKey_indexed_long", pageDesignKey);
-			document.addField("pageDesignKey_stored_long", pageDesignKey);
+		if(pageDesignKeys != null) {
+			for(java.lang.Long o : pageDesignKeys) {
+				document.addField("pageDesignKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : pageDesignKeys) {
+				document.addField("pageDesignKeys_stored_longs", o);
+			}
 		}
 		if(htmlLink != null) {
 			document.addField("htmlLink_indexed_string", htmlLink);
@@ -4108,6 +4138,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(pdfExclude != null) {
 			document.addField("pdfExclude_indexed_boolean", pdfExclude);
 			document.addField("pdfExclude_stored_boolean", pdfExclude);
+		}
+		if(loginLogout != null) {
+			document.addField("loginLogout_indexed_boolean", loginLogout);
+			document.addField("loginLogout_stored_boolean", loginLogout);
 		}
 		if(sort1 != null) {
 			document.addField("sort1_indexed_double", sort1);
@@ -4174,10 +4208,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		switch(entityVar) {
 			case "htmlPartKey":
 				return "htmlPartKey_indexed_long";
-			case "enrollmentDesignKey":
-				return "enrollmentDesignKey_indexed_long";
-			case "pageDesignKey":
-				return "pageDesignKey_indexed_long";
+			case "pageDesignKeys":
+				return "pageDesignKeys_indexed_longs";
 			case "htmlLink":
 				return "htmlLink_indexed_string";
 			case "htmlElement":
@@ -4208,6 +4240,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				return "htmlExclude_indexed_boolean";
 			case "pdfExclude":
 				return "pdfExclude_indexed_boolean";
+			case "loginLogout":
+				return "loginLogout_indexed_boolean";
 			case "sort1":
 				return "sort1_indexed_double";
 			case "sort2":
@@ -4261,13 +4295,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(htmlPartKey != null)
 			oHtmlPart.setHtmlPartKey(htmlPartKey);
 
-		Long enrollmentDesignKey = (Long)solrDocument.get("enrollmentDesignKey_stored_long");
-		if(enrollmentDesignKey != null)
-			oHtmlPart.setEnrollmentDesignKey(enrollmentDesignKey);
-
-		Long pageDesignKey = (Long)solrDocument.get("pageDesignKey_stored_long");
-		if(pageDesignKey != null)
-			oHtmlPart.setPageDesignKey(pageDesignKey);
+		List<Long> pageDesignKeys = (List<Long>)solrDocument.get("pageDesignKeys_stored_longs");
+		if(pageDesignKeys != null)
+			oHtmlPart.pageDesignKeys.addAll(pageDesignKeys);
 
 		String htmlLink = (String)solrDocument.get("htmlLink_stored_string");
 		if(htmlLink != null)
@@ -4329,6 +4359,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(pdfExclude != null)
 			oHtmlPart.setPdfExclude(pdfExclude);
 
+		Boolean loginLogout = (Boolean)solrDocument.get("loginLogout_stored_boolean");
+		if(loginLogout != null)
+			oHtmlPart.setLoginLogout(loginLogout);
+
 		Double sort1 = (Double)solrDocument.get("sort1_stored_double");
 		if(sort1 != null)
 			oHtmlPart.setSort1(sort1);
@@ -4381,10 +4415,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof HtmlPart) {
 			HtmlPart original = (HtmlPart)o;
-			if(!Objects.equals(enrollmentDesignKey, original.getEnrollmentDesignKey()))
-				apiRequest.addVars("enrollmentDesignKey");
-			if(!Objects.equals(pageDesignKey, original.getPageDesignKey()))
-				apiRequest.addVars("pageDesignKey");
+			if(!Objects.equals(pageDesignKeys, original.getPageDesignKeys()))
+				apiRequest.addVars("pageDesignKeys");
 			if(!Objects.equals(htmlLink, original.getHtmlLink()))
 				apiRequest.addVars("htmlLink");
 			if(!Objects.equals(htmlElement, original.getHtmlElement()))
@@ -4415,6 +4447,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				apiRequest.addVars("htmlExclude");
 			if(!Objects.equals(pdfExclude, original.getPdfExclude()))
 				apiRequest.addVars("pdfExclude");
+			if(!Objects.equals(loginLogout, original.getLoginLogout()))
+				apiRequest.addVars("loginLogout");
 			if(!Objects.equals(sort1, original.getSort1()))
 				apiRequest.addVars("sort1");
 			if(!Objects.equals(sort2, original.getSort2()))
@@ -4444,7 +4478,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentDesignKey, pageDesignKey, htmlLink, htmlElement, htmlId, htmlClasses, htmlStyle, htmlBefore, htmlAfter, htmlText, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclude, pdfExclude, sort1, sort2, sort3, sort4, sort5, sort6, sort7, sort8, sort9, sort10);
+		return Objects.hash(super.hashCode(), pageDesignKeys, htmlLink, htmlElement, htmlId, htmlClasses, htmlStyle, htmlBefore, htmlAfter, htmlText, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclude, pdfExclude, loginLogout, sort1, sort2, sort3, sort4, sort5, sort6, sort7, sort8, sort9, sort10);
 	}
 
 	////////////
@@ -4458,8 +4492,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			return false;
 		HtmlPart that = (HtmlPart)o;
 		return super.equals(o)
-				&& Objects.equals( enrollmentDesignKey, that.enrollmentDesignKey )
-				&& Objects.equals( pageDesignKey, that.pageDesignKey )
+				&& Objects.equals( pageDesignKeys, that.pageDesignKeys )
 				&& Objects.equals( htmlLink, that.htmlLink )
 				&& Objects.equals( htmlElement, that.htmlElement )
 				&& Objects.equals( htmlId, that.htmlId )
@@ -4475,6 +4508,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				&& Objects.equals( htmlVarForEach, that.htmlVarForEach )
 				&& Objects.equals( htmlExclude, that.htmlExclude )
 				&& Objects.equals( pdfExclude, that.pdfExclude )
+				&& Objects.equals( loginLogout, that.loginLogout )
 				&& Objects.equals( sort1, that.sort1 )
 				&& Objects.equals( sort2, that.sort2 )
 				&& Objects.equals( sort3, that.sort3 )
@@ -4495,8 +4529,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("HtmlPart { ");
-		sb.append( "enrollmentDesignKey: " ).append(enrollmentDesignKey);
-		sb.append( ", pageDesignKey: " ).append(pageDesignKey);
+		sb.append( "pageDesignKeys: " ).append(pageDesignKeys);
 		sb.append( ", htmlLink: \"" ).append(htmlLink).append( "\"" );
 		sb.append( ", htmlElement: \"" ).append(htmlElement).append( "\"" );
 		sb.append( ", htmlId: \"" ).append(htmlId).append( "\"" );
@@ -4512,6 +4545,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		sb.append( ", htmlVarForEach: \"" ).append(htmlVarForEach).append( "\"" );
 		sb.append( ", htmlExclude: " ).append(htmlExclude);
 		sb.append( ", pdfExclude: " ).append(pdfExclude);
+		sb.append( ", loginLogout: " ).append(loginLogout);
 		sb.append( ", sort1: " ).append(sort1);
 		sb.append( ", sort2: " ).append(sort2);
 		sb.append( ", sort3: " ).append(sort3);

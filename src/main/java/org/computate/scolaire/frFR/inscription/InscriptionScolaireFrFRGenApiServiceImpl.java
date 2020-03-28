@@ -3686,7 +3686,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
-	public void rechercheInscriptionScolaireQ(ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheInscriptionScolaireQ(String classeApiUriMethode, ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -3696,23 +3696,27 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
-	public void rechercheInscriptionScolaireFq(ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheInscriptionScolaireFq(String classeApiUriMethode, ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheInscriptionScolaireSort(ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheInscriptionScolaireSort(String classeApiUriMethode, ListeRecherche<InscriptionScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheInscriptionScolaireRows(ListeRecherche<InscriptionScolaire> listeRecherche, Integer valeurRows) {
+	public void rechercheInscriptionScolaireRows(String classeApiUriMethode, ListeRecherche<InscriptionScolaire> listeRecherche, Integer valeurRows) {
 		listeRecherche.setRows(valeurRows);
 	}
 
-	public void rechercheInscriptionScolaireStart(ListeRecherche<InscriptionScolaire> listeRecherche, Integer valeurStart) {
+	public void rechercheInscriptionScolaireStart(String classeApiUriMethode, ListeRecherche<InscriptionScolaire> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheInscriptionScolaireVar(ListeRecherche<InscriptionScolaire> listeRecherche, String var, String valeur) {
+	public void rechercheInscriptionScolaireVar(String classeApiUriMethode, ListeRecherche<InscriptionScolaire> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
@@ -3764,32 +3768,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								varIndexe = "*".equals(entiteVar) ? entiteVar : InscriptionScolaire.varRechercheInscriptionScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheInscriptionScolaireQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheInscriptionScolaireQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = InscriptionScolaire.varIndexeInscriptionScolaire(entiteVar);
-								rechercheInscriptionScolaireFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheInscriptionScolaireFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = InscriptionScolaire.varIndexeInscriptionScolaire(entiteVar);
-								rechercheInscriptionScolaireSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheInscriptionScolaireSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheInscriptionScolaireStart(listeRecherche, valeurStart);
+								rechercheInscriptionScolaireStart(classeApiUriMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheInscriptionScolaireRows(listeRecherche, valeurRows);
+								rechercheInscriptionScolaireRows(classeApiUriMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheInscriptionScolaireVar(listeRecherche, entiteVar, valeurIndexe);
+								rechercheInscriptionScolaireVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

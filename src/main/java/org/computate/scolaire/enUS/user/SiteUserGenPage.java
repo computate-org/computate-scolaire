@@ -568,7 +568,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchSiteUser($('#patchSiteUserFormFilters'), $('#patchSiteUserFormValues'), ", Optional.ofNullable(siteUser).map(SiteUser::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSiteUser(null, $('#patchSiteUserFormValues'), ", Optional.ofNullable(siteUser).map(SiteUser::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the site users")
 							.g("button");
 
@@ -673,14 +673,12 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SiteUserGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SiteUserGenPage.ROLES)
 					) {
-				if(listSiteUser == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllSiteUserGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchSiteUserVals([], {}, function() { addGlow($('#refreshAllSiteUserGenPage", id, "')); }, function() { addError($('#refreshAllSiteUserGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the site users");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

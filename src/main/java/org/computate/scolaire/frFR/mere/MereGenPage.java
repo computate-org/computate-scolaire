@@ -655,7 +655,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "patchMereScolaire($('#patchMereScolaireFormulaireFiltres'), $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchMereScolaire(null, $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des mères")
 							.g("button");
 
@@ -765,14 +765,12 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), MereGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), MereGenPage.ROLES)
 					) {
-				if(listeMereScolaire == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerToutesMereGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ").a("onclick", "patchMereScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesMereGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesMereGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger toutes les mères");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

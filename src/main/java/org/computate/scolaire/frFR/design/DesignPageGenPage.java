@@ -115,9 +115,9 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCle:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, true); ");
+			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCles:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCle:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, false); ");
+			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCles:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketDesignPage(websocketDesignPageInner);");
@@ -595,7 +595,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "patchDesignPage($('#patchDesignPageFormulaireFiltres'), $('#patchDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchDesignPage(null, $('#patchDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des design de pages")
 							.g("button");
 

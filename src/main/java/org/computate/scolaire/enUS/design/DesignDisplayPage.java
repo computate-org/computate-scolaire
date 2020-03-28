@@ -35,30 +35,18 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _listPageDesign(SearchList<PageDesign> l) {
-		String design = siteRequest_.getRequestVars().get("design");
-
-		l.setQuery("*:*");
-		l.addFilterQuery("pageDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(design));
-		l.setC(PageDesign.class);
-		l.setStore(true);
-
-		List<String> roles = Arrays.asList("SiteAdmin");
-		if(
-				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
-				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
-				) {
-			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
-		}
+	protected void _pageDesign(Wrap<PageDesign> c) {
+		if(listPageDesign.size() == 1)
+			c.o(listPageDesign.get(0));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _pageDesign(Wrap<PageDesign> c) {
-		if(listPageDesign.size() == 1)
-			c.o(listPageDesign.get(0));
+	protected void _designId(Wrap<String> c) {
+		if(pageDesign != null)
+			c.o(pageDesign.getId());
 	}
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
@@ -81,6 +69,14 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.addSort("ageStart_indexed_int", ORDER.asc);
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
+
+		if("name-roster".equals(designId)) {
+			l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
+		}
+		else if("birthday-roster".equals(designId)) {
+			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
+			l.addSort("childBirthDay_indexed_int", ORDER.asc);
+		}
 
 		String id = operationRequest.getParams().getJsonObject("path").getString("id");
 		if(id != null) {
@@ -196,14 +192,6 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.setQuery("*:*");
 		l.setC(SchoolYear.class);
 
-		List<String> roles = Arrays.asList("SiteAdmin");
-		if(
-				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
-				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
-				) {
-			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
-		}
-
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
 		if(yearKey != null)
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
@@ -222,41 +210,39 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			try {
 				for(Object paramObject : paramObjects) {
 					switch(paramName) {
-						case "q":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
-							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-							l.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-							if(!"*".equals(entityVar)) {
-								l.setHighlight(true);
-								l.setHighlightSnippets(3);
-								l.addHighlightField(varIndexed);
-								l.setParam("hl.encoder", "html");
-							}
-							break;
+//						case "q":
+//							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+//							varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
+//							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+//							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+//							l.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+//							if(!"*".equals(entityVar)) {
+//								l.setHighlight(true);
+//								l.setHighlightSnippets(3);
+//								l.addHighlightField(varIndexed);
+//								l.setParam("hl.encoder", "html");
+//							}
+//							break;
 						case "fq":
 							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							if(!"design".equals(entityVar)) {
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-								l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
-							}
-							break;
-						case "sort":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-							valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-							l.addSort(varIndexed, ORDER.valueOf(valueSort));
+							l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 							break;
-						case "start":
-							aSearchStart = (Integer)paramObject;
-							l.setStart(aSearchStart);
-							break;
-						case "rows":
-							aSearchNum = (Integer)paramObject;
-							l.setRows(aSearchNum);
-							break;
+//						case "sort":
+//							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+//							valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+//							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
+//							l.addSort(varIndexed, ORDER.valueOf(valueSort));
+//							break;
+//						case "start":
+//							aSearchStart = (Integer)paramObject;
+//							l.setStart(aSearchStart);
+//							break;
+//						case "rows":
+//							aSearchNum = (Integer)paramObject;
+//							l.setRows(aSearchNum);
+//							break;
 					}
 				}
 			} catch(Exception e) {
@@ -266,14 +252,16 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if(yearSearch.size() == 0) {
-			throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
-		}
-		else if(yearSearch.size() == 1) {
-			c.o(yearSearch.get(0));
-		}
-		else  {
-			throw new RuntimeException("More than one year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+		if("main-enrollment-form".equals(designId)) {
+			if(yearSearch.size() == 0) {
+				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+			}
+			else if(yearSearch.size() == 1) {
+				c.o(yearSearch.get(0));
+			}
+			else  {
+				throw new RuntimeException("More than one year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+			}
 		}
 	}
 
@@ -347,7 +335,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 
 	protected void _blockSearch(SearchList<SchoolBlock> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
+//		l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
 		l.setC(SchoolBlock.class);
 		l.setStore(true);
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
@@ -356,13 +344,31 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
-		List<String> roles = Arrays.asList("SiteAdmin");
-		if(
-				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
-				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
-				) {
-			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
-		}
+		OperationRequest operationRequest = siteRequest_.getOperationRequest();
+
+		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+			String entityVar = null;
+			String valueIndexed = null;
+			String varIndexed = null;
+			String paramName = paramRequest.getKey();
+			Object paramValuesObject = paramRequest.getValue();
+			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+	
+			try {
+				for(Object paramObject : paramObjects) {
+					switch(paramName) {
+						case "fq":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
+							l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+							break;
+					}
+				}
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
 	}
 
 	protected void _blocks(Wrap<List<SchoolBlock>> c) {
@@ -457,7 +463,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
 		if(pageDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("pageDesignKey_indexed_long:" + pageDesign.getPk());
+			l.addFilterQuery("pageDesignKeys_indexed_longs:" + pageDesign.getPk());
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);
@@ -471,14 +477,6 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			l.addSort("sort9_indexed_double", ORDER.asc);
 			l.addSort("sort10_indexed_double", ORDER.asc);
 			l.setRows(100000);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
-					) {
-				l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
-			}
 		}
 	}
 

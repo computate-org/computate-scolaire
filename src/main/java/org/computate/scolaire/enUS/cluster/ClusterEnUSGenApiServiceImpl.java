@@ -1463,7 +1463,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void aSearchClusterQ(SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchClusterQ(String classApiUriMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1473,23 +1473,27 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void aSearchClusterFq(SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchClusterFq(String classApiUriMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchClusterSort(SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchClusterSort(String classApiUriMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchClusterRows(SearchList<Cluster> searchList, Integer valueRows) {
+	public void aSearchClusterRows(String classApiUriMethod, SearchList<Cluster> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchClusterStart(SearchList<Cluster> searchList, Integer valueStart) {
+	public void aSearchClusterStart(String classApiUriMethod, SearchList<Cluster> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchClusterVar(SearchList<Cluster> searchList, String var, String value) {
+	public void aSearchClusterVar(String classApiUriMethod, SearchList<Cluster> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -1541,32 +1545,32 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : Cluster.varSearchCluster(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchClusterQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchClusterQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = Cluster.varIndexedCluster(entityVar);
-								aSearchClusterFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchClusterFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = Cluster.varIndexedCluster(entityVar);
-								aSearchClusterSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchClusterSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchClusterStart(searchList, valueStart);
+								aSearchClusterStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchClusterRows(searchList, valueRows);
+								aSearchClusterRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchClusterVar(searchList, entityVar, valueIndexed);
+								aSearchClusterVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

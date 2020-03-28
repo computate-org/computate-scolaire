@@ -848,10 +848,49 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: child_
 	 * r: PersonneDateNaissance
 	 * r.enUS: PersonBirthDate
-	 */    
+	 */     
 	protected void _enfantDateNaissance(Couverture<LocalDate> c) {
 		if(enfant_ != null)
 			c.o(enfant_.getPersonneDateNaissance());
+	}
+
+	/**
+	 * Var.enUS: strChildBirthDate
+	 * r: enfantDateNaissance
+	 * r.enUS: childBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 * r: "d MMM yyyy"
+	 * r.enUS: "MMM d yyyy"
+	 */
+	@Override public String strEnfantDateNaissance() { 
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("d MMM yyyy", Locale.FRANCE));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfantDateNaissance
+	 * r.enUS: childBirthDate
+	 */    
+	protected void _enfantMoisNaissance(Couverture<Integer> c) {
+		if(enfantDateNaissance != null)
+			c.o(enfantDateNaissance.getMonthValue());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthDay
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfantDateNaissance
+	 * r.enUS: childBirthDate
+	 */    
+	protected void _enfantJourNaissance(Couverture<Integer> c) {
+		if(enfantDateNaissance != null)
+			c.o(enfantDateNaissance.getMonthValue());
 	}
 
 	/**

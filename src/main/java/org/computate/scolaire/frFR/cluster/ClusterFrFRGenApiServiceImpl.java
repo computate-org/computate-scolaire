@@ -1463,7 +1463,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void rechercheClusterQ(ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheClusterQ(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -1473,23 +1473,27 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void rechercheClusterFq(ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheClusterFq(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheClusterSort(ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheClusterSort(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheClusterRows(ListeRecherche<Cluster> listeRecherche, Integer valeurRows) {
+	public void rechercheClusterRows(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, Integer valeurRows) {
 		listeRecherche.setRows(valeurRows);
 	}
 
-	public void rechercheClusterStart(ListeRecherche<Cluster> listeRecherche, Integer valeurStart) {
+	public void rechercheClusterStart(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheClusterVar(ListeRecherche<Cluster> listeRecherche, String var, String valeur) {
+	public void rechercheClusterVar(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
@@ -1541,32 +1545,32 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								varIndexe = "*".equals(entiteVar) ? entiteVar : Cluster.varRechercheCluster(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheClusterQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheClusterQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = Cluster.varIndexeCluster(entiteVar);
-								rechercheClusterFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheClusterFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = Cluster.varIndexeCluster(entiteVar);
-								rechercheClusterSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheClusterSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheClusterStart(listeRecherche, valeurStart);
+								rechercheClusterStart(classeApiUriMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheClusterRows(listeRecherche, valeurRows);
+								rechercheClusterRows(classeApiUriMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheClusterVar(listeRecherche, entiteVar, valeurIndexe);
+								rechercheClusterVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

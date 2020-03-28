@@ -131,6 +131,68 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return (PageLayout)this;
 	}
 
+	/////////////////
+	// siteBaseUrl //
+	/////////////////
+
+	/**	L'entité « siteBaseUrl »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String siteBaseUrl;
+	@JsonIgnore
+	public Wrap<String> siteBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("siteBaseUrl").o(siteBaseUrl);
+
+	/**	<br/>L'entité « siteBaseUrl »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteBaseUrl">Trouver l'entité siteBaseUrl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _siteBaseUrl(Wrap<String> c);
+
+	public String getSiteBaseUrl() {
+		return siteBaseUrl;
+	}
+
+	public void setSiteBaseUrl(String siteBaseUrl) {
+		this.siteBaseUrl = siteBaseUrl;
+		this.siteBaseUrlWrap.alreadyInitialized = true;
+	}
+	protected PageLayout siteBaseUrlInit() {
+		if(!siteBaseUrlWrap.alreadyInitialized) {
+			_siteBaseUrl(siteBaseUrlWrap);
+			if(siteBaseUrl == null)
+				setSiteBaseUrl(siteBaseUrlWrap.o);
+		}
+		siteBaseUrlWrap.alreadyInitialized(true);
+		return (PageLayout)this;
+	}
+
+	public String solrSiteBaseUrl() {
+		return siteBaseUrl;
+	}
+
+	public String strSiteBaseUrl() {
+		return siteBaseUrl == null ? "" : siteBaseUrl;
+	}
+
+	public String jsonSiteBaseUrl() {
+		return siteBaseUrl == null ? "" : siteBaseUrl;
+	}
+
+	public String nomAffichageSiteBaseUrl() {
+		return null;
+	}
+
+	public String htmTooltipSiteBaseUrl() {
+		return null;
+	}
+
+	public String htmSiteBaseUrl() {
+		return siteBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSiteBaseUrl());
+	}
+
 	///////////////////
 	// staticBaseUrl //
 	///////////////////
@@ -2349,6 +2411,44 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return (PageLayout)this;
 	}
 
+	/////////////
+	// school_ //
+	/////////////
+
+	/**	L'entité « school_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected School school_;
+	@JsonIgnore
+	public Wrap<School> school_Wrap = new Wrap<School>().p(this).c(School.class).var("school_").o(school_);
+
+	/**	<br/>L'entité « school_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school_">Trouver l'entité school_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _school_(Wrap<School> c);
+
+	public School getSchool_() {
+		return school_;
+	}
+
+	public void setSchool_(School school_) {
+		this.school_ = school_;
+		this.school_Wrap.alreadyInitialized = true;
+	}
+	protected PageLayout school_Init() {
+		if(!school_Wrap.alreadyInitialized) {
+			_school_(school_Wrap);
+			if(school_ == null)
+				setSchool_(school_Wrap.o);
+		}
+		school_Wrap.alreadyInitialized(true);
+		return (PageLayout)this;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2371,6 +2471,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void initPageLayout() {
 		pagePartsInit();
 		siteRequest_Init();
+		siteBaseUrlInit();
 		staticBaseUrlInit();
 		pageSolrDocumentInit();
 		wInit();
@@ -2407,6 +2508,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		pageLogoutUriInit();
 		listSchoolInit();
 		schoolsInit();
+		school_Init();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2452,6 +2554,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.pageParts;
 			case "siteRequest_":
 				return oPageLayout.siteRequest_;
+			case "siteBaseUrl":
+				return oPageLayout.siteBaseUrl;
 			case "staticBaseUrl":
 				return oPageLayout.staticBaseUrl;
 			case "pageSolrDocument":
@@ -2524,6 +2628,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.listSchool;
 			case "schools":
 				return oPageLayout.schools;
+			case "school_":
+				return oPageLayout.school_;
 			default:
 				return null;
 		}

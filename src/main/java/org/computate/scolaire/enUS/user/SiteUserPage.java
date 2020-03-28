@@ -7,22 +7,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.config.SiteConfig;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.year.SchoolYear;
 
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfSetting;
-import net.authorize.api.contract.v1.CustomerProfileType;
 import net.authorize.api.contract.v1.GetHostedProfilePageRequest;
 import net.authorize.api.contract.v1.GetHostedProfilePageResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
@@ -61,14 +58,14 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		}
 	}
 
-	protected void _enrollmentDesignSearch(SearchList<EnrollmentDesign> l) {
+	protected void _pageDesignSearch(SearchList<PageDesign> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("deleted_indexed_boolean:false");
 		l.addFilterQuery("archived_indexed_boolean:false");
 		l.addFilterQuery("designHidden_indexed_boolean:false");
-		l.setC(EnrollmentDesign.class);
+		l.setC(PageDesign.class);
 		l.setStore(true);
-		l.addSort("enrollmentDesignCompleteName_indexed_string", ORDER.asc);
+		l.addSort("pageDesignCompleteName_indexed_string", ORDER.asc);
 		l.setRows(1000);
 
 		List<String> roles = Arrays.asList("SiteAdmin");
@@ -80,8 +77,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		}
 	}
 
-	protected void _enrollmentDesigns(Wrap<List<EnrollmentDesign>> c) {
-		c.o(enrollmentDesignSearch.getList());
+	protected void _pageDesigns(Wrap<List<PageDesign>> c) {
+		c.o(pageDesignSearch.getList());
 	}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
@@ -242,12 +239,12 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 						{ e("div").a("class", "w3-cell-row ").f();
 							for(SchoolYear yearYear : schoolYear.getYearYears()) {
 								{ e("div").a("class", "w3-cell w3-mobile ").f();
-									for(EnrollmentDesign enrollmentDesign : enrollmentDesigns) {
+									for(PageDesign pageDesign : pageDesigns) {
 										try {
-											String url = "/enrollment-form?var=design:" + URLEncoder.encode(enrollmentDesign.getEnrollmentDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
+											String url = "/page?var=design:" + URLEncoder.encode(pageDesign.getPageDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
 											{ e("div").a("class", "w3-cell-row ").f();
 												{ e("a").a("href", url).a("class", "").f();
-													e("span").a("class", " ").f().sx(enrollmentDesign.getEnrollmentDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
+													e("span").a("class", " ").f().sx(pageDesign.getPageDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
 												} g("a");
 											} g("div");
 										} catch (UnsupportedEncodingException e) {

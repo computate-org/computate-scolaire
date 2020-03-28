@@ -847,7 +847,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	public void thead2EnrollmentGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("").g("th");
+				e("th").f().sx("created").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -1029,7 +1029,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchSchoolEnrollment($('#patchSchoolEnrollmentFormFilters'), $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify the enrollments")
 							.g("button");
 
@@ -1100,14 +1100,12 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentGenPage.ROLES)
 					) {
-				if(listSchoolEnrollment == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllEnrollmentGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the enrollments");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

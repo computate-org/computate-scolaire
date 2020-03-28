@@ -21,7 +21,7 @@ import org.computate.scolaire.frFR.vertx.AppliSwagger2;
 
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.writer.ApiWriter
- */   
+ */  
 public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<ApiEcrivain> {
 
 	/**
@@ -493,6 +493,16 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		if(o == null)
 			o = new ArrayList<>();
 		c.o(o);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: classPublicRead
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 **/
+	protected void _classePublicLire(Couverture<Boolean> c) {
+		c.o((Boolean)classeDocumentSolr.get("classePublicLire_stored_boolean"));
 	}
 
 	/**
@@ -1338,11 +1348,13 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: writeApi
 	 * r: appliNom
 	 * r.enUS: appName
+	 * r: classePublicLire
+	 * r.enUS: classPublicRead
 	 * r: classeRoleSession
 	 * r.enUS: classRoleSession
 	 * r: classeRoleUtilisateur
 	 * r.enUS: classRoleUser
-	 */
+	 */ 
 	public void ecrireApi(Boolean id) throws Exception {
 
 			if(id || !classeUris.contains(classeApiUriMethode)) {
@@ -1354,7 +1366,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
 			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-", classeNomSimple);
 	
-			if(classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession)) {
+			if(classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isNotTrue(classePublicLire)) {
 				wChemins.tl(3, "security:");
 				wChemins.tl(4, "- openIdConnect:");
 				wChemins.tl(5, "- roles");

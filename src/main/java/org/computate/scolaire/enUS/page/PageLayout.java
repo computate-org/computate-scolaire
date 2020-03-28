@@ -24,13 +24,13 @@ import org.computate.scolaire.enUS.year.YearGenPage;
 import org.computate.scolaire.enUS.block.BlockGenPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.design.PageDesignGenPage;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.child.ChildGenPage;
 import org.computate.scolaire.enUS.guardian.GuardianGenPage;
 import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignGenPage;
 import org.computate.scolaire.enUS.mom.MomGenPage;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.payment.PaymentGenPage;
@@ -74,6 +74,10 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {
+	}
+
+	protected void _siteBaseUrl(Wrap<String> c) {
+		c.o(siteRequest_.getSiteConfig_().getSiteBaseUrl());
 	}
 
 	protected void _staticBaseUrl(Wrap<String> c) {
@@ -235,6 +239,10 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	protected void _schools(Wrap<List<School>> c) {
 		c.o(listSchool.getList());
+	}
+
+	protected void _school_(Wrap<School> c) {
+//		c.o(listSchool.getList().stream().findFirst().orElse(null));
 	}
 
 	@Override()
@@ -515,7 +523,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 							sx("designs");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						EnrollmentDesignGenPage.htmlSuggestedEnrollmentDesignGenPage(this, id, null);
+						PageDesignGenPage.htmlSuggestedPageDesignGenPage(this, id, null);
 					} g("div");
 				} g("div");
 	
@@ -579,70 +587,74 @@ public class PageLayout extends PageLayoutGen<Object> {
 					PaymentGenPage.htmlSuggestedPaymentGenPage(this, id, null);
 				} g("div");
 			} g("div");
+		g("div");
+		writeLoginLogout();
+	}
 
-			if(siteRequest_.getUserId() == null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
-						e("span").a("class", "site-menu-item").f();
-							sx("Login");
-						g("span");
-					g("a");
-				g("div");
-			}
-			if(siteRequest_.getUserId() != null) {
+	public void  writeLoginLogout() {
 
-				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-green ").f();
-							e("i").a("class", "far fa-user-cog ").f().g("i");
-							sx(siteRequest_.getUserName());
+		if(siteRequest_.getUserId() == null) {
+			e("div").a("class", "site-bar-item w3-bar-item ").f();
+				e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
+					e("span").a("class", "site-menu-item").f();
+						sx("Login");
+					g("span");
+				g("a");
+			g("div");
+		}
+		if(siteRequest_.getUserId() != null) {
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "far fa-user-cog ").f().g("i");
+						sx(siteRequest_.getUserName());
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					SiteUser o = siteRequest_.getSiteUser();
+					{ e("div").a("class", "w3-cell-row ").f();
+						{ e("a").a("href", "/user/", siteRequest_.getUserKey()).a("class", "").f();
+							e("i").a("class", "far fa-user ").f().g("i");
+							sx("my user page");
+						} g("a");
 					} g("div");
-					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SiteUser o = siteRequest_.getSiteUser();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/user/", siteRequest_.getUserKey()).a("class", "").f();
-								e("i").a("class", "far fa-user ").f().g("i");
-								sx("my user page");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							e("label").a("for", "Page_seeArchived").a("class", "").f().sx("see archived").g("label");
-							e("input")
-								.a("type", "checkbox")
-								.a("value", "true")
-								.a("class", "setSeeArchived")
-								.a("name", "setSeeArchived")
-								.a("id", "Page_seeArchived")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", siteRequest_.getUserKey(), " }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#Page_seeArchived')); }, function() { addError($('#Page_seeArchived')); }); ")
-								;
-								if(o.getSeeArchived() != null && o.getSeeArchived())
-									a("checked", "checked");
-							fg();
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							e("label").a("for", "Page_seeDeleted").a("class", "").f().sx("see deleted").g("label");
-							e("input")
-								.a("type", "checkbox")
-								.a("value", "true")
-								.a("class", "setSeeDeleted")
-								.a("name", "setSeeDeleted")
-								.a("id", "Page_seeDeleted")
-								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", siteRequest_.getUserKey(), " }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#Page_seeDeleted')); }, function() { addError($('#Page_seeDeleted')); }); ")
-								;
-								if(o.getSeeDeleted() != null && o.getSeeDeleted())
-									a("checked", "checked");
-							fg();
-						} g("div");
+					{ e("div").a("class", "w3-cell-row ").f();
+						e("label").a("for", "Page_seeArchived").a("class", "").f().sx("see archived").g("label");
+						e("input")
+							.a("type", "checkbox")
+							.a("value", "true")
+							.a("class", "setSeeArchived")
+							.a("name", "setSeeArchived")
+							.a("id", "Page_seeArchived")
+							.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", siteRequest_.getUserKey(), " }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#Page_seeArchived')); }, function() { addError($('#Page_seeArchived')); }); ")
+							;
+							if(o.getSeeArchived() != null && o.getSeeArchived())
+								a("checked", "checked");
+						fg();
+					} g("div");
+					{ e("div").a("class", "w3-cell-row ").f();
+						e("label").a("for", "Page_seeDeleted").a("class", "").f().sx("see deleted").g("label");
+						e("input")
+							.a("type", "checkbox")
+							.a("value", "true")
+							.a("class", "setSeeDeleted")
+							.a("name", "setSeeDeleted")
+							.a("id", "Page_seeDeleted")
+							.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + ", siteRequest_.getUserKey(), " }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#Page_seeDeleted')); }, function() { addError($('#Page_seeDeleted')); }); ")
+							;
+							if(o.getSeeDeleted() != null && o.getSeeDeleted())
+								a("checked", "checked");
+						fg();
 					} g("div");
 				} g("div");
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "w3-padding ").a("href", pageLogoutUri).f();
-						e("span").a("class", "site-menu-item").f();
-							sx("Logout");
-						g("span");
-					g("a");
-				g("div");
-			}
-		g("div");
+			} g("div");
+			e("div").a("class", "site-bar-item w3-bar-item ").f();
+				e("a").a("class", "w3-padding ").a("href", pageLogoutUri).f();
+					e("span").a("class", "site-menu-item").f();
+						sx("Logout");
+					g("span");
+				g("a");
+			g("div");
+		}
 	}
 
 	public void  partagerPage() {
@@ -873,60 +885,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public void  htmlFormOptionsUtilisateurSite(SiteUser o) {
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "voirArchiveForm").a("style", "display: inline-block; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "voirArchive")
-						.a("id", "Page_voirArchive")
-						.a("value", "false")
-					.fg();
-
-					e("input")
-						.a("type", "checkbox")
-						.a("value", "true")
-						.a("class", "setSeeArchived")
-						.a("name", "setSeeArchived")
-						.a("id", "Page_voirArchive")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirArchiveForm')); ")
-						;
-						if(o.getSeeArchived() != null && o.getSeeArchived())
-							a("checked", "checked");
-					fg();
-
-					e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-				} g("form");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "voirSupprimeForm").a("style", "display: inline-block; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "voirSupprime")
-						.a("id", "Page_voirSupprime")
-						.a("value", "false")
-					.fg();
-
-					e("input");
-						a("type", "checkbox");
-						a("value", "true");
-						a("class", "setSeeDeleted");
-						a("name", "setSeeDeleted");
-						a("id", "Page_voirSupprime");
-						a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirSupprimeForm')); ");
-						if(o.getSeeDeleted() != null && o.getSeeDeleted())
-							a("checked", "checked");
-					fg();
-
-					e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
-				} g("form");
-			} g("div");
-		} g("div");
-	}
-
 	public Integer htmlPageLayout2(List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
 
 		Integer i;
@@ -1124,6 +1082,9 @@ public class PageLayout extends PageLayoutGen<Object> {
 						} catch (Exception e) {
 							throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 						}
+					}
+					if(htmlPart.getLoginLogout()) {
+						writeLoginLogout();
 					}
 					s(htmlPart.getHtmlAfter());
 				}

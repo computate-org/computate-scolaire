@@ -178,6 +178,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		c.o(o);
 	}
 
+	protected void _classPublicRead(Wrap<Boolean> c) {
+		c.o((Boolean)classSolrDocument.get("classePublicLire_stored_boolean"));
+	}
+
 	protected void _classRoleSession(Wrap<Boolean> c) {
 		c.o((Boolean)classSolrDocument.get("classeRoleSession_stored_boolean"));
 	}
@@ -574,7 +578,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 			wPaths.tl(3, "operationId: ", classApiOperationIdMethod, (id ? "Id" : ""));
 			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-", classSimpleName);
 	
-			if(classRolesFound && BooleanUtils.isNotTrue(classRoleSession)) {
+			if(classRolesFound && BooleanUtils.isNotTrue(classRoleSession) && BooleanUtils.isNotTrue(classPublicRead)) {
 				wPaths.tl(3, "security:");
 				wPaths.tl(4, "- openIdConnect:");
 				wPaths.tl(5, "- roles");

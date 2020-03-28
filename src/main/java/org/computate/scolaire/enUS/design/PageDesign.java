@@ -17,7 +17,7 @@ public class PageDesign extends PageDesignGen<Cluster> {
 
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("pageDesignKey_indexed_long:" + pk);
+		l.addFilterQuery("pageDesignKeys_indexed_longs:" + pk);
 		l.setC(HtmlPart.class);
 		l.setStore(true);
 	}

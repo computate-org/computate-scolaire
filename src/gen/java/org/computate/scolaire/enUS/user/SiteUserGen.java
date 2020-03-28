@@ -260,7 +260,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentKeys")
 					.a("id", classApiMethodMethod, "_enrollmentKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSiteUserEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SiteUserEnrollmentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSiteUserEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SiteUserEnrollmentKeys')) : [", pk == null ? "" : "{'name':'fq','value':'userKeys:" + pk + "'}", "], $('#listSiteUserEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -423,7 +423,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 					.a("name", "setPaymentKeys")
 					.a("id", classApiMethodMethod, "_paymentKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSiteUserPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SiteUserPaymentKeys')) : [{'name':'fq','value':'userKeys:", pk, "'}], $('#listSiteUserPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSiteUserPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SiteUserPaymentKeys')) : [", pk == null ? "" : "{'name':'fq','value':'userKeys:" + pk + "'}", "], $('#listSiteUserPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {

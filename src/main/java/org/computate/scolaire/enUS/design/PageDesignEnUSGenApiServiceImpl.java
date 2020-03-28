@@ -209,7 +209,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey", l));
+							postSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
 						}
 						break;
 					case "pageDesignCompleteName":
@@ -488,7 +488,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey", l));
+							postSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
 						}
 						break;
 					case "pageDesignCompleteName":
@@ -787,27 +787,27 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "addHtmlPartKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey", Long.parseLong(requestJson.getString(methodName))));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "addAllHtmlPartKeys":
 						JsonArray addAllHtmlPartKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllHtmlPartKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey", addAllHtmlPartKeysValues.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", addAllHtmlPartKeysValues.getString(i)));
 						}
 						break;
 					case "setHtmlPartKeys":
 						JsonArray setHtmlPartKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey"));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys"));
 						for(Integer i = 0; i <  setHtmlPartKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey", setHtmlPartKeysValues.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", setHtmlPartKeysValues.getString(i)));
 						}
 						break;
 					case "removeHtmlPartKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKey", Long.parseLong(requestJson.getString(methodName))));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "setPageDesignCompleteName":
 						if(requestJson.getString(methodName) == null) {
@@ -892,27 +892,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void getPageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPageDesign(siteRequest, a -> {
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
@@ -988,27 +967,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void searchPageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPageDesign(siteRequest, a -> {
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
@@ -1121,27 +1079,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void searchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPageDesign(siteRequest, a -> {
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
@@ -1236,27 +1173,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void designdisplaysearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPageDesign(siteRequest, a -> {
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
@@ -1689,7 +1605,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		}
 	}
 
-	public void aSearchPageDesignQ(SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchPageDesignQ(String classApiUriMethod, SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1699,23 +1615,27 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		}
 	}
 
-	public void aSearchPageDesignFq(SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchPageDesignFq(String classApiUriMethod, SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchPageDesignSort(SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchPageDesignSort(String classApiUriMethod, SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchPageDesignRows(SearchList<PageDesign> searchList, Integer valueRows) {
+	public void aSearchPageDesignRows(String classApiUriMethod, SearchList<PageDesign> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchPageDesignStart(SearchList<PageDesign> searchList, Integer valueStart) {
+	public void aSearchPageDesignStart(String classApiUriMethod, SearchList<PageDesign> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchPageDesignVar(SearchList<PageDesign> searchList, String var, String value) {
+	public void aSearchPageDesignVar(String classApiUriMethod, SearchList<PageDesign> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -1758,32 +1678,32 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								varIndexed = "*".equals(entityVar) ? entityVar : PageDesign.varSearchPageDesign(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchPageDesignQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchPageDesignQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = PageDesign.varIndexedPageDesign(entityVar);
-								aSearchPageDesignFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchPageDesignFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = PageDesign.varIndexedPageDesign(entityVar);
-								aSearchPageDesignSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchPageDesignSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchPageDesignStart(searchList, valueStart);
+								aSearchPageDesignStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchPageDesignRows(searchList, valueRows);
+								aSearchPageDesignRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchPageDesignVar(searchList, entityVar, valueIndexed);
+								aSearchPageDesignVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

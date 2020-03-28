@@ -569,7 +569,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchUtilisateurSite(null, $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier des utilisateurs du site")
 							.g("button");
 
@@ -713,14 +713,12 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), UtilisateurSiteGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), UtilisateurSiteGenPage.ROLES)
 					) {
-				if(listeUtilisateurSite == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerTousUtilisateurSiteGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ").a("onclick", "patchUtilisateurSiteVals([], {}, function() { ajouterLueur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousUtilisateurSiteGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger tous les utilisateurs du site");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

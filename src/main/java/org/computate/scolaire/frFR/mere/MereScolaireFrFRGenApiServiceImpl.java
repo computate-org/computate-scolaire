@@ -1655,7 +1655,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void rechercheMereScolaireQ(ListeRecherche<MereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheMereScolaireQ(String classeApiUriMethode, ListeRecherche<MereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -1665,23 +1665,27 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void rechercheMereScolaireFq(ListeRecherche<MereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheMereScolaireFq(String classeApiUriMethode, ListeRecherche<MereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheMereScolaireSort(ListeRecherche<MereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheMereScolaireSort(String classeApiUriMethode, ListeRecherche<MereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheMereScolaireRows(ListeRecherche<MereScolaire> listeRecherche, Integer valeurRows) {
+	public void rechercheMereScolaireRows(String classeApiUriMethode, ListeRecherche<MereScolaire> listeRecherche, Integer valeurRows) {
 		listeRecherche.setRows(valeurRows);
 	}
 
-	public void rechercheMereScolaireStart(ListeRecherche<MereScolaire> listeRecherche, Integer valeurStart) {
+	public void rechercheMereScolaireStart(String classeApiUriMethode, ListeRecherche<MereScolaire> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheMereScolaireVar(ListeRecherche<MereScolaire> listeRecherche, String var, String valeur) {
+	public void rechercheMereScolaireVar(String classeApiUriMethode, ListeRecherche<MereScolaire> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
@@ -1733,32 +1737,32 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								varIndexe = "*".equals(entiteVar) ? entiteVar : MereScolaire.varRechercheMereScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheMereScolaireQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheMereScolaireQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = MereScolaire.varIndexeMereScolaire(entiteVar);
-								rechercheMereScolaireFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheMereScolaireFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = MereScolaire.varIndexeMereScolaire(entiteVar);
-								rechercheMereScolaireSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheMereScolaireSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheMereScolaireStart(listeRecherche, valeurStart);
+								rechercheMereScolaireStart(classeApiUriMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheMereScolaireRows(listeRecherche, valeurRows);
+								rechercheMereScolaireRows(classeApiUriMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheMereScolaireVar(listeRecherche, entiteVar, valeurIndexe);
+								rechercheMereScolaireVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

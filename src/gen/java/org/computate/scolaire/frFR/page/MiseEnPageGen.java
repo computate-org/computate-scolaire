@@ -131,6 +131,68 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	/////////////////
+	// siteUrlBase //
+	/////////////////
+
+	/**	L'entité « siteUrlBase »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String siteUrlBase;
+	@JsonIgnore
+	public Couverture<String> siteUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("siteUrlBase").o(siteUrlBase);
+
+	/**	<br/>L'entité « siteUrlBase »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteUrlBase">Trouver l'entité siteUrlBase dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _siteUrlBase(Couverture<String> c);
+
+	public String getSiteUrlBase() {
+		return siteUrlBase;
+	}
+
+	public void setSiteUrlBase(String siteUrlBase) {
+		this.siteUrlBase = siteUrlBase;
+		this.siteUrlBaseCouverture.dejaInitialise = true;
+	}
+	protected MiseEnPage siteUrlBaseInit() {
+		if(!siteUrlBaseCouverture.dejaInitialise) {
+			_siteUrlBase(siteUrlBaseCouverture);
+			if(siteUrlBase == null)
+				setSiteUrlBase(siteUrlBaseCouverture.o);
+		}
+		siteUrlBaseCouverture.dejaInitialise(true);
+		return (MiseEnPage)this;
+	}
+
+	public String solrSiteUrlBase() {
+		return siteUrlBase;
+	}
+
+	public String strSiteUrlBase() {
+		return siteUrlBase == null ? "" : siteUrlBase;
+	}
+
+	public String jsonSiteUrlBase() {
+		return siteUrlBase == null ? "" : siteUrlBase;
+	}
+
+	public String nomAffichageSiteUrlBase() {
+		return null;
+	}
+
+	public String htmTooltipSiteUrlBase() {
+		return null;
+	}
+
+	public String htmSiteUrlBase() {
+		return siteUrlBase == null ? "" : StringEscapeUtils.escapeHtml4(strSiteUrlBase());
+	}
+
 	/////////////////////
 	// statiqueUrlBase //
 	/////////////////////
@@ -2349,6 +2411,44 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	////////////
+	// ecole_ //
+	////////////
+
+	/**	L'entité « ecole_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Ecole ecole_;
+	@JsonIgnore
+	public Couverture<Ecole> ecole_Couverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole_").o(ecole_);
+
+	/**	<br/>L'entité « ecole_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole_">Trouver l'entité ecole_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecole_(Couverture<Ecole> c);
+
+	public Ecole getEcole_() {
+		return ecole_;
+	}
+
+	public void setEcole_(Ecole ecole_) {
+		this.ecole_ = ecole_;
+		this.ecole_Couverture.dejaInitialise = true;
+	}
+	protected MiseEnPage ecole_Init() {
+		if(!ecole_Couverture.dejaInitialise) {
+			_ecole_(ecole_Couverture);
+			if(ecole_ == null)
+				setEcole_(ecole_Couverture.o);
+		}
+		ecole_Couverture.dejaInitialise(true);
+		return (MiseEnPage)this;
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -2371,6 +2471,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public void initMiseEnPage() {
 		pagePartsInit();
 		requeteSite_Init();
+		siteUrlBaseInit();
 		statiqueUrlBaseInit();
 		pageDocumentSolrInit();
 		wInit();
@@ -2407,6 +2508,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		pageDeconnexionUriInit();
 		listeEcoleInit();
 		ecolesInit();
+		ecole_Init();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2452,6 +2554,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				return oMiseEnPage.pageParts;
 			case "requeteSite_":
 				return oMiseEnPage.requeteSite_;
+			case "siteUrlBase":
+				return oMiseEnPage.siteUrlBase;
 			case "statiqueUrlBase":
 				return oMiseEnPage.statiqueUrlBase;
 			case "pageDocumentSolr":
@@ -2524,6 +2628,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				return oMiseEnPage.listeEcole;
 			case "ecoles":
 				return oMiseEnPage.ecoles;
+			case "ecole_":
+				return oMiseEnPage.ecole_;
 			default:
 				return null;
 		}

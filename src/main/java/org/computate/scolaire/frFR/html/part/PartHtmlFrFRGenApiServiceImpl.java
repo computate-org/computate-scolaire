@@ -1,7 +1,5 @@
 package org.computate.scolaire.frFR.html.part;
 
-import org.computate.scolaire.frFR.inscription.design.DesignInscriptionFrFRGenApiServiceImpl;
-import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.computate.scolaire.frFR.design.DesignPageFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.design.DesignPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
@@ -208,13 +206,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "designInscriptionCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
-						break;
-					case "designPageCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
+					case "designPageCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+						}
 						break;
 					case "htmlLien":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -275,6 +271,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "pdfExclure":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "connecterDeconnecter":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("connecterDeconnecter", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "tri1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -581,13 +581,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				for(Integer i = 0; i < entiteVars.size(); i++) {
 					String entiteVar = entiteVars.getString(i);
 					switch(entiteVar) {
-					case "designInscriptionCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
-						break;
-					case "designPageCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", Long.parseLong(jsonObject.getString(entiteVar))));
+					case "designPageCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+						}
 						break;
 					case "htmlLien":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -648,6 +646,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "pdfExclure":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "connecterDeconnecter":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("connecterDeconnecter", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "tri1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -975,25 +977,29 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
-					case "setDesignInscriptionCle":
-						o2.setDesignInscriptionCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", o2.getDesignInscriptionCle()));
+					case "addDesignPageCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
-					case "removeDesignInscriptionCle":
-						o2.setDesignInscriptionCle(requeteJson.getString(methodeNom));
+					case "addAllDesignPageCles":
+						JsonArray addAllDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllDesignPageClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", addAllDesignPageClesValeurs.getString(i)));
+						}
+						break;
+					case "setDesignPageCles":
+						JsonArray setDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles"));
+						for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", setDesignPageClesValeurs.getString(i)));
+						}
+						break;
+					case "removeDesignPageCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("designInscriptionCle", pk, "partHtmlCles", o2.getDesignInscriptionCle()));
-						break;
-					case "setDesignPageCle":
-						o2.setDesignPageCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", o2.getDesignPageCle()));
-						break;
-					case "removeDesignPageCle":
-						o2.setDesignPageCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("designPageCle", pk, "partHtmlCles", o2.getDesignPageCle()));
+						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "setHtmlLien":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -1143,6 +1149,16 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							o2.setPdfExclure(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("pdfExclure", o2.jsonPdfExclure(), pk));
+						}
+						break;
+					case "setConnecterDeconnecter":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "connecterDeconnecter"));
+						} else {
+							o2.setConnecterDeconnecter(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("connecterDeconnecter", o2.jsonConnecterDeconnecter(), pk));
 						}
 						break;
 					case "setTri1":
@@ -1696,15 +1712,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		if(requeteApi != null) {
 			List<Long> pks = requeteApi.getPks();
 			List<String> classes = requeteApi.getClasses();
-			if(o.getDesignInscriptionCle() != null) {
-				if(!pks.contains(o.getDesignInscriptionCle())) {
-					pks.add(o.getDesignInscriptionCle());
-					classes.add("DesignInscription");
-				}
-			}
-			if(o.getDesignPageCle() != null) {
-				if(!pks.contains(o.getDesignPageCle())) {
-					pks.add(o.getDesignPageCle());
+			for(Long pk : o.getDesignPageCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
 					classes.add("DesignPage");
 				}
 			}
@@ -1996,7 +2006,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public void recherchePartHtmlQ(ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void recherchePartHtmlQ(String classeApiUriMethode, ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -2006,23 +2016,27 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public void recherchePartHtmlFq(ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void recherchePartHtmlFq(String classeApiUriMethode, ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void recherchePartHtmlSort(ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void recherchePartHtmlSort(String classeApiUriMethode, ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void recherchePartHtmlRows(ListeRecherche<PartHtml> listeRecherche, Integer valeurRows) {
+	public void recherchePartHtmlRows(String classeApiUriMethode, ListeRecherche<PartHtml> listeRecherche, Integer valeurRows) {
 		listeRecherche.setRows(valeurRows);
 	}
 
-	public void recherchePartHtmlStart(ListeRecherche<PartHtml> listeRecherche, Integer valeurStart) {
+	public void recherchePartHtmlStart(String classeApiUriMethode, ListeRecherche<PartHtml> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void recherchePartHtmlVar(ListeRecherche<PartHtml> listeRecherche, String var, String valeur) {
+	public void recherchePartHtmlVar(String classeApiUriMethode, ListeRecherche<PartHtml> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
@@ -2065,32 +2079,32 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								varIndexe = "*".equals(entiteVar) ? entiteVar : PartHtml.varRecherchePartHtml(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								recherchePartHtmlQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								recherchePartHtmlQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = PartHtml.varIndexePartHtml(entiteVar);
-								recherchePartHtmlFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								recherchePartHtmlFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = PartHtml.varIndexePartHtml(entiteVar);
-								recherchePartHtmlSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								recherchePartHtmlSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								recherchePartHtmlStart(listeRecherche, valeurStart);
+								recherchePartHtmlStart(classeApiUriMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								recherchePartHtmlRows(listeRecherche, valeurRows);
+								recherchePartHtmlRows(classeApiUriMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								recherchePartHtmlVar(listeRecherche, entiteVar, valeurIndexe);
+								recherchePartHtmlVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}
@@ -2195,39 +2209,16 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PartHtml.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
-				listeRecherche.add("json.facet", "{designInscriptionCle:{terms:{field:designInscriptionCle_indexed_longs, limit:1000}}}");
-				listeRecherche.add("json.facet", "{designPageCle:{terms:{field:designPageCle_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{designPageCles:{terms:{field:designPageCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
 				{
-					DesignInscription o2 = new DesignInscription();
-					DesignInscriptionFrFRGenApiServiceImpl service = new DesignInscriptionFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					Long pk = o.getDesignInscriptionCle();
-
-					if(pk != null) {
-						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite2);
-						futures.add(
-							service.patchDesignInscriptionFuture(o2, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("DesignInscription %s rechargé. ", pk));
-								} else {
-									LOGGER.info(String.format("DesignInscription %s a échoué. ", pk));
-									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
-					}
-				}
-
-				{
-					DesignPage o2 = new DesignPage();
 					DesignPageFrFRGenApiServiceImpl service = new DesignPageFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					Long pk = o.getDesignPageCle();
+					for(Long pk : o.getDesignPageCles()) {
+						DesignPage o2 = new DesignPage();
 
-					if(pk != null) {
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(

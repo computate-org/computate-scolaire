@@ -3686,7 +3686,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void aSearchSchoolEnrollmentQ(SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolEnrollmentQ(String classApiUriMethod, SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -3696,23 +3696,27 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void aSearchSchoolEnrollmentFq(SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolEnrollmentFq(String classApiUriMethod, SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSchoolEnrollmentSort(SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolEnrollmentSort(String classApiUriMethod, SearchList<SchoolEnrollment> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSchoolEnrollmentRows(SearchList<SchoolEnrollment> searchList, Integer valueRows) {
+	public void aSearchSchoolEnrollmentRows(String classApiUriMethod, SearchList<SchoolEnrollment> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchSchoolEnrollmentStart(SearchList<SchoolEnrollment> searchList, Integer valueStart) {
+	public void aSearchSchoolEnrollmentStart(String classApiUriMethod, SearchList<SchoolEnrollment> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolEnrollmentVar(SearchList<SchoolEnrollment> searchList, String var, String value) {
+	public void aSearchSchoolEnrollmentVar(String classApiUriMethod, SearchList<SchoolEnrollment> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -3764,32 +3768,32 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolEnrollment.varSearchSchoolEnrollment(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolEnrollmentQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolEnrollmentQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
-								aSearchSchoolEnrollmentFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolEnrollmentFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
-								aSearchSchoolEnrollmentSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolEnrollmentSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSchoolEnrollmentStart(searchList, valueStart);
+								aSearchSchoolEnrollmentStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSchoolEnrollmentRows(searchList, valueRows);
+								aSearchSchoolEnrollmentRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolEnrollmentVar(searchList, entityVar, valueIndexed);
+								aSearchSchoolEnrollmentVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

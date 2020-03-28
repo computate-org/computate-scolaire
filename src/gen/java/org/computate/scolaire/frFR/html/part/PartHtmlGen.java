@@ -144,258 +144,144 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return partHtmlCle == null ? "" : StringEscapeUtils.escapeHtml4(strPartHtmlCle());
 	}
 
-	//////////////////////////
-	// designInscriptionCle //
-	//////////////////////////
+	////////////////////
+	// designPageCles //
+	////////////////////
 
-	/**	L'entité « designInscriptionCle »
-	 *	 is defined as null before being initialized. 
+	/**	L'entité « designPageCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Long designInscriptionCle;
+	protected List<Long> designPageCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
-	public Couverture<Long> designInscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("designInscriptionCle").o(designInscriptionCle);
+	public Couverture<List<Long>> designPageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designPageCles").o(designPageCles);
 
-	/**	<br/>L'entité « designInscriptionCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designInscriptionCle">Trouver l'entité designInscriptionCle dans Solr</a>
+	/**	<br/>L'entité « designPageCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCles">Trouver l'entité designPageCles dans Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param designPageCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _designInscriptionCle(Couverture<Long> c);
+	protected abstract void _designPageCles(List<Long> c);
 
-	public Long getDesignInscriptionCle() {
-		return designInscriptionCle;
+	public List<Long> getDesignPageCles() {
+		return designPageCles;
 	}
 
-	public void setDesignInscriptionCle(Long designInscriptionCle) {
-		this.designInscriptionCle = designInscriptionCle;
-		this.designInscriptionCleCouverture.dejaInitialise = true;
+	public void setDesignPageCles(List<Long> designPageCles) {
+		this.designPageCles = designPageCles;
+		this.designPageClesCouverture.dejaInitialise = true;
 	}
-	public PartHtml setDesignInscriptionCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.designInscriptionCle = Long.parseLong(o);
-		this.designInscriptionCleCouverture.dejaInitialise = true;
-		return (PartHtml)this;
-	}
-	protected PartHtml designInscriptionCleInit() {
-		if(!designInscriptionCleCouverture.dejaInitialise) {
-			_designInscriptionCle(designInscriptionCleCouverture);
-			if(designInscriptionCle == null)
-				setDesignInscriptionCle(designInscriptionCleCouverture.o);
+	public PartHtml addDesignPageCles(Long...objets) {
+		for(Long o : objets) {
+			addDesignPageCles(o);
 		}
-		designInscriptionCleCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+	public PartHtml addDesignPageCles(Long o) {
+		if(o != null && !designPageCles.contains(o))
+			this.designPageCles.add(o);
+		return (PartHtml)this;
+	}
+	public PartHtml setDesignPageCles(JsonArray objets) {
+		designPageCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addDesignPageCles(o);
+		}
+		return (PartHtml)this;
+	}
+	public PartHtml addDesignPageCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addDesignPageCles(p);
+		}
+		return (PartHtml)this;
+	}
+	protected PartHtml designPageClesInit() {
+		if(!designPageClesCouverture.dejaInitialise) {
+			_designPageCles(designPageCles);
+		}
+		designPageClesCouverture.dejaInitialise(true);
 		return (PartHtml)this;
 	}
 
-	public Long solrDesignInscriptionCle() {
-		return designInscriptionCle;
+	public List<Long> solrDesignPageCles() {
+		return designPageCles;
 	}
 
-	public String strDesignInscriptionCle() {
-		return designInscriptionCle == null ? "" : designInscriptionCle.toString();
+	public String strDesignPageCles() {
+		return designPageCles == null ? "" : designPageCles.toString();
 	}
 
-	public String jsonDesignInscriptionCle() {
-		return designInscriptionCle == null ? "" : designInscriptionCle.toString();
+	public String jsonDesignPageCles() {
+		return designPageCles == null ? "" : designPageCles.toString();
 	}
 
-	public String nomAffichageDesignInscriptionCle() {
-		return "design d'inscription";
+	public String nomAffichageDesignPageCles() {
+		return "designs de page";
 	}
 
-	public String htmTooltipDesignInscriptionCle() {
+	public String htmTooltipDesignPageCles() {
 		return null;
 	}
 
-	public String htmDesignInscriptionCle() {
-		return designInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionCle());
+	public String htmDesignPageCles() {
+		return designPageCles == null ? "" : StringEscapeUtils.escapeHtml4(strDesignPageCles());
 	}
 
-	public void inputDesignInscriptionCle(String classeApiMethodeMethode) {
+	public void inputDesignPageCles(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
 		{
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
-					.a("placeholder", "design d'inscription")
-					.a("class", "valeur suggereDesignInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setDesignInscriptionCle")
-					.a("id", classeApiMethodeMethode, "_designInscriptionCle")
+					.a("placeholder", "designs de page")
+					.a("class", "valeur suggereDesignPageCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setDesignPageCles")
+					.a("id", classeApiMethodeMethode, "_designPageCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle')) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignPageCles')) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
 	}
 
-	public void htmDesignInscriptionCle(String classeApiMethodeMethode) {
+	public void htmDesignPageCles(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlDesignInscriptionCle").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlDesignPageCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
 								e("i").a("class", "far fa-drafting-compass ").f().g("i");
-								sx("design d'inscription");
+								sx("designs de page");
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier un design d'inscription a ce part de HTML");
+								sx("relier  a ce part de HTML");
 							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-cell-row ").f();
 
-								inputDesignInscriptionCle(classeApiMethodeMethode);
+								inputDesignPageCles(classeApiMethodeMethode);
 								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode).f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPartHtmlDesignPageCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postDesignInscriptionVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designInscriptionCle')); });")
-											.f().sx("ajouter un design d'inscription")
-										.g("button");
-									} g("div");
-								}
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////////
-	// designPageCle //
-	///////////////////
-
-	/**	L'entité « designPageCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long designPageCle;
-	@JsonIgnore
-	public Couverture<Long> designPageCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("designPageCle").o(designPageCle);
-
-	/**	<br/>L'entité « designPageCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCle">Trouver l'entité designPageCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _designPageCle(Couverture<Long> c);
-
-	public Long getDesignPageCle() {
-		return designPageCle;
-	}
-
-	public void setDesignPageCle(Long designPageCle) {
-		this.designPageCle = designPageCle;
-		this.designPageCleCouverture.dejaInitialise = true;
-	}
-	public PartHtml setDesignPageCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.designPageCle = Long.parseLong(o);
-		this.designPageCleCouverture.dejaInitialise = true;
-		return (PartHtml)this;
-	}
-	protected PartHtml designPageCleInit() {
-		if(!designPageCleCouverture.dejaInitialise) {
-			_designPageCle(designPageCleCouverture);
-			if(designPageCle == null)
-				setDesignPageCle(designPageCleCouverture.o);
-		}
-		designPageCleCouverture.dejaInitialise(true);
-		return (PartHtml)this;
-	}
-
-	public Long solrDesignPageCle() {
-		return designPageCle;
-	}
-
-	public String strDesignPageCle() {
-		return designPageCle == null ? "" : designPageCle.toString();
-	}
-
-	public String jsonDesignPageCle() {
-		return designPageCle == null ? "" : designPageCle.toString();
-	}
-
-	public String nomAffichageDesignPageCle() {
-		return "design de page";
-	}
-
-	public String htmTooltipDesignPageCle() {
-		return null;
-	}
-
-	public String htmDesignPageCle() {
-		return designPageCle == null ? "" : StringEscapeUtils.escapeHtml4(strDesignPageCle());
-	}
-
-	public void inputDesignPageCle(String classeApiMethodeMethode) {
-		PartHtml s = (PartHtml)this;
-		{
-			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "design de page")
-					.a("class", "valeur suggereDesignPageCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setDesignPageCle")
-					.a("id", classeApiMethodeMethode, "_designPageCle")
-					.a("autocomplete", "off")
-					.a("oninput", "suggerePartHtmlDesignPageCle($(this).val() ? rechercherDesignPageFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignPageCle')) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCle_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
-
-		}
-	}
-
-	public void htmDesignPageCle(String classeApiMethodeMethode) {
-		PartHtml s = (PartHtml)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlDesignPageCle").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=partHtmlCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
-								e("i").a("class", "far fa-drafting-compass ").f().g("i");
-								sx("design de page");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier un design de page a ce part de HTML");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputDesignPageCle(classeApiMethodeMethode);
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPartHtmlDesignPageCle_", classeApiMethodeMethode).f();
-								} g("ul");
-								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCle')); });")
+											.a("onclick", "postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCles')); });")
 											.f().sx("ajouter un design de page")
 										.g("button");
 									} g("div");
@@ -415,6 +301,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlLien »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlLien;
 	@JsonIgnore
@@ -535,6 +422,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlElement »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlElement;
 	@JsonIgnore
@@ -655,6 +543,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlId;
 	@JsonIgnore
@@ -775,6 +664,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlClasses »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlClasses;
 	@JsonIgnore
@@ -895,6 +785,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlStyle »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlStyle;
 	@JsonIgnore
@@ -1015,6 +906,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlAvant »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlAvant;
 	@JsonIgnore
@@ -1133,6 +1025,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlApres »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlApres;
 	@JsonIgnore
@@ -1251,6 +1144,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlTexte »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlTexte;
 	@JsonIgnore
@@ -1369,6 +1263,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVar »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVar;
 	@JsonIgnore
@@ -1489,6 +1384,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarSpan »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarSpan;
 	@JsonIgnore
@@ -1609,6 +1505,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarForm »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarForm;
 	@JsonIgnore
@@ -1729,6 +1626,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarInput »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarInput;
 	@JsonIgnore
@@ -1849,6 +1747,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarForEach »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarForEach;
 	@JsonIgnore
@@ -1969,6 +1868,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlExclure »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean htmlExclure;
 	@JsonIgnore
@@ -2094,6 +1994,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « pdfExclure »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean pdfExclure;
 	@JsonIgnore
@@ -2204,6 +2105,132 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputPdfExclure(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////////
+	// connecterDeconnecter //
+	//////////////////////////
+
+	/**	L'entité « connecterDeconnecter »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean connecterDeconnecter;
+	@JsonIgnore
+	public Couverture<Boolean> connecterDeconnecterCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("connecterDeconnecter").o(connecterDeconnecter);
+
+	/**	<br/>L'entité « connecterDeconnecter »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:connecterDeconnecter">Trouver l'entité connecterDeconnecter dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _connecterDeconnecter(Couverture<Boolean> c);
+
+	public Boolean getConnecterDeconnecter() {
+		return connecterDeconnecter;
+	}
+
+	public void setConnecterDeconnecter(Boolean connecterDeconnecter) {
+		this.connecterDeconnecter = connecterDeconnecter;
+		this.connecterDeconnecterCouverture.dejaInitialise = true;
+	}
+	public PartHtml setConnecterDeconnecter(String o) {
+		this.connecterDeconnecter = Boolean.parseBoolean(o);
+		this.connecterDeconnecterCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	protected PartHtml connecterDeconnecterInit() {
+		if(!connecterDeconnecterCouverture.dejaInitialise) {
+			_connecterDeconnecter(connecterDeconnecterCouverture);
+			if(connecterDeconnecter == null)
+				setConnecterDeconnecter(connecterDeconnecterCouverture.o);
+		}
+		connecterDeconnecterCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+
+	public Boolean solrConnecterDeconnecter() {
+		return connecterDeconnecter;
+	}
+
+	public String strConnecterDeconnecter() {
+		return connecterDeconnecter == null ? "" : connecterDeconnecter.toString();
+	}
+
+	public String jsonConnecterDeconnecter() {
+		return connecterDeconnecter == null ? "" : connecterDeconnecter.toString();
+	}
+
+	public String nomAffichageConnecterDeconnecter() {
+		return "se connecter / se deconnecter";
+	}
+
+	public String htmTooltipConnecterDeconnecter() {
+		return null;
+	}
+
+	public String htmConnecterDeconnecter() {
+		return connecterDeconnecter == null ? "" : StringEscapeUtils.escapeHtml4(strConnecterDeconnecter());
+	}
+
+	public void inputConnecterDeconnecter(String classeApiMethodeMethode) {
+		PartHtml s = (PartHtml)this;
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_connecterDeconnecter")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_connecterDeconnecter");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setConnecterDeconnecter inputPartHtml", pk, "ConnecterDeconnecter w3-input w3-border ");
+				a("name", "setConnecterDeconnecter");
+			} else {
+				a("class", "valeurConnecterDeconnecter inputPartHtml", pk, "ConnecterDeconnecter w3-input w3-border ");
+				a("name", "connecterDeconnecter");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setConnecterDeconnecter', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_connecterDeconnecter')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_connecterDeconnecter')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getConnecterDeconnecter() != null && getConnecterDeconnecter())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		}
+	}
+
+	public void htmConnecterDeconnecter(String classeApiMethodeMethode) {
+		PartHtml s = (PartHtml)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlConnecterDeconnecter").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_connecterDeconnecter").a("class", "").f().sx("se connecter / se deconnecter").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputConnecterDeconnecter(classeApiMethodeMethode);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -3504,8 +3531,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void initPartHtml() {
 		partHtmlCleInit();
-		designInscriptionCleInit();
-		designPageCleInit();
+		designPageClesInit();
 		htmlLienInit();
 		htmlElementInit();
 		htmlIdInit();
@@ -3521,6 +3547,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		htmlVarForEachInit();
 		htmlExclureInit();
 		pdfExclureInit();
+		connecterDeconnecterInit();
 		tri1Init();
 		tri2Init();
 		tri3Init();
@@ -3571,10 +3598,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		switch(var) {
 			case "partHtmlCle":
 				return oPartHtml.partHtmlCle;
-			case "designInscriptionCle":
-				return oPartHtml.designInscriptionCle;
-			case "designPageCle":
-				return oPartHtml.designPageCle;
+			case "designPageCles":
+				return oPartHtml.designPageCles;
 			case "htmlLien":
 				return oPartHtml.htmlLien;
 			case "htmlElement":
@@ -3605,6 +3630,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return oPartHtml.htmlExclure;
 			case "pdfExclure":
 				return oPartHtml.pdfExclure;
+			case "connecterDeconnecter":
+				return oPartHtml.connecterDeconnecter;
 			case "tri1":
 				return oPartHtml.tri1;
 			case "tri2":
@@ -3650,11 +3677,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public Object attribuerPartHtml(String var, Object val) {
 		PartHtml oPartHtml = (PartHtml)this;
 		switch(var) {
-			case "designInscriptionCle":
-				oPartHtml.setDesignInscriptionCle((Long)val);
-				return val;
-			case "designPageCle":
-				oPartHtml.setDesignPageCle((Long)val);
+			case "designPageCles":
+				oPartHtml.addDesignPageCles((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3742,6 +3766,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				setPdfExclure(val);
 				sauvegardesPartHtml.add(var);
 				return val;
+			case "connecterDeconnecter":
+				setConnecterDeconnecter(val);
+				sauvegardesPartHtml.add(var);
+				return val;
 			case "tri1":
 				setTri1(val);
 				sauvegardesPartHtml.add(var);
@@ -3811,13 +3839,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					oPartHtml.setPartHtmlCle(partHtmlCle);
 			}
 
-			Long designInscriptionCle = (Long)solrDocument.get("designInscriptionCle_stored_long");
-			if(designInscriptionCle != null)
-				oPartHtml.setDesignInscriptionCle(designInscriptionCle);
-
-			Long designPageCle = (Long)solrDocument.get("designPageCle_stored_long");
-			if(designPageCle != null)
-				oPartHtml.setDesignPageCle(designPageCle);
+			List<Long> designPageCles = (List<Long>)solrDocument.get("designPageCles_stored_longs");
+			if(designPageCles != null)
+				oPartHtml.designPageCles.addAll(designPageCles);
 
 			if(sauvegardesPartHtml.contains("htmlLien")) {
 				String htmlLien = (String)solrDocument.get("htmlLien_stored_string");
@@ -3907,6 +3931,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				Boolean pdfExclure = (Boolean)solrDocument.get("pdfExclure_stored_boolean");
 				if(pdfExclure != null)
 					oPartHtml.setPdfExclure(pdfExclure);
+			}
+
+			if(sauvegardesPartHtml.contains("connecterDeconnecter")) {
+				Boolean connecterDeconnecter = (Boolean)solrDocument.get("connecterDeconnecter_stored_boolean");
+				if(connecterDeconnecter != null)
+					oPartHtml.setConnecterDeconnecter(connecterDeconnecter);
 			}
 
 			if(sauvegardesPartHtml.contains("tri1")) {
@@ -4042,13 +4072,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			document.addField("partHtmlCle_indexed_long", partHtmlCle);
 			document.addField("partHtmlCle_stored_long", partHtmlCle);
 		}
-		if(designInscriptionCle != null) {
-			document.addField("designInscriptionCle_indexed_long", designInscriptionCle);
-			document.addField("designInscriptionCle_stored_long", designInscriptionCle);
-		}
-		if(designPageCle != null) {
-			document.addField("designPageCle_indexed_long", designPageCle);
-			document.addField("designPageCle_stored_long", designPageCle);
+		if(designPageCles != null) {
+			for(java.lang.Long o : designPageCles) {
+				document.addField("designPageCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : designPageCles) {
+				document.addField("designPageCles_stored_longs", o);
+			}
 		}
 		if(htmlLien != null) {
 			document.addField("htmlLien_indexed_string", htmlLien);
@@ -4109,6 +4139,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		if(pdfExclure != null) {
 			document.addField("pdfExclure_indexed_boolean", pdfExclure);
 			document.addField("pdfExclure_stored_boolean", pdfExclure);
+		}
+		if(connecterDeconnecter != null) {
+			document.addField("connecterDeconnecter_indexed_boolean", connecterDeconnecter);
+			document.addField("connecterDeconnecter_stored_boolean", connecterDeconnecter);
 		}
 		if(tri1 != null) {
 			document.addField("tri1_indexed_double", tri1);
@@ -4175,10 +4209,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		switch(entiteVar) {
 			case "partHtmlCle":
 				return "partHtmlCle_indexed_long";
-			case "designInscriptionCle":
-				return "designInscriptionCle_indexed_long";
-			case "designPageCle":
-				return "designPageCle_indexed_long";
+			case "designPageCles":
+				return "designPageCles_indexed_longs";
 			case "htmlLien":
 				return "htmlLien_indexed_string";
 			case "htmlElement":
@@ -4209,6 +4241,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return "htmlExclure_indexed_boolean";
 			case "pdfExclure":
 				return "pdfExclure_indexed_boolean";
+			case "connecterDeconnecter":
+				return "connecterDeconnecter_indexed_boolean";
 			case "tri1":
 				return "tri1_indexed_double";
 			case "tri2":
@@ -4262,13 +4296,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		if(partHtmlCle != null)
 			oPartHtml.setPartHtmlCle(partHtmlCle);
 
-		Long designInscriptionCle = (Long)solrDocument.get("designInscriptionCle_stored_long");
-		if(designInscriptionCle != null)
-			oPartHtml.setDesignInscriptionCle(designInscriptionCle);
-
-		Long designPageCle = (Long)solrDocument.get("designPageCle_stored_long");
-		if(designPageCle != null)
-			oPartHtml.setDesignPageCle(designPageCle);
+		List<Long> designPageCles = (List<Long>)solrDocument.get("designPageCles_stored_longs");
+		if(designPageCles != null)
+			oPartHtml.designPageCles.addAll(designPageCles);
 
 		String htmlLien = (String)solrDocument.get("htmlLien_stored_string");
 		if(htmlLien != null)
@@ -4330,6 +4360,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		if(pdfExclure != null)
 			oPartHtml.setPdfExclure(pdfExclure);
 
+		Boolean connecterDeconnecter = (Boolean)solrDocument.get("connecterDeconnecter_stored_boolean");
+		if(connecterDeconnecter != null)
+			oPartHtml.setConnecterDeconnecter(connecterDeconnecter);
+
 		Double tri1 = (Double)solrDocument.get("tri1_stored_double");
 		if(tri1 != null)
 			oPartHtml.setTri1(tri1);
@@ -4382,10 +4416,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof PartHtml) {
 			PartHtml original = (PartHtml)o;
-			if(!Objects.equals(designInscriptionCle, original.getDesignInscriptionCle()))
-				requeteApi.addVars("designInscriptionCle");
-			if(!Objects.equals(designPageCle, original.getDesignPageCle()))
-				requeteApi.addVars("designPageCle");
+			if(!Objects.equals(designPageCles, original.getDesignPageCles()))
+				requeteApi.addVars("designPageCles");
 			if(!Objects.equals(htmlLien, original.getHtmlLien()))
 				requeteApi.addVars("htmlLien");
 			if(!Objects.equals(htmlElement, original.getHtmlElement()))
@@ -4416,6 +4448,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				requeteApi.addVars("htmlExclure");
 			if(!Objects.equals(pdfExclure, original.getPdfExclure()))
 				requeteApi.addVars("pdfExclure");
+			if(!Objects.equals(connecterDeconnecter, original.getConnecterDeconnecter()))
+				requeteApi.addVars("connecterDeconnecter");
 			if(!Objects.equals(tri1, original.getTri1()))
 				requeteApi.addVars("tri1");
 			if(!Objects.equals(tri2, original.getTri2()))
@@ -4445,7 +4479,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), designInscriptionCle, designPageCle, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclure, pdfExclure, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
+		return Objects.hash(super.hashCode(), designPageCles, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclure, pdfExclure, connecterDeconnecter, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
 	}
 
 	////////////
@@ -4459,8 +4493,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			return false;
 		PartHtml that = (PartHtml)o;
 		return super.equals(o)
-				&& Objects.equals( designInscriptionCle, that.designInscriptionCle )
-				&& Objects.equals( designPageCle, that.designPageCle )
+				&& Objects.equals( designPageCles, that.designPageCles )
 				&& Objects.equals( htmlLien, that.htmlLien )
 				&& Objects.equals( htmlElement, that.htmlElement )
 				&& Objects.equals( htmlId, that.htmlId )
@@ -4476,6 +4509,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				&& Objects.equals( htmlVarForEach, that.htmlVarForEach )
 				&& Objects.equals( htmlExclure, that.htmlExclure )
 				&& Objects.equals( pdfExclure, that.pdfExclure )
+				&& Objects.equals( connecterDeconnecter, that.connecterDeconnecter )
 				&& Objects.equals( tri1, that.tri1 )
 				&& Objects.equals( tri2, that.tri2 )
 				&& Objects.equals( tri3, that.tri3 )
@@ -4496,8 +4530,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("PartHtml { ");
-		sb.append( "designInscriptionCle: " ).append(designInscriptionCle);
-		sb.append( ", designPageCle: " ).append(designPageCle);
+		sb.append( "designPageCles: " ).append(designPageCles);
 		sb.append( ", htmlLien: \"" ).append(htmlLien).append( "\"" );
 		sb.append( ", htmlElement: \"" ).append(htmlElement).append( "\"" );
 		sb.append( ", htmlId: \"" ).append(htmlId).append( "\"" );
@@ -4513,6 +4546,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		sb.append( ", htmlVarForEach: \"" ).append(htmlVarForEach).append( "\"" );
 		sb.append( ", htmlExclure: " ).append(htmlExclure);
 		sb.append( ", pdfExclure: " ).append(pdfExclure);
+		sb.append( ", connecterDeconnecter: " ).append(connecterDeconnecter);
 		sb.append( ", tri1: " ).append(tri1);
 		sb.append( ", tri2: " ).append(tri2);
 		sb.append( ", tri3: " ).append(tri3);

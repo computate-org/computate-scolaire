@@ -233,7 +233,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public void inputPartHtmlCles(String classeApiMethodeMethode) {
 		DesignPage s = (DesignPage)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -242,9 +245,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					.a("name", "setPartHtmlCles")
 					.a("id", classeApiMethodeMethode, "_partHtmlCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles')) : [", pk == null ? "" : "{'name':'fq','value':'designPageCle:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles')) : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			sx(htmPartHtmlCles());
 		}
 	}
 
@@ -255,7 +260,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=designPageCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+							{ e("a").a("href", "?fq=designPageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
 								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("parts");
 							} g("a");
@@ -277,11 +282,14 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignPagePartHtmlCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postPartHtmlVals({ designPageCle: \"", pk, "\" }, function() { patchDesignPageVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
+											.a("onclick", "postPartHtmlVals({ designPageCles: [ \"", pk, "\" ] }, function() { patchDesignPageVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
 											.f().sx("ajouter un part de HTML")
 										.g("button");
 									} g("div");
@@ -447,7 +455,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public void inputDesignPageNomComplet(String classeApiMethodeMethode) {
 		DesignPage s = (DesignPage)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "nom")
@@ -466,6 +477,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				a("value", strDesignPageNomComplet())
 			.fg();
 
+		} else {
+			sx(htmDesignPageNomComplet());
 		}
 	}
 
@@ -483,7 +496,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 								inputDesignPageNomComplet(classeApiMethodeMethode);
 							} g("div");
-							{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -573,7 +589,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public void inputDesignCache(String classeApiMethodeMethode) {
 		DesignPage s = (DesignPage)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -605,6 +624,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
+			sx(htmDesignCache());
 		}
 	}
 

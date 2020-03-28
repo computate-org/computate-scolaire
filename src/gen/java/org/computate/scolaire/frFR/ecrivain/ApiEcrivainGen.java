@@ -2242,6 +2242,73 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeMotsCles == null ? "" : StringEscapeUtils.escapeHtml4(strClasseMotsCles());
 	}
 
+	//////////////////////
+	// classePublicLire //
+	//////////////////////
+
+	/**	L'entité « classePublicLire »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean classePublicLire;
+	@JsonIgnore
+	public Couverture<Boolean> classePublicLireCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classePublicLire").o(classePublicLire);
+
+	/**	<br/>L'entité « classePublicLire »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classePublicLire">Trouver l'entité classePublicLire dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classePublicLire(Couverture<Boolean> c);
+
+	public Boolean getClassePublicLire() {
+		return classePublicLire;
+	}
+
+	public void setClassePublicLire(Boolean classePublicLire) {
+		this.classePublicLire = classePublicLire;
+		this.classePublicLireCouverture.dejaInitialise = true;
+	}
+	public ApiEcrivain setClassePublicLire(String o) {
+		this.classePublicLire = Boolean.parseBoolean(o);
+		this.classePublicLireCouverture.dejaInitialise = true;
+		return (ApiEcrivain)this;
+	}
+	protected ApiEcrivain classePublicLireInit() {
+		if(!classePublicLireCouverture.dejaInitialise) {
+			_classePublicLire(classePublicLireCouverture);
+			if(classePublicLire == null)
+				setClassePublicLire(classePublicLireCouverture.o);
+		}
+		classePublicLireCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public Boolean solrClassePublicLire() {
+		return classePublicLire;
+	}
+
+	public String strClassePublicLire() {
+		return classePublicLire == null ? "" : classePublicLire.toString();
+	}
+
+	public String jsonClassePublicLire() {
+		return classePublicLire == null ? "" : classePublicLire.toString();
+	}
+
+	public String nomAffichageClassePublicLire() {
+		return null;
+	}
+
+	public String htmTooltipClassePublicLire() {
+		return null;
+	}
+
+	public String htmClassePublicLire() {
+		return classePublicLire == null ? "" : StringEscapeUtils.escapeHtml4(strClassePublicLire());
+	}
+
 	///////////////////////
 	// classeRoleSession //
 	///////////////////////
@@ -2765,6 +2832,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classePageNomCanoniqueMethodeInit();
 		classeMotsClesTrouvesInit();
 		classeMotsClesInit();
+		classePublicLireInit();
 		classeRoleSessionInit();
 		classeRoleUtilisateurInit();
 		classeRolesTrouvesInit();
@@ -2913,6 +2981,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeMotsClesTrouves;
 			case "classeMotsCles":
 				return oApiEcrivain.classeMotsCles;
+			case "classePublicLire":
+				return oApiEcrivain.classePublicLire;
 			case "classeRoleSession":
 				return oApiEcrivain.classeRoleSession;
 			case "classeRoleUtilisateur":
