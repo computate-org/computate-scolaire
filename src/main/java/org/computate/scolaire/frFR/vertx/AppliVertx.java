@@ -66,6 +66,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
@@ -76,9 +77,11 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.net.JksOptions;
 import io.vertx.core.shareddata.AsyncMap;
 import io.vertx.core.shareddata.SharedData;
+import io.vertx.ext.auth.oauth2.AccessToken;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.auth.oauth2.OAuth2ClientOptions;
 import io.vertx.ext.auth.oauth2.OAuth2FlowType;
-import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
+import io.vertx.ext.auth.oauth2.providers.OpenIDConnectAuth;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
@@ -521,97 +524,128 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Promise<Void> promise = Promise.promise();
 		String siteUrlBase = configSite.getSiteUrlBase();
-		JsonObject keycloakJson = new JsonObject()
-			.put("realm", configSite.getAuthRoyaume())
-			.put("resource", configSite.getAuthRessource())
-			.put("auth-server-url", configSite.getAuthUrl())
-			.put("ssl-required", configSite.getAuthSslRequis())
-			.put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()))
-			;
-		OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
-		OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
-		{
-			Router tempRouter = Router.router(vertx);
-			gestionnaireAuth.setupCallback(tempRouter.get("/callback"));
-		}
+		OAuth2ClientOptions oauth2ClientOptions = new OAuth2ClientOptions();
+		oauth2ClientOptions.setSite(configSite.getAuthUrl() + "/realms/" + configSite.getAuthRoyaume());
+		oauth2ClientOptions.setClientID(configSite.getAuthRessource());
+		oauth2ClientOptions.setClientSecret(configSite.getAuthSecret());
+		oauth2ClientOptions.setFlow(OAuth2FlowType.AUTH_CODE);
+		JsonObject extraParams = new JsonObject();
+		extraParams.put("scope", "openid DefaultAuthScope SiteAdminScope");
+		oauth2ClientOptions.setExtraParameters(extraParams);
+//		oauth2ClientOptions.setAuthorizationPath(configSite.getAuthUrl() + "/realms/" + configSite.getAuthRoyaume() + "/protocol/openid-connect/auth");
 
-//		ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
-		LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
-		SessionHandler sessionHandler = SessionHandler.create(sessionStore);
-		sessionHandler.setAuthProvider(authFournisseur);
-
-		OpenAPI3RouterFactory.create(vertx, "openapi3-frFR.yaml", ar -> {
-			if (ar.succeeded()) {
-				OpenAPI3RouterFactory usineRouteur = ar.result();
-				usineRouteur.mountServicesFromExtensions();
-				siteContexteFrFR.setUsineRouteur(usineRouteur);
-
-				usineRouteur.addGlobalHandler(new CookieHandlerImpl());
-				usineRouteur.addGlobalHandler(sessionHandler);
-				usineRouteur.addHandlerByOperationId("callback", ctx -> {
-
-					// Handle the callback of the flow
-					final String code = ctx.request().getParam("code");
-
-					// code is a require value
-					if (code == null) {
-						ctx.fail(400);
-						return;
-					}
-
-					final String state = ctx.request().getParam("state");
-
-					final JsonObject config = new JsonObject().put("code", code);
-
-					config.put("redirect_uri", siteUrlBase + "/callback");
-
-					authFournisseur.authenticate(config, res -> {
-						if (res.failed()) {
-							ctx.fail(res.cause());
-						} else {
-							ctx.setUser(res.result());
-							Session session = ctx.session();
-							if (session != null) {
-								// the user has upgraded from unauthenticated to authenticated
-								// session should be upgraded as recommended by owasp
-								session.regenerateId();
-								// we should redirect the UA so this link becomes invalid
-								ctx.response()
-										// disable all caching
-										.putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
-										.putHeader("Pragma", "no-cache").putHeader(HttpHeaders.EXPIRES, "0")
-										// redirect (when there is no state, redirect to home
-										.putHeader(HttpHeaders.LOCATION, state != null ? state : "/").setStatusCode(302)
-										.end("Redirecting to " + (state != null ? state : "/") + ".");
-							} else {
-								// there is no session object so we cannot keep state
-								ctx.reroute(state != null ? state : "/");
+		OpenIDConnectAuth.discover(vertx, oauth2ClientOptions, a -> {
+			if(a.succeeded()) {
+				OAuth2Auth authFournisseur = a.result();
+	
+				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
+				gestionnaireAuth.addAuthority("DefaultAuthScope");
+				gestionnaireAuth.addAuthority("SiteAdminScope");
+				gestionnaireAuth.addAuthority("openid");
+				{
+					Router tempRouter = Router.router(vertx);
+					gestionnaireAuth.setupCallback(tempRouter.get("/callback"));
+				}
+		
+		//		ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
+				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+				sessionHandler.setAuthProvider(authFournisseur);
+		
+				OpenAPI3RouterFactory.create(vertx, "openapi3-frFR.yaml", b -> {
+					if (b.succeeded()) {
+						OpenAPI3RouterFactory usineRouteur = b.result();
+						usineRouteur.mountServicesFromExtensions();
+						siteContexteFrFR.setUsineRouteur(usineRouteur);
+		
+						usineRouteur.addGlobalHandler(new CookieHandlerImpl());
+						usineRouteur.addGlobalHandler(sessionHandler);
+						usineRouteur.addHandlerByOperationId("callback", ctx -> {
+		
+							// Handle the callback of the flow
+							final String code = ctx.request().getParam("code");
+		
+							// code is a require value
+							if (code == null) {
+								ctx.fail(400);
+								return;
 							}
-						}
-					});
-				});
-				usineRouteur.addFailureHandlerByOperationId("callback", a -> {});
-
-				usineRouteur.addHandlerByOperationId("deconnexion", rc -> {
-					Session session = rc.session();
-					if (session != null) {
-						session.destroy();
+		
+							final String state = ctx.request().getParam("state");
+		
+							final JsonObject config = new JsonObject().put("code", code);
+		
+							config.put("redirect_uri", siteUrlBase + "/callback");
+		
+							authFournisseur.authenticate(config, res -> {
+								if (res.failed()) {
+									ctx.fail(res.cause());
+								} else {
+									AccessToken token = (AccessToken) res.result();
+									token.isAuthorized("SiteAdminScope", r -> {
+										if(r.succeeded()) {
+											ctx.setUser(res.result());
+											Session session = ctx.session();
+											if (session != null) {
+												// the user has upgraded from unauthenticated to authenticated
+												// session should be upgraded as recommended by owasp
+												session.regenerateId();
+												// we should redirect the UA so this link becomes invalid
+												ctx.response()
+														// disable all caching
+														.putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
+														.putHeader("Pragma", "no-cache").putHeader(HttpHeaders.EXPIRES, "0")
+														// redirect (when there is no state, redirect to home
+														.putHeader(HttpHeaders.LOCATION, state != null ? state : "/").setStatusCode(302)
+														.end("Redirecting to " + (state != null ? state : "/") + ".");
+											} else {
+												// there is no session object so we cannot keep state
+												ctx.reroute(state != null ? state : "/");
+											}
+										} else {
+											String str = new JsonObject()
+													.put("error", new JsonObject())
+													.put("message", "Unauthorized").encodePrettily();
+											Buffer buffer = Buffer.buffer().appendString(str);
+											ctx.response().putHeader("Content-Length", Integer.toString(buffer.length()));
+											ctx.response().write(buffer);
+											ctx.response().setStatusCode(403);
+											ctx.response().end();
+										}
+									});
+								}
+							});
+						});
+						usineRouteur.addFailureHandlerByOperationId("callback", c -> {});
+		
+						usineRouteur.addHandlerByOperationId("deconnexion", rc -> {
+							Session session = rc.session();
+							if (session != null) {
+								session.destroy();
+							}
+							rc.clearUser();
+							rc.reroute("/ecole");
+						});
+						usineRouteur.addFailureHandlerByOperationId("deconnexion", c -> {});
+		
+//						usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
+						usineRouteur.addSecuritySchemaScopeValidator("openIdConnect", "DefaultAuthScope", gestionnaireAuth);
+						usineRouteur.addSecuritySchemaScopeValidator("openIdConnect", "SiteAdminScope", gestionnaireAuth);
+						usineRouteur.addSecuritySchemaScopeValidator("openIdConnect", "openid", gestionnaireAuth);
+						Router routeur = usineRouteur.getRouter();
+						siteContexteFrFR.setRouteur(routeur);
+		
+						LOGGER.info(configurerOpenApiSucces);
+						promise.complete();
+					} else {
+						LOGGER.error(configurerOpenApiErreur, b.cause());
+						promise.fail(b.cause());
 					}
-					rc.clearUser();
-					rc.reroute("/ecole");
 				});
-				usineRouteur.addFailureHandlerByOperationId("deconnexion", a -> {});
-
-				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
-				Router routeur = usineRouteur.getRouter();
-				siteContexteFrFR.setRouteur(routeur);
-
-				LOGGER.info(configurerOpenApiSucces);
-				promise.complete();
 			} else {
-				LOGGER.error(configurerOpenApiErreur, ar.cause());
-				promise.fail(ar.cause());
+				LOGGER.error(configurerOpenApiErreur, a.cause());
+				promise.fail(a.cause());
 			}
 		});
 		return promise;

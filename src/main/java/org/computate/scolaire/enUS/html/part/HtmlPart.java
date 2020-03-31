@@ -124,6 +124,8 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 			b.append("[").append(htmlVarInput).append("]");
 		if(htmlVarForm != null)
 			b.append("[[").append(htmlVarForm).append("]]");
+		if(loginLogout)
+			b.append("[ login ] / [ logout ]");
 		if(htmlText != null)
 			b.append(htmlText);
 		if(htmlAfter != null)

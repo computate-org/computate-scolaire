@@ -508,6 +508,12 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * r.enUS: htmlText
 	 * r: htmlApres
 	 * r.enUS: htmlAfter
+	 * r: connecterDeconnecter
+	 * r.enUS: loginLogout
+	 * r: deconnecter
+	 * r.enUS: logout
+	 * r: connecter
+	 * r.enUS: login
 	 */ 
 	@Override
 	protected void _objetTitre(Couverture<String> c) {
@@ -528,6 +534,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 			b.append("[").append(htmlVarInput).append("]");
 		if(htmlVarForm != null)
 			b.append("[[").append(htmlVarForm).append("]]");
+		if(connecterDeconnecter)
+			b.append("[ connecter ] / [ deconnecter ]");
 		if(htmlTexte != null)
 			b.append(htmlTexte);
 		if(htmlApres != null)

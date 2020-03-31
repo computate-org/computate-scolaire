@@ -2449,6 +2449,75 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return (PageLayout)this;
 	}
 
+	/////////////
+	// yearVal //
+	/////////////
+
+	/**	L'entité « yearVal »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer yearVal;
+	@JsonIgnore
+	public Wrap<Integer> yearValWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearVal").o(yearVal);
+
+	/**	<br/>L'entité « yearVal »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearVal">Trouver l'entité yearVal dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearVal(Wrap<Integer> c);
+
+	public Integer getYearVal() {
+		return yearVal;
+	}
+
+	public void setYearVal(Integer yearVal) {
+		this.yearVal = yearVal;
+		this.yearValWrap.alreadyInitialized = true;
+	}
+	public PageLayout setYearVal(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearVal = Integer.parseInt(o);
+		this.yearValWrap.alreadyInitialized = true;
+		return (PageLayout)this;
+	}
+	protected PageLayout yearValInit() {
+		if(!yearValWrap.alreadyInitialized) {
+			_yearVal(yearValWrap);
+			if(yearVal == null)
+				setYearVal(yearValWrap.o);
+		}
+		yearValWrap.alreadyInitialized(true);
+		return (PageLayout)this;
+	}
+
+	public Integer solrYearVal() {
+		return yearVal;
+	}
+
+	public String strYearVal() {
+		return yearVal == null ? "" : yearVal.toString();
+	}
+
+	public String jsonYearVal() {
+		return yearVal == null ? "" : yearVal.toString();
+	}
+
+	public String nomAffichageYearVal() {
+		return null;
+	}
+
+	public String htmTooltipYearVal() {
+		return null;
+	}
+
+	public String htmYearVal() {
+		return yearVal == null ? "" : StringEscapeUtils.escapeHtml4(strYearVal());
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2509,6 +2578,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		listSchoolInit();
 		schoolsInit();
 		school_Init();
+		yearValInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2630,6 +2700,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.schools;
 			case "school_":
 				return oPageLayout.school_;
+			case "yearVal":
+				return oPageLayout.yearVal;
 			default:
 				return null;
 		}

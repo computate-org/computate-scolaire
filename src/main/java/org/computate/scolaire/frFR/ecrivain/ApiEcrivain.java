@@ -1369,9 +1369,12 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			if(classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isNotTrue(classePublicLire)) {
 				wChemins.tl(3, "security:");
 				wChemins.tl(4, "- openIdConnect:");
-				wChemins.tl(5, "- roles");
-				wChemins.tl(5, "- profile");
-				wChemins.tl(5, "- offline_access");
+				wChemins.tl(5, "- DefaultAuthScope");
+
+//				wChemins.tl(5, "- roles");
+//				wChemins.tl(5, "- profile");
+//				wChemins.tl(5, "- offline_access");
+
 //				for(int i = 0; i < classeRoles.size(); i++) {
 //					if("frFR".equals(classeRolesLangue.get(i)))
 //						wChemins.tl(5, "- ", classeRoles.get(i));

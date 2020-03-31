@@ -581,9 +581,12 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 			if(classRolesFound && BooleanUtils.isNotTrue(classRoleSession) && BooleanUtils.isNotTrue(classPublicRead)) {
 				wPaths.tl(3, "security:");
 				wPaths.tl(4, "- openIdConnect:");
-				wPaths.tl(5, "- roles");
-				wPaths.tl(5, "- profile");
-				wPaths.tl(5, "- offline_access");
+				wPaths.tl(5, "- DefaultAuthScope");
+
+//				wPaths.tl(5, "- roles");
+//				wPaths.tl(5, "- profile");
+//				wPaths.tl(5, "- offline_access");
+
 //				for(int i = 0; i < classRoles.size(); i++) {
 //					if("frFR".equals(classRolesLanguage.get(i)))
 //						wPaths.tl(5, "- ", classRoles.get(i));

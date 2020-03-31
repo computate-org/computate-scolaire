@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.page;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -596,6 +597,13 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
+	 * Var.enUS: yearVal
+	 */
+	protected void _anneeVal(Couverture<Integer> c) {
+		c.o(LocalDate.now().getYear());
+	}
+
+	/**
 	 * r: pageMotsCles
 	 * r.enUS: pageKeywords
 	 * r: pageTitre
@@ -1130,8 +1138,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					PaiementGenPage.htmlSuggerePaiementGenPage(this, id, null);
 				} g("div");
 			} g("div");
+			ecrireConnecterDeconnecter();
 		g("div");
-		ecrireConnecterDeconnecter();
 	} 
 
 	/**
@@ -1915,6 +1923,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					}
 					if(htmlPart.getLoginLogout()) {
 						ecrireConnecterDeconnecter();
+						l();
 					}
 					s(htmlPart.getHtmlAfter());
 				}

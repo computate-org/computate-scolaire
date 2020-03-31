@@ -2450,6 +2450,75 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	//////////////
+	// anneeVal //
+	//////////////
+
+	/**	L'entité « anneeVal »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer anneeVal;
+	@JsonIgnore
+	public Couverture<Integer> anneeValCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeVal").o(anneeVal);
+
+	/**	<br/>L'entité « anneeVal »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeVal">Trouver l'entité anneeVal dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeVal(Couverture<Integer> c);
+
+	public Integer getAnneeVal() {
+		return anneeVal;
+	}
+
+	public void setAnneeVal(Integer anneeVal) {
+		this.anneeVal = anneeVal;
+		this.anneeValCouverture.dejaInitialise = true;
+	}
+	public MiseEnPage setAnneeVal(String o) {
+		if(NumberUtils.isParsable(o))
+			this.anneeVal = Integer.parseInt(o);
+		this.anneeValCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	protected MiseEnPage anneeValInit() {
+		if(!anneeValCouverture.dejaInitialise) {
+			_anneeVal(anneeValCouverture);
+			if(anneeVal == null)
+				setAnneeVal(anneeValCouverture.o);
+		}
+		anneeValCouverture.dejaInitialise(true);
+		return (MiseEnPage)this;
+	}
+
+	public Integer solrAnneeVal() {
+		return anneeVal;
+	}
+
+	public String strAnneeVal() {
+		return anneeVal == null ? "" : anneeVal.toString();
+	}
+
+	public String jsonAnneeVal() {
+		return anneeVal == null ? "" : anneeVal.toString();
+	}
+
+	public String nomAffichageAnneeVal() {
+		return null;
+	}
+
+	public String htmTooltipAnneeVal() {
+		return null;
+	}
+
+	public String htmAnneeVal() {
+		return anneeVal == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeVal());
+	}
+
+	//////////////
 	// initLoin //
 	//////////////
 
@@ -2509,6 +2578,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		listeEcoleInit();
 		ecolesInit();
 		ecole_Init();
+		anneeValInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2630,6 +2700,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				return oMiseEnPage.ecoles;
 			case "ecole_":
 				return oMiseEnPage.ecole_;
+			case "anneeVal":
+				return oMiseEnPage.anneeVal;
 			default:
 				return null;
 		}

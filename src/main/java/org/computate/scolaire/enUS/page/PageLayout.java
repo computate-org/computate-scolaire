@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.page;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -243,6 +244,10 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	protected void _school_(Wrap<School> c) {
 //		c.o(listSchool.getList().stream().findFirst().orElse(null));
+	}
+
+	protected void _yearVal(Wrap<Integer> c) {
+		c.o(LocalDate.now().getYear());
 	}
 
 	@Override()
@@ -587,8 +592,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 					PaymentGenPage.htmlSuggestedPaymentGenPage(this, id, null);
 				} g("div");
 			} g("div");
+			writeLoginLogout();
 		g("div");
-		writeLoginLogout();
 	}
 
 	public void  writeLoginLogout() {
@@ -1085,6 +1090,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 					}
 					if(htmlPart.getLoginLogout()) {
 						writeLoginLogout();
+						l();
 					}
 					s(htmlPart.getHtmlAfter());
 				}
