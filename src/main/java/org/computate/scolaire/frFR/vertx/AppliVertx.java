@@ -2384,7 +2384,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		String siteNomHote = configSite.getSiteNomHote();
 		Integer sitePort = configSite.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
-		if(new File(configSite.getSslJksChemin()).exists()) {
+		if(configSite.getSslJksChemin() != null && new File(configSite.getSslJksChemin()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
 			options.setSsl(true);
 		}

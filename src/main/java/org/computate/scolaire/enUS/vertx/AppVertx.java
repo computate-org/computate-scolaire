@@ -1329,7 +1329,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		String siteHostName = siteConfig.getSiteHostName();
 		Integer sitePort = siteConfig.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
-		if(new File(siteConfig.getSslJksPath()).exists()) {
+		if(siteConfig.getSslJksPath() != null && new File(siteConfig.getSslJksPath()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(siteConfig.getSslJksPath()).setPassword(siteConfig.getSslJksPassword()));
 			options.setSsl(true);
 		}

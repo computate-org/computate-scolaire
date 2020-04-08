@@ -289,7 +289,7 @@
 						</goals>
 						<configuration>
 							<files>
-								<file>/opt/keystore/keystore.properties</file>
+								<file>/opt/keystore/computate-scolaire-keystore.properties</file>
 							</files>
 						</configuration>
 					</execution>
