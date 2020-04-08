@@ -289,7 +289,7 @@
 						</goals>
 						<configuration>
 							<files>
-								<file>keystore.properties</file>
+								<file>/opt/keystore/keystore.properties</file>
 							</files>
 						</configuration>
 					</execution>
