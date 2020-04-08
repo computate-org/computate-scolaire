@@ -13,6 +13,9 @@ import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
+import org.apache.solr.client.solrj.request.QueryRequest;
+import org.apache.solr.client.solrj.SolrRequest;
+import org.apache.solr.client.solrj.SolrResponse;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -91,7 +94,8 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
 		if(numFound > 0) {
 			try {
-				setQueryResponse(requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery));
+				QueryRequest queryRequest = new QueryRequest(solrQuery);
+				setQueryResponse(queryRequest.process(requeteSite_.getSiteContexte_().getClientSolr()));
 			} catch (SolrServerException | IOException e) {
 				ExceptionUtils.rethrow(e);
 			}

@@ -533,7 +533,6 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		JsonObject extraParams = new JsonObject();
 		extraParams.put("scope", "openid DefaultAuthScope SiteAdminScope");
 		oauth2ClientOptions.setExtraParameters(extraParams);
-//		oauth2ClientOptions.setAuthorizationPath(configSite.getAuthUrl() + "/realms/" + configSite.getAuthRoyaume() + "/protocol/openid-connect/auth");
 
 		OpenIDConnectAuth.discover(vertx, oauth2ClientOptions, a -> {
 			if(a.succeeded()) {

@@ -1,28 +1,32 @@
 package org.computate.scolaire.frFR.recherche;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
+import java.math.MathContext;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.solr.client.solrj.SolrQuery;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import java.lang.Boolean;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Class;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -37,6 +41,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « c »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Class<DEV> c;
 	@JsonIgnore
 	public Couverture<Class<DEV>> cCouverture = new Couverture<Class<DEV>>().p(this).c(Class.class).var("c").o(c);
@@ -75,6 +80,7 @@ public abstract class ListeRechercheGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
@@ -112,6 +118,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « stocker »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean stocker;
 	@JsonIgnore
 	public Couverture<Boolean> stockerCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("stocker").o(stocker);
@@ -178,6 +185,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « peupler »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean peupler;
 	@JsonIgnore
 	public Couverture<Boolean> peuplerCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("peupler").o(peupler);
@@ -244,6 +252,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « fields »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> fields = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Couverture<List<String>> fieldsCouverture = new Couverture<List<String>>().p(this).c(List.class).var("fields").o(fields);
@@ -322,6 +331,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « solrQuery »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SolrQuery(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrQuery solrQuery = new SolrQuery();
 	@JsonIgnore
 	public Couverture<SolrQuery> solrQueryCouverture = new Couverture<SolrQuery>().p(this).c(SolrQuery.class).var("solrQuery").o(solrQuery);
@@ -357,6 +367,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « queryResponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected QueryResponse queryResponse;
 	@JsonIgnore
 	public Couverture<QueryResponse> queryResponseCouverture = new Couverture<QueryResponse>().p(this).c(QueryResponse.class).var("queryResponse").o(queryResponse);
@@ -394,6 +405,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « solrDocumentList »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocumentList solrDocumentList;
 	@JsonIgnore
 	public Couverture<SolrDocumentList> solrDocumentListCouverture = new Couverture<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("solrDocumentList").o(solrDocumentList);
@@ -431,6 +443,7 @@ public abstract class ListeRechercheGen<DEV> {
 	/**	L'entité « list »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<DEV>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<DEV> list = new java.util.ArrayList<DEV>();
 	@JsonIgnore
 	public Couverture<List<DEV>> listCouverture = new Couverture<List<DEV>>().p(this).c(List.class).var("list").o(list);

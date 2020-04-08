@@ -1,28 +1,32 @@
 package org.computate.scolaire.enUS.search;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.computate.scolaire.enUS.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
+import java.math.MathContext;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.solr.client.solrj.SolrQuery;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import java.lang.Boolean;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Class;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchList&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -37,6 +41,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « c »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Class<DEV> c;
 	@JsonIgnore
 	public Wrap<Class<DEV>> cWrap = new Wrap<Class<DEV>>().p(this).c(Class.class).var("c").o(c);
@@ -75,6 +80,7 @@ public abstract class SearchListGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
@@ -112,6 +118,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « store »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean store;
 	@JsonIgnore
 	public Wrap<Boolean> storeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("store").o(store);
@@ -178,6 +185,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « populate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean populate;
 	@JsonIgnore
 	public Wrap<Boolean> populateWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("populate").o(populate);
@@ -244,6 +252,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « fields »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<String> fields = new java.util.ArrayList<java.lang.String>();
 	@JsonIgnore
 	public Wrap<List<String>> fieldsWrap = new Wrap<List<String>>().p(this).c(List.class).var("fields").o(fields);
@@ -322,6 +331,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « solrQuery »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SolrQuery(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrQuery solrQuery = new SolrQuery();
 	@JsonIgnore
 	public Wrap<SolrQuery> solrQueryWrap = new Wrap<SolrQuery>().p(this).c(SolrQuery.class).var("solrQuery").o(solrQuery);
@@ -357,6 +367,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « queryResponse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected QueryResponse queryResponse;
 	@JsonIgnore
 	public Wrap<QueryResponse> queryResponseWrap = new Wrap<QueryResponse>().p(this).c(QueryResponse.class).var("queryResponse").o(queryResponse);
@@ -394,6 +405,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « solrDocumentList »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocumentList solrDocumentList;
 	@JsonIgnore
 	public Wrap<SolrDocumentList> solrDocumentListWrap = new Wrap<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("solrDocumentList").o(solrDocumentList);
@@ -431,6 +443,7 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « list »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<DEV>(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected List<DEV> list = new java.util.ArrayList<DEV>();
 	@JsonIgnore
 	public Wrap<List<DEV>> listWrap = new Wrap<List<DEV>>().p(this).c(List.class).var("list").o(list);
