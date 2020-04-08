@@ -2273,6 +2273,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * Val.SuccesServeur.frFR:Le serveur HTTP est démarré : %s:%s
 	 * Val.BeforeServer.enUS:HTTP server starting: %s://%s:%s
 	 * Val.AvantServeur.frFR:Le serveur HTTP est démarré : %s:%s
+	 * Val.Ssl.enUS:Configuring SSL: %s
+	 * Val.Ssl.frFR:Configurer SSL : %s
 	 * 
 	 * enUS: Start the Vert.x server. 
 	 * enUS: Démarrer le serveur Vert.x. 
@@ -2297,6 +2299,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: startServerSuccessServer
 	 * r: demarrerServeurAvantServeur
 	 * r.enUS: startServerBeforeServer
+	 * r: demarrerServeurSsl
+	 * r.enUS: startServerSsl
 	 * r: getSiteNomHote
 	 * r.enUS: getSiteHostName
 	 * r: getSslJksChemin
@@ -2387,6 +2391,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		if(configSite.getSslJksChemin() != null && new File(configSite.getSslJksChemin()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
 			options.setSsl(true);
+			LOGGER.info(String.format(demarrerServeurSsl, configSite.getSslJksChemin()));
 		}
 		options.setPort(sitePort);
 

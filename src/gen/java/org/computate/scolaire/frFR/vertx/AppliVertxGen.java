@@ -61,6 +61,8 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 	public static final String demarrerServeurSuccesServeur = demarrerServeurSuccesServeur1;
 	public static final String demarrerServeurAvantServeur1 = "Le serveur HTTP est démarré : %s:%s";
 	public static final String demarrerServeurAvantServeur = demarrerServeurAvantServeur1;
+	public static final String demarrerServeurSsl1 = "Configurer SSL : %s";
+	public static final String demarrerServeurSsl = demarrerServeurSsl1;
 
 	public static final String fermerDonneesErreur1 = "Impossible de fermer la connexion du client de base de données. ";
 	public static final String fermerDonneesErreur = fermerDonneesErreur1;
@@ -201,5 +203,5 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, demarrerServeurErreurServeur1, demarrerServeurSuccesServeur1, demarrerServeurAvantServeur1, fermerDonneesErreur1, fermerDonneesSucces1 };
+	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, demarrerServeurErreurServeur1, demarrerServeurSuccesServeur1, demarrerServeurAvantServeur1, demarrerServeurSsl1, fermerDonneesErreur1, fermerDonneesSucces1 };
 }

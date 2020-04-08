@@ -62,6 +62,8 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 	public static final String startServerSuccessServer = startServerSuccessServer1;
 	public static final String startServerBeforeServer1 = "HTTP server starting: %s://%s:%s";
 	public static final String startServerBeforeServer = startServerBeforeServer1;
+	public static final String startServerSsl1 = "Configuring SSL: %s";
+	public static final String startServerSsl = startServerSsl1;
 
 	public static final String closeDataError1 = "Could not close the database client connection. ";
 	public static final String closeDataError = closeDataError1;
@@ -202,5 +204,5 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppVertxVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureClusterDataError1, configureClusterDataSuccess1, configureOpenApiError1, configureOpenApiSuccess1, configureHealthChecksErrorDatabase1, configureHealthChecksEmptySolr1, configureHealthChecksErrorSolr1, configureHealthChecksErrorVertx1, startServerErrorServer1, startServerSuccessServer1, startServerBeforeServer1, closeDataError1, closeDataSuccess1 };
+	public static final String[] AppVertxVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureClusterDataError1, configureClusterDataSuccess1, configureOpenApiError1, configureOpenApiSuccess1, configureHealthChecksErrorDatabase1, configureHealthChecksEmptySolr1, configureHealthChecksErrorSolr1, configureHealthChecksErrorVertx1, startServerErrorServer1, startServerSuccessServer1, startServerBeforeServer1, startServerSsl1, closeDataError1, closeDataSuccess1 };
 }

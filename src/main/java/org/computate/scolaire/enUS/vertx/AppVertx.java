@@ -1332,6 +1332,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		if(siteConfig.getSslJksPath() != null && new File(siteConfig.getSslJksPath()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(siteConfig.getSslJksPath()).setPassword(siteConfig.getSslJksPassword()));
 			options.setSsl(true);
+			LOGGER.info(String.format(startServerSsl, siteConfig.getSslJksPath()));
 		}
 		options.setPort(sitePort);
 
