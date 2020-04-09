@@ -3804,6 +3804,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			if(searchList.getSorts().size() == 0) {
 				searchList.addSort("created_indexed_date", ORDER.desc);
 			}
+			LOGGER.info(searchList.toString());
 			searchList.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
