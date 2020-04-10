@@ -366,8 +366,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 									ctx.fail(res.cause());
 								} else {
 									AccessToken token = (AccessToken) res.result();
-									token.isAuthorized("SiteAdminScope", r -> {
-										if(r.succeeded()) {
+//									token.isAuthorized("SiteAdminScope", r -> {
+//										if(r.succeeded()) {
 											ctx.setUser(res.result());
 											Session session = ctx.session();
 											if (session != null) {
@@ -386,17 +386,17 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 												// there is no session object so we cannot keep state
 												ctx.reroute(state != null ? state : "/");
 											}
-										} else {
-											String str = new JsonObject()
-													.put("error", new JsonObject())
-													.put("message", "Unauthorized").encodePrettily();
-											Buffer buffer = Buffer.buffer().appendString(str);
-											ctx.response().putHeader("Content-Length", Integer.toString(buffer.length()));
-											ctx.response().write(buffer);
-											ctx.response().setStatusCode(403);
-											ctx.response().end();
-										}
-									});
+//										} else {
+//											String str = new JsonObject()
+//													.put("error", new JsonObject())
+//													.put("message", "Unauthorized").encodePrettily();
+//											Buffer buffer = Buffer.buffer().appendString(str);
+//											ctx.response().putHeader("Content-Length", Integer.toString(buffer.length()));
+//											ctx.response().write(buffer);
+//											ctx.response().setStatusCode(403);
+//											ctx.response().end();
+//										}
+//									});
 								}
 							});
 						});
