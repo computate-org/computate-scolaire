@@ -104,6 +104,18 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 	@Override public void htmlScriptClusterGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -138,14 +150,46 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		} g("div");
 	}
 
-	public void htmlFormPUTCluster(Cluster o) {
+	public void htmlFormPUTImportCluster(Cluster o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeCluster(Cluster o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopyCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 	}
 
@@ -162,17 +206,17 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 	public void htmlFormSearchCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
+			o.htmObjectTitle("Search");
 		} g("div");
 	}
 
@@ -492,30 +536,98 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-				.a("onclick", "$('#putClusterModal').show(); ")
+				.a("onclick", "$('#putimportClusterModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the clusters");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import clusters");
 			} g("button");
-			{ e("div").a("id", "putClusterModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportClusterModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putClusterModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the clusters").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportClusterModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import clusters").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							Cluster o = new Cluster();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putClusterFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTCluster(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportClusterForm").f();
+								htmlFormPUTImportCluster(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "putCluster($('#putClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the clusters")
+								.a("onclick", "putimportCluster($('#putimportClusterForm')); ")
+								.f().sx("Import clusters")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+				.a("onclick", "$('#putmergeClusterModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge clusters");
+			} g("button");
+			{ e("div").a("id", "putmergeClusterModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeClusterModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge clusters").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							Cluster o = new Cluster();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergeClusterForm").f();
+								htmlFormPUTMergeCluster(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+								.a("onclick", "putmergeCluster($('#putmergeClusterForm')); ")
+								.f().sx("Merge clusters")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+				.a("onclick", "$('#putcopyClusterModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate clusters");
+			} g("button");
+			{ e("div").a("id", "putcopyClusterModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-gray ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopyClusterModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate clusters").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							Cluster o = new Cluster();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopyClusterForm").f();
+								htmlFormPUTCopyCluster(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
+								.a("onclick", "putcopyCluster(", o.getPk(), ", $('#putcopyClusterForm')); ")
+								.f().sx("Duplicate clusters")
 							.g("button");
 
 						} g("div");
@@ -529,14 +641,14 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 				.a("onclick", "$('#patchClusterModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the clusters");
+				sx("Modify clusters");
 			} g("button");
 			{ e("div").a("id", "patchClusterModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-gray ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchClusterModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the clusters").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify clusters").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							Cluster o = new Cluster();
@@ -549,7 +661,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
 								.a("onclick", "patchCluster(null, $('#patchClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the clusters")
+								.f().sx("Modify clusters")
 							.g("button");
 
 						} g("div");

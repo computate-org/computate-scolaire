@@ -107,6 +107,18 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptGardienGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -177,28 +189,60 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTGardienScolaire(GardienScolaire o) {
+	public void htmlFormPUTImportGardienScolaire(GardienScolaire o) {
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTFusionGardienScolaire(GardienScolaire o) {
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTFusion_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopieGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PUT");
-			o.htmModifie("PUT");
+			o.htmCree("PUTCopie");
+			o.htmModifie("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchive("PUT");
-			o.htmSupprime("PUT");
+			o.htmArchive("PUTCopie");
+			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonnePrenom("PUT");
-			o.htmFamilleNom("PUT");
-			o.htmPersonnePrenomPrefere("PUT");
+			o.htmPersonnePrenom("PUTCopie");
+			o.htmFamilleNom("PUTCopie");
+			o.htmPersonnePrenomPrefere("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonneNumeroTelephone("PUT");
-			o.htmPersonneRelation("PUT");
-			o.htmPersonneContactUrgence("PUT");
-			o.htmPersonneChercher("PUT");
+			o.htmPersonneNumeroTelephone("PUTCopie");
+			o.htmPersonneRelation("PUTCopie");
+			o.htmPersonneContactUrgence("PUTCopie");
+			o.htmPersonneChercher("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionCles("PUT");
+			o.htmInscriptionCles("PUTCopie");
 		} g("div");
 	}
 
@@ -573,30 +617,98 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-				.a("onclick", "$('#putGardienScolaireModale').show(); ")
+				.a("onclick", "$('#putimportGardienScolaireModale').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Dupliquer des gardiens");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Importer gardiens");
 			} g("button");
-			{ e("div").a("id", "putGardienScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportGardienScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-yellow ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putGardienScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des gardiens").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportGardienScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Importer gardiens").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							GardienScolaire o = new GardienScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PUT
-							{ e("form").a("action", "").a("id", "putGardienScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTGardienScolaire(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportGardienScolaireForm").f();
+								htmlFormPUTImportGardienScolaire(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putGardienScolaire($('#putGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Dupliquer des gardiens")
+								.a("onclick", "putimportGardienScolaire($('#putimportGardienScolaireForm')); ")
+								.f().sx("Importer gardiens")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putfusionGardienScolaireModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Fusionner gardiens");
+			} g("button");
+			{ e("div").a("id", "putfusionGardienScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-yellow ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionGardienScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Fusionner gardiens").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							GardienScolaire o = new GardienScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putfusionGardienScolaireForm").f();
+								htmlFormPUTFusionGardienScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("onclick", "putfusionGardienScolaire($('#putfusionGardienScolaireForm')); ")
+								.f().sx("Fusionner gardiens")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putcopieGardienScolaireModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer gardiens");
+			} g("button");
+			{ e("div").a("id", "putcopieGardienScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-yellow ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieGardienScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer gardiens").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							GardienScolaire o = new GardienScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopieGardienScolaireForm").f();
+								htmlFormPUTCopieGardienScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("onclick", "putcopieGardienScolaire(", o.getPk(), ", $('#putcopieGardienScolaireForm')); ")
+								.f().sx("Dupliquer gardiens")
 							.g("button");
 
 						} g("div");
@@ -610,14 +722,14 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchGardienScolaireModale').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modifier des gardiens");
+				sx("Modifier gardiens");
 			} g("button");
 			{ e("div").a("id", "patchGardienScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-yellow ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchGardienScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modifier des gardiens").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier gardiens").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							GardienScolaire o = new GardienScolaire();
@@ -629,8 +741,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchGardienScolaire($('#patchGardienScolaireFormulaireFiltres'), $('#patchGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modifier des gardiens")
+								.a("onclick", "patchGardienScolaire(null, $('#patchGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier gardiens")
 							.g("button");
 
 						} g("div");
@@ -739,14 +851,12 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), GardienGenPage.ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), GardienGenPage.ROLES)
 					) {
-				if(listeGardienScolaire == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "rechargerTousGardienGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchGardienScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousGardienGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousGardienGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger tous les gardiens");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

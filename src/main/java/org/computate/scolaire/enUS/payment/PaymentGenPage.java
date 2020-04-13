@@ -107,6 +107,18 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptPaymentGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -193,49 +205,81 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTSchoolPayment(SchoolPayment o) {
+	public void htmlFormPUTImportSchoolPayment(SchoolPayment o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeSchoolPayment(SchoolPayment o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopySchoolPayment(SchoolPayment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaymentDate("PUT");
-			o.htmPaymentAmount("PUT");
-			o.htmPaymentCash("PUT");
-			o.htmPaymentCheck("PUT");
-			o.htmPaymentSystem("PUT");
+			o.htmPaymentDate("PUTCopy");
+			o.htmPaymentAmount("PUTCopy");
+			o.htmPaymentCash("PUTCopy");
+			o.htmPaymentCheck("PUTCopy");
+			o.htmPaymentSystem("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaymentDescription("PUT");
-			o.htmEnrollmentPaymentComplete("PUT");
-			o.htmPaymentBy("PUT");
-			o.htmEnrollmentPaymentEachMonth("PUT");
+			o.htmPaymentDescription("PUTCopy");
+			o.htmEnrollmentPaymentComplete("PUTCopy");
+			o.htmPaymentBy("PUTCopy");
+			o.htmEnrollmentPaymentEachMonth("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmTransactionId("PUT");
-			o.htmCustomerProfileId("PUT");
-			o.htmTransactionStatus("PUT");
+			o.htmTransactionId("PUTCopy");
+			o.htmCustomerProfileId("PUTCopy");
+			o.htmTransactionStatus("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKey("PUT");
-			o.htmPaymentRecieved("PUT");
+			o.htmEnrollmentKey("PUTCopy");
+			o.htmPaymentRecieved("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmChildCompleteNamePreferred("PUT");
-			o.htmChildBirthDate("PUT");
-			o.htmMomCompleteNamePreferred("PUT");
-			o.htmDadCompleteNamePreferred("PUT");
-			o.htmChargeAmount("PUT");
-			o.htmChargeAmountFuture("PUT");
-			o.htmChargeEnrollment("PUT");
-			o.htmChargeFirstLast("PUT");
-			o.htmChargeMonth("PUT");
-			o.htmChargeLateFee("PUT");
-			o.htmPaymentShortName("PUT");
+			o.htmChildCompleteNamePreferred("PUTCopy");
+			o.htmChildBirthDate("PUTCopy");
+			o.htmMomCompleteNamePreferred("PUTCopy");
+			o.htmDadCompleteNamePreferred("PUTCopy");
+			o.htmChargeAmount("PUTCopy");
+			o.htmChargeAmountFuture("PUTCopy");
+			o.htmChargeEnrollment("PUTCopy");
+			o.htmChargeFirstLast("PUTCopy");
+			o.htmChargeMonth("PUTCopy");
+			o.htmChargeLateFee("PUTCopy");
+			o.htmPaymentShortName("PUTCopy");
 		} g("div");
 	}
 
@@ -287,50 +331,50 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolPayment(SchoolPayment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaymentDate("Recherche");
-			o.htmPaymentAmount("Recherche");
-			o.htmPaymentCash("Recherche");
-			o.htmPaymentCheck("Recherche");
-			o.htmPaymentSystem("Recherche");
+			o.htmPaymentDate("Search");
+			o.htmPaymentAmount("Search");
+			o.htmPaymentCash("Search");
+			o.htmPaymentCheck("Search");
+			o.htmPaymentSystem("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPaymentDescription("Recherche");
-			o.htmEnrollmentPaymentComplete("Recherche");
-			o.htmPaymentBy("Recherche");
-			o.htmEnrollmentPaymentEachMonth("Recherche");
+			o.htmPaymentDescription("Search");
+			o.htmEnrollmentPaymentComplete("Search");
+			o.htmPaymentBy("Search");
+			o.htmEnrollmentPaymentEachMonth("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmTransactionId("Recherche");
-			o.htmCustomerProfileId("Recherche");
-			o.htmTransactionStatus("Recherche");
+			o.htmTransactionId("Search");
+			o.htmCustomerProfileId("Search");
+			o.htmTransactionStatus("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKey("Recherche");
-			o.htmPaymentRecieved("Recherche");
+			o.htmEnrollmentKey("Search");
+			o.htmPaymentRecieved("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
-			o.htmChildCompleteNamePreferred("Recherche");
-			o.htmChildBirthDate("Recherche");
-			o.htmMomCompleteNamePreferred("Recherche");
-			o.htmDadCompleteNamePreferred("Recherche");
-			o.htmChargeAmount("Recherche");
-			o.htmChargeAmountFuture("Recherche");
-			o.htmChargeEnrollment("Recherche");
-			o.htmChargeFirstLast("Recherche");
-			o.htmChargeMonth("Recherche");
-			o.htmChargeLateFee("Recherche");
-			o.htmPaymentShortName("Recherche");
+			o.htmObjectTitle("Search");
+			o.htmChildCompleteNamePreferred("Search");
+			o.htmChildBirthDate("Search");
+			o.htmMomCompleteNamePreferred("Search");
+			o.htmDadCompleteNamePreferred("Search");
+			o.htmChargeAmount("Search");
+			o.htmChargeAmountFuture("Search");
+			o.htmChargeEnrollment("Search");
+			o.htmChargeFirstLast("Search");
+			o.htmChargeMonth("Search");
+			o.htmChargeLateFee("Search");
+			o.htmPaymentShortName("Search");
 		} g("div");
 	}
 
@@ -734,30 +778,98 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("onclick", "$('#putSchoolPaymentModal').show(); ")
+				.a("onclick", "$('#putimportSchoolPaymentModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the payments");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import payments");
 			} g("button");
-			{ e("div").a("id", "putSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-green ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolPaymentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the payments").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolPaymentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import payments").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolPayment o = new SchoolPayment();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putSchoolPaymentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTSchoolPayment(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportSchoolPaymentForm").f();
+								htmlFormPUTImportSchoolPayment(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putSchoolPayment($('#putSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the payments")
+								.a("onclick", "putimportSchoolPayment($('#putimportSchoolPaymentForm')); ")
+								.f().sx("Import payments")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putmergeSchoolPaymentModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge payments");
+			} g("button");
+			{ e("div").a("id", "putmergeSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolPaymentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge payments").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolPayment o = new SchoolPayment();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergeSchoolPaymentForm").f();
+								htmlFormPUTMergeSchoolPayment(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putmergeSchoolPayment($('#putmergeSchoolPaymentForm')); ")
+								.f().sx("Merge payments")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putcopySchoolPaymentModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate payments");
+			} g("button");
+			{ e("div").a("id", "putcopySchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolPaymentModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate payments").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolPayment o = new SchoolPayment();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopySchoolPaymentForm").f();
+								htmlFormPUTCopySchoolPayment(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putcopySchoolPayment(", o.getPk(), ", $('#putcopySchoolPaymentForm')); ")
+								.f().sx("Duplicate payments")
 							.g("button");
 
 						} g("div");
@@ -771,14 +883,14 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchSchoolPaymentModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the payments");
+				sx("Modify payments");
 			} g("button");
 			{ e("div").a("id", "patchSchoolPaymentModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-green ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolPaymentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the payments").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify payments").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolPayment o = new SchoolPayment();
@@ -790,8 +902,8 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "patchSchoolPayment($('#patchSchoolPaymentFormFilters'), $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the payments")
+								.a("onclick", "patchSchoolPayment(null, $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify payments")
 							.g("button");
 
 						} g("div");
@@ -861,14 +973,12 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PaymentGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PaymentGenPage.ROLES)
 					) {
-				if(listSchoolPayment == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllPaymentGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolPaymentVals([], {}, function() { addGlow($('#refreshAllPaymentGenPage", id, "')); }, function() { addError($('#refreshAllPaymentGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the payments");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

@@ -142,6 +142,18 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptDesignDisplayGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -198,21 +210,53 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTPageDesign(PageDesign o) {
+	public void htmlFormPUTImportPageDesign(PageDesign o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergePageDesign(PageDesign o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopyPageDesign(PageDesign o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPageDesignCompleteName("PUT");
-			o.htmDesignHidden("PUT");
+			o.htmPageDesignCompleteName("PUTCopy");
+			o.htmDesignHidden("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("PUT");
+			o.htmHtmlPartKeys("PUTCopy");
 		} g("div");
 	}
 
@@ -236,24 +280,24 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchPageDesign(PageDesign o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPageDesignCompleteName("Recherche");
-			o.htmDesignHidden("Recherche");
+			o.htmPageDesignCompleteName("Search");
+			o.htmDesignHidden("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("Recherche");
+			o.htmHtmlPartKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
+			o.htmObjectTitle("Search");
 		} g("div");
 	}
 
@@ -573,30 +617,98 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-				.a("onclick", "$('#putPageDesignModal').show(); ")
+				.a("onclick", "$('#putimportPageDesignModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the page designs");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import page designs");
 			} g("button");
-			{ e("div").a("id", "putPageDesignModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportPageDesignModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-khaki ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putPageDesignModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the page designs").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportPageDesignModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import page designs").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							PageDesign o = new PageDesign();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putPageDesignFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTPageDesign(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportPageDesignForm").f();
+								htmlFormPUTImportPageDesign(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putPageDesign($('#putPageDesignFormValues'), ", Optional.ofNullable(pageDesign).map(PageDesign::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the page designs")
+								.a("onclick", "putimportPageDesign($('#putimportPageDesignForm')); ")
+								.f().sx("Import page designs")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+				.a("onclick", "$('#putmergePageDesignModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge page designs");
+			} g("button");
+			{ e("div").a("id", "putmergePageDesignModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergePageDesignModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge page designs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							PageDesign o = new PageDesign();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergePageDesignForm").f();
+								htmlFormPUTMergePageDesign(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
+								.a("onclick", "putmergePageDesign($('#putmergePageDesignForm')); ")
+								.f().sx("Merge page designs")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+				.a("onclick", "$('#putcopyPageDesignModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate page designs");
+			} g("button");
+			{ e("div").a("id", "putcopyPageDesignModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopyPageDesignModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate page designs").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							PageDesign o = new PageDesign();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopyPageDesignForm").f();
+								htmlFormPUTCopyPageDesign(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
+								.a("onclick", "putcopyPageDesign(", o.getPk(), ", $('#putcopyPageDesignForm')); ")
+								.f().sx("Duplicate page designs")
 							.g("button");
 
 						} g("div");
@@ -610,14 +722,14 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchPageDesignModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the page designs");
+				sx("Modify page designs");
 			} g("button");
 			{ e("div").a("id", "patchPageDesignModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchPageDesignModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the page designs").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify page designs").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							PageDesign o = new PageDesign();
@@ -630,7 +742,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchPageDesign(null, $('#patchPageDesignFormValues'), ", Optional.ofNullable(pageDesign).map(PageDesign::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the page designs")
+								.f().sx("Modify page designs")
 							.g("button");
 
 						} g("div");

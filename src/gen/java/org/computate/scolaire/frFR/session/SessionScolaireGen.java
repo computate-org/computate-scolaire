@@ -337,7 +337,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					.a("name", "setAgeCles")
 					.a("id", classeApiMethodeMethode, "_ageCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireAgeCles')) : [{'name':'fq','value':'sessionCle:", pk, "'}], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireAgeCles')) : [", pk == null ? "" : "{'name':'fq','value':'sessionCle:" + pk + "'}", "], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -815,7 +815,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					.a("name", "setSaisonCle")
 					.a("id", classeApiMethodeMethode, "_saisonCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireSaisonCle')) : [{'name':'fq','value':'sessionCles:", pk, "'}], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($('#suggere", classeApiMethodeMethode, "SessionScolaireSaisonCle')) : [", pk == null ? "" : "{'name':'fq','value':'sessionCles:" + pk + "'}", "], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}

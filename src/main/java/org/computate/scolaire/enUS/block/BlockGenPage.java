@@ -108,6 +108,18 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptBlockGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -190,33 +202,59 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTSchoolBlock(SchoolBlock o) {
+	public void htmlFormPUTImportSchoolBlock(SchoolBlock o) {
+		{
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeSchoolBlock(SchoolBlock o) {
+		{
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopySchoolBlock(SchoolBlock o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlockStartTime("PUT");
-			o.htmBlockEndTime("PUT");
-			o.htmBlockPricePerMonth("PUT");
+			o.htmBlockStartTime("PUTCopy");
+			o.htmBlockEndTime("PUTCopy");
+			o.htmBlockPricePerMonth("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlockMonday("PUT");
-			o.htmBlockTuesday("PUT");
-			o.htmBlockWednesday("PUT");
-			o.htmBlockThursday("PUT");
-			o.htmBlockFriday("PUT");
+			o.htmBlockMonday("PUTCopy");
+			o.htmBlockTuesday("PUTCopy");
+			o.htmBlockWednesday("PUTCopy");
+			o.htmBlockThursday("PUTCopy");
+			o.htmBlockFriday("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeKey("PUT");
-			o.htmEnrollmentKeys("PUT");
+			o.htmAgeKey("PUTCopy");
+			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSchoolAddress("PUT");
+			o.htmSchoolAddress("PUTCopy");
 		} g("div");
 	}
 
@@ -252,34 +290,34 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolBlock(SchoolBlock o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlockStartTime("Recherche");
-			o.htmBlockEndTime("Recherche");
-			o.htmBlockPricePerMonth("Recherche");
+			o.htmBlockStartTime("Search");
+			o.htmBlockEndTime("Search");
+			o.htmBlockPricePerMonth("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmBlockMonday("Recherche");
-			o.htmBlockTuesday("Recherche");
-			o.htmBlockWednesday("Recherche");
-			o.htmBlockThursday("Recherche");
-			o.htmBlockFriday("Recherche");
+			o.htmBlockMonday("Search");
+			o.htmBlockTuesday("Search");
+			o.htmBlockWednesday("Search");
+			o.htmBlockThursday("Search");
+			o.htmBlockFriday("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeKey("Recherche");
-			o.htmEnrollmentKeys("Recherche");
+			o.htmAgeKey("Search");
+			o.htmEnrollmentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
-			o.htmSchoolAddress("Recherche");
+			o.htmObjectTitle("Search");
+			o.htmSchoolAddress("Search");
 		} g("div");
 	}
 
@@ -473,7 +511,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	public void thead2BlockGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("").g("th");
+				e("th").f().sx("created").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -599,30 +637,98 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-				.a("onclick", "$('#putSchoolBlockModal').show(); ")
+				.a("onclick", "$('#putimportSchoolBlockModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the blocks");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import blocks");
 			} g("button");
-			{ e("div").a("id", "putSchoolBlockModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportSchoolBlockModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-indigo ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolBlockModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the blocks").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolBlockModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import blocks").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolBlock o = new SchoolBlock();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putSchoolBlockFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTSchoolBlock(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportSchoolBlockForm").f();
+								htmlFormPUTImportSchoolBlock(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "putSchoolBlock($('#putSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the blocks")
+								.a("onclick", "putimportSchoolBlock($('#putimportSchoolBlockForm')); ")
+								.f().sx("Import blocks")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("onclick", "$('#putmergeSchoolBlockModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge blocks");
+			} g("button");
+			{ e("div").a("id", "putmergeSchoolBlockModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-indigo ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolBlockModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge blocks").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolBlock o = new SchoolBlock();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergeSchoolBlockForm").f();
+								htmlFormPUTMergeSchoolBlock(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("onclick", "putmergeSchoolBlock($('#putmergeSchoolBlockForm')); ")
+								.f().sx("Merge blocks")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+				.a("onclick", "$('#putcopySchoolBlockModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate blocks");
+			} g("button");
+			{ e("div").a("id", "putcopySchoolBlockModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-indigo ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolBlockModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate blocks").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolBlock o = new SchoolBlock();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopySchoolBlockForm").f();
+								htmlFormPUTCopySchoolBlock(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
+								.a("onclick", "putcopySchoolBlock(", o.getPk(), ", $('#putcopySchoolBlockForm')); ")
+								.f().sx("Duplicate blocks")
 							.g("button");
 
 						} g("div");
@@ -636,14 +742,14 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchSchoolBlockModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the blocks");
+				sx("Modify blocks");
 			} g("button");
 			{ e("div").a("id", "patchSchoolBlockModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-indigo ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolBlockModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the blocks").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify blocks").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolBlock o = new SchoolBlock();
@@ -655,8 +761,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "patchSchoolBlock($('#patchSchoolBlockFormFilters'), $('#patchSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the blocks")
+								.a("onclick", "patchSchoolBlock(null, $('#patchSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify blocks")
 							.g("button");
 
 						} g("div");
@@ -726,14 +832,12 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), BlockGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), BlockGenPage.ROLES)
 					) {
-				if(listSchoolBlock == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllBlockGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ").a("onclick", "patchSchoolBlockVals([], {}, function() { addGlow($('#refreshAllBlockGenPage", id, "')); }, function() { addError($('#refreshAllBlockGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the blocks");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

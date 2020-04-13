@@ -107,6 +107,18 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSiteUserGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -177,30 +189,62 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTSiteUser(SiteUser o) {
+	public void htmlFormPUTImportSiteUser(SiteUser o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeSiteUser(SiteUser o) {
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopySiteUser(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmUserReceiveEmails("PUT");
-			o.htmSeeArchived("PUT");
-			o.htmSeeDeleted("PUT");
-			o.htmCustomerProfileId("PUT");
+			o.htmUserReceiveEmails("PUTCopy");
+			o.htmSeeArchived("PUTCopy");
+			o.htmSeeDeleted("PUTCopy");
+			o.htmCustomerProfileId("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKeys("PUT");
-			o.htmPaymentKeys("PUT");
+			o.htmEnrollmentKeys("PUTCopy");
+			o.htmPaymentKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmUserId("PUT");
-			o.htmUserKey("PUT");
-			o.htmUserName("PUT");
-			o.htmUserEmail("PUT");
+			o.htmUserId("PUTCopy");
+			o.htmUserKey("PUTCopy");
+			o.htmUserName("PUTCopy");
+			o.htmUserEmail("PUTCopy");
 		} g("div");
 	}
 
@@ -233,31 +277,31 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSiteUser(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmUserReceiveEmails("Recherche");
-			o.htmSeeArchived("Recherche");
-			o.htmSeeDeleted("Recherche");
-			o.htmCustomerProfileId("Recherche");
+			o.htmUserReceiveEmails("Search");
+			o.htmSeeArchived("Search");
+			o.htmSeeDeleted("Search");
+			o.htmCustomerProfileId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKeys("Recherche");
-			o.htmPaymentKeys("Recherche");
+			o.htmEnrollmentKeys("Search");
+			o.htmPaymentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
-			o.htmUserId("Recherche");
-			o.htmUserKey("Recherche");
-			o.htmUserName("Recherche");
-			o.htmUserEmail("Recherche");
+			o.htmObjectTitle("Search");
+			o.htmUserId("Search");
+			o.htmUserKey("Search");
+			o.htmUserName("Search");
+			o.htmUserEmail("Search");
 		} g("div");
 	}
 
@@ -549,14 +593,14 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchSiteUserModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the site users");
+				sx("Modify site users");
 			} g("button");
 			{ e("div").a("id", "patchSiteUserModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-gray ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSiteUserModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the site users").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify site users").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SiteUser o = new SiteUser();
@@ -569,7 +613,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
 								.a("onclick", "patchSiteUser(null, $('#patchSiteUserFormValues'), ", Optional.ofNullable(siteUser).map(SiteUser::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the site users")
+								.f().sx("Modify site users")
 							.g("button");
 
 						} g("div");

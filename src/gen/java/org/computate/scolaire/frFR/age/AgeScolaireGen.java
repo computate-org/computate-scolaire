@@ -337,7 +337,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("name", "setBlocCles")
 					.a("id", classeApiMethodeMethode, "_blocCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireBlocCles')) : [{'name':'fq','value':'ageCle:", pk, "'}], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireBlocCles')) : [", pk == null ? "" : "{'name':'fq','value':'ageCle:" + pk + "'}", "], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -815,7 +815,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("name", "setSessionCle")
 					.a("id", classeApiMethodeMethode, "_sessionCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireSessionCle')) : [{'name':'fq','value':'ageCles:", pk, "'}], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireSessionCle')) : [", pk == null ? "" : "{'name':'fq','value':'ageCles:" + pk + "'}", "], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}

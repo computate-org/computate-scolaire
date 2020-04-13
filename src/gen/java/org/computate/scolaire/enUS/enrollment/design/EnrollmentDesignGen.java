@@ -221,7 +221,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « htmlPartKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> htmlPartKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -303,64 +302,27 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public void inputHtmlPartKeys(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
-		{
-			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "parts")
-					.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setHtmlPartKeys")
-					.a("id", classApiMethodMethod, "_htmlPartKeys")
-					.a("autocomplete", "off")
-					.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
-				.fg();
-
-		}
 	}
 
 	public void htmHtmlPartKeys(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "EnrollmentDesignHtmlPartKeys").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/html-part?fq=enrollmentDesignKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun ").f().g("i");
-								sx("parts");
-							} g("a");
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("class", "").f().sx("parts").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relate HTML parts to this enrollment design");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputHtmlPartKeys(classApiMethodMethod);
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strHtmlPartKeys()).g("span");
 								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod).f();
-								} g("ul");
-								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postHtmlPartVals({ enrollmentDesignKey: \"", pk, "\" }, function() { patchEnrollmentDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
-											.f().sx("add an HTML part")
-										.g("button");
-									} g("div");
-								}
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("div");
-			} g("div");
+			}
 		} g("div");
 	}
 
@@ -371,7 +333,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -692,7 +653,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String schoolCompleteName;
 	@JsonIgnore
@@ -755,7 +715,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « schoolLocation »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String schoolLocation;
 	@JsonIgnore
@@ -956,7 +915,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « yearShortName »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String yearShortName;
 	@JsonIgnore
@@ -1019,7 +977,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « yearCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String yearCompleteName;
 	@JsonIgnore
@@ -1082,7 +1039,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « enrollmentDesignCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String enrollmentDesignCompleteName;
 	@JsonIgnore
@@ -1203,7 +1159,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	/**	L'entité « designHidden »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean designHidden;
 	@JsonIgnore
@@ -1461,9 +1416,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	public Object attributeEnrollmentDesign(String var, Object val) {
 		EnrollmentDesign oEnrollmentDesign = (EnrollmentDesign)this;
 		switch(var) {
-			case "htmlPartKeys":
-				oEnrollmentDesign.addHtmlPartKeys((Long)val);
-				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -1533,9 +1485,11 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 					oEnrollmentDesign.setYearKey(yearKey);
 			}
 
-			List<Long> htmlPartKeys = (List<Long>)solrDocument.get("htmlPartKeys_stored_longs");
-			if(htmlPartKeys != null)
-				oEnrollmentDesign.htmlPartKeys.addAll(htmlPartKeys);
+			if(savesEnrollmentDesign.contains("htmlPartKeys")) {
+				List<Long> htmlPartKeys = (List<Long>)solrDocument.get("htmlPartKeys_stored_longs");
+				if(htmlPartKeys != null)
+					oEnrollmentDesign.htmlPartKeys.addAll(htmlPartKeys);
+			}
 
 			if(savesEnrollmentDesign.contains("enrollmentKeys")) {
 				List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
@@ -1868,8 +1822,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof EnrollmentDesign) {
 			EnrollmentDesign original = (EnrollmentDesign)o;
-			if(!Objects.equals(htmlPartKeys, original.getHtmlPartKeys()))
-				apiRequest.addVars("htmlPartKeys");
 			if(!Objects.equals(enrollmentDesignCompleteName, original.getEnrollmentDesignCompleteName()))
 				apiRequest.addVars("enrollmentDesignCompleteName");
 			if(!Objects.equals(designHidden, original.getDesignHidden()))
@@ -1883,7 +1835,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), htmlPartKeys, enrollmentDesignCompleteName, designHidden);
+		return Objects.hash(super.hashCode(), enrollmentDesignCompleteName, designHidden);
 	}
 
 	////////////
@@ -1897,7 +1849,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			return false;
 		EnrollmentDesign that = (EnrollmentDesign)o;
 		return super.equals(o)
-				&& Objects.equals( htmlPartKeys, that.htmlPartKeys )
 				&& Objects.equals( enrollmentDesignCompleteName, that.enrollmentDesignCompleteName )
 				&& Objects.equals( designHidden, that.designHidden );
 	}
@@ -1910,8 +1861,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("EnrollmentDesign { ");
-		sb.append( "htmlPartKeys: " ).append(htmlPartKeys);
-		sb.append( ", enrollmentDesignCompleteName: \"" ).append(enrollmentDesignCompleteName).append( "\"" );
+		sb.append( "enrollmentDesignCompleteName: \"" ).append(enrollmentDesignCompleteName).append( "\"" );
 		sb.append( ", designHidden: " ).append(designHidden);
 		sb.append(" }");
 		return sb.toString();

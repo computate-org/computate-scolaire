@@ -106,6 +106,18 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptGuardianGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -176,28 +188,60 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTSchoolGuardian(SchoolGuardian o) {
+	public void htmlFormPUTImportSchoolGuardian(SchoolGuardian o) {
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeSchoolGuardian(SchoolGuardian o) {
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopySchoolGuardian(SchoolGuardian o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonFirstName("PUT");
-			o.htmFamilyName("PUT");
-			o.htmPersonFirstNamePreferred("PUT");
+			o.htmPersonFirstName("PUTCopy");
+			o.htmFamilyName("PUTCopy");
+			o.htmPersonFirstNamePreferred("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonPhoneNumber("PUT");
-			o.htmPersonRelation("PUT");
-			o.htmPersonEmergencyContact("PUT");
-			o.htmPersonPickup("PUT");
+			o.htmPersonPhoneNumber("PUTCopy");
+			o.htmPersonRelation("PUTCopy");
+			o.htmPersonEmergencyContact("PUTCopy");
+			o.htmPersonPickup("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKeys("PUT");
+			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
 	}
 
@@ -228,31 +272,31 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolGuardian(SchoolGuardian o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonFirstName("Recherche");
-			o.htmFamilyName("Recherche");
-			o.htmPersonFirstNamePreferred("Recherche");
+			o.htmPersonFirstName("Search");
+			o.htmFamilyName("Search");
+			o.htmPersonFirstNamePreferred("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonPhoneNumber("Recherche");
-			o.htmPersonRelation("Recherche");
-			o.htmPersonEmergencyContact("Recherche");
-			o.htmPersonPickup("Recherche");
+			o.htmPersonPhoneNumber("Search");
+			o.htmPersonRelation("Search");
+			o.htmPersonEmergencyContact("Search");
+			o.htmPersonPickup("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKeys("Recherche");
+			o.htmEnrollmentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
+			o.htmObjectTitle("Search");
 		} g("div");
 	}
 
@@ -572,30 +616,98 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-				.a("onclick", "$('#putSchoolGuardianModal').show(); ")
+				.a("onclick", "$('#putimportSchoolGuardianModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the guardians");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import guardians");
 			} g("button");
-			{ e("div").a("id", "putSchoolGuardianModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportSchoolGuardianModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-yellow ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolGuardianModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the guardians").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolGuardianModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import guardians").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolGuardian o = new SchoolGuardian();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putSchoolGuardianFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTSchoolGuardian(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportSchoolGuardianForm").f();
+								htmlFormPUTImportSchoolGuardian(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putSchoolGuardian($('#putSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the guardians")
+								.a("onclick", "putimportSchoolGuardian($('#putimportSchoolGuardianForm')); ")
+								.f().sx("Import guardians")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putmergeSchoolGuardianModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge guardians");
+			} g("button");
+			{ e("div").a("id", "putmergeSchoolGuardianModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-yellow ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolGuardianModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge guardians").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolGuardian o = new SchoolGuardian();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergeSchoolGuardianForm").f();
+								htmlFormPUTMergeSchoolGuardian(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("onclick", "putmergeSchoolGuardian($('#putmergeSchoolGuardianForm')); ")
+								.f().sx("Merge guardians")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putcopySchoolGuardianModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate guardians");
+			} g("button");
+			{ e("div").a("id", "putcopySchoolGuardianModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-yellow ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolGuardianModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate guardians").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolGuardian o = new SchoolGuardian();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopySchoolGuardianForm").f();
+								htmlFormPUTCopySchoolGuardian(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("onclick", "putcopySchoolGuardian(", o.getPk(), ", $('#putcopySchoolGuardianForm')); ")
+								.f().sx("Duplicate guardians")
 							.g("button");
 
 						} g("div");
@@ -609,14 +721,14 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchSchoolGuardianModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the guardians");
+				sx("Modify guardians");
 			} g("button");
 			{ e("div").a("id", "patchSchoolGuardianModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-yellow ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolGuardianModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the guardians").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify guardians").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolGuardian o = new SchoolGuardian();
@@ -628,8 +740,8 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchSchoolGuardian($('#patchSchoolGuardianFormFilters'), $('#patchSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the guardians")
+								.a("onclick", "patchSchoolGuardian(null, $('#patchSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify guardians")
 							.g("button");
 
 						} g("div");
@@ -699,14 +811,12 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), GuardianGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), GuardianGenPage.ROLES)
 					) {
-				if(listSchoolGuardian == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllGuardianGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchSchoolGuardianVals([], {}, function() { addGlow($('#refreshAllGuardianGenPage", id, "')); }, function() { addError($('#refreshAllGuardianGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the guardians");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

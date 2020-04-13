@@ -320,7 +320,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentKeys")
 					.a("id", classApiMethodMethod, "_enrollmentKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [", pk == null ? "" : "{'name':'fq','value':'blockKeys:" + pk + "'}", "], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -1002,7 +1002,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("name", "setAgeKey")
 					.a("id", classApiMethodMethod, "_ageKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [{'name':'fq','value':'blockKeys:", pk, "'}], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [", pk == null ? "" : "{'name':'fq','value':'blockKeys:" + pk + "'}", "], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}

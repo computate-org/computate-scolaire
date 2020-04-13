@@ -295,10 +295,10 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	// PUT //
+	// PUTImport //
 
 	@Override
-	public void putSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putimportSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 
@@ -340,14 +340,14 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 													sqlSchoolGuardian(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPUTSchoolGuardian(apiRequest, listSchoolGuardian, f -> {
+																listPUTImportSchoolGuardian(apiRequest, listSchoolGuardian, f -> {
 																	if(f.succeeded()) {
-																		putSchoolGuardianResponse(listSchoolGuardian, g -> {
+																		putimportSchoolGuardianResponse(listSchoolGuardian, g -> {
 																			if(g.succeeded()) {
 																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putSchoolGuardian succeeded. "));
+																				LOGGER.info(String.format("putimportSchoolGuardian succeeded. "));
 																			} else {
-																				LOGGER.error(String.format("putSchoolGuardian failed. ", g.cause()));
+																				LOGGER.error(String.format("putimportSchoolGuardian failed. ", g.cause()));
 																				errorSchoolGuardian(siteRequest, eventHandler, d);
 																			}
 																		});
@@ -387,76 +387,41 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	}
 
 
-	public void listPUTSchoolGuardian(ApiRequest apiRequest, SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTImportSchoolGuardian(ApiRequest apiRequest, SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		if(jsonArray.size() == 0) {
-			listSchoolGuardian.getList().forEach(o -> {
-				futures.add(
-					putSchoolGuardianFuture(siteRequest, JsonObject.mapFrom(o), a -> {
-						if(a.succeeded()) {
-							SchoolGuardian schoolGuardian = a.result();
-							apiRequestSchoolGuardian(schoolGuardian);
-						} else {
-							errorSchoolGuardian(siteRequest, eventHandler, a);
-						}
-					})
-				);
-			});
-			CompositeFuture.all(futures).setHandler( a -> {
-				if(a.succeeded()) {
-					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolGuardian.size());
-					if(listSchoolGuardian.next()) {
-						siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-						listPUTSchoolGuardian(apiRequest, listSchoolGuardian, eventHandler);
+		jsonArray.forEach(o -> {
+			JsonObject jsonObject = (JsonObject)o;
+			futures.add(
+				putimportSchoolGuardianFuture(siteRequest, jsonObject, a -> {
+					if(a.succeeded()) {
+						SchoolGuardian schoolGuardian = a.result();
+						apiRequestSchoolGuardian(schoolGuardian);
 					} else {
-						response200PUTSchoolGuardian(listSchoolGuardian, eventHandler);
+						errorSchoolGuardian(siteRequest, eventHandler, a);
 					}
-				} else {
-					errorSchoolGuardian(listSchoolGuardian.getSiteRequest_(), eventHandler, a);
-				}
-			});
-		} else {
-			jsonArray.forEach(o -> {
-				JsonObject jsonObject = (JsonObject)o;
-				futures.add(
-					putSchoolGuardianFuture(siteRequest, jsonObject, a -> {
-						if(a.succeeded()) {
-							SchoolGuardian schoolGuardian = a.result();
-							apiRequestSchoolGuardian(schoolGuardian);
-						} else {
-							errorSchoolGuardian(siteRequest, eventHandler, a);
-						}
-					})
-				);
-			});
-			CompositeFuture.all(futures).setHandler( a -> {
-				if(a.succeeded()) {
-					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTSchoolGuardian(listSchoolGuardian, eventHandler);
-				} else {
-					errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
-				}
-			});
-		}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+				response200PUTImportSchoolGuardian(listSchoolGuardian, eventHandler);
+			} else {
+				errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
+			}
+		});
 	}
 
-	public Future<SchoolGuardian> putSchoolGuardianFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolGuardian>> eventHandler) {
+	public Future<SchoolGuardian> putimportSchoolGuardianFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolGuardian>> eventHandler) {
 		Promise<SchoolGuardian> promise = Promise.promise();
 		try {
 
-			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
-				jsonObject.getJsonArray("saves").add(o.getKey());
-
-			});
 			createSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolGuardian schoolGuardian = a.result();
-					sqlPUTSchoolGuardian(schoolGuardian, jsonObject, b -> {
+					sqlPUTImportSchoolGuardian(schoolGuardian, jsonObject, b -> {
 						if(b.succeeded()) {
 							defineSchoolGuardian(schoolGuardian, c -> {
 								if(c.succeeded()) {
@@ -492,13 +457,13 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		return promise.future();
 	}
 
-	public void sqlPUTSchoolGuardian(SchoolGuardian o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPUTImportSchoolGuardian(SchoolGuardian o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
 
 			if(jsonObject != null) {
 				JsonArray entityVars = jsonObject.getJsonArray("saves");
@@ -507,44 +472,52 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					switch(entityVar) {
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "guardianKeys", l));
+							SearchList<SchoolEnrollment> r = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							if(searchList.size() == 1) {
+								putSql.append(SiteContextEnUS.SQL_addA);
+								putSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "guardianKeys", searchList.get(0).getPk()));
+							}
 						}
 						break;
 					case "personFirstName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
 						break;
 					case "personFirstNamePreferred":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
 						break;
 					case "familyName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
 						break;
 					case "personPhoneNumber":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personPhoneNumber", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personPhoneNumber", jsonObject.getString(entityVar), pk));
 						break;
 					case "personRelation":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personRelation", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personRelation", jsonObject.getString(entityVar), pk));
 						break;
 					case "personEmergencyContact":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personEmergencyContact", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personEmergencyContact", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "personPickup":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personPickup", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personPickup", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
 			}
 			sqlConnection.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
+					putSql.toString()
+					, new JsonArray(putSqlParams)
 					, postAsync
 			-> {
 				if(postAsync.succeeded()) {
@@ -558,9 +531,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void putSchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putimportSchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
-		response200PUTSchoolGuardian(listSchoolGuardian, a -> {
+		response200PUTImportSchoolGuardian(listSchoolGuardian, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -583,7 +556,543 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			}
 		});
 	}
-	public void response200PUTSchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTImportSchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTMerge //
+
+	@Override
+	public void putmergeSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchoolGuardian(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolGuardian(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchoolGuardian(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolGuardian> listSchoolGuardian = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolGuardian(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTMergeSchoolGuardian(apiRequest, listSchoolGuardian, f -> {
+																	if(f.succeeded()) {
+																		putmergeSchoolGuardianResponse(listSchoolGuardian, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putmergeSchoolGuardian succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putmergeSchoolGuardian failed. ", g.cause()));
+																				errorSchoolGuardian(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchoolGuardian(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolGuardian(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolGuardian(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolGuardian(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTMergeSchoolGuardian(ApiRequest apiRequest, SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		jsonArray.forEach(o -> {
+			JsonObject jsonObject = (JsonObject)o;
+			futures.add(
+				putmergeSchoolGuardianFuture(siteRequest, jsonObject, a -> {
+					if(a.succeeded()) {
+						SchoolGuardian schoolGuardian = a.result();
+						apiRequestSchoolGuardian(schoolGuardian);
+					} else {
+						errorSchoolGuardian(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+				response200PUTMergeSchoolGuardian(listSchoolGuardian, eventHandler);
+			} else {
+				errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<SchoolGuardian> putmergeSchoolGuardianFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolGuardian>> eventHandler) {
+		Promise<SchoolGuardian> promise = Promise.promise();
+		try {
+
+			createSchoolGuardian(siteRequest, a -> {
+				if(a.succeeded()) {
+					SchoolGuardian schoolGuardian = a.result();
+					sqlPUTMergeSchoolGuardian(schoolGuardian, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchoolGuardian(schoolGuardian, c -> {
+								if(c.succeeded()) {
+									attributeSchoolGuardian(schoolGuardian, d -> {
+										if(d.succeeded()) {
+											indexSchoolGuardian(schoolGuardian, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolGuardian));
+													promise.complete(schoolGuardian);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolGuardian(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTMergeSchoolGuardian(SchoolGuardian o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "guardianKeys", l));
+						}
+						break;
+					case "personFirstName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personFirstNamePreferred":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						break;
+					case "familyName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personPhoneNumber":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "personRelation":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personRelation", jsonObject.getString(entityVar), pk));
+						break;
+					case "personEmergencyContact":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personEmergencyContact", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personPickup":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personPickup", jsonObject.getBoolean(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putmergeSchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+		response200PUTMergeSchoolGuardian(listSchoolGuardian, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolGuardian(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolGuardian(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolGuardian(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTMergeSchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTCopy //
+
+	@Override
+	public void putcopySchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchoolGuardian(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolGuardian(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchoolGuardian(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolGuardian> listSchoolGuardian = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolGuardian(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTCopySchoolGuardian(apiRequest, listSchoolGuardian, f -> {
+																	if(f.succeeded()) {
+																		putcopySchoolGuardianResponse(listSchoolGuardian, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putcopySchoolGuardian succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putcopySchoolGuardian failed. ", g.cause()));
+																				errorSchoolGuardian(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchoolGuardian(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolGuardian(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolGuardian(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolGuardian(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTCopySchoolGuardian(ApiRequest apiRequest, SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+		listSchoolGuardian.getList().forEach(o -> {
+			futures.add(
+				putcopySchoolGuardianFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+					if(a.succeeded()) {
+						SchoolGuardian schoolGuardian = a.result();
+						apiRequestSchoolGuardian(schoolGuardian);
+					} else {
+						errorSchoolGuardian(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolGuardian.size());
+				if(listSchoolGuardian.next()) {
+					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+					listPUTCopySchoolGuardian(apiRequest, listSchoolGuardian, eventHandler);
+				} else {
+					response200PUTCopySchoolGuardian(listSchoolGuardian, eventHandler);
+				}
+			} else {
+				errorSchoolGuardian(listSchoolGuardian.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<SchoolGuardian> putcopySchoolGuardianFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolGuardian>> eventHandler) {
+		Promise<SchoolGuardian> promise = Promise.promise();
+		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+			});
+
+			createSchoolGuardian(siteRequest, a -> {
+				if(a.succeeded()) {
+					SchoolGuardian schoolGuardian = a.result();
+					sqlPUTCopySchoolGuardian(schoolGuardian, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchoolGuardian(schoolGuardian, c -> {
+								if(c.succeeded()) {
+									attributeSchoolGuardian(schoolGuardian, d -> {
+										if(d.succeeded()) {
+											indexSchoolGuardian(schoolGuardian, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolGuardian));
+													promise.complete(schoolGuardian);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolGuardian(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTCopySchoolGuardian(SchoolGuardian o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "guardianKeys", l));
+						}
+						break;
+					case "personFirstName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personFirstNamePreferred":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						break;
+					case "familyName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personPhoneNumber":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "personRelation":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personRelation", jsonObject.getString(entityVar), pk));
+						break;
+					case "personEmergencyContact":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personEmergencyContact", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personPickup":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("personPickup", jsonObject.getBoolean(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putcopySchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+		response200PUTCopySchoolGuardian(listSchoolGuardian, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolGuardian(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolGuardian(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolGuardian(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTCopySchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1141,6 +1650,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.get(0).equals("saves")) {
+						fls.addAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					}
 					for(String fieldName : fieldNames) {
 						if(!fls.contains(fieldName))
 							json2.remove(fieldName);
@@ -1601,7 +2113,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void aSearchSchoolGuardianQ(SearchList<SchoolGuardian> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolGuardianQ(String classApiUriMethod, SearchList<SchoolGuardian> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1611,23 +2123,27 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void aSearchSchoolGuardianFq(SearchList<SchoolGuardian> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolGuardianFq(String classApiUriMethod, SearchList<SchoolGuardian> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSchoolGuardianSort(SearchList<SchoolGuardian> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolGuardianSort(String classApiUriMethod, SearchList<SchoolGuardian> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSchoolGuardianRows(SearchList<SchoolGuardian> searchList, Integer valueRows) {
+	public void aSearchSchoolGuardianRows(String classApiUriMethod, SearchList<SchoolGuardian> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchSchoolGuardianStart(SearchList<SchoolGuardian> searchList, Integer valueStart) {
+	public void aSearchSchoolGuardianStart(String classApiUriMethod, SearchList<SchoolGuardian> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolGuardianVar(SearchList<SchoolGuardian> searchList, String var, String value) {
+	public void aSearchSchoolGuardianVar(String classApiUriMethod, SearchList<SchoolGuardian> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -1679,32 +2195,32 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolGuardian.varSearchSchoolGuardian(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolGuardianQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolGuardianQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolGuardian.varIndexedSchoolGuardian(entityVar);
-								aSearchSchoolGuardianFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolGuardianFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolGuardian.varIndexedSchoolGuardian(entityVar);
-								aSearchSchoolGuardianSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolGuardianSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSchoolGuardianStart(searchList, valueStart);
+								aSearchSchoolGuardianStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSchoolGuardianRows(searchList, valueRows);
+								aSearchSchoolGuardianRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolGuardianVar(searchList, entityVar, valueIndexed);
+								aSearchSchoolGuardianVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

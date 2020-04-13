@@ -239,7 +239,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					.a("name", "setYearKeys")
 					.a("id", classApiMethodMethod, "_yearKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolYearKeys')) : [{'name':'fq','value':'schoolKey:", pk, "'}], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($('#suggest", classApiMethodMethod, "SchoolYearKeys')) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}

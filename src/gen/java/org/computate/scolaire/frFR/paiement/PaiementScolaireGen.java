@@ -239,7 +239,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					.a("name", "setInscriptionCle")
 					.a("id", classeApiMethodeMethode, "_inscriptionCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCle')) : [{'name':'fq','value':'paiementCles:", pk, "'}], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionCle')) : [", pk == null ? "" : "{'name':'fq','value':'paiementCles:" + pk + "'}", "], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {

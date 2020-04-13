@@ -107,6 +107,18 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptChildGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -173,25 +185,57 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTSchoolChild(SchoolChild o) {
+	public void htmlFormPUTImportSchoolChild(SchoolChild o) {
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeSchoolChild(SchoolChild o) {
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopySchoolChild(SchoolChild o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonFirstName("PUT");
-			o.htmFamilyName("PUT");
-			o.htmPersonFirstNamePreferred("PUT");
+			o.htmPersonFirstName("PUTCopy");
+			o.htmFamilyName("PUTCopy");
+			o.htmPersonFirstNamePreferred("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonBirthDate("PUT");
+			o.htmPersonBirthDate("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKeys("PUT");
+			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
 	}
 
@@ -219,29 +263,29 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolChild(SchoolChild o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonFirstName("Recherche");
-			o.htmFamilyName("Recherche");
-			o.htmPersonFirstNamePreferred("Recherche");
+			o.htmPersonFirstName("Search");
+			o.htmFamilyName("Search");
+			o.htmPersonFirstNamePreferred("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonBirthDate("Recherche");
-			o.htmPersonAgeInSeptember("Recherche");
+			o.htmPersonBirthDate("Search");
+			o.htmPersonAgeInSeptember("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentKeys("Recherche");
+			o.htmEnrollmentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
+			o.htmObjectTitle("Search");
 		} g("div");
 	}
 
@@ -561,30 +605,98 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-				.a("onclick", "$('#putSchoolChildModal').show(); ")
+				.a("onclick", "$('#putimportSchoolChildModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the children");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import children");
 			} g("button");
-			{ e("div").a("id", "putSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-orange ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolChildModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the children").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolChildModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import children").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolChild o = new SchoolChild();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putSchoolChildFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTSchoolChild(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportSchoolChildForm").f();
+								htmlFormPUTImportSchoolChild(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putSchoolChild($('#putSchoolChildFormValues'), ", Optional.ofNullable(schoolChild).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the children")
+								.a("onclick", "putimportSchoolChild($('#putimportSchoolChildForm')); ")
+								.f().sx("Import children")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+				.a("onclick", "$('#putmergeSchoolChildModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge children");
+			} g("button");
+			{ e("div").a("id", "putmergeSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-orange ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolChildModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge children").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolChild o = new SchoolChild();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergeSchoolChildForm").f();
+								htmlFormPUTMergeSchoolChild(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
+								.a("onclick", "putmergeSchoolChild($('#putmergeSchoolChildForm')); ")
+								.f().sx("Merge children")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+				.a("onclick", "$('#putcopySchoolChildModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate children");
+			} g("button");
+			{ e("div").a("id", "putcopySchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-orange ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolChildModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate children").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolChild o = new SchoolChild();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopySchoolChildForm").f();
+								htmlFormPUTCopySchoolChild(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
+								.a("onclick", "putcopySchoolChild(", o.getPk(), ", $('#putcopySchoolChildForm')); ")
+								.f().sx("Duplicate children")
 							.g("button");
 
 						} g("div");
@@ -598,14 +710,14 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchSchoolChildModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the children");
+				sx("Modify children");
 			} g("button");
 			{ e("div").a("id", "patchSchoolChildModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-orange ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolChildModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the children").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify children").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolChild o = new SchoolChild();
@@ -617,8 +729,8 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "patchSchoolChild($('#patchSchoolChildFormFilters'), $('#patchSchoolChildFormValues'), ", Optional.ofNullable(schoolChild).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the children")
+								.a("onclick", "patchSchoolChild(null, $('#patchSchoolChildFormValues'), ", Optional.ofNullable(schoolChild).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify children")
 							.g("button");
 
 						} g("div");
@@ -688,14 +800,12 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ChildGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ChildGenPage.ROLES)
 					) {
-				if(listSchoolChild == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllChildGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ").a("onclick", "patchSchoolChildVals([], {}, function() { addGlow($('#refreshAllChildGenPage", id, "')); }, function() { addError($('#refreshAllChildGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the children");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

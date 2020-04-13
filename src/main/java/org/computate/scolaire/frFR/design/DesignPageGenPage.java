@@ -108,6 +108,18 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptDesignPageGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -164,21 +176,53 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTDesignPage(DesignPage o) {
+	public void htmlFormPUTImportDesignPage(DesignPage o) {
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTFusionDesignPage(DesignPage o) {
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTFusion_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopieDesignPage(DesignPage o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PUT");
-			o.htmModifie("PUT");
+			o.htmCree("PUTCopie");
+			o.htmModifie("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchive("PUT");
-			o.htmSupprime("PUT");
+			o.htmArchive("PUTCopie");
+			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignPageNomComplet("PUT");
-			o.htmDesignCache("PUT");
+			o.htmDesignPageNomComplet("PUTCopie");
+			o.htmDesignCache("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("PUT");
+			o.htmPartHtmlCles("PUTCopie");
 		} g("div");
 	}
 
@@ -539,30 +583,98 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-				.a("onclick", "$('#putDesignPageModale').show(); ")
+				.a("onclick", "$('#putimportDesignPageModale').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Dupliquer des design de pages");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Importer design de pages");
 			} g("button");
-			{ e("div").a("id", "putDesignPageModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportDesignPageModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-khaki ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putDesignPageModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des design de pages").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportDesignPageModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Importer design de pages").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							DesignPage o = new DesignPage();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PUT
-							{ e("form").a("action", "").a("id", "putDesignPageFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTDesignPage(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportDesignPageForm").f();
+								htmlFormPUTImportDesignPage(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putDesignPage($('#putDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Dupliquer des design de pages")
+								.a("onclick", "putimportDesignPage($('#putimportDesignPageForm')); ")
+								.f().sx("Importer design de pages")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+				.a("onclick", "$('#putfusionDesignPageModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Fusionner design de pages");
+			} g("button");
+			{ e("div").a("id", "putfusionDesignPageModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionDesignPageModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Fusionner design de pages").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							DesignPage o = new DesignPage();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putfusionDesignPageForm").f();
+								htmlFormPUTFusionDesignPage(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
+								.a("onclick", "putfusionDesignPage($('#putfusionDesignPageForm')); ")
+								.f().sx("Fusionner design de pages")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+				.a("onclick", "$('#putcopieDesignPageModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer design de pages");
+			} g("button");
+			{ e("div").a("id", "putcopieDesignPageModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieDesignPageModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer design de pages").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							DesignPage o = new DesignPage();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopieDesignPageForm").f();
+								htmlFormPUTCopieDesignPage(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
+								.a("onclick", "putcopieDesignPage(", o.getPk(), ", $('#putcopieDesignPageForm')); ")
+								.f().sx("Dupliquer design de pages")
 							.g("button");
 
 						} g("div");
@@ -576,14 +688,14 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchDesignPageModale').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modifier des design de pages");
+				sx("Modifier design de pages");
 			} g("button");
 			{ e("div").a("id", "patchDesignPageModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchDesignPageModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modifier des design de pages").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier design de pages").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							DesignPage o = new DesignPage();
@@ -596,7 +708,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchDesignPage(null, $('#patchDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modifier des design de pages")
+								.f().sx("Modifier design de pages")
 							.g("button");
 
 						} g("div");

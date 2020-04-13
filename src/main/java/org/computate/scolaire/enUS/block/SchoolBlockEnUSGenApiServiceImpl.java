@@ -309,10 +309,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	// PUT //
+	// PUTImport //
 
 	@Override
-	public void putSchoolBlock(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putimportSchoolBlock(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest, body);
 
@@ -354,14 +354,14 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 													sqlSchoolBlock(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPUTSchoolBlock(apiRequest, listSchoolBlock, f -> {
+																listPUTImportSchoolBlock(apiRequest, listSchoolBlock, f -> {
 																	if(f.succeeded()) {
-																		putSchoolBlockResponse(listSchoolBlock, g -> {
+																		putimportSchoolBlockResponse(listSchoolBlock, g -> {
 																			if(g.succeeded()) {
 																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putSchoolBlock succeeded. "));
+																				LOGGER.info(String.format("putimportSchoolBlock succeeded. "));
 																			} else {
-																				LOGGER.error(String.format("putSchoolBlock failed. ", g.cause()));
+																				LOGGER.error(String.format("putimportSchoolBlock failed. ", g.cause()));
 																				errorSchoolBlock(siteRequest, eventHandler, d);
 																			}
 																		});
@@ -401,76 +401,41 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	}
 
 
-	public void listPUTSchoolBlock(ApiRequest apiRequest, SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTImportSchoolBlock(ApiRequest apiRequest, SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		if(jsonArray.size() == 0) {
-			listSchoolBlock.getList().forEach(o -> {
-				futures.add(
-					putSchoolBlockFuture(siteRequest, JsonObject.mapFrom(o), a -> {
-						if(a.succeeded()) {
-							SchoolBlock schoolBlock = a.result();
-							apiRequestSchoolBlock(schoolBlock);
-						} else {
-							errorSchoolBlock(siteRequest, eventHandler, a);
-						}
-					})
-				);
-			});
-			CompositeFuture.all(futures).setHandler( a -> {
-				if(a.succeeded()) {
-					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolBlock.size());
-					if(listSchoolBlock.next()) {
-						siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
-						listPUTSchoolBlock(apiRequest, listSchoolBlock, eventHandler);
+		jsonArray.forEach(o -> {
+			JsonObject jsonObject = (JsonObject)o;
+			futures.add(
+				putimportSchoolBlockFuture(siteRequest, jsonObject, a -> {
+					if(a.succeeded()) {
+						SchoolBlock schoolBlock = a.result();
+						apiRequestSchoolBlock(schoolBlock);
 					} else {
-						response200PUTSchoolBlock(listSchoolBlock, eventHandler);
+						errorSchoolBlock(siteRequest, eventHandler, a);
 					}
-				} else {
-					errorSchoolBlock(listSchoolBlock.getSiteRequest_(), eventHandler, a);
-				}
-			});
-		} else {
-			jsonArray.forEach(o -> {
-				JsonObject jsonObject = (JsonObject)o;
-				futures.add(
-					putSchoolBlockFuture(siteRequest, jsonObject, a -> {
-						if(a.succeeded()) {
-							SchoolBlock schoolBlock = a.result();
-							apiRequestSchoolBlock(schoolBlock);
-						} else {
-							errorSchoolBlock(siteRequest, eventHandler, a);
-						}
-					})
-				);
-			});
-			CompositeFuture.all(futures).setHandler( a -> {
-				if(a.succeeded()) {
-					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTSchoolBlock(listSchoolBlock, eventHandler);
-				} else {
-					errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
-				}
-			});
-		}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+				response200PUTImportSchoolBlock(listSchoolBlock, eventHandler);
+			} else {
+				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
+			}
+		});
 	}
 
-	public Future<SchoolBlock> putSchoolBlockFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+	public Future<SchoolBlock> putimportSchoolBlockFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolBlock>> eventHandler) {
 		Promise<SchoolBlock> promise = Promise.promise();
 		try {
 
-			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
-				jsonObject.getJsonArray("saves").add(o.getKey());
-
-			});
 			createSchoolBlock(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolBlock schoolBlock = a.result();
-					sqlPUTSchoolBlock(schoolBlock, jsonObject, b -> {
+					sqlPUTImportSchoolBlock(schoolBlock, jsonObject, b -> {
 						if(b.succeeded()) {
 							defineSchoolBlock(schoolBlock, c -> {
 								if(c.succeeded()) {
@@ -506,13 +471,13 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		return promise.future();
 	}
 
-	public void sqlPUTSchoolBlock(SchoolBlock o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPUTImportSchoolBlock(SchoolBlock o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
 
 			if(jsonObject != null) {
 				JsonArray entityVars = jsonObject.getJsonArray("saves");
@@ -521,56 +486,64 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					switch(entityVar) {
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							if(searchList.size() == 1) {
+								putSql.append(SiteContextEnUS.SQL_addA);
+								putSqlParams.addAll(Arrays.asList("blockKeys", searchList.get(0).getPk(), "enrollmentKeys", pk));
+							}
 						}
 						break;
 					case "ageKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						putSql.append(SiteContextEnUS.SQL_addA);
+						putSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", Long.parseLong(jsonObject.getString(entityVar))));
 						break;
 					case "schoolAddress":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
 						break;
 					case "blockStartTime":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockStartTime", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockStartTime", jsonObject.getString(entityVar), pk));
 						break;
 					case "blockEndTime":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockEndTime", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockEndTime", jsonObject.getString(entityVar), pk));
 						break;
 					case "blockPricePerMonth":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
 						break;
 					case "blockMonday":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockMonday", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockMonday", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "blockTuesday":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockTuesday", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockTuesday", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "blockWednesday":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockWednesday", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockWednesday", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "blockThursday":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockThursday", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockThursday", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "blockFriday":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockFriday", jsonObject.getBoolean(entityVar), pk));
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockFriday", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
 			}
 			sqlConnection.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
+					putSql.toString()
+					, new JsonArray(putSqlParams)
 					, postAsync
 			-> {
 				if(postAsync.succeeded()) {
@@ -584,9 +557,9 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void putSchoolBlockResponse(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void putimportSchoolBlockResponse(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
-		response200PUTSchoolBlock(listSchoolBlock, a -> {
+		response200PUTImportSchoolBlock(listSchoolBlock, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -609,7 +582,567 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			}
 		});
 	}
-	public void response200PUTSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTImportSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTMerge //
+
+	@Override
+	public void putmergeSchoolBlock(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchoolBlock(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolBlock(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchoolBlock(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolBlock> listSchoolBlock = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolBlock(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTMergeSchoolBlock(apiRequest, listSchoolBlock, f -> {
+																	if(f.succeeded()) {
+																		putmergeSchoolBlockResponse(listSchoolBlock, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putmergeSchoolBlock succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putmergeSchoolBlock failed. ", g.cause()));
+																				errorSchoolBlock(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchoolBlock(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolBlock(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolBlock(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolBlock(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTMergeSchoolBlock(ApiRequest apiRequest, SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		jsonArray.forEach(o -> {
+			JsonObject jsonObject = (JsonObject)o;
+			futures.add(
+				putmergeSchoolBlockFuture(siteRequest, jsonObject, a -> {
+					if(a.succeeded()) {
+						SchoolBlock schoolBlock = a.result();
+						apiRequestSchoolBlock(schoolBlock);
+					} else {
+						errorSchoolBlock(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+				response200PUTMergeSchoolBlock(listSchoolBlock, eventHandler);
+			} else {
+				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<SchoolBlock> putmergeSchoolBlockFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+		Promise<SchoolBlock> promise = Promise.promise();
+		try {
+
+			createSchoolBlock(siteRequest, a -> {
+				if(a.succeeded()) {
+					SchoolBlock schoolBlock = a.result();
+					sqlPUTMergeSchoolBlock(schoolBlock, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchoolBlock(schoolBlock, c -> {
+								if(c.succeeded()) {
+									attributeSchoolBlock(schoolBlock, d -> {
+										if(d.succeeded()) {
+											indexSchoolBlock(schoolBlock, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolBlock));
+													promise.complete(schoolBlock);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolBlock(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTMergeSchoolBlock(SchoolBlock o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
+						}
+						break;
+					case "ageKey":
+						putSql.append(SiteContextEnUS.SQL_addA);
+						putSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						break;
+					case "schoolAddress":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockStartTime":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockStartTime", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockEndTime":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockEndTime", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockPricePerMonth":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockMonday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockMonday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockTuesday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockTuesday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockWednesday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockWednesday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockThursday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockThursday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockFriday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockFriday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putmergeSchoolBlockResponse(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+		response200PUTMergeSchoolBlock(listSchoolBlock, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolBlock(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolBlock(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolBlock(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTMergeSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTCopy //
+
+	@Override
+	public void putcopySchoolBlock(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchoolBlock(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolBlock(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchoolBlock(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolBlock> listSchoolBlock = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolBlock(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTCopySchoolBlock(apiRequest, listSchoolBlock, f -> {
+																	if(f.succeeded()) {
+																		putcopySchoolBlockResponse(listSchoolBlock, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putcopySchoolBlock succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putcopySchoolBlock failed. ", g.cause()));
+																				errorSchoolBlock(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchoolBlock(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolBlock(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolBlock(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolBlock(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTCopySchoolBlock(ApiRequest apiRequest, SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+		listSchoolBlock.getList().forEach(o -> {
+			futures.add(
+				putcopySchoolBlockFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+					if(a.succeeded()) {
+						SchoolBlock schoolBlock = a.result();
+						apiRequestSchoolBlock(schoolBlock);
+					} else {
+						errorSchoolBlock(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolBlock.size());
+				if(listSchoolBlock.next()) {
+					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+					listPUTCopySchoolBlock(apiRequest, listSchoolBlock, eventHandler);
+				} else {
+					response200PUTCopySchoolBlock(listSchoolBlock, eventHandler);
+				}
+			} else {
+				errorSchoolBlock(listSchoolBlock.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<SchoolBlock> putcopySchoolBlockFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+		Promise<SchoolBlock> promise = Promise.promise();
+		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+			});
+
+			createSchoolBlock(siteRequest, a -> {
+				if(a.succeeded()) {
+					SchoolBlock schoolBlock = a.result();
+					sqlPUTCopySchoolBlock(schoolBlock, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchoolBlock(schoolBlock, c -> {
+								if(c.succeeded()) {
+									attributeSchoolBlock(schoolBlock, d -> {
+										if(d.succeeded()) {
+											indexSchoolBlock(schoolBlock, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolBlock));
+													promise.complete(schoolBlock);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolBlock(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTCopySchoolBlock(SchoolBlock o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
+						}
+						break;
+					case "ageKey":
+						putSql.append(SiteContextEnUS.SQL_addA);
+						putSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						break;
+					case "schoolAddress":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockStartTime":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockStartTime", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockEndTime":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockEndTime", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockPricePerMonth":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockMonday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockMonday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockTuesday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockTuesday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockWednesday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockWednesday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockThursday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockThursday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockFriday":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("blockFriday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putcopySchoolBlockResponse(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+		response200PUTCopySchoolBlock(listSchoolBlock, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchoolBlock(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchoolBlock(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchoolBlock(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTCopySchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1239,6 +1772,9 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.get(0).equals("saves")) {
+						fls.addAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					}
 					for(String fieldName : fieldNames) {
 						if(!fls.contains(fieldName))
 							json2.remove(fieldName);
@@ -1726,7 +2262,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void aSearchSchoolBlockQ(SearchList<SchoolBlock> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolBlockQ(String classApiUriMethod, SearchList<SchoolBlock> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1736,23 +2272,27 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void aSearchSchoolBlockFq(SearchList<SchoolBlock> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolBlockFq(String classApiUriMethod, SearchList<SchoolBlock> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSchoolBlockSort(SearchList<SchoolBlock> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolBlockSort(String classApiUriMethod, SearchList<SchoolBlock> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSchoolBlockRows(SearchList<SchoolBlock> searchList, Integer valueRows) {
+	public void aSearchSchoolBlockRows(String classApiUriMethod, SearchList<SchoolBlock> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchSchoolBlockStart(SearchList<SchoolBlock> searchList, Integer valueStart) {
+	public void aSearchSchoolBlockStart(String classApiUriMethod, SearchList<SchoolBlock> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolBlockVar(SearchList<SchoolBlock> searchList, String var, String value) {
+	public void aSearchSchoolBlockVar(String classApiUriMethod, SearchList<SchoolBlock> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -1795,32 +2335,32 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolBlock.varSearchSchoolBlock(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolBlockQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolBlockQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolBlock.varIndexedSchoolBlock(entityVar);
-								aSearchSchoolBlockFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolBlockFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolBlock.varIndexedSchoolBlock(entityVar);
-								aSearchSchoolBlockSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolBlockSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSchoolBlockStart(searchList, valueStart);
+								aSearchSchoolBlockStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSchoolBlockRows(searchList, valueRows);
+								aSearchSchoolBlockRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolBlockVar(searchList, entityVar, valueIndexed);
+								aSearchSchoolBlockVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

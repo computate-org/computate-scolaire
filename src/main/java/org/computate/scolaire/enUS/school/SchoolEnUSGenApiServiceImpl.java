@@ -291,300 +291,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	// PUT //
-
-	@Override
-	public void putSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
-			sqlSchool(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchool(siteRequest, b -> {
-						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									aSearchSchool(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<School> listSchool = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchool(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTSchool(apiRequest, listSchool, f -> {
-																	if(f.succeeded()) {
-																		putSchoolResponse(listSchool, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putSchool succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putSchool failed. ", g.cause()));
-																				errorSchool(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchool(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorSchool(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchool(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorSchool(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorSchool(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-
-	public void listPUTSchool(ApiRequest apiRequest, SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		if(jsonArray.size() == 0) {
-			listSchool.getList().forEach(o -> {
-				futures.add(
-					putSchoolFuture(siteRequest, JsonObject.mapFrom(o), a -> {
-						if(a.succeeded()) {
-							School school = a.result();
-							apiRequestSchool(school);
-						} else {
-							errorSchool(siteRequest, eventHandler, a);
-						}
-					})
-				);
-			});
-			CompositeFuture.all(futures).setHandler( a -> {
-				if(a.succeeded()) {
-					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchool.size());
-					if(listSchool.next()) {
-						siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
-						listPUTSchool(apiRequest, listSchool, eventHandler);
-					} else {
-						response200PUTSchool(listSchool, eventHandler);
-					}
-				} else {
-					errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
-				}
-			});
-		} else {
-			jsonArray.forEach(o -> {
-				JsonObject jsonObject = (JsonObject)o;
-				futures.add(
-					putSchoolFuture(siteRequest, jsonObject, a -> {
-						if(a.succeeded()) {
-							School school = a.result();
-							apiRequestSchool(school);
-						} else {
-							errorSchool(siteRequest, eventHandler, a);
-						}
-					})
-				);
-			});
-			CompositeFuture.all(futures).setHandler( a -> {
-				if(a.succeeded()) {
-					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-					response200PUTSchool(listSchool, eventHandler);
-				} else {
-					errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
-				}
-			});
-		}
-	}
-
-	public Future<School> putSchoolFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<School>> eventHandler) {
-		Promise<School> promise = Promise.promise();
-		try {
-
-			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
-			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
-			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
-				jsonObject.getJsonArray("saves").add(o.getKey());
-
-			});
-			createSchool(siteRequest, a -> {
-				if(a.succeeded()) {
-					School school = a.result();
-					sqlPUTSchool(school, jsonObject, b -> {
-						if(b.succeeded()) {
-							defineSchool(school, c -> {
-								if(c.succeeded()) {
-									attributeSchool(school, d -> {
-										if(d.succeeded()) {
-											indexSchool(school, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(school));
-													promise.complete(school);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorSchool(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTSchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "yearKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
-						}
-						break;
-					case "schoolName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolName", jsonObject.getString(entityVar), pk));
-						break;
-					case "schoolPhoneNumber":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolPhoneNumber", jsonObject.getString(entityVar), pk));
-						break;
-					case "schoolAdministratorName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
-						break;
-					case "schoolEmail":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
-						break;
-					case "schoolLocation":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolLocation", jsonObject.getString(entityVar), pk));
-						break;
-					case "schoolAddress":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-		response200PUTSchool(listSchool, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchool(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchool(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchool(siteRequest, eventHandler, a);
-			}
-		});
-	}
-	public void response200PUTSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// PATCH //
 
 	@Override
@@ -1165,6 +871,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.get(0).equals("saves")) {
+						fls.addAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					}
 					for(String fieldName : fieldNames) {
 						if(!fls.contains(fieldName))
 							json2.remove(fieldName);
@@ -1177,6 +886,801 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTImport //
+
+	@Override
+	public void putimportSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchool(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchool(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<School> listSchool = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchool(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTImportSchool(apiRequest, listSchool, f -> {
+																	if(f.succeeded()) {
+																		putimportSchoolResponse(listSchool, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putimportSchool succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putimportSchool failed. ", g.cause()));
+																				errorSchool(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchool(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchool(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchool(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchool(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTImportSchool(ApiRequest apiRequest, SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		jsonArray.forEach(o -> {
+			JsonObject jsonObject = (JsonObject)o;
+			futures.add(
+				putimportSchoolFuture(siteRequest, jsonObject, a -> {
+					if(a.succeeded()) {
+						School school = a.result();
+						apiRequestSchool(school);
+					} else {
+						errorSchool(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+				response200PUTImportSchool(listSchool, eventHandler);
+			} else {
+				errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<School> putimportSchoolFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<School>> eventHandler) {
+		Promise<School> promise = Promise.promise();
+		try {
+
+			createSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					School school = a.result();
+					sqlPUTImportSchool(school, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchool(school, c -> {
+								if(c.succeeded()) {
+									attributeSchool(school, d -> {
+										if(d.succeeded()) {
+											indexSchool(school, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(school));
+													promise.complete(school);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTImportSchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "yearKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							if(searchList.size() == 1) {
+								putSql.append(SiteContextEnUS.SQL_addA);
+								putSqlParams.addAll(Arrays.asList("schoolKey", searchList.get(0).getPk(), "yearKeys", pk));
+							}
+						}
+						break;
+					case "schoolName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolPhoneNumber":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAdministratorName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolEmail":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolLocation":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolLocation", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAddress":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putimportSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200PUTImportSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTImportSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTMerge //
+
+	@Override
+	public void putmergeSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchool(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchool(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<School> listSchool = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchool(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTMergeSchool(apiRequest, listSchool, f -> {
+																	if(f.succeeded()) {
+																		putmergeSchoolResponse(listSchool, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putmergeSchool succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putmergeSchool failed. ", g.cause()));
+																				errorSchool(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchool(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchool(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchool(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchool(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTMergeSchool(ApiRequest apiRequest, SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+		jsonArray.forEach(o -> {
+			JsonObject jsonObject = (JsonObject)o;
+			futures.add(
+				putmergeSchoolFuture(siteRequest, jsonObject, a -> {
+					if(a.succeeded()) {
+						School school = a.result();
+						apiRequestSchool(school);
+					} else {
+						errorSchool(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
+				response200PUTMergeSchool(listSchool, eventHandler);
+			} else {
+				errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<School> putmergeSchoolFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<School>> eventHandler) {
+		Promise<School> promise = Promise.promise();
+		try {
+
+			createSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					School school = a.result();
+					sqlPUTMergeSchool(school, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchool(school, c -> {
+								if(c.succeeded()) {
+									attributeSchool(school, d -> {
+										if(d.succeeded()) {
+											indexSchool(school, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(school));
+													promise.complete(school);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTMergeSchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "yearKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+						}
+						break;
+					case "schoolName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolPhoneNumber":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAdministratorName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolEmail":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolLocation":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolLocation", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAddress":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putmergeSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200PUTMergeSchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTMergeSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PUTCopy //
+
+	@Override
+	public void putcopySchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				eventHandler.handle(Future.succeededFuture(
+					new OperationResponse(401, "UNAUTHORIZED", 
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "roles required: " + String.join(", ", roles))
+								.encodePrettily()
+							), new CaseInsensitiveHeaders()
+					)
+				));
+			}
+
+			sqlSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchool(siteRequest, b -> {
+						if(b.succeeded()) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									aSearchSchool(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<School> listSchool = d.result();
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchool(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPUTCopySchool(apiRequest, listSchool, f -> {
+																	if(f.succeeded()) {
+																		putcopySchoolResponse(listSchool, g -> {
+																			if(g.succeeded()) {
+																				eventHandler.handle(Future.succeededFuture(g.result()));
+																				LOGGER.info(String.format("putcopySchool succeeded. "));
+																			} else {
+																				LOGGER.error(String.format("putcopySchool failed. ", g.cause()));
+																				errorSchool(siteRequest, eventHandler, d);
+																			}
+																		});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														}
+													});
+												}, resultHandler -> {
+												}
+											);
+										} else {
+											errorSchool(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchool(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchool(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchool(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+
+	public void listPUTCopySchool(ApiRequest apiRequest, SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		listSchool.getList().forEach(o -> {
+			futures.add(
+				putcopySchoolFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+					if(a.succeeded()) {
+						School school = a.result();
+						apiRequestSchool(school);
+					} else {
+						errorSchool(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchool.size());
+				if(listSchool.next()) {
+					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+					listPUTCopySchool(apiRequest, listSchool, eventHandler);
+				} else {
+					response200PUTCopySchool(listSchool, eventHandler);
+				}
+			} else {
+				errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
+			}
+		});
+	}
+
+	public Future<School> putcopySchoolFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<School>> eventHandler) {
+		Promise<School> promise = Promise.promise();
+		try {
+
+			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
+			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
+			jsonPatch.stream().forEach(o -> {
+				jsonObject.put(o.getKey(), o.getValue());
+				jsonObject.getJsonArray("saves").add(o.getKey());
+			});
+
+			createSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					School school = a.result();
+					sqlPUTCopySchool(school, jsonObject, b -> {
+						if(b.succeeded()) {
+							defineSchool(school, c -> {
+								if(c.succeeded()) {
+									attributeSchool(school, d -> {
+										if(d.succeeded()) {
+											indexSchool(school, e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(school));
+													promise.complete(school);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPUTCopySchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					case "yearKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+						}
+						break;
+					case "schoolName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolPhoneNumber":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAdministratorName":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolEmail":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolLocation":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolLocation", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAddress":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void putcopySchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+		response200PUTCopySchool(listSchool, a -> {
+			if(a.succeeded()) {
+				SQLConnection sqlConnection = siteRequest.getSqlConnection();
+				sqlConnection.commit(b -> {
+					if(b.succeeded()) {
+						sqlConnection.close(c -> {
+							if(c.succeeded()) {
+								ApiRequest apiRequest = siteRequest.getApiRequest_();
+								siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+								eventHandler.handle(Future.succeededFuture(a.result()));
+							} else {
+								errorSchool(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						errorSchool(siteRequest, eventHandler, b);
+					}
+				});
+			} else {
+				errorSchool(siteRequest, eventHandler, a);
+			}
+		});
+	}
+	public void response200PUTCopySchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1646,7 +2150,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void aSearchSchoolQ(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolQ(String classApiUriMethod, SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1656,23 +2160,27 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void aSearchSchoolFq(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolFq(String classApiUriMethod, SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSchoolSort(SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolSort(String classApiUriMethod, SearchList<School> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if(varIndexed == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSchoolRows(SearchList<School> searchList, Integer valueRows) {
+	public void aSearchSchoolRows(String classApiUriMethod, SearchList<School> searchList, Integer valueRows) {
 		searchList.setRows(valueRows);
 	}
 
-	public void aSearchSchoolStart(SearchList<School> searchList, Integer valueStart) {
+	public void aSearchSchoolStart(String classApiUriMethod, SearchList<School> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolVar(SearchList<School> searchList, String var, String value) {
+	public void aSearchSchoolVar(String classApiUriMethod, SearchList<School> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
@@ -1715,32 +2223,32 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : School.varSearchSchool(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolQ(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = School.varIndexedSchool(entityVar);
-								aSearchSchoolFq(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = School.varIndexedSchool(entityVar);
-								aSearchSchoolSort(searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSchoolStart(searchList, valueStart);
+								aSearchSchoolStart(classApiUriMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSchoolRows(searchList, valueRows);
+								aSearchSchoolRows(classApiUriMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolVar(searchList, entityVar, valueIndexed);
+								aSearchSchoolVar(classApiUriMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

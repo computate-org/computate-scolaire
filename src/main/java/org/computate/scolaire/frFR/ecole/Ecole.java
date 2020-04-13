@@ -7,7 +7,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                 
+/**                
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -21,11 +21,17 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiUri.enUS: /api/school
  * 
  * ApiMethode: POST
- * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
+ * 
+ * ApiMethode.frFR: PUTImport
+ * ApiMethode.frFR: PUTFusion
+ * ApiMethode.frFR: PUTCopie
+ * ApiMethode.enUS: PUTImport
+ * ApiMethode.enUS: PUTMerge
+ * ApiMethode.enUS: PUTCopy
  * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: EcolePage
@@ -45,7 +51,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */              
+ */            
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**

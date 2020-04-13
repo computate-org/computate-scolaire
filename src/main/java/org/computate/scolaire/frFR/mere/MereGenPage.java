@@ -108,6 +108,18 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptMereGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -188,33 +200,65 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTMereScolaire(MereScolaire o) {
+	public void htmlFormPUTImportMereScolaire(MereScolaire o) {
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTFusionMereScolaire(MereScolaire o) {
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+		) {
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTFusion_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopieMereScolaire(MereScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PUT");
-			o.htmModifie("PUT");
+			o.htmCree("PUTCopie");
+			o.htmModifie("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchive("PUT");
-			o.htmSupprime("PUT");
+			o.htmArchive("PUTCopie");
+			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonnePrenom("PUT");
-			o.htmFamilleNom("PUT");
-			o.htmPersonnePrenomPrefere("PUT");
+			o.htmPersonnePrenom("PUTCopie");
+			o.htmFamilleNom("PUTCopie");
+			o.htmPersonnePrenomPrefere("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonneMail("PUT");
-			o.htmPersonneNumeroTelephone("PUT");
-			o.htmPersonneOccupation("PUT");
+			o.htmPersonneMail("PUTCopie");
+			o.htmPersonneNumeroTelephone("PUTCopie");
+			o.htmPersonneOccupation("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPersonneSms("PUT");
-			o.htmPersonneRecevoirMail("PUT");
-			o.htmPersonneContactUrgence("PUT");
-			o.htmPersonneChercher("PUT");
+			o.htmPersonneSms("PUTCopie");
+			o.htmPersonneRecevoirMail("PUTCopie");
+			o.htmPersonneContactUrgence("PUTCopie");
+			o.htmPersonneChercher("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionCles("PUT");
+			o.htmInscriptionCles("PUTCopie");
 		} g("div");
 	}
 
@@ -599,30 +643,98 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-				.a("onclick", "$('#putMereScolaireModale').show(); ")
+				.a("onclick", "$('#putimportMereScolaireModale').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Dupliquer des mères");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Importer mères");
 			} g("button");
-			{ e("div").a("id", "putMereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportMereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-pink ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putMereScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des mères").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportMereScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Importer mères").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							MereScolaire o = new MereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PUT
-							{ e("form").a("action", "").a("id", "putMereScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTMereScolaire(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportMereScolaireForm").f();
+								htmlFormPUTImportMereScolaire(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putMereScolaire($('#putMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Dupliquer des mères")
+								.a("onclick", "putimportMereScolaire($('#putimportMereScolaireForm')); ")
+								.f().sx("Importer mères")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+				.a("onclick", "$('#putfusionMereScolaireModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Fusionner mères");
+			} g("button");
+			{ e("div").a("id", "putfusionMereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-pink ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionMereScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Fusionner mères").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							MereScolaire o = new MereScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putfusionMereScolaireForm").f();
+								htmlFormPUTFusionMereScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
+								.a("onclick", "putfusionMereScolaire($('#putfusionMereScolaireForm')); ")
+								.f().sx("Fusionner mères")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+				.a("onclick", "$('#putcopieMereScolaireModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer mères");
+			} g("button");
+			{ e("div").a("id", "putcopieMereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-pink ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieMereScolaireModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer mères").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							MereScolaire o = new MereScolaire();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopieMereScolaireForm").f();
+								htmlFormPUTCopieMereScolaire(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
+								.a("onclick", "putcopieMereScolaire(", o.getPk(), ", $('#putcopieMereScolaireForm')); ")
+								.f().sx("Dupliquer mères")
 							.g("button");
 
 						} g("div");
@@ -636,14 +748,14 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchMereScolaireModale').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modifier des mères");
+				sx("Modifier mères");
 			} g("button");
 			{ e("div").a("id", "patchMereScolaireModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-pink ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchMereScolaireModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modifier des mères").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier mères").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							MereScolaire o = new MereScolaire();
@@ -656,7 +768,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
 								.a("onclick", "patchMereScolaire(null, $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modifier des mères")
+								.f().sx("Modifier mères")
 							.g("button");
 
 						} g("div");

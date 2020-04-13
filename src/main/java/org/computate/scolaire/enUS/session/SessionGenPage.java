@@ -108,6 +108,18 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
@@ -174,25 +186,51 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPUTSchoolSession(SchoolSession o) {
+	public void htmlFormPUTImportSchoolSession(SchoolSession o) {
+		{
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTMergeSchoolSession(SchoolSession o) {
+		{
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTMerge_list")
+					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopySchoolSession(SchoolSession o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PUT");
-			o.htmModified("PUT");
+			o.htmCreated("PUTCopy");
+			o.htmModified("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("PUT");
-			o.htmDeleted("PUT");
+			o.htmArchived("PUTCopy");
+			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionStartDate("PUT");
-			o.htmSessionEndDate("PUT");
+			o.htmSessionStartDate("PUTCopy");
+			o.htmSessionEndDate("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSeasonKey("PUT");
-			o.htmAgeKeys("PUT");
+			o.htmSeasonKey("PUTCopy");
+			o.htmAgeKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSchoolAddress("PUT");
+			o.htmSchoolAddress("PUTCopy");
 		} g("div");
 	}
 
@@ -220,26 +258,26 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolSession(SchoolSession o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
-			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmPk("Search");
+			o.htmCreated("Search");
+			o.htmModified("Search");
+			o.htmObjectId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchived("Recherche");
-			o.htmDeleted("Recherche");
+			o.htmArchived("Search");
+			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionStartDate("Recherche");
-			o.htmSessionEndDate("Recherche");
+			o.htmSessionStartDate("Search");
+			o.htmSessionEndDate("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSeasonKey("Recherche");
-			o.htmAgeKeys("Recherche");
+			o.htmSeasonKey("Search");
+			o.htmAgeKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmObjectTitle("Recherche");
-			o.htmSchoolAddress("Recherche");
+			o.htmObjectTitle("Search");
+			o.htmSchoolAddress("Search");
 		} g("div");
 	}
 
@@ -433,7 +471,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	public void thead2SessionGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
-				e("th").f().sx("").g("th");
+				e("th").f().sx("created").g("th");
 			}
 			if(getColumnObjectTitle()) {
 				e("th").f().sx("").g("th");
@@ -559,30 +597,98 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-				.a("onclick", "$('#putSchoolSessionModal').show(); ")
+				.a("onclick", "$('#putimportSchoolSessionModal').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate the sessions");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Import sessions");
 			} g("button");
-			{ e("div").a("id", "putSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-green ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putSchoolSessionModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate the sessions").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolSessionModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Import sessions").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PUT
-							{ e("form").a("action", "").a("id", "putSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTSchoolSession(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportSchoolSessionForm").f();
+								htmlFormPUTImportSchoolSession(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putSchoolSession($('#putSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Duplicate the sessions")
+								.a("onclick", "putimportSchoolSession($('#putimportSchoolSessionForm')); ")
+								.f().sx("Import sessions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putmergeSchoolSessionModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Merge sessions");
+			} g("button");
+			{ e("div").a("id", "putmergeSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolSessionModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Merge sessions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolSession o = new SchoolSession();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putmergeSchoolSessionForm").f();
+								htmlFormPUTMergeSchoolSession(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putmergeSchoolSession($('#putmergeSchoolSessionForm')); ")
+								.f().sx("Merge sessions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#putcopySchoolSessionModal').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Duplicate sessions");
+			} g("button");
+			{ e("div").a("id", "putcopySchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-green ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolSessionModal').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Duplicate sessions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							SchoolSession o = new SchoolSession();
+							o.setSiteRequest_(siteRequest_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopySchoolSessionForm").f();
+								htmlFormPUTCopySchoolSession(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
+								.a("onclick", "putcopySchoolSession(", o.getPk(), ", $('#putcopySchoolSessionForm')); ")
+								.f().sx("Duplicate sessions")
 							.g("button");
 
 						} g("div");
@@ -596,14 +702,14 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 				.a("onclick", "$('#patchSchoolSessionModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify the sessions");
+				sx("Modify sessions");
 			} g("button");
 			{ e("div").a("id", "patchSchoolSessionModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-green ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSessionModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify the sessions").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modify sessions").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							SchoolSession o = new SchoolSession();
@@ -615,8 +721,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "patchSchoolSession($('#patchSchoolSessionFormFilters'), $('#patchSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify the sessions")
+								.a("onclick", "patchSchoolSession(null, $('#patchSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modify sessions")
 							.g("button");
 
 						} g("div");
@@ -686,14 +792,12 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SessionGenPage.ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SessionGenPage.ROLES)
 					) {
-				if(listSchoolSession == null) {
 					{ p.e("div").a("class", "").f();
 						{ p.e("button").a("id", "refreshAllSessionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").a("onclick", "patchSchoolSessionVals([], {}, function() { addGlow($('#refreshAllSessionGenPage", id, "')); }, function() { addError($('#refreshAllSessionGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the sessions");
 						} p.g("button");
 					} p.g("div");
-				}
 			}
 			{ p.e("div").a("class", "w3-cell-row ").f();
 				{ p.e("div").a("class", "w3-cell ").f();

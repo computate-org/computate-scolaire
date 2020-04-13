@@ -335,7 +335,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("name", "setBlockKeys")
 					.a("id", classApiMethodMethod, "_blockKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolAgeBlockKeys')) : [{'name':'fq','value':'ageKey:", pk, "'}], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolAgeBlockKeys')) : [", pk == null ? "" : "{'name':'fq','value':'ageKey:" + pk + "'}", "], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -812,7 +812,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("name", "setSessionKey")
 					.a("id", classApiMethodMethod, "_sessionKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolAgeSessionKey($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolAgeSessionKey')) : [{'name':'fq','value':'ageKeys:", pk, "'}], $('#listSchoolAgeSessionKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolAgeSessionKey($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolAgeSessionKey')) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeSessionKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}

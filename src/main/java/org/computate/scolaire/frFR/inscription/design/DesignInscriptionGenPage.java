@@ -103,22 +103,25 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 	@Override public void htmlScriptsDesignInscriptionGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/DesignInscriptionPage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/PartHtmlPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptDesignInscriptionGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "document.onkeydown = function(evt) {");
+		tl(2, "evt = evt || window.event;");
+		tl(2, "var isEscape = false;");
+		tl(2, "if ('key' in evt) {");
+		tl(3, "isEscape = (evt.key === 'Escape' || evt.key === 'Esc');");
+		tl(2, "} else {");
+		tl(3, "isEscape = (evt.keyCode === 27);");
+		tl(2, "}");
+		tl(2, "if (isEscape) {");
+		tl(3, "$('.w3-modal:visible').hide();");
+		tl(2, "}");
+		tl(1, "};");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
 		tl(1, "if(pk != null) {");
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			tl(2, "suggereDesignInscriptionPartHtmlCles([{'name':'fq','value':'designInscriptionCle:' + pk}], $('#listDesignInscriptionPartHtmlCles_Page'), pk, true); ");
-		} else {
-			tl(2, "suggereDesignInscriptionPartHtmlCles([{'name':'fq','value':'designInscriptionCle:' + pk}], $('#listDesignInscriptionPartHtmlCles_Page'), pk, false); ");
-		}
 		tl(1, "}");
 		tl(1, "websocketDesignInscription(websocketDesignInscriptionInner);");
 		l("});");
@@ -164,21 +167,44 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 	}
 
-	public void htmlFormPUTDesignInscription(DesignInscription o) {
+	public void htmlFormPUTImportDesignInscription(DesignInscription o) {
+		{
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTImport_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTFusionDesignInscription(DesignInscription o) {
+		{
+			{ e("div").a("class", "w3-cell-row ").f();
+				e("textarea")
+					.a("class", "PUTFusion_liste")
+					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+					;
+					f();
+				g("textarea");
+			} g("div");
+		}
+	}
+
+	public void htmlFormPUTCopieDesignInscription(DesignInscription o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PUT");
-			o.htmModifie("PUT");
+			o.htmCree("PUTCopie");
+			o.htmModifie("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmArchive("PUT");
-			o.htmSupprime("PUT");
+			o.htmArchive("PUTCopie");
+			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignInscriptionNomComplet("PUT");
-			o.htmDesignCache("PUT");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("PUT");
+			o.htmDesignInscriptionNomComplet("PUTCopie");
+			o.htmDesignCache("PUTCopie");
 		} g("div");
 	}
 
@@ -194,9 +220,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("PATCH");
 			o.htmDesignCache("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("PATCH");
 		} g("div");
 	}
 
@@ -539,30 +562,98 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-				.a("onclick", "$('#putDesignInscriptionModale').show(); ")
+				.a("onclick", "$('#putimportDesignInscriptionModale').show(); ")
 				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Dupliquer des design d'inscriptions");
+				e("i").a("class", "fas fa-file-import ").f().g("i");
+				sx("Importer design d'inscriptions");
 			} g("button");
-			{ e("div").a("id", "putDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+			{ e("div").a("id", "putimportDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-khaki ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putDesignInscriptionModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Dupliquer des design d'inscriptions").g("h2");
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Importer design d'inscriptions").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							DesignInscription o = new DesignInscription();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PUT
-							{ e("form").a("action", "").a("id", "putDesignInscriptionFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPUTDesignInscription(o);
-							} g("form");
+							// Form PUT
+							{ e("div").a("id", "putimportDesignInscriptionForm").f();
+								htmlFormPUTImportDesignInscription(o);
+							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putDesignInscription($('#putDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), "); ")
-								.f().sx("Dupliquer des design d'inscriptions")
+								.a("onclick", "putimportDesignInscription($('#putimportDesignInscriptionForm')); ")
+								.f().sx("Importer design d'inscriptions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+				.a("onclick", "$('#putfusionDesignInscriptionModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-code-merge ").f().g("i");
+				sx("Fusionner design d'inscriptions");
+			} g("button");
+			{ e("div").a("id", "putfusionDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Fusionner design d'inscriptions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							DesignInscription o = new DesignInscription();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putfusionDesignInscriptionForm").f();
+								htmlFormPUTFusionDesignInscription(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
+								.a("onclick", "putfusionDesignInscription($('#putfusionDesignInscriptionForm')); ")
+								.f().sx("Fusionner design d'inscriptions")
+							.g("button");
+
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+
+
+			{ e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+				.a("onclick", "$('#putcopieDesignInscriptionModale').show(); ")
+				.f();
+				e("i").a("class", "fas fa-copy ").f().g("i");
+				sx("Dupliquer design d'inscriptions");
+			} g("button");
+			{ e("div").a("id", "putcopieDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
+				{ e("div").a("class", "w3-modal-content ").f();
+					{ e("div").a("class", "w3-card-4 ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
+							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieDesignInscriptionModale').hide(); ").f().sx("×").g("span");
+							e("h2").a("class", "w3-padding ").f().sx("Dupliquer design d'inscriptions").g("h2");
+						} g("header");
+						{ e("div").a("class", "w3-container ").f();
+							DesignInscription o = new DesignInscription();
+							o.setRequeteSite_(requeteSite_);
+
+							// Form PUT
+							{ e("div").a("id", "putcopieDesignInscriptionForm").f();
+								htmlFormPUTCopieDesignInscription(o);
+							} g("div");
+							e("button")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
+								.a("onclick", "putcopieDesignInscription(", o.getPk(), ", $('#putcopieDesignInscriptionForm')); ")
+								.f().sx("Dupliquer design d'inscriptions")
 							.g("button");
 
 						} g("div");
@@ -576,14 +667,14 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 				.a("onclick", "$('#patchDesignInscriptionModale').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modifier des design d'inscriptions");
+				sx("Modifier design d'inscriptions");
 			} g("button");
 			{ e("div").a("id", "patchDesignInscriptionModale").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
 						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchDesignInscriptionModale').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modifier des design d'inscriptions").g("h2");
+							e("h2").a("class", "w3-padding ").f().sx("Modifier design d'inscriptions").g("h2");
 						} g("header");
 						{ e("div").a("class", "w3-container ").f();
 							DesignInscription o = new DesignInscription();
@@ -595,8 +686,8 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "patchDesignInscription($('#patchDesignInscriptionFormulaireFiltres'), $('#patchDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modifier des design d'inscriptions")
+								.a("onclick", "patchDesignInscription(null, $('#patchDesignInscriptionFormulaireValeurs'), ", Optional.ofNullable(designInscription).map(DesignInscription::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.f().sx("Modifier design d'inscriptions")
 							.g("button");
 
 						} g("div");

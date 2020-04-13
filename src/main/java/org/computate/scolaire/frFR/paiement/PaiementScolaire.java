@@ -30,7 +30,14 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUri.enUS: /api/payment
  * 
  * ApiMethode: POST
- * ApiMethode: PUT
+ * 
+ * ApiMethode.frFR: PUTImport
+ * ApiMethode.frFR: PUTFusion
+ * ApiMethode.frFR: PUTCopie
+ * ApiMethode.enUS: PUTImport
+ * ApiMethode.enUS: PUTMerge
+ * ApiMethode.enUS: PUTCopy
+
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode.frFR: Recherche

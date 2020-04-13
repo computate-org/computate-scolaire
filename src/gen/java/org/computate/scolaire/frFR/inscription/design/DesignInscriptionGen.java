@@ -222,7 +222,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « partHtmlCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> partHtmlCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -304,64 +303,27 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void inputPartHtmlCles(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
-		{
-			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "parts")
-					.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setPartHtmlCles")
-					.a("id", classeApiMethodeMethode, "_partHtmlCles")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
-
-		}
 	}
 
 	public void htmPartHtmlCles(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignInscriptionPartHtmlCles").f();
+			if("Page".equals(classeApiMethodeMethode)) {
+				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=designInscriptionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun ").f().g("i");
-								sx("parts");
-							} g("a");
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("class", "").f().sx("parts").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a ce design d'inscription");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputPartHtmlCles(classeApiMethodeMethode);
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strPartHtmlCles()).g("span");
 								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode).f();
-								} g("ul");
-								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postPartHtmlVals({ designInscriptionCle: \"", pk, "\" }, function() { patchDesignInscriptionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
-											.f().sx("ajouter un part de HTML")
-										.g("button");
-									} g("div");
-								}
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("div");
-			} g("div");
+			}
 		} g("div");
 	}
 
@@ -372,7 +334,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -693,7 +654,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNomComplet;
 	@JsonIgnore
@@ -756,7 +716,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « ecoleEmplacement »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleEmplacement;
 	@JsonIgnore
@@ -957,7 +916,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « anneeNomCourt »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String anneeNomCourt;
 	@JsonIgnore
@@ -1020,7 +978,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « anneeNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String anneeNomComplet;
 	@JsonIgnore
@@ -1083,7 +1040,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « designInscriptionNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String designInscriptionNomComplet;
 	@JsonIgnore
@@ -1204,7 +1160,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « designCache »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean designCache;
 	@JsonIgnore
@@ -1462,9 +1417,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	public Object attribuerDesignInscription(String var, Object val) {
 		DesignInscription oDesignInscription = (DesignInscription)this;
 		switch(var) {
-			case "partHtmlCles":
-				oDesignInscription.addPartHtmlCles((Long)val);
-				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -1534,9 +1486,11 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 					oDesignInscription.setAnneeCle(anneeCle);
 			}
 
-			List<Long> partHtmlCles = (List<Long>)solrDocument.get("partHtmlCles_stored_longs");
-			if(partHtmlCles != null)
-				oDesignInscription.partHtmlCles.addAll(partHtmlCles);
+			if(sauvegardesDesignInscription.contains("partHtmlCles")) {
+				List<Long> partHtmlCles = (List<Long>)solrDocument.get("partHtmlCles_stored_longs");
+				if(partHtmlCles != null)
+					oDesignInscription.partHtmlCles.addAll(partHtmlCles);
+			}
 
 			if(sauvegardesDesignInscription.contains("inscriptionCles")) {
 				List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
@@ -1869,8 +1823,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof DesignInscription) {
 			DesignInscription original = (DesignInscription)o;
-			if(!Objects.equals(partHtmlCles, original.getPartHtmlCles()))
-				requeteApi.addVars("partHtmlCles");
 			if(!Objects.equals(designInscriptionNomComplet, original.getDesignInscriptionNomComplet()))
 				requeteApi.addVars("designInscriptionNomComplet");
 			if(!Objects.equals(designCache, original.getDesignCache()))
@@ -1884,7 +1836,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), partHtmlCles, designInscriptionNomComplet, designCache);
+		return Objects.hash(super.hashCode(), designInscriptionNomComplet, designCache);
 	}
 
 	////////////
@@ -1898,7 +1850,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			return false;
 		DesignInscription that = (DesignInscription)o;
 		return super.equals(o)
-				&& Objects.equals( partHtmlCles, that.partHtmlCles )
 				&& Objects.equals( designInscriptionNomComplet, that.designInscriptionNomComplet )
 				&& Objects.equals( designCache, that.designCache );
 	}
@@ -1911,8 +1862,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("DesignInscription { ");
-		sb.append( "partHtmlCles: " ).append(partHtmlCles);
-		sb.append( ", designInscriptionNomComplet: \"" ).append(designInscriptionNomComplet).append( "\"" );
+		sb.append( "designInscriptionNomComplet: \"" ).append(designInscriptionNomComplet).append( "\"" );
 		sb.append( ", designCache: " ).append(designCache);
 		sb.append(" }");
 		return sb.toString();

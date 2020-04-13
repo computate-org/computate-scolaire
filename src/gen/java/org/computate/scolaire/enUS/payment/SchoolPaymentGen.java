@@ -237,7 +237,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentKey")
 					.a("id", classApiMethodMethod, "_enrollmentKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKey')) : [{'name':'fq','value':'paymentKeys:", pk, "'}], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKey')) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {

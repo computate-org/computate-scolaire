@@ -191,6 +191,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.get(0).equals("sauvegardes")) {
+						fls.addAll(json2.getJsonArray("sauvegardes").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					}
 					for(String fieldName : fieldNames) {
 						if(!fls.contains(fieldName))
 							json2.remove(fieldName);
@@ -1280,7 +1283,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void rechercheUtilisateurSiteQ(ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheUtilisateurSiteQ(String classeApiUriMethode, ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -1290,23 +1293,27 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void rechercheUtilisateurSiteFq(ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheUtilisateurSiteFq(String classeApiUriMethode, ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheUtilisateurSiteSort(ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheUtilisateurSiteSort(String classeApiUriMethode, ListeRecherche<UtilisateurSite> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+		if(varIndexe == null)
+			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheUtilisateurSiteRows(ListeRecherche<UtilisateurSite> listeRecherche, Integer valeurRows) {
+	public void rechercheUtilisateurSiteRows(String classeApiUriMethode, ListeRecherche<UtilisateurSite> listeRecherche, Integer valeurRows) {
 		listeRecherche.setRows(valeurRows);
 	}
 
-	public void rechercheUtilisateurSiteStart(ListeRecherche<UtilisateurSite> listeRecherche, Integer valeurStart) {
+	public void rechercheUtilisateurSiteStart(String classeApiUriMethode, ListeRecherche<UtilisateurSite> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheUtilisateurSiteVar(ListeRecherche<UtilisateurSite> listeRecherche, String var, String valeur) {
+	public void rechercheUtilisateurSiteVar(String classeApiUriMethode, ListeRecherche<UtilisateurSite> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
@@ -1358,32 +1365,32 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								varIndexe = "*".equals(entiteVar) ? entiteVar : UtilisateurSite.varRechercheUtilisateurSite(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheUtilisateurSiteQ(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheUtilisateurSiteQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
-								rechercheUtilisateurSiteFq(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheUtilisateurSiteFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
-								rechercheUtilisateurSiteSort(listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheUtilisateurSiteSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheUtilisateurSiteStart(listeRecherche, valeurStart);
+								rechercheUtilisateurSiteStart(classeApiUriMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheUtilisateurSiteRows(listeRecherche, valeurRows);
+								rechercheUtilisateurSiteRows(classeApiUriMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheUtilisateurSiteVar(listeRecherche, entiteVar, valeurIndexe);
+								rechercheUtilisateurSiteVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

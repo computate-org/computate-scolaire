@@ -322,7 +322,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("name", "setInscriptionCles")
 					.a("id", classeApiMethodeMethode, "_inscriptionCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles')) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -1005,7 +1005,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("name", "setAgeCle")
 					.a("id", classeApiMethodeMethode, "_ageCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireAgeCle')) : [{'name':'fq','value':'blocCles:", pk, "'}], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireAgeCle')) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}

@@ -241,7 +241,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					.a("name", "setAnneeCles")
 					.a("id", classeApiMethodeMethode, "_anneeCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($('#suggere", classeApiMethodeMethode, "EcoleAnneeCles')) : [{'name':'fq','value':'ecoleCle:", pk, "'}], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($('#suggere", classeApiMethodeMethode, "EcoleAnneeCles')) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
