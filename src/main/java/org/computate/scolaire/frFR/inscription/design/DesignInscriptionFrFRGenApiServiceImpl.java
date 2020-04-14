@@ -1510,8 +1510,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
-					if(fls.size() == 1 && fls.get(0).equals("sauvegardes")) {
-						fls.addAll(json2.getJsonArray("sauvegardes").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
+						fieldNames.removeAll(json2.getJsonArray("sauvegardes").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
 					}
 					for(String fieldName : fieldNames) {
 						if(!fls.contains(fieldName))

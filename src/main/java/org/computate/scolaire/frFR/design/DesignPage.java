@@ -116,7 +116,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: designs parent
 	 * NomAffichage.enUS: parent designs
-	*/     
+	*/  
 	protected void _designParentCles(List<Long> c) {
 	}
 

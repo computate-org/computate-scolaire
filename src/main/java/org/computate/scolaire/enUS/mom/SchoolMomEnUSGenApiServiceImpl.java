@@ -1728,8 +1728,11 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
-					if(fls.size() == 1 && fls.get(0).equals("saves")) {
-						fls.addAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
+						fieldNames.removeAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
 					}
 					for(String fieldName : fieldNames) {
 						if(!fls.contains(fieldName))
