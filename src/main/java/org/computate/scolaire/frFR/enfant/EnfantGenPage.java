@@ -187,35 +187,25 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	}
 
 	public void htmlFormPUTImportEnfantScolaire(EnfantScolaire o) {
-		if(
-				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-				|| Objects.equals(sessionId, requeteSite_.getSessionId())
-		) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_liste")
-					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_liste")
+				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTFusionEnfantScolaire(EnfantScolaire o) {
-		if(
-				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-				|| Objects.equals(sessionId, requeteSite_.getSessionId())
-		) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTFusion_liste")
-					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTFusion_liste")
+				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopieEnfantScolaire(EnfantScolaire o) {

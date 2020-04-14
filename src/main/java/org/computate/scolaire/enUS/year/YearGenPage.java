@@ -189,29 +189,25 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 	}
 
 	public void htmlFormPUTImportSchoolYear(SchoolYear o) {
-		{
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_list")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTMergeSchoolYear(SchoolYear o) {
-		{
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTMerge_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTMerge_list")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopySchoolYear(SchoolYear o) {

@@ -191,35 +191,25 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	public void htmlFormPUTImportUtilisateurSite(UtilisateurSite o) {
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_liste")
-					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_liste")
+				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTFusionUtilisateurSite(UtilisateurSite o) {
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTFusion_liste")
-					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTFusion_liste")
+				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopieUtilisateurSite(UtilisateurSite o) {

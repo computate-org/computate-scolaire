@@ -188,29 +188,27 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 	}
 
 	public void htmlFormPUTImportSchool(School o) {
-		{
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_list w3-input w3-border ")
+				.a("style", "height: 400px; ")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTMergeSchool(School o) {
-		{
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTMerge_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTMerge_list w3-input w3-border ")
+				.a("style", "height: 400px; ")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopySchool(School o) {

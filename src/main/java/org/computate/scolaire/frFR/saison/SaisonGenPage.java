@@ -188,29 +188,25 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 	}
 
 	public void htmlFormPUTImportSaisonScolaire(SaisonScolaire o) {
-		{
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_liste")
-					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_liste")
+				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTFusionSaisonScolaire(SaisonScolaire o) {
-		{
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTFusion_liste")
-					.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTFusion_liste")
+				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopieSaisonScolaire(SaisonScolaire o) {

@@ -13,6 +13,12 @@ public class PageDesign extends PageDesignGen<Cluster> {
 		c.o(pk);
 	}
 
+	protected void _childDesignKeys(List<Long> c) {
+	}
+
+	protected void _parentDesignKeys(List<Long> c) {
+	}
+
 	protected void _htmlPartKeys(List<Long> o) {}
 
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {

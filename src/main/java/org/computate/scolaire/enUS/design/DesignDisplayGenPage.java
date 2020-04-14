@@ -137,6 +137,8 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsDesignDisplayGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/DesignDisplayPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/HtmlPartPage.js").f().g("script");
 	}
 
@@ -165,6 +167,22 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} else {
 			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, false); ");
 		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestPageDesignParentDesignKeys([{'name':'fq','value':'childDesignKeys:' + pk}], $('#listPageDesignParentDesignKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestPageDesignParentDesignKeys([{'name':'fq','value':'childDesignKeys:' + pk}], $('#listPageDesignParentDesignKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestPageDesignChildDesignKeys([{'name':'fq','value':'parentDesignKeys:' + pk}], $('#listPageDesignChildDesignKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestPageDesignChildDesignKeys([{'name':'fq','value':'parentDesignKeys:' + pk}], $('#listPageDesignChildDesignKeys_Page'), pk, false); ");
+		}
 		tl(1, "}");
 		tl(1, "websocketPageDesign(websocketPageDesignInner);");
 		l("});");
@@ -187,6 +205,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("Page");
+			o.htmParentDesignKeys("Page");
 		} g("div");
 	}
 
@@ -207,39 +226,32 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("POST");
+			o.htmParentDesignKeys("POST");
 		} g("div");
 	}
 
 	public void htmlFormPUTImportPageDesign(PageDesign o) {
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_list w3-input w3-border ")
+				.a("style", "height: 400px; ")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTMergePageDesign(PageDesign o) {
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTMerge_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTMerge_list w3-input w3-border ")
+				.a("style", "height: 400px; ")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopyPageDesign(PageDesign o) {
@@ -257,6 +269,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("PUTCopy");
+			o.htmParentDesignKeys("PUTCopy");
 		} g("div");
 	}
 
@@ -275,6 +288,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("PATCH");
+			o.htmParentDesignKeys("PATCH");
 		} g("div");
 	}
 
@@ -295,6 +309,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("Search");
+			o.htmParentDesignKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmObjectTitle("Search");

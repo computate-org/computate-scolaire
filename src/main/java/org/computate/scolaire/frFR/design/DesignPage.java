@@ -94,6 +94,32 @@ public class DesignPage extends DesignPageGen<Cluster> {
 //	protected void _anneeCle(Couverture<Long> c) {
 //	}
 
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childDesignKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: DesignPage.designParentCles
+	 * NomAffichage.frFR: designs d'enfant
+	 * NomAffichage.enUS: child designs
+	*/  
+	protected void _designEnfantCles(List<Long> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: parentDesignKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: DesignPage.designEnfantCles
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 1
+	 * NomAffichage.frFR: designs parent
+	 * NomAffichage.enUS: parent designs
+	*/     
+	protected void _designParentCles(List<Long> c) {
+	}
+
 	/**  
 	 * {@inheritDoc}
 	 * Var.enUS: htmlPartKeys
@@ -101,10 +127,10 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: PartHtml.designPageCles
 	 * HtmlLigne: 4
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
-	 */            
+	 */           
 	protected void _partHtmlCles(List<Long> o) {}
 //
 //	/**

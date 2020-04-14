@@ -73,7 +73,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public static final String PartHtml_Couleur = "yellow";
 	public static final String PartHtml_IconeGroupe = "regular";
 	public static final String PartHtml_IconeNom = "sun";
-	public static final Integer PartHtml_Lignes = 1000000;
+	public static final Integer PartHtml_Lignes = 1000;
 
 	/////////////////
 	// partHtmlCle //
@@ -163,7 +163,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param designPageCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _designPageCles(List<Long> c);
+	protected abstract void _designPageCles(List<Long> l);
 
 	public List<Long> getDesignPageCles() {
 		return designPageCles;
@@ -242,7 +242,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("name", "setDesignPageCles")
 					.a("id", classeApiMethodeMethode, "_designPageCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($('#suggere", classeApiMethodeMethode, "PartHtmlDesignPageCles')) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}

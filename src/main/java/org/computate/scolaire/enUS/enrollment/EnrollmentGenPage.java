@@ -428,35 +428,25 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	}
 
 	public void htmlFormPUTImportSchoolEnrollment(SchoolEnrollment o) {
-		if(
-				userKeys.contains(siteRequest_.getUserKey())
-				|| Objects.equals(sessionId, siteRequest_.getSessionId())
-		) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTImport_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTImport_list")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTMergeSchoolEnrollment(SchoolEnrollment o) {
-		if(
-				userKeys.contains(siteRequest_.getUserKey())
-				|| Objects.equals(sessionId, siteRequest_.getSessionId())
-		) {
-			{ e("div").a("class", "w3-cell-row ").f();
-				e("textarea")
-					.a("class", "PUTMerge_list")
-					.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
-					;
-					f();
-				g("textarea");
-			} g("div");
-		}
+		{ e("div").a("class", "w3-cell-row ").f();
+			e("textarea")
+				.a("class", "PUTMerge_list")
+				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
+				;
+				f();
+			g("textarea");
+		} g("div");
 	}
 
 	public void htmlFormPUTCopySchoolEnrollment(SchoolEnrollment o) {

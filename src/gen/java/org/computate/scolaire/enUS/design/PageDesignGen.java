@@ -143,6 +143,251 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		return pageDesignKey == null ? "" : StringEscapeUtils.escapeHtml4(strPageDesignKey());
 	}
 
+	/////////////////////
+	// childDesignKeys //
+	/////////////////////
+
+	/**	L'entité « childDesignKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> childDesignKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> childDesignKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("childDesignKeys").o(childDesignKeys);
+
+	/**	<br/>L'entité « childDesignKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childDesignKeys">Trouver l'entité childDesignKeys dans Solr</a>
+	 * <br/>
+	 * @param childDesignKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _childDesignKeys(List<Long> c);
+
+	public List<Long> getChildDesignKeys() {
+		return childDesignKeys;
+	}
+
+	public void setChildDesignKeys(List<Long> childDesignKeys) {
+		this.childDesignKeys = childDesignKeys;
+		this.childDesignKeysWrap.alreadyInitialized = true;
+	}
+	public PageDesign addChildDesignKeys(Long...objets) {
+		for(Long o : objets) {
+			addChildDesignKeys(o);
+		}
+		return (PageDesign)this;
+	}
+	public PageDesign addChildDesignKeys(Long o) {
+		if(o != null && !childDesignKeys.contains(o))
+			this.childDesignKeys.add(o);
+		return (PageDesign)this;
+	}
+	public PageDesign setChildDesignKeys(JsonArray objets) {
+		childDesignKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addChildDesignKeys(o);
+		}
+		return (PageDesign)this;
+	}
+	public PageDesign addChildDesignKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addChildDesignKeys(p);
+		}
+		return (PageDesign)this;
+	}
+	protected PageDesign childDesignKeysInit() {
+		if(!childDesignKeysWrap.alreadyInitialized) {
+			_childDesignKeys(childDesignKeys);
+		}
+		childDesignKeysWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public List<Long> solrChildDesignKeys() {
+		return childDesignKeys;
+	}
+
+	public String strChildDesignKeys() {
+		return childDesignKeys == null ? "" : childDesignKeys.toString();
+	}
+
+	public String jsonChildDesignKeys() {
+		return childDesignKeys == null ? "" : childDesignKeys.toString();
+	}
+
+	public String nomAffichageChildDesignKeys() {
+		return "child designs";
+	}
+
+	public String htmTooltipChildDesignKeys() {
+		return null;
+	}
+
+	public String htmChildDesignKeys() {
+		return childDesignKeys == null ? "" : StringEscapeUtils.escapeHtml4(strChildDesignKeys());
+	}
+
+	//////////////////////
+	// parentDesignKeys //
+	//////////////////////
+
+	/**	L'entité « parentDesignKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> parentDesignKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> parentDesignKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("parentDesignKeys").o(parentDesignKeys);
+
+	/**	<br/>L'entité « parentDesignKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:parentDesignKeys">Trouver l'entité parentDesignKeys dans Solr</a>
+	 * <br/>
+	 * @param parentDesignKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _parentDesignKeys(List<Long> c);
+
+	public List<Long> getParentDesignKeys() {
+		return parentDesignKeys;
+	}
+
+	public void setParentDesignKeys(List<Long> parentDesignKeys) {
+		this.parentDesignKeys = parentDesignKeys;
+		this.parentDesignKeysWrap.alreadyInitialized = true;
+	}
+	public PageDesign addParentDesignKeys(Long...objets) {
+		for(Long o : objets) {
+			addParentDesignKeys(o);
+		}
+		return (PageDesign)this;
+	}
+	public PageDesign addParentDesignKeys(Long o) {
+		if(o != null && !parentDesignKeys.contains(o))
+			this.parentDesignKeys.add(o);
+		return (PageDesign)this;
+	}
+	public PageDesign setParentDesignKeys(JsonArray objets) {
+		parentDesignKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addParentDesignKeys(o);
+		}
+		return (PageDesign)this;
+	}
+	public PageDesign addParentDesignKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addParentDesignKeys(p);
+		}
+		return (PageDesign)this;
+	}
+	protected PageDesign parentDesignKeysInit() {
+		if(!parentDesignKeysWrap.alreadyInitialized) {
+			_parentDesignKeys(parentDesignKeys);
+		}
+		parentDesignKeysWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public List<Long> solrParentDesignKeys() {
+		return parentDesignKeys;
+	}
+
+	public String strParentDesignKeys() {
+		return parentDesignKeys == null ? "" : parentDesignKeys.toString();
+	}
+
+	public String jsonParentDesignKeys() {
+		return parentDesignKeys == null ? "" : parentDesignKeys.toString();
+	}
+
+	public String nomAffichageParentDesignKeys() {
+		return "parent designs";
+	}
+
+	public String htmTooltipParentDesignKeys() {
+		return null;
+	}
+
+	public String htmParentDesignKeys() {
+		return parentDesignKeys == null ? "" : StringEscapeUtils.escapeHtml4(strParentDesignKeys());
+	}
+
+	public void inputParentDesignKeys(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "parent designs")
+					.a("class", "valueObjectSuggest suggestParentDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setParentDesignKeys")
+					.a("id", classApiMethodMethod, "_parentDesignKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestPageDesignParentDesignKeys($(this).val() ? searchPageDesignFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'childDesignKeys:" + pk + "'}", "], $('#listPageDesignParentDesignKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
+
+		} else {
+			sx(htmParentDesignKeys());
+		}
+	}
+
+	public void htmParentDesignKeys(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignParentDesignKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/page-design?fq=childDesignKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
+								e("i").a("class", "far fa-drafting-compass ").f().g("i");
+								sx("parent designs");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate page designs to this page design");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputParentDesignKeys(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPageDesignParentDesignKeys_", classApiMethodMethod).f();
+								} g("ul");
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+											.a("onclick", "postPageDesignVals({ childDesignKeys: [ \"", pk, "\" ] }, function() { patchPageDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "parentDesignKeys')); });")
+											.f().sx("add a page design")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////
 	// htmlPartKeys //
 	//////////////////
@@ -244,7 +489,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					.a("name", "setHtmlPartKeys")
 					.a("id", classApiMethodMethod, "_htmlPartKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggest", classApiMethodMethod, "PageDesignHtmlPartKeys')) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKeys:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKeys:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -671,6 +916,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 	public void initPageDesign() {
 		pageDesignKeyInit();
+		childDesignKeysInit();
+		parentDesignKeysInit();
 		htmlPartKeysInit();
 		htmlPartSearchInit();
 		htmlPartListInit();
@@ -718,6 +965,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		switch(var) {
 			case "pageDesignKey":
 				return oPageDesign.pageDesignKey;
+			case "childDesignKeys":
+				return oPageDesign.childDesignKeys;
+			case "parentDesignKeys":
+				return oPageDesign.parentDesignKeys;
 			case "htmlPartKeys":
 				return oPageDesign.htmlPartKeys;
 			case "htmlPartSearch":
@@ -753,6 +1004,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	public Object attributePageDesign(String var, Object val) {
 		PageDesign oPageDesign = (PageDesign)this;
 		switch(var) {
+			case "childDesignKeys":
+				oPageDesign.addChildDesignKeys((Long)val);
+				return val;
+			case "parentDesignKeys":
+				oPageDesign.addParentDesignKeys((Long)val);
+				return val;
 			case "htmlPartKeys":
 				oPageDesign.addHtmlPartKeys((Long)val);
 				return val;
@@ -818,6 +1075,14 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				if(pageDesignKey != null)
 					oPageDesign.setPageDesignKey(pageDesignKey);
 			}
+
+			List<Long> childDesignKeys = (List<Long>)solrDocument.get("childDesignKeys_stored_longs");
+			if(childDesignKeys != null)
+				oPageDesign.childDesignKeys.addAll(childDesignKeys);
+
+			List<Long> parentDesignKeys = (List<Long>)solrDocument.get("parentDesignKeys_stored_longs");
+			if(parentDesignKeys != null)
+				oPageDesign.parentDesignKeys.addAll(parentDesignKeys);
 
 			List<Long> htmlPartKeys = (List<Long>)solrDocument.get("htmlPartKeys_stored_longs");
 			if(htmlPartKeys != null)
@@ -908,6 +1173,22 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			document.addField("pageDesignKey_indexed_long", pageDesignKey);
 			document.addField("pageDesignKey_stored_long", pageDesignKey);
 		}
+		if(childDesignKeys != null) {
+			for(java.lang.Long o : childDesignKeys) {
+				document.addField("childDesignKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : childDesignKeys) {
+				document.addField("childDesignKeys_stored_longs", o);
+			}
+		}
+		if(parentDesignKeys != null) {
+			for(java.lang.Long o : parentDesignKeys) {
+				document.addField("parentDesignKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : parentDesignKeys) {
+				document.addField("parentDesignKeys_stored_longs", o);
+			}
+		}
 		if(htmlPartKeys != null) {
 			for(java.lang.Long o : htmlPartKeys) {
 				document.addField("htmlPartKeys_indexed_longs", o);
@@ -949,6 +1230,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		switch(entityVar) {
 			case "pageDesignKey":
 				return "pageDesignKey_indexed_long";
+			case "childDesignKeys":
+				return "childDesignKeys_indexed_longs";
+			case "parentDesignKeys":
+				return "parentDesignKeys_indexed_longs";
 			case "htmlPartKeys":
 				return "htmlPartKeys_indexed_longs";
 			case "pageDesignCompleteName":
@@ -988,6 +1273,14 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		if(pageDesignKey != null)
 			oPageDesign.setPageDesignKey(pageDesignKey);
 
+		List<Long> childDesignKeys = (List<Long>)solrDocument.get("childDesignKeys_stored_longs");
+		if(childDesignKeys != null)
+			oPageDesign.childDesignKeys.addAll(childDesignKeys);
+
+		List<Long> parentDesignKeys = (List<Long>)solrDocument.get("parentDesignKeys_stored_longs");
+		if(parentDesignKeys != null)
+			oPageDesign.parentDesignKeys.addAll(parentDesignKeys);
+
 		List<Long> htmlPartKeys = (List<Long>)solrDocument.get("htmlPartKeys_stored_longs");
 		if(htmlPartKeys != null)
 			oPageDesign.htmlPartKeys.addAll(htmlPartKeys);
@@ -1012,6 +1305,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof PageDesign) {
 			PageDesign original = (PageDesign)o;
+			if(!Objects.equals(childDesignKeys, original.getChildDesignKeys()))
+				apiRequest.addVars("childDesignKeys");
+			if(!Objects.equals(parentDesignKeys, original.getParentDesignKeys()))
+				apiRequest.addVars("parentDesignKeys");
 			if(!Objects.equals(htmlPartKeys, original.getHtmlPartKeys()))
 				apiRequest.addVars("htmlPartKeys");
 			if(!Objects.equals(pageDesignCompleteName, original.getPageDesignCompleteName()))
@@ -1027,7 +1324,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), htmlPartKeys, pageDesignCompleteName, designHidden);
+		return Objects.hash(super.hashCode(), childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden);
 	}
 
 	////////////
@@ -1041,6 +1338,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return false;
 		PageDesign that = (PageDesign)o;
 		return super.equals(o)
+				&& Objects.equals( childDesignKeys, that.childDesignKeys )
+				&& Objects.equals( parentDesignKeys, that.parentDesignKeys )
 				&& Objects.equals( htmlPartKeys, that.htmlPartKeys )
 				&& Objects.equals( pageDesignCompleteName, that.pageDesignCompleteName )
 				&& Objects.equals( designHidden, that.designHidden );
@@ -1054,7 +1353,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("PageDesign { ");
-		sb.append( "htmlPartKeys: " ).append(htmlPartKeys);
+		sb.append( "childDesignKeys: " ).append(childDesignKeys);
+		sb.append( ", parentDesignKeys: " ).append(parentDesignKeys);
+		sb.append( ", htmlPartKeys: " ).append(htmlPartKeys);
 		sb.append( ", pageDesignCompleteName: \"" ).append(pageDesignCompleteName).append( "\"" );
 		sb.append( ", designHidden: " ).append(designHidden);
 		sb.append(" }");

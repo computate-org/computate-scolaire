@@ -1,8 +1,11 @@
 package org.computate.scolaire.enUS.html.part;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.design.PageDesign;
+import org.computate.scolaire.enUS.search.SearchList;
 
 public class HtmlPart extends HtmlPartGen<Cluster> {
 
@@ -10,7 +13,15 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 		c.o(pk);
 	}
 
-	protected void _pageDesignKeys(List<Long> c) {
+	protected void _pageDesignKeys(List<Long> l) {
+		SearchList<PageDesign> r = new SearchList<>();
+		r.setQuery("*:*");
+		r.setC(PageDesign.class);
+		r.setStore(true);
+		for(Long c : pageDesignKeys)
+			r.addFilterQuery("parentDesignKeys_indexed_longs:" + c);
+		r.initDeepSearchList(siteRequest_);
+		l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
 	}
 
 	protected void _htmlLink(Wrap<String> c) {

@@ -1,5 +1,9 @@
 package org.computate.scolaire.enUS.design;
 
+import org.computate.scolaire.enUS.design.PageDesignEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.design.PageDesign;
+import org.computate.scolaire.enUS.design.PageDesignEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -206,6 +210,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "childDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+						}
+						break;
+					case "parentDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+						}
+						break;
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
@@ -450,6 +466,34 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				for(Integer i = 0; i < entityVars.size(); i++) {
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
+					case "childDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							SearchList<PageDesign> r = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							if(searchList.size() == 1) {
+								putSql.append(SiteContextEnUS.SQL_addA);
+								putSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", searchList.get(0).getPk()));
+							}
+						}
+						break;
+					case "parentDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							if(searchList.size() == 1) {
+								putSql.append(SiteContextEnUS.SQL_addA);
+								putSqlParams.addAll(Arrays.asList("childDesignKeys", searchList.get(0).getPk(), "parentDesignKeys", pk));
+							}
+						}
+						break;
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							SearchList<HtmlPart> r = new SearchList<HtmlPart>();
@@ -701,6 +745,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				for(Integer i = 0; i < entityVars.size(); i++) {
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
+					case "childDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+						}
+						break;
+					case "parentDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+						}
+						break;
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
@@ -954,6 +1010,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				for(Integer i = 0; i < entityVars.size(); i++) {
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
+					case "childDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+						}
+						break;
+					case "parentDesignKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							putSql.append(SiteContextEnUS.SQL_addA);
+							putSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+						}
+						break;
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
@@ -1253,6 +1321,54 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
+						break;
+					case "addChildDesignKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "addAllChildDesignKeys":
+						JsonArray addAllChildDesignKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllChildDesignKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", addAllChildDesignKeysValues.getString(i)));
+						}
+						break;
+					case "setChildDesignKeys":
+						JsonArray setChildDesignKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys"));
+						for(Integer i = 0; i <  setChildDesignKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", setChildDesignKeysValues.getString(i)));
+						}
+						break;
+					case "removeChildDesignKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "addParentDesignKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(requestJson.getString(methodName)), "parentDesignKeys", pk));
+						break;
+					case "addAllParentDesignKeys":
+						JsonArray addAllParentDesignKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllParentDesignKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("childDesignKeys", addAllParentDesignKeysValues.getString(i), "parentDesignKeys", pk));
+						}
+						break;
+					case "setParentDesignKeys":
+						JsonArray setParentDesignKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(requestJson.getString(methodName)), "parentDesignKeys", pk));
+						for(Integer i = 0; i <  setParentDesignKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("childDesignKeys", setParentDesignKeysValues.getString(i), "parentDesignKeys", pk));
+						}
+						break;
+					case "removeParentDesignKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(requestJson.getString(methodName)), "parentDesignKeys", pk));
 						break;
 					case "addHtmlPartKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
@@ -1783,6 +1899,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		if(apiRequest != null) {
 			List<Long> pks = apiRequest.getPks();
 			List<String> classes = apiRequest.getClasses();
+			for(Long pk : o.getChildDesignKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("PageDesign");
+				}
+			}
+			for(Long pk : o.getParentDesignKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("PageDesign");
+				}
+			}
 			for(Long pk : o.getHtmlPartKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -2271,10 +2399,52 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				searchList.setQuery("*:*");
 				searchList.setC(PageDesign.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
+				searchList.add("json.facet", "{childDesignKeys:{terms:{field:childDesignKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{parentDesignKeys:{terms:{field:parentDesignKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{htmlPartKeys:{terms:{field:htmlPartKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
+
+				{
+					PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+					for(Long pk : o.getChildDesignKeys()) {
+						PageDesign o2 = new PageDesign();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchPageDesignFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("PageDesign %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
+
+				{
+					PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+					for(Long pk : o.getParentDesignKeys()) {
+						PageDesign o2 = new PageDesign();
+
+						o2.setPk(pk);
+						o2.setSiteRequest_(siteRequest2);
+						futures.add(
+							service.patchPageDesignFuture(o2, a -> {
+								if(a.succeeded()) {
+									LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
+								} else {
+									LOGGER.info(String.format("PageDesign %s failed. ", pk));
+									eventHandler.handle(Future.failedFuture(a.cause()));
+								}
+							})
+						);
+					}
+				}
 
 				{
 					HtmlPartEnUSGenApiServiceImpl service = new HtmlPartEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());

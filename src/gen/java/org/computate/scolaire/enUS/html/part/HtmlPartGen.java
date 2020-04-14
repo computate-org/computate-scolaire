@@ -72,7 +72,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public static final String HtmlPart_Color = "yellow";
 	public static final String HtmlPart_IconGroup = "regular";
 	public static final String HtmlPart_IconName = "sun";
-	public static final Integer HtmlPart_Rows = 1000000;
+	public static final Integer HtmlPart_Rows = 1000;
 
 	/////////////////
 	// htmlPartKey //
@@ -162,7 +162,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param pageDesignKeys est l'entité déjà construit. 
 	 **/
-	protected abstract void _pageDesignKeys(List<Long> c);
+	protected abstract void _pageDesignKeys(List<Long> l);
 
 	public List<Long> getPageDesignKeys() {
 		return pageDesignKeys;
@@ -241,7 +241,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("name", "setPageDesignKeys")
 					.a("id", classApiMethodMethod, "_pageDesignKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestHtmlPartPageDesignKeys($(this).val() ? searchPageDesignFilters($('#suggest", classApiMethodMethod, "HtmlPartPageDesignKeys')) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestHtmlPartPageDesignKeys($(this).val() ? searchPageDesignFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}

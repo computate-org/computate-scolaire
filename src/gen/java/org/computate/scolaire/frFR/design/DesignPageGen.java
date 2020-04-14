@@ -144,6 +144,251 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designPageCle == null ? "" : StringEscapeUtils.escapeHtml4(strDesignPageCle());
 	}
 
+	//////////////////////
+	// designEnfantCles //
+	//////////////////////
+
+	/**	L'entité « designEnfantCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> designEnfantCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> designEnfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designEnfantCles").o(designEnfantCles);
+
+	/**	<br/>L'entité « designEnfantCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designEnfantCles">Trouver l'entité designEnfantCles dans Solr</a>
+	 * <br/>
+	 * @param designEnfantCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _designEnfantCles(List<Long> c);
+
+	public List<Long> getDesignEnfantCles() {
+		return designEnfantCles;
+	}
+
+	public void setDesignEnfantCles(List<Long> designEnfantCles) {
+		this.designEnfantCles = designEnfantCles;
+		this.designEnfantClesCouverture.dejaInitialise = true;
+	}
+	public DesignPage addDesignEnfantCles(Long...objets) {
+		for(Long o : objets) {
+			addDesignEnfantCles(o);
+		}
+		return (DesignPage)this;
+	}
+	public DesignPage addDesignEnfantCles(Long o) {
+		if(o != null && !designEnfantCles.contains(o))
+			this.designEnfantCles.add(o);
+		return (DesignPage)this;
+	}
+	public DesignPage setDesignEnfantCles(JsonArray objets) {
+		designEnfantCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addDesignEnfantCles(o);
+		}
+		return (DesignPage)this;
+	}
+	public DesignPage addDesignEnfantCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addDesignEnfantCles(p);
+		}
+		return (DesignPage)this;
+	}
+	protected DesignPage designEnfantClesInit() {
+		if(!designEnfantClesCouverture.dejaInitialise) {
+			_designEnfantCles(designEnfantCles);
+		}
+		designEnfantClesCouverture.dejaInitialise(true);
+		return (DesignPage)this;
+	}
+
+	public List<Long> solrDesignEnfantCles() {
+		return designEnfantCles;
+	}
+
+	public String strDesignEnfantCles() {
+		return designEnfantCles == null ? "" : designEnfantCles.toString();
+	}
+
+	public String jsonDesignEnfantCles() {
+		return designEnfantCles == null ? "" : designEnfantCles.toString();
+	}
+
+	public String nomAffichageDesignEnfantCles() {
+		return "designs d'enfant";
+	}
+
+	public String htmTooltipDesignEnfantCles() {
+		return null;
+	}
+
+	public String htmDesignEnfantCles() {
+		return designEnfantCles == null ? "" : StringEscapeUtils.escapeHtml4(strDesignEnfantCles());
+	}
+
+	//////////////////////
+	// designParentCles //
+	//////////////////////
+
+	/**	L'entité « designParentCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> designParentCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> designParentClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designParentCles").o(designParentCles);
+
+	/**	<br/>L'entité « designParentCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designParentCles">Trouver l'entité designParentCles dans Solr</a>
+	 * <br/>
+	 * @param designParentCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _designParentCles(List<Long> c);
+
+	public List<Long> getDesignParentCles() {
+		return designParentCles;
+	}
+
+	public void setDesignParentCles(List<Long> designParentCles) {
+		this.designParentCles = designParentCles;
+		this.designParentClesCouverture.dejaInitialise = true;
+	}
+	public DesignPage addDesignParentCles(Long...objets) {
+		for(Long o : objets) {
+			addDesignParentCles(o);
+		}
+		return (DesignPage)this;
+	}
+	public DesignPage addDesignParentCles(Long o) {
+		if(o != null && !designParentCles.contains(o))
+			this.designParentCles.add(o);
+		return (DesignPage)this;
+	}
+	public DesignPage setDesignParentCles(JsonArray objets) {
+		designParentCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addDesignParentCles(o);
+		}
+		return (DesignPage)this;
+	}
+	public DesignPage addDesignParentCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addDesignParentCles(p);
+		}
+		return (DesignPage)this;
+	}
+	protected DesignPage designParentClesInit() {
+		if(!designParentClesCouverture.dejaInitialise) {
+			_designParentCles(designParentCles);
+		}
+		designParentClesCouverture.dejaInitialise(true);
+		return (DesignPage)this;
+	}
+
+	public List<Long> solrDesignParentCles() {
+		return designParentCles;
+	}
+
+	public String strDesignParentCles() {
+		return designParentCles == null ? "" : designParentCles.toString();
+	}
+
+	public String jsonDesignParentCles() {
+		return designParentCles == null ? "" : designParentCles.toString();
+	}
+
+	public String nomAffichageDesignParentCles() {
+		return "designs parent";
+	}
+
+	public String htmTooltipDesignParentCles() {
+		return null;
+	}
+
+	public String htmDesignParentCles() {
+		return designParentCles == null ? "" : StringEscapeUtils.escapeHtml4(strDesignParentCles());
+	}
+
+	public void inputDesignParentCles(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "designs parent")
+					.a("class", "valeur suggereDesignParentCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setDesignParentCles")
+					.a("id", classeApiMethodeMethode, "_designParentCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereDesignPageDesignParentCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designEnfantCles:" + pk + "'}", "], $('#listDesignPageDesignParentCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
+
+		} else {
+			sx(htmDesignParentCles());
+		}
+	}
+
+	public void htmDesignParentCles(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageDesignParentCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=designEnfantCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
+								e("i").a("class", "far fa-drafting-compass ").f().g("i");
+								sx("designs parent");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a ce design de page");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputDesignParentCles(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignPageDesignParentCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+											.a("onclick", "postDesignPageVals({ designEnfantCles: [ \"", pk, "\" ] }, function() { patchDesignPageVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designParentCles')); });")
+											.f().sx("ajouter un design de page")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////
 	// partHtmlCles //
 	//////////////////
@@ -245,7 +490,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					.a("name", "setPartHtmlCles")
 					.a("id", classeApiMethodeMethode, "_partHtmlCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles')) : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -672,6 +917,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public void initDesignPage() {
 		designPageCleInit();
+		designEnfantClesInit();
+		designParentClesInit();
 		partHtmlClesInit();
 		partHtmlRechercheInit();
 		partHtmlListe_Init();
@@ -719,6 +966,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		switch(var) {
 			case "designPageCle":
 				return oDesignPage.designPageCle;
+			case "designEnfantCles":
+				return oDesignPage.designEnfantCles;
+			case "designParentCles":
+				return oDesignPage.designParentCles;
 			case "partHtmlCles":
 				return oDesignPage.partHtmlCles;
 			case "partHtmlRecherche":
@@ -754,6 +1005,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public Object attribuerDesignPage(String var, Object val) {
 		DesignPage oDesignPage = (DesignPage)this;
 		switch(var) {
+			case "designEnfantCles":
+				oDesignPage.addDesignEnfantCles((Long)val);
+				return val;
+			case "designParentCles":
+				oDesignPage.addDesignParentCles((Long)val);
+				return val;
 			case "partHtmlCles":
 				oDesignPage.addPartHtmlCles((Long)val);
 				return val;
@@ -819,6 +1076,14 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				if(designPageCle != null)
 					oDesignPage.setDesignPageCle(designPageCle);
 			}
+
+			List<Long> designEnfantCles = (List<Long>)solrDocument.get("designEnfantCles_stored_longs");
+			if(designEnfantCles != null)
+				oDesignPage.designEnfantCles.addAll(designEnfantCles);
+
+			List<Long> designParentCles = (List<Long>)solrDocument.get("designParentCles_stored_longs");
+			if(designParentCles != null)
+				oDesignPage.designParentCles.addAll(designParentCles);
 
 			List<Long> partHtmlCles = (List<Long>)solrDocument.get("partHtmlCles_stored_longs");
 			if(partHtmlCles != null)
@@ -909,6 +1174,22 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			document.addField("designPageCle_indexed_long", designPageCle);
 			document.addField("designPageCle_stored_long", designPageCle);
 		}
+		if(designEnfantCles != null) {
+			for(java.lang.Long o : designEnfantCles) {
+				document.addField("designEnfantCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : designEnfantCles) {
+				document.addField("designEnfantCles_stored_longs", o);
+			}
+		}
+		if(designParentCles != null) {
+			for(java.lang.Long o : designParentCles) {
+				document.addField("designParentCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : designParentCles) {
+				document.addField("designParentCles_stored_longs", o);
+			}
+		}
 		if(partHtmlCles != null) {
 			for(java.lang.Long o : partHtmlCles) {
 				document.addField("partHtmlCles_indexed_longs", o);
@@ -950,6 +1231,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		switch(entiteVar) {
 			case "designPageCle":
 				return "designPageCle_indexed_long";
+			case "designEnfantCles":
+				return "designEnfantCles_indexed_longs";
+			case "designParentCles":
+				return "designParentCles_indexed_longs";
 			case "partHtmlCles":
 				return "partHtmlCles_indexed_longs";
 			case "designPageNomComplet":
@@ -989,6 +1274,14 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		if(designPageCle != null)
 			oDesignPage.setDesignPageCle(designPageCle);
 
+		List<Long> designEnfantCles = (List<Long>)solrDocument.get("designEnfantCles_stored_longs");
+		if(designEnfantCles != null)
+			oDesignPage.designEnfantCles.addAll(designEnfantCles);
+
+		List<Long> designParentCles = (List<Long>)solrDocument.get("designParentCles_stored_longs");
+		if(designParentCles != null)
+			oDesignPage.designParentCles.addAll(designParentCles);
+
 		List<Long> partHtmlCles = (List<Long>)solrDocument.get("partHtmlCles_stored_longs");
 		if(partHtmlCles != null)
 			oDesignPage.partHtmlCles.addAll(partHtmlCles);
@@ -1013,6 +1306,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof DesignPage) {
 			DesignPage original = (DesignPage)o;
+			if(!Objects.equals(designEnfantCles, original.getDesignEnfantCles()))
+				requeteApi.addVars("designEnfantCles");
+			if(!Objects.equals(designParentCles, original.getDesignParentCles()))
+				requeteApi.addVars("designParentCles");
 			if(!Objects.equals(partHtmlCles, original.getPartHtmlCles()))
 				requeteApi.addVars("partHtmlCles");
 			if(!Objects.equals(designPageNomComplet, original.getDesignPageNomComplet()))
@@ -1028,7 +1325,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), partHtmlCles, designPageNomComplet, designCache);
+		return Objects.hash(super.hashCode(), designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache);
 	}
 
 	////////////
@@ -1042,6 +1339,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			return false;
 		DesignPage that = (DesignPage)o;
 		return super.equals(o)
+				&& Objects.equals( designEnfantCles, that.designEnfantCles )
+				&& Objects.equals( designParentCles, that.designParentCles )
 				&& Objects.equals( partHtmlCles, that.partHtmlCles )
 				&& Objects.equals( designPageNomComplet, that.designPageNomComplet )
 				&& Objects.equals( designCache, that.designCache );
@@ -1055,7 +1354,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("DesignPage { ");
-		sb.append( "partHtmlCles: " ).append(partHtmlCles);
+		sb.append( "designEnfantCles: " ).append(designEnfantCles);
+		sb.append( ", designParentCles: " ).append(designParentCles);
+		sb.append( ", partHtmlCles: " ).append(partHtmlCles);
 		sb.append( ", designPageNomComplet: \"" ).append(designPageNomComplet).append( "\"" );
 		sb.append( ", designCache: " ).append(designCache);
 		sb.append(" }");

@@ -1,9 +1,12 @@
 package org.computate.scolaire.frFR.html.part;               
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.design.DesignPage;
+import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**      
  * NomCanonique.enUS: org.computate.scolaire.enUS.html.part.HtmlPart
@@ -59,7 +62,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri8
  * Tri.asc: tri9
  * Tri.asc: tri10
- * Lignes: 1000000
+ * Lignes: 1000
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
@@ -117,8 +120,30 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: designs de page
 	 * NomAffichage.enUS: page designs
+	 * r: ListeRecherche
+	 * r.enUS: SearchList
+	 * r: DesignPage
+	 * r.enUS: PageDesign
+	 * r: designParentCles
+	 * r.enUS: parentDesignKeys
+	 * r: initLoin
+	 * r.enUS: initDeep
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: Stocker
+	 * r.enUS: Store
+	 * r: designPageCles
+	 * r.enUS: pageDesignKeys
 	*/     
-	protected void _designPageCles(List<Long> c) {
+	protected void _designPageCles(List<Long> l) {
+		ListeRecherche<DesignPage> r = new ListeRecherche<>();
+		r.setQuery("*:*");
+		r.setC(DesignPage.class);
+		r.setStocker(true);
+		for(Long c : designPageCles)
+			r.addFilterQuery("designParentCles_indexed_longs:" + c);
+		r.initLoinListeRecherche(requeteSite_);
+		l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
 	}
 
 	/**
