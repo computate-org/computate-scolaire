@@ -246,7 +246,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 					.a("name", "setInscriptionCles")
 					.a("id", classeApiMethodeMethode, "_inscriptionCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereGardienScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "GardienScolaireInscriptionCles')) : [", pk == null ? "" : "{'name':'fq','value':'gardienCles:" + pk + "'}", "], $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereGardienScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'gardienCles:" + pk + "'}", "], $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -2639,6 +2639,8 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oGardienScolaire.addInscriptionCles((Long)val);
+				if(!sauvegardesGardienScolaire.contains(var))
+					sauvegardesGardienScolaire.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

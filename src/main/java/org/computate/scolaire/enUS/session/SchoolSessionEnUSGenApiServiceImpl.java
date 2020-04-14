@@ -462,7 +462,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					switch(entityVar) {
 					case "ageKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<SchoolAge> r = new SearchList<SchoolAge>();
+							SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(SchoolAge.class);

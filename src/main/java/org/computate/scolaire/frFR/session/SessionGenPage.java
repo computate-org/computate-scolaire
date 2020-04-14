@@ -190,7 +190,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	public void htmlFormPUTImportSessionScolaire(SessionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTImport_liste")
+				.a("class", "PUTImport_liste w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
 				;
 				f();
@@ -201,7 +202,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	public void htmlFormPUTFusionSessionScolaire(SessionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTFusion_liste")
+				.a("class", "PUTFusion_liste w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
 				;
 				f();

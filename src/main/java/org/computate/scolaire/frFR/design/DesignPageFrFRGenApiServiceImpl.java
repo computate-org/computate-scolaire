@@ -468,7 +468,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					switch(entiteVar) {
 					case "designEnfantCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<DesignPage> r = new ListeRecherche<DesignPage>();
+							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
 							listeRecherche.setQuery("*:*");
 							listeRecherche.setStocker(true);
 							listeRecherche.setC(DesignPage.class);

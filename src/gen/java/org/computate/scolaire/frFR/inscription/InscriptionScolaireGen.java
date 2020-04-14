@@ -410,7 +410,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setBlocCles")
 					.a("id", classeApiMethodeMethode, "_blocCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireBlocCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1071,7 +1071,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setEnfantCle")
 					.a("id", classeApiMethodeMethode, "_enfantCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireEnfantCle')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1230,7 +1230,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setMereCles")
 					.a("id", classeApiMethodeMethode, "_mereCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireMereCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1389,7 +1389,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setPereCles")
 					.a("id", classeApiMethodeMethode, "_pereCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePereCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1548,7 +1548,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setGardienCles")
 					.a("id", classeApiMethodeMethode, "_gardienCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireGardienCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1707,7 +1707,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setPaiementCles")
 					.a("id", classeApiMethodeMethode, "_paiementCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1935,7 +1935,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					.a("name", "setUtilisateurCles")
 					.a("id", classeApiMethodeMethode, "_utilisateurCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($('#suggere", classeApiMethodeMethode, "InscriptionScolaireUtilisateurCles')) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -12847,27 +12847,43 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "anneeCle":
 				oInscriptionScolaire.setAnneeCle((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "blocCles":
 				oInscriptionScolaire.addBlocCles((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantCle":
 				oInscriptionScolaire.setEnfantCle((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "mereCles":
 				oInscriptionScolaire.addMereCles((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "pereCles":
 				oInscriptionScolaire.addPereCles((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "gardienCles":
 				oInscriptionScolaire.addGardienCles((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "paiementCles":
 				oInscriptionScolaire.addPaiementCles((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "utilisateurCles":
 				oInscriptionScolaire.addUtilisateurCles((Long)val);
+				if(!sauvegardesInscriptionScolaire.contains(var))
+					sauvegardesInscriptionScolaire.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

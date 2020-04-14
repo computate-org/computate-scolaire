@@ -672,7 +672,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "blocCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<BlocScolaire> r = new ListeRecherche<BlocScolaire>();
+							ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
 							listeRecherche.setQuery("*:*");
 							listeRecherche.setStocker(true);
 							listeRecherche.setC(BlocScolaire.class);
@@ -718,7 +718,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "gardienCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<GardienScolaire> r = new ListeRecherche<GardienScolaire>();
+							ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
 							listeRecherche.setQuery("*:*");
 							listeRecherche.setStocker(true);
 							listeRecherche.setC(GardienScolaire.class);

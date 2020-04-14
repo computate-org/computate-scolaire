@@ -335,7 +335,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					.a("name", "setAgeKeys")
 					.a("id", classApiMethodMethod, "_ageKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolSessionAgeKeys($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolSessionAgeKeys')) : [", pk == null ? "" : "{'name':'fq','value':'sessionKey:" + pk + "'}", "], $('#listSchoolSessionAgeKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolSessionAgeKeys($(this).val() ? searchSchoolAgeFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'sessionKey:" + pk + "'}", "], $('#listSchoolSessionAgeKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -812,7 +812,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					.a("name", "setSeasonKey")
 					.a("id", classApiMethodMethod, "_seasonKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolSessionSeasonKey($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolSessionSeasonKey')) : [", pk == null ? "" : "{'name':'fq','value':'sessionKeys:" + pk + "'}", "], $('#listSchoolSessionSeasonKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolSessionSeasonKey($(this).val() ? searchSchoolSeasonFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'sessionKeys:" + pk + "'}", "], $('#listSchoolSessionSeasonKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -2625,9 +2625,13 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		switch(var) {
 			case "ageKeys":
 				oSchoolSession.addAgeKeys((Long)val);
+				if(!savesSchoolSession.contains(var))
+					savesSchoolSession.add(var);
 				return val;
 			case "seasonKey":
 				oSchoolSession.setSeasonKey((Long)val);
+				if(!savesSchoolSession.contains(var))
+					savesSchoolSession.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

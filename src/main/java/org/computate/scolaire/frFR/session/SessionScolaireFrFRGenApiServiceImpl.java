@@ -462,7 +462,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					switch(entiteVar) {
 					case "ageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<AgeScolaire> r = new ListeRecherche<AgeScolaire>();
+							ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 							listeRecherche.setQuery("*:*");
 							listeRecherche.setStocker(true);
 							listeRecherche.setC(AgeScolaire.class);

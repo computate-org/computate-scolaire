@@ -1068,7 +1068,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					switch(entiteVar) {
 					case "anneeCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<AnneeScolaire> r = new ListeRecherche<AnneeScolaire>();
+							ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
 							listeRecherche.setQuery("*:*");
 							listeRecherche.setStocker(true);
 							listeRecherche.setC(AnneeScolaire.class);

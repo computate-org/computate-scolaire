@@ -156,7 +156,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					.a("name", "setSchoolKey")
 					.a("id", classApiMethodMethod, "_schoolKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($('#suggest", classApiMethodMethod, "SchoolYearSchoolKey')) : [", pk == null ? "" : "{'name':'fq','value':'yearKeys:" + pk + "'}", "], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolYearSchoolKey($(this).val() ? searchSchoolFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'yearKeys:" + pk + "'}", "], $('#listSchoolYearSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -462,7 +462,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					.a("name", "setSeasonKeys")
 					.a("id", classApiMethodMethod, "_seasonKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($('#suggest", classApiMethodMethod, "SchoolYearSeasonKeys')) : [", pk == null ? "" : "{'name':'fq','value':'yearKey:" + pk + "'}", "], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolYearSeasonKeys($(this).val() ? searchSchoolSeasonFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'yearKey:" + pk + "'}", "], $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -1965,9 +1965,13 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		switch(var) {
 			case "schoolKey":
 				oSchoolYear.setSchoolKey((Long)val);
+				if(!savesSchoolYear.contains(var))
+					savesSchoolYear.add(var);
 				return val;
 			case "seasonKeys":
 				oSchoolYear.addSeasonKeys((Long)val);
+				if(!savesSchoolYear.contains(var))
+					savesSchoolYear.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

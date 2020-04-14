@@ -320,7 +320,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentKeys")
 					.a("id", classApiMethodMethod, "_enrollmentKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolBlockEnrollmentKeys')) : [", pk == null ? "" : "{'name':'fq','value':'blockKeys:" + pk + "'}", "], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolBlockEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blockKeys:" + pk + "'}", "], $('#listSchoolBlockEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -1002,7 +1002,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("name", "setAgeKey")
 					.a("id", classApiMethodMethod, "_ageKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($('#suggest", classApiMethodMethod, "SchoolBlockAgeKey')) : [", pk == null ? "" : "{'name':'fq','value':'blockKeys:" + pk + "'}", "], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolBlockAgeKey($(this).val() ? searchSchoolAgeFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blockKeys:" + pk + "'}", "], $('#listSchoolBlockAgeKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -4609,9 +4609,13 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKeys":
 				oSchoolBlock.addEnrollmentKeys((Long)val);
+				if(!savesSchoolBlock.contains(var))
+					savesSchoolBlock.add(var);
 				return val;
 			case "ageKey":
 				oSchoolBlock.setAgeKey((Long)val);
+				if(!savesSchoolBlock.contains(var))
+					savesSchoolBlock.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

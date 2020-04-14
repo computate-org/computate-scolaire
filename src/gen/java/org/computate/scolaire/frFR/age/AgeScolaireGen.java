@@ -337,7 +337,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("name", "setBlocCles")
 					.a("id", classeApiMethodeMethode, "_blocCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireBlocCles')) : [", pk == null ? "" : "{'name':'fq','value':'ageCle:" + pk + "'}", "], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageCle:" + pk + "'}", "], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -815,7 +815,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("name", "setSessionCle")
 					.a("id", classeApiMethodeMethode, "_sessionCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggere", classeApiMethodeMethode, "AgeScolaireSessionCle')) : [", pk == null ? "" : "{'name':'fq','value':'ageCles:" + pk + "'}", "], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageCles:" + pk + "'}", "], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -2930,9 +2930,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "blocCles":
 				oAgeScolaire.addBlocCles((Long)val);
+				if(!sauvegardesAgeScolaire.contains(var))
+					sauvegardesAgeScolaire.add(var);
 				return val;
 			case "sessionCle":
 				oAgeScolaire.setSessionCle((Long)val);
+				if(!sauvegardesAgeScolaire.contains(var))
+					sauvegardesAgeScolaire.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

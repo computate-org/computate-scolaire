@@ -1007,12 +1007,18 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		switch(var) {
 			case "designEnfantCles":
 				oDesignPage.addDesignEnfantCles((Long)val);
+				if(!sauvegardesDesignPage.contains(var))
+					sauvegardesDesignPage.add(var);
 				return val;
 			case "designParentCles":
 				oDesignPage.addDesignParentCles((Long)val);
+				if(!sauvegardesDesignPage.contains(var))
+					sauvegardesDesignPage.add(var);
 				return val;
 			case "partHtmlCles":
 				oDesignPage.addPartHtmlCles((Long)val);
+				if(!sauvegardesDesignPage.contains(var))
+					sauvegardesDesignPage.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

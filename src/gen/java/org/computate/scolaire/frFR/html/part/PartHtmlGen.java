@@ -3679,6 +3679,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		switch(var) {
 			case "designPageCles":
 				oPartHtml.addDesignPageCles((Long)val);
+				if(!sauvegardesPartHtml.contains(var))
+					sauvegardesPartHtml.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

@@ -484,7 +484,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					switch(entityVar) {
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<SchoolEnrollment> r = new SearchList<SchoolEnrollment>();
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(SchoolEnrollment.class);

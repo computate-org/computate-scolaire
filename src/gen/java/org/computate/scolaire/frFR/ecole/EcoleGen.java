@@ -241,7 +241,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					.a("name", "setAnneeCles")
 					.a("id", classeApiMethodeMethode, "_anneeCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($('#suggere", classeApiMethodeMethode, "EcoleAnneeCles')) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -1859,6 +1859,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		switch(var) {
 			case "anneeCles":
 				oEcole.addAnneeCles((Long)val);
+				if(!sauvegardesEcole.contains(var))
+					sauvegardesEcole.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

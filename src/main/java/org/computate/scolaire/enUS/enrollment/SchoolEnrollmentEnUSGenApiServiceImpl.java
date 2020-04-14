@@ -672,7 +672,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<SchoolBlock> r = new SearchList<SchoolBlock>();
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(SchoolBlock.class);
@@ -704,7 +704,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "dadKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<SchoolDad> r = new SearchList<SchoolDad>();
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(SchoolDad.class);

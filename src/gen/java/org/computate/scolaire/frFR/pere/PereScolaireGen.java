@@ -246,7 +246,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 					.a("name", "setInscriptionCles")
 					.a("id", classeApiMethodeMethode, "_inscriptionCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePereScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "PereScolaireInscriptionCles')) : [", pk == null ? "" : "{'name':'fq','value':'pereCles:" + pk + "'}", "], $('#listPereScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggerePereScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'pereCles:" + pk + "'}", "], $('#listPereScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -2831,6 +2831,8 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oPereScolaire.addInscriptionCles((Long)val);
+				if(!sauvegardesPereScolaire.contains(var))
+					sauvegardesPereScolaire.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

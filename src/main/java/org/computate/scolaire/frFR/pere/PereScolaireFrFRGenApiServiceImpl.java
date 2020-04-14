@@ -484,7 +484,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					switch(entiteVar) {
 					case "inscriptionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<InscriptionScolaire> r = new ListeRecherche<InscriptionScolaire>();
+							ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
 							listeRecherche.setQuery("*:*");
 							listeRecherche.setStocker(true);
 							listeRecherche.setC(InscriptionScolaire.class);

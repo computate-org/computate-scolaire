@@ -1006,12 +1006,18 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		switch(var) {
 			case "childDesignKeys":
 				oPageDesign.addChildDesignKeys((Long)val);
+				if(!savesPageDesign.contains(var))
+					savesPageDesign.add(var);
 				return val;
 			case "parentDesignKeys":
 				oPageDesign.addParentDesignKeys((Long)val);
+				if(!savesPageDesign.contains(var))
+					savesPageDesign.add(var);
 				return val;
 			case "htmlPartKeys":
 				oPageDesign.addHtmlPartKeys((Long)val);
+				if(!savesPageDesign.contains(var))
+					savesPageDesign.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

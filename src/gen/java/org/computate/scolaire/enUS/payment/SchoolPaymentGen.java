@@ -237,7 +237,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentKey")
 					.a("id", classApiMethodMethod, "_enrollmentKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolPaymentEnrollmentKey')) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -6073,6 +6073,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKey":
 				oSchoolPayment.setEnrollmentKey((Long)val);
+				if(!savesSchoolPayment.contains(var))
+					savesSchoolPayment.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

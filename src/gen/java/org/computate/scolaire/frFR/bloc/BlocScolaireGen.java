@@ -322,7 +322,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("name", "setInscriptionCles")
 					.a("id", classeApiMethodeMethode, "_inscriptionCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireInscriptionCles')) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -1005,7 +1005,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("name", "setAgeCle")
 					.a("id", classeApiMethodeMethode, "_ageCle")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($('#suggere", classeApiMethodeMethode, "BlocScolaireAgeCle')) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -4614,9 +4614,13 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oBlocScolaire.addInscriptionCles((Long)val);
+				if(!sauvegardesBlocScolaire.contains(var))
+					sauvegardesBlocScolaire.add(var);
 				return val;
 			case "ageCle":
 				oBlocScolaire.setAgeCle((Long)val);
+				if(!sauvegardesBlocScolaire.contains(var))
+					sauvegardesBlocScolaire.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

@@ -408,7 +408,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setBlockKeys")
 					.a("id", classApiMethodMethod, "_blockKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentBlockKeys')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentBlockKeys($(this).val() ? searchSchoolBlockFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1068,7 +1068,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setChildKey")
 					.a("id", classApiMethodMethod, "_childKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentChildKey($(this).val() ? searchSchoolChildFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentChildKey')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentChildKey($(this).val() ? searchSchoolChildFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1226,7 +1226,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setMomKeys")
 					.a("id", classApiMethodMethod, "_momKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentMomKeys($(this).val() ? searchSchoolMomFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentMomKeys')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentMomKeys($(this).val() ? searchSchoolMomFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1384,7 +1384,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setDadKeys")
 					.a("id", classApiMethodMethod, "_dadKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentDadKeys($(this).val() ? searchSchoolDadFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentDadKeys')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentDadKeys($(this).val() ? searchSchoolDadFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1542,7 +1542,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setGuardianKeys")
 					.a("id", classApiMethodMethod, "_guardianKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentGuardianKeys($(this).val() ? searchSchoolGuardianFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentGuardianKeys')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentGuardianKeys($(this).val() ? searchSchoolGuardianFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1700,7 +1700,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setPaymentKeys")
 					.a("id", classApiMethodMethod, "_paymentKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentPaymentKeys')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKey:" + pk + "'}", "], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKey:" + pk + "'}", "], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1927,7 +1927,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("name", "setUserKeys")
 					.a("id", classApiMethodMethod, "_userKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? searchSiteUserFilters($('#suggest", classApiMethodMethod, "SchoolEnrollmentUserKeys')) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? searchSiteUserFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -12814,27 +12814,43 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		switch(var) {
 			case "yearKey":
 				oSchoolEnrollment.setYearKey((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "blockKeys":
 				oSchoolEnrollment.addBlockKeys((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "childKey":
 				oSchoolEnrollment.setChildKey((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "momKeys":
 				oSchoolEnrollment.addMomKeys((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "dadKeys":
 				oSchoolEnrollment.addDadKeys((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "guardianKeys":
 				oSchoolEnrollment.addGuardianKeys((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "paymentKeys":
 				oSchoolEnrollment.addPaymentKeys((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			case "userKeys":
 				oSchoolEnrollment.addUserKeys((Long)val);
+				if(!savesSchoolEnrollment.contains(var))
+					savesSchoolEnrollment.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

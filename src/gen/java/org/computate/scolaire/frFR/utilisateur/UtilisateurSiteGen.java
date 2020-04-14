@@ -262,7 +262,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					.a("name", "setInscriptionCles")
 					.a("id", classeApiMethodeMethode, "_inscriptionCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles')) : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -426,7 +426,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					.a("name", "setPaiementCles")
 					.a("id", classeApiMethodeMethode, "_paiementCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($('#suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles')) : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -1952,9 +1952,13 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oUtilisateurSite.addInscriptionCles((Long)val);
+				if(!sauvegardesUtilisateurSite.contains(var))
+					sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "paiementCles":
 				oUtilisateurSite.addPaiementCles((Long)val);
+				if(!sauvegardesUtilisateurSite.contains(var))
+					sauvegardesUtilisateurSite.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);

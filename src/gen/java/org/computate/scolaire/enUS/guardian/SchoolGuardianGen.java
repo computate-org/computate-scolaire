@@ -245,7 +245,7 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 					.a("name", "setEnrollmentKeys")
 					.a("id", classApiMethodMethod, "_enrollmentKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolGuardianEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($('#suggest", classApiMethodMethod, "SchoolGuardianEnrollmentKeys')) : [", pk == null ? "" : "{'name':'fq','value':'guardianKeys:" + pk + "'}", "], $('#listSchoolGuardianEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolGuardianEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'guardianKeys:" + pk + "'}", "], $('#listSchoolGuardianEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		} else {
@@ -2638,6 +2638,8 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKeys":
 				oSchoolGuardian.addEnrollmentKeys((Long)val);
+				if(!savesSchoolGuardian.contains(var))
+					savesSchoolGuardian.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

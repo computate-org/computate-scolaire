@@ -335,7 +335,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("name", "setBlockKeys")
 					.a("id", classApiMethodMethod, "_blockKeys")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($('#suggest", classApiMethodMethod, "SchoolAgeBlockKeys')) : [", pk == null ? "" : "{'name':'fq','value':'ageKey:" + pk + "'}", "], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKey:" + pk + "'}", "], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -812,7 +812,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("name", "setSessionKey")
 					.a("id", classApiMethodMethod, "_sessionKey")
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolAgeSessionKey($(this).val() ? searchSchoolSessionFilters($('#suggest", classApiMethodMethod, "SchoolAgeSessionKey')) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeSessionKey_", classApiMethodMethod, "'), ", pk, "); ")
+					.a("oninput", "suggestSchoolAgeSessionKey($(this).val() ? searchSchoolSessionFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeSessionKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
 		}
@@ -2924,9 +2924,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		switch(var) {
 			case "blockKeys":
 				oSchoolAge.addBlockKeys((Long)val);
+				if(!savesSchoolAge.contains(var))
+					savesSchoolAge.add(var);
 				return val;
 			case "sessionKey":
 				oSchoolAge.setSessionKey((Long)val);
+				if(!savesSchoolAge.contains(var))
+					savesSchoolAge.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

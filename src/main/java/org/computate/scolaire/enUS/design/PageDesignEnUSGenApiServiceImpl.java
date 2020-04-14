@@ -468,7 +468,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					switch(entityVar) {
 					case "childDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<PageDesign> r = new SearchList<PageDesign>();
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(PageDesign.class);
@@ -496,7 +496,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<HtmlPart> r = new SearchList<HtmlPart>();
+							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(HtmlPart.class);

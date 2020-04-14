@@ -3678,6 +3678,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		switch(var) {
 			case "pageDesignKeys":
 				oHtmlPart.addPageDesignKeys((Long)val);
+				if(!savesHtmlPart.contains(var))
+					savesHtmlPart.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);

@@ -206,7 +206,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	public void htmlFormPUTImportBlocScolaire(BlocScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTImport_liste")
+				.a("class", "PUTImport_liste w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
 				;
 				f();
@@ -217,7 +218,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	public void htmlFormPUTFusionBlocScolaire(BlocScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTFusion_liste")
+				.a("class", "PUTFusion_liste w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
 				;
 				f();

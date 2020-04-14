@@ -466,7 +466,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "seasonKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<SchoolSeason> r = new SearchList<SchoolSeason>();
+							SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
 							searchList.setQuery("*:*");
 							searchList.setStore(true);
 							searchList.setC(SchoolSeason.class);

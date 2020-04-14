@@ -188,7 +188,8 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	public void htmlFormPUTImportSchoolChild(SchoolChild o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTImport_list")
+				.a("class", "PUTImport_list w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
 				;
 				f();
@@ -199,7 +200,8 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	public void htmlFormPUTMergeSchoolChild(SchoolChild o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTMerge_list")
+				.a("class", "PUTMerge_list w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"list\": [ { \"pk\": ... , \"saves\": [ ... ] }, ... ] }")
 				;
 				f();

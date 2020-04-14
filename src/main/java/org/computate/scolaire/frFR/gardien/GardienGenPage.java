@@ -192,7 +192,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 	public void htmlFormPUTImportGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTImport_liste")
+				.a("class", "PUTImport_liste w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
 				;
 				f();
@@ -203,7 +204,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 	public void htmlFormPUTFusionGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			e("textarea")
-				.a("class", "PUTFusion_liste")
+				.a("class", "PUTFusion_liste w3-input w3-border ")
+				.a("style", "height: 400px; ")
 				.a("placeholder", "{ \"liste\": [ { \"pk\": ... , \"sauvegardes\": [ ... ] }, ... ] }")
 				;
 				f();
