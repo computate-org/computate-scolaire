@@ -192,7 +192,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
-						fieldNames.removeAll(json2.getJsonArray("sauvegardes").stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
@@ -460,10 +461,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setInscriptionCles":
 						JsonArray setInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles"));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "utilisateurCles", pk));
 						for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", setInscriptionClesValeurs.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", Long.parseLong(setInscriptionClesValeurs.getString(i))));
 						}
 						break;
 					case "removeInscriptionCles":
@@ -484,10 +485,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles"));
+						patchSqlParams.addAll(Arrays.asList("paiementCles", "utilisateurCles", pk));
 						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", setPaiementClesValeurs.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", Long.parseLong(setPaiementClesValeurs.getString(i))));
 						}
 						break;
 					case "removePaiementCles":

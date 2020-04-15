@@ -1322,10 +1322,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setDesignPageCles":
 						JsonArray setDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles"));
+						patchSqlParams.addAll(Arrays.asList("designPageCles", "partHtmlCles", pk));
 						for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", setDesignPageClesValeurs.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", Long.parseLong(setDesignPageClesValeurs.getString(i))));
 						}
 						break;
 					case "removeDesignPageCles":

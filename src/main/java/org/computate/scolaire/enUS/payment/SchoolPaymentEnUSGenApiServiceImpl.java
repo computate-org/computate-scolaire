@@ -397,44 +397,37 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSchoolPayment(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolPayment> listSchoolPayment = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolPayment(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTImportSchoolPayment(apiRequest, listSchoolPayment, f -> {
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											sqlSchoolPayment(siteRequest, d -> {
+												if(d.succeeded()) {
+													try {
+														listPUTImportSchoolPayment(apiRequest, siteRequest, e -> {
+															if(e.succeeded()) {
+																putimportSchoolPaymentResponse(siteRequest, f -> {
 																	if(f.succeeded()) {
-																		putimportSchoolPaymentResponse(listSchoolPayment, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putimportSchoolPayment succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putimportSchoolPayment failed. ", g.cause()));
-																				errorSchoolPayment(siteRequest, eventHandler, d);
-																			}
-																		});
+																		eventHandler.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putimportSchoolPayment succeeded. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putimportSchoolPayment failed. ", f.cause()));
+																		errorSchoolPayment(siteRequest, eventHandler, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											errorSchoolPayment(siteRequest, eventHandler, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									errorSchoolPayment(siteRequest, eventHandler, c);
 								}
@@ -453,211 +446,68 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	}
 
 
-	public void listPUTImportSchoolPayment(ApiRequest apiRequest, SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTImportSchoolPayment(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putimportSchoolPaymentFuture(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-						SchoolPayment schoolPayment = a.result();
-						apiRequestSchoolPayment(schoolPayment);
-					} else {
-						errorSchoolPayment(siteRequest, eventHandler, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), json);
+			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+
+			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(SchoolPayment.class);
+			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+			searchList.initDeepForClass(siteRequest2);
+
+			if(searchList.size() == 1) {
+				SchoolPayment o = searchList.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSaves()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				siteRequest2.setJsonObject(json2);
+				futures.add(
+					patchSchoolPaymentFuture(o, a -> {
+						if(a.succeeded()) {
+							SchoolPayment schoolPayment = a.result();
+							apiRequestSchoolPayment(schoolPayment);
+						} else {
+							errorSchoolPayment(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postSchoolPaymentFuture(siteRequest, a -> {
+						if(a.succeeded()) {
+							SchoolPayment schoolPayment = a.result();
+							apiRequestSchoolPayment(schoolPayment);
+						} else {
+							errorSchoolPayment(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTImportSchoolPayment(listSchoolPayment, eventHandler);
+				response200PUTImportSchoolPayment(siteRequest, eventHandler);
 			} else {
 				errorSchoolPayment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<SchoolPayment> putimportSchoolPaymentFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolPayment>> eventHandler) {
-		Promise<SchoolPayment> promise = Promise.promise();
-		try {
-
-			createSchoolPayment(siteRequest, a -> {
-				if(a.succeeded()) {
-					SchoolPayment schoolPayment = a.result();
-					sqlPUTImportSchoolPayment(schoolPayment, jsonObject, b -> {
-						if(b.succeeded()) {
-							defineSchoolPayment(schoolPayment, c -> {
-								if(c.succeeded()) {
-									attributeSchoolPayment(schoolPayment, d -> {
-										if(d.succeeded()) {
-											indexSchoolPayment(schoolPayment, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(schoolPayment));
-													promise.complete(schoolPayment);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorSchoolPayment(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTImportSchoolPayment(SchoolPayment o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "enrollmentKey":
-						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", Long.parseLong(jsonObject.getString(entityVar))));
-						break;
-					case "childCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("childCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "childBirthDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("childBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
-						break;
-					case "momCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("momCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "dadCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("dadCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "enrollmentPaymentEachMonth":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enrollmentPaymentEachMonth", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "enrollmentPaymentComplete":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentDescription":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentDescription", jsonObject.getString(entityVar), pk));
-						break;
-					case "paymentDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
-						break;
-					case "paymentAmount":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentAmount", jsonObject.getString(entityVar), pk));
-						break;
-					case "chargeAmount":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeAmount", jsonObject.getString(entityVar), pk));
-						break;
-					case "chargeAmountFuture":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeAmountFuture", jsonObject.getString(entityVar), pk));
-						break;
-					case "chargeEnrollment":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeEnrollment", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "chargeFirstLast":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeFirstLast", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "chargeMonth":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeMonth", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "chargeLateFee":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeLateFee", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentCash":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentCash", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentCheck":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentCheck", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentSystem":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentSystem", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentBy":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentBy", jsonObject.getString(entityVar), pk));
-						break;
-					case "transactionId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("transactionId", jsonObject.getString(entityVar), pk));
-						break;
-					case "customerProfileId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entityVar), pk));
-						break;
-					case "transactionStatus":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("transactionStatus", jsonObject.getString(entityVar), pk));
-						break;
-					case "paymentRecieved":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentRecieved", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentShortName":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentShortName", jsonObject.getString(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putimportSchoolPaymentResponse(SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
-		response200PUTImportSchoolPayment(listSchoolPayment, a -> {
+	public void putimportSchoolPaymentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTImportSchoolPayment(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -680,9 +530,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			}
 		});
 	}
-	public void response200PUTImportSchoolPayment(SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTImportSchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
@@ -726,44 +575,37 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSchoolPayment(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolPayment> listSchoolPayment = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolPayment(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTMergeSchoolPayment(apiRequest, listSchoolPayment, f -> {
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											sqlSchoolPayment(siteRequest, d -> {
+												if(d.succeeded()) {
+													try {
+														listPUTMergeSchoolPayment(apiRequest, siteRequest, e -> {
+															if(e.succeeded()) {
+																putmergeSchoolPaymentResponse(siteRequest, f -> {
 																	if(f.succeeded()) {
-																		putmergeSchoolPaymentResponse(listSchoolPayment, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putmergeSchoolPayment succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putmergeSchoolPayment failed. ", g.cause()));
-																				errorSchoolPayment(siteRequest, eventHandler, d);
-																			}
-																		});
+																		eventHandler.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putmergeSchoolPayment succeeded. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putmergeSchoolPayment failed. ", f.cause()));
+																		errorSchoolPayment(siteRequest, eventHandler, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											errorSchoolPayment(siteRequest, eventHandler, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									errorSchoolPayment(siteRequest, eventHandler, c);
 								}
@@ -782,211 +624,68 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	}
 
 
-	public void listPUTMergeSchoolPayment(ApiRequest apiRequest, SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTMergeSchoolPayment(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putmergeSchoolPaymentFuture(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-						SchoolPayment schoolPayment = a.result();
-						apiRequestSchoolPayment(schoolPayment);
-					} else {
-						errorSchoolPayment(siteRequest, eventHandler, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), json);
+			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+
+			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(SchoolPayment.class);
+			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+			searchList.initDeepForClass(siteRequest2);
+
+			if(searchList.size() == 1) {
+				SchoolPayment o = searchList.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSaves()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				siteRequest2.setJsonObject(json2);
+				futures.add(
+					patchSchoolPaymentFuture(o, a -> {
+						if(a.succeeded()) {
+							SchoolPayment schoolPayment = a.result();
+							apiRequestSchoolPayment(schoolPayment);
+						} else {
+							errorSchoolPayment(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postSchoolPaymentFuture(siteRequest, a -> {
+						if(a.succeeded()) {
+							SchoolPayment schoolPayment = a.result();
+							apiRequestSchoolPayment(schoolPayment);
+						} else {
+							errorSchoolPayment(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTMergeSchoolPayment(listSchoolPayment, eventHandler);
+				response200PUTMergeSchoolPayment(siteRequest, eventHandler);
 			} else {
 				errorSchoolPayment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<SchoolPayment> putmergeSchoolPaymentFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<SchoolPayment>> eventHandler) {
-		Promise<SchoolPayment> promise = Promise.promise();
-		try {
-
-			createSchoolPayment(siteRequest, a -> {
-				if(a.succeeded()) {
-					SchoolPayment schoolPayment = a.result();
-					sqlPUTMergeSchoolPayment(schoolPayment, jsonObject, b -> {
-						if(b.succeeded()) {
-							defineSchoolPayment(schoolPayment, c -> {
-								if(c.succeeded()) {
-									attributeSchoolPayment(schoolPayment, d -> {
-										if(d.succeeded()) {
-											indexSchoolPayment(schoolPayment, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(schoolPayment));
-													promise.complete(schoolPayment);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorSchoolPayment(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTMergeSchoolPayment(SchoolPayment o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "enrollmentKey":
-						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", Long.parseLong(jsonObject.getString(entityVar))));
-						break;
-					case "childCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("childCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "childBirthDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("childBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
-						break;
-					case "momCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("momCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "dadCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("dadCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "enrollmentPaymentEachMonth":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enrollmentPaymentEachMonth", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "enrollmentPaymentComplete":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentDescription":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentDescription", jsonObject.getString(entityVar), pk));
-						break;
-					case "paymentDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
-						break;
-					case "paymentAmount":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentAmount", jsonObject.getString(entityVar), pk));
-						break;
-					case "chargeAmount":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeAmount", jsonObject.getString(entityVar), pk));
-						break;
-					case "chargeAmountFuture":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeAmountFuture", jsonObject.getString(entityVar), pk));
-						break;
-					case "chargeEnrollment":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeEnrollment", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "chargeFirstLast":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeFirstLast", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "chargeMonth":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeMonth", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "chargeLateFee":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("chargeLateFee", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentCash":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentCash", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentCheck":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentCheck", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentSystem":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentSystem", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentBy":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentBy", jsonObject.getString(entityVar), pk));
-						break;
-					case "transactionId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("transactionId", jsonObject.getString(entityVar), pk));
-						break;
-					case "customerProfileId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entityVar), pk));
-						break;
-					case "transactionStatus":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("transactionStatus", jsonObject.getString(entityVar), pk));
-						break;
-					case "paymentRecieved":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentRecieved", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "paymentShortName":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("paymentShortName", jsonObject.getString(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putmergeSchoolPaymentResponse(SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
-		response200PUTMergeSchoolPayment(listSchoolPayment, a -> {
+	public void putmergeSchoolPaymentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTMergeSchoolPayment(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -1009,9 +708,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			}
 		});
 	}
-	public void response200PUTMergeSchoolPayment(SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTMergeSchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
@@ -2063,7 +1761,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
-						fieldNames.removeAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);

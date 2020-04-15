@@ -327,44 +327,37 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchPageDesign(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<PageDesign> listPageDesign = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlPageDesign(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTImportPageDesign(apiRequest, listPageDesign, f -> {
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											sqlPageDesign(siteRequest, d -> {
+												if(d.succeeded()) {
+													try {
+														listPUTImportPageDesign(apiRequest, siteRequest, e -> {
+															if(e.succeeded()) {
+																putimportPageDesignResponse(siteRequest, f -> {
 																	if(f.succeeded()) {
-																		putimportPageDesignResponse(listPageDesign, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putimportPageDesign succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putimportPageDesign failed. ", g.cause()));
-																				errorPageDesign(siteRequest, eventHandler, d);
-																			}
-																		});
+																		eventHandler.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putimportPageDesign succeeded. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putimportPageDesign failed. ", f.cause()));
+																		errorPageDesign(siteRequest, eventHandler, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											errorPageDesign(siteRequest, eventHandler, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									errorPageDesign(siteRequest, eventHandler, c);
 								}
@@ -383,161 +376,68 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
-	public void listPUTImportPageDesign(ApiRequest apiRequest, SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTImportPageDesign(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putimportPageDesignFuture(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-						PageDesign pageDesign = a.result();
-						apiRequestPageDesign(pageDesign);
-					} else {
-						errorPageDesign(siteRequest, eventHandler, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
+			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+
+			SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(PageDesign.class);
+			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+			searchList.initDeepForClass(siteRequest2);
+
+			if(searchList.size() == 1) {
+				PageDesign o = searchList.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSaves()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				siteRequest2.setJsonObject(json2);
+				futures.add(
+					patchPageDesignFuture(o, a -> {
+						if(a.succeeded()) {
+							PageDesign pageDesign = a.result();
+							apiRequestPageDesign(pageDesign);
+						} else {
+							errorPageDesign(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postPageDesignFuture(siteRequest, a -> {
+						if(a.succeeded()) {
+							PageDesign pageDesign = a.result();
+							apiRequestPageDesign(pageDesign);
+						} else {
+							errorPageDesign(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTImportPageDesign(listPageDesign, eventHandler);
+				response200PUTImportPageDesign(siteRequest, eventHandler);
 			} else {
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<PageDesign> putimportPageDesignFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<PageDesign>> eventHandler) {
-		Promise<PageDesign> promise = Promise.promise();
-		try {
-
-			createPageDesign(siteRequest, a -> {
-				if(a.succeeded()) {
-					PageDesign pageDesign = a.result();
-					sqlPUTImportPageDesign(pageDesign, jsonObject, b -> {
-						if(b.succeeded()) {
-							definePageDesign(pageDesign, c -> {
-								if(c.succeeded()) {
-									attributePageDesign(pageDesign, d -> {
-										if(d.succeeded()) {
-											indexPageDesign(pageDesign, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(pageDesign));
-													promise.complete(pageDesign);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorPageDesign(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTImportPageDesign(PageDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "childDesignKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(PageDesign.class);
-							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							if(searchList.size() == 1) {
-								putSql.append(SiteContextEnUS.SQL_addA);
-								putSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", searchList.get(0).getPk()));
-							}
-						}
-						break;
-					case "parentDesignKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(PageDesign.class);
-							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							if(searchList.size() == 1) {
-								putSql.append(SiteContextEnUS.SQL_addA);
-								putSqlParams.addAll(Arrays.asList("childDesignKeys", searchList.get(0).getPk(), "parentDesignKeys", pk));
-							}
-						}
-						break;
-					case "htmlPartKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(HtmlPart.class);
-							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							if(searchList.size() == 1) {
-								putSql.append(SiteContextEnUS.SQL_addA);
-								putSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", searchList.get(0).getPk()));
-							}
-						}
-						break;
-					case "pageDesignCompleteName":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pageDesignCompleteName", jsonObject.getString(entityVar), pk));
-						break;
-					case "designHidden":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("designHidden", jsonObject.getBoolean(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putimportPageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		response200PUTImportPageDesign(listPageDesign, a -> {
+	public void putimportPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTImportPageDesign(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -560,9 +460,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			}
 		});
 	}
-	public void response200PUTImportPageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTImportPageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
@@ -606,44 +505,37 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchPageDesign(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<PageDesign> listPageDesign = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlPageDesign(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTMergePageDesign(apiRequest, listPageDesign, f -> {
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											sqlPageDesign(siteRequest, d -> {
+												if(d.succeeded()) {
+													try {
+														listPUTMergePageDesign(apiRequest, siteRequest, e -> {
+															if(e.succeeded()) {
+																putmergePageDesignResponse(siteRequest, f -> {
 																	if(f.succeeded()) {
-																		putmergePageDesignResponse(listPageDesign, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putmergePageDesign succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putmergePageDesign failed. ", g.cause()));
-																				errorPageDesign(siteRequest, eventHandler, d);
-																			}
-																		});
+																		eventHandler.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putmergePageDesign succeeded. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putmergePageDesign failed. ", f.cause()));
+																		errorPageDesign(siteRequest, eventHandler, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											errorPageDesign(siteRequest, eventHandler, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									errorPageDesign(siteRequest, eventHandler, c);
 								}
@@ -662,137 +554,68 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
-	public void listPUTMergePageDesign(ApiRequest apiRequest, SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTMergePageDesign(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putmergePageDesignFuture(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-						PageDesign pageDesign = a.result();
-						apiRequestPageDesign(pageDesign);
-					} else {
-						errorPageDesign(siteRequest, eventHandler, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
+			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+
+			SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(PageDesign.class);
+			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+			searchList.initDeepForClass(siteRequest2);
+
+			if(searchList.size() == 1) {
+				PageDesign o = searchList.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSaves()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				siteRequest2.setJsonObject(json2);
+				futures.add(
+					patchPageDesignFuture(o, a -> {
+						if(a.succeeded()) {
+							PageDesign pageDesign = a.result();
+							apiRequestPageDesign(pageDesign);
+						} else {
+							errorPageDesign(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postPageDesignFuture(siteRequest, a -> {
+						if(a.succeeded()) {
+							PageDesign pageDesign = a.result();
+							apiRequestPageDesign(pageDesign);
+						} else {
+							errorPageDesign(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTMergePageDesign(listPageDesign, eventHandler);
+				response200PUTMergePageDesign(siteRequest, eventHandler);
 			} else {
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<PageDesign> putmergePageDesignFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<PageDesign>> eventHandler) {
-		Promise<PageDesign> promise = Promise.promise();
-		try {
-
-			createPageDesign(siteRequest, a -> {
-				if(a.succeeded()) {
-					PageDesign pageDesign = a.result();
-					sqlPUTMergePageDesign(pageDesign, jsonObject, b -> {
-						if(b.succeeded()) {
-							definePageDesign(pageDesign, c -> {
-								if(c.succeeded()) {
-									attributePageDesign(pageDesign, d -> {
-										if(d.succeeded()) {
-											indexPageDesign(pageDesign, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(pageDesign));
-													promise.complete(pageDesign);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorPageDesign(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTMergePageDesign(PageDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "childDesignKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
-						}
-						break;
-					case "parentDesignKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
-						}
-						break;
-					case "htmlPartKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
-						}
-						break;
-					case "pageDesignCompleteName":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pageDesignCompleteName", jsonObject.getString(entityVar), pk));
-						break;
-					case "designHidden":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("designHidden", jsonObject.getBoolean(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putmergePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		response200PUTMergePageDesign(listPageDesign, a -> {
+	public void putmergePageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTMergePageDesign(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -815,9 +638,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			}
 		});
 	}
-	public void response200PUTMergePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTMergePageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
@@ -1336,10 +1158,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setChildDesignKeys":
 						JsonArray setChildDesignKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys"));
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", "parentDesignKeys", pk));
 						for(Integer i = 0; i <  setChildDesignKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", setChildDesignKeysValues.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", Long.parseLong(setChildDesignKeysValues.getString(i))));
 						}
 						break;
 					case "removeChildDesignKeys":
@@ -1360,10 +1182,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setParentDesignKeys":
 						JsonArray setParentDesignKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(requestJson.getString(methodName)), "parentDesignKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", "parentDesignKeys", pk));
 						for(Integer i = 0; i <  setParentDesignKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("childDesignKeys", setParentDesignKeysValues.getString(i), "parentDesignKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(setParentDesignKeysValues.getString(i)), "parentDesignKeys", pk));
 						}
 						break;
 					case "removeParentDesignKeys":
@@ -1384,10 +1206,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setHtmlPartKeys":
 						JsonArray setHtmlPartKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys"));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
 						for(Integer i = 0; i <  setHtmlPartKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", setHtmlPartKeysValues.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", Long.parseLong(setHtmlPartKeysValues.getString(i))));
 						}
 						break;
 					case "removeHtmlPartKeys":
@@ -1637,7 +1459,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
-						fieldNames.removeAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);

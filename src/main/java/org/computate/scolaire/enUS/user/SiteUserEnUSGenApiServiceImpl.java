@@ -192,7 +192,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
-						fieldNames.removeAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
@@ -460,10 +461,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					case "setEnrollmentKeys":
 						JsonArray setEnrollmentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys"));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "userKeys", pk));
 						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", setEnrollmentKeysValues.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", Long.parseLong(setEnrollmentKeysValues.getString(i))));
 						}
 						break;
 					case "removeEnrollmentKeys":
@@ -484,10 +485,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					case "setPaymentKeys":
 						JsonArray setPaymentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys"));
+						patchSqlParams.addAll(Arrays.asList("paymentKeys", "userKeys", pk));
 						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", setPaymentKeysValues.getString(i)));
+							patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", Long.parseLong(setPaymentKeysValues.getString(i))));
 						}
 						break;
 					case "removePaymentKeys":

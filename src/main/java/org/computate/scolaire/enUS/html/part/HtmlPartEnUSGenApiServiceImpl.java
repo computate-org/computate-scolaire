@@ -1322,10 +1322,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setPageDesignKeys":
 						JsonArray setPageDesignKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(requestJson.getString(methodName)), "pageDesignKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
 						for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", setPageDesignKeysValues.getString(i), "pageDesignKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", Long.parseLong(setPageDesignKeysValues.getString(i)), "pageDesignKeys", pk));
 						}
 						break;
 					case "removePageDesignKeys":
