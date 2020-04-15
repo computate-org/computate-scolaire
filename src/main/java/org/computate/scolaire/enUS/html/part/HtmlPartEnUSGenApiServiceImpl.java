@@ -407,44 +407,37 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchHtmlPart(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<HtmlPart> listHtmlPart = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlHtmlPart(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTImportHtmlPart(apiRequest, listHtmlPart, f -> {
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											sqlHtmlPart(siteRequest, d -> {
+												if(d.succeeded()) {
+													try {
+														listPUTImportHtmlPart(apiRequest, siteRequest, e -> {
+															if(e.succeeded()) {
+																putimportHtmlPartResponse(siteRequest, f -> {
 																	if(f.succeeded()) {
-																		putimportHtmlPartResponse(listHtmlPart, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putimportHtmlPart succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putimportHtmlPart failed. ", g.cause()));
-																				errorHtmlPart(siteRequest, eventHandler, d);
-																			}
-																		});
+																		eventHandler.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putimportHtmlPart succeeded. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putimportHtmlPart failed. ", f.cause()));
+																		errorHtmlPart(siteRequest, eventHandler, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											errorHtmlPart(siteRequest, eventHandler, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									errorHtmlPart(siteRequest, eventHandler, c);
 								}
@@ -463,229 +456,68 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 
-	public void listPUTImportHtmlPart(ApiRequest apiRequest, SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTImportHtmlPart(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putimportHtmlPartFuture(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-						HtmlPart htmlPart = a.result();
-						apiRequestHtmlPart(htmlPart);
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForHtmlPart(siteContext, siteRequest.getOperationRequest(), json);
+			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+
+			SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(HtmlPart.class);
+			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+			searchList.initDeepForClass(siteRequest2);
+
+			if(searchList.size() == 1) {
+				HtmlPart o = searchList.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSaves()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				siteRequest2.setJsonObject(json2);
+				futures.add(
+					patchHtmlPartFuture(o, a -> {
+						if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postHtmlPartFuture(siteRequest, a -> {
+						if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTImportHtmlPart(listHtmlPart, eventHandler);
+				response200PUTImportHtmlPart(siteRequest, eventHandler);
 			} else {
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<HtmlPart> putimportHtmlPartFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<HtmlPart>> eventHandler) {
-		Promise<HtmlPart> promise = Promise.promise();
-		try {
-
-			createHtmlPart(siteRequest, a -> {
-				if(a.succeeded()) {
-					HtmlPart htmlPart = a.result();
-					sqlPUTImportHtmlPart(htmlPart, jsonObject, b -> {
-						if(b.succeeded()) {
-							defineHtmlPart(htmlPart, c -> {
-								if(c.succeeded()) {
-									attributeHtmlPart(htmlPart, d -> {
-										if(d.succeeded()) {
-											indexHtmlPart(htmlPart, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(htmlPart));
-													promise.complete(htmlPart);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorHtmlPart(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTImportHtmlPart(HtmlPart o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "pageDesignKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(PageDesign.class);
-							searchList.addFilterQuery("inheritPk_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							if(searchList.size() == 1) {
-								putSql.append(SiteContextEnUS.SQL_addA);
-								putSqlParams.addAll(Arrays.asList("htmlPartKeys", searchList.get(0).getPk(), "pageDesignKeys", pk));
-							}
-						}
-						break;
-					case "htmlLink":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlLink", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlElement":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlElement", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlId", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlClasses":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlClasses", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlStyle":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlStyle", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlBefore":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlBefore", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlAfter":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlAfter", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlText":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlText", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVar":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarSpan":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarSpan", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarForm":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarInput":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarForEach":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlExclude":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlExclude", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "pdfExclude":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pdfExclude", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "loginLogout":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("loginLogout", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "sort1":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort1", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort2":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort2", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort3":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort3", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort4":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort4", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort5":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort5", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort6":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort6", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort7":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort7", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort8":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort8", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort9":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort9", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort10":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort10", jsonObject.getString(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putimportHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-		response200PUTImportHtmlPart(listHtmlPart, a -> {
+	public void putimportHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTImportHtmlPart(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -708,9 +540,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			}
 		});
 	}
-	public void response200PUTImportHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTImportHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
@@ -754,44 +585,37 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchHtmlPart(siteRequest, false, true, null, d -> {
-										if(d.succeeded()) {
-											SearchList<HtmlPart> listHtmlPart = d.result();
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlHtmlPart(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTMergeHtmlPart(apiRequest, listHtmlPart, f -> {
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											sqlHtmlPart(siteRequest, d -> {
+												if(d.succeeded()) {
+													try {
+														listPUTMergeHtmlPart(apiRequest, siteRequest, e -> {
+															if(e.succeeded()) {
+																putmergeHtmlPartResponse(siteRequest, f -> {
 																	if(f.succeeded()) {
-																		putmergeHtmlPartResponse(listHtmlPart, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putmergeHtmlPart succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putmergeHtmlPart failed. ", g.cause()));
-																				errorHtmlPart(siteRequest, eventHandler, d);
-																			}
-																		});
+																		eventHandler.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putmergeHtmlPart succeeded. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putmergeHtmlPart failed. ", f.cause()));
+																		errorHtmlPart(siteRequest, eventHandler, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											errorHtmlPart(siteRequest, eventHandler, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									errorHtmlPart(siteRequest, eventHandler, c);
 								}
@@ -810,221 +634,68 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 
-	public void listPUTMergeHtmlPart(ApiRequest apiRequest, SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPUTMergeHtmlPart(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putmergeHtmlPartFuture(siteRequest, jsonObject, a -> {
-					if(a.succeeded()) {
-						HtmlPart htmlPart = a.result();
-						apiRequestHtmlPart(htmlPart);
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForHtmlPart(siteContext, siteRequest.getOperationRequest(), json);
+			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+
+			SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(HtmlPart.class);
+			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+			searchList.initDeepForClass(siteRequest2);
+
+			if(searchList.size() == 1) {
+				HtmlPart o = searchList.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSaves()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				siteRequest2.setJsonObject(json2);
+				futures.add(
+					patchHtmlPartFuture(o, a -> {
+						if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postHtmlPartFuture(siteRequest, a -> {
+						if(a.succeeded()) {
+							HtmlPart htmlPart = a.result();
+							apiRequestHtmlPart(htmlPart);
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
-				response200PUTMergeHtmlPart(listHtmlPart, eventHandler);
+				response200PUTMergeHtmlPart(siteRequest, eventHandler);
 			} else {
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<HtmlPart> putmergeHtmlPartFuture(SiteRequestEnUS siteRequest, JsonObject jsonObject, Handler<AsyncResult<HtmlPart>> eventHandler) {
-		Promise<HtmlPart> promise = Promise.promise();
-		try {
-
-			createHtmlPart(siteRequest, a -> {
-				if(a.succeeded()) {
-					HtmlPart htmlPart = a.result();
-					sqlPUTMergeHtmlPart(htmlPart, jsonObject, b -> {
-						if(b.succeeded()) {
-							defineHtmlPart(htmlPart, c -> {
-								if(c.succeeded()) {
-									attributeHtmlPart(htmlPart, d -> {
-										if(d.succeeded()) {
-											indexHtmlPart(htmlPart, e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(htmlPart));
-													promise.complete(htmlPart);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											eventHandler.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									eventHandler.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							eventHandler.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					eventHandler.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			errorHtmlPart(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTMergeHtmlPart(HtmlPart o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					case "pageDesignKeys":
-						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
-						}
-						break;
-					case "htmlLink":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlLink", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlElement":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlElement", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlId", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlClasses":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlClasses", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlStyle":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlStyle", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlBefore":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlBefore", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlAfter":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlAfter", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlText":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlText", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVar":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarSpan":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarSpan", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarForm":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarInput":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlVarForEach":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entityVar), pk));
-						break;
-					case "htmlExclude":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlExclude", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "pdfExclude":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pdfExclude", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "loginLogout":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("loginLogout", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "sort1":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort1", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort2":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort2", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort3":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort3", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort4":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort4", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort5":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort5", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort6":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort6", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort7":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort7", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort8":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort8", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort9":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort9", jsonObject.getString(entityVar), pk));
-						break;
-					case "sort10":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sort10", jsonObject.getString(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putmergeHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-		response200PUTMergeHtmlPart(listHtmlPart, a -> {
+	public void putmergeHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTMergeHtmlPart(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -1047,9 +718,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			}
 		});
 	}
-	public void response200PUTMergeHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTMergeHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
@@ -2187,7 +1857,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
-						fieldNames.removeAll(json2.getJsonArray("saves").stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);

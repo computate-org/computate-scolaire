@@ -407,44 +407,37 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									recherchePartHtml(requeteSite, false, true, null, d -> {
-										if(d.succeeded()) {
-											ListeRecherche<PartHtml> listePartHtml = d.result();
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlPartHtml(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePUTImportPartHtml(requeteApi, listePartHtml, f -> {
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											sqlPartHtml(requeteSite, d -> {
+												if(d.succeeded()) {
+													try {
+														listePUTImportPartHtml(requeteApi, requeteSite, e -> {
+															if(e.succeeded()) {
+																putimportPartHtmlReponse(requeteSite, f -> {
 																	if(f.succeeded()) {
-																		putimportPartHtmlReponse(listePartHtml, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putimportPartHtml a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("putimportPartHtml a échoué. ", g.cause()));
-																				erreurPartHtml(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
+																		gestionnaireEvenements.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putimportPartHtml a réussi. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putimportPartHtml a échoué. ", f.cause()));
+																		erreurPartHtml(requeteSite, gestionnaireEvenements, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
 								}
@@ -463,229 +456,68 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	}
 
 
-	public void listePUTImportPartHtml(RequeteApi requeteApi, ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePUTImportPartHtml(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putimportPartHtmlFuture(requeteSite, jsonObject, a -> {
-					if(a.succeeded()) {
-						PartHtml partHtml = a.result();
-						requeteApiPartHtml(partHtml);
-					} else {
-						erreurPartHtml(requeteSite, gestionnaireEvenements, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPartHtml(siteContexte, requeteSite.getOperationRequete(), json);
+			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+
+			ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+			listeRecherche.setStocker(true);
+			listeRecherche.setQuery("*:*");
+			listeRecherche.setC(PartHtml.class);
+			listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+			listeRecherche.initLoinPourClasse(requeteSite2);
+
+			if(listeRecherche.size() == 1) {
+				PartHtml o = listeRecherche.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSauvegardes()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				requeteSite2.setObjetJson(json2);
+				futures.add(
+					patchPartHtmlFuture(o, a -> {
+						if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
+						} else {
+							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postPartHtmlFuture(requeteSite, a -> {
+						if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
+						} else {
+							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
-				reponse200PUTImportPartHtml(listePartHtml, gestionnaireEvenements);
+				reponse200PUTImportPartHtml(requeteSite, gestionnaireEvenements);
 			} else {
 				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
 	}
 
-	public Future<PartHtml> putimportPartHtmlFuture(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
-		Promise<PartHtml> promise = Promise.promise();
-		try {
-
-			creerPartHtml(requeteSite, a -> {
-				if(a.succeeded()) {
-					PartHtml partHtml = a.result();
-					sqlPUTImportPartHtml(partHtml, jsonObject, b -> {
-						if(b.succeeded()) {
-							definirPartHtml(partHtml, c -> {
-								if(c.succeeded()) {
-									attribuerPartHtml(partHtml, d -> {
-										if(d.succeeded()) {
-											indexerPartHtml(partHtml, e -> {
-												if(e.succeeded()) {
-													gestionnaireEvenements.handle(Future.succeededFuture(partHtml));
-													promise.complete(partHtml);
-												} else {
-													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			erreurPartHtml(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTImportPartHtml(PartHtml o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					case "designPageCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-							listeRecherche.setQuery("*:*");
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(DesignPage.class);
-							listeRecherche.addFilterQuery("inheritPk_indexed_long:" + l);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							if(listeRecherche.size() == 1) {
-								putSql.append(SiteContexteFrFR.SQL_addA);
-								putSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", listeRecherche.get(0).getPk()));
-							}
-						}
-						break;
-					case "htmlLien":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlLien", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlElement":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlElement", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlId":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlId", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlClasses":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlClasses", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlStyle":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlStyle", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlAvant":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlAvant", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlApres":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlApres", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlTexte":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlTexte", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVar":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarSpan":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarSpan", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarForm":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarInput":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarForEach":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlExclure":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlExclure", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "pdfExclure":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "connecterDeconnecter":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("connecterDeconnecter", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "tri1":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri1", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri2":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri2", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri3":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri3", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri4":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri4", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri5":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri5", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri6":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri6", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri7":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri7", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri8":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri8", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri9":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri9", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri10":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri10", jsonObject.getString(entiteVar), pk));
-						break;
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putimportPartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
-		reponse200PUTImportPartHtml(listePartHtml, a -> {
+	public void putimportPartHtmlReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PUTImportPartHtml(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -708,9 +540,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			}
 		});
 	}
-	public void reponse200PUTImportPartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PUTImportPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
 		} catch(Exception e) {
@@ -754,44 +585,37 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									recherchePartHtml(requeteSite, false, true, null, d -> {
-										if(d.succeeded()) {
-											ListeRecherche<PartHtml> listePartHtml = d.result();
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlPartHtml(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePUTFusionPartHtml(requeteApi, listePartHtml, f -> {
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											sqlPartHtml(requeteSite, d -> {
+												if(d.succeeded()) {
+													try {
+														listePUTFusionPartHtml(requeteApi, requeteSite, e -> {
+															if(e.succeeded()) {
+																putfusionPartHtmlReponse(requeteSite, f -> {
 																	if(f.succeeded()) {
-																		putfusionPartHtmlReponse(listePartHtml, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putfusionPartHtml a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("putfusionPartHtml a échoué. ", g.cause()));
-																				erreurPartHtml(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
+																		gestionnaireEvenements.handle(Future.succeededFuture(f.result()));
+																		LOGGER.info(String.format("putfusionPartHtml a réussi. "));
 																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		LOGGER.error(String.format("putfusionPartHtml a échoué. ", f.cause()));
+																		erreurPartHtml(requeteSite, gestionnaireEvenements, f);
 																	}
 																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+															} else {
+																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
+														});
+													} catch(Exception ex) {
+												blockingCodeHandler.handle(Future.failedFuture(ex));
+													}
+												} else {
+													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
-											);
-										} else {
-											erreurPartHtml(requeteSite, gestionnaireEvenements, d);
+											});
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
 									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
 								}
@@ -810,221 +634,68 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	}
 
 
-	public void listePUTFusionPartHtml(RequeteApi requeteApi, ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePUTFusionPartHtml(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(o -> {
-			JsonObject jsonObject = (JsonObject)o;
-			futures.add(
-				putfusionPartHtmlFuture(requeteSite, jsonObject, a -> {
-					if(a.succeeded()) {
-						PartHtml partHtml = a.result();
-						requeteApiPartHtml(partHtml);
-					} else {
-						erreurPartHtml(requeteSite, gestionnaireEvenements, a);
-					}
-				})
-			);
+		jsonArray.forEach(obj -> {
+			JsonObject json = (JsonObject)obj;
+
+			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPartHtml(siteContexte, requeteSite.getOperationRequete(), json);
+			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+
+			ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+			listeRecherche.setStocker(true);
+			listeRecherche.setQuery("*:*");
+			listeRecherche.setC(PartHtml.class);
+			listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+			listeRecherche.initLoinPourClasse(requeteSite2);
+
+			if(listeRecherche.size() == 1) {
+				PartHtml o = listeRecherche.get(0);
+				JsonObject json2 = new JsonObject();
+				for(String f : json.fieldNames()) {
+					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
+				}
+				for(String f : o.getSauvegardes()) {
+					if(!json.fieldNames().contains(f))
+						json2.putNull("set" + StringUtils.capitalize(f));
+				}
+				requeteSite2.setObjetJson(json2);
+				futures.add(
+					patchPartHtmlFuture(o, a -> {
+						if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
+						} else {
+							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						}
+					})
+				);
+			} else {
+				futures.add(
+					postPartHtmlFuture(requeteSite, a -> {
+						if(a.succeeded()) {
+							PartHtml partHtml = a.result();
+							requeteApiPartHtml(partHtml);
+						} else {
+							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+						}
+					})
+				);
+			}
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
-				reponse200PUTFusionPartHtml(listePartHtml, gestionnaireEvenements);
+				reponse200PUTFusionPartHtml(requeteSite, gestionnaireEvenements);
 			} else {
 				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
 	}
 
-	public Future<PartHtml> putfusionPartHtmlFuture(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
-		Promise<PartHtml> promise = Promise.promise();
-		try {
-
-			creerPartHtml(requeteSite, a -> {
-				if(a.succeeded()) {
-					PartHtml partHtml = a.result();
-					sqlPUTFusionPartHtml(partHtml, jsonObject, b -> {
-						if(b.succeeded()) {
-							definirPartHtml(partHtml, c -> {
-								if(c.succeeded()) {
-									attribuerPartHtml(partHtml, d -> {
-										if(d.succeeded()) {
-											indexerPartHtml(partHtml, e -> {
-												if(e.succeeded()) {
-													gestionnaireEvenements.handle(Future.succeededFuture(partHtml));
-													promise.complete(partHtml);
-												} else {
-													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
-												}
-											});
-										} else {
-											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
-										}
-									});
-								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
-								}
-							});
-						} else {
-							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
-						}
-					});
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-				}
-			});
-		} catch(Exception e) {
-			erreurPartHtml(null, null, Future.failedFuture(e));
-		}
-		return promise.future();
-	}
-
-	public void sqlPUTFusionPartHtml(PartHtml o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					case "designPageCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
-						}
-						break;
-					case "htmlLien":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlLien", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlElement":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlElement", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlId":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlId", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlClasses":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlClasses", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlStyle":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlStyle", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlAvant":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlAvant", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlApres":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlApres", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlTexte":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlTexte", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVar":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarSpan":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarSpan", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarForm":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarInput":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlVarForEach":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entiteVar), pk));
-						break;
-					case "htmlExclure":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlExclure", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "pdfExclure":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "connecterDeconnecter":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("connecterDeconnecter", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "tri1":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri1", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri2":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri2", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri3":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri3", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri4":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri4", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri5":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri5", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri6":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri6", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri7":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri7", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri8":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri8", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri9":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri9", jsonObject.getString(entiteVar), pk));
-						break;
-					case "tri10":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri10", jsonObject.getString(entiteVar), pk));
-						break;
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void putfusionPartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
-		reponse200PUTFusionPartHtml(listePartHtml, a -> {
+	public void putfusionPartHtmlReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PUTFusionPartHtml(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -1047,9 +718,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			}
 		});
 	}
-	public void reponse200PUTFusionPartHtml(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PUTFusionPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
 		} catch(Exception e) {
@@ -2187,7 +1857,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
-						fieldNames.removeAll(json2.getJsonArray("sauvegardes").stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
