@@ -403,18 +403,18 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							SchoolAge schoolAge = a.result();
 							apiRequestSchoolAge(schoolAge);
 						} else {
-							errorSchoolAge(siteRequest, eventHandler, a);
+							errorSchoolAge(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolAgeFuture(siteRequest, a -> {
+					postSchoolAgeFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolAge schoolAge = a.result();
 							apiRequestSchoolAge(schoolAge);
 						} else {
-							errorSchoolAge(siteRequest, eventHandler, a);
+							errorSchoolAge(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -581,18 +581,18 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							SchoolAge schoolAge = a.result();
 							apiRequestSchoolAge(schoolAge);
 						} else {
-							errorSchoolAge(siteRequest, eventHandler, a);
+							errorSchoolAge(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolAgeFuture(siteRequest, a -> {
+					postSchoolAgeFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolAge schoolAge = a.result();
 							apiRequestSchoolAge(schoolAge);
 						} else {
-							errorSchoolAge(siteRequest, eventHandler, a);
+							errorSchoolAge(siteRequest2, eventHandler, a);
 						}
 					})
 				);

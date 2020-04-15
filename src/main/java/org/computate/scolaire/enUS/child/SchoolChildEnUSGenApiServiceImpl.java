@@ -401,18 +401,18 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							SchoolChild schoolChild = a.result();
 							apiRequestSchoolChild(schoolChild);
 						} else {
-							errorSchoolChild(siteRequest, eventHandler, a);
+							errorSchoolChild(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolChildFuture(siteRequest, a -> {
+					postSchoolChildFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolChild schoolChild = a.result();
 							apiRequestSchoolChild(schoolChild);
 						} else {
-							errorSchoolChild(siteRequest, eventHandler, a);
+							errorSchoolChild(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -579,18 +579,18 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							SchoolChild schoolChild = a.result();
 							apiRequestSchoolChild(schoolChild);
 						} else {
-							errorSchoolChild(siteRequest, eventHandler, a);
+							errorSchoolChild(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolChildFuture(siteRequest, a -> {
+					postSchoolChildFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolChild schoolChild = a.result();
 							apiRequestSchoolChild(schoolChild);
 						} else {
-							errorSchoolChild(siteRequest, eventHandler, a);
+							errorSchoolChild(siteRequest2, eventHandler, a);
 						}
 					})
 				);

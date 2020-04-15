@@ -425,18 +425,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
 						} else {
-							errorSchoolDad(siteRequest, eventHandler, a);
+							errorSchoolDad(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolDadFuture(siteRequest, a -> {
+					postSchoolDadFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
 						} else {
-							errorSchoolDad(siteRequest, eventHandler, a);
+							errorSchoolDad(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -603,18 +603,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
 						} else {
-							errorSchoolDad(siteRequest, eventHandler, a);
+							errorSchoolDad(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolDadFuture(siteRequest, a -> {
+					postSchoolDadFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
 						} else {
-							errorSchoolDad(siteRequest, eventHandler, a);
+							errorSchoolDad(siteRequest2, eventHandler, a);
 						}
 					})
 				);

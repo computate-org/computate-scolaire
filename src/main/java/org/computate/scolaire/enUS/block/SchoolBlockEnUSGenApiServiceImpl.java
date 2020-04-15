@@ -427,18 +427,18 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, a);
+							errorSchoolBlock(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolBlockFuture(siteRequest, a -> {
+					postSchoolBlockFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, a);
+							errorSchoolBlock(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -605,18 +605,18 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, a);
+							errorSchoolBlock(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolBlockFuture(siteRequest, a -> {
+					postSchoolBlockFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, a);
+							errorSchoolBlock(siteRequest2, eventHandler, a);
 						}
 					})
 				);

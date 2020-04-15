@@ -609,18 +609,18 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
 						} else {
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postInscriptionScolaireFuture(requeteSite, a -> {
+					postInscriptionScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
 						} else {
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -787,18 +787,18 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
 						} else {
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postInscriptionScolaireFuture(requeteSite, a -> {
+					postInscriptionScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
 						} else {
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

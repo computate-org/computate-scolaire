@@ -134,16 +134,18 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * r.enUS: Store
 	 * r: designPageCles
 	 * r.enUS: pageDesignKeys
-	*/    
+	*/   
 	protected void _designPageCles(List<Long> l) {
-		ListeRecherche<DesignPage> r = new ListeRecherche<>();
-		r.setQuery("*:*");
-		r.setC(DesignPage.class);
-		r.setStocker(true);
-		for(Long c : designPageCles)
-			r.addFilterQuery("designParentCles_indexed_longs:" + c);
-		r.initLoinListeRecherche(requeteSite_);
-		l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
+		if(designPageCles.size() > 0) {
+			ListeRecherche<DesignPage> r = new ListeRecherche<>();
+			r.setQuery("*:*");
+			r.setC(DesignPage.class);
+			r.setStocker(true);
+			for(Long c : designPageCles)
+				r.addFilterQuery("designParentCles_indexed_longs:" + c);
+			r.initLoinListeRecherche(requeteSite_);
+			l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
+		}
 	}
 
 	/**

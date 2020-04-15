@@ -409,18 +409,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
 						} else {
-							erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postDesignPageFuture(requeteSite, a -> {
+					postDesignPageFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
 						} else {
-							erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -587,18 +587,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
 						} else {
-							erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postDesignPageFuture(requeteSite, a -> {
+					postDesignPageFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
 						} else {
-							erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

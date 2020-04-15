@@ -403,18 +403,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							SessionScolaire sessionScolaire = a.result();
 							requeteApiSessionScolaire(sessionScolaire);
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSessionScolaireFuture(requeteSite, a -> {
+					postSessionScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							SessionScolaire sessionScolaire = a.result();
 							requeteApiSessionScolaire(sessionScolaire);
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -581,18 +581,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							SessionScolaire sessionScolaire = a.result();
 							requeteApiSessionScolaire(sessionScolaire);
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSessionScolaireFuture(requeteSite, a -> {
+					postSessionScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							SessionScolaire sessionScolaire = a.result();
 							requeteApiSessionScolaire(sessionScolaire);
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

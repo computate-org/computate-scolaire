@@ -1013,18 +1013,18 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							School school = a.result();
 							apiRequestSchool(school);
 						} else {
-							errorSchool(siteRequest, eventHandler, a);
+							errorSchool(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolFuture(siteRequest, a -> {
+					postSchoolFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							School school = a.result();
 							apiRequestSchool(school);
 						} else {
-							errorSchool(siteRequest, eventHandler, a);
+							errorSchool(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -1191,18 +1191,18 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							School school = a.result();
 							apiRequestSchool(school);
 						} else {
-							errorSchool(siteRequest, eventHandler, a);
+							errorSchool(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolFuture(siteRequest, a -> {
+					postSchoolFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							School school = a.result();
 							apiRequestSchool(school);
 						} else {
-							errorSchool(siteRequest, eventHandler, a);
+							errorSchool(siteRequest2, eventHandler, a);
 						}
 					})
 				);

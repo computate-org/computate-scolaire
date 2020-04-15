@@ -489,18 +489,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
 						} else {
-							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postPartHtmlFuture(requeteSite, a -> {
+					postPartHtmlFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
 						} else {
-							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -667,18 +667,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
 						} else {
-							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postPartHtmlFuture(requeteSite, a -> {
+					postPartHtmlFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
 						} else {
-							erreurPartHtml(requeteSite, gestionnaireEvenements, a);
+							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

@@ -425,18 +425,18 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 							MereScolaire mereScolaire = a.result();
 							requeteApiMereScolaire(mereScolaire);
 						} else {
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postMereScolaireFuture(requeteSite, a -> {
+					postMereScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							MereScolaire mereScolaire = a.result();
 							requeteApiMereScolaire(mereScolaire);
 						} else {
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -603,18 +603,18 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 							MereScolaire mereScolaire = a.result();
 							requeteApiMereScolaire(mereScolaire);
 						} else {
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postMereScolaireFuture(requeteSite, a -> {
+					postMereScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							MereScolaire mereScolaire = a.result();
 							requeteApiMereScolaire(mereScolaire);
 						} else {
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

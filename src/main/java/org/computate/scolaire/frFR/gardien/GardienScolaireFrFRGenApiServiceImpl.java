@@ -413,18 +413,18 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
 						} else {
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postGardienScolaireFuture(requeteSite, a -> {
+					postGardienScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
 						} else {
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -591,18 +591,18 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
 						} else {
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postGardienScolaireFuture(requeteSite, a -> {
+					postGardienScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
 						} else {
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

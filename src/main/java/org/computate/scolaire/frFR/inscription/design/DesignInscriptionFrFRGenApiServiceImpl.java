@@ -391,18 +391,18 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							DesignInscription designInscription = a.result();
 							requeteApiDesignInscription(designInscription);
 						} else {
-							erreurDesignInscription(requeteSite, gestionnaireEvenements, a);
+							erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postDesignInscriptionFuture(requeteSite, a -> {
+					postDesignInscriptionFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							DesignInscription designInscription = a.result();
 							requeteApiDesignInscription(designInscription);
 						} else {
-							erreurDesignInscription(requeteSite, gestionnaireEvenements, a);
+							erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -569,18 +569,18 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							DesignInscription designInscription = a.result();
 							requeteApiDesignInscription(designInscription);
 						} else {
-							erreurDesignInscription(requeteSite, gestionnaireEvenements, a);
+							erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postDesignInscriptionFuture(requeteSite, a -> {
+					postDesignInscriptionFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							DesignInscription designInscription = a.result();
 							requeteApiDesignInscription(designInscription);
 						} else {
-							erreurDesignInscription(requeteSite, gestionnaireEvenements, a);
+							erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

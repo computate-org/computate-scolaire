@@ -403,18 +403,18 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							AnneeScolaire anneeScolaire = a.result();
 							requeteApiAnneeScolaire(anneeScolaire);
 						} else {
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postAnneeScolaireFuture(requeteSite, a -> {
+					postAnneeScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							AnneeScolaire anneeScolaire = a.result();
 							requeteApiAnneeScolaire(anneeScolaire);
 						} else {
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -581,18 +581,18 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							AnneeScolaire anneeScolaire = a.result();
 							requeteApiAnneeScolaire(anneeScolaire);
 						} else {
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postAnneeScolaireFuture(requeteSite, a -> {
+					postAnneeScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							AnneeScolaire anneeScolaire = a.result();
 							requeteApiAnneeScolaire(anneeScolaire);
 						} else {
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

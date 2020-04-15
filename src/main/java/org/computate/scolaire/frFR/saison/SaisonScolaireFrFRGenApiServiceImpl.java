@@ -407,18 +407,18 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							SaisonScolaire saisonScolaire = a.result();
 							requeteApiSaisonScolaire(saisonScolaire);
 						} else {
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSaisonScolaireFuture(requeteSite, a -> {
+					postSaisonScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							SaisonScolaire saisonScolaire = a.result();
 							requeteApiSaisonScolaire(saisonScolaire);
 						} else {
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -585,18 +585,18 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							SaisonScolaire saisonScolaire = a.result();
 							requeteApiSaisonScolaire(saisonScolaire);
 						} else {
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSaisonScolaireFuture(requeteSite, a -> {
+					postSaisonScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							SaisonScolaire saisonScolaire = a.result();
 							requeteApiSaisonScolaire(saisonScolaire);
 						} else {
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

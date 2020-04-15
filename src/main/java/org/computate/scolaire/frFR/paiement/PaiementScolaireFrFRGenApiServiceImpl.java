@@ -479,18 +479,18 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							PaiementScolaire paiementScolaire = a.result();
 							requeteApiPaiementScolaire(paiementScolaire);
 						} else {
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postPaiementScolaireFuture(requeteSite, a -> {
+					postPaiementScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							PaiementScolaire paiementScolaire = a.result();
 							requeteApiPaiementScolaire(paiementScolaire);
 						} else {
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -657,18 +657,18 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							PaiementScolaire paiementScolaire = a.result();
 							requeteApiPaiementScolaire(paiementScolaire);
 						} else {
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postPaiementScolaireFuture(requeteSite, a -> {
+					postPaiementScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							PaiementScolaire paiementScolaire = a.result();
 							requeteApiPaiementScolaire(paiementScolaire);
 						} else {
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

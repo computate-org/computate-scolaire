@@ -609,18 +609,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);
 						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, a);
+							errorSchoolEnrollment(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolEnrollmentFuture(siteRequest, a -> {
+					postSchoolEnrollmentFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);
 						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, a);
+							errorSchoolEnrollment(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -787,18 +787,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);
 						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, a);
+							errorSchoolEnrollment(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolEnrollmentFuture(siteRequest, a -> {
+					postSchoolEnrollmentFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);
 						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, a);
+							errorSchoolEnrollment(siteRequest2, eventHandler, a);
 						}
 					})
 				);

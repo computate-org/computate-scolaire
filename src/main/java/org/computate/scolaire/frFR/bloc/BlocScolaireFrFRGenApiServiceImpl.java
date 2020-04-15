@@ -427,18 +427,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							BlocScolaire blocScolaire = a.result();
 							requeteApiBlocScolaire(blocScolaire);
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postBlocScolaireFuture(requeteSite, a -> {
+					postBlocScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							BlocScolaire blocScolaire = a.result();
 							requeteApiBlocScolaire(blocScolaire);
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -605,18 +605,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							BlocScolaire blocScolaire = a.result();
 							requeteApiBlocScolaire(blocScolaire);
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postBlocScolaireFuture(requeteSite, a -> {
+					postBlocScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							BlocScolaire blocScolaire = a.result();
 							requeteApiBlocScolaire(blocScolaire);
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

@@ -393,18 +393,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
 						} else {
-							errorCluster(siteRequest, eventHandler, a);
+							errorCluster(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postClusterFuture(siteRequest, a -> {
+					postClusterFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
 						} else {
-							errorCluster(siteRequest, eventHandler, a);
+							errorCluster(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -571,18 +571,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
 						} else {
-							errorCluster(siteRequest, eventHandler, a);
+							errorCluster(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postClusterFuture(siteRequest, a -> {
+					postClusterFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
 						} else {
-							errorCluster(siteRequest, eventHandler, a);
+							errorCluster(siteRequest2, eventHandler, a);
 						}
 					})
 				);

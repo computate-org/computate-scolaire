@@ -403,18 +403,18 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
 						} else {
-							erreurAgeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postAgeScolaireFuture(requeteSite, a -> {
+					postAgeScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
 						} else {
-							erreurAgeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -581,18 +581,18 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
 						} else {
-							erreurAgeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postAgeScolaireFuture(requeteSite, a -> {
+					postAgeScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
 						} else {
-							erreurAgeScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

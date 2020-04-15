@@ -425,18 +425,18 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							SchoolMom schoolMom = a.result();
 							apiRequestSchoolMom(schoolMom);
 						} else {
-							errorSchoolMom(siteRequest, eventHandler, a);
+							errorSchoolMom(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolMomFuture(siteRequest, a -> {
+					postSchoolMomFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolMom schoolMom = a.result();
 							apiRequestSchoolMom(schoolMom);
 						} else {
-							errorSchoolMom(siteRequest, eventHandler, a);
+							errorSchoolMom(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -603,18 +603,18 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							SchoolMom schoolMom = a.result();
 							apiRequestSchoolMom(schoolMom);
 						} else {
-							errorSchoolMom(siteRequest, eventHandler, a);
+							errorSchoolMom(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolMomFuture(siteRequest, a -> {
+					postSchoolMomFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolMom schoolMom = a.result();
 							apiRequestSchoolMom(schoolMom);
 						} else {
-							errorSchoolMom(siteRequest, eventHandler, a);
+							errorSchoolMom(siteRequest2, eventHandler, a);
 						}
 					})
 				);

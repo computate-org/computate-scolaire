@@ -403,18 +403,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							SchoolYear schoolYear = a.result();
 							apiRequestSchoolYear(schoolYear);
 						} else {
-							errorSchoolYear(siteRequest, eventHandler, a);
+							errorSchoolYear(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolYearFuture(siteRequest, a -> {
+					postSchoolYearFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolYear schoolYear = a.result();
 							apiRequestSchoolYear(schoolYear);
 						} else {
-							errorSchoolYear(siteRequest, eventHandler, a);
+							errorSchoolYear(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -581,18 +581,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							SchoolYear schoolYear = a.result();
 							apiRequestSchoolYear(schoolYear);
 						} else {
-							errorSchoolYear(siteRequest, eventHandler, a);
+							errorSchoolYear(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolYearFuture(siteRequest, a -> {
+					postSchoolYearFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolYear schoolYear = a.result();
 							apiRequestSchoolYear(schoolYear);
 						} else {
-							errorSchoolYear(siteRequest, eventHandler, a);
+							errorSchoolYear(siteRequest2, eventHandler, a);
 						}
 					})
 				);

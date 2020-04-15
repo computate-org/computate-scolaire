@@ -479,18 +479,18 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							SchoolPayment schoolPayment = a.result();
 							apiRequestSchoolPayment(schoolPayment);
 						} else {
-							errorSchoolPayment(siteRequest, eventHandler, a);
+							errorSchoolPayment(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolPaymentFuture(siteRequest, a -> {
+					postSchoolPaymentFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolPayment schoolPayment = a.result();
 							apiRequestSchoolPayment(schoolPayment);
 						} else {
-							errorSchoolPayment(siteRequest, eventHandler, a);
+							errorSchoolPayment(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -657,18 +657,18 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							SchoolPayment schoolPayment = a.result();
 							apiRequestSchoolPayment(schoolPayment);
 						} else {
-							errorSchoolPayment(siteRequest, eventHandler, a);
+							errorSchoolPayment(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolPaymentFuture(siteRequest, a -> {
+					postSchoolPaymentFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolPayment schoolPayment = a.result();
 							apiRequestSchoolPayment(schoolPayment);
 						} else {
-							errorSchoolPayment(siteRequest, eventHandler, a);
+							errorSchoolPayment(siteRequest2, eventHandler, a);
 						}
 					})
 				);

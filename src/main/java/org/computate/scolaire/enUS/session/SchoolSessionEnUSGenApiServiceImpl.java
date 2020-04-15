@@ -403,18 +403,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, a);
+							errorSchoolSession(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolSessionFuture(siteRequest, a -> {
+					postSchoolSessionFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, a);
+							errorSchoolSession(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -581,18 +581,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, a);
+							errorSchoolSession(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolSessionFuture(siteRequest, a -> {
+					postSchoolSessionFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, a);
+							errorSchoolSession(siteRequest2, eventHandler, a);
 						}
 					})
 				);

@@ -1013,18 +1013,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							Ecole ecole = a.result();
 							requeteApiEcole(ecole);
 						} else {
-							erreurEcole(requeteSite, gestionnaireEvenements, a);
+							erreurEcole(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postEcoleFuture(requeteSite, a -> {
+					postEcoleFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							Ecole ecole = a.result();
 							requeteApiEcole(ecole);
 						} else {
-							erreurEcole(requeteSite, gestionnaireEvenements, a);
+							erreurEcole(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -1191,18 +1191,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							Ecole ecole = a.result();
 							requeteApiEcole(ecole);
 						} else {
-							erreurEcole(requeteSite, gestionnaireEvenements, a);
+							erreurEcole(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postEcoleFuture(requeteSite, a -> {
+					postEcoleFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							Ecole ecole = a.result();
 							requeteApiEcole(ecole);
 						} else {
-							erreurEcole(requeteSite, gestionnaireEvenements, a);
+							erreurEcole(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

@@ -393,18 +393,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, a);
+							erreurCluster(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postClusterFuture(requeteSite, a -> {
+					postClusterFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, a);
+							erreurCluster(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -571,18 +571,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, a);
+							erreurCluster(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postClusterFuture(requeteSite, a -> {
+					postClusterFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, a);
+							erreurCluster(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

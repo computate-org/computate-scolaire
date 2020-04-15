@@ -401,18 +401,18 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 							EnfantScolaire enfantScolaire = a.result();
 							requeteApiEnfantScolaire(enfantScolaire);
 						} else {
-							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postEnfantScolaireFuture(requeteSite, a -> {
+					postEnfantScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							EnfantScolaire enfantScolaire = a.result();
 							requeteApiEnfantScolaire(enfantScolaire);
 						} else {
-							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
@@ -579,18 +579,18 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 							EnfantScolaire enfantScolaire = a.result();
 							requeteApiEnfantScolaire(enfantScolaire);
 						} else {
-							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postEnfantScolaireFuture(requeteSite, a -> {
+					postEnfantScolaireFuture(requeteSite2, a -> {
 						if(a.succeeded()) {
 							EnfantScolaire enfantScolaire = a.result();
 							requeteApiEnfantScolaire(enfantScolaire);
 						} else {
-							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
+							erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
 					})
 				);

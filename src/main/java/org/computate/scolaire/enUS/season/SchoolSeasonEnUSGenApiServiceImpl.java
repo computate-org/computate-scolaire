@@ -407,18 +407,18 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
 						} else {
-							errorSchoolSeason(siteRequest, eventHandler, a);
+							errorSchoolSeason(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolSeasonFuture(siteRequest, a -> {
+					postSchoolSeasonFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
 						} else {
-							errorSchoolSeason(siteRequest, eventHandler, a);
+							errorSchoolSeason(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -585,18 +585,18 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
 						} else {
-							errorSchoolSeason(siteRequest, eventHandler, a);
+							errorSchoolSeason(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postSchoolSeasonFuture(siteRequest, a -> {
+					postSchoolSeasonFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
 						} else {
-							errorSchoolSeason(siteRequest, eventHandler, a);
+							errorSchoolSeason(siteRequest2, eventHandler, a);
 						}
 					})
 				);

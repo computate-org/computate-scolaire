@@ -409,18 +409,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
 						} else {
-							errorPageDesign(siteRequest, eventHandler, a);
+							errorPageDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postPageDesignFuture(siteRequest, a -> {
+					postPageDesignFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
 						} else {
-							errorPageDesign(siteRequest, eventHandler, a);
+							errorPageDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -587,18 +587,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
 						} else {
-							errorPageDesign(siteRequest, eventHandler, a);
+							errorPageDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postPageDesignFuture(siteRequest, a -> {
+					postPageDesignFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
 						} else {
-							errorPageDesign(siteRequest, eventHandler, a);
+							errorPageDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);

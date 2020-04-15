@@ -385,18 +385,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							EnrollmentDesign enrollmentDesign = a.result();
 							apiRequestEnrollmentDesign(enrollmentDesign);
 						} else {
-							errorEnrollmentDesign(siteRequest, eventHandler, a);
+							errorEnrollmentDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postEnrollmentDesignFuture(siteRequest, a -> {
+					postEnrollmentDesignFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							EnrollmentDesign enrollmentDesign = a.result();
 							apiRequestEnrollmentDesign(enrollmentDesign);
 						} else {
-							errorEnrollmentDesign(siteRequest, eventHandler, a);
+							errorEnrollmentDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -563,18 +563,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							EnrollmentDesign enrollmentDesign = a.result();
 							apiRequestEnrollmentDesign(enrollmentDesign);
 						} else {
-							errorEnrollmentDesign(siteRequest, eventHandler, a);
+							errorEnrollmentDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postEnrollmentDesignFuture(siteRequest, a -> {
+					postEnrollmentDesignFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							EnrollmentDesign enrollmentDesign = a.result();
 							apiRequestEnrollmentDesign(enrollmentDesign);
 						} else {
-							errorEnrollmentDesign(siteRequest, eventHandler, a);
+							errorEnrollmentDesign(siteRequest2, eventHandler, a);
 						}
 					})
 				);

@@ -489,18 +489,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
 						} else {
-							errorHtmlPart(siteRequest, eventHandler, a);
+							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postHtmlPartFuture(siteRequest, a -> {
+					postHtmlPartFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
 						} else {
-							errorHtmlPart(siteRequest, eventHandler, a);
+							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
 					})
 				);
@@ -667,18 +667,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
 						} else {
-							errorHtmlPart(siteRequest, eventHandler, a);
+							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
 					})
 				);
 			} else {
 				futures.add(
-					postHtmlPartFuture(siteRequest, a -> {
+					postHtmlPartFuture(siteRequest2, a -> {
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
 						} else {
-							errorHtmlPart(siteRequest, eventHandler, a);
+							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
 					})
 				);
