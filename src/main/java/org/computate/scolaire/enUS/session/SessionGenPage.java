@@ -228,6 +228,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmAgeKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
 			o.htmSchoolAddress("PUTCopy");
 		} g("div");
 	}
@@ -250,6 +251,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmAgeKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 			o.htmSchoolAddress("PATCH");
 		} g("div");
 	}
@@ -274,6 +276,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmAgeKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 			o.htmSchoolAddress("Search");
 		} g("div");

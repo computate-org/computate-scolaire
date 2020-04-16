@@ -204,6 +204,9 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			o.htmDesignInscriptionNomComplet("PUTCopie");
 			o.htmDesignCache("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHDesignInscription(DesignInscription o) {
@@ -218,6 +221,9 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignInscriptionNomComplet("PATCH");
 			o.htmDesignCache("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -240,6 +246,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			o.htmPartHtmlCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

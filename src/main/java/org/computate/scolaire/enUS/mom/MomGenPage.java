@@ -251,6 +251,9 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
+		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolMom(SchoolMom o) {
@@ -280,6 +283,9 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -314,6 +320,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}

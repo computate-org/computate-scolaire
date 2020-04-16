@@ -236,6 +236,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHGardienScolaire(GardienScolaire o) {
@@ -260,6 +263,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -289,6 +295,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

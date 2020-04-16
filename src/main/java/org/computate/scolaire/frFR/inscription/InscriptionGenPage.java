@@ -506,6 +506,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmUtilisateurCles("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
 			o.htmEnfantNomComplet("PUTCopie");
 			o.htmEnfantNomCompletPrefere("PUTCopie");
 			o.htmEnfantDateNaissance("PUTCopie");
@@ -589,6 +590,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmUtilisateurCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 			o.htmEnfantNomComplet("PATCH");
 			o.htmEnfantNomCompletPrefere("PATCH");
 			o.htmEnfantDateNaissance("PATCH");
@@ -674,6 +676,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmUtilisateurCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 			o.htmEnfantNomComplet("Recherche");
 			o.htmEnfantNomCompletPrefere("Recherche");

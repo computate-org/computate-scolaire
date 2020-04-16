@@ -231,6 +231,9 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmEcoleCle("PUTCopie");
 			o.htmSaisonCles("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHAnneeScolaire(AnneeScolaire o) {
@@ -250,6 +253,9 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("PATCH");
 			o.htmSaisonCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -274,6 +280,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSaisonCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

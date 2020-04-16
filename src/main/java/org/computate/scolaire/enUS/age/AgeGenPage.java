@@ -228,6 +228,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlockKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
 			o.htmSchoolAddress("PUTCopy");
 		} g("div");
 	}
@@ -250,6 +251,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlockKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 			o.htmSchoolAddress("PATCH");
 		} g("div");
 	}
@@ -274,6 +276,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlockKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 			o.htmSchoolAddress("Search");
 		} g("div");

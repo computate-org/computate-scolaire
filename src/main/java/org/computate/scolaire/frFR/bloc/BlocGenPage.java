@@ -253,6 +253,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
 			o.htmEcoleAddresse("PUTCopie");
 		} g("div");
 	}
@@ -283,6 +284,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 			o.htmEcoleAddresse("PATCH");
 		} g("div");
 	}
@@ -315,6 +317,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 			o.htmEcoleAddresse("Recherche");
 		} g("div");

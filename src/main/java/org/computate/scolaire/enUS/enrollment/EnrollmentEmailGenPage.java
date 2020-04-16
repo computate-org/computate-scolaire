@@ -505,6 +505,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			o.htmUserKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
 			o.htmChildCompleteName("PUTCopy");
 			o.htmChildCompleteNamePreferred("PUTCopy");
 			o.htmChildBirthDate("PUTCopy");
@@ -588,6 +589,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			o.htmUserKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 			o.htmChildCompleteName("PATCH");
 			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
@@ -673,6 +675,7 @@ public class EnrollmentEmailGenPage extends EnrollmentEmailGenPageGen<ClusterPag
 			o.htmUserKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 			o.htmChildCompleteName("Search");
 			o.htmChildCompleteNamePreferred("Search");

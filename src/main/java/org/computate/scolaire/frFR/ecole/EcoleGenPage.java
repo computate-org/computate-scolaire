@@ -234,6 +234,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHEcole(Ecole o) {
@@ -257,6 +260,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -285,6 +291,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 			o.htmAnneeCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

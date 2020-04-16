@@ -237,6 +237,9 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmPartHtmlCles("PUTCopie");
 			o.htmDesignParentCles("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHDesignPage(DesignPage o) {
@@ -255,6 +258,9 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PATCH");
 			o.htmDesignParentCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -278,6 +284,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmDesignParentCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

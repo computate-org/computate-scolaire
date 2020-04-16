@@ -184,6 +184,9 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			o.htmArchive("PUTCopie");
 			o.htmSupprime("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHCluster(Cluster o) {
@@ -194,6 +197,9 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
 			o.htmSupprime("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -209,6 +215,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			o.htmSupprime("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

@@ -235,6 +235,9 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
+		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolGuardian(SchoolGuardian o) {
@@ -259,6 +262,9 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -288,6 +294,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}

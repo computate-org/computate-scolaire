@@ -210,6 +210,26 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "inheritPk":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entityVar), pk));
+						break;
+					case "created":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						break;
+					case "modified":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						break;
+					case "archived":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "deleted":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						break;
 					case "childDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
@@ -410,6 +430,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		jsonArray.forEach(obj -> {
 			JsonObject json = (JsonObject)obj;
 
+			json.put("inheritPk", json.getValue("pk"));
+
 			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
 			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
@@ -588,6 +610,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 		jsonArray.forEach(obj -> {
 			JsonObject json = (JsonObject)obj;
+
+			json.put("inheritPk", json.getValue("pk"));
 
 			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
 			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
@@ -861,6 +885,26 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				for(Integer i = 0; i < entityVars.size(); i++) {
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
+					case "inheritPk":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entityVar), pk));
+						break;
+					case "created":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						break;
+					case "modified":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						break;
+					case "archived":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "deleted":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						break;
 					case "childDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
@@ -1133,6 +1177,16 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.design.PageDesign"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setInheritPk":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+						} else {
+							o2.setInheritPk(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+						}
+						break;
 					case "setCreated":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);

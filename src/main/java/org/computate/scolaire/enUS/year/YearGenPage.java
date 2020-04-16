@@ -230,6 +230,9 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmSchoolKey("PUTCopy");
 			o.htmSeasonKeys("PUTCopy");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
+		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolYear(SchoolYear o) {
@@ -249,6 +252,9 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("PATCH");
 			o.htmSeasonKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -273,6 +279,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmSeasonKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}

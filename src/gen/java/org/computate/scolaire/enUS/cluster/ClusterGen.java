@@ -333,6 +333,75 @@ public abstract class ClusterGen<DEV> extends Object {
 		return inheritPk == null ? "" : StringEscapeUtils.escapeHtml4(strInheritPk());
 	}
 
+	public void inputInheritPk(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			s.e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_inheritPk");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					s.a("class", "setInheritPk inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("name", "setInheritPk");
+				} else {
+					s.a("class", "valueInheritPk w3-input w3-border inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("name", "inheritPk");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					s.a("onclick", "removeGlow($(this)); ");
+					s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInheritPk', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_inheritPk')); }, function() { addError($('#", classApiMethodMethod, "_inheritPk')); }); ");
+				}
+				s.a("value", strInheritPk())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				s.sx(htmInheritPk());
+			}
+		}
+	}
+
+	public void htmInheritPk(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterInheritPk").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputInheritPk(classApiMethodMethod);
+							} s.g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ s.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ s.e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_inheritPk')); $('#", classApiMethodMethod, "_inheritPk').val(null); patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=pk]').val() }], 'setInheritPk', null, function() { addGlow($('#", classApiMethodMethod, "_inheritPk')); }, function() { addError($('#", classApiMethodMethod, "_inheritPk')); }); ")
+											.f();
+											s.e("i").a("class", "far fa-eraser ").f().g("i");
+										} s.g("button");
+									} s.g("div");
+								}
+							}
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
+	}
+
 	////////
 	// id //
 	////////
@@ -1944,6 +2013,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	public Object defineCluster(String var, String val) {
 		switch(var) {
+			case "inheritPk":
+				setInheritPk(val);
+				savesCluster.add(var);
+				return val;
 			case "created":
 				setCreated(val);
 				savesCluster.add(var);
@@ -2396,6 +2469,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof Cluster) {
 			Cluster original = (Cluster)o;
+			if(!Objects.equals(inheritPk, original.getInheritPk()))
+				apiRequest.addVars("inheritPk");
 			if(!Objects.equals(created, original.getCreated()))
 				apiRequest.addVars("created");
 			if(!Objects.equals(modified, original.getModified()))
@@ -2412,7 +2487,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(created, modified, archived, deleted);
+		return Objects.hash(inheritPk, created, modified, archived, deleted);
 	}
 
 	////////////
@@ -2425,7 +2500,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(!(o instanceof Cluster))
 			return false;
 		Cluster that = (Cluster)o;
-		return Objects.equals( created, that.created )
+		return Objects.equals( inheritPk, that.inheritPk )
+				&& Objects.equals( created, that.created )
 				&& Objects.equals( modified, that.modified )
 				&& Objects.equals( archived, that.archived )
 				&& Objects.equals( deleted, that.deleted );
@@ -2438,7 +2514,8 @@ public abstract class ClusterGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Cluster { ");
-		sb.append( "created: " ).append(created);
+		sb.append( "inheritPk: " ).append(inheritPk);
+		sb.append( ", created: " ).append(created);
 		sb.append( ", modified: " ).append(modified);
 		sb.append( ", archived: " ).append(archived);
 		sb.append( ", deleted: " ).append(deleted);

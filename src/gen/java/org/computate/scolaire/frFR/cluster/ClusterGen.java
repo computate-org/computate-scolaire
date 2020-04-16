@@ -334,6 +334,75 @@ public abstract class ClusterGen<DEV> extends Object {
 		return inheritPk == null ? "" : StringEscapeUtils.escapeHtml4(strInheritPk());
 	}
 
+	public void inputInheritPk(String classeApiMethodeMethode) {
+		Cluster s = (Cluster)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			s.e("input")
+				.a("type", "text")
+				.a("id", classeApiMethodeMethode, "_inheritPk");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					s.a("class", "setInheritPk inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("name", "setInheritPk");
+				} else {
+					s.a("class", "valeurInheritPk w3-input w3-border inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("name", "inheritPk");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					s.a("onclick", "enleverLueur($(this)); ");
+					s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInheritPk', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inheritPk')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inheritPk')); }); ");
+				}
+				s.a("value", strInheritPk())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				s.sx(htmInheritPk());
+			}
+		}
+	}
+
+	public void htmInheritPk(String classeApiMethodeMethode) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggere", classeApiMethodeMethode, "ClusterInheritPk").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputInheritPk(classeApiMethodeMethode);
+							} s.g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ s.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ s.e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inheritPk')); $('#", classeApiMethodeMethode, "_inheritPk').val(null); patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=pk]').val() }], 'setInheritPk', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inheritPk')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inheritPk')); }); ")
+											.f();
+											s.e("i").a("class", "far fa-eraser ").f().g("i");
+										} s.g("button");
+									} s.g("div");
+								}
+							}
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
+	}
+
 	////////
 	// id //
 	////////
@@ -1945,6 +2014,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	public Object definirCluster(String var, String val) {
 		switch(var) {
+			case "inheritPk":
+				setInheritPk(val);
+				sauvegardesCluster.add(var);
+				return val;
 			case "cree":
 				setCree(val);
 				sauvegardesCluster.add(var);
@@ -2397,6 +2470,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof Cluster) {
 			Cluster original = (Cluster)o;
+			if(!Objects.equals(inheritPk, original.getInheritPk()))
+				requeteApi.addVars("inheritPk");
 			if(!Objects.equals(cree, original.getCree()))
 				requeteApi.addVars("cree");
 			if(!Objects.equals(modifie, original.getModifie()))
@@ -2413,7 +2488,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(cree, modifie, archive, supprime);
+		return Objects.hash(inheritPk, cree, modifie, archive, supprime);
 	}
 
 	////////////
@@ -2426,7 +2501,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(!(o instanceof Cluster))
 			return false;
 		Cluster that = (Cluster)o;
-		return Objects.equals( cree, that.cree )
+		return Objects.equals( inheritPk, that.inheritPk )
+				&& Objects.equals( cree, that.cree )
 				&& Objects.equals( modifie, that.modifie )
 				&& Objects.equals( archive, that.archive )
 				&& Objects.equals( supprime, that.supprime );
@@ -2439,7 +2515,8 @@ public abstract class ClusterGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Cluster { ");
-		sb.append( "cree: " ).append(cree);
+		sb.append( "inheritPk: " ).append(inheritPk);
+		sb.append( ", cree: " ).append(cree);
 		sb.append( ", modifie: " ).append(modifie);
 		sb.append( ", archive: " ).append(archive);
 		sb.append( ", supprime: " ).append(supprime);

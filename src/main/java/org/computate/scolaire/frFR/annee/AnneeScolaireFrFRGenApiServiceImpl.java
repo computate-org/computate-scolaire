@@ -208,6 +208,26 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "inheritPk":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						break;
+					case "cree":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						break;
+					case "modifie":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						break;
+					case "archive":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "supprime":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						break;
 					case "ecoleCle":
 						{
 							Long l = Long.parseLong(jsonObject.getString(entiteVar));
@@ -398,6 +418,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		jsonArray.forEach(obj -> {
 			JsonObject json = (JsonObject)obj;
 
+			json.put("inheritPk", json.getValue("pk"));
+
 			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), json);
 			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
@@ -576,6 +598,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 		jsonArray.forEach(obj -> {
 			JsonObject json = (JsonObject)obj;
+
+			json.put("inheritPk", json.getValue("pk"));
 
 			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), json);
 			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
@@ -849,6 +873,26 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				for(Integer i = 0; i < entiteVars.size(); i++) {
 					String entiteVar = entiteVars.getString(i);
 					switch(entiteVar) {
+					case "inheritPk":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						break;
+					case "cree":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						break;
+					case "modifie":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						break;
+					case "archive":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "supprime":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						break;
 					case "ecoleCle":
 						putSql.append(SiteContexteFrFR.SQL_addA);
 						putSqlParams.addAll(Arrays.asList("anneeCles", Long.parseLong(jsonObject.getString(entiteVar)), "ecoleCle", pk));
@@ -1117,6 +1161,16 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.annee.AnneeScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setInheritPk":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+						} else {
+							o2.setInheritPk(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+						}
+						break;
 					case "setCree":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);

@@ -203,6 +203,9 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 			o.htmEnrollmentDesignCompleteName("PUTCopy");
 			o.htmDesignHidden("PUTCopy");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopy");
+		} g("div");
 	}
 
 	public void htmlFormPATCHEnrollmentDesign(EnrollmentDesign o) {
@@ -217,6 +220,9 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentDesignCompleteName("PATCH");
 			o.htmDesignHidden("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -239,6 +245,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 			o.htmHtmlPartKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}

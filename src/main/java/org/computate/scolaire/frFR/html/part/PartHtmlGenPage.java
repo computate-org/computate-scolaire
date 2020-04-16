@@ -335,6 +335,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			o.htmTri9("PUTCopie");
 			o.htmTri10("PUTCopie");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PUTCopie");
+		} g("div");
 	}
 
 	public void htmlFormPATCHPartHtml(PartHtml o) {
@@ -392,6 +395,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			o.htmTri8("PATCH");
 			o.htmTri9("PATCH");
 			o.htmTri10("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("PATCH");
 		} g("div");
 	}
 
@@ -454,6 +460,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			o.htmTri10("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInheritPk("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

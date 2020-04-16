@@ -204,6 +204,26 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "inheritPk":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entityVar), pk));
+						break;
+					case "created":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						break;
+					case "modified":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						break;
+					case "archived":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "deleted":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						break;
 					case "enrollmentDesignCompleteName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enrollmentDesignCompleteName", jsonObject.getString(entityVar), pk));
@@ -358,6 +378,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 		jsonArray.forEach(obj -> {
 			JsonObject json = (JsonObject)obj;
+
+			json.put("inheritPk", json.getValue("pk"));
 
 			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), json);
 			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
@@ -537,6 +559,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 		jsonArray.forEach(obj -> {
 			JsonObject json = (JsonObject)obj;
+
+			json.put("inheritPk", json.getValue("pk"));
 
 			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), json);
 			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
@@ -810,6 +834,26 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				for(Integer i = 0; i < entityVars.size(); i++) {
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
+					case "inheritPk":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entityVar), pk));
+						break;
+					case "created":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						break;
+					case "modified":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						break;
+					case "archived":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "deleted":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						break;
 					case "enrollmentDesignCompleteName":
 						putSql.append(SiteContextEnUS.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("enrollmentDesignCompleteName", jsonObject.getString(entityVar), pk));
@@ -1064,6 +1108,16 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setInheritPk":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+						} else {
+							o2.setInheritPk(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+						}
+						break;
 					case "setCreated":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);

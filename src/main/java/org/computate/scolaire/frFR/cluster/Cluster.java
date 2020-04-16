@@ -63,7 +63,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * Role.enUS: SiteAdmin
  * RoleLire.frFR: User
  * RoleLire.enUS: User
- */                
+ */              
 public class Cluster extends ClusterGen<Object> {   
 
 	/**
@@ -102,6 +102,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * InheritClePrimaire: true
+	 * Definir: true
 	 */                                       
 	protected void _inheritPk(Couverture<Long> c) {}
 
