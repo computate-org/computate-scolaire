@@ -1247,7 +1247,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					case "setAgeCles":
 						JsonArray setAgeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("ageCles", "sessionCle", pk));
+						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle"));
 						for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setAgeClesValeurs.getString(i));
 							ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();

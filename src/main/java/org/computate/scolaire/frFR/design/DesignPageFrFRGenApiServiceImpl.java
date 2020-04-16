@@ -1263,7 +1263,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignEnfantCles":
 						JsonArray setDesignEnfantClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("designEnfantCles", "designParentCles", pk));
+						patchSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles"));
 						for(Integer i = 0; i <  setDesignEnfantClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setDesignEnfantClesValeurs.getString(i));
 							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();

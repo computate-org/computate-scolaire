@@ -598,7 +598,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					case "setAnneeCles":
 						JsonArray setAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", "ecoleCle", pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle"));
 						for(Integer i = 0; i <  setAnneeClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setAnneeClesValeurs.getString(i));
 							ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();

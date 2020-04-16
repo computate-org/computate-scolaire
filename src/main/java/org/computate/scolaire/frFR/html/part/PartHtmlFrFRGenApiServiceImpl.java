@@ -1409,7 +1409,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setDesignPageCles":
 						JsonArray setDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("designPageCles", "partHtmlCles", pk));
+						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles"));
 						for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setDesignPageClesValeurs.getString(i));
 							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();

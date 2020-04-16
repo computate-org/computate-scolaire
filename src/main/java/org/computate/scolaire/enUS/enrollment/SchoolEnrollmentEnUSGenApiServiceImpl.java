@@ -1738,7 +1738,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setBlockKeys":
 						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", "enrollmentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys"));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 							Long l = Long.parseLong(setBlockKeysValues.getString(i));
 							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
@@ -1908,7 +1908,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setDadKeys":
 						JsonArray setDadKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("dadKeys", "enrollmentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys"));
 						for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
 							Long l = Long.parseLong(setDadKeysValues.getString(i));
 							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
@@ -3132,7 +3132,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setBlockKeys":
 						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", "enrollmentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys"));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 							Long l = Long.parseLong(setBlockKeysValues.getString(i));
 							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
@@ -3302,7 +3302,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setDadKeys":
 						JsonArray setDadKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("dadKeys", "enrollmentKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys"));
 						for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
 							Long l = Long.parseLong(setDadKeysValues.getString(i));
 							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();

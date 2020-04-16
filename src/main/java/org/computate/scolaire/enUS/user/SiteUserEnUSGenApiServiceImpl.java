@@ -493,7 +493,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					case "setEnrollmentKeys":
 						JsonArray setEnrollmentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "userKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys"));
 						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
 							Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
 							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
@@ -561,7 +561,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					case "setPaymentKeys":
 						JsonArray setPaymentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("paymentKeys", "userKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys"));
 						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
 							Long l = Long.parseLong(setPaymentKeysValues.getString(i));
 							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();

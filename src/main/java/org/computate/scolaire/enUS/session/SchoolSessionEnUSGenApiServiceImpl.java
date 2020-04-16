@@ -1247,7 +1247,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					case "setAgeKeys":
 						JsonArray setAgeKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", "sessionKey", pk));
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey"));
 						for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
 							Long l = Long.parseLong(setAgeKeysValues.getString(i));
 							SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();

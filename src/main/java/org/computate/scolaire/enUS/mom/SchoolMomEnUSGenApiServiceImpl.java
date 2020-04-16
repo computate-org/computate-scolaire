@@ -1281,7 +1281,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					case "setEnrollmentKeys":
 						JsonArray setEnrollmentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "momKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "momKeys"));
 						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
 							Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
 							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();

@@ -1738,7 +1738,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setBlocCles":
 						JsonArray setBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blocCles", "inscriptionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles"));
 						for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setBlocClesValeurs.getString(i));
 							ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
@@ -1976,7 +1976,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setGardienCles":
 						JsonArray setGardienClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", "inscriptionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles"));
 						for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setGardienClesValeurs.getString(i));
 							ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
@@ -3132,7 +3132,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setBlocCles":
 						JsonArray setBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blocCles", "inscriptionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles"));
 						for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setBlocClesValeurs.getString(i));
 							ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
@@ -3370,7 +3370,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setGardienCles":
 						JsonArray setGardienClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", "inscriptionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles"));
 						for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setGardienClesValeurs.getString(i));
 							ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();

@@ -1263,7 +1263,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setChildDesignKeys":
 						JsonArray setChildDesignKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", "parentDesignKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys"));
 						for(Integer i = 0; i <  setChildDesignKeysValues.size(); i++) {
 							Long l = Long.parseLong(setChildDesignKeysValues.getString(i));
 							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
@@ -1399,7 +1399,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setHtmlPartKeys":
 						JsonArray setHtmlPartKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys"));
 						for(Integer i = 0; i <  setHtmlPartKeysValues.size(); i++) {
 							Long l = Long.parseLong(setHtmlPartKeysValues.getString(i));
 							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();

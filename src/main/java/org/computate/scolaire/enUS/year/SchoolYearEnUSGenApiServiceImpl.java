@@ -1281,7 +1281,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setSeasonKeys":
 						JsonArray setSeasonKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("seasonKeys", "yearKey", pk));
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey"));
 						for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
 							Long l = Long.parseLong(setSeasonKeysValues.getString(i));
 							SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();

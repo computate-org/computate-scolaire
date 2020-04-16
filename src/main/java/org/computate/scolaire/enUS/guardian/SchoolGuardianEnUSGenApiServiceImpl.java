@@ -1257,7 +1257,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					case "setEnrollmentKeys":
 						JsonArray setEnrollmentKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "guardianKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "guardianKeys"));
 						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
 							Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
 							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();

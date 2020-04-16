@@ -493,7 +493,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setInscriptionCles":
 						JsonArray setInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "utilisateurCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles"));
 						for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setInscriptionClesValeurs.getString(i));
 							ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
@@ -561,7 +561,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("paiementCles", "utilisateurCles", pk));
+						patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles"));
 						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
 							ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
