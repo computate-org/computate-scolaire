@@ -132,7 +132,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postGardienScolaireFuture(requeteSite, c -> {
+							postGardienScolaireFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									GardienScolaire gardienScolaire = c.result();
 									requeteApiGardienScolaire(gardienScolaire);
@@ -163,13 +163,13 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	}
 
 
-	public Future<GardienScolaire> postGardienScolaireFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<GardienScolaire>> gestionnaireEvenements) {
+	public Future<GardienScolaire> postGardienScolaireFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<GardienScolaire>> gestionnaireEvenements) {
 		Promise<GardienScolaire> promise = Promise.promise();
 		try {
 			creerGardienScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					GardienScolaire gardienScolaire = a.result();
-					sqlPOSTGardienScolaire(gardienScolaire, false, b -> {
+					sqlPOSTGardienScolaire(gardienScolaire, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerGardienScolaire(gardienScolaire, c -> {
 								if(c.succeeded()) {
@@ -332,11 +332,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -346,6 +341,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											sqlGardienScolaire(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTImportGardienScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportGardienScolaireReponse(requeteSite, f -> {
@@ -417,7 +418,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchGardienScolaireFuture(o, a -> {
+					patchGardienScolaireFuture(o, true, a -> {
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
@@ -428,7 +429,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				);
 			} else {
 				futures.add(
-					postGardienScolaireFuture(requeteSite2, a -> {
+					postGardienScolaireFuture(requeteSite2, true, a -> {
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
@@ -447,38 +448,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportGardienScolaire(GardienScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportGardienScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -542,11 +511,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -556,6 +520,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											sqlGardienScolaire(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTFusionGardienScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionGardienScolaireReponse(requeteSite, f -> {
@@ -627,7 +597,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchGardienScolaireFuture(o, a -> {
+					patchGardienScolaireFuture(o, false, a -> {
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
@@ -638,7 +608,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				);
 			} else {
 				futures.add(
-					postGardienScolaireFuture(requeteSite2, a -> {
+					postGardienScolaireFuture(requeteSite2, false, a -> {
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
@@ -657,38 +627,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTFusionGardienScolaire(GardienScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putfusionGardienScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -752,17 +690,17 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheGardienScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeGardienScolaire.getRows());
+											requeteApi.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -1025,17 +963,17 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheGardienScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeGardienScolaire.getRows());
+											requeteApi.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1112,7 +1050,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
 		listeGardienScolaire.getList().forEach(o -> {
 			futures.add(
-				patchGardienScolaireFuture(o, a -> {
+				patchGardienScolaireFuture(o, false, a -> {
 					if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
@@ -1137,11 +1075,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 	}
 
-	public Future<GardienScolaire> patchGardienScolaireFuture(GardienScolaire o, Handler<AsyncResult<GardienScolaire>> gestionnaireEvenements) {
+	public Future<GardienScolaire> patchGardienScolaireFuture(GardienScolaire o, Boolean inheritPk, Handler<AsyncResult<GardienScolaire>> gestionnaireEvenements) {
 		Promise<GardienScolaire> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHGardienScolaire(o, false, a -> {
+			sqlPATCHGardienScolaire(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					GardienScolaire gardienScolaire = a.result();
 					definirGardienScolaire(gardienScolaire, b -> {
@@ -2272,7 +2210,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchInscriptionScolaireFuture(o2, a -> {
+							service.patchInscriptionScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
 								} else {
@@ -2291,7 +2229,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						List<Future> futures2 = new ArrayList<>();
 						for(GardienScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchGardienScolaireFuture(o2, b -> {
+								service.patchGardienScolaireFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("GardienScolaire %s rechargé. ", o2.getPk()));
 									} else {

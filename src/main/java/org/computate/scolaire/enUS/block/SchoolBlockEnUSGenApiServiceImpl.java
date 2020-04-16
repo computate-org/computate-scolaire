@@ -134,7 +134,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postSchoolBlockFuture(siteRequest, c -> {
+							postSchoolBlockFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SchoolBlock schoolBlock = c.result();
 									apiRequestSchoolBlock(schoolBlock);
@@ -165,13 +165,13 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	}
 
 
-	public Future<SchoolBlock> postSchoolBlockFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+	public Future<SchoolBlock> postSchoolBlockFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SchoolBlock>> eventHandler) {
 		Promise<SchoolBlock> promise = Promise.promise();
 		try {
 			createSchoolBlock(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolBlock schoolBlock = a.result();
-					sqlPOSTSchoolBlock(schoolBlock, false, b -> {
+					sqlPOSTSchoolBlock(schoolBlock, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolBlock(schoolBlock, c -> {
 								if(c.succeeded()) {
@@ -358,11 +358,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(a.succeeded()) {
 					userSchoolBlock(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -372,6 +367,12 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 											sqlSchoolBlock(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportSchoolBlock(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportSchoolBlockResponse(siteRequest, f -> {
@@ -443,7 +444,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolBlockFuture(o, a -> {
+					patchSchoolBlockFuture(o, true, a -> {
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
@@ -454,7 +455,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				);
 			} else {
 				futures.add(
-					postSchoolBlockFuture(siteRequest2, a -> {
+					postSchoolBlockFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
@@ -473,38 +474,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportSchoolBlock(SchoolBlock o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportSchoolBlockResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -568,11 +537,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(a.succeeded()) {
 					userSchoolBlock(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -582,6 +546,12 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 											sqlSchoolBlock(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergeSchoolBlock(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeSchoolBlockResponse(siteRequest, f -> {
@@ -653,7 +623,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolBlockFuture(o, a -> {
+					patchSchoolBlockFuture(o, false, a -> {
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
@@ -664,7 +634,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				);
 			} else {
 				futures.add(
-					postSchoolBlockFuture(siteRequest2, a -> {
+					postSchoolBlockFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
@@ -683,38 +653,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergeSchoolBlock(SchoolBlock o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergeSchoolBlockResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -778,17 +716,17 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(a.succeeded()) {
 					userSchoolBlock(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolBlock(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolBlock> listSchoolBlock = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolBlock.getRows());
+											apiRequest.setNumFound(listSchoolBlock.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -1063,17 +1001,17 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(a.succeeded()) {
 					userSchoolBlock(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolBlock(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolBlock> listSchoolBlock = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolBlock.getRows());
+											apiRequest.setNumFound(listSchoolBlock.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolBlock.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1150,7 +1088,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 		listSchoolBlock.getList().forEach(o -> {
 			futures.add(
-				patchSchoolBlockFuture(o, a -> {
+				patchSchoolBlockFuture(o, false, a -> {
 					if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
@@ -1175,11 +1113,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		});
 	}
 
-	public Future<SchoolBlock> patchSchoolBlockFuture(SchoolBlock o, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+	public Future<SchoolBlock> patchSchoolBlockFuture(SchoolBlock o, Boolean inheritPk, Handler<AsyncResult<SchoolBlock>> eventHandler) {
 		Promise<SchoolBlock> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolBlock(o, false, a -> {
+			sqlPATCHSchoolBlock(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolBlock schoolBlock = a.result();
 					defineSchoolBlock(schoolBlock, b -> {
@@ -2425,7 +2363,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolEnrollmentFuture(o2, a -> {
+							service.patchSchoolEnrollmentFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
 								} else {
@@ -2446,7 +2384,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolAgeFuture(o2, a -> {
+							service.patchSchoolAgeFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolAge %s refreshed. ", pk));
 								} else {
@@ -2465,7 +2403,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolBlock o2 : searchList.getList()) {
 							futures2.add(
-								service.patchSchoolBlockFuture(o2, b -> {
+								service.patchSchoolBlockFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SchoolBlock %s refreshed. ", o2.getPk()));
 									} else {

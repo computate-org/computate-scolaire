@@ -134,7 +134,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postAgeScolaireFuture(requeteSite, c -> {
+							postAgeScolaireFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									AgeScolaire ageScolaire = c.result();
 									requeteApiAgeScolaire(ageScolaire);
@@ -165,13 +165,13 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 	}
 
 
-	public Future<AgeScolaire> postAgeScolaireFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<AgeScolaire>> gestionnaireEvenements) {
+	public Future<AgeScolaire> postAgeScolaireFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<AgeScolaire>> gestionnaireEvenements) {
 		Promise<AgeScolaire> promise = Promise.promise();
 		try {
 			creerAgeScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					AgeScolaire ageScolaire = a.result();
-					sqlPOSTAgeScolaire(ageScolaire, false, b -> {
+					sqlPOSTAgeScolaire(ageScolaire, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerAgeScolaire(ageScolaire, c -> {
 								if(c.succeeded()) {
@@ -334,11 +334,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				if(a.succeeded()) {
 					utilisateurAgeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -348,6 +343,12 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 											sqlAgeScolaire(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTImportAgeScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportAgeScolaireReponse(requeteSite, f -> {
@@ -419,7 +420,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchAgeScolaireFuture(o, a -> {
+					patchAgeScolaireFuture(o, true, a -> {
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
@@ -430,7 +431,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				);
 			} else {
 				futures.add(
-					postAgeScolaireFuture(requeteSite2, a -> {
+					postAgeScolaireFuture(requeteSite2, true, a -> {
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
@@ -449,38 +450,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				erreurAgeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportAgeScolaire(AgeScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportAgeScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -544,11 +513,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				if(a.succeeded()) {
 					utilisateurAgeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -558,6 +522,12 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 											sqlAgeScolaire(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTFusionAgeScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionAgeScolaireReponse(requeteSite, f -> {
@@ -629,7 +599,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchAgeScolaireFuture(o, a -> {
+					patchAgeScolaireFuture(o, false, a -> {
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
@@ -640,7 +610,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				);
 			} else {
 				futures.add(
-					postAgeScolaireFuture(requeteSite2, a -> {
+					postAgeScolaireFuture(requeteSite2, false, a -> {
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
@@ -659,38 +629,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				erreurAgeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTFusionAgeScolaire(AgeScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putfusionAgeScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -754,17 +692,17 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				if(a.succeeded()) {
 					utilisateurAgeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheAgeScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<AgeScolaire> listeAgeScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeAgeScolaire.getRows());
+											requeteApi.setNumFound(listeAgeScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -1015,17 +953,17 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				if(a.succeeded()) {
 					utilisateurAgeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheAgeScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<AgeScolaire> listeAgeScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeAgeScolaire.getRows());
+											requeteApi.setNumFound(listeAgeScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeAgeScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1102,7 +1040,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		RequeteSiteFrFR requeteSite = listeAgeScolaire.getRequeteSite_();
 		listeAgeScolaire.getList().forEach(o -> {
 			futures.add(
-				patchAgeScolaireFuture(o, a -> {
+				patchAgeScolaireFuture(o, false, a -> {
 					if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
@@ -1127,11 +1065,11 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		});
 	}
 
-	public Future<AgeScolaire> patchAgeScolaireFuture(AgeScolaire o, Handler<AsyncResult<AgeScolaire>> gestionnaireEvenements) {
+	public Future<AgeScolaire> patchAgeScolaireFuture(AgeScolaire o, Boolean inheritPk, Handler<AsyncResult<AgeScolaire>> gestionnaireEvenements) {
 		Promise<AgeScolaire> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHAgeScolaire(o, false, a -> {
+			sqlPATCHAgeScolaire(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					AgeScolaire ageScolaire = a.result();
 					definirAgeScolaire(ageScolaire, b -> {
@@ -2317,7 +2255,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchBlocScolaireFuture(o2, a -> {
+							service.patchBlocScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("BlocScolaire %s rechargé. ", pk));
 								} else {
@@ -2338,7 +2276,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchSessionScolaireFuture(o2, a -> {
+							service.patchSessionScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SessionScolaire %s rechargé. ", pk));
 								} else {
@@ -2357,7 +2295,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						List<Future> futures2 = new ArrayList<>();
 						for(AgeScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchAgeScolaireFuture(o2, b -> {
+								service.patchAgeScolaireFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("AgeScolaire %s rechargé. ", o2.getPk()));
 									} else {

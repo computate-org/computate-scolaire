@@ -132,7 +132,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postPartHtmlFuture(requeteSite, c -> {
+							postPartHtmlFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									PartHtml partHtml = c.result();
 									requeteApiPartHtml(partHtml);
@@ -163,13 +163,13 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	}
 
 
-	public Future<PartHtml> postPartHtmlFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
+	public Future<PartHtml> postPartHtmlFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
 		Promise<PartHtml> promise = Promise.promise();
 		try {
 			creerPartHtml(requeteSite, a -> {
 				if(a.succeeded()) {
 					PartHtml partHtml = a.result();
-					sqlPOSTPartHtml(partHtml, false, b -> {
+					sqlPOSTPartHtml(partHtml, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerPartHtml(partHtml, c -> {
 								if(c.succeeded()) {
@@ -408,11 +408,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -422,6 +417,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 											sqlPartHtml(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTImportPartHtml(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportPartHtmlReponse(requeteSite, f -> {
@@ -493,7 +494,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchPartHtmlFuture(o, a -> {
+					patchPartHtmlFuture(o, true, a -> {
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
@@ -504,7 +505,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				);
 			} else {
 				futures.add(
-					postPartHtmlFuture(requeteSite2, a -> {
+					postPartHtmlFuture(requeteSite2, true, a -> {
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
@@ -523,38 +524,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportPartHtml(PartHtml o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportPartHtmlReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -618,11 +587,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -632,6 +596,12 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 											sqlPartHtml(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTFusionPartHtml(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionPartHtmlReponse(requeteSite, f -> {
@@ -703,7 +673,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchPartHtmlFuture(o, a -> {
+					patchPartHtmlFuture(o, false, a -> {
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
@@ -714,7 +684,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				);
 			} else {
 				futures.add(
-					postPartHtmlFuture(requeteSite2, a -> {
+					postPartHtmlFuture(requeteSite2, false, a -> {
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
@@ -733,38 +703,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTFusionPartHtml(PartHtml o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putfusionPartHtmlReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -828,17 +766,17 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									recherchePartHtml(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<PartHtml> listePartHtml = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listePartHtml.getRows());
+											requeteApi.setNumFound(listePartHtml.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -1177,17 +1115,17 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									recherchePartHtml(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<PartHtml> listePartHtml = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listePartHtml.getRows());
+											requeteApi.setNumFound(listePartHtml.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1264,7 +1202,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 		listePartHtml.getList().forEach(o -> {
 			futures.add(
-				patchPartHtmlFuture(o, a -> {
+				patchPartHtmlFuture(o, false, a -> {
 					if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
@@ -1289,11 +1227,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		});
 	}
 
-	public Future<PartHtml> patchPartHtmlFuture(PartHtml o, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
+	public Future<PartHtml> patchPartHtmlFuture(PartHtml o, Boolean inheritPk, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
 		Promise<PartHtml> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHPartHtml(o, false, a -> {
+			sqlPATCHPartHtml(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					PartHtml partHtml = a.result();
 					definirPartHtml(partHtml, b -> {
@@ -2677,7 +2615,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchDesignPageFuture(o2, a -> {
+							service.patchDesignPageFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
 								} else {
@@ -2696,7 +2634,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						List<Future> futures2 = new ArrayList<>();
 						for(PartHtml o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchPartHtmlFuture(o2, b -> {
+								service.patchPartHtmlFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("PartHtml %s rechargé. ", o2.getPk()));
 									} else {

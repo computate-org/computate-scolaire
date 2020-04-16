@@ -132,7 +132,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postHtmlPartFuture(siteRequest, c -> {
+							postHtmlPartFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									HtmlPart htmlPart = c.result();
 									apiRequestHtmlPart(htmlPart);
@@ -163,13 +163,13 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 
-	public Future<HtmlPart> postHtmlPartFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<HtmlPart>> eventHandler) {
+	public Future<HtmlPart> postHtmlPartFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<HtmlPart>> eventHandler) {
 		Promise<HtmlPart> promise = Promise.promise();
 		try {
 			createHtmlPart(siteRequest, a -> {
 				if(a.succeeded()) {
 					HtmlPart htmlPart = a.result();
-					sqlPOSTHtmlPart(htmlPart, false, b -> {
+					sqlPOSTHtmlPart(htmlPart, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexHtmlPart(htmlPart, c -> {
 								if(c.succeeded()) {
@@ -408,11 +408,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -422,6 +417,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 											sqlHtmlPart(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportHtmlPart(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportHtmlPartResponse(siteRequest, f -> {
@@ -493,7 +494,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchHtmlPartFuture(o, a -> {
+					patchHtmlPartFuture(o, true, a -> {
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
@@ -504,7 +505,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				);
 			} else {
 				futures.add(
-					postHtmlPartFuture(siteRequest2, a -> {
+					postHtmlPartFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
@@ -523,38 +524,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportHtmlPart(HtmlPart o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -618,11 +587,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -632,6 +596,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 											sqlHtmlPart(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergeHtmlPart(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeHtmlPartResponse(siteRequest, f -> {
@@ -703,7 +673,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchHtmlPartFuture(o, a -> {
+					patchHtmlPartFuture(o, false, a -> {
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
@@ -714,7 +684,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				);
 			} else {
 				futures.add(
-					postHtmlPartFuture(siteRequest2, a -> {
+					postHtmlPartFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
@@ -733,38 +703,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergeHtmlPart(HtmlPart o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergeHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -828,17 +766,17 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchHtmlPart(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<HtmlPart> listHtmlPart = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listHtmlPart.getRows());
+											apiRequest.setNumFound(listHtmlPart.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -1177,17 +1115,17 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchHtmlPart(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<HtmlPart> listHtmlPart = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listHtmlPart.getRows());
+											apiRequest.setNumFound(listHtmlPart.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1264,7 +1202,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 		listHtmlPart.getList().forEach(o -> {
 			futures.add(
-				patchHtmlPartFuture(o, a -> {
+				patchHtmlPartFuture(o, false, a -> {
 					if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
@@ -1289,11 +1227,11 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		});
 	}
 
-	public Future<HtmlPart> patchHtmlPartFuture(HtmlPart o, Handler<AsyncResult<HtmlPart>> eventHandler) {
+	public Future<HtmlPart> patchHtmlPartFuture(HtmlPart o, Boolean inheritPk, Handler<AsyncResult<HtmlPart>> eventHandler) {
 		Promise<HtmlPart> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHHtmlPart(o, false, a -> {
+			sqlPATCHHtmlPart(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					HtmlPart htmlPart = a.result();
 					defineHtmlPart(htmlPart, b -> {
@@ -2677,7 +2615,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchPageDesignFuture(o2, a -> {
+							service.patchPageDesignFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
 								} else {
@@ -2696,7 +2634,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						List<Future> futures2 = new ArrayList<>();
 						for(HtmlPart o2 : searchList.getList()) {
 							futures2.add(
-								service.patchHtmlPartFuture(o2, b -> {
+								service.patchHtmlPartFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("HtmlPart %s refreshed. ", o2.getPk()));
 									} else {

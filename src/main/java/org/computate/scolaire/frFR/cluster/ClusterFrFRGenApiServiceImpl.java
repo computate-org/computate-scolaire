@@ -130,7 +130,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postClusterFuture(requeteSite, c -> {
+							postClusterFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
 									requeteApiCluster(cluster);
@@ -161,13 +161,13 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 
-	public Future<Cluster> postClusterFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
+	public Future<Cluster> postClusterFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
 		Promise<Cluster> promise = Promise.promise();
 		try {
 			creerCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
-					sqlPOSTCluster(cluster, false, b -> {
+					sqlPOSTCluster(cluster, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerCluster(cluster, c -> {
 								if(c.succeeded()) {
@@ -303,11 +303,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -317,6 +312,12 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 											sqlCluster(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTImportCluster(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportClusterReponse(requeteSite, f -> {
@@ -388,7 +389,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchClusterFuture(o, a -> {
+					patchClusterFuture(o, true, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
@@ -399,7 +400,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				);
 			} else {
 				futures.add(
-					postClusterFuture(requeteSite2, a -> {
+					postClusterFuture(requeteSite2, true, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
@@ -418,38 +419,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportClusterReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -513,11 +482,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -527,6 +491,12 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 											sqlCluster(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTFusionCluster(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionClusterReponse(requeteSite, f -> {
@@ -598,7 +568,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchClusterFuture(o, a -> {
+					patchClusterFuture(o, false, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
@@ -609,7 +579,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				);
 			} else {
 				futures.add(
-					postClusterFuture(requeteSite2, a -> {
+					postClusterFuture(requeteSite2, false, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
@@ -628,38 +598,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTFusionCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putfusionClusterReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -723,17 +661,17 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheCluster(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<Cluster> listeCluster = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeCluster.getRows());
+											requeteApi.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -978,17 +916,17 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheCluster(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<Cluster> listeCluster = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeCluster.getRows());
+											requeteApi.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1065,7 +1003,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
 		listeCluster.getList().forEach(o -> {
 			futures.add(
-				patchClusterFuture(o, a -> {
+				patchClusterFuture(o, false, a -> {
 					if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
@@ -1090,11 +1028,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		});
 	}
 
-	public Future<Cluster> patchClusterFuture(Cluster o, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
+	public Future<Cluster> patchClusterFuture(Cluster o, Boolean inheritPk, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
 		Promise<Cluster> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHCluster(o, false, a -> {
+			sqlPATCHCluster(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
 					definirCluster(cluster, b -> {
@@ -2079,7 +2017,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						List<Future> futures2 = new ArrayList<>();
 						for(Cluster o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchClusterFuture(o2, b -> {
+								service.patchClusterFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("Cluster %s rechargé. ", o2.getPk()));
 									} else {

@@ -136,7 +136,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postPageDesignFuture(siteRequest, c -> {
+							postPageDesignFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									PageDesign pageDesign = c.result();
 									apiRequestPageDesign(pageDesign);
@@ -167,13 +167,13 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
-	public Future<PageDesign> postPageDesignFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<PageDesign>> eventHandler) {
+	public Future<PageDesign> postPageDesignFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<PageDesign>> eventHandler) {
 		Promise<PageDesign> promise = Promise.promise();
 		try {
 			createPageDesign(siteRequest, a -> {
 				if(a.succeeded()) {
 					PageDesign pageDesign = a.result();
-					sqlPOSTPageDesign(pageDesign, false, b -> {
+					sqlPOSTPageDesign(pageDesign, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexPageDesign(pageDesign, c -> {
 								if(c.succeeded()) {
@@ -346,11 +346,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -360,6 +355,12 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 											sqlPageDesign(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportPageDesign(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportPageDesignResponse(siteRequest, f -> {
@@ -431,7 +432,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchPageDesignFuture(o, a -> {
+					patchPageDesignFuture(o, true, a -> {
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
@@ -442,7 +443,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				);
 			} else {
 				futures.add(
-					postPageDesignFuture(siteRequest2, a -> {
+					postPageDesignFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
@@ -461,38 +462,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportPageDesign(PageDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -556,11 +525,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -570,6 +534,12 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 											sqlPageDesign(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergePageDesign(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergePageDesignResponse(siteRequest, f -> {
@@ -641,7 +611,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchPageDesignFuture(o, a -> {
+					patchPageDesignFuture(o, false, a -> {
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
@@ -652,7 +622,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				);
 			} else {
 				futures.add(
-					postPageDesignFuture(siteRequest2, a -> {
+					postPageDesignFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
@@ -671,38 +641,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergePageDesign(PageDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergePageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -766,17 +704,17 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchPageDesign(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<PageDesign> listPageDesign = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listPageDesign.getRows());
+											apiRequest.setNumFound(listPageDesign.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -1031,17 +969,17 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				if(a.succeeded()) {
 					userPageDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchPageDesign(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<PageDesign> listPageDesign = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listPageDesign.getRows());
+											apiRequest.setNumFound(listPageDesign.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listPageDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1118,7 +1056,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		listPageDesign.getList().forEach(o -> {
 			futures.add(
-				patchPageDesignFuture(o, a -> {
+				patchPageDesignFuture(o, false, a -> {
 					if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
@@ -1143,11 +1081,11 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		});
 	}
 
-	public Future<PageDesign> patchPageDesignFuture(PageDesign o, Handler<AsyncResult<PageDesign>> eventHandler) {
+	public Future<PageDesign> patchPageDesignFuture(PageDesign o, Boolean inheritPk, Handler<AsyncResult<PageDesign>> eventHandler) {
 		Promise<PageDesign> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHPageDesign(o, false, a -> {
+			sqlPATCHPageDesign(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					PageDesign pageDesign = a.result();
 					definePageDesign(pageDesign, b -> {
@@ -2463,7 +2401,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchPageDesignFuture(o2, a -> {
+							service.patchPageDesignFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
 								} else {
@@ -2483,7 +2421,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchPageDesignFuture(o2, a -> {
+							service.patchPageDesignFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
 								} else {
@@ -2503,7 +2441,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchHtmlPartFuture(o2, a -> {
+							service.patchHtmlPartFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("HtmlPart %s refreshed. ", pk));
 								} else {
@@ -2522,7 +2460,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						List<Future> futures2 = new ArrayList<>();
 						for(PageDesign o2 : searchList.getList()) {
 							futures2.add(
-								service.patchPageDesignFuture(o2, b -> {
+								service.patchPageDesignFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("PageDesign %s refreshed. ", o2.getPk()));
 									} else {

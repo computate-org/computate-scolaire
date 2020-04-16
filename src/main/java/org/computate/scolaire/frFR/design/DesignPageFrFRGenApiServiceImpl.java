@@ -136,7 +136,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postDesignPageFuture(requeteSite, c -> {
+							postDesignPageFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									DesignPage designPage = c.result();
 									requeteApiDesignPage(designPage);
@@ -167,13 +167,13 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 
-	public Future<DesignPage> postDesignPageFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<DesignPage>> gestionnaireEvenements) {
+	public Future<DesignPage> postDesignPageFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<DesignPage>> gestionnaireEvenements) {
 		Promise<DesignPage> promise = Promise.promise();
 		try {
 			creerDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					DesignPage designPage = a.result();
-					sqlPOSTDesignPage(designPage, false, b -> {
+					sqlPOSTDesignPage(designPage, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerDesignPage(designPage, c -> {
 								if(c.succeeded()) {
@@ -346,11 +346,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -360,6 +355,12 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 											sqlDesignPage(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTImportDesignPage(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportDesignPageReponse(requeteSite, f -> {
@@ -431,7 +432,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchDesignPageFuture(o, a -> {
+					patchDesignPageFuture(o, true, a -> {
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
@@ -442,7 +443,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				);
 			} else {
 				futures.add(
-					postDesignPageFuture(requeteSite2, a -> {
+					postDesignPageFuture(requeteSite2, true, a -> {
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
@@ -461,38 +462,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				erreurDesignPage(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportDesignPage(DesignPage o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -556,11 +525,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -570,6 +534,12 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 											sqlDesignPage(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTFusionDesignPage(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionDesignPageReponse(requeteSite, f -> {
@@ -641,7 +611,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchDesignPageFuture(o, a -> {
+					patchDesignPageFuture(o, false, a -> {
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
@@ -652,7 +622,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				);
 			} else {
 				futures.add(
-					postDesignPageFuture(requeteSite2, a -> {
+					postDesignPageFuture(requeteSite2, false, a -> {
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
@@ -671,38 +641,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				erreurDesignPage(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTFusionDesignPage(DesignPage o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putfusionDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -766,17 +704,17 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheDesignPage(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<DesignPage> listeDesignPage = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeDesignPage.getRows());
+											requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -1031,17 +969,17 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheDesignPage(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<DesignPage> listeDesignPage = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeDesignPage.getRows());
+											requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignPage.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1118,7 +1056,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
 		listeDesignPage.getList().forEach(o -> {
 			futures.add(
-				patchDesignPageFuture(o, a -> {
+				patchDesignPageFuture(o, false, a -> {
 					if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
@@ -1143,11 +1081,11 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		});
 	}
 
-	public Future<DesignPage> patchDesignPageFuture(DesignPage o, Handler<AsyncResult<DesignPage>> gestionnaireEvenements) {
+	public Future<DesignPage> patchDesignPageFuture(DesignPage o, Boolean inheritPk, Handler<AsyncResult<DesignPage>> gestionnaireEvenements) {
 		Promise<DesignPage> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHDesignPage(o, false, a -> {
+			sqlPATCHDesignPage(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					DesignPage designPage = a.result();
 					definirDesignPage(designPage, b -> {
@@ -2369,7 +2307,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchDesignPageFuture(o2, a -> {
+							service.patchDesignPageFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
 								} else {
@@ -2389,7 +2327,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchDesignPageFuture(o2, a -> {
+							service.patchDesignPageFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
 								} else {
@@ -2409,7 +2347,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchPartHtmlFuture(o2, a -> {
+							service.patchPartHtmlFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PartHtml %s rechargé. ", pk));
 								} else {
@@ -2428,7 +2366,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						List<Future> futures2 = new ArrayList<>();
 						for(DesignPage o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchDesignPageFuture(o2, b -> {
+								service.patchDesignPageFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("DesignPage %s rechargé. ", o2.getPk()));
 									} else {

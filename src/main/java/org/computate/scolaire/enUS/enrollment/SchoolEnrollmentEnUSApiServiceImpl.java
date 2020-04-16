@@ -60,7 +60,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		super(siteContext);
 	}
 
-	@Override public Future<SchoolEnrollment> patchpaymentsSchoolEnrollmentFuture(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+	@Override public Future<SchoolEnrollment> patchpaymentsSchoolEnrollmentFuture(SchoolEnrollment schoolEnrollment, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
 		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
@@ -113,7 +113,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
 					} else {
@@ -136,7 +136,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
 					} else {
@@ -161,7 +161,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 					siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-					futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
+					futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
 						if(b.succeeded()) {
 							LOGGER.info(String.format("charge %s created for enrollment %s. ", paymentDate, enrollmentKey));
 						} else {
@@ -355,7 +355,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
-				patchpaymentsSchoolEnrollmentFuture(o, a -> {
+				patchpaymentsSchoolEnrollmentFuture(o, false, a -> {
 					if(a.succeeded()) {
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);

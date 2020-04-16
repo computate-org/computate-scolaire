@@ -596,7 +596,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 												schoolEnrollment.setPk(enrollmentKey);
 												schoolEnrollment.setSiteRequest_(siteRequest);
 												futures.add(
-													enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, d -> {
+													enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("enrollment %s refreshed. ", enrollmentKey));
 														} else {
@@ -739,7 +739,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
 					} else {
@@ -766,7 +766,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
 					} else {
@@ -795,7 +795,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 					siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
-					futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, b -> {
+					futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
 						if(b.succeeded()) {
 							LOGGER.info(String.format("charge %s created for enrollment %s. ", paymentDate, enrollmentKey));
 						} else {
@@ -993,7 +993,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 												schoolEnrollment.setPk(enrollmentKey);
 												schoolEnrollment.setSiteRequest_(siteRequest);
 												futures.add(
-													enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, d -> {
+													enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("enrollment %s refreshed. ", enrollmentKey));
 														} else {
@@ -1009,7 +1009,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 													LOGGER.info(String.format("There are %s payments to reload. ", enrollmentKeys.size()));
 													for(SchoolPayment payment : listeRecherche.getList()) {
 														futuresPayment.add(
-															paymentService.patchSchoolPaymentFuture(payment, e -> {
+															paymentService.patchSchoolPaymentFuture(payment, false, e -> {
 																if(e.succeeded()) {
 																	LOGGER.info(String.format("payment %s refreshed. ", payment.getPk()));
 																} else {

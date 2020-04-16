@@ -146,7 +146,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postInscriptionScolaireFuture(requeteSite, c -> {
+							postInscriptionScolaireFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									InscriptionScolaire inscriptionScolaire = c.result();
 									requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -177,13 +177,13 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	}
 
 
-	public Future<InscriptionScolaire> postInscriptionScolaireFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
+	public Future<InscriptionScolaire> postInscriptionScolaireFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
 		Promise<InscriptionScolaire> promise = Promise.promise();
 		try {
 			creerInscriptionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					InscriptionScolaire inscriptionScolaire = a.result();
-					sqlPOSTInscriptionScolaire(inscriptionScolaire, false, b -> {
+					sqlPOSTInscriptionScolaire(inscriptionScolaire, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerInscriptionScolaire(inscriptionScolaire, c -> {
 								if(c.succeeded()) {
@@ -597,11 +597,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -611,6 +606,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											sqlInscriptionScolaire(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTImportInscriptionScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportInscriptionScolaireReponse(requeteSite, f -> {
@@ -682,7 +683,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchInscriptionScolaireFuture(o, a -> {
+					patchInscriptionScolaireFuture(o, true, a -> {
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -693,7 +694,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				);
 			} else {
 				futures.add(
-					postInscriptionScolaireFuture(requeteSite2, a -> {
+					postInscriptionScolaireFuture(requeteSite2, true, a -> {
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -712,38 +713,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportInscriptionScolaire(InscriptionScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportInscriptionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -807,11 +776,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
@@ -821,6 +785,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											sqlInscriptionScolaire(requeteSite, d -> {
 												if(d.succeeded()) {
 													try {
+														RequeteApi requeteApi = new RequeteApi();
+														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														requeteApi.setRows(jsonArray.size());
+														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
 														listePUTFusionInscriptionScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionInscriptionScolaireReponse(requeteSite, f -> {
@@ -892,7 +862,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				}
 				requeteSite2.setObjetJson(json2);
 				futures.add(
-					patchInscriptionScolaireFuture(o, a -> {
+					patchInscriptionScolaireFuture(o, false, a -> {
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -903,7 +873,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				);
 			} else {
 				futures.add(
-					postInscriptionScolaireFuture(requeteSite2, a -> {
+					postInscriptionScolaireFuture(requeteSite2, false, a -> {
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -922,38 +892,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
-	}
-
-	public void sqlPUTFusionInscriptionScolaire(InscriptionScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
-				for(Integer i = 0; i < entiteVars.size(); i++) {
-					String entiteVar = entiteVars.getString(i);
-					switch(entiteVar) {
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putfusionInscriptionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -1017,17 +955,17 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheInscriptionScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeInscriptionScolaire.getRows());
+											requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -1472,17 +1410,17 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheInscriptionScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeInscriptionScolaire.getRows());
+											requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1559,7 +1497,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 		listeInscriptionScolaire.getList().forEach(o -> {
 			futures.add(
-				patchInscriptionScolaireFuture(o, a -> {
+				patchInscriptionScolaireFuture(o, false, a -> {
 					if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -1584,11 +1522,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		});
 	}
 
-	public Future<InscriptionScolaire> patchInscriptionScolaireFuture(InscriptionScolaire o, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
+	public Future<InscriptionScolaire> patchInscriptionScolaireFuture(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
 		Promise<InscriptionScolaire> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHInscriptionScolaire(o, false, a -> {
+			sqlPATCHInscriptionScolaire(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					InscriptionScolaire inscriptionScolaire = a.result();
 					definirInscriptionScolaire(inscriptionScolaire, b -> {
@@ -2856,17 +2794,17 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheInscriptionScolaire(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeInscriptionScolaire.getRows());
+											requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -2943,7 +2881,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 		listeInscriptionScolaire.getList().forEach(o -> {
 			futures.add(
-				patchpaiementsInscriptionScolaireFuture(o, a -> {
+				patchpaiementsInscriptionScolaireFuture(o, false, a -> {
 					if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
@@ -2968,11 +2906,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		});
 	}
 
-	public Future<InscriptionScolaire> patchpaiementsInscriptionScolaireFuture(InscriptionScolaire o, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
+	public Future<InscriptionScolaire> patchpaiementsInscriptionScolaireFuture(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
 		Promise<InscriptionScolaire> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHPaiementsInscriptionScolaire(o, false, a -> {
+			sqlPATCHPaiementsInscriptionScolaire(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					InscriptionScolaire inscriptionScolaire = a.result();
 					definirInscriptionScolaire(inscriptionScolaire, b -> {
@@ -5014,7 +4952,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchAnneeScolaireFuture(o2, a -> {
+							service.patchAnneeScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
 								} else {
@@ -5034,7 +4972,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchBlocScolaireFuture(o2, a -> {
+							service.patchBlocScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("BlocScolaire %s rechargé. ", pk));
 								} else {
@@ -5055,7 +4993,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchEnfantScolaireFuture(o2, a -> {
+							service.patchEnfantScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("EnfantScolaire %s rechargé. ", pk));
 								} else {
@@ -5075,7 +5013,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchMereScolaireFuture(o2, a -> {
+							service.patchMereScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("MereScolaire %s rechargé. ", pk));
 								} else {
@@ -5095,7 +5033,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchPereScolaireFuture(o2, a -> {
+							service.patchPereScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PereScolaire %s rechargé. ", pk));
 								} else {
@@ -5115,7 +5053,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchGardienScolaireFuture(o2, a -> {
+							service.patchGardienScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("GardienScolaire %s rechargé. ", pk));
 								} else {
@@ -5135,7 +5073,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchPaiementScolaireFuture(o2, a -> {
+							service.patchPaiementScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk));
 								} else {
@@ -5155,7 +5093,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchUtilisateurSiteFuture(o2, a -> {
+							service.patchUtilisateurSiteFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("UtilisateurSite %s rechargé. ", pk));
 								} else {
@@ -5174,7 +5112,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						List<Future> futures2 = new ArrayList<>();
 						for(InscriptionScolaire o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchInscriptionScolaireFuture(o2, b -> {
+								service.patchInscriptionScolaireFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", o2.getPk()));
 									} else {

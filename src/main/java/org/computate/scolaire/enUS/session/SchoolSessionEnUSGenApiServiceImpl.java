@@ -134,7 +134,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postSchoolSessionFuture(siteRequest, c -> {
+							postSchoolSessionFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SchoolSession schoolSession = c.result();
 									apiRequestSchoolSession(schoolSession);
@@ -165,13 +165,13 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 
 
-	public Future<SchoolSession> postSchoolSessionFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolSession>> eventHandler) {
+	public Future<SchoolSession> postSchoolSessionFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SchoolSession>> eventHandler) {
 		Promise<SchoolSession> promise = Promise.promise();
 		try {
 			createSchoolSession(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolSession schoolSession = a.result();
-					sqlPOSTSchoolSession(schoolSession, false, b -> {
+					sqlPOSTSchoolSession(schoolSession, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolSession(schoolSession, c -> {
 								if(c.succeeded()) {
@@ -334,11 +334,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -348,6 +343,12 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 											sqlSchoolSession(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportSchoolSession(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportSchoolSessionResponse(siteRequest, f -> {
@@ -419,7 +420,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolSessionFuture(o, a -> {
+					patchSchoolSessionFuture(o, true, a -> {
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
@@ -430,7 +431,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				);
 			} else {
 				futures.add(
-					postSchoolSessionFuture(siteRequest2, a -> {
+					postSchoolSessionFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
@@ -449,38 +450,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				errorSchoolSession(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportSchoolSession(SchoolSession o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportSchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -544,11 +513,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -558,6 +522,12 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 											sqlSchoolSession(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergeSchoolSession(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeSchoolSessionResponse(siteRequest, f -> {
@@ -629,7 +599,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolSessionFuture(o, a -> {
+					patchSchoolSessionFuture(o, false, a -> {
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
@@ -640,7 +610,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				);
 			} else {
 				futures.add(
-					postSchoolSessionFuture(siteRequest2, a -> {
+					postSchoolSessionFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
@@ -659,38 +629,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				errorSchoolSession(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergeSchoolSession(SchoolSession o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergeSchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -754,17 +692,17 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolSession(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolSession> listSchoolSession = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolSession.getRows());
+											apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -1015,17 +953,17 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolSession(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolSession> listSchoolSession = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolSession.getRows());
+											apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1102,7 +1040,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
 		listSchoolSession.getList().forEach(o -> {
 			futures.add(
-				patchSchoolSessionFuture(o, a -> {
+				patchSchoolSessionFuture(o, false, a -> {
 					if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
@@ -1127,11 +1065,11 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		});
 	}
 
-	public Future<SchoolSession> patchSchoolSessionFuture(SchoolSession o, Handler<AsyncResult<SchoolSession>> eventHandler) {
+	public Future<SchoolSession> patchSchoolSessionFuture(SchoolSession o, Boolean inheritPk, Handler<AsyncResult<SchoolSession>> eventHandler) {
 		Promise<SchoolSession> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolSession(o, false, a -> {
+			sqlPATCHSchoolSession(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolSession schoolSession = a.result();
 					defineSchoolSession(schoolSession, b -> {
@@ -2317,7 +2255,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolAgeFuture(o2, a -> {
+							service.patchSchoolAgeFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolAge %s refreshed. ", pk));
 								} else {
@@ -2338,7 +2276,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolSeasonFuture(o2, a -> {
+							service.patchSchoolSeasonFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolSeason %s refreshed. ", pk));
 								} else {
@@ -2357,7 +2295,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolSession o2 : searchList.getList()) {
 							futures2.add(
-								service.patchSchoolSessionFuture(o2, b -> {
+								service.patchSchoolSessionFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SchoolSession %s refreshed. ", o2.getPk()));
 									} else {

@@ -1100,7 +1100,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 												inscriptionScolaire.setPk(inscriptionCle);
 												inscriptionScolaire.setRequeteSite_(requeteSite);
 												futures.add(
-													inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, d -> {
+													inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, false, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
 														} else {
@@ -1406,7 +1406,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 				requeteSite2.setObjetJson(JsonObject.mapFrom(o));
 
-				futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, b -> {
+				futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, false, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("frais %s créé pour inscription %s. ", sessionJourDebut, inscriptionCle));
 					} else {
@@ -1433,7 +1433,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 				requeteSite2.setObjetJson(JsonObject.mapFrom(o));
 
-				futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, b -> {
+				futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, false, b -> {
 					if(b.succeeded()) {
 						LOGGER.info(String.format("frais %s créé pour inscription %s. ", sessionJourDebut, inscriptionCle));
 					} else {
@@ -1462,7 +1462,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 					requeteSite2.setObjetJson(JsonObject.mapFrom(o));
 
-					futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, b -> {
+					futures.add(paiementService.postPaiementScolaireFuture(requeteSite2, false, b -> {
 						if(b.succeeded()) {
 							LOGGER.info(String.format("frais %s créé pour inscription %s. ", paiementDate, inscriptionCle));
 						} else {
@@ -1835,7 +1835,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 												inscriptionScolaire.setPk(inscriptionCle);
 												inscriptionScolaire.setRequeteSite_(requeteSite);
 												futures.add(
-													inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, d -> {
+													inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, false, d -> {
 														if(d.succeeded()) {
 															LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
 														} else {
@@ -1851,7 +1851,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 													LOGGER.info(String.format("Il y a %s paiements à recharger. ", inscriptionCles.size()));
 													for(PaiementScolaire paiement : listeRecherche.getList()) {
 														futuresPaiement.add(
-															paiementService.patchPaiementScolaireFuture(paiement, e -> {
+															paiementService.patchPaiementScolaireFuture(paiement, false, e -> {
 																if(e.succeeded()) {
 																	LOGGER.info(String.format("paiement %s rechargé. ", paiement.getPk()));
 																} else {

@@ -779,6 +779,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			g("head");
 			e("body").a("class", "w3-light-grey ").f(); 
 				e("a").a("name", "top").f().g("a");
+				e("div").a("class", "top-box w3-top ").f();
+				g("div");
 				e("div").a("id", "modaleErreur").a("class", "w3-modal").a("onclick", "this.style.display = 'none';").f();
 					e("div").a("class", "w3-modal-content w3-animate-zoom").f();
 						e("header").a("class", "w3-container w3-center w3-red ").f();

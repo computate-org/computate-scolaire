@@ -243,17 +243,17 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
 						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									rechercheUtilisateurSite(requeteSite, false, true, null, d -> {
 										if(d.succeeded()) {
 											ListeRecherche<UtilisateurSite> listeUtilisateurSite = d.result();
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeUtilisateurSite.getRows());
+											requeteApi.setNumFound(listeUtilisateurSite.getQueryResponse().getResults().getNumFound());
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -330,7 +330,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
 		listeUtilisateurSite.getList().forEach(o -> {
 			futures.add(
-				patchUtilisateurSiteFuture(o, a -> {
+				patchUtilisateurSiteFuture(o, false, a -> {
 					if(a.succeeded()) {
 							UtilisateurSite utilisateurSite = a.result();
 							requeteApiUtilisateurSite(utilisateurSite);
@@ -355,11 +355,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		});
 	}
 
-	public Future<UtilisateurSite> patchUtilisateurSiteFuture(UtilisateurSite o, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
+	public Future<UtilisateurSite> patchUtilisateurSiteFuture(UtilisateurSite o, Boolean inheritPk, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
 		Promise<UtilisateurSite> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHUtilisateurSite(o, false, a -> {
+			sqlPATCHUtilisateurSite(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					UtilisateurSite utilisateurSite = a.result();
 					definirUtilisateurSite(utilisateurSite, b -> {
@@ -753,7 +753,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							requeteApi.setNumFound(1L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
-							postUtilisateurSiteFuture(requeteSite, c -> {
+							postUtilisateurSiteFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									UtilisateurSite utilisateurSite = c.result();
 									requeteApiUtilisateurSite(utilisateurSite);
@@ -784,13 +784,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	}
 
 
-	public Future<UtilisateurSite> postUtilisateurSiteFuture(RequeteSiteFrFR requeteSite, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
+	public Future<UtilisateurSite> postUtilisateurSiteFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
 		Promise<UtilisateurSite> promise = Promise.promise();
 		try {
 			creerUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					UtilisateurSite utilisateurSite = a.result();
-					sqlPOSTUtilisateurSite(utilisateurSite, false, b -> {
+					sqlPOSTUtilisateurSite(utilisateurSite, inheritPk, b -> {
 						if(b.succeeded()) {
 							definirIndexerUtilisateurSite(utilisateurSite, c -> {
 								if(c.succeeded()) {
@@ -1610,7 +1610,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchInscriptionScolaireFuture(o2, a -> {
+							service.patchInscriptionScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
 								} else {
@@ -1630,7 +1630,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						o2.setPk(pk);
 						o2.setRequeteSite_(requeteSite2);
 						futures.add(
-							service.patchPaiementScolaireFuture(o2, a -> {
+							service.patchPaiementScolaireFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk));
 								} else {
@@ -1649,7 +1649,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						List<Future> futures2 = new ArrayList<>();
 						for(UtilisateurSite o2 : listeRecherche.getList()) {
 							futures2.add(
-								service.patchUtilisateurSiteFuture(o2, b -> {
+								service.patchUtilisateurSiteFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("UtilisateurSite %s rechargé. ", o2.getPk()));
 									} else {

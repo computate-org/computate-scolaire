@@ -130,7 +130,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postClusterFuture(siteRequest, c -> {
+							postClusterFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
 									apiRequestCluster(cluster);
@@ -161,13 +161,13 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 
-	public Future<Cluster> postClusterFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<Cluster>> eventHandler) {
+	public Future<Cluster> postClusterFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<Cluster>> eventHandler) {
 		Promise<Cluster> promise = Promise.promise();
 		try {
 			createCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
-					sqlPOSTCluster(cluster, false, b -> {
+					sqlPOSTCluster(cluster, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexCluster(cluster, c -> {
 								if(c.succeeded()) {
@@ -303,11 +303,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -317,6 +312,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 											sqlCluster(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportCluster(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportClusterResponse(siteRequest, f -> {
@@ -388,7 +389,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchClusterFuture(o, a -> {
+					patchClusterFuture(o, true, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
@@ -399,7 +400,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				);
 			} else {
 				futures.add(
-					postClusterFuture(siteRequest2, a -> {
+					postClusterFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
@@ -418,38 +419,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -513,11 +482,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -527,6 +491,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 											sqlCluster(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergeCluster(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeClusterResponse(siteRequest, f -> {
@@ -598,7 +568,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchClusterFuture(o, a -> {
+					patchClusterFuture(o, false, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
@@ -609,7 +579,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				);
 			} else {
 				futures.add(
-					postClusterFuture(siteRequest2, a -> {
+					postClusterFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
@@ -628,38 +598,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergeCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergeClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -723,17 +661,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchCluster(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<Cluster> listCluster = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listCluster.getRows());
+											apiRequest.setNumFound(listCluster.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -978,17 +916,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchCluster(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<Cluster> listCluster = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listCluster.getRows());
+											apiRequest.setNumFound(listCluster.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listCluster.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1065,7 +1003,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
 		listCluster.getList().forEach(o -> {
 			futures.add(
-				patchClusterFuture(o, a -> {
+				patchClusterFuture(o, false, a -> {
 					if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
@@ -1090,11 +1028,11 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		});
 	}
 
-	public Future<Cluster> patchClusterFuture(Cluster o, Handler<AsyncResult<Cluster>> eventHandler) {
+	public Future<Cluster> patchClusterFuture(Cluster o, Boolean inheritPk, Handler<AsyncResult<Cluster>> eventHandler) {
 		Promise<Cluster> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHCluster(o, false, a -> {
+			sqlPATCHCluster(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
 					defineCluster(cluster, b -> {
@@ -2079,7 +2017,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						List<Future> futures2 = new ArrayList<>();
 						for(Cluster o2 : searchList.getList()) {
 							futures2.add(
-								service.patchClusterFuture(o2, b -> {
+								service.patchClusterFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("Cluster %s refreshed. ", o2.getPk()));
 									} else {

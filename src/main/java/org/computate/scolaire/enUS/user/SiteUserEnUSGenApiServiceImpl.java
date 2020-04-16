@@ -243,17 +243,17 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSiteUser(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SiteUser> listSiteUser = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSiteUser.getRows());
+											apiRequest.setNumFound(listSiteUser.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -330,7 +330,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
 		listSiteUser.getList().forEach(o -> {
 			futures.add(
-				patchSiteUserFuture(o, a -> {
+				patchSiteUserFuture(o, false, a -> {
 					if(a.succeeded()) {
 							SiteUser siteUser = a.result();
 							apiRequestSiteUser(siteUser);
@@ -355,11 +355,11 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 	}
 
-	public Future<SiteUser> patchSiteUserFuture(SiteUser o, Handler<AsyncResult<SiteUser>> eventHandler) {
+	public Future<SiteUser> patchSiteUserFuture(SiteUser o, Boolean inheritPk, Handler<AsyncResult<SiteUser>> eventHandler) {
 		Promise<SiteUser> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSiteUser(o, false, a -> {
+			sqlPATCHSiteUser(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SiteUser siteUser = a.result();
 					defineSiteUser(siteUser, b -> {
@@ -753,7 +753,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postSiteUserFuture(siteRequest, c -> {
+							postSiteUserFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SiteUser siteUser = c.result();
 									apiRequestSiteUser(siteUser);
@@ -784,13 +784,13 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	}
 
 
-	public Future<SiteUser> postSiteUserFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SiteUser>> eventHandler) {
+	public Future<SiteUser> postSiteUserFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SiteUser>> eventHandler) {
 		Promise<SiteUser> promise = Promise.promise();
 		try {
 			createSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
 					SiteUser siteUser = a.result();
-					sqlPOSTSiteUser(siteUser, false, b -> {
+					sqlPOSTSiteUser(siteUser, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexSiteUser(siteUser, c -> {
 								if(c.succeeded()) {
@@ -1610,7 +1610,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolEnrollmentFuture(o2, a -> {
+							service.patchSchoolEnrollmentFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
 								} else {
@@ -1630,7 +1630,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolPaymentFuture(o2, a -> {
+							service.patchSchoolPaymentFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
 								} else {
@@ -1649,7 +1649,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						List<Future> futures2 = new ArrayList<>();
 						for(SiteUser o2 : searchList.getList()) {
 							futures2.add(
-								service.patchSiteUserFuture(o2, b -> {
+								service.patchSiteUserFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SiteUser %s refreshed. ", o2.getPk()));
 									} else {

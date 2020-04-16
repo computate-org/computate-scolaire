@@ -132,7 +132,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postSchoolDadFuture(siteRequest, c -> {
+							postSchoolDadFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SchoolDad schoolDad = c.result();
 									apiRequestSchoolDad(schoolDad);
@@ -163,13 +163,13 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	}
 
 
-	public Future<SchoolDad> postSchoolDadFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolDad>> eventHandler) {
+	public Future<SchoolDad> postSchoolDadFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SchoolDad>> eventHandler) {
 		Promise<SchoolDad> promise = Promise.promise();
 		try {
 			createSchoolDad(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolDad schoolDad = a.result();
-					sqlPOSTSchoolDad(schoolDad, false, b -> {
+					sqlPOSTSchoolDad(schoolDad, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolDad(schoolDad, c -> {
 								if(c.succeeded()) {
@@ -344,11 +344,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -358,6 +353,12 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											sqlSchoolDad(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportSchoolDad(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportSchoolDadResponse(siteRequest, f -> {
@@ -429,7 +430,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolDadFuture(o, a -> {
+					patchSchoolDadFuture(o, true, a -> {
 						if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
@@ -440,7 +441,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				);
 			} else {
 				futures.add(
-					postSchoolDadFuture(siteRequest2, a -> {
+					postSchoolDadFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
@@ -459,38 +460,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				errorSchoolDad(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportSchoolDad(SchoolDad o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportSchoolDadResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -554,11 +523,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -568,6 +532,12 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											sqlSchoolDad(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergeSchoolDad(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeSchoolDadResponse(siteRequest, f -> {
@@ -639,7 +609,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolDadFuture(o, a -> {
+					patchSchoolDadFuture(o, false, a -> {
 						if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
@@ -650,7 +620,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				);
 			} else {
 				futures.add(
-					postSchoolDadFuture(siteRequest2, a -> {
+					postSchoolDadFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
@@ -669,38 +639,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				errorSchoolDad(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergeSchoolDad(SchoolDad o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergeSchoolDadResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -764,17 +702,17 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolDad(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolDad> listSchoolDad = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolDad.getRows());
+											apiRequest.setNumFound(listSchoolDad.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -1049,17 +987,17 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolDad(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolDad> listSchoolDad = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolDad.getRows());
+											apiRequest.setNumFound(listSchoolDad.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolDad.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1136,7 +1074,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
 		listSchoolDad.getList().forEach(o -> {
 			futures.add(
-				patchSchoolDadFuture(o, a -> {
+				patchSchoolDadFuture(o, false, a -> {
 					if(a.succeeded()) {
 							SchoolDad schoolDad = a.result();
 							apiRequestSchoolDad(schoolDad);
@@ -1161,11 +1099,11 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		});
 	}
 
-	public Future<SchoolDad> patchSchoolDadFuture(SchoolDad o, Handler<AsyncResult<SchoolDad>> eventHandler) {
+	public Future<SchoolDad> patchSchoolDadFuture(SchoolDad o, Boolean inheritPk, Handler<AsyncResult<SchoolDad>> eventHandler) {
 		Promise<SchoolDad> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolDad(o, false, a -> {
+			sqlPATCHSchoolDad(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolDad schoolDad = a.result();
 					defineSchoolDad(schoolDad, b -> {
@@ -2326,7 +2264,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolEnrollmentFuture(o2, a -> {
+							service.patchSchoolEnrollmentFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
 								} else {
@@ -2345,7 +2283,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolDad o2 : searchList.getList()) {
 							futures2.add(
-								service.patchSchoolDadFuture(o2, b -> {
+								service.patchSchoolDadFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SchoolDad %s refreshed. ", o2.getPk()));
 									} else {

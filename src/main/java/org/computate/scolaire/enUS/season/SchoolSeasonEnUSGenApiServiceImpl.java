@@ -134,7 +134,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							apiRequest.setNumFound(1L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
-							postSchoolSeasonFuture(siteRequest, c -> {
+							postSchoolSeasonFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SchoolSeason schoolSeason = c.result();
 									apiRequestSchoolSeason(schoolSeason);
@@ -165,13 +165,13 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	}
 
 
-	public Future<SchoolSeason> postSchoolSeasonFuture(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolSeason>> eventHandler) {
+	public Future<SchoolSeason> postSchoolSeasonFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SchoolSeason>> eventHandler) {
 		Promise<SchoolSeason> promise = Promise.promise();
 		try {
 			createSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolSeason schoolSeason = a.result();
-					sqlPOSTSchoolSeason(schoolSeason, false, b -> {
+					sqlPOSTSchoolSeason(schoolSeason, inheritPk, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolSeason(schoolSeason, c -> {
 								if(c.succeeded()) {
@@ -338,11 +338,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				if(a.succeeded()) {
 					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -352,6 +347,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											sqlSchoolSeason(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTImportSchoolSeason(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportSchoolSeasonResponse(siteRequest, f -> {
@@ -423,7 +424,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolSeasonFuture(o, a -> {
+					patchSchoolSeasonFuture(o, true, a -> {
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
@@ -434,7 +435,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				);
 			} else {
 				futures.add(
-					postSchoolSeasonFuture(siteRequest2, a -> {
+					postSchoolSeasonFuture(siteRequest2, true, a -> {
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
@@ -453,38 +454,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				errorSchoolSeason(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTImportSchoolSeason(SchoolSeason o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putimportSchoolSeasonResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -548,11 +517,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				if(a.succeeded()) {
 					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
@@ -562,6 +526,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											sqlSchoolSeason(siteRequest, d -> {
 												if(d.succeeded()) {
 													try {
+														ApiRequest apiRequest = new ApiRequest();
+														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+														apiRequest.setRows(jsonArray.size());
+														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
 														listPUTMergeSchoolSeason(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeSchoolSeasonResponse(siteRequest, f -> {
@@ -633,7 +603,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				}
 				siteRequest2.setJsonObject(json2);
 				futures.add(
-					patchSchoolSeasonFuture(o, a -> {
+					patchSchoolSeasonFuture(o, false, a -> {
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
@@ -644,7 +614,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				);
 			} else {
 				futures.add(
-					postSchoolSeasonFuture(siteRequest2, a -> {
+					postSchoolSeasonFuture(siteRequest2, false, a -> {
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
@@ -663,38 +633,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				errorSchoolSeason(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
-	}
-
-	public void sqlPUTMergeSchoolSeason(SchoolSeason o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				JsonArray entityVars = jsonObject.getJsonArray("saves");
-				for(Integer i = 0; i < entityVars.size(); i++) {
-					String entityVar = entityVars.getString(i);
-					switch(entityVar) {
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
-				}
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	public void putmergeSchoolSeasonResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -758,17 +696,17 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				if(a.succeeded()) {
 					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolSeason(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolSeason> listSchoolSeason = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolSeason.getRows());
+											apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -1023,17 +961,17 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				if(a.succeeded()) {
 					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									aSearchSchoolSeason(siteRequest, false, true, null, d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolSeason> listSchoolSeason = d.result();
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolSeason.getRows());
+											apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1110,7 +1048,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 		listSchoolSeason.getList().forEach(o -> {
 			futures.add(
-				patchSchoolSeasonFuture(o, a -> {
+				patchSchoolSeasonFuture(o, false, a -> {
 					if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
@@ -1135,11 +1073,11 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		});
 	}
 
-	public Future<SchoolSeason> patchSchoolSeasonFuture(SchoolSeason o, Handler<AsyncResult<SchoolSeason>> eventHandler) {
+	public Future<SchoolSeason> patchSchoolSeasonFuture(SchoolSeason o, Boolean inheritPk, Handler<AsyncResult<SchoolSeason>> eventHandler) {
 		Promise<SchoolSeason> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolSeason(o, false, a -> {
+			sqlPATCHSchoolSeason(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolSeason schoolSeason = a.result();
 					defineSchoolSeason(schoolSeason, b -> {
@@ -2336,7 +2274,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolYearFuture(o2, a -> {
+							service.patchSchoolYearFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolYear %s refreshed. ", pk));
 								} else {
@@ -2356,7 +2294,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						o2.setPk(pk);
 						o2.setSiteRequest_(siteRequest2);
 						futures.add(
-							service.patchSchoolSessionFuture(o2, a -> {
+							service.patchSchoolSessionFuture(o2, false, a -> {
 								if(a.succeeded()) {
 									LOGGER.info(String.format("SchoolSession %s refreshed. ", pk));
 								} else {
@@ -2375,7 +2313,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolSeason o2 : searchList.getList()) {
 							futures2.add(
-								service.patchSchoolSeasonFuture(o2, b -> {
+								service.patchSchoolSeasonFuture(o2, false, b -> {
 									if(b.succeeded()) {
 										LOGGER.info(String.format("SchoolSeason %s refreshed. ", o2.getPk()));
 									} else {
