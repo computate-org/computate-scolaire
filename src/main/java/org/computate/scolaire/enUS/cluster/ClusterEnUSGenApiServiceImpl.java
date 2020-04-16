@@ -167,7 +167,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			createCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
-					sqlPOSTCluster(cluster, b -> {
+					sqlPOSTCluster(cluster, false, b -> {
 						if(b.succeeded()) {
 							defineIndexCluster(cluster, c -> {
 								if(c.succeeded()) {
@@ -191,7 +191,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		return promise.future();
 	}
 
-	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTCluster(Cluster o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -420,6 +420,38 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		});
 	}
 
+	public void sqlPUTImportCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		response200PUTImportCluster(siteRequest, a -> {
 			if(a.succeeded()) {
@@ -596,6 +628,38 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void sqlPUTMergeCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putmergeClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -1030,7 +1094,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		Promise<Cluster> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHCluster(o, a -> {
+			sqlPATCHCluster(o, false, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
 					defineCluster(cluster, b -> {
@@ -1063,7 +1127,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		return promise.future();
 	}
 
-	public void sqlPATCHCluster(Cluster o, Handler<AsyncResult<Cluster>> eventHandler) {
+	public void sqlPATCHCluster(Cluster o, Boolean inheritPk, Handler<AsyncResult<Cluster>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1659,7 +1723,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, c -> {
+										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
 												userService.defineSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
@@ -1738,7 +1802,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
-									userService.sqlPATCHSiteUser(siteUser, c -> {
+									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
 											userService.defineSiteUser(siteUser2, d -> {

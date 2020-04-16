@@ -183,7 +183,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			createSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
-					sqlPOSTSchoolEnrollment(schoolEnrollment, b -> {
+					sqlPOSTSchoolEnrollment(schoolEnrollment, false, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolEnrollment(schoolEnrollment, c -> {
 								if(c.succeeded()) {
@@ -207,7 +207,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		return promise.future();
 	}
 
-	public void sqlPOSTSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchoolEnrollment(SchoolEnrollment o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -221,47 +221,125 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
 					case "yearKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(jsonObject.getString(entityVar)), "yearKey", pk));
+						{
+							Long l = Long.parseLong(jsonObject.getString(entityVar));
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
+							}
+						}
 						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "childKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						{
+							Long l = Long.parseLong(jsonObject.getString(entityVar));
+							SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolChild.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", Long.parseLong(jsonObject.getString(entityVar))));
+							}
+						}
 						break;
 					case "momKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
 						}
 						break;
 					case "dadKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "guardianKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
 						}
 						break;
 					case "paymentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
 						}
 						break;
 					case "userKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
 						}
 						break;
 					case "childCompleteName":
@@ -636,6 +714,38 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		});
 	}
 
+	public void sqlPUTImportSchoolEnrollment(SchoolEnrollment o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		response200PUTImportSchoolEnrollment(siteRequest, a -> {
 			if(a.succeeded()) {
@@ -812,6 +922,38 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void sqlPUTMergeSchoolEnrollment(SchoolEnrollment o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putmergeSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -1446,7 +1588,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		Promise<SchoolEnrollment> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolEnrollment(o, a -> {
+			sqlPATCHSchoolEnrollment(o, false, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
 					defineSchoolEnrollment(schoolEnrollment, b -> {
@@ -1479,7 +1621,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		return promise.future();
 	}
 
-	public void sqlPATCHSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+	public void sqlPATCHSchoolEnrollment(SchoolEnrollment o, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1535,24 +1677,70 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						break;
 					case "setYearKey":
-						o2.setYearKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA2);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						{
+							Long l = o2.getYearKey();
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setYearKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
+							}
+						}
 						break;
 					case "removeYearKey":
-						o2.setYearKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						{
+							Long l = o2.getYearKey();
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setYearKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
+							}
+						}
 						break;
 					case "addBlockKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addAllBlockKeys":
 						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", addAllBlockKeysValues.getString(i)));
+							Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "setBlockKeys":
@@ -1560,33 +1748,101 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("blockKeys", "enrollmentKeys", pk));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(setBlockKeysValues.getString(i))));
+							Long l = Long.parseLong(setBlockKeysValues.getString(i));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "removeBlockKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "setChildKey":
-						o2.setChildKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						{
+							Long l = o2.getChildKey();
+							SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolChild.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setChildKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_setA1);
+								patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "removeChildKey":
-						o2.setChildKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						{
+							Long l = o2.getChildKey();
+							SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolChild.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setChildKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addMomKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
+						}
 						break;
 					case "addAllMomKeys":
 						JsonArray addAllMomKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllMomKeysValues.getString(i), "momKeys", pk));
+							Long l = Long.parseLong(addAllMomKeysValues.getString(i));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
 						}
 						break;
 					case "setMomKeys":
@@ -1594,23 +1850,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "momKeys", pk));
 						for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(setMomKeysValues.getString(i)), "momKeys", pk));
+							Long l = Long.parseLong(setMomKeysValues.getString(i));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
 						}
 						break;
 					case "removeMomKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
+						}
 						break;
 					case "addDadKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addAllDadKeys":
 						JsonArray addAllDadKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", addAllDadKeysValues.getString(i)));
+							Long l = Long.parseLong(addAllDadKeysValues.getString(i));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "setDadKeys":
@@ -1618,23 +1918,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("dadKeys", "enrollmentKeys", pk));
 						for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(setDadKeysValues.getString(i))));
+							Long l = Long.parseLong(setDadKeysValues.getString(i));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "removeDadKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addGuardianKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
+						}
 						break;
 					case "addAllGuardianKeys":
 						JsonArray addAllGuardianKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllGuardianKeysValues.getString(i), "guardianKeys", pk));
+							Long l = Long.parseLong(addAllGuardianKeysValues.getString(i));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
 						}
 						break;
 					case "setGuardianKeys":
@@ -1642,23 +1986,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "guardianKeys", pk));
 						for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(setGuardianKeysValues.getString(i)), "guardianKeys", pk));
+							Long l = Long.parseLong(setGuardianKeysValues.getString(i));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
 						}
 						break;
 					case "removeGuardianKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
+						}
 						break;
 					case "addPaymentKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
+						}
 						break;
 					case "addAllPaymentKeys":
 						JsonArray addAllPaymentKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKey", addAllPaymentKeysValues.getString(i), "paymentKeys", pk));
+							Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
 						}
 						break;
 					case "setPaymentKeys":
@@ -1666,23 +2054,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKey", "paymentKeys", pk));
 						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(setPaymentKeysValues.getString(i)), "paymentKeys", pk));
+							Long l = Long.parseLong(setPaymentKeysValues.getString(i));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
 						}
 						break;
 					case "removePaymentKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
+						}
 						break;
 					case "addUserKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
+						}
 						break;
 					case "addAllUserKeys":
 						JsonArray addAllUserKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllUserKeysValues.getString(i), "userKeys", pk));
+							Long l = Long.parseLong(addAllUserKeysValues.getString(i));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
 						}
 						break;
 					case "setUserKeys":
@@ -1690,13 +2122,35 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "userKeys", pk));
 						for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(setUserKeysValues.getString(i)), "userKeys", pk));
+							Long l = Long.parseLong(setUserKeysValues.getString(i));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
 						}
 						break;
 					case "removeUserKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
+						}
 						break;
 					case "setChildCompleteName":
 						if(requestJson.getString(methodName) == null) {
@@ -2518,7 +2972,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		Promise<SchoolEnrollment> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHPaymentsSchoolEnrollment(o, a -> {
+			sqlPATCHPaymentsSchoolEnrollment(o, false, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
 					defineSchoolEnrollment(schoolEnrollment, b -> {
@@ -2551,7 +3005,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		return promise.future();
 	}
 
-	public void sqlPATCHPaymentsSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+	public void sqlPATCHPaymentsSchoolEnrollment(SchoolEnrollment o, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -2607,24 +3061,70 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						break;
 					case "setYearKey":
-						o2.setYearKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA2);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						{
+							Long l = o2.getYearKey();
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setYearKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
+							}
+						}
 						break;
 					case "removeYearKey":
-						o2.setYearKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						{
+							Long l = o2.getYearKey();
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setYearKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
+							}
+						}
 						break;
 					case "addBlockKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addAllBlockKeys":
 						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", addAllBlockKeysValues.getString(i)));
+							Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "setBlockKeys":
@@ -2632,33 +3132,101 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("blockKeys", "enrollmentKeys", pk));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(setBlockKeysValues.getString(i))));
+							Long l = Long.parseLong(setBlockKeysValues.getString(i));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "removeBlockKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "setChildKey":
-						o2.setChildKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						{
+							Long l = o2.getChildKey();
+							SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolChild.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setChildKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_setA1);
+								patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "removeChildKey":
-						o2.setChildKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						{
+							Long l = o2.getChildKey();
+							SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolChild.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setChildKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addMomKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
+						}
 						break;
 					case "addAllMomKeys":
 						JsonArray addAllMomKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllMomKeysValues.getString(i), "momKeys", pk));
+							Long l = Long.parseLong(addAllMomKeysValues.getString(i));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
 						}
 						break;
 					case "setMomKeys":
@@ -2666,23 +3234,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "momKeys", pk));
 						for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(setMomKeysValues.getString(i)), "momKeys", pk));
+							Long l = Long.parseLong(setMomKeysValues.getString(i));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
 						}
 						break;
 					case "removeMomKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "momKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolMom.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+							}
+						}
 						break;
 					case "addDadKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addAllDadKeys":
 						JsonArray addAllDadKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", addAllDadKeysValues.getString(i)));
+							Long l = Long.parseLong(addAllDadKeysValues.getString(i));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "setDadKeys":
@@ -2690,23 +3302,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("dadKeys", "enrollmentKeys", pk));
 						for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(setDadKeysValues.getString(i))));
+							Long l = Long.parseLong(setDadKeysValues.getString(i));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
 						}
 						break;
 					case "removeDadKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolDad.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+							}
+						}
 						break;
 					case "addGuardianKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
+						}
 						break;
 					case "addAllGuardianKeys":
 						JsonArray addAllGuardianKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllGuardianKeysValues.getString(i), "guardianKeys", pk));
+							Long l = Long.parseLong(addAllGuardianKeysValues.getString(i));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
 						}
 						break;
 					case "setGuardianKeys":
@@ -2714,23 +3370,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "guardianKeys", pk));
 						for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(setGuardianKeysValues.getString(i)), "guardianKeys", pk));
+							Long l = Long.parseLong(setGuardianKeysValues.getString(i));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
 						}
 						break;
 					case "removeGuardianKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "guardianKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolGuardian.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+							}
+						}
 						break;
 					case "addPaymentKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
+						}
 						break;
 					case "addAllPaymentKeys":
 						JsonArray addAllPaymentKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKey", addAllPaymentKeysValues.getString(i), "paymentKeys", pk));
+							Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
 						}
 						break;
 					case "setPaymentKeys":
@@ -2738,23 +3438,67 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKey", "paymentKeys", pk));
 						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(setPaymentKeysValues.getString(i)), "paymentKeys", pk));
+							Long l = Long.parseLong(setPaymentKeysValues.getString(i));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
 						}
 						break;
 					case "removePaymentKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKey", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolPayment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
+							}
+						}
 						break;
 					case "addUserKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
+						}
 						break;
 					case "addAllUserKeys":
 						JsonArray addAllUserKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllUserKeysValues.getString(i), "userKeys", pk));
+							Long l = Long.parseLong(addAllUserKeysValues.getString(i));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
 						}
 						break;
 					case "setUserKeys":
@@ -2762,13 +3506,35 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", "userKeys", pk));
 						for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(setUserKeysValues.getString(i)), "userKeys", pk));
+							Long l = Long.parseLong(setUserKeysValues.getString(i));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
 						}
 						break;
 					case "removeUserKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "userKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SiteUser.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
+							}
+						}
 						break;
 					case "setChildCompleteName":
 						if(requestJson.getString(methodName) == null) {
@@ -3882,7 +4648,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, c -> {
+										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
 												userService.defineSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
@@ -3961,7 +4727,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
-									userService.sqlPATCHSiteUser(siteUser, c -> {
+									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
 											userService.defineSiteUser(siteUser2, d -> {

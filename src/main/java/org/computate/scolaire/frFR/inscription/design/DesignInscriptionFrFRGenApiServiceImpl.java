@@ -173,7 +173,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			creerDesignInscription(requeteSite, a -> {
 				if(a.succeeded()) {
 					DesignInscription designInscription = a.result();
-					sqlPOSTDesignInscription(designInscription, b -> {
+					sqlPOSTDesignInscription(designInscription, false, b -> {
 						if(b.succeeded()) {
 							definirIndexerDesignInscription(designInscription, c -> {
 								if(c.succeeded()) {
@@ -197,7 +197,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		return promise.future();
 	}
 
-	public void sqlPOSTDesignInscription(DesignInscription o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlPOSTDesignInscription(DesignInscription o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -418,6 +418,38 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 	}
 
+	public void sqlPUTImportDesignInscription(DesignInscription o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
+				for(Integer i = 0; i < entiteVars.size(); i++) {
+					String entiteVar = entiteVars.getString(i);
+					switch(entiteVar) {
+					}
+				}
+			}
+			connexionSql.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportDesignInscriptionReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		reponse200PUTImportDesignInscription(requeteSite, a -> {
 			if(a.succeeded()) {
@@ -594,6 +626,38 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				erreurDesignInscription(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void sqlPUTFusionDesignInscription(DesignInscription o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
+				for(Integer i = 0; i < entiteVars.size(); i++) {
+					String entiteVar = entiteVars.getString(i);
+					switch(entiteVar) {
+					}
+				}
+			}
+			connexionSql.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putfusionDesignInscriptionReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -1020,7 +1084,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		Promise<DesignInscription> promise = Promise.promise();
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			sqlPATCHDesignInscription(o, a -> {
+			sqlPATCHDesignInscription(o, false, a -> {
 				if(a.succeeded()) {
 					DesignInscription designInscription = a.result();
 					definirDesignInscription(designInscription, b -> {
@@ -1053,7 +1117,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		return promise.future();
 	}
 
-	public void sqlPATCHDesignInscription(DesignInscription o, Handler<AsyncResult<DesignInscription>> gestionnaireEvenements) {
+	public void sqlPATCHDesignInscription(DesignInscription o, Boolean inheritPk, Handler<AsyncResult<DesignInscription>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1732,7 +1796,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
 										UtilisateurSite utilisateurSite = b.result();
-										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, c -> {
+										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, false, c -> {
 											if(c.succeeded()) {
 												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
 													if(d.succeeded()) {
@@ -1811,7 +1875,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
 
-									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, c -> {
+									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
 										if(c.succeeded()) {
 											UtilisateurSite utilisateurSite2 = c.result();
 											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {

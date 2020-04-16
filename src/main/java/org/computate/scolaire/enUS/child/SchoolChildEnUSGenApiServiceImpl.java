@@ -169,7 +169,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			createSchoolChild(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolChild schoolChild = a.result();
-					sqlPOSTSchoolChild(schoolChild, b -> {
+					sqlPOSTSchoolChild(schoolChild, false, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolChild(schoolChild, c -> {
 								if(c.succeeded()) {
@@ -193,7 +193,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		return promise.future();
 	}
 
-	public void sqlPOSTSchoolChild(SchoolChild o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchoolChild(SchoolChild o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -208,8 +208,17 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					switch(entityVar) {
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							}
 						}
 						break;
 					case "personFirstName":
@@ -428,6 +437,38 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		});
 	}
 
+	public void sqlPUTImportSchoolChild(SchoolChild o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportSchoolChildResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		response200PUTImportSchoolChild(siteRequest, a -> {
 			if(a.succeeded()) {
@@ -604,6 +645,38 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void sqlPUTMergeSchoolChild(SchoolChild o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putmergeSchoolChildResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -1044,7 +1117,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		Promise<SchoolChild> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolChild(o, a -> {
+			sqlPATCHSchoolChild(o, false, a -> {
 				if(a.succeeded()) {
 					SchoolChild schoolChild = a.result();
 					defineSchoolChild(schoolChild, b -> {
@@ -1077,7 +1150,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		return promise.future();
 	}
 
-	public void sqlPATCHSchoolChild(SchoolChild o, Handler<AsyncResult<SchoolChild>> eventHandler) {
+	public void sqlPATCHSchoolChild(SchoolChild o, Boolean inheritPk, Handler<AsyncResult<SchoolChild>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1133,14 +1206,36 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						}
 						break;
 					case "addEnrollmentKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("childKey", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							}
+						}
 						break;
 					case "addAllEnrollmentKeys":
 						JsonArray addAllEnrollmentKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("childKey", addAllEnrollmentKeysValues.getString(i), "enrollmentKeys", pk));
+							Long l = Long.parseLong(addAllEnrollmentKeysValues.getString(i));
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							}
 						}
 						break;
 					case "setEnrollmentKeys":
@@ -1148,13 +1243,35 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("childKey", "enrollmentKeys", pk));
 						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("childKey", Long.parseLong(setEnrollmentKeysValues.getString(i)), "enrollmentKeys", pk));
+							Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							}
 						}
 						break;
 					case "removeEnrollmentKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("childKey", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolEnrollment.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							}
+						}
 						break;
 					case "setPersonFirstName":
 						if(requestJson.getString(methodName) == null) {
@@ -1743,7 +1860,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, c -> {
+										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
 												userService.defineSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
@@ -1822,7 +1939,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
-									userService.sqlPATCHSiteUser(siteUser, c -> {
+									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
 											userService.defineSiteUser(siteUser2, d -> {

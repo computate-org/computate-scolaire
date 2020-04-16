@@ -171,7 +171,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			createSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
 					SchoolAge schoolAge = a.result();
-					sqlPOSTSchoolAge(schoolAge, b -> {
+					sqlPOSTSchoolAge(schoolAge, false, b -> {
 						if(b.succeeded()) {
 							defineIndexSchoolAge(schoolAge, c -> {
 								if(c.succeeded()) {
@@ -195,7 +195,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		return promise.future();
 	}
 
-	public void sqlPOSTSchoolAge(SchoolAge o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchoolAge(SchoolAge o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -210,13 +210,34 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					switch(entityVar) {
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
+							}
 						}
 						break;
 					case "sessionKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKeys", Long.parseLong(jsonObject.getString(entityVar)), "sessionKey", pk));
+						{
+							Long l = Long.parseLong(jsonObject.getString(entityVar));
+							SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolSession.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("ageKeys", l, "sessionKey", pk));
+							}
+						}
 						break;
 					case "schoolAddress":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -430,6 +451,38 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		});
 	}
 
+	public void sqlPUTImportSchoolAge(SchoolAge o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportSchoolAgeResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		response200PUTImportSchoolAge(siteRequest, a -> {
 			if(a.succeeded()) {
@@ -606,6 +659,38 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				errorSchoolAge(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void sqlPUTMergeSchoolAge(SchoolAge o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putmergeSchoolAgeResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -1046,7 +1131,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		Promise<SchoolAge> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchoolAge(o, a -> {
+			sqlPATCHSchoolAge(o, false, a -> {
 				if(a.succeeded()) {
 					SchoolAge schoolAge = a.result();
 					defineSchoolAge(schoolAge, b -> {
@@ -1079,7 +1164,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		return promise.future();
 	}
 
-	public void sqlPATCHSchoolAge(SchoolAge o, Handler<AsyncResult<SchoolAge>> eventHandler) {
+	public void sqlPATCHSchoolAge(SchoolAge o, Boolean inheritPk, Handler<AsyncResult<SchoolAge>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1135,14 +1220,36 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						break;
 					case "addBlockKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(requestJson.getString(methodName)), "blockKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
+							}
+						}
 						break;
 					case "addAllBlockKeys":
 						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("ageKey", addAllBlockKeysValues.getString(i), "blockKeys", pk));
+							Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
+							}
 						}
 						break;
 					case "setBlockKeys":
@@ -1150,23 +1257,69 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("ageKey", "blockKeys", pk));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(setBlockKeysValues.getString(i)), "blockKeys", pk));
+							Long l = Long.parseLong(setBlockKeysValues.getString(i));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
+							}
 						}
 						break;
 					case "removeBlockKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(requestJson.getString(methodName)), "blockKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolBlock.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
+							}
+						}
 						break;
 					case "setSessionKey":
-						o2.setSessionKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA2);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
+						{
+							Long l = o2.getSessionKey();
+							SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolSession.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setSessionKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("ageKeys", l, "sessionKey", pk));
+							}
+						}
 						break;
 					case "removeSessionKey":
-						o2.setSessionKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
+						{
+							Long l = o2.getSessionKey();
+							SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolSession.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								o2.setSessionKey(requestJson.getString(methodName));
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("ageKeys", l, "sessionKey", pk));
+							}
+						}
 						break;
 					case "setSchoolAddress":
 						if(requestJson.getString(methodName) == null) {
@@ -1814,7 +1967,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, c -> {
+										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
 												userService.defineSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
@@ -1893,7 +2046,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
-									userService.sqlPATCHSiteUser(siteUser, c -> {
+									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
 											userService.defineSiteUser(siteUser2, d -> {

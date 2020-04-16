@@ -169,7 +169,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			createSchool(siteRequest, a -> {
 				if(a.succeeded()) {
 					School school = a.result();
-					sqlPOSTSchool(school, b -> {
+					sqlPOSTSchool(school, false, b -> {
 						if(b.succeeded()) {
 							defineIndexSchool(school, c -> {
 								if(c.succeeded()) {
@@ -193,7 +193,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		return promise.future();
 	}
 
-	public void sqlPOSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchool(School o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -208,8 +208,17 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					switch(entityVar) {
 					case "yearKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+							}
 						}
 						break;
 					case "schoolName":
@@ -435,7 +444,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		Promise<School> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHSchool(o, a -> {
+			sqlPATCHSchool(o, false, a -> {
 				if(a.succeeded()) {
 					School school = a.result();
 					defineSchool(school, b -> {
@@ -468,7 +477,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		return promise.future();
 	}
 
-	public void sqlPATCHSchool(School o, Handler<AsyncResult<School>> eventHandler) {
+	public void sqlPATCHSchool(School o, Boolean inheritPk, Handler<AsyncResult<School>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -524,14 +533,36 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						}
 						break;
 					case "addYearKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("schoolKey", Long.parseLong(requestJson.getString(methodName)), "yearKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+							}
+						}
 						break;
 					case "addAllYearKeys":
 						JsonArray addAllYearKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllYearKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("schoolKey", addAllYearKeysValues.getString(i), "yearKeys", pk));
+							Long l = Long.parseLong(addAllYearKeysValues.getString(i));
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+							}
 						}
 						break;
 					case "setYearKeys":
@@ -539,13 +570,35 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", "yearKeys", pk));
 						for(Integer i = 0; i <  setYearKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("schoolKey", Long.parseLong(setYearKeysValues.getString(i)), "yearKeys", pk));
+							Long l = Long.parseLong(setYearKeysValues.getString(i));
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+							}
 						}
 						break;
 					case "removeYearKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("schoolKey", Long.parseLong(requestJson.getString(methodName)), "yearKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(SchoolYear.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+							}
+						}
 						break;
 					case "setSchoolName":
 						if(requestJson.getString(methodName) == null) {
@@ -1040,6 +1093,38 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 	}
 
+	public void sqlPUTImportSchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportSchoolResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		response200PUTImportSchool(siteRequest, a -> {
 			if(a.succeeded()) {
@@ -1216,6 +1301,38 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void sqlPUTMergeSchool(School o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putmergeSchoolResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -1842,7 +1959,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, c -> {
+										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
 												userService.defineSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
@@ -1921,7 +2038,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
-									userService.sqlPATCHSiteUser(siteUser, c -> {
+									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
 											userService.defineSiteUser(siteUser2, d -> {

@@ -173,7 +173,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			createPageDesign(siteRequest, a -> {
 				if(a.succeeded()) {
 					PageDesign pageDesign = a.result();
-					sqlPOSTPageDesign(pageDesign, b -> {
+					sqlPOSTPageDesign(pageDesign, false, b -> {
 						if(b.succeeded()) {
 							defineIndexPageDesign(pageDesign, c -> {
 								if(c.succeeded()) {
@@ -197,7 +197,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		return promise.future();
 	}
 
-	public void sqlPOSTPageDesign(PageDesign o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTPageDesign(PageDesign o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -212,20 +212,47 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					switch(entityVar) {
 					case "childDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+							}
 						}
 						break;
 					case "parentDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+							}
 						}
 						break;
 					case "htmlPartKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							postSql.append(SiteContextEnUS.SQL_addA);
-							postSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
+							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(HtmlPart.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								postSql.append(SiteContextEnUS.SQL_addA);
+								postSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
+							}
 						}
 						break;
 					case "pageDesignCompleteName":
@@ -436,6 +463,38 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		});
 	}
 
+	public void sqlPUTImportPageDesign(PageDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void putimportPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		response200PUTImportPageDesign(siteRequest, a -> {
 			if(a.succeeded()) {
@@ -612,6 +671,38 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void sqlPUTMergePageDesign(PageDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			StringBuilder putSql = new StringBuilder();
+			List<Object> putSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				JsonArray entityVars = jsonObject.getJsonArray("saves");
+				for(Integer i = 0; i < entityVars.size(); i++) {
+					String entityVar = entityVars.getString(i);
+					switch(entityVar) {
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					putSql.toString()
+					, new JsonArray(putSqlParams)
+					, postAsync
+			-> {
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	public void putmergePageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -1056,7 +1147,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		Promise<PageDesign> promise = Promise.promise();
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			sqlPATCHPageDesign(o, a -> {
+			sqlPATCHPageDesign(o, false, a -> {
 				if(a.succeeded()) {
 					PageDesign pageDesign = a.result();
 					definePageDesign(pageDesign, b -> {
@@ -1089,7 +1180,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		return promise.future();
 	}
 
-	public void sqlPATCHPageDesign(PageDesign o, Handler<AsyncResult<PageDesign>> eventHandler) {
+	public void sqlPATCHPageDesign(PageDesign o, Boolean inheritPk, Handler<AsyncResult<PageDesign>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1145,14 +1236,36 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						}
 						break;
 					case "addChildDesignKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+							}
+						}
 						break;
 					case "addAllChildDesignKeys":
 						JsonArray addAllChildDesignKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllChildDesignKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", addAllChildDesignKeysValues.getString(i)));
+							Long l = Long.parseLong(addAllChildDesignKeysValues.getString(i));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+							}
 						}
 						break;
 					case "setChildDesignKeys":
@@ -1160,23 +1273,67 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("childDesignKeys", "parentDesignKeys", pk));
 						for(Integer i = 0; i <  setChildDesignKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", Long.parseLong(setChildDesignKeysValues.getString(i))));
+							Long l = Long.parseLong(setChildDesignKeysValues.getString(i));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+							}
 						}
 						break;
 					case "removeChildDesignKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", pk, "parentDesignKeys", l));
+							}
+						}
 						break;
 					case "addParentDesignKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(requestJson.getString(methodName)), "parentDesignKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+							}
+						}
 						break;
 					case "addAllParentDesignKeys":
 						JsonArray addAllParentDesignKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllParentDesignKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("childDesignKeys", addAllParentDesignKeysValues.getString(i), "parentDesignKeys", pk));
+							Long l = Long.parseLong(addAllParentDesignKeysValues.getString(i));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+							}
 						}
 						break;
 					case "setParentDesignKeys":
@@ -1184,23 +1341,67 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("childDesignKeys", "parentDesignKeys", pk));
 						for(Integer i = 0; i <  setParentDesignKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(setParentDesignKeysValues.getString(i)), "parentDesignKeys", pk));
+							Long l = Long.parseLong(setParentDesignKeysValues.getString(i));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_setA2);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+							}
 						}
 						break;
 					case "removeParentDesignKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("childDesignKeys", Long.parseLong(requestJson.getString(methodName)), "parentDesignKeys", pk));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(PageDesign.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("childDesignKeys", l, "parentDesignKeys", pk));
+							}
+						}
 						break;
 					case "addHtmlPartKeys":
-						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(HtmlPart.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
+							}
+						}
 						break;
 					case "addAllHtmlPartKeys":
 						JsonArray addAllHtmlPartKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllHtmlPartKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", addAllHtmlPartKeysValues.getString(i)));
+							Long l = Long.parseLong(addAllHtmlPartKeysValues.getString(i));
+							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(HtmlPart.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
+							}
 						}
 						break;
 					case "setHtmlPartKeys":
@@ -1208,13 +1409,35 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
 						for(Integer i = 0; i <  setHtmlPartKeysValues.size(); i++) {
-							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", Long.parseLong(setHtmlPartKeysValues.getString(i))));
+							Long l = Long.parseLong(setHtmlPartKeysValues.getString(i));
+							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(HtmlPart.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_addA);
+								patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
+							}
 						}
 						break;
 					case "removeHtmlPartKeys":
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", Long.parseLong(requestJson.getString(methodName))));
+						{
+							Long l = Long.parseLong(requestJson.getString(methodName));
+							SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+							searchList.setQuery("*:*");
+							searchList.setStore(true);
+							searchList.setC(HtmlPart.class);
+							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+							searchList.initDeepSearchList(siteRequest);
+							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+							if(l != null) {
+								patchSql.append(SiteContextEnUS.SQL_removeA);
+								patchSqlParams.addAll(Arrays.asList("htmlPartKeys", pk, "pageDesignKeys", l));
+							}
+						}
 						break;
 					case "setPageDesignCompleteName":
 						if(requestJson.getString(methodName) == null) {
@@ -1889,7 +2112,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, c -> {
+										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
 												userService.defineSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
@@ -1968,7 +2191,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
 
-									userService.sqlPATCHSiteUser(siteUser, c -> {
+									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
 											userService.defineSiteUser(siteUser2, d -> {
