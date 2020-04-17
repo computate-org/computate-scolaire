@@ -239,20 +239,22 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 						e("div").a("class", "w3-xxlarge font-weight-bold ").f().sx(schoolYear.getSchoolLocation()).g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
 							for(SchoolYear yearYear : schoolYear.getYearYears()) {
-								{ e("div").a("class", "w3-cell w3-mobile ").f();
-									for(PageDesign pageDesign : pageDesigns) {
-										try {
-											String url = "/page?var=design:" + URLEncoder.encode(pageDesign.getPageDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
-											{ e("div").a("class", "w3-cell-row ").f();
-												{ e("a").a("href", url).a("class", "").f();
-													e("span").a("class", " ").f().sx(pageDesign.getPageDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
-												} g("a");
-											} g("div");
-										} catch (UnsupportedEncodingException e) {
-											ExceptionUtils.rethrow(e);
+								if(yearYear.getSchoolName() != null && yearYear.getSchoolLocation() != null) {
+									{ e("div").a("class", "w3-cell w3-mobile ").f();
+										for(PageDesign pageDesign : pageDesigns) {
+											try {
+												String url = "/page?var=design:" + URLEncoder.encode(pageDesign.getPageDesignCompleteName(), "UTF-8") + "&fq=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&fq=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&fq=yearStart:" + yearYear.getYearStart();
+												{ e("div").a("class", "w3-cell-row ").f();
+													{ e("a").a("href", url).a("class", "").f();
+														e("span").a("class", " ").f().sx(pageDesign.getPageDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
+													} g("a");
+												} g("div");
+											} catch (UnsupportedEncodingException e) {
+												ExceptionUtils.rethrow(e);
+											}
 										}
-									}
-								} g("div");
+									} g("div");
+								}
 							}
 						} g("div");
 					} g("div");

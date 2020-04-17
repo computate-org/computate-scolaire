@@ -51,7 +51,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _siteContexte_(Couverture<SiteContexteFrFR> c) {
 	}
 
-	private static final Pattern PATTERN_SESSION = Pattern.compile("vertx-web.session=(\\w+)");
+	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+)");
 
 	/**	
 	 * Var.enUS: siteConfig_

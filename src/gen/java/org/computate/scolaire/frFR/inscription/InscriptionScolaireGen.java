@@ -400,6 +400,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -450,6 +452,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1061,6 +1065,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -1111,6 +1117,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1220,6 +1228,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -1270,6 +1280,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1379,6 +1391,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -1429,6 +1443,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1538,6 +1554,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -1588,6 +1606,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1697,6 +1717,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -1747,6 +1769,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1925,6 +1949,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -1975,6 +2001,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								if(
 										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 										|| Objects.equals(sessionId, requeteSite_.getSessionId())
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -3410,6 +3438,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -3452,6 +3482,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -3539,6 +3571,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -3581,6 +3615,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -3685,6 +3721,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -3718,6 +3756,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -4129,6 +4169,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -4171,6 +4213,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -6197,6 +6241,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -6327,6 +6373,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -6457,6 +6505,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -6587,6 +6637,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -6717,6 +6769,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -6842,6 +6896,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "addresse de la famille")
@@ -6882,6 +6938,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -6969,6 +7027,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "comment vous connaissez l'école ? ")
@@ -7009,6 +7069,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7096,6 +7158,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "considérations spéciale")
@@ -7136,6 +7200,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7223,6 +7289,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "conditions médicales")
@@ -7263,6 +7331,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7350,6 +7420,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "écoles précedemment fréqentées")
@@ -7390,6 +7462,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7477,6 +7551,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "description")
@@ -7517,6 +7593,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7604,6 +7682,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("textarea")
 				.a("placeholder", "objectifs")
@@ -7644,6 +7724,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7736,6 +7818,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -7861,6 +7945,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -7903,6 +7989,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -7995,6 +8083,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -8125,6 +8215,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
@@ -8250,6 +8342,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -8292,6 +8386,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -8396,6 +8492,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -8426,6 +8524,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -8847,6 +8947,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -8885,6 +8987,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -9282,6 +9386,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature1").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature1");
@@ -9336,6 +9442,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -9423,6 +9531,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature2").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature2");
@@ -9477,6 +9587,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -9564,6 +9676,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature3").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature3");
@@ -9618,6 +9732,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -9705,6 +9821,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature4").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature4");
@@ -9759,6 +9877,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -9846,6 +9966,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature5").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature5");
@@ -9900,6 +10022,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -9987,6 +10111,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature6").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature6");
@@ -10041,6 +10167,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10128,6 +10256,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature7").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature7");
@@ -10182,6 +10312,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10269,6 +10401,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature8").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature8");
@@ -10323,6 +10457,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10410,6 +10546,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature9").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature9");
@@ -10464,6 +10602,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10551,6 +10691,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature10").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature10");
@@ -10605,6 +10747,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10709,6 +10853,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -10739,6 +10885,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10843,6 +10991,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -10873,6 +11023,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -10977,6 +11129,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11007,6 +11161,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11111,6 +11267,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11141,6 +11299,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11245,6 +11405,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11275,6 +11437,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11379,6 +11543,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11409,6 +11575,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11513,6 +11681,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11543,6 +11713,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11647,6 +11819,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11677,6 +11851,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11781,6 +11957,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11811,6 +11989,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -11915,6 +12095,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(
 				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -11945,6 +12127,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							if(
 									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
 									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 							) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();

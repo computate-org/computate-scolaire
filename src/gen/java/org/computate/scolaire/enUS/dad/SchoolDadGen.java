@@ -236,6 +236,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
@@ -285,6 +287,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 								if(
 										userKeys.contains(siteRequest_.getUserKey())
 										|| Objects.equals(sessionId, siteRequest_.getSessionId())
+										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 								) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -1115,6 +1119,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -1156,6 +1162,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 							if(
 									userKeys.contains(siteRequest_.getUserKey())
 									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 							) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1243,6 +1251,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -1284,6 +1294,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 							if(
 									userKeys.contains(siteRequest_.getUserKey())
 									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 							) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1371,6 +1383,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -1412,6 +1426,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 							if(
 									userKeys.contains(siteRequest_.getUserKey())
 									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 							) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1685,6 +1701,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -1726,6 +1744,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 							if(
 									userKeys.contains(siteRequest_.getUserKey())
 									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 							) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1813,6 +1833,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -1854,6 +1876,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 							if(
 									userKeys.contains(siteRequest_.getUserKey())
 									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 							) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1941,6 +1965,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
 				.a("type", "text")
@@ -1982,6 +2008,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 							if(
 									userKeys.contains(siteRequest_.getUserKey())
 									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 							) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2136,6 +2164,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
@@ -2266,6 +2296,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
@@ -2396,6 +2428,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
@@ -2526,6 +2560,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		if(
 				userKeys.contains(siteRequest_.getUserKey())
 				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")

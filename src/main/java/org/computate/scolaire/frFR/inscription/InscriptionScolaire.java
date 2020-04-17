@@ -116,7 +116,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/       
+*/     
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**

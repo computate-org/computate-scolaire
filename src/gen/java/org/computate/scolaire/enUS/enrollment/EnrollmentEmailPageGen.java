@@ -4,7 +4,6 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
@@ -22,6 +21,7 @@ import org.computate.scolaire.enUS.enrollment.EnrollmentEmailGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
+import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -129,80 +129,80 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 		return (EnrollmentEmailPage)this;
 	}
 
-	//////////////////////////
-	// listEnrollmentDesign //
-	//////////////////////////
+	////////////////////
+	// listPageDesign //
+	////////////////////
 
-	/**	L'entité « listEnrollmentDesign »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
+	/**	L'entité « listPageDesign »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SearchList<EnrollmentDesign> listEnrollmentDesign = new SearchList<EnrollmentDesign>();
+	protected SearchList<PageDesign> listPageDesign = new SearchList<PageDesign>();
 	@JsonIgnore
-	public Wrap<SearchList<EnrollmentDesign>> listEnrollmentDesignWrap = new Wrap<SearchList<EnrollmentDesign>>().p(this).c(SearchList.class).var("listEnrollmentDesign").o(listEnrollmentDesign);
+	public Wrap<SearchList<PageDesign>> listPageDesignWrap = new Wrap<SearchList<PageDesign>>().p(this).c(SearchList.class).var("listPageDesign").o(listPageDesign);
 
-	/**	<br/>L'entité « listEnrollmentDesign »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listEnrollmentDesign">Trouver l'entité listEnrollmentDesign dans Solr</a>
+	/**	<br/>L'entité « listPageDesign »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listPageDesign">Trouver l'entité listPageDesign dans Solr</a>
 	 * <br/>
-	 * @param listEnrollmentDesign est l'entité déjà construit. 
+	 * @param listPageDesign est l'entité déjà construit. 
 	 **/
-	protected abstract void _listEnrollmentDesign(SearchList<EnrollmentDesign> l);
+	protected abstract void _listPageDesign(SearchList<PageDesign> l);
 
-	public SearchList<EnrollmentDesign> getListEnrollmentDesign() {
-		return listEnrollmentDesign;
+	public SearchList<PageDesign> getListPageDesign() {
+		return listPageDesign;
 	}
 
-	public void setListEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign) {
-		this.listEnrollmentDesign = listEnrollmentDesign;
-		this.listEnrollmentDesignWrap.alreadyInitialized = true;
+	public void setListPageDesign(SearchList<PageDesign> listPageDesign) {
+		this.listPageDesign = listPageDesign;
+		this.listPageDesignWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentEmailPage listEnrollmentDesignInit() {
-		if(!listEnrollmentDesignWrap.alreadyInitialized) {
-			_listEnrollmentDesign(listEnrollmentDesign);
+	protected EnrollmentEmailPage listPageDesignInit() {
+		if(!listPageDesignWrap.alreadyInitialized) {
+			_listPageDesign(listPageDesign);
 		}
-		listEnrollmentDesign.initDeepForClass(siteRequest_);
-		listEnrollmentDesignWrap.alreadyInitialized(true);
+		listPageDesign.initDeepForClass(siteRequest_);
+		listPageDesignWrap.alreadyInitialized(true);
 		return (EnrollmentEmailPage)this;
 	}
 
-	//////////////////////
-	// enrollmentDesign //
-	//////////////////////
+	////////////////
+	// pageDesign //
+	////////////////
 
-	/**	L'entité « enrollmentDesign »
+	/**	L'entité « pageDesign »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected EnrollmentDesign enrollmentDesign;
+	protected PageDesign pageDesign;
 	@JsonIgnore
-	public Wrap<EnrollmentDesign> enrollmentDesignWrap = new Wrap<EnrollmentDesign>().p(this).c(EnrollmentDesign.class).var("enrollmentDesign").o(enrollmentDesign);
+	public Wrap<PageDesign> pageDesignWrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("pageDesign").o(pageDesign);
 
-	/**	<br/>L'entité « enrollmentDesign »
+	/**	<br/>L'entité « pageDesign »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDesign">Trouver l'entité enrollmentDesign dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesign">Trouver l'entité pageDesign dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _enrollmentDesign(Wrap<EnrollmentDesign> c);
+	protected abstract void _pageDesign(Wrap<PageDesign> c);
 
-	public EnrollmentDesign getEnrollmentDesign() {
-		return enrollmentDesign;
+	public PageDesign getPageDesign() {
+		return pageDesign;
 	}
 
-	public void setEnrollmentDesign(EnrollmentDesign enrollmentDesign) {
-		this.enrollmentDesign = enrollmentDesign;
-		this.enrollmentDesignWrap.alreadyInitialized = true;
+	public void setPageDesign(PageDesign pageDesign) {
+		this.pageDesign = pageDesign;
+		this.pageDesignWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentEmailPage enrollmentDesignInit() {
-		if(!enrollmentDesignWrap.alreadyInitialized) {
-			_enrollmentDesign(enrollmentDesignWrap);
-			if(enrollmentDesign == null)
-				setEnrollmentDesign(enrollmentDesignWrap.o);
+	protected EnrollmentEmailPage pageDesignInit() {
+		if(!pageDesignWrap.alreadyInitialized) {
+			_pageDesign(pageDesignWrap);
+			if(pageDesign == null)
+				setPageDesign(pageDesignWrap.o);
 		}
-		if(enrollmentDesign != null)
-			enrollmentDesign.initDeepForClass(siteRequest_);
-		enrollmentDesignWrap.alreadyInitialized(true);
+		if(pageDesign != null)
+			pageDesign.initDeepForClass(siteRequest_);
+		pageDesignWrap.alreadyInitialized(true);
 		return (EnrollmentEmailPage)this;
 	}
 
@@ -1492,8 +1492,8 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 	public void initEnrollmentEmailPage() {
 		w1Init();
 		w2Init();
-		listEnrollmentDesignInit();
-		enrollmentDesignInit();
+		listPageDesignInit();
+		pageDesignInit();
 		yearSearchInit();
 		year_Init();
 		enrollmentSearchInit();
@@ -1535,10 +1535,10 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 			w1.setSiteRequest_(siteRequest_);
 		if(w2 != null)
 			w2.setSiteRequest_(siteRequest_);
-		if(listEnrollmentDesign != null)
-			listEnrollmentDesign.setSiteRequest_(siteRequest_);
-		if(enrollmentDesign != null)
-			enrollmentDesign.setSiteRequest_(siteRequest_);
+		if(listPageDesign != null)
+			listPageDesign.setSiteRequest_(siteRequest_);
+		if(pageDesign != null)
+			pageDesign.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
@@ -1585,10 +1585,10 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 				return oEnrollmentEmailPage.w1;
 			case "w2":
 				return oEnrollmentEmailPage.w2;
-			case "listEnrollmentDesign":
-				return oEnrollmentEmailPage.listEnrollmentDesign;
-			case "enrollmentDesign":
-				return oEnrollmentEmailPage.enrollmentDesign;
+			case "listPageDesign":
+				return oEnrollmentEmailPage.listPageDesign;
+			case "pageDesign":
+				return oEnrollmentEmailPage.pageDesign;
 			case "yearSearch":
 				return oEnrollmentEmailPage.yearSearch;
 			case "year_":

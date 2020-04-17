@@ -39,7 +39,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _siteContext_(Wrap<SiteContextEnUS> c) {
 	}
 
-	private static final Pattern PATTERN_SESSION = Pattern.compile("vertx-web.session=(\\w+)");
+	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+)");
 
 	/**	
 	 *	The site configuration. 

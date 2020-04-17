@@ -22,11 +22,10 @@ import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.dad.SchoolDad;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.mom.SchoolMom;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
@@ -39,7 +38,6 @@ import org.xml.sax.SAXException;
 import com.itextpdf.text.DocumentException;
 
 import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.OperationRequest;
 
 /**
@@ -72,12 +70,12 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _listEnrollmentDesign(SearchList<EnrollmentDesign> l) {
+	protected void _listPageDesign(SearchList<PageDesign> l) {
 		String design = siteRequest_.getRequestVars().get("design");
 
 		l.setQuery("*:*");
 		l.addFilterQuery("pageDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(design));
-		l.setC(EnrollmentDesign.class);
+		l.setC(PageDesign.class);
 		l.setStore(true);
 
 		List<String> roles = Arrays.asList("SiteAdmin");
@@ -93,9 +91,9 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _enrollmentDesign(Wrap<EnrollmentDesign> c) {
-		if(listEnrollmentDesign.size() == 1)
-			c.o(listEnrollmentDesign.get(0));
+	protected void _pageDesign(Wrap<PageDesign> c) {
+		if(listPageDesign.size() == 1)
+			c.o(listPageDesign.get(0));
 	}
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
@@ -492,9 +490,9 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 	 * 
 	 **/
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
-		if(enrollmentDesign != null) {
+		if(pageDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("enrollmentDesignKey_indexed_long:" + enrollmentDesign.getPk());
+			l.addFilterQuery("pageDesignKey_indexed_long:" + pageDesign.getPk());
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);

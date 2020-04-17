@@ -18,7 +18,7 @@ import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.dad.SchoolDad;
-import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.mom.SchoolMom;
@@ -75,12 +75,12 @@ public class EnrollmentEmailPage extends EnrollmentEmailPageGen<EnrollmentEmailG
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _listEnrollmentDesign(SearchList<EnrollmentDesign> l) {
+	protected void _listPageDesign(SearchList<PageDesign> l) {
 		if(schoolEnrollment != null && schoolEnrollment.getPk() != null) {
 			l.setQuery("*:*");
 //			l.addFilterQuery("enrollmentKeys_indexed_longs:" + schoolEnrollment.getPk());
 			l.addFilterQuery("pk_indexed_long:12697");
-			l.setC(EnrollmentDesign.class);
+			l.setC(PageDesign.class);
 			l.setStore(true);
 		}
 	}
@@ -89,9 +89,9 @@ public class EnrollmentEmailPage extends EnrollmentEmailPageGen<EnrollmentEmailG
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _enrollmentDesign(Wrap<EnrollmentDesign> c) {
-		if(listEnrollmentDesign.size() == 1)
-			c.o(listEnrollmentDesign.get(0));
+	protected void _pageDesign(Wrap<PageDesign> c) {
+		if(listPageDesign.size() == 1)
+			c.o(listPageDesign.get(0));
 	}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
@@ -294,9 +294,9 @@ public class EnrollmentEmailPage extends EnrollmentEmailPageGen<EnrollmentEmailG
 	 * 
 	 **/
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
-		if(enrollmentDesign != null) {
+		if(pageDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("enrollmentDesignKey_indexed_long:" + enrollmentDesign.getPk());
+			l.addFilterQuery("pageDesignKey_indexed_long:" + pageDesign.getPk());
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);
