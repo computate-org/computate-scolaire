@@ -238,7 +238,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
 								postSql.append(SiteContextEnUS.SQL_addA);
-								postSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", Long.parseLong(jsonObject.getString(entityVar))));
+								postSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
 							}
 						}
 						break;

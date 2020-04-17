@@ -240,7 +240,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
 								postSql.append(SiteContexteFrFR.SQL_addA);
-								postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", Long.parseLong(jsonObject.getString(entiteVar))));
+								postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", l));
 							}
 						}
 						break;

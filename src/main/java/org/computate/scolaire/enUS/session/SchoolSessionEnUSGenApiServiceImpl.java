@@ -255,7 +255,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
 								postSql.append(SiteContextEnUS.SQL_addA);
-								postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", Long.parseLong(jsonObject.getString(entityVar))));
+								postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", l));
 							}
 						}
 						break;
