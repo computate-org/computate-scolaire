@@ -725,6 +725,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -747,6 +749,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportInscriptionScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -906,6 +910,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						if(a.succeeded()) {
 							InscriptionScolaire inscriptionScolaire = a.result();
 							requeteApiInscriptionScolaire(inscriptionScolaire);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -928,6 +934,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionInscriptionScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

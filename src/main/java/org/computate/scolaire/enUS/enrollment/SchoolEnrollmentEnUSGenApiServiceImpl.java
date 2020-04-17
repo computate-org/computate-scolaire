@@ -725,6 +725,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(a.succeeded()) {
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolEnrollment(siteRequest2, eventHandler, a);
 						}
@@ -747,6 +749,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolEnrollment(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -906,6 +910,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(a.succeeded()) {
 							SchoolEnrollment schoolEnrollment = a.result();
 							apiRequestSchoolEnrollment(schoolEnrollment);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolEnrollment(siteRequest2, eventHandler, a);
 						}
@@ -928,6 +934,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolEnrollment(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
