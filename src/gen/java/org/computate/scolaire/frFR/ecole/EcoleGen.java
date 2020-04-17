@@ -873,7 +873,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNom;
 	@JsonIgnore
@@ -995,7 +994,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNumeroTelephone »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNumeroTelephone;
 	@JsonIgnore
@@ -1117,7 +1115,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleAdministrateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleAdministrateurNom;
 	@JsonIgnore
@@ -1239,7 +1236,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleMail »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleMail;
 	@JsonIgnore
@@ -1361,7 +1357,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleEmplacement »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleEmplacement;
 	@JsonIgnore
@@ -1483,7 +1478,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleAddresse »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleAddresse;
 	@JsonIgnore
@@ -1603,7 +1597,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNomCourt »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNomCourt;
 	@JsonIgnore
@@ -1666,7 +1659,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNomComplet;
 	@JsonIgnore

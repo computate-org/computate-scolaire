@@ -495,7 +495,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurId »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurId;
 	@JsonIgnore
@@ -771,7 +770,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNom;
 	@JsonIgnore
@@ -902,7 +900,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurMail »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurMail;
 	@JsonIgnore
@@ -1033,7 +1030,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurPrenom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurPrenom;
 	@JsonIgnore
@@ -1096,7 +1092,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNomFamille »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomFamille;
 	@JsonIgnore
@@ -1159,7 +1154,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurNomComplet;
 	@JsonIgnore
@@ -1222,7 +1216,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurSite »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String utilisateurSite;
 	@JsonIgnore
@@ -1285,7 +1278,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « customerProfileId »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String customerProfileId;
 	@JsonIgnore
@@ -1420,7 +1412,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurRecevoirCourriels »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean utilisateurRecevoirCourriels;
 	@JsonIgnore
@@ -1556,7 +1547,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « voirArchive »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean voirArchive;
 	@JsonIgnore
@@ -1692,7 +1682,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	/**	L'entité « voirSupprime »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean voirSupprime;
 	@JsonIgnore

@@ -301,7 +301,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlLien »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlLien;
 	@JsonIgnore
@@ -422,7 +421,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlElement »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlElement;
 	@JsonIgnore
@@ -543,7 +541,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlId »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlId;
 	@JsonIgnore
@@ -664,7 +661,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlClasses »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlClasses;
 	@JsonIgnore
@@ -785,7 +781,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlStyle »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlStyle;
 	@JsonIgnore
@@ -906,7 +901,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlAvant »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlAvant;
 	@JsonIgnore
@@ -1025,7 +1019,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlApres »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlApres;
 	@JsonIgnore
@@ -1144,7 +1137,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlTexte »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlTexte;
 	@JsonIgnore
@@ -1263,7 +1255,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVar »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVar;
 	@JsonIgnore
@@ -1384,7 +1375,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarSpan »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarSpan;
 	@JsonIgnore
@@ -1505,7 +1495,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarForm »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarForm;
 	@JsonIgnore
@@ -1626,7 +1615,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarInput »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarInput;
 	@JsonIgnore
@@ -1747,7 +1735,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlVarForEach »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String htmlVarForEach;
 	@JsonIgnore
@@ -1868,7 +1855,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « htmlExclure »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean htmlExclure;
 	@JsonIgnore
@@ -1994,7 +1980,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « pdfExclure »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean pdfExclure;
 	@JsonIgnore
@@ -2120,7 +2105,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	/**	L'entité « connecterDeconnecter »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean connecterDeconnecter;
 	@JsonIgnore

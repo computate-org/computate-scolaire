@@ -808,7 +808,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNom;
 	@JsonIgnore
@@ -871,7 +870,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNomComplet;
 	@JsonIgnore
@@ -934,7 +932,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleEmplacement »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleEmplacement;
 	@JsonIgnore
@@ -997,7 +994,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleAddresse »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleAddresse;
 	@JsonIgnore
@@ -1060,7 +1056,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleNumeroTelephone »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleNumeroTelephone;
 	@JsonIgnore
@@ -1123,7 +1118,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « ecoleAdministrateurNom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String ecoleAdministrateurNom;
 	@JsonIgnore
@@ -1650,7 +1644,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneesAnnee »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<AnneeScolaire>(). 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<AnneeScolaire> anneesAnnee = new java.util.ArrayList<org.computate.scolaire.frFR.annee.AnneeScolaire>();
 	@JsonIgnore
@@ -1698,7 +1691,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeNomCourt »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String anneeNomCourt;
 	@JsonIgnore
@@ -1761,7 +1753,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	/**	L'entité « anneeNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String anneeNomComplet;
 	@JsonIgnore

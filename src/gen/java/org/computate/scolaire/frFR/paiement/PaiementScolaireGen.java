@@ -387,6 +387,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « utilisateurCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -956,6 +957,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « mereCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> mereCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -1042,6 +1044,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « pereCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> pereCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -1128,6 +1131,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « gardienCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> gardienCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore

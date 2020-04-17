@@ -642,7 +642,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	/**	L'entité « designPageNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String designPageNomComplet;
 	@JsonIgnore
@@ -771,7 +770,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	/**	L'entité « designCache »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected Boolean designCache;
 	@JsonIgnore

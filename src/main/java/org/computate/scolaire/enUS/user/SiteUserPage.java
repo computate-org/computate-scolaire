@@ -129,7 +129,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 					yearYears = year.getYearYears();
 					schoolYears.add(year);
 				}
-				yearYears.add(year);
+				if(yearYears != null)
+					yearYears.add(year);
 				i++;
 			}
 		}

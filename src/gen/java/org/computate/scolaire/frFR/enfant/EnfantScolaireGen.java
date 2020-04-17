@@ -1062,7 +1062,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « personnePrenom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String personnePrenom;
 	@JsonIgnore
@@ -1191,7 +1190,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « personnePrenomPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String personnePrenomPrefere;
 	@JsonIgnore
@@ -1320,7 +1318,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « familleNom »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String familleNom;
 	@JsonIgnore
@@ -1449,7 +1446,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « personneNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String personneNomComplet;
 	@JsonIgnore
@@ -1512,7 +1508,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « personneNomCompletPrefere »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String personneNomCompletPrefere;
 	@JsonIgnore
@@ -1575,7 +1570,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « personneNomFormel »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String personneNomFormel;
 	@JsonIgnore
@@ -1774,7 +1768,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « personneAgeEnSeptembre »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String personneAgeEnSeptembre;
 	@JsonIgnore
@@ -1863,7 +1856,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected String enfantNomComplet;
 	@JsonIgnore

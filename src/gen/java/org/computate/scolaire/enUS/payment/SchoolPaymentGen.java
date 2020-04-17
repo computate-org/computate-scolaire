@@ -385,6 +385,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	/**	L'entité « userKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -954,6 +955,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	/**	L'entité « momKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> momKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -1040,6 +1042,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	/**	L'entité « dadKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> dadKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -1126,6 +1129,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	/**	L'entité « guardianKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> guardianKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore

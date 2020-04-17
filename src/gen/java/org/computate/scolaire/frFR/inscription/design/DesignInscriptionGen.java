@@ -222,6 +222,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « partHtmlCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> partHtmlCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
@@ -334,6 +335,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
