@@ -450,6 +450,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						if(a.succeeded()) {
 							SessionScolaire sessionScolaire = a.result();
 							requeteApiSessionScolaire(sessionScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -472,6 +474,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportSessionScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurSessionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -631,6 +635,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						if(a.succeeded()) {
 							SessionScolaire sessionScolaire = a.result();
 							requeteApiSessionScolaire(sessionScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -653,6 +659,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionSessionScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurSessionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

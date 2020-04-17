@@ -1108,6 +1108,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						if(a.succeeded()) {
 							School school = a.result();
 							apiRequestSchool(school);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchool(siteRequest2, eventHandler, a);
 						}
@@ -1130,6 +1132,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchool(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -1289,6 +1293,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						if(a.succeeded()) {
 							School school = a.result();
 							apiRequestSchool(school);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchool(siteRequest2, eventHandler, a);
 						}
@@ -1311,6 +1317,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchool(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchool(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

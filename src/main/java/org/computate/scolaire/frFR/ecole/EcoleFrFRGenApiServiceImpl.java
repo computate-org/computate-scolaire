@@ -1108,6 +1108,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						if(a.succeeded()) {
 							Ecole ecole = a.result();
 							requeteApiEcole(ecole);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurEcole(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -1130,6 +1132,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportEcole(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurEcole(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -1289,6 +1293,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						if(a.succeeded()) {
 							Ecole ecole = a.result();
 							requeteApiEcole(ecole);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurEcole(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -1311,6 +1317,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionEcole(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurEcole(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

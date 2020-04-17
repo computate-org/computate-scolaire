@@ -464,6 +464,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -486,6 +488,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportDesignPage(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignPage(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -645,6 +649,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						if(a.succeeded()) {
 							DesignPage designPage = a.result();
 							requeteApiDesignPage(designPage);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -667,6 +673,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionDesignPage(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignPage(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

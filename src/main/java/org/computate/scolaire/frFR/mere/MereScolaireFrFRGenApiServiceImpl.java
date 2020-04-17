@@ -458,6 +458,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						if(a.succeeded()) {
 							MereScolaire mereScolaire = a.result();
 							requeteApiMereScolaire(mereScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -480,6 +482,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportMereScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurMereScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -639,6 +643,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						if(a.succeeded()) {
 							MereScolaire mereScolaire = a.result();
 							requeteApiMereScolaire(mereScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -661,6 +667,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionMereScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurMereScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

@@ -522,6 +522,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -544,6 +546,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportPartHtml(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -703,6 +707,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApiPartHtml(partHtml);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -725,6 +731,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionPartHtml(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

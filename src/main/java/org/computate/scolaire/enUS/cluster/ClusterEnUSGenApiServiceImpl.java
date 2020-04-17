@@ -399,6 +399,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorCluster(siteRequest2, eventHandler, a);
 						}
@@ -421,6 +423,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportCluster(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -580,6 +584,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							apiRequestCluster(cluster);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorCluster(siteRequest2, eventHandler, a);
 						}
@@ -602,6 +608,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeCluster(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

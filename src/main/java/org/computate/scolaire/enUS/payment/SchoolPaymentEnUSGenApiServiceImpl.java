@@ -515,6 +515,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						if(a.succeeded()) {
 							SchoolPayment schoolPayment = a.result();
 							apiRequestSchoolPayment(schoolPayment);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolPayment(siteRequest2, eventHandler, a);
 						}
@@ -537,6 +539,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolPayment(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolPayment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -696,6 +700,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						if(a.succeeded()) {
 							SchoolPayment schoolPayment = a.result();
 							apiRequestSchoolPayment(schoolPayment);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolPayment(siteRequest2, eventHandler, a);
 						}
@@ -718,6 +724,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolPayment(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolPayment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

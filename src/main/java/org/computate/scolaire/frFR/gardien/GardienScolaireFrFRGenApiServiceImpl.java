@@ -446,6 +446,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -468,6 +470,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportGardienScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -627,6 +631,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						if(a.succeeded()) {
 							GardienScolaire gardienScolaire = a.result();
 							requeteApiGardienScolaire(gardienScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -649,6 +655,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionGardienScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

@@ -515,6 +515,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						if(a.succeeded()) {
 							PaiementScolaire paiementScolaire = a.result();
 							requeteApiPaiementScolaire(paiementScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -537,6 +539,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportPaiementScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPaiementScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -696,6 +700,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						if(a.succeeded()) {
 							PaiementScolaire paiementScolaire = a.result();
 							requeteApiPaiementScolaire(paiementScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -718,6 +724,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionPaiementScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPaiementScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

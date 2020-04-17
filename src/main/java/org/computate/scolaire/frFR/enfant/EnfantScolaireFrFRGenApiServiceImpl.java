@@ -434,6 +434,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						if(a.succeeded()) {
 							EnfantScolaire enfantScolaire = a.result();
 							requeteApiEnfantScolaire(enfantScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -456,6 +458,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportEnfantScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurEnfantScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -615,6 +619,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						if(a.succeeded()) {
 							EnfantScolaire enfantScolaire = a.result();
 							requeteApiEnfantScolaire(enfantScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -637,6 +643,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionEnfantScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurEnfantScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

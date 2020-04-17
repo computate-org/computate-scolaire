@@ -454,6 +454,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolSeason(siteRequest2, eventHandler, a);
 						}
@@ -476,6 +478,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolSeason(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolSeason(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -635,6 +639,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						if(a.succeeded()) {
 							SchoolSeason schoolSeason = a.result();
 							apiRequestSchoolSeason(schoolSeason);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolSeason(siteRequest2, eventHandler, a);
 						}
@@ -657,6 +663,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolSeason(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolSeason(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

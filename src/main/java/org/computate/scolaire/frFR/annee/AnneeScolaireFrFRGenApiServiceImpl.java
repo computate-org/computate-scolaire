@@ -450,6 +450,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						if(a.succeeded()) {
 							AnneeScolaire anneeScolaire = a.result();
 							requeteApiAnneeScolaire(anneeScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -472,6 +474,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportAnneeScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurAnneeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -631,6 +635,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						if(a.succeeded()) {
 							AnneeScolaire anneeScolaire = a.result();
 							requeteApiAnneeScolaire(anneeScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -653,6 +659,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionAnneeScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurAnneeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

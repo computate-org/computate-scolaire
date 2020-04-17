@@ -464,6 +464,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorPageDesign(siteRequest2, eventHandler, a);
 						}
@@ -486,6 +488,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportPageDesign(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -645,6 +649,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						if(a.succeeded()) {
 							PageDesign pageDesign = a.result();
 							apiRequestPageDesign(pageDesign);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorPageDesign(siteRequest2, eventHandler, a);
 						}
@@ -667,6 +673,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergePageDesign(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

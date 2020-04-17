@@ -413,6 +413,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						if(a.succeeded()) {
 							DesignInscription designInscription = a.result();
 							requeteApiDesignInscription(designInscription);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -435,6 +437,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportDesignInscription(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignInscription(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -594,6 +598,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						if(a.succeeded()) {
 							DesignInscription designInscription = a.result();
 							requeteApiDesignInscription(designInscription);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -616,6 +622,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionDesignInscription(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignInscription(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

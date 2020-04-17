@@ -454,6 +454,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						if(a.succeeded()) {
 							SaisonScolaire saisonScolaire = a.result();
 							requeteApiSaisonScolaire(saisonScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -476,6 +478,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportSaisonScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurSaisonScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -635,6 +639,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						if(a.succeeded()) {
 							SaisonScolaire saisonScolaire = a.result();
 							requeteApiSaisonScolaire(saisonScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -657,6 +663,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionSaisonScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurSaisonScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

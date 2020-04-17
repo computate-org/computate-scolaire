@@ -450,6 +450,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -472,6 +474,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportAgeScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurAgeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -631,6 +635,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						if(a.succeeded()) {
 							AgeScolaire ageScolaire = a.result();
 							requeteApiAgeScolaire(ageScolaire);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurAgeScolaire(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -653,6 +659,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionAgeScolaire(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurAgeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

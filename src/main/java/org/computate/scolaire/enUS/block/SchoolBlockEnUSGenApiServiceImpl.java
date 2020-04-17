@@ -474,6 +474,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolBlock(siteRequest2, eventHandler, a);
 						}
@@ -496,6 +498,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolBlock(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -655,6 +659,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						if(a.succeeded()) {
 							SchoolBlock schoolBlock = a.result();
 							apiRequestSchoolBlock(schoolBlock);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolBlock(siteRequest2, eventHandler, a);
 						}
@@ -677,6 +683,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolBlock(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

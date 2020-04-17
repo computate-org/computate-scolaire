@@ -399,6 +399,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurCluster(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -421,6 +423,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportCluster(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -580,6 +584,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						if(a.succeeded()) {
 							Cluster cluster = a.result();
 							requeteApiCluster(cluster);
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurCluster(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -602,6 +608,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionCluster(requeteSite, gestionnaireEvenements);
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+				requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}

@@ -458,6 +458,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 						if(a.succeeded()) {
 							SchoolMom schoolMom = a.result();
 							apiRequestSchoolMom(schoolMom);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolMom(siteRequest2, eventHandler, a);
 						}
@@ -480,6 +482,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolMom(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -639,6 +643,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 						if(a.succeeded()) {
 							SchoolMom schoolMom = a.result();
 							apiRequestSchoolMom(schoolMom);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolMom(siteRequest2, eventHandler, a);
 						}
@@ -661,6 +667,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolMom(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

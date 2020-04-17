@@ -450,6 +450,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						if(a.succeeded()) {
 							SchoolYear schoolYear = a.result();
 							apiRequestSchoolYear(schoolYear);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolYear(siteRequest2, eventHandler, a);
 						}
@@ -472,6 +474,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolYear(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolYear(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -631,6 +635,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						if(a.succeeded()) {
 							SchoolYear schoolYear = a.result();
 							apiRequestSchoolYear(schoolYear);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolYear(siteRequest2, eventHandler, a);
 						}
@@ -653,6 +659,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolYear(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolYear(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

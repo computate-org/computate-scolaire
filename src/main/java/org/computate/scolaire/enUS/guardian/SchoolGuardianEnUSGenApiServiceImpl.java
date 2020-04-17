@@ -446,6 +446,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						if(a.succeeded()) {
 							SchoolGuardian schoolGuardian = a.result();
 							apiRequestSchoolGuardian(schoolGuardian);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolGuardian(siteRequest2, eventHandler, a);
 						}
@@ -468,6 +470,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolGuardian(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -627,6 +631,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						if(a.succeeded()) {
 							SchoolGuardian schoolGuardian = a.result();
 							apiRequestSchoolGuardian(schoolGuardian);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolGuardian(siteRequest2, eventHandler, a);
 						}
@@ -649,6 +655,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolGuardian(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

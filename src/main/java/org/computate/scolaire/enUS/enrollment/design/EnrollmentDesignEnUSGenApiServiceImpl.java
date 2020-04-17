@@ -407,6 +407,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						if(a.succeeded()) {
 							EnrollmentDesign enrollmentDesign = a.result();
 							apiRequestEnrollmentDesign(enrollmentDesign);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorEnrollmentDesign(siteRequest2, eventHandler, a);
 						}
@@ -429,6 +431,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportEnrollmentDesign(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -588,6 +592,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						if(a.succeeded()) {
 							EnrollmentDesign enrollmentDesign = a.result();
 							apiRequestEnrollmentDesign(enrollmentDesign);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorEnrollmentDesign(siteRequest2, eventHandler, a);
 						}
@@ -610,6 +616,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeEnrollmentDesign(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

@@ -522,6 +522,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
@@ -544,6 +546,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportHtmlPart(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -703,6 +707,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						if(a.succeeded()) {
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
@@ -725,6 +731,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeHtmlPart(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}

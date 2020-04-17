@@ -43,7 +43,7 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		String design = siteRequest_.getRequestVars().get("design");
 
 		l.setQuery("*:*");
-		l.addFilterQuery("enrollmentDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(design));
+		l.addFilterQuery("pageDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(design));
 		l.setC(EnrollmentDesign.class);
 		l.setStore(true);
 

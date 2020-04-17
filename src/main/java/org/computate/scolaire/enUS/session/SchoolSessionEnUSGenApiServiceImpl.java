@@ -450,6 +450,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolSession(siteRequest2, eventHandler, a);
 						}
@@ -472,6 +474,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolSession(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolSession(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -631,6 +635,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						if(a.succeeded()) {
 							SchoolSession schoolSession = a.result();
 							apiRequestSchoolSession(schoolSession);
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 						} else {
 							errorSchoolSession(siteRequest2, eventHandler, a);
 						}
@@ -653,6 +659,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolSession(siteRequest, eventHandler);
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolSession(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
