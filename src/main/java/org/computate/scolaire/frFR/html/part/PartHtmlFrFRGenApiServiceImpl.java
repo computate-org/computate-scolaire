@@ -228,16 +228,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "designPageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-							listeRecherche.setQuery("*:*");
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(DesignPage.class);
-							listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								postSql.append(SiteContexteFrFR.SQL_addA);
-								postSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									postSql.append(SiteContexteFrFR.SQL_addA);
+									postSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								}
 							}
 						}
 						break;
@@ -1376,16 +1378,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "addDesignPageCles":
 						{
 							Long l = Long.parseLong(requeteJson.getString(methodeNom));
-							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-							listeRecherche.setQuery("*:*");
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(DesignPage.class);
-							listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								patchSql.append(SiteContexteFrFR.SQL_addA);
-								patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								}
 							}
 						}
 						break;
@@ -1393,16 +1397,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						JsonArray addAllDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllDesignPageClesValeurs.size(); i++) {
 							Long l = Long.parseLong(addAllDesignPageClesValeurs.getString(i));
-							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-							listeRecherche.setQuery("*:*");
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(DesignPage.class);
-							listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								patchSql.append(SiteContexteFrFR.SQL_addA);
-								patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								}
 							}
 						}
 						break;
@@ -1412,32 +1418,36 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles"));
 						for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
 							Long l = Long.parseLong(setDesignPageClesValeurs.getString(i));
-							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-							listeRecherche.setQuery("*:*");
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(DesignPage.class);
-							listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								patchSql.append(SiteContexteFrFR.SQL_addA);
-								patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								}
 							}
 						}
 						break;
 					case "removeDesignPageCles":
 						{
 							Long l = Long.parseLong(requeteJson.getString(methodeNom));
-							ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-							listeRecherche.setQuery("*:*");
-							listeRecherche.setStocker(true);
-							listeRecherche.setC(DesignPage.class);
-							listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							listeRecherche.initLoinListeRecherche(requeteSite);
-							l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								patchSql.append(SiteContexteFrFR.SQL_removeA);
-								patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+								}
 							}
 						}
 						break;

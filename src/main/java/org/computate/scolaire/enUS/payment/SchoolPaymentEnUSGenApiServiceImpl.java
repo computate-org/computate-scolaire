@@ -229,16 +229,18 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "enrollmentKey":
 						{
 							Long l = Long.parseLong(jsonObject.getString(entityVar));
-							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(SchoolEnrollment.class);
-							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								postSql.append(SiteContextEnUS.SQL_addA);
-								postSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolEnrollment.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									postSql.append(SiteContextEnUS.SQL_addA);
+									postSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+								}
 							}
 						}
 						break;
@@ -1359,34 +1361,38 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setEnrollmentKey":
 						{
 							Long l = o2.getEnrollmentKey();
-							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(SchoolEnrollment.class);
-							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								o2.setEnrollmentKey(requestJson.getString(methodName));
-								patchSql.append(SiteContextEnUS.SQL_setA1);
-								patchSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolEnrollment.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									o2.setEnrollmentKey(requestJson.getString(methodName));
+									patchSql.append(SiteContextEnUS.SQL_setA1);
+									patchSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+								}
 							}
 						}
 						break;
 					case "removeEnrollmentKey":
 						{
 							Long l = o2.getEnrollmentKey();
-							SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-							searchList.setQuery("*:*");
-							searchList.setStore(true);
-							searchList.setC(SchoolEnrollment.class);
-							searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-							searchList.initDeepSearchList(siteRequest);
-							l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 							if(l != null) {
-								o2.setEnrollmentKey(requestJson.getString(methodName));
-								patchSql.append(SiteContextEnUS.SQL_removeA);
-								patchSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolEnrollment.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l != null) {
+									o2.setEnrollmentKey(requestJson.getString(methodName));
+									patchSql.append(SiteContextEnUS.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+								}
 							}
 						}
 						break;
