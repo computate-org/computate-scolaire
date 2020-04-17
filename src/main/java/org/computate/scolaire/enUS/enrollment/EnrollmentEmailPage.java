@@ -296,7 +296,7 @@ public class EnrollmentEmailPage extends EnrollmentEmailPageGen<EnrollmentEmailG
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
 		if(pageDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("pageDesignKey_indexed_long:" + pageDesign.getPk());
+			l.addFilterQuery("pageDesignKeys_indexed_longs:" + pageDesign.getPk());
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);
