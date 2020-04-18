@@ -1,25 +1,33 @@
 package org.computate.scolaire.frFR.contexte;
 
-import java.math.MathContext;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import io.vertx.core.Vertx;
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.OAuth2AuthHandler;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.WorkerExecutor;
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.math.NumberUtils;
-import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import io.vertx.core.Vertx;
+import io.vertx.ext.web.handler.OAuth2AuthHandler;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.lang.Object;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.sql.SQLClient;
@@ -37,6 +45,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « vertx »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Vertx vertx;
 	@JsonIgnore
 	public Couverture<Vertx> vertxCouverture = new Couverture<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
@@ -74,6 +83,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « usineRouteur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OpenAPI3RouterFactory usineRouteur;
 	@JsonIgnore
 	public Couverture<OpenAPI3RouterFactory> usineRouteurCouverture = new Couverture<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("usineRouteur").o(usineRouteur);
@@ -111,6 +121,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « routeur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Router routeur;
 	@JsonIgnore
 	public Couverture<Router> routeurCouverture = new Couverture<Router>().p(this).c(Router.class).var("routeur").o(routeur);
@@ -148,6 +159,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « gestionnaireAuth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OAuth2AuthHandler gestionnaireAuth;
 	@JsonIgnore
 	public Couverture<OAuth2AuthHandler> gestionnaireAuthCouverture = new Couverture<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("gestionnaireAuth").o(gestionnaireAuth);
@@ -185,6 +197,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « authFournisseur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OAuth2Auth authFournisseur;
 	@JsonIgnore
 	public Couverture<OAuth2Auth> authFournisseurCouverture = new Couverture<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authFournisseur").o(authFournisseur);
@@ -222,6 +235,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « executeurTravailleur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected WorkerExecutor executeurTravailleur;
 	@JsonIgnore
 	public Couverture<WorkerExecutor> executeurTravailleurCouverture = new Couverture<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("executeurTravailleur").o(executeurTravailleur);
@@ -259,6 +273,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « configSite »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ConfigSite(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected ConfigSite configSite = new ConfigSite();
 	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
@@ -295,6 +310,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « clientSql »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SQLClient clientSql;
 	@JsonIgnore
 	public Couverture<SQLClient> clientSqlCouverture = new Couverture<SQLClient>().p(this).c(SQLClient.class).var("clientSql").o(clientSql);
@@ -332,6 +348,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « clientSolr »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected HttpSolrClient clientSolr;
 	@JsonIgnore
 	public Couverture<HttpSolrClient> clientSolrCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolr").o(clientSolr);
@@ -369,6 +386,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « mailClient »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected MailClient mailClient;
 	@JsonIgnore
 	public Couverture<MailClient> mailClientCouverture = new Couverture<MailClient>().p(this).c(MailClient.class).var("mailClient").o(mailClient);
@@ -406,6 +424,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	/**	L'entité « clientSolrComputate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected HttpSolrClient clientSolrComputate;
 	@JsonIgnore
 	public Couverture<HttpSolrClient> clientSolrComputateCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolrComputate").o(clientSolrComputate);

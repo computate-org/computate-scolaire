@@ -16,13 +16,20 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	protected void _pageDesignKeys(List<Long> l) {
 		if(pageDesignKeys.size() > 0) {
 			SearchList<PageDesign> r = new SearchList<>();
-			r.setQuery("*:*");
-			r.setC(PageDesign.class);
-			r.setStore(true);
-			for(Long c : pageDesignKeys)
-				r.addFilterQuery("parentDesignKeys_indexed_longs:" + c);
-			r.initDeepSearchList(siteRequest_);
-			l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
+			StringBuilder fq = new StringBuilder();
+			for(Long c : pageDesignKeys) {
+				if(fq.length() > 0)
+					fq.append(" OR ");
+				fq.append("parentDesignKeys_indexed_longs:").append(c);
+			}
+			if(fq.length() > 0) {
+				r.setQuery("*:*");
+				r.setC(PageDesign.class);
+				r.setStore(true);
+				r.addFilterQuery(fq.toString());
+				r.initDeepSearchList(siteRequest_);
+				l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
+			}
 		}
 	}
 

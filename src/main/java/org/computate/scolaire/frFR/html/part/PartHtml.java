@@ -138,13 +138,20 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	protected void _designPageCles(List<Long> l) {
 		if(designPageCles.size() > 0) {
 			ListeRecherche<DesignPage> r = new ListeRecherche<>();
-			r.setQuery("*:*");
-			r.setC(DesignPage.class);
-			r.setStocker(true);
-			for(Long c : designPageCles)
-				r.addFilterQuery("designParentCles_indexed_longs:" + c);
-			r.initLoinListeRecherche(requeteSite_);
-			l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
+			StringBuilder fq = new StringBuilder();
+			for(Long c : designPageCles) {
+				if(fq.length() > 0)
+					fq.append(" OR ");
+				fq.append("designParentCles_indexed_longs:").append(c);
+			}
+			if(fq.length() > 0) {
+				r.setQuery("*:*");
+				r.setC(DesignPage.class);
+				r.setStocker(true);
+				r.addFilterQuery(fq.toString());
+				r.initLoinListeRecherche(requeteSite_);
+				l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
+			}
 		}
 	}
 

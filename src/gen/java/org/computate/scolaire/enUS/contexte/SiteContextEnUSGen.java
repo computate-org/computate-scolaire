@@ -1,25 +1,33 @@
 package org.computate.scolaire.enUS.contexte;
 
-import java.math.MathContext;
-import org.computate.scolaire.enUS.cluster.Cluster;
-import io.vertx.core.Vertx;
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.OAuth2AuthHandler;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.WorkerExecutor;
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.math.NumberUtils;
-import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import io.vertx.core.Vertx;
+import io.vertx.ext.web.handler.OAuth2AuthHandler;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.lang.Object;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.sql.SQLClient;
@@ -37,6 +45,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « vertx »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Vertx vertx;
 	@JsonIgnore
 	public Wrap<Vertx> vertxWrap = new Wrap<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
@@ -74,6 +83,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « routerFactory »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OpenAPI3RouterFactory routerFactory;
 	@JsonIgnore
 	public Wrap<OpenAPI3RouterFactory> routerFactoryWrap = new Wrap<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("routerFactory").o(routerFactory);
@@ -111,6 +121,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « router »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Router router;
 	@JsonIgnore
 	public Wrap<Router> routerWrap = new Wrap<Router>().p(this).c(Router.class).var("router").o(router);
@@ -148,6 +159,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « authHandler »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OAuth2AuthHandler authHandler;
 	@JsonIgnore
 	public Wrap<OAuth2AuthHandler> authHandlerWrap = new Wrap<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("authHandler").o(authHandler);
@@ -185,6 +197,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « authProvider »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected OAuth2Auth authProvider;
 	@JsonIgnore
 	public Wrap<OAuth2Auth> authProviderWrap = new Wrap<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authProvider").o(authProvider);
@@ -222,6 +235,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « workerExecutor »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected WorkerExecutor workerExecutor;
 	@JsonIgnore
 	public Wrap<WorkerExecutor> workerExecutorWrap = new Wrap<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("workerExecutor").o(workerExecutor);
@@ -259,6 +273,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « siteConfig »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteConfig(). 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteConfig siteConfig = new SiteConfig();
 	@JsonIgnore
 	public Wrap<SiteConfig> siteConfigWrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig").o(siteConfig);
@@ -295,6 +310,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « sqlClient »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SQLClient sqlClient;
 	@JsonIgnore
 	public Wrap<SQLClient> sqlClientWrap = new Wrap<SQLClient>().p(this).c(SQLClient.class).var("sqlClient").o(sqlClient);
@@ -332,6 +348,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « solrClient »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected HttpSolrClient solrClient;
 	@JsonIgnore
 	public Wrap<HttpSolrClient> solrClientWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("solrClient").o(solrClient);
@@ -369,6 +386,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « mailClient »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected MailClient mailClient;
 	@JsonIgnore
 	public Wrap<MailClient> mailClientWrap = new Wrap<MailClient>().p(this).c(MailClient.class).var("mailClient").o(mailClient);
@@ -406,6 +424,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	/**	L'entité « solrClientComputate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected HttpSolrClient solrClientComputate;
 	@JsonIgnore
 	public Wrap<HttpSolrClient> solrClientComputateWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("solrClientComputate").o(solrClientComputate);

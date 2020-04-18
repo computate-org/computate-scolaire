@@ -146,7 +146,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: id_utilisateur
 	 * r.enUS: user_id
 	 */
-	public static final String SQL_createTableC = "create table if not exists c(pk bigserial primary key, ajour boolean, nom_canonique text, cree timestamp with time zone default now(), modifie timestamp with time zone default now(), id_utilisateur text); ";
+	public static final String SQL_createTableC = "create table if not exists c(pk bigserial primary key, ajour boolean, nom_canonique text, cree timestamp with time zone, modifie timestamp with time zone, id_utilisateur text); ";
 
 	/**
 	 * enUS: A SQL query for creating a unique index on the "c" table based on the pk, canonical_name, and user_id fields for faster lookup. 
@@ -178,7 +178,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: modifie
 	 * r.enUS: modified
 	 */
-	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, pk2 bigint, entite1 text, entite2 text, actuel boolean, cree timestamp with time zone default now(), modifie timestamp with time zone default now(), foreign key(pk1) references c(pk), foreign key(pk2) references c(pk)); ";
+	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, pk2 bigint, entite1 text, entite2 text, actuel boolean, cree timestamp with time zone, modifie timestamp with time zone); ";
 
 	/**
 	 * enUS: A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
@@ -193,7 +193,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: chemin
 	 * r.enUS: path
 	 */
-	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, chemin text, valeur text, actuel boolean, cree timestamp with time zone default now(), modifie timestamp with time zone default now(), pk_c bigint, foreign key(pk_c) references c(pk)); ";
+	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, chemin text, valeur text, actuel boolean, cree timestamp with time zone, modifie timestamp with time zone, pk_c bigint); ";
 
 	/**
 	 * enUS: Concatenate all of the SQL together to execute when the server starts. 
