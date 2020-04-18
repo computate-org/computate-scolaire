@@ -1426,6 +1426,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
 						for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
 							Long l = Long.parseLong(setPageDesignKeysValues.getString(i));
+							LOGGER.info("l1: " + l);
 							if(l != null) {
 								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 								searchList.setQuery("*:*");
@@ -1434,7 +1435,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								LOGGER.info("l2: " + l);
 								if(l != null) {
+									LOGGER.info("l3: " + l);
 									patchSql.append(SiteContextEnUS.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
 								}
