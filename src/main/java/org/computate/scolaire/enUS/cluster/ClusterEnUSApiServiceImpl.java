@@ -46,38 +46,4 @@ public class ClusterEnUSApiServiceImpl extends ClusterEnUSGenApiServiceImpl {
 		}
 		return future;
 	}
-
-	@Override
-	public void patchCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-//		if(operationRequest.getParams().getJsonObject("query").getJsonArray("fq").size() > 0) {
-//			super.patchCluster(body, operationRequest, eventHandler);
-//		} else {
-//			try {
-//				SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
-//				WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-//				workerExecutor.executeBlocking(
-//					future -> {
-//						try {
-//							appRestore(siteRequest, a -> {
-//								if(a.succeeded())
-//									a.complete();
-//								else
-//									errorCluster(siteRequest, eventHandler, a);
-//							});
-//						} catch (Exception e) {
-//							errorCluster(null, eventHandler, Future.failedFuture(e));
-//						}
-//					}
-//					, res -> {
-//						LOGGER.info("AppRestore complete. ");
-//						Buffer buffer = Buffer.buffer();
-//						buffer.appendString("{}");
-//						eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
-//					}
-//				);
-//			} catch(Exception e) {
-//				errorCluster(null, eventHandler, Future.failedFuture(e));
-//			}
-//		}
-	}
 }
