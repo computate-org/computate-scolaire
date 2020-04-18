@@ -1435,6 +1435,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								LOGGER.info("inheritPk: " + inheritPk);
 								LOGGER.info("l2: " + l);
 								if(l != null) {
 									LOGGER.info("l3: " + l);
