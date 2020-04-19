@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -1254,13 +1255,28 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: ChildGenPage.htmlSuggestedChildGenPage
 	 * r: DesignPageGenPage.htmlSuggereDesignPageGenPage
 	 * r.enUS: PageDesignGenPage.htmlSuggestedPageDesignGenPage
+	 * r: xmlPile
+	 * r.enUS: xmlStack
+	 * r: XmlPile
+	 * r.enUS: XmlStack
 	 */
 	public void ecrireConnecterDeconnecter() {
+		Stack<String> xmlPile = requeteSite_.getXmlPile();
+		boolean empty = xmlPile.isEmpty();
+		if(empty) {
+			xmlPile.push("html");
+			xmlPile.push("body");
+			xmlPile.push("div");
+			xmlPile.push("div");
+			xmlPile.push("div");
+			
+		}
 
 		if(requeteSite_.getUtilisateurId() == null) {
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
 					e("span").a("class", "site-menu-item").f();
+						e("i").a("class", "far fa-sign-in-alt ").f().g("i");
 						sx("Connexion");
 					g("span");
 				g("a");
@@ -1314,10 +1330,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "w3-padding ").a("href", pageDeconnexionUri).f();
 					e("span").a("class", "site-menu-item").f();
+						e("i").a("class", "far fa-sign-out-alt ").f().g("i");
 						sx("Déconnexion");
 					g("span");
 				g("a");
 			g("div");
+		}
+
+		if(empty) {
+			xmlPile.clear();
 		}
 	}
 
@@ -1447,13 +1468,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
 
 		boolean eNoWrapParent = nomLocalParent == null || HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "  "));
 
 		requeteSite_.getXmlPile().push(nomLocal);
 		if(StringUtils.equals(nomLocal, "html"))
 			w.s("<!DOCTYPE html>\n");
-		if(!eNoWrapParent && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrapParent && !tabulations.isEmpty()) {
 			w.l();
 			w.s(tabulations);
 		}
@@ -1566,7 +1586,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 */
 	public MiseEnPage t(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			s("\t");
+			s("  ");
 		s(objets);
 		return this;
 	}
@@ -1581,7 +1601,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 */
 	public MiseEnPage tl(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			s("\t");
+			s("  ");
 		s(objets);
 		s("\n");
 		return this;
@@ -1639,7 +1659,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 */
 	public MiseEnPage tx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			sx("\t");
+			sx("  ");
 		sx(objets);
 		return this;
 	}
@@ -1654,7 +1674,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 */
 	public MiseEnPage tlx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			sx("\t");
+			sx("  ");
 		sx(objets);
 		sx("\n");
 		return this;
@@ -1681,8 +1701,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: getXmlStack
 	 * r: nomLocalParent
 	 * r.enUS: localNameParent
-	 * r: tabulationsEchappes
-	 * r.enUS: tabsEscaped
 	 * r: tabulations
 	 * r.enUS: tabs
 	 * r: MiseEnPage
@@ -1695,10 +1713,9 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		boolean eNoWrap = nomLocalParent == null || HTML_ELEMENTS_NO_WRAP.contains(nomLocal);
 
 		requeteSite_.getXmlPile().pop();
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "  "));
 
-		if(!eNoWrap && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrap && !tabulations.isEmpty()) {
 			w.l();
 			w.s(tabulations);
 		}

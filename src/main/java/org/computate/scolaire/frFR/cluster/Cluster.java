@@ -463,13 +463,12 @@ public class Cluster extends ClusterGen<Object> {
 		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
 
 		boolean eNoWrapParent = nomLocalParent == null || MiseEnPage.HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "  "));
 
 		requeteSite_.getXmlPile().push(nomLocal);
 		if(StringUtils.equals(nomLocal, "html"))
 			w.s("<!DOCTYPE html>\n");
-		if(!eNoWrapParent && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrapParent && !tabulations.isEmpty()) {
 			w.l();
 			w.s(tabulations);
 		}
@@ -599,7 +598,7 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	public Cluster t(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			s("\t");
+			s("  ");
 		s(objets);
 		return this;
 	}
@@ -614,7 +613,7 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	public Cluster tl(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			s("\t");
+			s("  ");
 		s(objets);
 		s("\n");
 		return this;
@@ -677,7 +676,7 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	public Cluster tx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			sx("\t");
+			sx("  ");
 		sx(objets);
 		return this;
 	}
@@ -692,7 +691,7 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	public Cluster tlx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
-			sx("\t");
+			sx("  ");
 		sx(objets);
 		sx("\n");
 		return this;
@@ -724,8 +723,6 @@ public class Cluster extends ClusterGen<Object> {
 	 * r.enUS: getXmlStack
 	 * r: nomLocalParent
 	 * r.enUS: localNameParent
-	 * r: tabulationsEchappes
-	 * r.enUS: tabsEscaped
 	 * r: tabulations
 	 * r.enUS: tabs
 	 * r: MiseEnPage
@@ -739,12 +736,11 @@ public class Cluster extends ClusterGen<Object> {
 		boolean eNoWrap = nomLocalParent == null || MiseEnPage.HTML_ELEMENTS_NO_WRAP.contains(nomLocal);
 
 		requeteSite_.getXmlPile().pop();
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "  "));
 
 		if(!eNoWrap || nomLocalParent == null)
 			w.l();
-		if(!eNoWrap && !tabulationsEchappes.isEmpty())
+		if(!eNoWrap && !tabulations.isEmpty())
 			w.s(tabulations);
 		w.s("</");
 		w.s(nomLocal);

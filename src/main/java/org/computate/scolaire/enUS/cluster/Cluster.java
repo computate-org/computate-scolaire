@@ -167,13 +167,12 @@ public class Cluster extends ClusterGen<Object> {
 		String localNameParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();
 
 		boolean eNoWrapParent = localNameParent == null || PageLayout.HTML_ELEMENTS_NO_WRAP.contains(localNameParent);
-		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
-		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "  "));
 
 		siteRequest_.getXmlStack().push(localName);
 		if(StringUtils.equals(localName, "html"))
 			w.s("<!DOCTYPE html>\n");
-		if(!eNoWrapParent && !tabsEscaped.isEmpty()) {
+		if(!eNoWrapParent && !tabs.isEmpty()) {
 			w.l();
 			w.s(tabs);
 		}
@@ -242,14 +241,14 @@ public class Cluster extends ClusterGen<Object> {
 
 	public Cluster t(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			s("\t");
+			s("  ");
 		s(objects);
 		return this;
 	}
 
 	public Cluster tl(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			s("\t");
+			s("  ");
 		s(objects);
 		s("\n");
 		return this;
@@ -281,14 +280,14 @@ public class Cluster extends ClusterGen<Object> {
 
 	public Cluster tx(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			sx("\t");
+			sx("  ");
 		sx(objects);
 		return this;
 	}
 
 	public Cluster tlx(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			sx("\t");
+			sx("  ");
 		sx(objects);
 		sx("\n");
 		return this;
@@ -308,12 +307,11 @@ public class Cluster extends ClusterGen<Object> {
 		boolean eNoWrap = localNameParent == null || PageLayout.HTML_ELEMENTS_NO_WRAP.contains(localName);
 
 		siteRequest_.getXmlStack().pop();
-		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
-		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "  "));
 
 		if(!eNoWrap || localNameParent == null)
 			w.l();
-		if(!eNoWrap && !tabsEscaped.isEmpty())
+		if(!eNoWrap && !tabs.isEmpty())
 			w.s(tabs);
 		w.s("</");
 		w.s(localName);

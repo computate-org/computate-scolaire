@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
@@ -599,11 +600,22 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	public void  writeLoginLogout() {
+		Stack<String> xmlStack = siteRequest_.getXmlStack();
+		boolean empty = xmlStack.isEmpty();
+		if(empty) {
+			xmlStack.push("html");
+			xmlStack.push("body");
+			xmlStack.push("div");
+			xmlStack.push("div");
+			xmlStack.push("div");
+			
+		}
 
 		if(siteRequest_.getUserId() == null) {
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
 					e("span").a("class", "site-menu-item").f();
+						e("i").a("class", "far fa-sign-in-alt ").f().g("i");
 						sx("Login");
 					g("span");
 				g("a");
@@ -657,10 +669,15 @@ public class PageLayout extends PageLayoutGen<Object> {
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "w3-padding ").a("href", pageLogoutUri).f();
 					e("span").a("class", "site-menu-item").f();
+						e("i").a("class", "far fa-sign-out-alt ").f().g("i");
 						sx("Logout");
 					g("span");
 				g("a");
 			g("div");
+		}
+
+		if(empty) {
+			xmlStack.clear();
 		}
 	}
 
@@ -745,13 +762,12 @@ public class PageLayout extends PageLayoutGen<Object> {
 		String localNameParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();
 
 		boolean eNoWrapParent = localNameParent == null || HTML_ELEMENTS_NO_WRAP.contains(localNameParent);
-		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
-		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "  "));
 
 		siteRequest_.getXmlStack().push(localName);
 		if(StringUtils.equals(localName, "html"))
 			w.s("<!DOCTYPE html>\n");
-		if(!eNoWrapParent && !tabsEscaped.isEmpty()) {
+		if(!eNoWrapParent && !tabs.isEmpty()) {
 			w.l();
 			w.s(tabs);
 		}
@@ -815,14 +831,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public PageLayout t(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			s("\t");
+			s("  ");
 		s(objects);
 		return this;
 	}
 
 	public PageLayout tl(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			s("\t");
+			s("  ");
 		s(objects);
 		s("\n");
 		return this;
@@ -853,14 +869,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public PageLayout tx(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			sx("\t");
+			sx("  ");
 		sx(objects);
 		return this;
 	}
 
 	public PageLayout tlx(int numberTabs, Object...objects) {
 		for(int i = 0; i < numberTabs; i++)
-			sx("\t");
+			sx("  ");
 		sx(objects);
 		sx("\n");
 		return this;
@@ -878,10 +894,9 @@ public class PageLayout extends PageLayoutGen<Object> {
 		boolean eNoWrap = localNameParent == null || HTML_ELEMENTS_NO_WRAP.contains(localName);
 
 		siteRequest_.getXmlStack().pop();
-		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
-		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "  "));
 
-		if(!eNoWrap && !tabsEscaped.isEmpty()) {
+		if(!eNoWrap && !tabs.isEmpty()) {
 			w.l();
 			w.s(tabs);
 		}
