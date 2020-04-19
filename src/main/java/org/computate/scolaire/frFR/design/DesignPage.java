@@ -61,6 +61,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * PublicLire: true
+ * 
+ * Lignes: 100
 */                
 public class DesignPage extends DesignPageGen<Cluster> {
 

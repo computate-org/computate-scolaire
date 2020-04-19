@@ -73,6 +73,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	public static final String PageDesign_Color = "khaki";
 	public static final String PageDesign_IconGroup = "regular";
 	public static final String PageDesign_IconName = "drafting-compass";
+	public static final Integer PageDesign_Rows = 100;
 
 	///////////////////
 	// pageDesignKey //

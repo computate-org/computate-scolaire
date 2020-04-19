@@ -35,9 +35,9 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 
 	public static final String SQL_attribute = "select pk1, pk2, entity1, entity2 from a where (a.pk1=? or a.pk2=?) and a.current=true;\n";
 
-	public static final String SQL_setA1 = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created, modified) values(?, ?, ?, ?, true, now(), now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false, modified=now() where a.entity1=(select entity1 from a1) and a.pk1=(select pk1 from a1) and a.entity2=(select entity2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
+	public static final String SQL_setA1 = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created, modified) values(?, ?, ?, ?, true, now(), now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false, modified=now() where a.entity1=(select entity1 from a1) and a.pk1=(select pk1 from a1) and a.entity2=(select entity2 from a1) and a.pk2=(select pk2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
 
-	public static final String SQL_setA2 = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created, modified) values(?, ?, ?, ?, true, now(), now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false, modified=now() where a.entity1=(select entity1 from a1) and a.entity2=(select entity2 from a1) and a.pk2=(select pk2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
+	public static final String SQL_setA2 = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created, modified) values(?, ?, ?, ?, true, now(), now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false, modified=now() where a.entity1=(select entity1 from a1) and a.pk1=(select pk1 from a1) and a.entity2=(select entity2 from a1) and a.pk2=(select pk2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
 
 	public static final String SQL_addA = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created, modified) values(?, ?, ?, ?, true, now(), now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false, modified=now() where a.entity1=(select entity1 from a1) and a.pk1=(select pk1 from a1) and a.entity2=(select entity2 from a1) and a.pk2=(select pk2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
 

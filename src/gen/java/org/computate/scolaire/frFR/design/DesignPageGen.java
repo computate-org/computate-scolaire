@@ -74,6 +74,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public static final String DesignPage_Couleur = "khaki";
 	public static final String DesignPage_IconeGroupe = "regular";
 	public static final String DesignPage_IconeNom = "drafting-compass";
+	public static final Integer DesignPage_Lignes = 100;
 
 	///////////////////
 	// designPageCle //
