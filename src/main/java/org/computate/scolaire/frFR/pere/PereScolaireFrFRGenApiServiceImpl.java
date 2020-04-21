@@ -104,6 +104,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	@Override
 	public void postPereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("postPereScolaire a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -130,8 +131,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
+							requeteApi.setNumPATCH(0L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
+							requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 							postPereScolaireFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									PereScolaire pereScolaire = c.result();
@@ -309,8 +312,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postPereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postPereScolaire sql close. "));
 								RequeteApi requeteApi = requeteApiPereScolaire(pereScolaire);
 								pereScolaire.requeteApiPereScolaire();
 								requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
@@ -343,6 +348,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	@Override
 	public void putimportPereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putimportPereScolaire a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -379,8 +385,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														requeteApi.setRows(jsonArray.size());
 														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.setNumPATCH(0L);
 														requeteApi.initLoinRequeteApi(requeteSite);
 														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 														listePUTImportPereScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportPereScolaireReponse(requeteSite, f -> {
@@ -480,9 +488,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportPereScolaire(requeteSite, gestionnaireEvenements);
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 				requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPereScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -496,8 +502,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportPereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportPereScolaire sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -528,6 +536,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	@Override
 	public void putfusionPereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putfusionPereScolaire a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -564,8 +573,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														requeteApi.setRows(jsonArray.size());
 														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.setNumPATCH(0L);
 														requeteApi.initLoinRequeteApi(requeteSite);
 														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 														listePUTFusionPereScolaire(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionPereScolaireReponse(requeteSite, f -> {
@@ -665,9 +676,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionPereScolaire(requeteSite, gestionnaireEvenements);
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 				requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPereScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -681,8 +690,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putfusionPereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putfusionPereScolaire sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -713,6 +724,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	@Override
 	public void putcopiePereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putcopiePereScolaire a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -739,14 +751,16 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									recherchePereScolaire(requeteSite, false, true, null, d -> {
+									recherchePereScolaire(requeteSite, false, true, "/api/pere/copie", "PUTCopie", d -> {
 										if(d.succeeded()) {
 											ListeRecherche<PereScolaire> listePereScolaire = d.result();
 											RequeteApi requeteApi = new RequeteApi();
 											requeteApi.setRows(listePereScolaire.getRows());
 											requeteApi.setNumFound(listePereScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.setNumPATCH(0L);
 											requeteApi.initLoinRequeteApi(requeteSite);
 											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -985,8 +999,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopiePereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopiePereScolaire sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -1018,6 +1034,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	@Override
 	public void patchPereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("patchPereScolaire a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -1044,14 +1061,16 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									recherchePereScolaire(requeteSite, false, true, null, d -> {
+									recherchePereScolaire(requeteSite, false, true, "/api/pere", "PATCH", d -> {
 										if(d.succeeded()) {
 											ListeRecherche<PereScolaire> listePereScolaire = d.result();
 											RequeteApi requeteApi = new RequeteApi();
 											requeteApi.setRows(listePereScolaire.getRows());
 											requeteApi.setNumFound(listePereScolaire.getQueryResponse().getResults().getNumFound());
+											requeteApi.setNumPATCH(0L);
 											requeteApi.initLoinRequeteApi(requeteSite);
 											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePereScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1459,8 +1478,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchPereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchPereScolaire sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -1498,7 +1519,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				if(a.succeeded()) {
 					utilisateurPereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							recherchePereScolaire(requeteSite, false, true, null, c -> {
+							recherchePereScolaire(requeteSite, false, true, "/api/pere/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PereScolaire> listePereScolaire = c.result();
 									getPereScolaireReponse(listePereScolaire, d -> {
@@ -1535,8 +1556,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getPereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getPereScolaire sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1573,7 +1596,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				if(a.succeeded()) {
 					utilisateurPereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							recherchePereScolaire(requeteSite, false, true, "/api/pere", c -> {
+							recherchePereScolaire(requeteSite, false, true, "/api/pere", "Recherche", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PereScolaire> listePereScolaire = c.result();
 									recherchePereScolaireReponse(listePereScolaire, d -> {
@@ -1610,8 +1633,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("recherchePereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("recherchePereScolaire sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1692,7 +1717,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				if(a.succeeded()) {
 					utilisateurPereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							recherchePereScolaire(requeteSite, false, true, "/pere", c -> {
+							recherchePereScolaire(requeteSite, false, true, "/pere", "PageRecherche", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PereScolaire> listePereScolaire = c.result();
 									pagerecherchePereScolaireReponse(listePereScolaire, d -> {
@@ -1729,8 +1754,10 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("pagerecherchePereScolaire sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("pagerecherchePereScolaire sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -2120,7 +2147,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		}
 	}
 
-	public void recherchePereScolaireQ(String classeApiUriMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void recherchePereScolaireQ(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -2130,31 +2157,31 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		}
 	}
 
-	public void recherchePereScolaireFq(String classeApiUriMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void recherchePereScolaireFq(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void recherchePereScolaireSort(String classeApiUriMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void recherchePereScolaireSort(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void recherchePereScolaireRows(String classeApiUriMethode, ListeRecherche<PereScolaire> listeRecherche, Integer valeurRows) {
-		listeRecherche.setRows(valeurRows);
+	public void recherchePereScolaireRows(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, Integer valeurRows) {
+			listeRecherche.setRows(apiMethode != null && apiMethode.contains("Recherche") ? valeurRows : 10);
 	}
 
-	public void recherchePereScolaireStart(String classeApiUriMethode, ListeRecherche<PereScolaire> listeRecherche, Integer valeurStart) {
+	public void recherchePereScolaireStart(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void recherchePereScolaireVar(String classeApiUriMethode, ListeRecherche<PereScolaire> listeRecherche, String var, String valeur) {
+	public void recherchePereScolaireVar(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
-	public void recherchePereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<PereScolaire>>> gestionnaireEvenements) {
+	public void recherchePereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PereScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -2202,32 +2229,32 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 								varIndexe = "*".equals(entiteVar) ? entiteVar : PereScolaire.varRecherchePereScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								recherchePereScolaireQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								recherchePereScolaireQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = PereScolaire.varIndexePereScolaire(entiteVar);
-								recherchePereScolaireFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								recherchePereScolaireFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = PereScolaire.varIndexePereScolaire(entiteVar);
-								recherchePereScolaireSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								recherchePereScolaireSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								recherchePereScolaireStart(classeApiUriMethode, listeRecherche, valeurStart);
+								recherchePereScolaireStart(uri, apiMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								recherchePereScolaireRows(classeApiUriMethode, listeRecherche, valeurRows);
+								recherchePereScolaireRows(uri, apiMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								recherchePereScolaireVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
+								recherchePereScolaireVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

@@ -102,6 +102,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void postCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("postCluster a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -128,8 +129,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
+							requeteApi.setNumPATCH(0L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
+							requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 							postClusterFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
@@ -250,8 +253,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postCluster sql close. "));
 								RequeteApi requeteApi = requeteApiCluster(cluster);
 								cluster.requeteApiCluster();
 								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
@@ -284,6 +289,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void putimportCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putimportCluster a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -320,8 +326,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														requeteApi.setRows(jsonArray.size());
 														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.setNumPATCH(0L);
 														requeteApi.initLoinRequeteApi(requeteSite);
 														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 														listePUTImportCluster(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportClusterReponse(requeteSite, f -> {
@@ -421,9 +429,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportCluster(requeteSite, gestionnaireEvenements);
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 				requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -437,8 +443,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportCluster sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -469,6 +477,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void putfusionCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putfusionCluster a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -505,8 +514,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														requeteApi.setRows(jsonArray.size());
 														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.setNumPATCH(0L);
 														requeteApi.initLoinRequeteApi(requeteSite);
 														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 														listePUTFusionCluster(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionClusterReponse(requeteSite, f -> {
@@ -606,9 +617,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionCluster(requeteSite, gestionnaireEvenements);
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 				requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -622,8 +631,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putfusionCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putfusionCluster sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -654,6 +665,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void putcopieCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putcopieCluster a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -680,14 +692,16 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									rechercheCluster(requeteSite, false, true, null, d -> {
+									rechercheCluster(requeteSite, false, true, "/api/cluster/copie", "PUTCopie", d -> {
 										if(d.succeeded()) {
 											ListeRecherche<Cluster> listeCluster = d.result();
 											RequeteApi requeteApi = new RequeteApi();
 											requeteApi.setRows(listeCluster.getRows());
 											requeteApi.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
+											requeteApi.setNumPATCH(0L);
 											requeteApi.initLoinRequeteApi(requeteSite);
 											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -880,8 +894,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopieCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopieCluster sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -913,6 +929,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void patchCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("patchCluster a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -939,14 +956,16 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									rechercheCluster(requeteSite, false, true, null, d -> {
+									rechercheCluster(requeteSite, false, true, "/api/cluster", "PATCH", d -> {
 										if(d.succeeded()) {
 											ListeRecherche<Cluster> listeCluster = d.result();
 											RequeteApi requeteApi = new RequeteApi();
 											requeteApi.setRows(listeCluster.getRows());
 											requeteApi.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
+											requeteApi.setNumPATCH(0L);
 											requeteApi.initLoinRequeteApi(requeteSite);
 											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1178,8 +1197,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchCluster sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -1217,7 +1238,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, null, c -> {
+							rechercheCluster(requeteSite, false, true, "/api/cluster/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Cluster> listeCluster = c.result();
 									getClusterReponse(listeCluster, d -> {
@@ -1254,8 +1275,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getCluster sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1292,7 +1315,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, "/api/cluster", c -> {
+							rechercheCluster(requeteSite, false, true, "/api/cluster", "Recherche", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Cluster> listeCluster = c.result();
 									rechercheClusterReponse(listeCluster, d -> {
@@ -1329,8 +1352,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("rechercheCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("rechercheCluster sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1411,7 +1436,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, "/cluster", c -> {
+							rechercheCluster(requeteSite, false, true, "/cluster", "PageRecherche", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Cluster> listeCluster = c.result();
 									pagerechercheClusterReponse(listeCluster, d -> {
@@ -1448,8 +1473,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("pagerechercheCluster sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("pagerechercheCluster sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1833,7 +1860,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void rechercheClusterQ(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheClusterQ(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -1843,31 +1870,31 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void rechercheClusterFq(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheClusterFq(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheClusterSort(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheClusterSort(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheClusterRows(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, Integer valeurRows) {
-		listeRecherche.setRows(valeurRows);
+	public void rechercheClusterRows(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche, Integer valeurRows) {
+			listeRecherche.setRows(apiMethode != null && apiMethode.contains("Recherche") ? valeurRows : 10);
 	}
 
-	public void rechercheClusterStart(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, Integer valeurStart) {
+	public void rechercheClusterStart(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheClusterVar(String classeApiUriMethode, ListeRecherche<Cluster> listeRecherche, String var, String valeur) {
+	public void rechercheClusterVar(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
-	public void rechercheCluster(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
+	public void rechercheCluster(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -1915,32 +1942,32 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								varIndexe = "*".equals(entiteVar) ? entiteVar : Cluster.varRechercheCluster(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheClusterQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheClusterQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = Cluster.varIndexeCluster(entiteVar);
-								rechercheClusterFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheClusterFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = Cluster.varIndexeCluster(entiteVar);
-								rechercheClusterSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheClusterSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheClusterStart(classeApiUriMethode, listeRecherche, valeurStart);
+								rechercheClusterStart(uri, apiMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheClusterRows(classeApiUriMethode, listeRecherche, valeurRows);
+								rechercheClusterRows(uri, apiMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheClusterVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
+								rechercheClusterVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

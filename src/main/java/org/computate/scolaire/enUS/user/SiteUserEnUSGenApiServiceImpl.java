@@ -111,7 +111,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSiteUser(siteRequest, false, true, "/api/user", c -> {
+							aSearchSiteUser(siteRequest, false, true, "/api/user", "Search", c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
 									searchSiteUserResponse(listSiteUser, d -> {
@@ -148,8 +148,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchSiteUser sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchSiteUser sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSiteUser(siteRequest, eventHandler, c);
@@ -220,6 +222,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	@Override
 	public void patchSiteUser(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("patchSiteUser started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
@@ -246,14 +249,16 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSiteUser(siteRequest, false, true, null, d -> {
+									aSearchSiteUser(siteRequest, false, true, "/api/user", "PATCH", d -> {
 										if(d.succeeded()) {
 											SearchList<SiteUser> listSiteUser = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listSiteUser.getRows());
 											apiRequest.setNumFound(listSiteUser.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -717,8 +722,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchSiteUser sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchSiteUser sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -751,6 +758,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	@Override
 	public void postSiteUser(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("postSiteUser started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
@@ -777,8 +785,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
+							siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 							postSiteUserFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SiteUser siteUser = c.result();
@@ -965,8 +975,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postSiteUser sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postSiteUser sql close. "));
 								ApiRequest apiRequest = apiRequestSiteUser(siteUser);
 								siteUser.apiRequestSiteUser();
 								siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
@@ -1009,7 +1021,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSiteUser(siteRequest, false, true, "/user", c -> {
+							aSearchSiteUser(siteRequest, false, true, "/user", "SearchPage", c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
 									searchpageSiteUserResponse(listSiteUser, d -> {
@@ -1046,8 +1058,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchpageSiteUser sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchpageSiteUser sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSiteUser(siteRequest, eventHandler, c);
@@ -1443,7 +1457,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void aSearchSiteUserQ(String classApiUriMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSiteUserQ(String uri, String apiMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1453,31 +1467,31 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void aSearchSiteUserFq(String classApiUriMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSiteUserFq(String uri, String apiMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSiteUserSort(String classApiUriMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSiteUserSort(String uri, String apiMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSiteUserRows(String classApiUriMethod, SearchList<SiteUser> searchList, Integer valueRows) {
-		searchList.setRows(valueRows);
+	public void aSearchSiteUserRows(String uri, String apiMethod, SearchList<SiteUser> searchList, Integer valueRows) {
+			searchList.setRows(apiMethod != null && apiMethod.contains("Search") ? valueRows : 10);
 	}
 
-	public void aSearchSiteUserStart(String classApiUriMethod, SearchList<SiteUser> searchList, Integer valueStart) {
+	public void aSearchSiteUserStart(String uri, String apiMethod, SearchList<SiteUser> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSiteUserVar(String classApiUriMethod, SearchList<SiteUser> searchList, String var, String value) {
+	public void aSearchSiteUserVar(String uri, String apiMethod, SearchList<SiteUser> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
-	public void aSearchSiteUser(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SiteUser>>> eventHandler) {
+	public void aSearchSiteUser(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SiteUser>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -1525,32 +1539,32 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								varIndexed = "*".equals(entityVar) ? entityVar : SiteUser.varSearchSiteUser(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSiteUserQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSiteUserQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-								aSearchSiteUserFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSiteUserFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-								aSearchSiteUserSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSiteUserSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSiteUserStart(classApiUriMethod, searchList, valueStart);
+								aSearchSiteUserStart(uri, apiMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSiteUserRows(classApiUriMethod, searchList, valueRows);
+								aSearchSiteUserRows(uri, apiMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSiteUserVar(classApiUriMethod, searchList, entityVar, valueIndexed);
+								aSearchSiteUserVar(uri, apiMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

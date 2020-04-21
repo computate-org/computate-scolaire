@@ -13,19 +13,19 @@ public class PageDesignEnUSApiServiceImpl extends PageDesignEnUSGenApiServiceImp
 		super(siteContext);
 	}
 
-	@Override public void aSearchPageDesignVar(String classApiUriMethod, SearchList<PageDesign> searchList, String var, String value) {
-		if ("/page".equals(classApiUriMethod)) {
+	@Override public void aSearchPageDesignVar(String uri, String apiMethod, SearchList<PageDesign> searchList, String var, String value) {
+		if ("/page".equals(uri)) {
 			if("design".equals(var))
 				searchList.addFilterQuery("pageDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars(value));
 		}
-		super.aSearchPageDesignVar(classApiUriMethod, searchList, var, value);
+		super.aSearchPageDesignVar(uri, apiMethod, searchList, var, value);
 	}
-	@Override public void aSearchPageDesignFq(String classApiUriMethod, SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
-		if ("/page".equals(classApiUriMethod)) {
+	@Override public void aSearchPageDesignFq(String uri, String apiMethod, SearchList<PageDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+		if ("/page".equals(uri)) {
 			// skip
 		}
 		else {
-			super.aSearchPageDesignFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+			super.aSearchPageDesignFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 		}
 	}
 }

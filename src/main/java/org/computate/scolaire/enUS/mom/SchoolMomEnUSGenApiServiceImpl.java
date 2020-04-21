@@ -104,6 +104,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	@Override
 	public void postSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("postSchoolMom started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -130,8 +131,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 							postSchoolMomFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SchoolMom schoolMom = c.result();
@@ -309,8 +312,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postSchoolMom sql close. "));
 								ApiRequest apiRequest = apiRequestSchoolMom(schoolMom);
 								schoolMom.apiRequestSchoolMom();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
@@ -343,6 +348,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	@Override
 	public void putimportSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putimportSchoolMom started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -379,8 +385,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 														listPUTImportSchoolMom(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportSchoolMomResponse(siteRequest, f -> {
@@ -480,9 +488,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolMom(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -496,8 +502,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportSchoolMom sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -528,6 +536,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	@Override
 	public void putmergeSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putmergeSchoolMom started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -564,8 +573,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 														listPUTMergeSchoolMom(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeSchoolMomResponse(siteRequest, f -> {
@@ -665,9 +676,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolMom(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -681,8 +690,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putmergeSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putmergeSchoolMom sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -713,6 +724,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	@Override
 	public void putcopySchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putcopySchoolMom started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -739,14 +751,16 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSchoolMom(siteRequest, false, true, null, d -> {
+									aSearchSchoolMom(siteRequest, false, true, "/api/mom/copy", "PUTCopy", d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolMom> listSchoolMom = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listSchoolMom.getRows());
 											apiRequest.setNumFound(listSchoolMom.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -985,8 +999,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopySchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopySchoolMom sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -1018,6 +1034,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	@Override
 	public void patchSchoolMom(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("patchSchoolMom started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -1044,14 +1061,16 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSchoolMom(siteRequest, false, true, null, d -> {
+									aSearchSchoolMom(siteRequest, false, true, "/api/mom", "PATCH", d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolMom> listSchoolMom = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listSchoolMom.getRows());
 											apiRequest.setNumFound(listSchoolMom.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolMom.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1459,8 +1478,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchSchoolMom sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -1498,7 +1519,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolMom(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolMom(siteRequest, false, true, null, c -> {
+							aSearchSchoolMom(siteRequest, false, true, "/api/mom/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolMom> listSchoolMom = c.result();
 									getSchoolMomResponse(listSchoolMom, d -> {
@@ -1535,8 +1556,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getSchoolMom sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolMom(siteRequest, eventHandler, c);
@@ -1573,7 +1596,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolMom(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolMom(siteRequest, false, true, "/api/mom", c -> {
+							aSearchSchoolMom(siteRequest, false, true, "/api/mom", "Search", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolMom> listSchoolMom = c.result();
 									searchSchoolMomResponse(listSchoolMom, d -> {
@@ -1610,8 +1633,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchSchoolMom sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolMom(siteRequest, eventHandler, c);
@@ -1692,7 +1717,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolMom(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolMom(siteRequest, false, true, "/mom", c -> {
+							aSearchSchoolMom(siteRequest, false, true, "/mom", "SearchPage", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolMom> listSchoolMom = c.result();
 									searchpageSchoolMomResponse(listSchoolMom, d -> {
@@ -1729,8 +1754,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchpageSchoolMom sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchpageSchoolMom sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolMom(siteRequest, eventHandler, c);
@@ -2120,7 +2147,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		}
 	}
 
-	public void aSearchSchoolMomQ(String classApiUriMethod, SearchList<SchoolMom> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolMomQ(String uri, String apiMethod, SearchList<SchoolMom> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -2130,31 +2157,31 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		}
 	}
 
-	public void aSearchSchoolMomFq(String classApiUriMethod, SearchList<SchoolMom> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolMomFq(String uri, String apiMethod, SearchList<SchoolMom> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSchoolMomSort(String classApiUriMethod, SearchList<SchoolMom> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolMomSort(String uri, String apiMethod, SearchList<SchoolMom> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSchoolMomRows(String classApiUriMethod, SearchList<SchoolMom> searchList, Integer valueRows) {
-		searchList.setRows(valueRows);
+	public void aSearchSchoolMomRows(String uri, String apiMethod, SearchList<SchoolMom> searchList, Integer valueRows) {
+			searchList.setRows(apiMethod != null && apiMethod.contains("Search") ? valueRows : 10);
 	}
 
-	public void aSearchSchoolMomStart(String classApiUriMethod, SearchList<SchoolMom> searchList, Integer valueStart) {
+	public void aSearchSchoolMomStart(String uri, String apiMethod, SearchList<SchoolMom> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolMomVar(String classApiUriMethod, SearchList<SchoolMom> searchList, String var, String value) {
+	public void aSearchSchoolMomVar(String uri, String apiMethod, SearchList<SchoolMom> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
-	public void aSearchSchoolMom(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolMom>>> eventHandler) {
+	public void aSearchSchoolMom(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolMom>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -2202,32 +2229,32 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolMom.varSearchSchoolMom(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolMomQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolMomQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolMom.varIndexedSchoolMom(entityVar);
-								aSearchSchoolMomFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolMomFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolMom.varIndexedSchoolMom(entityVar);
-								aSearchSchoolMomSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolMomSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSchoolMomStart(classApiUriMethod, searchList, valueStart);
+								aSearchSchoolMomStart(uri, apiMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSchoolMomRows(classApiUriMethod, searchList, valueRows);
+								aSearchSchoolMomRows(uri, apiMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolMomVar(classApiUriMethod, searchList, entityVar, valueIndexed);
+								aSearchSchoolMomVar(uri, apiMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

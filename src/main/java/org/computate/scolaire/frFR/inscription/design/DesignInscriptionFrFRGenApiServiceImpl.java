@@ -108,6 +108,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	@Override
 	public void postDesignInscription(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("postDesignInscription a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -134,8 +135,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							RequeteApi requeteApi = new RequeteApi();
 							requeteApi.setRows(1);
 							requeteApi.setNumFound(1L);
+							requeteApi.setNumPATCH(0L);
 							requeteApi.initLoinRequeteApi(requeteSite);
 							requeteSite.setRequeteApi_(requeteApi);
+							requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 							postDesignInscriptionFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									DesignInscription designInscription = c.result();
@@ -264,8 +267,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postDesignInscription sql close. "));
 								RequeteApi requeteApi = requeteApiDesignInscription(designInscription);
 								designInscription.requeteApiDesignInscription();
 								requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
@@ -298,6 +303,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	@Override
 	public void putimportDesignInscription(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putimportDesignInscription a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -334,8 +340,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														requeteApi.setRows(jsonArray.size());
 														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.setNumPATCH(0L);
 														requeteApi.initLoinRequeteApi(requeteSite);
 														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 														listePUTImportDesignInscription(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putimportDesignInscriptionReponse(requeteSite, f -> {
@@ -435,9 +443,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTImportDesignInscription(requeteSite, gestionnaireEvenements);
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 				requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignInscription(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -451,8 +457,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportDesignInscription sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -483,6 +491,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	@Override
 	public void putfusionDesignInscription(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putfusionDesignInscription a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -519,8 +528,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														requeteApi.setRows(jsonArray.size());
 														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+														requeteApi.setNumPATCH(0L);
 														requeteApi.initLoinRequeteApi(requeteSite);
 														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 														listePUTFusionDesignInscription(requeteApi, requeteSite, e -> {
 															if(e.succeeded()) {
 																putfusionDesignInscriptionReponse(requeteSite, f -> {
@@ -620,9 +631,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + jsonArray.size());
 				reponse200PUTFusionDesignInscription(requeteSite, gestionnaireEvenements);
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 				requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignInscription(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -636,8 +645,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putfusionDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putfusionDesignInscription sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -668,6 +679,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	@Override
 	public void putcopieDesignInscription(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("putcopieDesignInscription a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -694,14 +706,16 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									rechercheDesignInscription(requeteSite, false, true, null, d -> {
+									rechercheDesignInscription(requeteSite, false, true, "/api/design-inscription/copie", "PUTCopie", d -> {
 										if(d.succeeded()) {
 											ListeRecherche<DesignInscription> listeDesignInscription = d.result();
 											RequeteApi requeteApi = new RequeteApi();
 											requeteApi.setRows(listeDesignInscription.getRows());
 											requeteApi.setNumFound(listeDesignInscription.getQueryResponse().getResults().getNumFound());
+											requeteApi.setNumPATCH(0L);
 											requeteApi.initLoinRequeteApi(requeteSite);
 											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -902,8 +916,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopieDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopieDesignInscription sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -935,6 +951,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	@Override
 	public void patchDesignInscription(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
+			LOGGER.info(String.format("patchDesignInscription a démarré. "));
 			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignInscription(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -961,14 +978,16 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							SQLConnection connexionSql = requeteSite.getConnexionSql();
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									rechercheDesignInscription(requeteSite, false, true, null, d -> {
+									rechercheDesignInscription(requeteSite, false, true, "/api/design-inscription", "PATCH", d -> {
 										if(d.succeeded()) {
 											ListeRecherche<DesignInscription> listeDesignInscription = d.result();
 											RequeteApi requeteApi = new RequeteApi();
 											requeteApi.setRows(listeDesignInscription.getRows());
 											requeteApi.setNumFound(listeDesignInscription.getQueryResponse().getResults().getNumFound());
+											requeteApi.setNumPATCH(0L);
 											requeteApi.initLoinRequeteApi(requeteSite);
 											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1220,8 +1239,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchDesignInscription sql close. "));
 								RequeteApi requeteApi = requeteSite.getRequeteApi_();
 								requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
@@ -1280,7 +1301,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(a.succeeded()) {
 					utilisateurDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheDesignInscription(requeteSite, false, true, null, c -> {
+							rechercheDesignInscription(requeteSite, false, true, "/api/design-inscription/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<DesignInscription> listeDesignInscription = c.result();
 									getDesignInscriptionReponse(listeDesignInscription, d -> {
@@ -1317,8 +1338,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getDesignInscription sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
@@ -1376,7 +1399,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(a.succeeded()) {
 					utilisateurDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheDesignInscription(requeteSite, false, true, "/api/design-inscription", c -> {
+							rechercheDesignInscription(requeteSite, false, true, "/api/design-inscription", "Recherche", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<DesignInscription> listeDesignInscription = c.result();
 									rechercheDesignInscriptionReponse(listeDesignInscription, d -> {
@@ -1413,8 +1436,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("rechercheDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("rechercheDesignInscription sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
@@ -1516,7 +1541,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(a.succeeded()) {
 					utilisateurDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheDesignInscription(requeteSite, false, true, "/design-inscription", c -> {
+							rechercheDesignInscription(requeteSite, false, true, "/design-inscription", "PageRecherche", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<DesignInscription> listeDesignInscription = c.result();
 									pagerechercheDesignInscriptionReponse(listeDesignInscription, d -> {
@@ -1553,8 +1578,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("pagerechercheDesignInscription sql commit. "));
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("pagerechercheDesignInscription sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
@@ -1938,7 +1965,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		}
 	}
 
-	public void rechercheDesignInscriptionQ(String classeApiUriMethode, ListeRecherche<DesignInscription> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheDesignInscriptionQ(String uri, String apiMethode, ListeRecherche<DesignInscription> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
 			listeRecherche.setHighlight(true);
@@ -1948,31 +1975,31 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		}
 	}
 
-	public void rechercheDesignInscriptionFq(String classeApiUriMethode, ListeRecherche<DesignInscription> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheDesignInscriptionFq(String uri, String apiMethode, ListeRecherche<DesignInscription> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 	}
 
-	public void rechercheDesignInscriptionSort(String classeApiUriMethode, ListeRecherche<DesignInscription> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
+	public void rechercheDesignInscriptionSort(String uri, String apiMethode, ListeRecherche<DesignInscription> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurIndexe));
 	}
 
-	public void rechercheDesignInscriptionRows(String classeApiUriMethode, ListeRecherche<DesignInscription> listeRecherche, Integer valeurRows) {
-		listeRecherche.setRows(valeurRows);
+	public void rechercheDesignInscriptionRows(String uri, String apiMethode, ListeRecherche<DesignInscription> listeRecherche, Integer valeurRows) {
+			listeRecherche.setRows(apiMethode != null && apiMethode.contains("Recherche") ? valeurRows : 10);
 	}
 
-	public void rechercheDesignInscriptionStart(String classeApiUriMethode, ListeRecherche<DesignInscription> listeRecherche, Integer valeurStart) {
+	public void rechercheDesignInscriptionStart(String uri, String apiMethode, ListeRecherche<DesignInscription> listeRecherche, Integer valeurStart) {
 		listeRecherche.setStart(valeurStart);
 	}
 
-	public void rechercheDesignInscriptionVar(String classeApiUriMethode, ListeRecherche<DesignInscription> listeRecherche, String var, String valeur) {
+	public void rechercheDesignInscriptionVar(String uri, String apiMethode, ListeRecherche<DesignInscription> listeRecherche, String var, String valeur) {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
-	public void rechercheDesignInscription(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<DesignInscription>>> gestionnaireEvenements) {
+	public void rechercheDesignInscription(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<DesignInscription>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -2011,32 +2038,32 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 								varIndexe = "*".equals(entiteVar) ? entiteVar : DesignInscription.varRechercheDesignInscription(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheDesignInscriptionQ(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheDesignInscriptionQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								varIndexe = DesignInscription.varIndexeDesignInscription(entiteVar);
-								rechercheDesignInscriptionFq(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheDesignInscriptionFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = DesignInscription.varIndexeDesignInscription(entiteVar);
-								rechercheDesignInscriptionSort(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+								rechercheDesignInscriptionSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
 								break;
 							case "start":
 								valeurStart = (Integer)paramObjet;
-								rechercheDesignInscriptionStart(classeApiUriMethode, listeRecherche, valeurStart);
+								rechercheDesignInscriptionStart(uri, apiMethode, listeRecherche, valeurStart);
 								break;
 							case "rows":
 								valeurRows = (Integer)paramObjet;
-								rechercheDesignInscriptionRows(classeApiUriMethode, listeRecherche, valeurRows);
+								rechercheDesignInscriptionRows(uri, apiMethode, listeRecherche, valeurRows);
 								break;
 							case "var":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheDesignInscriptionVar(classeApiUriMethode, listeRecherche, entiteVar, valeurIndexe);
+								rechercheDesignInscriptionVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
 								break;
 						}
 					}

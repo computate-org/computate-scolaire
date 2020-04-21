@@ -106,6 +106,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void postSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("postSchoolYear started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -132,8 +133,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 							postSchoolYearFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SchoolYear schoolYear = c.result();
@@ -301,8 +304,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postSchoolYear sql close. "));
 								ApiRequest apiRequest = apiRequestSchoolYear(schoolYear);
 								schoolYear.apiRequestSchoolYear();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
@@ -335,6 +340,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void putimportSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putimportSchoolYear started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -371,8 +377,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 														listPUTImportSchoolYear(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportSchoolYearResponse(siteRequest, f -> {
@@ -472,9 +480,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportSchoolYear(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolYear(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -488,8 +494,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportSchoolYear sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -520,6 +528,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void putmergeSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putmergeSchoolYear started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -556,8 +565,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 														listPUTMergeSchoolYear(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeSchoolYearResponse(siteRequest, f -> {
@@ -657,9 +668,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeSchoolYear(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolYear(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -673,8 +682,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putmergeSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putmergeSchoolYear sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -705,6 +716,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void putcopySchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putcopySchoolYear started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -731,14 +743,16 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSchoolYear(siteRequest, false, true, null, d -> {
+									aSearchSchoolYear(siteRequest, false, true, "/api/year/copy", "PUTCopy", d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolYear> listSchoolYear = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listSchoolYear.getRows());
 											apiRequest.setNumFound(listSchoolYear.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -953,8 +967,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopySchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopySchoolYear sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -986,6 +1002,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void patchSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("patchSchoolYear started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -1012,14 +1029,16 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchSchoolYear(siteRequest, false, true, null, d -> {
+									aSearchSchoolYear(siteRequest, false, true, "/api/year", "PATCH", d -> {
 										if(d.succeeded()) {
 											SearchList<SchoolYear> listSchoolYear = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listSchoolYear.getRows());
 											apiRequest.setNumFound(listSchoolYear.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolYear.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1395,8 +1414,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchSchoolYear sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -1455,7 +1476,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				if(a.succeeded()) {
 					userSchoolYear(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolYear(siteRequest, false, true, null, c -> {
+							aSearchSchoolYear(siteRequest, false, true, "/api/year/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolYear> listSchoolYear = c.result();
 									getSchoolYearResponse(listSchoolYear, d -> {
@@ -1492,8 +1513,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getSchoolYear sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolYear(siteRequest, eventHandler, c);
@@ -1551,7 +1574,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				if(a.succeeded()) {
 					userSchoolYear(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolYear(siteRequest, false, true, "/api/year", c -> {
+							aSearchSchoolYear(siteRequest, false, true, "/api/year", "Search", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolYear> listSchoolYear = c.result();
 									searchSchoolYearResponse(listSchoolYear, d -> {
@@ -1588,8 +1611,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchSchoolYear sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolYear(siteRequest, eventHandler, c);
@@ -1691,7 +1716,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				if(a.succeeded()) {
 					userSchoolYear(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolYear(siteRequest, false, true, "/year", c -> {
+							aSearchSchoolYear(siteRequest, false, true, "/year", "SearchPage", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolYear> listSchoolYear = c.result();
 									searchpageSchoolYearResponse(listSchoolYear, d -> {
@@ -1728,8 +1753,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchpageSchoolYear sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchpageSchoolYear sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolYear(siteRequest, eventHandler, c);
@@ -2125,7 +2152,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
-	public void aSearchSchoolYearQ(String classApiUriMethod, SearchList<SchoolYear> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolYearQ(String uri, String apiMethod, SearchList<SchoolYear> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -2135,31 +2162,31 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
-	public void aSearchSchoolYearFq(String classApiUriMethod, SearchList<SchoolYear> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolYearFq(String uri, String apiMethod, SearchList<SchoolYear> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchSchoolYearSort(String classApiUriMethod, SearchList<SchoolYear> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchSchoolYearSort(String uri, String apiMethod, SearchList<SchoolYear> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchSchoolYearRows(String classApiUriMethod, SearchList<SchoolYear> searchList, Integer valueRows) {
-		searchList.setRows(valueRows);
+	public void aSearchSchoolYearRows(String uri, String apiMethod, SearchList<SchoolYear> searchList, Integer valueRows) {
+			searchList.setRows(apiMethod != null && apiMethod.contains("Search") ? valueRows : 10);
 	}
 
-	public void aSearchSchoolYearStart(String classApiUriMethod, SearchList<SchoolYear> searchList, Integer valueStart) {
+	public void aSearchSchoolYearStart(String uri, String apiMethod, SearchList<SchoolYear> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchSchoolYearVar(String classApiUriMethod, SearchList<SchoolYear> searchList, String var, String value) {
+	public void aSearchSchoolYearVar(String uri, String apiMethod, SearchList<SchoolYear> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
-	public void aSearchSchoolYear(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolYear>>> eventHandler) {
+	public void aSearchSchoolYear(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolYear>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -2198,32 +2225,32 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolYearQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolYearQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-								aSearchSchoolYearFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolYearFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-								aSearchSchoolYearSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchSchoolYearSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchSchoolYearStart(classApiUriMethod, searchList, valueStart);
+								aSearchSchoolYearStart(uri, apiMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchSchoolYearRows(classApiUriMethod, searchList, valueRows);
+								aSearchSchoolYearRows(uri, apiMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolYearVar(classApiUriMethod, searchList, entityVar, valueIndexed);
+								aSearchSchoolYearVar(uri, apiMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

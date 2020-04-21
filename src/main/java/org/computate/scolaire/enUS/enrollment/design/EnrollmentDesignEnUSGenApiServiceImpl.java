@@ -102,6 +102,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	@Override
 	public void postEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("postEnrollmentDesign started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -128,8 +129,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
+							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 							postEnrollmentDesignFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									EnrollmentDesign enrollmentDesign = c.result();
@@ -258,8 +261,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postEnrollmentDesign sql close. "));
 								ApiRequest apiRequest = apiRequestEnrollmentDesign(enrollmentDesign);
 								enrollmentDesign.apiRequestEnrollmentDesign();
 								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
@@ -292,6 +297,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	@Override
 	public void putimportEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putimportEnrollmentDesign started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -328,8 +334,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 														listPUTImportEnrollmentDesign(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportEnrollmentDesignResponse(siteRequest, f -> {
@@ -429,9 +437,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportEnrollmentDesign(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -445,8 +451,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportEnrollmentDesign sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -477,6 +485,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	@Override
 	public void putmergeEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putmergeEnrollmentDesign started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -513,8 +522,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 														listPUTMergeEnrollmentDesign(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeEnrollmentDesignResponse(siteRequest, f -> {
@@ -614,9 +625,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeEnrollmentDesign(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -630,8 +639,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putmergeEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putmergeEnrollmentDesign sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -662,6 +673,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	@Override
 	public void putcopyEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putcopyEnrollmentDesign started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -688,14 +700,16 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchEnrollmentDesign(siteRequest, false, true, null, d -> {
+									aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design/copy", "PUTCopy", d -> {
 										if(d.succeeded()) {
 											SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listEnrollmentDesign.getRows());
 											apiRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -896,8 +910,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopyEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopyEnrollmentDesign sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -929,6 +945,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	@Override
 	public void patchEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("patchEnrollmentDesign started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -955,14 +972,16 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchEnrollmentDesign(siteRequest, false, true, null, d -> {
+									aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design", "PATCH", d -> {
 										if(d.succeeded()) {
 											SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listEnrollmentDesign.getRows());
 											apiRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1214,8 +1233,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchEnrollmentDesign sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -1274,7 +1295,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchEnrollmentDesign(siteRequest, false, true, null, c -> {
+							aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									SearchList<EnrollmentDesign> listEnrollmentDesign = c.result();
 									getEnrollmentDesignResponse(listEnrollmentDesign, d -> {
@@ -1311,8 +1332,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getEnrollmentDesign sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1370,7 +1393,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design", c -> {
+							aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design", "Search", c -> {
 								if(c.succeeded()) {
 									SearchList<EnrollmentDesign> listEnrollmentDesign = c.result();
 									searchEnrollmentDesignResponse(listEnrollmentDesign, d -> {
@@ -1407,8 +1430,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchEnrollmentDesign sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1510,7 +1535,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchEnrollmentDesign(siteRequest, false, true, "/enrollment-design", c -> {
+							aSearchEnrollmentDesign(siteRequest, false, true, "/enrollment-design", "SearchPage", c -> {
 								if(c.succeeded()) {
 									SearchList<EnrollmentDesign> listEnrollmentDesign = c.result();
 									searchpageEnrollmentDesignResponse(listEnrollmentDesign, d -> {
@@ -1547,8 +1572,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchpageEnrollmentDesign sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchpageEnrollmentDesign sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1932,7 +1959,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void aSearchEnrollmentDesignQ(String classApiUriMethod, SearchList<EnrollmentDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchEnrollmentDesignQ(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1942,31 +1969,31 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void aSearchEnrollmentDesignFq(String classApiUriMethod, SearchList<EnrollmentDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchEnrollmentDesignFq(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchEnrollmentDesignSort(String classApiUriMethod, SearchList<EnrollmentDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchEnrollmentDesignSort(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchEnrollmentDesignRows(String classApiUriMethod, SearchList<EnrollmentDesign> searchList, Integer valueRows) {
-		searchList.setRows(valueRows);
+	public void aSearchEnrollmentDesignRows(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList, Integer valueRows) {
+			searchList.setRows(apiMethod != null && apiMethod.contains("Search") ? valueRows : 10);
 	}
 
-	public void aSearchEnrollmentDesignStart(String classApiUriMethod, SearchList<EnrollmentDesign> searchList, Integer valueStart) {
+	public void aSearchEnrollmentDesignStart(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchEnrollmentDesignVar(String classApiUriMethod, SearchList<EnrollmentDesign> searchList, String var, String value) {
+	public void aSearchEnrollmentDesignVar(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
-	public void aSearchEnrollmentDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<EnrollmentDesign>>> eventHandler) {
+	public void aSearchEnrollmentDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<EnrollmentDesign>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -2005,32 +2032,32 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								varIndexed = "*".equals(entityVar) ? entityVar : EnrollmentDesign.varSearchEnrollmentDesign(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchEnrollmentDesignQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchEnrollmentDesignQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = EnrollmentDesign.varIndexedEnrollmentDesign(entityVar);
-								aSearchEnrollmentDesignFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchEnrollmentDesignFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = EnrollmentDesign.varIndexedEnrollmentDesign(entityVar);
-								aSearchEnrollmentDesignSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchEnrollmentDesignSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchEnrollmentDesignStart(classApiUriMethod, searchList, valueStart);
+								aSearchEnrollmentDesignStart(uri, apiMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchEnrollmentDesignRows(classApiUriMethod, searchList, valueRows);
+								aSearchEnrollmentDesignRows(uri, apiMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchEnrollmentDesignVar(classApiUriMethod, searchList, entityVar, valueIndexed);
+								aSearchEnrollmentDesignVar(uri, apiMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

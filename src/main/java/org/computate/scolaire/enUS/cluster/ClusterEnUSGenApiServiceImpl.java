@@ -102,6 +102,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	@Override
 	public void postCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("postCluster started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -128,8 +129,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1);
 							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
 							apiRequest.initDeepApiRequest(siteRequest);
 							siteRequest.setApiRequest_(apiRequest);
+							siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 							postClusterFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
@@ -250,8 +253,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("postCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("postCluster sql close. "));
 								ApiRequest apiRequest = apiRequestCluster(cluster);
 								cluster.apiRequestCluster();
 								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
@@ -284,6 +289,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	@Override
 	public void putimportCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putimportCluster started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -320,8 +326,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 														listPUTImportCluster(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putimportClusterResponse(siteRequest, f -> {
@@ -421,9 +429,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTImportCluster(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -437,8 +443,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putimportCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putimportCluster sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -469,6 +477,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	@Override
 	public void putmergeCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putmergeCluster started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -505,8 +514,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 														apiRequest.setRows(jsonArray.size());
 														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+														apiRequest.setNumPATCH(0L);
 														apiRequest.initDeepApiRequest(siteRequest);
 														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 														listPUTMergeCluster(apiRequest, siteRequest, e -> {
 															if(e.succeeded()) {
 																putmergeClusterResponse(siteRequest, f -> {
@@ -606,9 +617,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + jsonArray.size());
 				response200PUTMergeCluster(siteRequest, eventHandler);
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -622,8 +631,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putmergeCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putmergeCluster sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -654,6 +665,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	@Override
 	public void putcopyCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("putcopyCluster started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -680,14 +692,16 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchCluster(siteRequest, false, true, null, d -> {
+									aSearchCluster(siteRequest, false, true, "/api/cluster/copy", "PUTCopy", d -> {
 										if(d.succeeded()) {
 											SearchList<Cluster> listCluster = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listCluster.getRows());
 											apiRequest.setNumFound(listCluster.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -880,8 +894,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("putcopyCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("putcopyCluster sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -913,6 +929,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	@Override
 	public void patchCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
+			LOGGER.info(String.format("patchCluster started. "));
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -939,14 +956,16 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							SQLConnection sqlConnection = siteRequest.getSqlConnection();
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									aSearchCluster(siteRequest, false, true, null, d -> {
+									aSearchCluster(siteRequest, false, true, "/api/cluster", "PATCH", d -> {
 										if(d.succeeded()) {
 											SearchList<Cluster> listCluster = d.result();
 											ApiRequest apiRequest = new ApiRequest();
 											apiRequest.setRows(listCluster.getRows());
 											apiRequest.setNumFound(listCluster.getQueryResponse().getResults().getNumFound());
+											apiRequest.setNumPATCH(0L);
 											apiRequest.initDeepApiRequest(siteRequest);
 											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listCluster.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 											Date date = null;
 											if(facets != null)
@@ -1178,8 +1197,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("patchCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("patchCluster sql close. "));
 								ApiRequest apiRequest = siteRequest.getApiRequest_();
 								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
@@ -1217,7 +1238,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, null, c -> {
+							aSearchCluster(siteRequest, false, true, "/api/cluster/{id}", "GET", c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
 									getClusterResponse(listCluster, d -> {
@@ -1254,8 +1275,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("getCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("getCluster sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorCluster(siteRequest, eventHandler, c);
@@ -1292,7 +1315,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, "/api/cluster", c -> {
+							aSearchCluster(siteRequest, false, true, "/api/cluster", "Search", c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
 									searchClusterResponse(listCluster, d -> {
@@ -1329,8 +1352,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchCluster sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorCluster(siteRequest, eventHandler, c);
@@ -1411,7 +1436,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, "/cluster", c -> {
+							aSearchCluster(siteRequest, false, true, "/cluster", "SearchPage", c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
 									searchpageClusterResponse(listCluster, d -> {
@@ -1448,8 +1473,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
 					if(b.succeeded()) {
+						LOGGER.info(String.format("searchpageCluster sql commit. "));
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
+								LOGGER.info(String.format("searchpageCluster sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorCluster(siteRequest, eventHandler, c);
@@ -1833,7 +1860,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void aSearchClusterQ(String classApiUriMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchClusterQ(String uri, String apiMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 			searchList.setHighlight(true);
@@ -1843,31 +1870,31 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void aSearchClusterFq(String classApiUriMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchClusterFq(String uri, String apiMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 	}
 
-	public void aSearchClusterSort(String classApiUriMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void aSearchClusterSort(String uri, String apiMethod, SearchList<Cluster> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.addSort(varIndexed, ORDER.valueOf(valueIndexed));
 	}
 
-	public void aSearchClusterRows(String classApiUriMethod, SearchList<Cluster> searchList, Integer valueRows) {
-		searchList.setRows(valueRows);
+	public void aSearchClusterRows(String uri, String apiMethod, SearchList<Cluster> searchList, Integer valueRows) {
+			searchList.setRows(apiMethod != null && apiMethod.contains("Search") ? valueRows : 10);
 	}
 
-	public void aSearchClusterStart(String classApiUriMethod, SearchList<Cluster> searchList, Integer valueStart) {
+	public void aSearchClusterStart(String uri, String apiMethod, SearchList<Cluster> searchList, Integer valueStart) {
 		searchList.setStart(valueStart);
 	}
 
-	public void aSearchClusterVar(String classApiUriMethod, SearchList<Cluster> searchList, String var, String value) {
+	public void aSearchClusterVar(String uri, String apiMethod, SearchList<Cluster> searchList, String var, String value) {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
-	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
+	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -1915,32 +1942,32 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : Cluster.varSearchCluster(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchClusterQ(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchClusterQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								varIndexed = Cluster.varIndexedCluster(entityVar);
-								aSearchClusterFq(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchClusterFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = Cluster.varIndexedCluster(entityVar);
-								aSearchClusterSort(classApiUriMethod, searchList, entityVar, valueIndexed, varIndexed);
+								aSearchClusterSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
 								break;
 							case "start":
 								valueStart = (Integer)paramObject;
-								aSearchClusterStart(classApiUriMethod, searchList, valueStart);
+								aSearchClusterStart(uri, apiMethod, searchList, valueStart);
 								break;
 							case "rows":
 								valueRows = (Integer)paramObject;
-								aSearchClusterRows(classApiUriMethod, searchList, valueRows);
+								aSearchClusterRows(uri, apiMethod, searchList, valueRows);
 								break;
 							case "var":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchClusterVar(classApiUriMethod, searchList, entityVar, valueIndexed);
+								aSearchClusterVar(uri, apiMethod, searchList, entityVar, valueIndexed);
 								break;
 						}
 					}

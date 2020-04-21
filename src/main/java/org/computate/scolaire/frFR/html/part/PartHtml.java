@@ -67,7 +67,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * 
-*/                 
+*/                
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -134,7 +134,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * r.enUS: Store
 	 * r: designPageCles
 	 * r.enUS: pageDesignKeys
-	*/      
+	*/          
 	protected void _designPageCles(List<Long> l) {
 		if(designPageCles.size() > 0) {
 			ListeRecherche<DesignPage> r = new ListeRecherche<>();
