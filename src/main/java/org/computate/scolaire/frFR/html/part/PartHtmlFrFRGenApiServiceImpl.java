@@ -530,7 +530,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+							requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
@@ -716,7 +716,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						if(a.succeeded()) {
 							PartHtml partHtml = a.result();
 							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+							requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
 						} else {
 							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 						}
