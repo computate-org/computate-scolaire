@@ -471,7 +471,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 														});
 													} catch(Exception ex) {
 																LOGGER.error(String.format("error 2"));
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+														errorHtmlPart(null, eventHandler, Future.failedFuture(ex));
 													}
 												} else {
 																LOGGER.error(String.format("error 3"));
