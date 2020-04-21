@@ -465,13 +465,16 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 																	}
 																});
 															} else {
+																LOGGER.error(String.format("error 1"));
 																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 															}
 														});
 													} catch(Exception ex) {
+																LOGGER.error(String.format("error 2"));
 												blockingCodeHandler.handle(Future.failedFuture(ex));
 													}
 												} else {
+																LOGGER.error(String.format("error 3"));
 													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 												}
 											});
@@ -479,18 +482,22 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 										}
 									);
 								} else {
+																LOGGER.error(String.format("error 4"));
 									errorHtmlPart(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
+																LOGGER.error(String.format("error 5"));
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+																LOGGER.error(String.format("error 6"));
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
+																LOGGER.error(String.format("error 7"));
 			errorHtmlPart(null, eventHandler, Future.failedFuture(e));
 		}
 	}
@@ -532,6 +539,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 							siteRequest2.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 						} else {
+																LOGGER.error(String.format("error 8"));
 							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
 					})
@@ -543,6 +551,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							HtmlPart htmlPart = a.result();
 							apiRequestHtmlPart(htmlPart);
 						} else {
+																LOGGER.error(String.format("error 9"));
 							errorHtmlPart(siteRequest2, eventHandler, a);
 						}
 					})
@@ -555,6 +564,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTImportHtmlPart(siteRequest, eventHandler);
 			} else {
+																LOGGER.error(String.format("error 10"));
 				errorHtmlPart(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
 		});
@@ -572,14 +582,17 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								LOGGER.info(String.format("putimportHtmlPart sql close. "));
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
+																LOGGER.error(String.format("error 11"));
 								errorHtmlPart(siteRequest, eventHandler, c);
 							}
 						});
 					} else {
+																LOGGER.error(String.format("error 12"));
 						errorHtmlPart(siteRequest, eventHandler, b);
 					}
 				});
 			} else {
+																LOGGER.error(String.format("error 13"));
 				errorHtmlPart(siteRequest, eventHandler, a);
 			}
 		});
@@ -589,6 +602,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
 		} catch(Exception e) {
+																LOGGER.error(String.format("error 14"));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
