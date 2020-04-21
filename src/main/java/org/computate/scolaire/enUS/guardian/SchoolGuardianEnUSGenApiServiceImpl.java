@@ -103,9 +103,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void postSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postSchoolGuardian started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -149,6 +149,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -161,7 +162,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -191,7 +192,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, null, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -335,9 +336,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void putimportSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportSchoolGuardian started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -360,49 +361,54 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putimportSchoolGuardianResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlSchoolGuardian(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-														listPUTImportSchoolGuardian(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+												sqlSchoolGuardian(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTImportSchoolGuardian(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putimportSchoolGuardianResponse(siteRequest, f -> {
+																putimportSchoolGuardianResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putimportSchoolGuardian succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putimportSchoolGuardian failed. ", f.cause()));
-																		errorSchoolGuardian(siteRequest, eventHandler, f);
+																		errorSchoolGuardian(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putimportSchoolGuardian failed. ", e.cause()));
+																errorSchoolGuardian(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putimportSchoolGuardian failed. ", d.cause()));
+														errorSchoolGuardian(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putimportSchoolGuardian failed. ", ex));
+												errorSchoolGuardian(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putimportSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -415,7 +421,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -439,28 +445,29 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				SchoolGuardian o = searchList.get(0);
+				SchoolGuardian o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchSchoolGuardianFuture(o, true, a -> {
+							if(a.succeeded()) {
+								SchoolGuardian schoolGuardian = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorSchoolGuardian(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchSchoolGuardianFuture(o, true, a -> {
-						if(a.succeeded()) {
-							SchoolGuardian schoolGuardian = a.result();
-							apiRequestSchoolGuardian(schoolGuardian);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorSchoolGuardian(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postSchoolGuardianFuture(siteRequest2, true, a -> {
@@ -476,8 +483,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTImportSchoolGuardian(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -494,8 +502,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putimportSchoolGuardian sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -512,8 +518,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	}
 	public void response200PUTImportSchoolGuardian(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -523,9 +529,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void putmergeSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeSchoolGuardian started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -548,49 +554,54 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putmergeSchoolGuardianResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlSchoolGuardian(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-														listPUTMergeSchoolGuardian(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+												sqlSchoolGuardian(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTMergeSchoolGuardian(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putmergeSchoolGuardianResponse(siteRequest, f -> {
+																putmergeSchoolGuardianResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putmergeSchoolGuardian succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putmergeSchoolGuardian failed. ", f.cause()));
-																		errorSchoolGuardian(siteRequest, eventHandler, f);
+																		errorSchoolGuardian(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putmergeSchoolGuardian failed. ", e.cause()));
+																errorSchoolGuardian(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putmergeSchoolGuardian failed. ", d.cause()));
+														errorSchoolGuardian(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putmergeSchoolGuardian failed. ", ex));
+												errorSchoolGuardian(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putmergeSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -603,7 +614,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -627,28 +638,29 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				SchoolGuardian o = searchList.get(0);
+				SchoolGuardian o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchSchoolGuardianFuture(o, false, a -> {
+							if(a.succeeded()) {
+								SchoolGuardian schoolGuardian = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorSchoolGuardian(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchSchoolGuardianFuture(o, false, a -> {
-						if(a.succeeded()) {
-							SchoolGuardian schoolGuardian = a.result();
-							apiRequestSchoolGuardian(schoolGuardian);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorSchoolGuardian(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postSchoolGuardianFuture(siteRequest2, false, a -> {
@@ -664,8 +676,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTMergeSchoolGuardian(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolGuardian(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -682,8 +695,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putmergeSchoolGuardian sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -700,8 +711,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	}
 	public void response200PUTMergeSchoolGuardian(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -711,9 +722,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void putcopySchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopySchoolGuardian started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -736,55 +747,66 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putcopySchoolGuardianResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolGuardian(siteRequest, false, true, "/api/guardian/copy", "PUTCopy", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolGuardian> listSchoolGuardian = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolGuardian.getRows());
-											apiRequest.setNumFound(listSchoolGuardian.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolGuardian(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTCopySchoolGuardian(apiRequest, listSchoolGuardian, f -> {
-																	if(f.succeeded()) {
-																		putcopySchoolGuardianResponse(listSchoolGuardian, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putcopySchoolGuardian succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putcopySchoolGuardian failed. ", g.cause()));
-																				errorSchoolGuardian(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolGuardian(siteRequest2, false, true, "/api/guardian/copy", "PUTCopy", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolGuardian> listSchoolGuardian = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolGuardian.getRows());
+														apiRequest.setNumFound(listSchoolGuardian.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+														sqlSchoolGuardian(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPUTCopySchoolGuardian(apiRequest, listSchoolGuardian, f -> {
+																		if(f.succeeded()) {
+																			putcopySchoolGuardianResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("putcopySchoolGuardian succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("putcopySchoolGuardian failed. ", g.cause()));
+																					errorSchoolGuardian(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("putcopySchoolGuardian failed. ", f.cause()));
+																			errorSchoolGuardian(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("putcopySchoolGuardian failed. ", ex));
+																	errorSchoolGuardian(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("putcopySchoolGuardian failed. ", e.cause()));
+																errorSchoolGuardian(siteRequest2, null, e);
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolGuardian(siteRequest, eventHandler, d);
+														});
+													} else {
+														LOGGER.error(String.format("putcopySchoolGuardian failed. ", d.cause()));
+														errorSchoolGuardian(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putcopySchoolGuardian failed. ", ex));
+												errorSchoolGuardian(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("putcopySchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -797,7 +819,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -824,7 +846,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolGuardian(apiRequest, listSchoolGuardian, eventHandler);
 				} else {
-					response200PUTCopySchoolGuardian(listSchoolGuardian, eventHandler);
+					response200PUTCopySchoolGuardian(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolGuardian(listSchoolGuardian.getSiteRequest_(), eventHandler, a);
@@ -877,7 +899,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, null, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -968,9 +990,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void putcopySchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
-		response200PUTCopySchoolGuardian(listSchoolGuardian, a -> {
+	public void putcopySchoolGuardianResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTCopySchoolGuardian(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -979,8 +1000,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putcopySchoolGuardian sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -995,11 +1014,10 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			}
 		});
 	}
-	public void response200PUTCopySchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTCopySchoolGuardian(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1009,9 +1027,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void patchSchoolGuardian(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchSchoolGuardian started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -1034,73 +1052,84 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							patchSchoolGuardianResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolGuardian(siteRequest, false, true, "/api/guardian", "PATCH", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolGuardian> listSchoolGuardian = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolGuardian.getRows());
-											apiRequest.setNumFound(listSchoolGuardian.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolGuardian.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modified");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listSchoolGuardian.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolGuardian(siteRequest2, false, true, "/api/guardian", "PATCH", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolGuardian> listSchoolGuardian = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolGuardian.getRows());
+														apiRequest.setNumFound(listSchoolGuardian.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolGuardian.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchoolGuardian.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											if(listSchoolGuardian.size() == 1) {
-												SchoolGuardian o = listSchoolGuardian.get(0);
-												apiRequest.setPk(o.getPk());
-												apiRequest.setOriginal(o);
-												apiRequestSchoolGuardian(o);
-											o.apiRequestSchoolGuardian();
-											}
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolGuardian(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPATCHSchoolGuardian(apiRequest, listSchoolGuardian, dt, f -> {
-																	if(f.succeeded()) {
-																		patchSchoolGuardianResponse(listSchoolGuardian, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchSchoolGuardian succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("patchSchoolGuardian failed. ", g.cause()));
-																				errorSchoolGuardian(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														SchoolGuardian o = listSchoolGuardian.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															apiRequest.setPk(o.getPk());
+															apiRequest.setOriginal(o);
+															apiRequestSchoolGuardian(o);
+															o.apiRequestSchoolGuardian();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolGuardian(siteRequest, eventHandler, d);
+														sqlSchoolGuardian(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPATCHSchoolGuardian(apiRequest, listSchoolGuardian, dt, f -> {
+																		if(f.succeeded()) {
+																			patchSchoolGuardianResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchSchoolGuardian succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchSchoolGuardian failed. ", g.cause()));
+																					errorSchoolGuardian(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchSchoolGuardian failed. ", f.cause()));
+																			errorSchoolGuardian(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchSchoolGuardian failed. ", ex));
+																	errorSchoolGuardian(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchSchoolGuardian failed. ", e.cause()));
+																errorSchoolGuardian(siteRequest2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchSchoolGuardian failed. ", d.cause()));
+														errorSchoolGuardian(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchSchoolGuardian failed. ", ex));
+												errorSchoolGuardian(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -1113,7 +1142,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1140,7 +1169,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSchoolGuardian(apiRequest, listSchoolGuardian, dt, eventHandler);
 				} else {
-					response200PATCHSchoolGuardian(listSchoolGuardian, eventHandler);
+					response200PATCHSchoolGuardian(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolGuardian(listSchoolGuardian.getSiteRequest_(), eventHandler, a);
@@ -1150,8 +1179,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	public Future<SchoolGuardian> patchSchoolGuardianFuture(SchoolGuardian o, Boolean inheritPk, Handler<AsyncResult<SchoolGuardian>> eventHandler) {
 		Promise<SchoolGuardian> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSchoolGuardian(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolGuardian schoolGuardian = a.result();
@@ -1180,7 +1209,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, null, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1417,9 +1446,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void patchSchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
-		response200PATCHSchoolGuardian(listSchoolGuardian, a -> {
+	public void patchSchoolGuardianResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PATCHSchoolGuardian(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -1428,8 +1456,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchSchoolGuardian sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -1444,11 +1470,9 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			}
 		});
 	}
-	public void response200PATCHSchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolGuardian(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = JsonObject.mapFrom(apiRequest);
+			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -1459,8 +1483,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void getSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -1478,6 +1502,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 										}
 									});
 								} else {
+									LOGGER.error(String.format("getSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -1490,7 +1515,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1536,8 +1561,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void searchSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -1555,6 +1580,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -1567,7 +1593,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1657,8 +1683,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 
 	@Override
 	public void searchpageSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
 			sqlSchoolGuardian(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolGuardian(siteRequest, b -> {
@@ -1676,6 +1702,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchpageSchoolGuardian failed. ", c.cause()));
 									errorSchoolGuardian(siteRequest, eventHandler, c);
 								}
 							});
@@ -1688,7 +1715,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolGuardian(null, eventHandler, Future.failedFuture(e));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1848,8 +1875,10 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			if(sqlConnection != null) {
 				sqlConnection.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
 								eventHandler.handle(Future.succeededFuture(responseOperation));

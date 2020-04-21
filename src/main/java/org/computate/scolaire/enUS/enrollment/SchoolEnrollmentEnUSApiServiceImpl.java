@@ -368,7 +368,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolEnrollment.size());
-				response200PATCHPaymentsSchoolEnrollment(listSchoolEnrollment, eventHandler);
+				response200PATCHPaymentsSchoolEnrollment(siteRequest, eventHandler);
 			} else {
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
 			}

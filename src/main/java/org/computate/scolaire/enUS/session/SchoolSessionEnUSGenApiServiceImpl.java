@@ -105,9 +105,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void postSchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postSchoolSession started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -151,6 +151,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -163,7 +164,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -193,7 +194,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, null, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -339,9 +340,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void putimportSchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportSchoolSession started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -364,49 +365,54 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putimportSchoolSessionResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlSchoolSession(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-														listPUTImportSchoolSession(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+												sqlSchoolSession(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTImportSchoolSession(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putimportSchoolSessionResponse(siteRequest, f -> {
+																putimportSchoolSessionResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putimportSchoolSession succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putimportSchoolSession failed. ", f.cause()));
-																		errorSchoolSession(siteRequest, eventHandler, f);
+																		errorSchoolSession(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putimportSchoolSession failed. ", e.cause()));
+																errorSchoolSession(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putimportSchoolSession failed. ", d.cause()));
+														errorSchoolSession(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putimportSchoolSession failed. ", ex));
+												errorSchoolSession(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putimportSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -419,7 +425,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -443,28 +449,29 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				SchoolSession o = searchList.get(0);
+				SchoolSession o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchSchoolSessionFuture(o, true, a -> {
+							if(a.succeeded()) {
+								SchoolSession schoolSession = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorSchoolSession(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchSchoolSessionFuture(o, true, a -> {
-						if(a.succeeded()) {
-							SchoolSession schoolSession = a.result();
-							apiRequestSchoolSession(schoolSession);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorSchoolSession(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postSchoolSessionFuture(siteRequest2, true, a -> {
@@ -480,8 +487,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTImportSchoolSession(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolSession(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -498,8 +506,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putimportSchoolSession sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolSession(siteRequest, eventHandler, c);
@@ -516,8 +522,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 	public void response200PUTImportSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -527,9 +533,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void putmergeSchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeSchoolSession started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -552,49 +558,54 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putmergeSchoolSessionResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlSchoolSession(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-														listPUTMergeSchoolSession(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+												sqlSchoolSession(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTMergeSchoolSession(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putmergeSchoolSessionResponse(siteRequest, f -> {
+																putmergeSchoolSessionResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putmergeSchoolSession succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putmergeSchoolSession failed. ", f.cause()));
-																		errorSchoolSession(siteRequest, eventHandler, f);
+																		errorSchoolSession(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putmergeSchoolSession failed. ", e.cause()));
+																errorSchoolSession(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putmergeSchoolSession failed. ", d.cause()));
+														errorSchoolSession(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putmergeSchoolSession failed. ", ex));
+												errorSchoolSession(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putmergeSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -607,7 +618,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -631,28 +642,29 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				SchoolSession o = searchList.get(0);
+				SchoolSession o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchSchoolSessionFuture(o, false, a -> {
+							if(a.succeeded()) {
+								SchoolSession schoolSession = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorSchoolSession(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchSchoolSessionFuture(o, false, a -> {
-						if(a.succeeded()) {
-							SchoolSession schoolSession = a.result();
-							apiRequestSchoolSession(schoolSession);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorSchoolSession(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postSchoolSessionFuture(siteRequest2, false, a -> {
@@ -668,8 +680,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTMergeSchoolSession(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolSession(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -686,8 +699,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putmergeSchoolSession sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolSession(siteRequest, eventHandler, c);
@@ -704,8 +715,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 	public void response200PUTMergeSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -715,9 +726,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void putcopySchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopySchoolSession started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -740,55 +751,66 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putcopySchoolSessionResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolSession(siteRequest, false, true, "/api/session/copy", "PUTCopy", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolSession> listSchoolSession = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolSession.getRows());
-											apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolSession(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTCopySchoolSession(apiRequest, listSchoolSession, f -> {
-																	if(f.succeeded()) {
-																		putcopySchoolSessionResponse(listSchoolSession, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putcopySchoolSession succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putcopySchoolSession failed. ", g.cause()));
-																				errorSchoolSession(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolSession(siteRequest2, false, true, "/api/session/copy", "PUTCopy", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolSession> listSchoolSession = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolSession.getRows());
+														apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+														sqlSchoolSession(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPUTCopySchoolSession(apiRequest, listSchoolSession, f -> {
+																		if(f.succeeded()) {
+																			putcopySchoolSessionResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("putcopySchoolSession succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("putcopySchoolSession failed. ", g.cause()));
+																					errorSchoolSession(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("putcopySchoolSession failed. ", f.cause()));
+																			errorSchoolSession(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
+																	errorSchoolSession(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("putcopySchoolSession failed. ", e.cause()));
+																errorSchoolSession(siteRequest2, null, e);
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+														});
+													} else {
+														LOGGER.error(String.format("putcopySchoolSession failed. ", d.cause()));
+														errorSchoolSession(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
+												errorSchoolSession(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("putcopySchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -801,7 +823,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -828,7 +850,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolSession(apiRequest, listSchoolSession, eventHandler);
 				} else {
-					response200PUTCopySchoolSession(listSchoolSession, eventHandler);
+					response200PUTCopySchoolSession(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolSession(listSchoolSession.getSiteRequest_(), eventHandler, a);
@@ -881,7 +903,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, null, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -960,9 +982,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void putcopySchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-		response200PUTCopySchoolSession(listSchoolSession, a -> {
+	public void putcopySchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTCopySchoolSession(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -971,8 +992,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putcopySchoolSession sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolSession(siteRequest, eventHandler, c);
@@ -987,11 +1006,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			}
 		});
 	}
-	public void response200PUTCopySchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTCopySchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1001,9 +1019,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void patchSchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchSchoolSession started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -1026,73 +1044,84 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							patchSchoolSessionResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolSession(siteRequest, false, true, "/api/session", "PATCH", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolSession> listSchoolSession = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolSession.getRows());
-											apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modified");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolSession(siteRequest2, false, true, "/api/session", "PATCH", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolSession> listSchoolSession = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolSession.getRows());
+														apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											if(listSchoolSession.size() == 1) {
-												SchoolSession o = listSchoolSession.get(0);
-												apiRequest.setPk(o.getPk());
-												apiRequest.setOriginal(o);
-												apiRequestSchoolSession(o);
-											o.apiRequestSchoolSession();
-											}
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolSession(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPATCHSchoolSession(apiRequest, listSchoolSession, dt, f -> {
-																	if(f.succeeded()) {
-																		patchSchoolSessionResponse(listSchoolSession, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchSchoolSession succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("patchSchoolSession failed. ", g.cause()));
-																				errorSchoolSession(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														SchoolSession o = listSchoolSession.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															apiRequest.setPk(o.getPk());
+															apiRequest.setOriginal(o);
+															apiRequestSchoolSession(o);
+															o.apiRequestSchoolSession();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+														sqlSchoolSession(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPATCHSchoolSession(apiRequest, listSchoolSession, dt, f -> {
+																		if(f.succeeded()) {
+																			patchSchoolSessionResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchSchoolSession succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchSchoolSession failed. ", g.cause()));
+																					errorSchoolSession(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchSchoolSession failed. ", f.cause()));
+																			errorSchoolSession(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchSchoolSession failed. ", ex));
+																	errorSchoolSession(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchSchoolSession failed. ", e.cause()));
+																errorSchoolSession(siteRequest2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchSchoolSession failed. ", d.cause()));
+														errorSchoolSession(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchSchoolSession failed. ", ex));
+												errorSchoolSession(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -1105,7 +1134,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1132,7 +1161,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSchoolSession(apiRequest, listSchoolSession, dt, eventHandler);
 				} else {
-					response200PATCHSchoolSession(listSchoolSession, eventHandler);
+					response200PATCHSchoolSession(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolSession(listSchoolSession.getSiteRequest_(), eventHandler, a);
@@ -1142,8 +1171,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	public Future<SchoolSession> patchSchoolSessionFuture(SchoolSession o, Boolean inheritPk, Handler<AsyncResult<SchoolSession>> eventHandler) {
 		Promise<SchoolSession> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSchoolSession(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolSession schoolSession = a.result();
@@ -1172,7 +1201,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, null, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1407,9 +1436,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void patchSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-		response200PATCHSchoolSession(listSchoolSession, a -> {
+	public void patchSchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PATCHSchoolSession(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -1418,8 +1446,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchSchoolSession sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolSession(siteRequest, eventHandler, c);
@@ -1434,11 +1460,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			}
 		});
 	}
-	public void response200PATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = JsonObject.mapFrom(apiRequest);
+			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -1449,8 +1473,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void getSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("");
@@ -1489,6 +1513,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 										}
 									});
 								} else {
+									LOGGER.error(String.format("getSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -1501,7 +1526,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1547,8 +1572,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void searchSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("");
@@ -1587,6 +1612,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -1599,7 +1625,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1689,8 +1715,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	@Override
 	public void searchpageSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("");
@@ -1729,6 +1755,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchpageSchoolSession failed. ", c.cause()));
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
 							});
@@ -1741,7 +1768,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1907,8 +1934,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			if(sqlConnection != null) {
 				sqlConnection.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
 								eventHandler.handle(Future.succeededFuture(responseOperation));

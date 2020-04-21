@@ -107,9 +107,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void postDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postDesignPage a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -153,6 +153,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -165,7 +166,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -195,7 +196,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, null, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -353,9 +354,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void putimportDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportDesignPage a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -378,49 +379,54 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							putimportDesignPageReponse(requeteSite, c -> {
 								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
 										blockingCodeHandler -> {
-											sqlDesignPage(requeteSite, d -> {
-												if(d.succeeded()) {
-													try {
-														RequeteApi requeteApi = new RequeteApi();
-														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														requeteApi.setRows(jsonArray.size());
-														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-														requeteApi.setNumPATCH(0L);
-														requeteApi.initLoinRequeteApi(requeteSite);
-														requeteSite.setRequeteApi_(requeteApi);
-														requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-														listePUTImportDesignPage(requeteApi, requeteSite, e -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+											try {
+												RequeteApi requeteApi = new RequeteApi();
+												JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												requeteApi.setRows(jsonArray.size());
+												requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
+												requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+												sqlDesignPage(requeteSite2, d -> {
+													if(d.succeeded()) {
+														listePUTImportDesignPage(requeteApi, requeteSite2, e -> {
 															if(e.succeeded()) {
-																putimportDesignPageReponse(requeteSite, f -> {
+																putimportDesignPageReponse(requeteSite2, f -> {
 																	if(f.succeeded()) {
-																		gestionnaireEvenements.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putimportDesignPage a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putimportDesignPage a échoué. ", f.cause()));
-																		erreurDesignPage(requeteSite, gestionnaireEvenements, f);
+																		erreurDesignPage(requeteSite2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putimportDesignPage a échoué. ", e.cause()));
+																erreurDesignPage(requeteSite2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putimportDesignPage a échoué. ", d.cause()));
+														erreurDesignPage(requeteSite2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putimportDesignPage a échoué. ", ex));
+												erreurDesignPage(requeteSite2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putimportDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -433,7 +439,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -457,28 +463,29 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			listeRecherche.initLoinPourClasse(requeteSite2);
 
 			if(listeRecherche.size() == 1) {
-				DesignPage o = listeRecherche.get(0);
+				DesignPage o = listeRecherche.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSauvegardes()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSauvegardes()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					requeteSite2.setObjetJson(json2);
+					futures.add(
+						patchDesignPageFuture(o, true, a -> {
+							if(a.succeeded()) {
+								DesignPage designPage = a.result();
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+							} else {
+								erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
+							}
+						})
+					);
 				}
-				requeteSite2.setObjetJson(json2);
-				futures.add(
-					patchDesignPageFuture(o, true, a -> {
-						if(a.succeeded()) {
-							DesignPage designPage = a.result();
-							requeteApiDesignPage(designPage);
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-						} else {
-							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postDesignPageFuture(requeteSite2, true, a -> {
@@ -494,8 +501,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 				reponse200PUTImportDesignPage(requeteSite, gestionnaireEvenements);
-				requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignPage(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -512,8 +520,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putimportDesignPage sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
@@ -530,8 +536,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 	public void reponse200PUTImportDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -541,9 +547,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void putfusionDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionDesignPage a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -566,49 +572,54 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							putfusionDesignPageReponse(requeteSite, c -> {
 								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
 										blockingCodeHandler -> {
-											sqlDesignPage(requeteSite, d -> {
-												if(d.succeeded()) {
-													try {
-														RequeteApi requeteApi = new RequeteApi();
-														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														requeteApi.setRows(jsonArray.size());
-														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-														requeteApi.setNumPATCH(0L);
-														requeteApi.initLoinRequeteApi(requeteSite);
-														requeteSite.setRequeteApi_(requeteApi);
-														requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-														listePUTFusionDesignPage(requeteApi, requeteSite, e -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+											try {
+												RequeteApi requeteApi = new RequeteApi();
+												JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												requeteApi.setRows(jsonArray.size());
+												requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
+												requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+												sqlDesignPage(requeteSite2, d -> {
+													if(d.succeeded()) {
+														listePUTFusionDesignPage(requeteApi, requeteSite2, e -> {
 															if(e.succeeded()) {
-																putfusionDesignPageReponse(requeteSite, f -> {
+																putfusionDesignPageReponse(requeteSite2, f -> {
 																	if(f.succeeded()) {
-																		gestionnaireEvenements.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putfusionDesignPage a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putfusionDesignPage a échoué. ", f.cause()));
-																		erreurDesignPage(requeteSite, gestionnaireEvenements, f);
+																		erreurDesignPage(requeteSite2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putfusionDesignPage a échoué. ", e.cause()));
+																erreurDesignPage(requeteSite2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putfusionDesignPage a échoué. ", d.cause()));
+														erreurDesignPage(requeteSite2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putfusionDesignPage a échoué. ", ex));
+												erreurDesignPage(requeteSite2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putfusionDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -621,7 +632,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -645,28 +656,29 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			listeRecherche.initLoinPourClasse(requeteSite2);
 
 			if(listeRecherche.size() == 1) {
-				DesignPage o = listeRecherche.get(0);
+				DesignPage o = listeRecherche.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSauvegardes()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSauvegardes()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					requeteSite2.setObjetJson(json2);
+					futures.add(
+						patchDesignPageFuture(o, false, a -> {
+							if(a.succeeded()) {
+								DesignPage designPage = a.result();
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+							} else {
+								erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
+							}
+						})
+					);
 				}
-				requeteSite2.setObjetJson(json2);
-				futures.add(
-					patchDesignPageFuture(o, false, a -> {
-						if(a.succeeded()) {
-							DesignPage designPage = a.result();
-							requeteApiDesignPage(designPage);
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-						} else {
-							erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postDesignPageFuture(requeteSite2, false, a -> {
@@ -682,8 +694,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 				reponse200PUTFusionDesignPage(requeteSite, gestionnaireEvenements);
-				requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurDesignPage(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -700,8 +713,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putfusionDesignPage sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
@@ -718,8 +729,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 	public void reponse200PUTFusionDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -729,9 +740,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void putcopieDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopieDesignPage a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -754,55 +765,66 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							putcopieDesignPageReponse(requeteSite, c -> {
 								if(c.succeeded()) {
-									rechercheDesignPage(requeteSite, false, true, "/api/design-page/copie", "PUTCopie", d -> {
-										if(d.succeeded()) {
-											ListeRecherche<DesignPage> listeDesignPage = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listeDesignPage.getRows());
-											requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
-											requeteApi.setNumPATCH(0L);
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
-											requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlDesignPage(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePUTCopieDesignPage(requeteApi, listeDesignPage, f -> {
-																	if(f.succeeded()) {
-																		putcopieDesignPageReponse(listeDesignPage, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putcopieDesignPage a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("putcopieDesignPage a échoué. ", g.cause()));
-																				erreurDesignPage(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+											try {
+												rechercheDesignPage(requeteSite2, false, true, "/api/design-page/copie", "PUTCopie", d -> {
+													if(d.succeeded()) {
+														ListeRecherche<DesignPage> listeDesignPage = d.result();
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeDesignPage.getRows());
+														requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite2);
+														requeteSite2.setRequeteApi_(requeteApi);
+														requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+														sqlDesignPage(requeteSite2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listePUTCopieDesignPage(requeteApi, listeDesignPage, f -> {
+																		if(f.succeeded()) {
+																			putcopieDesignPageReponse(requeteSite2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("putcopieDesignPage a réussi. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("putcopieDesignPage a échoué. ", g.cause()));
+																					erreurDesignPage(requeteSite2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("putcopieDesignPage a échoué. ", f.cause()));
+																			erreurDesignPage(requeteSite2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("putcopieDesignPage a échoué. ", ex));
+																	erreurDesignPage(requeteSite2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("putcopieDesignPage a échoué. ", e.cause()));
+																erreurDesignPage(requeteSite2, null, e);
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											erreurDesignPage(requeteSite, gestionnaireEvenements, d);
+														});
+													} else {
+														LOGGER.error(String.format("putcopieDesignPage a échoué. ", d.cause()));
+														erreurDesignPage(requeteSite2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putcopieDesignPage a échoué. ", ex));
+												erreurDesignPage(requeteSite2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("putcopieDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -815,7 +837,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -842,7 +864,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopieDesignPage(requeteApi, listeDesignPage, gestionnaireEvenements);
 				} else {
-					reponse200PUTCopieDesignPage(listeDesignPage, gestionnaireEvenements);
+					reponse200PUTCopieDesignPage(requeteSite, gestionnaireEvenements);
 				}
 			} else {
 				erreurDesignPage(listeDesignPage.getRequeteSite_(), gestionnaireEvenements, a);
@@ -895,7 +917,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, null, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -978,9 +1000,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		}
 	}
 
-	public void putcopieDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-		reponse200PUTCopieDesignPage(listeDesignPage, a -> {
+	public void putcopieDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PUTCopieDesignPage(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -989,8 +1010,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putcopieDesignPage sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
@@ -1005,11 +1024,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			}
 		});
 	}
-	public void reponse200PUTCopieDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PUTCopieDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1019,9 +1037,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void patchDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchDesignPage a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -1044,73 +1062,84 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							patchDesignPageReponse(requeteSite, c -> {
 								if(c.succeeded()) {
-									rechercheDesignPage(requeteSite, false, true, "/api/design-page", "PATCH", d -> {
-										if(d.succeeded()) {
-											ListeRecherche<DesignPage> listeDesignPage = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listeDesignPage.getRows());
-											requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
-											requeteApi.setNumPATCH(0L);
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
-											requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignPage.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modifie");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listeDesignPage.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+											try {
+												rechercheDesignPage(requeteSite2, false, true, "/api/design-page", "PATCH", d -> {
+													if(d.succeeded()) {
+														ListeRecherche<DesignPage> listeDesignPage = d.result();
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeDesignPage.getRows());
+														requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite2);
+														requeteSite2.setRequeteApi_(requeteApi);
+														requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignPage.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listeDesignPage.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											if(listeDesignPage.size() == 1) {
-												DesignPage o = listeDesignPage.get(0);
-												requeteApi.setPk(o.getPk());
-												requeteApi.setOriginal(o);
-												requeteApiDesignPage(o);
-											o.requeteApiDesignPage();
-											}
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlDesignPage(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePATCHDesignPage(requeteApi, listeDesignPage, dt, f -> {
-																	if(f.succeeded()) {
-																		patchDesignPageReponse(listeDesignPage, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchDesignPage a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("patchDesignPage a échoué. ", g.cause()));
-																				erreurDesignPage(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														DesignPage o = listeDesignPage.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															requeteApi.setPk(o.getPk());
+															requeteApi.setOriginal(o);
+															requeteApiDesignPage(o);
+															o.requeteApiDesignPage();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											erreurDesignPage(requeteSite, gestionnaireEvenements, d);
+														sqlDesignPage(requeteSite2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listePATCHDesignPage(requeteApi, listeDesignPage, dt, f -> {
+																		if(f.succeeded()) {
+																			patchDesignPageReponse(requeteSite2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchDesignPage a réussi. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchDesignPage a échoué. ", g.cause()));
+																					erreurDesignPage(requeteSite2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchDesignPage a échoué. ", f.cause()));
+																			erreurDesignPage(requeteSite2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchDesignPage a échoué. ", ex));
+																	erreurDesignPage(requeteSite2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchDesignPage a échoué. ", e.cause()));
+																erreurDesignPage(requeteSite2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchDesignPage a échoué. ", d.cause()));
+														erreurDesignPage(requeteSite2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchDesignPage a échoué. ", ex));
+												erreurDesignPage(requeteSite2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1123,7 +1152,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1150,7 +1179,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHDesignPage(requeteApi, listeDesignPage, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHDesignPage(listeDesignPage, gestionnaireEvenements);
+					reponse200PATCHDesignPage(requeteSite, gestionnaireEvenements);
 				}
 			} else {
 				erreurDesignPage(listeDesignPage.getRequeteSite_(), gestionnaireEvenements, a);
@@ -1160,8 +1189,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	public Future<DesignPage> patchDesignPageFuture(DesignPage o, Boolean inheritPk, Handler<AsyncResult<DesignPage>> gestionnaireEvenements) {
 		Promise<DesignPage> promise = Promise.promise();
+		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			sqlPATCHDesignPage(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					DesignPage designPage = a.result();
@@ -1190,7 +1219,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, null, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1529,9 +1558,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		}
 	}
 
-	public void patchDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-		reponse200PATCHDesignPage(listeDesignPage, a -> {
+	public void patchDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PATCHDesignPage(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -1540,8 +1568,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchDesignPage sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
@@ -1556,11 +1582,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			}
 		});
 	}
-	public void reponse200PATCHDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			JsonObject json = JsonObject.mapFrom(requeteApi);
+			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -1571,8 +1595,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void getDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
 			sqlDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
@@ -1590,6 +1614,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										}
 									});
 								} else {
+									LOGGER.error(String.format("getDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1602,7 +1627,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1648,8 +1673,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void rechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
 			sqlDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
@@ -1667,6 +1692,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										}
 									});
 								} else {
+									LOGGER.error(String.format("rechercheDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1679,7 +1705,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1769,8 +1795,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	@Override
 	public void pagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
 			sqlDesignPage(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurDesignPage(requeteSite, b -> {
@@ -1788,6 +1814,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										}
 									});
 								} else {
+									LOGGER.error(String.format("pagerechercheDesignPage a échoué. ", c.cause()));
 									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1800,7 +1827,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				}
 			});
 		} catch(Exception e) {
-			erreurDesignPage(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1972,8 +1999,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			if(connexionSql != null) {
 				connexionSql.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						connexionSql.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							} else {
 								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));

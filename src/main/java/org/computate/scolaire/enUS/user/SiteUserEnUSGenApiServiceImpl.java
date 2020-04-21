@@ -105,8 +105,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	@Override
 	public void searchSiteUser(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest);
 			sqlSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
@@ -124,6 +124,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchSiteUser failed. ", c.cause()));
 									errorSiteUser(siteRequest, eventHandler, c);
 								}
 							});
@@ -136,7 +137,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			});
 		} catch(Exception e) {
-			errorSiteUser(null, eventHandler, Future.failedFuture(e));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -221,9 +222,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	@Override
 	public void patchSiteUser(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchSiteUser started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
 			if(
@@ -246,73 +247,84 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							patchSiteUserResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSiteUser(siteRequest, false, true, "/api/user", "PATCH", d -> {
-										if(d.succeeded()) {
-											SearchList<SiteUser> listSiteUser = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSiteUser.getRows());
-											apiRequest.setNumFound(listSiteUser.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modified");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listSiteUser.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
+											try {
+												aSearchSiteUser(siteRequest2, false, true, "/api/user", "PATCH", d -> {
+													if(d.succeeded()) {
+														SearchList<SiteUser> listSiteUser = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSiteUser.getRows());
+														apiRequest.setNumFound(listSiteUser.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSiteUser.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											if(listSiteUser.size() == 1) {
-												SiteUser o = listSiteUser.get(0);
-												apiRequest.setPk(o.getPk());
-												apiRequest.setOriginal(o);
-												apiRequestSiteUser(o);
-											o.apiRequestSiteUser();
-											}
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSiteUser(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPATCHSiteUser(apiRequest, listSiteUser, dt, f -> {
-																	if(f.succeeded()) {
-																		patchSiteUserResponse(listSiteUser, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchSiteUser succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("patchSiteUser failed. ", g.cause()));
-																				errorSiteUser(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														SiteUser o = listSiteUser.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															apiRequest.setPk(o.getPk());
+															apiRequest.setOriginal(o);
+															apiRequestSiteUser(o);
+															o.apiRequestSiteUser();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSiteUser(siteRequest, eventHandler, d);
+														sqlSiteUser(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPATCHSiteUser(apiRequest, listSiteUser, dt, f -> {
+																		if(f.succeeded()) {
+																			patchSiteUserResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchSiteUser succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchSiteUser failed. ", g.cause()));
+																					errorSiteUser(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchSiteUser failed. ", f.cause()));
+																			errorSiteUser(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchSiteUser failed. ", ex));
+																	errorSiteUser(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchSiteUser failed. ", e.cause()));
+																errorSiteUser(siteRequest2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchSiteUser failed. ", d.cause()));
+														errorSiteUser(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchSiteUser failed. ", ex));
+												errorSiteUser(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchSiteUser failed. ", c.cause()));
 									errorSiteUser(siteRequest, eventHandler, c);
 								}
 							});
@@ -325,7 +337,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			});
 		} catch(Exception e) {
-			errorSiteUser(null, eventHandler, Future.failedFuture(e));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -352,7 +364,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSiteUser(apiRequest, listSiteUser, dt, eventHandler);
 				} else {
-					response200PATCHSiteUser(listSiteUser, eventHandler);
+					response200PATCHSiteUser(siteRequest, eventHandler);
 				}
 			} else {
 				errorSiteUser(listSiteUser.getSiteRequest_(), eventHandler, a);
@@ -362,8 +374,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public Future<SiteUser> patchSiteUserFuture(SiteUser o, Boolean inheritPk, Handler<AsyncResult<SiteUser>> eventHandler) {
 		Promise<SiteUser> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSiteUser(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SiteUser siteUser = a.result();
@@ -392,7 +404,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			});
 		} catch(Exception e) {
-			errorSiteUser(null, null, Future.failedFuture(e));
+			errorSiteUser(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -715,9 +727,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void patchSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
-		response200PATCHSiteUser(listSiteUser, a -> {
+	public void patchSiteUserResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PATCHSiteUser(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -726,8 +737,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchSiteUser sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSiteUser(siteRequest, eventHandler, c);
@@ -742,11 +751,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			}
 		});
 	}
-	public void response200PATCHSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = JsonObject.mapFrom(apiRequest);
+			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -757,9 +764,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	@Override
 	public void postSiteUser(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postSiteUser started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
 			if(
@@ -803,6 +810,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postSiteUser failed. ", c.cause()));
 									errorSiteUser(siteRequest, eventHandler, c);
 								}
 							});
@@ -815,7 +823,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			});
 		} catch(Exception e) {
-			errorSiteUser(null, eventHandler, Future.failedFuture(e));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -845,7 +853,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			});
 		} catch(Exception e) {
-			errorSiteUser(null, null, Future.failedFuture(e));
+			errorSiteUser(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1015,8 +1023,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	@Override
 	public void searchpageSiteUser(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest);
 			sqlSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
@@ -1034,6 +1042,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchpageSiteUser failed. ", c.cause()));
 									errorSiteUser(siteRequest, eventHandler, c);
 								}
 							});
@@ -1046,7 +1055,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				}
 			});
 		} catch(Exception e) {
-			errorSiteUser(null, eventHandler, Future.failedFuture(e));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1212,8 +1221,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			if(sqlConnection != null) {
 				sqlConnection.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
 								eventHandler.handle(Future.succeededFuture(responseOperation));

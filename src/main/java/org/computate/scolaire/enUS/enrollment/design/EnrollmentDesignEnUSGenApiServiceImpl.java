@@ -101,9 +101,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void postEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postEnrollmentDesign started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -147,6 +147,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -159,7 +160,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -189,7 +190,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, null, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -296,9 +297,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void putimportEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportEnrollmentDesign started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -321,49 +322,54 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putimportEnrollmentDesignResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlEnrollmentDesign(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-														listPUTImportEnrollmentDesign(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+												sqlEnrollmentDesign(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTImportEnrollmentDesign(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putimportEnrollmentDesignResponse(siteRequest, f -> {
+																putimportEnrollmentDesignResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putimportEnrollmentDesign succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putimportEnrollmentDesign failed. ", f.cause()));
-																		errorEnrollmentDesign(siteRequest, eventHandler, f);
+																		errorEnrollmentDesign(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putimportEnrollmentDesign failed. ", e.cause()));
+																errorEnrollmentDesign(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putimportEnrollmentDesign failed. ", d.cause()));
+														errorEnrollmentDesign(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putimportEnrollmentDesign failed. ", ex));
+												errorEnrollmentDesign(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putimportEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -376,7 +382,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -400,28 +406,29 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				EnrollmentDesign o = searchList.get(0);
+				EnrollmentDesign o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchEnrollmentDesignFuture(o, true, a -> {
+							if(a.succeeded()) {
+								EnrollmentDesign enrollmentDesign = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorEnrollmentDesign(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchEnrollmentDesignFuture(o, true, a -> {
-						if(a.succeeded()) {
-							EnrollmentDesign enrollmentDesign = a.result();
-							apiRequestEnrollmentDesign(enrollmentDesign);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorEnrollmentDesign(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postEnrollmentDesignFuture(siteRequest2, true, a -> {
@@ -437,8 +444,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTImportEnrollmentDesign(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -455,8 +463,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putimportEnrollmentDesign sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -473,8 +479,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	}
 	public void response200PUTImportEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -484,9 +490,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void putmergeEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeEnrollmentDesign started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -509,49 +515,54 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putmergeEnrollmentDesignResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlEnrollmentDesign(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-														listPUTMergeEnrollmentDesign(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+												sqlEnrollmentDesign(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTMergeEnrollmentDesign(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putmergeEnrollmentDesignResponse(siteRequest, f -> {
+																putmergeEnrollmentDesignResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putmergeEnrollmentDesign succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", f.cause()));
-																		errorEnrollmentDesign(siteRequest, eventHandler, f);
+																		errorEnrollmentDesign(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", e.cause()));
+																errorEnrollmentDesign(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", d.cause()));
+														errorEnrollmentDesign(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", ex));
+												errorEnrollmentDesign(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -564,7 +575,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -588,28 +599,29 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				EnrollmentDesign o = searchList.get(0);
+				EnrollmentDesign o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchEnrollmentDesignFuture(o, false, a -> {
+							if(a.succeeded()) {
+								EnrollmentDesign enrollmentDesign = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorEnrollmentDesign(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchEnrollmentDesignFuture(o, false, a -> {
-						if(a.succeeded()) {
-							EnrollmentDesign enrollmentDesign = a.result();
-							apiRequestEnrollmentDesign(enrollmentDesign);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorEnrollmentDesign(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postEnrollmentDesignFuture(siteRequest2, false, a -> {
@@ -625,8 +637,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTMergeEnrollmentDesign(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -643,8 +656,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putmergeEnrollmentDesign sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -661,8 +672,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	}
 	public void response200PUTMergeEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -672,9 +683,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void putcopyEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopyEnrollmentDesign started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -697,55 +708,66 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putcopyEnrollmentDesignResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design/copy", "PUTCopy", d -> {
-										if(d.succeeded()) {
-											SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listEnrollmentDesign.getRows());
-											apiRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlEnrollmentDesign(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTCopyEnrollmentDesign(apiRequest, listEnrollmentDesign, f -> {
-																	if(f.succeeded()) {
-																		putcopyEnrollmentDesignResponse(listEnrollmentDesign, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putcopyEnrollmentDesign succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", g.cause()));
-																				errorEnrollmentDesign(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
+											try {
+												aSearchEnrollmentDesign(siteRequest2, false, true, "/api/enrollment-design/copy", "PUTCopy", d -> {
+													if(d.succeeded()) {
+														SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listEnrollmentDesign.getRows());
+														apiRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+														sqlEnrollmentDesign(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPUTCopyEnrollmentDesign(apiRequest, listEnrollmentDesign, f -> {
+																		if(f.succeeded()) {
+																			putcopyEnrollmentDesignResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("putcopyEnrollmentDesign succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", g.cause()));
+																					errorEnrollmentDesign(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", f.cause()));
+																			errorEnrollmentDesign(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", ex));
+																	errorEnrollmentDesign(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", e.cause()));
+																errorEnrollmentDesign(siteRequest2, null, e);
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorEnrollmentDesign(siteRequest, eventHandler, d);
+														});
+													} else {
+														LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", d.cause()));
+														errorEnrollmentDesign(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", ex));
+												errorEnrollmentDesign(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -758,7 +780,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -785,7 +807,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopyEnrollmentDesign(apiRequest, listEnrollmentDesign, eventHandler);
 				} else {
-					response200PUTCopyEnrollmentDesign(listEnrollmentDesign, eventHandler);
+					response200PUTCopyEnrollmentDesign(siteRequest, eventHandler);
 				}
 			} else {
 				errorEnrollmentDesign(listEnrollmentDesign.getSiteRequest_(), eventHandler, a);
@@ -838,7 +860,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, null, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -903,9 +925,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void putcopyEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-		response200PUTCopyEnrollmentDesign(listEnrollmentDesign, a -> {
+	public void putcopyEnrollmentDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTCopyEnrollmentDesign(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -914,8 +935,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putcopyEnrollmentDesign sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -930,11 +949,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			}
 		});
 	}
-	public void response200PUTCopyEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTCopyEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -944,9 +962,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void patchEnrollmentDesign(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchEnrollmentDesign started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -969,73 +987,84 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							patchEnrollmentDesignResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchEnrollmentDesign(siteRequest, false, true, "/api/enrollment-design", "PATCH", d -> {
-										if(d.succeeded()) {
-											SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listEnrollmentDesign.getRows());
-											apiRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modified");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest, body);
+											try {
+												aSearchEnrollmentDesign(siteRequest2, false, true, "/api/enrollment-design", "PATCH", d -> {
+													if(d.succeeded()) {
+														SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listEnrollmentDesign.getRows());
+														apiRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											if(listEnrollmentDesign.size() == 1) {
-												EnrollmentDesign o = listEnrollmentDesign.get(0);
-												apiRequest.setPk(o.getPk());
-												apiRequest.setOriginal(o);
-												apiRequestEnrollmentDesign(o);
-											o.apiRequestEnrollmentDesign();
-											}
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlEnrollmentDesign(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPATCHEnrollmentDesign(apiRequest, listEnrollmentDesign, dt, f -> {
-																	if(f.succeeded()) {
-																		patchEnrollmentDesignResponse(listEnrollmentDesign, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchEnrollmentDesign succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("patchEnrollmentDesign failed. ", g.cause()));
-																				errorEnrollmentDesign(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														EnrollmentDesign o = listEnrollmentDesign.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															apiRequest.setPk(o.getPk());
+															apiRequest.setOriginal(o);
+															apiRequestEnrollmentDesign(o);
+															o.apiRequestEnrollmentDesign();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorEnrollmentDesign(siteRequest, eventHandler, d);
+														sqlEnrollmentDesign(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPATCHEnrollmentDesign(apiRequest, listEnrollmentDesign, dt, f -> {
+																		if(f.succeeded()) {
+																			patchEnrollmentDesignResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchEnrollmentDesign succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchEnrollmentDesign failed. ", g.cause()));
+																					errorEnrollmentDesign(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchEnrollmentDesign failed. ", f.cause()));
+																			errorEnrollmentDesign(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchEnrollmentDesign failed. ", ex));
+																	errorEnrollmentDesign(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchEnrollmentDesign failed. ", e.cause()));
+																errorEnrollmentDesign(siteRequest2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchEnrollmentDesign failed. ", d.cause()));
+														errorEnrollmentDesign(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchEnrollmentDesign failed. ", ex));
+												errorEnrollmentDesign(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -1048,7 +1077,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1075,7 +1104,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHEnrollmentDesign(apiRequest, listEnrollmentDesign, dt, eventHandler);
 				} else {
-					response200PATCHEnrollmentDesign(listEnrollmentDesign, eventHandler);
+					response200PATCHEnrollmentDesign(siteRequest, eventHandler);
 				}
 			} else {
 				errorEnrollmentDesign(listEnrollmentDesign.getSiteRequest_(), eventHandler, a);
@@ -1085,8 +1114,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	public Future<EnrollmentDesign> patchEnrollmentDesignFuture(EnrollmentDesign o, Boolean inheritPk, Handler<AsyncResult<EnrollmentDesign>> eventHandler) {
 		Promise<EnrollmentDesign> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHEnrollmentDesign(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					EnrollmentDesign enrollmentDesign = a.result();
@@ -1115,7 +1144,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, null, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1226,9 +1255,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void patchEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-		response200PATCHEnrollmentDesign(listEnrollmentDesign, a -> {
+	public void patchEnrollmentDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PATCHEnrollmentDesign(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -1237,8 +1265,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchEnrollmentDesign sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1253,11 +1279,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			}
 		});
 	}
-	public void response200PATCHEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = JsonObject.mapFrom(apiRequest);
+			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -1268,8 +1292,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void getEnrollmentDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("");
@@ -1308,6 +1332,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("getEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -1320,7 +1345,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1366,8 +1391,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void searchEnrollmentDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("");
@@ -1406,6 +1431,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -1418,7 +1444,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1508,8 +1534,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	@Override
 	public void searchpageEnrollmentDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForEnrollmentDesign(siteContext, operationRequest);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("");
@@ -1548,6 +1574,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchpageEnrollmentDesign failed. ", c.cause()));
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
 							});
@@ -1560,7 +1587,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				}
 			});
 		} catch(Exception e) {
-			errorEnrollmentDesign(null, eventHandler, Future.failedFuture(e));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1714,8 +1741,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			if(sqlConnection != null) {
 				sqlConnection.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
 								eventHandler.handle(Future.succeededFuture(responseOperation));

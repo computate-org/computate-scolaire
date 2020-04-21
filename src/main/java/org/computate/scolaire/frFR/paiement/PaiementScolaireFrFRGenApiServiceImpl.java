@@ -103,9 +103,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void postPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postPaiementScolaire a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -149,6 +149,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postPaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -161,7 +162,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -191,7 +192,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, null, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -404,9 +405,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void putimportPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportPaiementScolaire a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -429,49 +430,54 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							putimportPaiementScolaireReponse(requeteSite, c -> {
 								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
 										blockingCodeHandler -> {
-											sqlPaiementScolaire(requeteSite, d -> {
-												if(d.succeeded()) {
-													try {
-														RequeteApi requeteApi = new RequeteApi();
-														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														requeteApi.setRows(jsonArray.size());
-														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-														requeteApi.setNumPATCH(0L);
-														requeteApi.initLoinRequeteApi(requeteSite);
-														requeteSite.setRequeteApi_(requeteApi);
-														requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-														listePUTImportPaiementScolaire(requeteApi, requeteSite, e -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+											try {
+												RequeteApi requeteApi = new RequeteApi();
+												JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												requeteApi.setRows(jsonArray.size());
+												requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
+												requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+												sqlPaiementScolaire(requeteSite2, d -> {
+													if(d.succeeded()) {
+														listePUTImportPaiementScolaire(requeteApi, requeteSite2, e -> {
 															if(e.succeeded()) {
-																putimportPaiementScolaireReponse(requeteSite, f -> {
+																putimportPaiementScolaireReponse(requeteSite2, f -> {
 																	if(f.succeeded()) {
-																		gestionnaireEvenements.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putimportPaiementScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", f.cause()));
-																		erreurPaiementScolaire(requeteSite, gestionnaireEvenements, f);
+																		erreurPaiementScolaire(requeteSite2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", e.cause()));
+																erreurPaiementScolaire(requeteSite2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", d.cause()));
+														erreurPaiementScolaire(requeteSite2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", ex));
+												erreurPaiementScolaire(requeteSite2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -484,7 +490,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -508,28 +514,29 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.initLoinPourClasse(requeteSite2);
 
 			if(listeRecherche.size() == 1) {
-				PaiementScolaire o = listeRecherche.get(0);
+				PaiementScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSauvegardes()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSauvegardes()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					requeteSite2.setObjetJson(json2);
+					futures.add(
+						patchPaiementScolaireFuture(o, true, a -> {
+							if(a.succeeded()) {
+								PaiementScolaire paiementScolaire = a.result();
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+							} else {
+								erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
+							}
+						})
+					);
 				}
-				requeteSite2.setObjetJson(json2);
-				futures.add(
-					patchPaiementScolaireFuture(o, true, a -> {
-						if(a.succeeded()) {
-							PaiementScolaire paiementScolaire = a.result();
-							requeteApiPaiementScolaire(paiementScolaire);
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-						} else {
-							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postPaiementScolaireFuture(requeteSite2, true, a -> {
@@ -545,8 +552,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 				reponse200PUTImportPaiementScolaire(requeteSite, gestionnaireEvenements);
-				requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPaiementScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -563,8 +571,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putimportPaiementScolaire sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -581,8 +587,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	}
 	public void reponse200PUTImportPaiementScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -592,9 +598,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void putfusionPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionPaiementScolaire a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -617,49 +623,54 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							putfusionPaiementScolaireReponse(requeteSite, c -> {
 								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
 										blockingCodeHandler -> {
-											sqlPaiementScolaire(requeteSite, d -> {
-												if(d.succeeded()) {
-													try {
-														RequeteApi requeteApi = new RequeteApi();
-														JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														requeteApi.setRows(jsonArray.size());
-														requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-														requeteApi.setNumPATCH(0L);
-														requeteApi.initLoinRequeteApi(requeteSite);
-														requeteSite.setRequeteApi_(requeteApi);
-														requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-														listePUTFusionPaiementScolaire(requeteApi, requeteSite, e -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+											try {
+												RequeteApi requeteApi = new RequeteApi();
+												JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												requeteApi.setRows(jsonArray.size());
+												requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
+												requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+												sqlPaiementScolaire(requeteSite2, d -> {
+													if(d.succeeded()) {
+														listePUTFusionPaiementScolaire(requeteApi, requeteSite2, e -> {
 															if(e.succeeded()) {
-																putfusionPaiementScolaireReponse(requeteSite, f -> {
+																putfusionPaiementScolaireReponse(requeteSite2, f -> {
 																	if(f.succeeded()) {
-																		gestionnaireEvenements.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putfusionPaiementScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", f.cause()));
-																		erreurPaiementScolaire(requeteSite, gestionnaireEvenements, f);
+																		erreurPaiementScolaire(requeteSite2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", e.cause()));
+																erreurPaiementScolaire(requeteSite2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", d.cause()));
+														erreurPaiementScolaire(requeteSite2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", ex));
+												erreurPaiementScolaire(requeteSite2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -672,7 +683,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -696,28 +707,29 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.initLoinPourClasse(requeteSite2);
 
 			if(listeRecherche.size() == 1) {
-				PaiementScolaire o = listeRecherche.get(0);
+				PaiementScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSauvegardes()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSauvegardes()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					requeteSite2.setObjetJson(json2);
+					futures.add(
+						patchPaiementScolaireFuture(o, false, a -> {
+							if(a.succeeded()) {
+								PaiementScolaire paiementScolaire = a.result();
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+							} else {
+								erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
+							}
+						})
+					);
 				}
-				requeteSite2.setObjetJson(json2);
-				futures.add(
-					patchPaiementScolaireFuture(o, false, a -> {
-						if(a.succeeded()) {
-							PaiementScolaire paiementScolaire = a.result();
-							requeteApiPaiementScolaire(paiementScolaire);
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-						} else {
-							erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postPaiementScolaireFuture(requeteSite2, false, a -> {
@@ -733,8 +745,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+							requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 				reponse200PUTFusionPaiementScolaire(requeteSite, gestionnaireEvenements);
-				requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 			} else {
 				erreurPaiementScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -751,8 +764,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putfusionPaiementScolaire sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -769,8 +780,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	}
 	public void reponse200PUTFusionPaiementScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -780,9 +791,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void putcopiePaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopiePaiementScolaire a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -805,55 +816,66 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							putcopiePaiementScolaireReponse(requeteSite, c -> {
 								if(c.succeeded()) {
-									recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/copie", "PUTCopie", d -> {
-										if(d.succeeded()) {
-											ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listePaiementScolaire.getRows());
-											requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
-											requeteApi.setNumPATCH(0L);
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
-											requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlPaiementScolaire(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePUTCopiePaiementScolaire(requeteApi, listePaiementScolaire, f -> {
-																	if(f.succeeded()) {
-																		putcopiePaiementScolaireReponse(listePaiementScolaire, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putcopiePaiementScolaire a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", g.cause()));
-																				erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+											try {
+												recherchePaiementScolaire(requeteSite2, false, true, "/api/paiement/copie", "PUTCopie", d -> {
+													if(d.succeeded()) {
+														ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listePaiementScolaire.getRows());
+														requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite2);
+														requeteSite2.setRequeteApi_(requeteApi);
+														requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+														sqlPaiementScolaire(requeteSite2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listePUTCopiePaiementScolaire(requeteApi, listePaiementScolaire, f -> {
+																		if(f.succeeded()) {
+																			putcopiePaiementScolaireReponse(requeteSite2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("putcopiePaiementScolaire a réussi. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", g.cause()));
+																					erreurPaiementScolaire(requeteSite2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", f.cause()));
+																			erreurPaiementScolaire(requeteSite2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
+																	erreurPaiementScolaire(requeteSite2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", e.cause()));
+																erreurPaiementScolaire(requeteSite2, null, e);
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+														});
+													} else {
+														LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", d.cause()));
+														erreurPaiementScolaire(requeteSite2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
+												erreurPaiementScolaire(requeteSite2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -866,7 +888,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -893,7 +915,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopiePaiementScolaire(requeteApi, listePaiementScolaire, gestionnaireEvenements);
 				} else {
-					reponse200PUTCopiePaiementScolaire(listePaiementScolaire, gestionnaireEvenements);
+					reponse200PUTCopiePaiementScolaire(requeteSite, gestionnaireEvenements);
 				}
 			} else {
 				erreurPaiementScolaire(listePaiementScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -946,7 +968,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, null, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1103,9 +1125,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		}
 	}
 
-	public void putcopiePaiementScolaireReponse(ListeRecherche<PaiementScolaire> listePaiementScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listePaiementScolaire.getRequeteSite_();
-		reponse200PUTCopiePaiementScolaire(listePaiementScolaire, a -> {
+	public void putcopiePaiementScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PUTCopiePaiementScolaire(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -1114,8 +1135,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putcopiePaiementScolaire sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1130,11 +1149,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			}
 		});
 	}
-	public void reponse200PUTCopiePaiementScolaire(ListeRecherche<PaiementScolaire> listePaiementScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PUTCopiePaiementScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listePaiementScolaire.getRequeteSite_();
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(requeteApi).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1144,9 +1162,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void patchPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchPaiementScolaire a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -1169,73 +1187,84 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							patchPaiementScolaireReponse(requeteSite, c -> {
 								if(c.succeeded()) {
-									recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "PATCH", d -> {
-										if(d.succeeded()) {
-											ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listePaiementScolaire.getRows());
-											requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
-											requeteApi.setNumPATCH(0L);
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
-											requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modifie");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+											try {
+												recherchePaiementScolaire(requeteSite2, false, true, "/api/paiement", "PATCH", d -> {
+													if(d.succeeded()) {
+														ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listePaiementScolaire.getRows());
+														requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite2);
+														requeteSite2.setRequeteApi_(requeteApi);
+														requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											if(listePaiementScolaire.size() == 1) {
-												PaiementScolaire o = listePaiementScolaire.get(0);
-												requeteApi.setPk(o.getPk());
-												requeteApi.setOriginal(o);
-												requeteApiPaiementScolaire(o);
-											o.requeteApiPaiementScolaire();
-											}
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlPaiementScolaire(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, f -> {
-																	if(f.succeeded()) {
-																		patchPaiementScolaireReponse(listePaiementScolaire, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchPaiementScolaire a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("patchPaiementScolaire a échoué. ", g.cause()));
-																				erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														PaiementScolaire o = listePaiementScolaire.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															requeteApi.setPk(o.getPk());
+															requeteApi.setOriginal(o);
+															requeteApiPaiementScolaire(o);
+															o.requeteApiPaiementScolaire();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+														sqlPaiementScolaire(requeteSite2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, f -> {
+																		if(f.succeeded()) {
+																			patchPaiementScolaireReponse(requeteSite2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchPaiementScolaire a réussi. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchPaiementScolaire a échoué. ", g.cause()));
+																					erreurPaiementScolaire(requeteSite2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchPaiementScolaire a échoué. ", f.cause()));
+																			erreurPaiementScolaire(requeteSite2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
+																	erreurPaiementScolaire(requeteSite2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchPaiementScolaire a échoué. ", e.cause()));
+																erreurPaiementScolaire(requeteSite2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchPaiementScolaire a échoué. ", d.cause()));
+														erreurPaiementScolaire(requeteSite2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
+												erreurPaiementScolaire(requeteSite2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchPaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1248,7 +1277,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1275,7 +1304,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHPaiementScolaire(listePaiementScolaire, gestionnaireEvenements);
+					reponse200PATCHPaiementScolaire(requeteSite, gestionnaireEvenements);
 				}
 			} else {
 				erreurPaiementScolaire(listePaiementScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -1285,8 +1314,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	public Future<PaiementScolaire> patchPaiementScolaireFuture(PaiementScolaire o, Boolean inheritPk, Handler<AsyncResult<PaiementScolaire>> gestionnaireEvenements) {
 		Promise<PaiementScolaire> promise = Promise.promise();
+		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			sqlPATCHPaiementScolaire(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					PaiementScolaire paiementScolaire = a.result();
@@ -1315,7 +1344,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, null, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1684,9 +1713,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		}
 	}
 
-	public void patchPaiementScolaireReponse(ListeRecherche<PaiementScolaire> listePaiementScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listePaiementScolaire.getRequeteSite_();
-		reponse200PATCHPaiementScolaire(listePaiementScolaire, a -> {
+	public void patchPaiementScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PATCHPaiementScolaire(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -1695,8 +1723,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchPaiementScolaire sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1711,11 +1737,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			}
 		});
 	}
-	public void reponse200PATCHPaiementScolaire(ListeRecherche<PaiementScolaire> listePaiementScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHPaiementScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listePaiementScolaire.getRequeteSite_();
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			JsonObject json = JsonObject.mapFrom(requeteApi);
+			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -1726,8 +1750,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void getPaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1745,6 +1769,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										}
 									});
 								} else {
+									LOGGER.error(String.format("getPaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1757,7 +1782,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1803,8 +1828,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void recherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1822,6 +1847,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										}
 									});
 								} else {
+									LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1834,7 +1860,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1924,8 +1950,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	@Override
 	public void pagerecherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1943,6 +1969,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										}
 									});
 								} else {
+									LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", c.cause()));
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1955,7 +1982,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				}
 			});
 		} catch(Exception e) {
-			erreurPaiementScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -2115,8 +2142,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			if(connexionSql != null) {
 				connexionSql.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						connexionSql.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							} else {
 								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));

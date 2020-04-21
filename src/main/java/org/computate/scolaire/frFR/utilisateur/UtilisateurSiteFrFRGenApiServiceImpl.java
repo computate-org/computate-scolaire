@@ -105,8 +105,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	@Override
 	public void rechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -124,6 +124,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										}
 									});
 								} else {
+									LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", c.cause()));
 									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -136,7 +137,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -221,9 +222,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	@Override
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchUtilisateurSite a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
 			if(
@@ -246,73 +247,84 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
 						if(b.succeeded()) {
-							SQLConnection connexionSql = requeteSite.getConnexionSql();
-							connexionSql.close(c -> {
+							patchUtilisateurSiteReponse(requeteSite, c -> {
 								if(c.succeeded()) {
-									rechercheUtilisateurSite(requeteSite, false, true, "/api/utilisateur", "PATCH", d -> {
-										if(d.succeeded()) {
-											ListeRecherche<UtilisateurSite> listeUtilisateurSite = d.result();
-											RequeteApi requeteApi = new RequeteApi();
-											requeteApi.setRows(listeUtilisateurSite.getRows());
-											requeteApi.setNumFound(listeUtilisateurSite.getQueryResponse().getResults().getNumFound());
-											requeteApi.setNumPATCH(0L);
-											requeteApi.initLoinRequeteApi(requeteSite);
-											requeteSite.setRequeteApi_(requeteApi);
-											requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modifie");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listeUtilisateurSite.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+											try {
+												rechercheUtilisateurSite(requeteSite2, false, true, "/api/utilisateur", "PATCH", d -> {
+													if(d.succeeded()) {
+														ListeRecherche<UtilisateurSite> listeUtilisateurSite = d.result();
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeUtilisateurSite.getRows());
+														requeteApi.setNumFound(listeUtilisateurSite.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite2);
+														requeteSite2.setRequeteApi_(requeteApi);
+														requeteSite2.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listeUtilisateurSite.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											if(listeUtilisateurSite.size() == 1) {
-												UtilisateurSite o = listeUtilisateurSite.get(0);
-												requeteApi.setPk(o.getPk());
-												requeteApi.setOriginal(o);
-												requeteApiUtilisateurSite(o);
-											o.requeteApiUtilisateurSite();
-											}
-											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-											executeurTravailleur.executeBlocking(
-												blockingCodeHandler -> {
-													sqlUtilisateurSite(requeteSite, e -> {
-														if(e.succeeded()) {
-															try {
-																listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, f -> {
-																	if(f.succeeded()) {
-																		patchUtilisateurSiteReponse(listeUtilisateurSite, g -> {
-																			if(g.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchUtilisateurSite a réussi. "));
-																			} else {
-																				LOGGER.error(String.format("patchUtilisateurSite a échoué. ", g.cause()));
-																				erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														UtilisateurSite o = listeUtilisateurSite.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															requeteApi.setPk(o.getPk());
+															requeteApi.setOriginal(o);
+															requeteApiUtilisateurSite(o);
+															o.requeteApiUtilisateurSite();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+														sqlUtilisateurSite(requeteSite2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, f -> {
+																		if(f.succeeded()) {
+																			patchUtilisateurSiteReponse(requeteSite2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchUtilisateurSite a réussi. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchUtilisateurSite a échoué. ", g.cause()));
+																					erreurUtilisateurSite(requeteSite2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchUtilisateurSite a échoué. ", f.cause()));
+																			erreurUtilisateurSite(requeteSite2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
+																	erreurUtilisateurSite(requeteSite2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchUtilisateurSite a échoué. ", e.cause()));
+																erreurUtilisateurSite(requeteSite2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchUtilisateurSite a échoué. ", d.cause()));
+														erreurUtilisateurSite(requeteSite2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
+												erreurUtilisateurSite(requeteSite2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchUtilisateurSite a échoué. ", c.cause()));
 									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -325,7 +337,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -352,7 +364,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHUtilisateurSite(listeUtilisateurSite, gestionnaireEvenements);
+					reponse200PATCHUtilisateurSite(requeteSite, gestionnaireEvenements);
 				}
 			} else {
 				erreurUtilisateurSite(listeUtilisateurSite.getRequeteSite_(), gestionnaireEvenements, a);
@@ -362,8 +374,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public Future<UtilisateurSite> patchUtilisateurSiteFuture(UtilisateurSite o, Boolean inheritPk, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
 		Promise<UtilisateurSite> promise = Promise.promise();
+		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			sqlPATCHUtilisateurSite(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					UtilisateurSite utilisateurSite = a.result();
@@ -392,7 +404,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, null, Future.failedFuture(e));
+			erreurUtilisateurSite(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -715,9 +727,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void patchUtilisateurSiteReponse(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-		reponse200PATCHUtilisateurSite(listeUtilisateurSite, a -> {
+	public void patchUtilisateurSiteReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		reponse200PATCHUtilisateurSite(requeteSite, a -> {
 			if(a.succeeded()) {
 				SQLConnection connexionSql = requeteSite.getConnexionSql();
 				connexionSql.commit(b -> {
@@ -726,8 +737,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						connexionSql.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchUtilisateurSite sql close. "));
-								RequeteApi requeteApi = requeteSite.getRequeteApi_();
-								requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
 								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 							} else {
 								erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
@@ -742,11 +751,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			}
 		});
 	}
-	public void reponse200PATCHUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			JsonObject json = JsonObject.mapFrom(requeteApi);
+			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -757,9 +764,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	@Override
 	public void postUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postUtilisateurSite a démarré. "));
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
 			if(
@@ -803,6 +810,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postUtilisateurSite a échoué. ", c.cause()));
 									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -815,7 +823,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -845,7 +853,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, null, Future.failedFuture(e));
+			erreurUtilisateurSite(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1015,8 +1023,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	@Override
 	public void pagerechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
@@ -1034,6 +1042,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										}
 									});
 								} else {
+									LOGGER.error(String.format("pagerechercheUtilisateurSite a échoué. ", c.cause()));
 									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 								}
 							});
@@ -1046,7 +1055,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
@@ -1212,8 +1221,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			if(connexionSql != null) {
 				connexionSql.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						connexionSql.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							} else {
 								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));

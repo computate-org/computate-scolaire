@@ -117,9 +117,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void postSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postSchoolEnrollment started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -163,6 +163,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -175,7 +176,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -205,7 +206,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, null, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -614,9 +615,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void putimportSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportSchoolEnrollment started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -639,49 +640,54 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putimportSchoolEnrollmentResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlSchoolEnrollment(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-														listPUTImportSchoolEnrollment(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+												sqlSchoolEnrollment(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTImportSchoolEnrollment(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putimportSchoolEnrollmentResponse(siteRequest, f -> {
+																putimportSchoolEnrollmentResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putimportSchoolEnrollment succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putimportSchoolEnrollment failed. ", f.cause()));
-																		errorSchoolEnrollment(siteRequest, eventHandler, f);
+																		errorSchoolEnrollment(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putimportSchoolEnrollment failed. ", e.cause()));
+																errorSchoolEnrollment(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putimportSchoolEnrollment failed. ", d.cause()));
+														errorSchoolEnrollment(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
+												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putimportSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -694,7 +700,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -718,28 +724,29 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				SchoolEnrollment o = searchList.get(0);
+				SchoolEnrollment o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchSchoolEnrollmentFuture(o, true, a -> {
+							if(a.succeeded()) {
+								SchoolEnrollment schoolEnrollment = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorSchoolEnrollment(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchSchoolEnrollmentFuture(o, true, a -> {
-						if(a.succeeded()) {
-							SchoolEnrollment schoolEnrollment = a.result();
-							apiRequestSchoolEnrollment(schoolEnrollment);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorSchoolEnrollment(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postSchoolEnrollmentFuture(siteRequest2, true, a -> {
@@ -755,8 +762,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTImportSchoolEnrollment(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -773,8 +781,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putimportSchoolEnrollment sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolEnrollment(siteRequest, eventHandler, c);
@@ -791,8 +797,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 	public void response200PUTImportSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -802,9 +808,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void putmergeSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeSchoolEnrollment started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -827,49 +833,54 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putmergeSchoolEnrollmentResponse(siteRequest, c -> {
 								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(c.result()));
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
 										blockingCodeHandler -> {
-											sqlSchoolEnrollment(siteRequest, d -> {
-												if(d.succeeded()) {
-													try {
-														ApiRequest apiRequest = new ApiRequest();
-														JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-														apiRequest.setRows(jsonArray.size());
-														apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest);
-														siteRequest.setApiRequest_(apiRequest);
-														siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-														listPUTMergeSchoolEnrollment(apiRequest, siteRequest, e -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+											try {
+												ApiRequest apiRequest = new ApiRequest();
+												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+												apiRequest.setRows(jsonArray.size());
+												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+												sqlSchoolEnrollment(siteRequest2, d -> {
+													if(d.succeeded()) {
+														listPUTMergeSchoolEnrollment(apiRequest, siteRequest2, e -> {
 															if(e.succeeded()) {
-																putmergeSchoolEnrollmentResponse(siteRequest, f -> {
+																putmergeSchoolEnrollmentResponse(siteRequest2, f -> {
 																	if(f.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(f.result()));
 																		LOGGER.info(String.format("putmergeSchoolEnrollment succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																	} else {
 																		LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", f.cause()));
-																		errorSchoolEnrollment(siteRequest, eventHandler, f);
+																		errorSchoolEnrollment(siteRequest2, null, f);
 																	}
 																});
 															} else {
-																blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+																LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", e.cause()));
+																errorSchoolEnrollment(siteRequest2, null, e);
 															}
 														});
-													} catch(Exception ex) {
-												blockingCodeHandler.handle(Future.failedFuture(ex));
+													} else {
+														LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", d.cause()));
+														errorSchoolEnrollment(siteRequest2, null, d);
 													}
-												} else {
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											});
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
+												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											}
 										}, resultHandler -> {
 										}
 									);
 								} else {
+									LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -882,7 +893,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -906,28 +917,29 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			searchList.initDeepForClass(siteRequest2);
 
 			if(searchList.size() == 1) {
-				SchoolEnrollment o = searchList.get(0);
+				SchoolEnrollment o = searchList.getList().stream().findFirst().orElse(null);
 				JsonObject json2 = new JsonObject();
 				for(String f : json.fieldNames()) {
 					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 				}
-				for(String f : o.getSaves()) {
-					if(!json.fieldNames().contains(f))
-						json2.putNull("set" + StringUtils.capitalize(f));
+				if(o != null) {
+					for(String f : o.getSaves()) {
+						if(!json.fieldNames().contains(f))
+							json2.putNull("set" + StringUtils.capitalize(f));
+					}
+					siteRequest2.setJsonObject(json2);
+					futures.add(
+						patchSchoolEnrollmentFuture(o, false, a -> {
+							if(a.succeeded()) {
+								SchoolEnrollment schoolEnrollment = a.result();
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+							} else {
+								errorSchoolEnrollment(siteRequest2, eventHandler, a);
+							}
+						})
+					);
 				}
-				siteRequest2.setJsonObject(json2);
-				futures.add(
-					patchSchoolEnrollmentFuture(o, false, a -> {
-						if(a.succeeded()) {
-							SchoolEnrollment schoolEnrollment = a.result();
-							apiRequestSchoolEnrollment(schoolEnrollment);
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-						} else {
-							errorSchoolEnrollment(siteRequest2, eventHandler, a);
-						}
-					})
-				);
 			} else {
 				futures.add(
 					postSchoolEnrollmentFuture(siteRequest2, false, a -> {
@@ -943,8 +955,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 				response200PUTMergeSchoolEnrollment(siteRequest, eventHandler);
-				siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 			} else {
 				errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 			}
@@ -961,8 +974,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putmergeSchoolEnrollment sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolEnrollment(siteRequest, eventHandler, c);
@@ -979,8 +990,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 	public void response200PUTMergeSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -990,9 +1001,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void putcopySchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopySchoolEnrollment started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -1015,55 +1026,66 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							putcopySchoolEnrollmentResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment/copy", "PUTCopy", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolEnrollment.getRows());
-											apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolEnrollment(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPUTCopySchoolEnrollment(apiRequest, listSchoolEnrollment, f -> {
-																	if(f.succeeded()) {
-																		putcopySchoolEnrollmentResponse(listSchoolEnrollment, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("putcopySchoolEnrollment succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("putcopySchoolEnrollment failed. ", g.cause()));
-																				errorSchoolEnrollment(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolEnrollment(siteRequest2, false, true, "/api/enrollment/copy", "PUTCopy", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolEnrollment.getRows());
+														apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+														sqlSchoolEnrollment(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPUTCopySchoolEnrollment(apiRequest, listSchoolEnrollment, f -> {
+																		if(f.succeeded()) {
+																			putcopySchoolEnrollmentResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("putcopySchoolEnrollment succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("putcopySchoolEnrollment failed. ", g.cause()));
+																					errorSchoolEnrollment(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("putcopySchoolEnrollment failed. ", f.cause()));
+																			errorSchoolEnrollment(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+																	errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("putcopySchoolEnrollment failed. ", e.cause()));
+																errorSchoolEnrollment(siteRequest2, null, e);
 															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
-														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
+														});
+													} else {
+														LOGGER.error(String.format("putcopySchoolEnrollment failed. ", d.cause()));
+														errorSchoolEnrollment(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("putcopySchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -1076,7 +1098,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1103,7 +1125,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolEnrollment(apiRequest, listSchoolEnrollment, eventHandler);
 				} else {
-					response200PUTCopySchoolEnrollment(listSchoolEnrollment, eventHandler);
+					response200PUTCopySchoolEnrollment(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
@@ -1156,7 +1178,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, null, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -1429,9 +1451,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void putcopySchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200PUTCopySchoolEnrollment(listSchoolEnrollment, a -> {
+	public void putcopySchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PUTCopySchoolEnrollment(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -1440,8 +1461,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("putcopySchoolEnrollment sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolEnrollment(siteRequest, eventHandler, c);
@@ -1456,11 +1475,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 		});
 	}
-	public void response200PUTCopySchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PUTCopySchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(apiRequest).encodePrettily()))));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1470,9 +1488,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void patchSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchSchoolEnrollment started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -1495,73 +1513,84 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							patchSchoolEnrollmentResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment", "PATCH", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolEnrollment.getRows());
-											apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modified");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolEnrollment(siteRequest2, false, true, "/api/enrollment", "PATCH", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolEnrollment.getRows());
+														apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											if(listSchoolEnrollment.size() == 1) {
-												SchoolEnrollment o = listSchoolEnrollment.get(0);
-												apiRequest.setPk(o.getPk());
-												apiRequest.setOriginal(o);
-												apiRequestSchoolEnrollment(o);
-											o.apiRequestSchoolEnrollment();
-											}
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolEnrollment(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
-																	if(f.succeeded()) {
-																		patchSchoolEnrollmentResponse(listSchoolEnrollment, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchSchoolEnrollment succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("patchSchoolEnrollment failed. ", g.cause()));
-																				errorSchoolEnrollment(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														SchoolEnrollment o = listSchoolEnrollment.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															apiRequest.setPk(o.getPk());
+															apiRequest.setOriginal(o);
+															apiRequestSchoolEnrollment(o);
+															o.apiRequestSchoolEnrollment();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
+														sqlSchoolEnrollment(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
+																		if(f.succeeded()) {
+																			patchSchoolEnrollmentResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchSchoolEnrollment succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchSchoolEnrollment failed. ", g.cause()));
+																					errorSchoolEnrollment(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchSchoolEnrollment failed. ", f.cause()));
+																			errorSchoolEnrollment(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+																	errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchSchoolEnrollment failed. ", e.cause()));
+																errorSchoolEnrollment(siteRequest2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchSchoolEnrollment failed. ", d.cause()));
+														errorSchoolEnrollment(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -1574,7 +1603,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -1601,7 +1630,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
 				} else {
-					response200PATCHSchoolEnrollment(listSchoolEnrollment, eventHandler);
+					response200PATCHSchoolEnrollment(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
@@ -1611,8 +1640,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public Future<SchoolEnrollment> patchSchoolEnrollmentFuture(SchoolEnrollment o, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		Promise<SchoolEnrollment> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHSchoolEnrollment(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
@@ -1641,7 +1670,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, null, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -2694,9 +2723,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void patchSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200PATCHSchoolEnrollment(listSchoolEnrollment, a -> {
+	public void patchSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PATCHSchoolEnrollment(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -2705,8 +2733,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchSchoolEnrollment sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolEnrollment(siteRequest, eventHandler, c);
@@ -2721,11 +2747,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 		});
 	}
-	public void response200PATCHSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = JsonObject.mapFrom(apiRequest);
+			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -2736,8 +2760,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void getSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -2755,6 +2779,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("getSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -2767,7 +2792,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -2813,8 +2838,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void searchSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -2832,6 +2857,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -2844,7 +2870,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -2929,9 +2955,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void patchpaymentsSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchpaymentsSchoolEnrollment started. "));
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
@@ -2954,73 +2980,84 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							SQLConnection sqlConnection = siteRequest.getSqlConnection();
-							sqlConnection.close(c -> {
+							patchpaymentsSchoolEnrollmentResponse(siteRequest, c -> {
 								if(c.succeeded()) {
-									aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/payments", "PATCHPayments", d -> {
-										if(d.succeeded()) {
-											SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-											ApiRequest apiRequest = new ApiRequest();
-											apiRequest.setRows(listSchoolEnrollment.getRows());
-											apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
-											apiRequest.setNumPATCH(0L);
-											apiRequest.initDeepApiRequest(siteRequest);
-											siteRequest.setApiRequest_(apiRequest);
-											siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-											Date date = null;
-											if(facets != null)
-												date = (Date)facets.get("max_modified");
-											String dt;
-											if(date == null)
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-											else
-												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-											listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									eventHandler.handle(Future.succeededFuture(c.result()));
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+											try {
+												aSearchSchoolEnrollment(siteRequest2, false, true, "/enrollment/payments", "PATCHPayments", d -> {
+													if(d.succeeded()) {
+														SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolEnrollment.getRows());
+														apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+															date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											if(listSchoolEnrollment.size() == 1) {
-												SchoolEnrollment o = listSchoolEnrollment.get(0);
-												apiRequest.setPk(o.getPk());
-												apiRequest.setOriginal(o);
-												apiRequestSchoolEnrollment(o);
-											o.apiRequestSchoolEnrollment();
-											}
-											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-											workerExecutor.executeBlocking(
-												blockingCodeHandler -> {
-													sqlSchoolEnrollment(siteRequest, e -> {
-														if(e.succeeded()) {
-															try {
-																listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
-																	if(f.succeeded()) {
-																		patchpaymentsSchoolEnrollmentResponse(listSchoolEnrollment, g -> {
-																			if(g.succeeded()) {
-																				eventHandler.handle(Future.succeededFuture(g.result()));
-																				LOGGER.info(String.format("patchpaymentsSchoolEnrollment succeeded. "));
-																			} else {
-																				LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", g.cause()));
-																				errorSchoolEnrollment(siteRequest, eventHandler, d);
-																			}
-																		});
-																	} else {
-																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
-																	}
-																});
-															} catch(Exception ex) {
-																blockingCodeHandler.handle(Future.failedFuture(ex));
-															}
-														} else {
-															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
+														SchoolEnrollment o = listSchoolEnrollment.getList().stream().findFirst().orElse(null);
+														if(o != null) {
+															apiRequest.setPk(o.getPk());
+															apiRequest.setOriginal(o);
+															apiRequestSchoolEnrollment(o);
+															o.apiRequestSchoolEnrollment();
 														}
-													});
-												}, resultHandler -> {
-												}
-											);
-										} else {
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
+														sqlSchoolEnrollment(siteRequest2, e -> {
+															if(e.succeeded()) {
+																try {
+																	listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
+																		if(f.succeeded()) {
+																			patchpaymentsSchoolEnrollmentResponse(siteRequest2, g -> {
+																				if(g.succeeded()) {
+																					LOGGER.info(String.format("patchpaymentsSchoolEnrollment succeeded. "));
+																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", g.cause()));
+																					errorSchoolEnrollment(siteRequest2, null, g);
+																				}
+																			});
+																		} else {
+																			LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", f.cause()));
+																			errorSchoolEnrollment(siteRequest2, null, f);
+																		}
+																	});
+																} catch(Exception ex) {
+																	LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+																	errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+																}
+															} else {
+																LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", e.cause()));
+																errorSchoolEnrollment(siteRequest2, null, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", d.cause()));
+														errorSchoolEnrollment(siteRequest2, null, d);
+													}
+												});
+											} catch(Exception ex) {
+												LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											}
+										}, resultHandler -> {
 										}
-									});
+									);
 								} else {
+									LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -3033,7 +3070,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -3060,7 +3097,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
 				} else {
-					response200PATCHPaymentsSchoolEnrollment(listSchoolEnrollment, eventHandler);
+					response200PATCHPaymentsSchoolEnrollment(siteRequest, eventHandler);
 				}
 			} else {
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
@@ -3070,8 +3107,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public Future<SchoolEnrollment> patchpaymentsSchoolEnrollmentFuture(SchoolEnrollment o, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		Promise<SchoolEnrollment> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			sqlPATCHPaymentsSchoolEnrollment(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment schoolEnrollment = a.result();
@@ -3100,7 +3137,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, null, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
 	}
@@ -4153,9 +4190,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void patchpaymentsSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200PATCHPaymentsSchoolEnrollment(listSchoolEnrollment, a -> {
+	public void patchpaymentsSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		response200PATCHPaymentsSchoolEnrollment(siteRequest, a -> {
 			if(a.succeeded()) {
 				SQLConnection sqlConnection = siteRequest.getSqlConnection();
 				sqlConnection.commit(b -> {
@@ -4164,8 +4200,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlConnection.close(c -> {
 							if(c.succeeded()) {
 								LOGGER.info(String.format("patchpaymentsSchoolEnrollment sql close. "));
-								ApiRequest apiRequest = siteRequest.getApiRequest_();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 								eventHandler.handle(Future.succeededFuture(a.result()));
 							} else {
 								errorSchoolEnrollment(siteRequest, eventHandler, c);
@@ -4180,11 +4214,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 		});
 	}
-	public void response200PATCHPaymentsSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHPaymentsSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = JsonObject.mapFrom(apiRequest);
+			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -4200,8 +4232,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void searchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -4219,6 +4251,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -4231,7 +4264,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -4296,8 +4329,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void formsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -4315,6 +4348,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("formsearchpageSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -4327,7 +4361,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -4392,8 +4426,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void pdfsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -4411,6 +4445,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("pdfsearchpageSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -4423,7 +4458,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -4488,8 +4523,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	@Override
 	public void emailsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -4507,6 +4542,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										}
 									});
 								} else {
+									LOGGER.error(String.format("emailsearchpageSchoolEnrollment failed. ", c.cause()));
 									errorSchoolEnrollment(siteRequest, eventHandler, c);
 								}
 							});
@@ -4519,7 +4555,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
 		}
 	}
 
@@ -4721,8 +4757,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			if(sqlConnection != null) {
 				sqlConnection.rollback(a -> {
 					if(a.succeeded()) {
+						LOGGER.info(String.format("sql rollback. "));
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
+								LOGGER.info(String.format("sql close. "));
 								eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
 								eventHandler.handle(Future.succeededFuture(responseOperation));
