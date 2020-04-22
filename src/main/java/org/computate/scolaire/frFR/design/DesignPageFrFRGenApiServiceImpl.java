@@ -158,15 +158,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postDesignPage a échoué. ", b.cause()));
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postDesignPage a échoué. ", a.cause()));
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -314,31 +317,36 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	public void postDesignPageReponse(DesignPage designPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = designPage.getRequeteSite_();
-		reponse200POSTDesignPage(designPage, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postDesignPage sql close. "));
-								RequeteApi requeteApi = requeteApiDesignPage(designPage);
-								designPage.requeteApiDesignPage();
-								requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200POSTDesignPage(designPage, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postDesignPage sql close. "));
+									RequeteApi requeteApi = requeteApiDesignPage(designPage);
+									designPage.requeteApiDesignPage();
+									requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200POSTDesignPage(DesignPage o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -431,15 +439,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportDesignPage a échoué. ", b.cause()));
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportDesignPage a échoué. ", a.cause()));
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -516,28 +527,33 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 	public void putimportDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTImportDesignPage(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTImportDesignPage(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTImportDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -629,15 +645,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putfusionDesignPage a échoué. ", b.cause()));
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putfusionDesignPage a échoué. ", a.cause()));
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -714,28 +733,33 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 	public void putfusionDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTFusionDesignPage(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putfusionDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putfusionDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTFusionDesignPage(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putfusionDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putfusionDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTFusionDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -839,15 +863,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopieDesignPage a échoué. ", b.cause()));
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopieDesignPage a échoué. ", a.cause()));
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1011,28 +1038,33 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 	public void putcopieDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTCopieDesignPage(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopieDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopieDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTCopieDesignPage(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopieDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopieDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTCopieDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1154,15 +1186,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchDesignPage a échoué. ", b.cause()));
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchDesignPage a échoué. ", a.cause()));
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1569,28 +1604,33 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 	public void patchDesignPageReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PATCHDesignPage(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PATCHDesignPage(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PATCHDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1629,6 +1669,40 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getDesignPage a échoué. ", b.cause()));
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getDesignPage a échoué. ", a.cause()));
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+		try {
+			reponse200GETDesignPage(listeDesignPage, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1636,36 +1710,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-		reponse200GETDesignPage(listeDesignPage, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200GETDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1707,6 +1755,40 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("rechercheDesignPage a échoué. ", b.cause()));
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheDesignPage a échoué. ", a.cause()));
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+		try {
+			reponse200RechercheDesignPage(listeDesignPage, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("rechercheDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("rechercheDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1714,36 +1796,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void rechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-		reponse200RechercheDesignPage(listeDesignPage, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("rechercheDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("rechercheDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200RechercheDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1829,6 +1885,43 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pagerechercheDesignPage a échoué. ", b.cause()));
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pagerechercheDesignPage a échoué. ", a.cause()));
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageRechercheDesignPage(listeDesignPage, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pagerechercheDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pagerechercheDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1836,36 +1929,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
-		reponse200PageRechercheDesignPage(listeDesignPage, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pagerechercheDesignPage sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pagerechercheDesignPage sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurDesignPage(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurDesignPage(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurDesignPage(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200PageRechercheDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1886,6 +1953,222 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			page.setListeDesignPage(listeDesignPage);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinDesignPagePage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	// DesignAffichagePageRecherche //
+
+	@Override
+	public void designaffichagepagerechercheDesignPageId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		designaffichagepagerechercheDesignPage(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void designaffichagepagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		try {
+			sqlDesignPage(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurDesignPage(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheDesignPage(requeteSite, false, true, "/page", "DesignAffichagePageRecherche", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<DesignPage> listeDesignPage = c.result();
+									designaffichagepagerechercheDesignPageReponse(listeDesignPage, d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("designaffichagepagerechercheDesignPage a réussi. "));
+										} else {
+											LOGGER.error(String.format("designaffichagepagerechercheDesignPage a échoué. ", d.cause()));
+											erreurDesignPage(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("designaffichagepagerechercheDesignPage a échoué. ", c.cause()));
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("designaffichagepagerechercheDesignPage a échoué. ", b.cause()));
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("designaffichagepagerechercheDesignPage a échoué. ", a.cause()));
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designaffichagepagerechercheDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void designaffichagepagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200DesignAffichagePageRechercheDesignPage(listeDesignPage, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("designaffichagepagerechercheDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("designaffichagepagerechercheDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designaffichagepagerechercheDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200DesignAffichagePageRechercheDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
+			DesignPageAffichage page = new DesignPageAffichage();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/page");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			if(listeDesignPage.size() == 1)
+				requeteSite.setRequetePk(listeDesignPage.get(0).getPk());
+			requeteSite.setW(w);
+			page.setListeDesignPage(listeDesignPage);
+			page.setRequeteSite_(requeteSite);
+			page.initLoinDesignPageAffichage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PageAccueilRecherchePage //
+
+	@Override
+	public void pageaccueilrecherchepageDesignPageId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		pageaccueilrecherchepageDesignPage(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void pageaccueilrecherchepageDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		try {
+			sqlDesignPage(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurDesignPage(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheDesignPage(requeteSite, false, true, "/", "PageAccueilRecherchePage", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<DesignPage> listeDesignPage = c.result();
+									pageaccueilrecherchepageDesignPageReponse(listeDesignPage, d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("pageaccueilrecherchepageDesignPage a réussi. "));
+										} else {
+											LOGGER.error(String.format("pageaccueilrecherchepageDesignPage a échoué. ", d.cause()));
+											erreurDesignPage(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("pageaccueilrecherchepageDesignPage a échoué. ", c.cause()));
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("pageaccueilrecherchepageDesignPage a échoué. ", b.cause()));
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pageaccueilrecherchepageDesignPage a échoué. ", a.cause()));
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pageaccueilrecherchepageDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pageaccueilrecherchepageDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageAccueilRecherchePageDesignPage(listeDesignPage, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pageaccueilrecherchepageDesignPage sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pageaccueilrecherchepageDesignPage sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurDesignPage(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurDesignPage(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurDesignPage(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pageaccueilrecherchepageDesignPage a échoué. ", ex));
+			erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200PageAccueilRecherchePageDesignPage(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
+			DesignPageAffichage page = new DesignPageAffichage();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			if(listeDesignPage.size() == 1)
+				requeteSite.setRequetePk(listeDesignPage.get(0).getPk());
+			requeteSite.setW(w);
+			page.setListeDesignPage(listeDesignPage);
+			page.setRequeteSite_(requeteSite);
+			page.initLoinDesignPageAffichage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
@@ -2290,6 +2573,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
+	public void rechercheDesignPageUri(String uri, String apiMethode, ListeRecherche<DesignPage> listeRecherche) {
+	}
+
 	public void rechercheDesignPage(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<DesignPage>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -2358,6 +2644,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								break;
 						}
 					}
+					rechercheDesignPageUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}

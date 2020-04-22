@@ -158,15 +158,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postPageDesign failed. ", b.cause()));
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postPageDesign failed. ", a.cause()));
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -314,31 +317,36 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 
 	public void postPageDesignResponse(PageDesign pageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = pageDesign.getSiteRequest_();
-		response200POSTPageDesign(pageDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postPageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postPageDesign sql close. "));
-								ApiRequest apiRequest = apiRequestPageDesign(pageDesign);
-								pageDesign.apiRequestPageDesign();
-								siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTPageDesign(pageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postPageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postPageDesign sql close. "));
+									ApiRequest apiRequest = apiRequestPageDesign(pageDesign);
+									pageDesign.apiRequestPageDesign();
+									siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTPageDesign(PageDesign o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -431,15 +439,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportPageDesign failed. ", b.cause()));
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportPageDesign failed. ", a.cause()));
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -516,28 +527,33 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 	public void putimportPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportPageDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportPageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportPageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportPageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportPageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportPageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -629,15 +645,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergePageDesign failed. ", b.cause()));
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergePageDesign failed. ", a.cause()));
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -714,28 +733,33 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 	public void putmergePageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergePageDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergePageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergePageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergePageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergePageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergePageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergePageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -839,15 +863,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopyPageDesign failed. ", b.cause()));
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopyPageDesign failed. ", a.cause()));
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1011,28 +1038,33 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 	public void putcopyPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopyPageDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopyPageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopyPageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopyPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopyPageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopyPageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopyPageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1154,15 +1186,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchPageDesign failed. ", b.cause()));
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchPageDesign failed. ", a.cause()));
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1569,28 +1604,33 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 	public void patchPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHPageDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchPageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchPageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchPageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchPageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHPageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1629,6 +1669,40 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getPageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getPageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getPageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			response200GETPageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getPageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getPageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1636,36 +1710,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getPageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		response200GETPageDesign(listPageDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getPageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getPageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETPageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1707,6 +1755,40 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchPageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchPageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchPageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			response200SearchPageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchPageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchPageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1714,36 +1796,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchPageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		response200SearchPageDesign(listPageDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchPageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchPageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1829,6 +1885,43 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpagePageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpagePageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPagePageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpagePageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpagePageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1836,36 +1929,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		response200SearchPagePageDesign(listPageDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpagePageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpagePageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1926,6 +1993,43 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("designdisplaysearchpagePageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("designdisplaysearchpagePageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designdisplaysearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void designdisplaysearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200DesignDisplaySearchPagePageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("designdisplaysearchpagePageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("designdisplaysearchpagePageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorPageDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1933,36 +2037,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					errorPageDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designdisplaysearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void designdisplaysearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		response200DesignDisplaySearchPagePageDesign(listPageDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("designdisplaysearchpagePageDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("designdisplaysearchpagePageDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorPageDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorPageDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorPageDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200DesignDisplaySearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1975,6 +2053,114 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/page");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listPageDesign.size() == 1)
+				siteRequest.setRequestPk(listPageDesign.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListPageDesign(listPageDesign);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepDesignDisplayPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// HomePageSearchPage //
+
+	@Override
+	public void homepagesearchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		homepagesearchpagePageDesign(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void homepagesearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
+		try {
+			sqlPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					userPageDesign(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchPageDesign(siteRequest, false, true, "/", "HomePageSearchPage", c -> {
+								if(c.succeeded()) {
+									SearchList<PageDesign> listPageDesign = c.result();
+									homepagesearchpagePageDesignResponse(listPageDesign, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("homepagesearchpagePageDesign succeeded. "));
+										} else {
+											LOGGER.error(String.format("homepagesearchpagePageDesign failed. ", d.cause()));
+											errorPageDesign(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("homepagesearchpagePageDesign failed. ", c.cause()));
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("homepagesearchpagePageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("homepagesearchpagePageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("homepagesearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void homepagesearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200HomePageSearchPagePageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("homepagesearchpagePageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("homepagesearchpagePageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("homepagesearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200HomePageSearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
+			DesignDisplayPage page = new DesignDisplayPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			if(listPageDesign.size() == 1)
@@ -2387,6 +2573,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchPageDesignUri(String uri, String apiMethod, SearchList<PageDesign> searchList) {
+	}
+
 	public void aSearchPageDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<PageDesign>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2455,6 +2644,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								break;
 						}
 					}
+					aSearchPageDesignUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

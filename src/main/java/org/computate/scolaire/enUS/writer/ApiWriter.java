@@ -840,7 +840,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				}
 	//		}
 		}
-		if(classPageCanonicalNameMethod != null && BooleanUtils.isFalse(id))
+		if(classPageCanonicalNameMethod != null && BooleanUtils.isFalse(id) && !"/".equals(classApiUriMethod))
 			writeApi(true);
 	}
 

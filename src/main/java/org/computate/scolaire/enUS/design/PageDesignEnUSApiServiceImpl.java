@@ -2,7 +2,11 @@ package org.computate.scolaire.enUS.design;
 
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.search.SearchList;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
 
 /**
  * Translate: false
@@ -26,6 +30,12 @@ public class PageDesignEnUSApiServiceImpl extends PageDesignEnUSGenApiServiceImp
 		}
 		else {
 			super.aSearchPageDesignFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+		}
+	}
+	@Override
+	public void aSearchPageDesignUri(String uri, String apiMethod, SearchList<PageDesign> searchList) {
+		if ("/".equals(uri)) {
+			searchList.addFilterQuery("pageDesignCompleteName_indexed_string:" + ClientUtils.escapeQueryChars("home page"));
 		}
 	}
 }

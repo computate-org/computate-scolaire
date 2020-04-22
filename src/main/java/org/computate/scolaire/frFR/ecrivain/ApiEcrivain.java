@@ -1628,7 +1628,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				}
 	//		}
 		}
-		if(classePageNomCanoniqueMethode != null && BooleanUtils.isFalse(id))
+		if(classePageNomCanoniqueMethode != null && BooleanUtils.isFalse(id) && !"/".equals(classeApiUriMethode))
 			ecrireApi(true);
 	}
 

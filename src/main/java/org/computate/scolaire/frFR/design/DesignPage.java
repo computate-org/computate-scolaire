@@ -18,7 +18,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiTag.frFR: Design de page
  * ApiUri.frFR: /api/design-page
  * 
- * ApiTag.enUS: Block
+ * ApiTag.enUS: Page Design
  * ApiUri.enUS: /api/page-design
  * 
  * ApiMethode: POST
@@ -45,10 +45,25 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /page-design
  * 
+ * ApiMethode.frFR: DesignAffichagePageRecherche
+ * PageDesignAffichagePageRecherche.frFR: DesignPageAffichage
+ * PageSuperDesignAffichagePageRecherche.frFR: ClusterPage
+ * ApiUriDesignAffichagePageRecherche.frFR: /page
+ * 
  * ApiMethode.enUS: DesignDisplaySearchPage
  * PageDesignDisplaySearchPage.enUS: DesignDisplayPage
  * PageSuperDesignDisplaySearchPage.enUS: ClusterPage
  * ApiUriDesignDisplaySearchPage.enUS: /page
+ * 
+ * ApiMethode.frFR: PageAccueilRecherchePage
+ * PagePageAccueilRecherchePage.frFR: DesignPageAffichage
+ * PageSuperPageAccueilRecherchePage.frFR: ClusterPage
+ * ApiUriPageAccueilRecherchePage.frFR: /
+ * 
+ * ApiMethode.enUS: HomePageSearchPage
+ * PageHomePageSearchPage.enUS: DesignDisplayPage
+ * PageSuperHomePageSearchPage.enUS: ClusterPage
+ * ApiUriHomePageSearchPage.enUS: /
  * 
  * UnNom.frFR: un design de page
  * UnNom.enUS: a page design
@@ -63,7 +78,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PublicLire: true
  * 
  * Lignes: 100
-*/                
+*/     
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
