@@ -457,67 +457,72 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	public void listPUTImportSchoolBlock(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolBlock(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolBlock(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolBlock.class);
-			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolBlock.class);
+				searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				SchoolBlock o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					SchoolBlock o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchSchoolBlockFuture(o, true, a -> {
+								if(a.succeeded()) {
+									SchoolBlock schoolBlock = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorSchoolBlock(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchSchoolBlockFuture(o, true, a -> {
+						postSchoolBlockFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								SchoolBlock schoolBlock = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestSchoolBlock(schoolBlock);
 							} else {
 								errorSchoolBlock(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postSchoolBlockFuture(siteRequest2, true, a -> {
-						if(a.succeeded()) {
-							SchoolBlock schoolBlock = a.result();
-							apiRequestSchoolBlock(schoolBlock);
-						} else {
-							errorSchoolBlock(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTImportSchoolBlock(siteRequest, eventHandler);
-			} else {
-				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTImportSchoolBlock(siteRequest, eventHandler);
+				} else {
+					errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolBlock failed. ", ex));
+			errorSchoolBlock(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportSchoolBlockResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -650,67 +655,72 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	public void listPUTMergeSchoolBlock(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolBlock(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolBlock(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolBlock.class);
-			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolBlock.class);
+				searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				SchoolBlock o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					SchoolBlock o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchSchoolBlockFuture(o, false, a -> {
+								if(a.succeeded()) {
+									SchoolBlock schoolBlock = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorSchoolBlock(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchSchoolBlockFuture(o, false, a -> {
+						postSchoolBlockFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								SchoolBlock schoolBlock = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestSchoolBlock(schoolBlock);
 							} else {
 								errorSchoolBlock(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postSchoolBlockFuture(siteRequest2, false, a -> {
-						if(a.succeeded()) {
-							SchoolBlock schoolBlock = a.result();
-							apiRequestSchoolBlock(schoolBlock);
-						} else {
-							errorSchoolBlock(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTMergeSchoolBlock(siteRequest, eventHandler);
-			} else {
-				errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTMergeSchoolBlock(siteRequest, eventHandler);
+				} else {
+					errorSchoolBlock(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolBlock failed. ", ex));
+			errorSchoolBlock(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putmergeSchoolBlockResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {

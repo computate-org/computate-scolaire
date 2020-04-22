@@ -441,67 +441,72 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	public void listPUTImportSchoolMom(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolMom(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolMom(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolMom.class);
-			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolMom.class);
+				searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				SchoolMom o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					SchoolMom o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchSchoolMomFuture(o, true, a -> {
+								if(a.succeeded()) {
+									SchoolMom schoolMom = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorSchoolMom(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchSchoolMomFuture(o, true, a -> {
+						postSchoolMomFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								SchoolMom schoolMom = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestSchoolMom(schoolMom);
 							} else {
 								errorSchoolMom(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postSchoolMomFuture(siteRequest2, true, a -> {
-						if(a.succeeded()) {
-							SchoolMom schoolMom = a.result();
-							apiRequestSchoolMom(schoolMom);
-						} else {
-							errorSchoolMom(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTImportSchoolMom(siteRequest, eventHandler);
-			} else {
-				errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTImportSchoolMom(siteRequest, eventHandler);
+				} else {
+					errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolMom failed. ", ex));
+			errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportSchoolMomResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -634,67 +639,72 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	public void listPUTMergeSchoolMom(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolMom(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolMom(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolMom.class);
-			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolMom.class);
+				searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				SchoolMom o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					SchoolMom o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchSchoolMomFuture(o, false, a -> {
+								if(a.succeeded()) {
+									SchoolMom schoolMom = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorSchoolMom(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchSchoolMomFuture(o, false, a -> {
+						postSchoolMomFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								SchoolMom schoolMom = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestSchoolMom(schoolMom);
 							} else {
 								errorSchoolMom(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postSchoolMomFuture(siteRequest2, false, a -> {
-						if(a.succeeded()) {
-							SchoolMom schoolMom = a.result();
-							apiRequestSchoolMom(schoolMom);
-						} else {
-							errorSchoolMom(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTMergeSchoolMom(siteRequest, eventHandler);
-			} else {
-				errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTMergeSchoolMom(siteRequest, eventHandler);
+				} else {
+					errorSchoolMom(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolMom failed. ", ex));
+			errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putmergeSchoolMomResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {

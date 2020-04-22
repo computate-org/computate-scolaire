@@ -708,67 +708,72 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void listePUTImportInscriptionScolaire(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(InscriptionScolaire.class);
-			listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(InscriptionScolaire.class);
+				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				InscriptionScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					InscriptionScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchInscriptionScolaireFuture(o, true, a -> {
+								if(a.succeeded()) {
+									InscriptionScolaire inscriptionScolaire = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchInscriptionScolaireFuture(o, true, a -> {
+						postInscriptionScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								InscriptionScolaire inscriptionScolaire = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiInscriptionScolaire(inscriptionScolaire);
 							} else {
 								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postInscriptionScolaireFuture(requeteSite2, true, a -> {
-						if(a.succeeded()) {
-							InscriptionScolaire inscriptionScolaire = a.result();
-							requeteApiInscriptionScolaire(inscriptionScolaire);
-						} else {
-							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTImportInscriptionScolaire(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTImportInscriptionScolaire(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportInscriptionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -901,67 +906,72 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void listePUTFusionInscriptionScolaire(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(InscriptionScolaire.class);
-			listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(InscriptionScolaire.class);
+				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				InscriptionScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					InscriptionScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchInscriptionScolaireFuture(o, false, a -> {
+								if(a.succeeded()) {
+									InscriptionScolaire inscriptionScolaire = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchInscriptionScolaireFuture(o, false, a -> {
+						postInscriptionScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								InscriptionScolaire inscriptionScolaire = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiInscriptionScolaire(inscriptionScolaire);
 							} else {
 								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postInscriptionScolaireFuture(requeteSite2, false, a -> {
-						if(a.succeeded()) {
-							InscriptionScolaire inscriptionScolaire = a.result();
-							requeteApiInscriptionScolaire(inscriptionScolaire);
-						} else {
-							erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTFusionInscriptionScolaire(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTFusionInscriptionScolaire(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurInscriptionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putfusionInscriptionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {

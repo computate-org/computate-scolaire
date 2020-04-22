@@ -417,67 +417,72 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 	public void listPUTImportSchoolChild(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolChild.class);
-			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolChild.class);
+				searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				SchoolChild o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					SchoolChild o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchSchoolChildFuture(o, true, a -> {
+								if(a.succeeded()) {
+									SchoolChild schoolChild = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorSchoolChild(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchSchoolChildFuture(o, true, a -> {
+						postSchoolChildFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								SchoolChild schoolChild = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestSchoolChild(schoolChild);
 							} else {
 								errorSchoolChild(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postSchoolChildFuture(siteRequest2, true, a -> {
-						if(a.succeeded()) {
-							SchoolChild schoolChild = a.result();
-							apiRequestSchoolChild(schoolChild);
-						} else {
-							errorSchoolChild(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTImportSchoolChild(siteRequest, eventHandler);
-			} else {
-				errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTImportSchoolChild(siteRequest, eventHandler);
+				} else {
+					errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolChild failed. ", ex));
+			errorSchoolChild(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportSchoolChildResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -610,67 +615,72 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 	public void listPUTMergeSchoolChild(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolChild.class);
-			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(SchoolChild.class);
+				searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				SchoolChild o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					SchoolChild o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchSchoolChildFuture(o, false, a -> {
+								if(a.succeeded()) {
+									SchoolChild schoolChild = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorSchoolChild(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchSchoolChildFuture(o, false, a -> {
+						postSchoolChildFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								SchoolChild schoolChild = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestSchoolChild(schoolChild);
 							} else {
 								errorSchoolChild(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postSchoolChildFuture(siteRequest2, false, a -> {
-						if(a.succeeded()) {
-							SchoolChild schoolChild = a.result();
-							apiRequestSchoolChild(schoolChild);
-						} else {
-							errorSchoolChild(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTMergeSchoolChild(siteRequest, eventHandler);
-			} else {
-				errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTMergeSchoolChild(siteRequest, eventHandler);
+				} else {
+					errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolChild failed. ", ex));
+			errorSchoolChild(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putmergeSchoolChildResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {

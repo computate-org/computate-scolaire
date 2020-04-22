@@ -433,67 +433,72 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void listePUTImportAnneeScolaire(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(AnneeScolaire.class);
-			listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(AnneeScolaire.class);
+				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				AnneeScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					AnneeScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchAnneeScolaireFuture(o, true, a -> {
+								if(a.succeeded()) {
+									AnneeScolaire anneeScolaire = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchAnneeScolaireFuture(o, true, a -> {
+						postAnneeScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								AnneeScolaire anneeScolaire = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiAnneeScolaire(anneeScolaire);
 							} else {
 								erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postAnneeScolaireFuture(requeteSite2, true, a -> {
-						if(a.succeeded()) {
-							AnneeScolaire anneeScolaire = a.result();
-							requeteApiAnneeScolaire(anneeScolaire);
-						} else {
-							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTImportAnneeScolaire(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurAnneeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTImportAnneeScolaire(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurAnneeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", ex));
+			erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportAnneeScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -626,67 +631,72 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void listePUTFusionAnneeScolaire(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(AnneeScolaire.class);
-			listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(AnneeScolaire.class);
+				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				AnneeScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					AnneeScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchAnneeScolaireFuture(o, false, a -> {
+								if(a.succeeded()) {
+									AnneeScolaire anneeScolaire = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchAnneeScolaireFuture(o, false, a -> {
+						postAnneeScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								AnneeScolaire anneeScolaire = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiAnneeScolaire(anneeScolaire);
 							} else {
 								erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postAnneeScolaireFuture(requeteSite2, false, a -> {
-						if(a.succeeded()) {
-							AnneeScolaire anneeScolaire = a.result();
-							requeteApiAnneeScolaire(anneeScolaire);
-						} else {
-							erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTFusionAnneeScolaire(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurAnneeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTFusionAnneeScolaire(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurAnneeScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", ex));
+			erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putfusionAnneeScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {

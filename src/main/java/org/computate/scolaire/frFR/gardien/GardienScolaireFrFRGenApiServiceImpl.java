@@ -429,67 +429,72 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void listePUTImportGardienScolaire(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(GardienScolaire.class);
-			listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(GardienScolaire.class);
+				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				GardienScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					GardienScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchGardienScolaireFuture(o, true, a -> {
+								if(a.succeeded()) {
+									GardienScolaire gardienScolaire = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchGardienScolaireFuture(o, true, a -> {
+						postGardienScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								GardienScolaire gardienScolaire = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiGardienScolaire(gardienScolaire);
 							} else {
 								erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postGardienScolaireFuture(requeteSite2, true, a -> {
-						if(a.succeeded()) {
-							GardienScolaire gardienScolaire = a.result();
-							requeteApiGardienScolaire(gardienScolaire);
-						} else {
-							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTImportGardienScolaire(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTImportGardienScolaire(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportGardienScolaire a échoué. ", ex));
+			erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportGardienScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -622,67 +627,72 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void listePUTFusionGardienScolaire(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(GardienScolaire.class);
-			listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(GardienScolaire.class);
+				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				GardienScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					GardienScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchGardienScolaireFuture(o, false, a -> {
+								if(a.succeeded()) {
+									GardienScolaire gardienScolaire = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchGardienScolaireFuture(o, false, a -> {
+						postGardienScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								GardienScolaire gardienScolaire = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiGardienScolaire(gardienScolaire);
 							} else {
 								erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postGardienScolaireFuture(requeteSite2, false, a -> {
-						if(a.succeeded()) {
-							GardienScolaire gardienScolaire = a.result();
-							requeteApiGardienScolaire(gardienScolaire);
-						} else {
-							erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTFusionGardienScolaire(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTFusionGardienScolaire(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurGardienScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", ex));
+			erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putfusionGardienScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {

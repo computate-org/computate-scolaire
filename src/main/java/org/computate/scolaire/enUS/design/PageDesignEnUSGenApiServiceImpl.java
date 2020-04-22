@@ -447,67 +447,72 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void listPUTImportPageDesign(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(PageDesign.class);
-			searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(PageDesign.class);
+				searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				PageDesign o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					PageDesign o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchPageDesignFuture(o, true, a -> {
+								if(a.succeeded()) {
+									PageDesign pageDesign = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorPageDesign(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchPageDesignFuture(o, true, a -> {
+						postPageDesignFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								PageDesign pageDesign = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestPageDesign(pageDesign);
 							} else {
 								errorPageDesign(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postPageDesignFuture(siteRequest2, true, a -> {
-						if(a.succeeded()) {
-							PageDesign pageDesign = a.result();
-							apiRequestPageDesign(pageDesign);
-						} else {
-							errorPageDesign(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTImportPageDesign(siteRequest, eventHandler);
-			} else {
-				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTImportPageDesign(siteRequest, eventHandler);
+				} else {
+					errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportPageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportPageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -640,67 +645,72 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void listPUTMergePageDesign(ApiRequest apiRequest, SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
-			siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
+				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 
-			SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(PageDesign.class);
-			searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			searchList.initDeepForClass(siteRequest2);
+				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+				searchList.setStore(true);
+				searchList.setQuery("*:*");
+				searchList.setC(PageDesign.class);
+				searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				searchList.initDeepForClass(siteRequest2);
 
-			if(searchList.size() == 1) {
-				PageDesign o = searchList.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSaves()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(searchList.size() == 1) {
+					PageDesign o = searchList.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					siteRequest2.setJsonObject(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						siteRequest2.setJsonObject(json2);
+						futures.add(
+							patchPageDesignFuture(o, false, a -> {
+								if(a.succeeded()) {
+									PageDesign pageDesign = a.result();
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+								} else {
+									errorPageDesign(siteRequest2, eventHandler, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchPageDesignFuture(o, false, a -> {
+						postPageDesignFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								PageDesign pageDesign = a.result();
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+								apiRequestPageDesign(pageDesign);
 							} else {
 								errorPageDesign(siteRequest2, eventHandler, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postPageDesignFuture(siteRequest2, false, a -> {
-						if(a.succeeded()) {
-							PageDesign pageDesign = a.result();
-							apiRequestPageDesign(pageDesign);
-						} else {
-							errorPageDesign(siteRequest2, eventHandler, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
-				response200PUTMergePageDesign(siteRequest, eventHandler);
-			} else {
-				errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+								siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+					response200PUTMergePageDesign(siteRequest, eventHandler);
+				} else {
+					errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putmergePageDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {

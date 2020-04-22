@@ -505,67 +505,72 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void listePUTImportPartHtml(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPartHtml(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPartHtml(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(PartHtml.class);
-			listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(PartHtml.class);
+				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				PartHtml o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					PartHtml o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchPartHtmlFuture(o, true, a -> {
+								if(a.succeeded()) {
+									PartHtml partHtml = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchPartHtmlFuture(o, true, a -> {
+						postPartHtmlFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								PartHtml partHtml = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiPartHtml(partHtml);
 							} else {
 								erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postPartHtmlFuture(requeteSite2, true, a -> {
-						if(a.succeeded()) {
-							PartHtml partHtml = a.result();
-							requeteApiPartHtml(partHtml);
-						} else {
-							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTImportPartHtml(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTImportPartHtml(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportPartHtml a échoué. ", ex));
+			erreurPartHtml(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putimportPartHtmlReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -698,67 +703,72 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void listePUTFusionPartHtml(RequeteApi requeteApi, RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-		jsonArray.forEach(obj -> {
-			JsonObject json = (JsonObject)obj;
+		try {
+			jsonArray.forEach(obj -> {
+				JsonObject json = (JsonObject)obj;
 
-			json.put("inheritPk", json.getValue("pk"));
+				json.put("inheritPk", json.getValue("pk"));
 
-			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPartHtml(siteContexte, requeteSite.getOperationRequete(), json);
-			requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPartHtml(siteContexte, requeteSite.getOperationRequete(), json);
+				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 
-			ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
-			listeRecherche.setStocker(true);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(PartHtml.class);
-			listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
-			listeRecherche.initLoinPourClasse(requeteSite2);
+				ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+				listeRecherche.setStocker(true);
+				listeRecherche.setQuery("*:*");
+				listeRecherche.setC(PartHtml.class);
+				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
+				listeRecherche.initLoinPourClasse(requeteSite2);
 
-			if(listeRecherche.size() == 1) {
-				PartHtml o = listeRecherche.getList().stream().findFirst().orElse(null);
-				JsonObject json2 = new JsonObject();
-				for(String f : json.fieldNames()) {
-					json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
-				}
-				if(o != null) {
-					for(String f : o.getSauvegardes()) {
-						if(!json.fieldNames().contains(f))
-							json2.putNull("set" + StringUtils.capitalize(f));
+				if(listeRecherche.size() == 1) {
+					PartHtml o = listeRecherche.getList().stream().findFirst().orElse(null);
+					JsonObject json2 = new JsonObject();
+					for(String f : json.fieldNames()) {
+						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
-					requeteSite2.setObjetJson(json2);
+					if(o != null) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+							if(!json.fieldNames().contains(f))
+								json2.putNull("set" + StringUtils.capitalize(f));
+						}
+						requeteSite2.setObjetJson(json2);
+						futures.add(
+							patchPartHtmlFuture(o, false, a -> {
+								if(a.succeeded()) {
+									PartHtml partHtml = a.result();
+									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+									requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								} else {
+									erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
+								}
+							})
+						);
+					}
+				} else {
 					futures.add(
-						patchPartHtmlFuture(o, false, a -> {
+						postPartHtmlFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								PartHtml partHtml = a.result();
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+								requeteApiPartHtml(partHtml);
 							} else {
 								erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
 					);
 				}
-			} else {
-				futures.add(
-					postPartHtmlFuture(requeteSite2, false, a -> {
-						if(a.succeeded()) {
-							PartHtml partHtml = a.result();
-							requeteApiPartHtml(partHtml);
-						} else {
-							erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
-						}
-					})
-				);
-			}
-		});
-		CompositeFuture.all(futures).setHandler( a -> {
-			if(a.succeeded()) {
-							requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-							requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
-				reponse200PUTFusionPartHtml(requeteSite, gestionnaireEvenements);
-			} else {
-				erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
-			}
-		});
+			});
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+								requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+					reponse200PUTFusionPartHtml(requeteSite, gestionnaireEvenements);
+				} else {
+					erreurPartHtml(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionPartHtml a échoué. ", ex));
+			erreurPartHtml(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 
 	public void putfusionPartHtmlReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {

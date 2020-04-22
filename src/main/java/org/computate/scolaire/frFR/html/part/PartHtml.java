@@ -165,7 +165,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCelulle: 3
-	 */                 
+	 */                     
 	protected void _htmlLien(Couverture<String> c) {
 	}
 
