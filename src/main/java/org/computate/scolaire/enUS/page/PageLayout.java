@@ -332,6 +332,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				e("title").f();
 					sx(pageTitle);
 				g("title");
+				htmlMeta();
 				htmlScripts();
 				e("script").f().l("/*<![CDATA[*/");
 				htmlScript();

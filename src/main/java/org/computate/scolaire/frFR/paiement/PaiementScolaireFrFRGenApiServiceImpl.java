@@ -106,24 +106,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postPaiementScolaire a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -416,24 +398,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportPaiementScolaire a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -622,24 +586,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionPaiementScolaire a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -828,24 +774,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopiePaiementScolaire a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
@@ -1207,24 +1135,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchPaiementScolaire a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlPaiementScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {

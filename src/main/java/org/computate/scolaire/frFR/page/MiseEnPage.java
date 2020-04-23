@@ -768,6 +768,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				e("title").f();
 					sx(pageTitre);
 				g("title");
+				htmlMeta();
 				htmlScripts();
 				e("script").f().l("/*<![CDATA[*/");
 				htmlScript();
