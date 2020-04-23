@@ -690,7 +690,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopySchoolYear(", o.getPk(), ", $('#putcopySchoolYearForm')); ")
+								.a("onclick", "putcopySchoolYear($('#putcopySchoolYearForm'), ", schoolYear == null ? "null" : schoolYear.getPk(), "); ")
 								.f().sx("Duplicate years")
 							.g("button");
 

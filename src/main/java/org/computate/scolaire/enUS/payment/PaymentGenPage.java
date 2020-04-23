@@ -863,7 +863,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putcopySchoolPayment(", o.getPk(), ", $('#putcopySchoolPaymentForm')); ")
+								.a("onclick", "putcopySchoolPayment($('#putcopySchoolPaymentForm'), ", schoolPayment == null ? "null" : schoolPayment.getPk(), "); ")
 								.f().sx("Duplicate payments")
 							.g("button");
 

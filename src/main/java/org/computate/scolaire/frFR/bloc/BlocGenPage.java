@@ -729,7 +729,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "putcopieBlocScolaire(", o.getPk(), ", $('#putcopieBlocScolaireForm')); ")
+								.a("onclick", "putcopieBlocScolaire($('#putcopieBlocScolaireForm'), ", blocScolaire == null ? "null" : blocScolaire.getPk(), "); ")
 								.f().sx("Dupliquer blocs")
 							.g("button");
 

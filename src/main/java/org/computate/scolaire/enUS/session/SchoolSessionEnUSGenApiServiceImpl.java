@@ -156,15 +156,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSchoolSession failed. ", b.cause()));
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSchoolSession failed. ", a.cause()));
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -300,31 +303,36 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	public void postSchoolSessionResponse(SchoolSession schoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolSession.getSiteRequest_();
-		response200POSTSchoolSession(schoolSession, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postSchoolSession sql close. "));
-								ApiRequest apiRequest = apiRequestSchoolSession(schoolSession);
-								schoolSession.apiRequestSchoolSession();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTSchoolSession(schoolSession, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postSchoolSession sql close. "));
+									ApiRequest apiRequest = apiRequestSchoolSession(schoolSession);
+									schoolSession.apiRequestSchoolSession();
+									siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -417,15 +425,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportSchoolSession failed. ", b.cause()));
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportSchoolSession failed. ", a.cause()));
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -502,28 +513,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 
 	public void putimportSchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportSchoolSession(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportSchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportSchoolSession(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportSchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -615,15 +631,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeSchoolSession failed. ", b.cause()));
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeSchoolSession failed. ", a.cause()));
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -700,28 +719,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 
 	public void putmergeSchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeSchoolSession(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeSchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeSchoolSession(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeSchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -825,15 +849,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopySchoolSession failed. ", b.cause()));
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopySchoolSession failed. ", a.cause()));
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -856,8 +883,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolSession.size());
+				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 				if(listSchoolSession.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolSession(apiRequest, listSchoolSession, eventHandler);
 				} else {
 					response200PUTCopySchoolSession(siteRequest, eventHandler);
@@ -993,28 +1020,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 
 	public void putcopySchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopySchoolSession(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopySchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopySchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopySchoolSession(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopySchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopySchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopySchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1136,15 +1168,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSchoolSession failed. ", b.cause()));
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSchoolSession failed. ", a.cause()));
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1447,28 +1482,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 
 	public void patchSchoolSessionResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHSchoolSession(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchSchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHSchoolSession(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchSchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1528,6 +1568,40 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getSchoolSession failed. ", b.cause()));
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getSchoolSession failed. ", a.cause()));
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
+		try {
+			response200GETSchoolSession(listSchoolSession, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getSchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
@@ -1535,36 +1609,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-		response200GETSchoolSession(listSchoolSession, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getSchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1627,6 +1675,40 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchSchoolSession failed. ", b.cause()));
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchSchoolSession failed. ", a.cause()));
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
+		try {
+			response200SearchSchoolSession(listSchoolSession, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchSchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
@@ -1634,36 +1716,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-		response200SearchSchoolSession(listSchoolSession, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchSchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1770,6 +1826,43 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageSchoolSession failed. ", b.cause()));
+							errorSchoolSession(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageSchoolSession failed. ", a.cause()));
+					errorSchoolSession(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageSchoolSession(listSchoolSession, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageSchoolSession sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageSchoolSession sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolSession(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolSession(siteRequest, eventHandler, b);
 						}
 					});
@@ -1777,36 +1870,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					errorSchoolSession(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolSession failed. ", ex));
+			errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-		response200SearchPageSchoolSession(listSchoolSession, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageSchoolSession sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageSchoolSession sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolSession(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolSession(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolSession(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2225,6 +2292,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchSchoolSessionUri(String uri, String apiMethod, SearchList<SchoolSession> searchList) {
+	}
+
 	public void aSearchSchoolSession(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolSession>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2293,6 +2363,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								break;
 						}
 					}
+					aSearchSchoolSessionUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

@@ -657,7 +657,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putcopieDesignInscription(", o.getPk(), ", $('#putcopieDesignInscriptionForm')); ")
+								.a("onclick", "putcopieDesignInscription($('#putcopieDesignInscriptionForm'), ", designInscription == null ? "null" : designInscription.getPk(), "); ")
 								.f().sx("Dupliquer design d'inscriptions")
 							.g("button");
 

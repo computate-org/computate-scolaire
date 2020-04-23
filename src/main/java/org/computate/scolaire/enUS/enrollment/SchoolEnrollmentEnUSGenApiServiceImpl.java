@@ -168,15 +168,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSchoolEnrollment failed. ", b.cause()));
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -575,31 +578,36 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public void postSchoolEnrollmentResponse(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
-		response200POSTSchoolEnrollment(schoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postSchoolEnrollment sql close. "));
-								ApiRequest apiRequest = apiRequestSchoolEnrollment(schoolEnrollment);
-								schoolEnrollment.apiRequestSchoolEnrollment();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTSchoolEnrollment(schoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postSchoolEnrollment sql close. "));
+									ApiRequest apiRequest = apiRequestSchoolEnrollment(schoolEnrollment);
+									schoolEnrollment.apiRequestSchoolEnrollment();
+									siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -692,15 +700,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportSchoolEnrollment failed. ", b.cause()));
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -777,28 +788,33 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 
 	public void putimportSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportSchoolEnrollment(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -890,15 +906,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", b.cause()));
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -975,28 +994,33 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 
 	public void putmergeSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeSchoolEnrollment(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1100,15 +1124,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopySchoolEnrollment failed. ", b.cause()));
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopySchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1131,8 +1158,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolEnrollment.size());
+				siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 				if(listSchoolEnrollment.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolEnrollment(apiRequest, listSchoolEnrollment, eventHandler);
 				} else {
 					response200PUTCopySchoolEnrollment(siteRequest, eventHandler);
@@ -1462,28 +1489,33 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 
 	public void putcopySchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopySchoolEnrollment(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopySchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopySchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopySchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopySchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopySchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopySchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1605,15 +1637,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSchoolEnrollment failed. ", b.cause()));
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -2734,28 +2769,33 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 
 	public void patchSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHSchoolEnrollment(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2794,6 +2834,40 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			response200GETSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
@@ -2801,36 +2875,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200GETSchoolEnrollment(listSchoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2872,6 +2920,40 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			response200SearchSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
@@ -2879,36 +2961,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200SearchSchoolEnrollment(listSchoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -3072,15 +3128,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", b.cause()));
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -4201,28 +4260,33 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	}
 
 	public void patchpaymentsSchoolEnrollmentResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHPaymentsSchoolEnrollment(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchpaymentsSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchpaymentsSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHPaymentsSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchpaymentsSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchpaymentsSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHPaymentsSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -4266,6 +4330,43 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
@@ -4273,36 +4374,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200SearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -4363,6 +4438,43 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("formsearchpageSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("formsearchpageSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("formsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void formsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200FormSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("formsearchpageSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("formsearchpageSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
@@ -4370,36 +4482,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("formsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void formsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200FormSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("formsearchpageSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("formsearchpageSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200FormSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -4460,6 +4546,40 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pdfsearchpageSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pdfsearchpageSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pdfsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pdfsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			response200PdfSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pdfsearchpageSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pdfsearchpageSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
@@ -4467,36 +4587,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pdfsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pdfsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200PdfSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pdfsearchpageSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pdfsearchpageSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200PdfSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -4557,6 +4651,40 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("emailsearchpageSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("emailsearchpageSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("emailsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void emailsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			response200EmailSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("emailsearchpageSchoolEnrollment sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("emailsearchpageSchoolEnrollment sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolEnrollment(siteRequest, eventHandler, b);
 						}
 					});
@@ -4564,36 +4692,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("emailsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void emailsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		response200EmailSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("emailsearchpageSchoolEnrollment sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("emailsearchpageSchoolEnrollment sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolEnrollment(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolEnrollment(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200EmailSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -5048,6 +5150,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchSchoolEnrollmentUri(String uri, String apiMethod, SearchList<SchoolEnrollment> searchList) {
+	}
+
 	public void aSearchSchoolEnrollment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolEnrollment>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -5125,6 +5230,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								break;
 						}
 					}
+					aSearchSchoolEnrollmentUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

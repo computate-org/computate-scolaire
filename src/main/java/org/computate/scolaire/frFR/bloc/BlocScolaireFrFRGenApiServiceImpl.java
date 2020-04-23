@@ -156,15 +156,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postBlocScolaire a échoué. ", b.cause()));
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -324,31 +327,36 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 	public void postBlocScolaireReponse(BlocScolaire blocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = blocScolaire.getRequeteSite_();
-		reponse200POSTBlocScolaire(blocScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postBlocScolaire sql close. "));
-								RequeteApi requeteApi = requeteApiBlocScolaire(blocScolaire);
-								blocScolaire.requeteApiBlocScolaire();
-								requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200POSTBlocScolaire(blocScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postBlocScolaire sql close. "));
+									RequeteApi requeteApi = requeteApiBlocScolaire(blocScolaire);
+									blocScolaire.requeteApiBlocScolaire();
+									requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200POSTBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -441,15 +449,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportBlocScolaire a échoué. ", b.cause()));
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -526,28 +537,33 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	}
 
 	public void putimportBlocScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTImportBlocScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTImportBlocScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTImportBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -639,15 +655,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", b.cause()));
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -724,28 +743,33 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	}
 
 	public void putfusionBlocScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTFusionBlocScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putfusionBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putfusionBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTFusionBlocScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putfusionBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putfusionBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTFusionBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -849,15 +873,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", b.cause()));
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -880,8 +907,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeBlocScolaire.size());
+				requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 				if(listeBlocScolaire.next()) {
-					requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopieBlocScolaire(requeteApi, listeBlocScolaire, gestionnaireEvenements);
 				} else {
 					reponse200PUTCopieBlocScolaire(requeteSite, gestionnaireEvenements);
@@ -1041,28 +1068,33 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	}
 
 	public void putcopieBlocScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTCopieBlocScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopieBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopieBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTCopieBlocScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopieBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopieBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTCopieBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1184,15 +1216,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchBlocScolaire a échoué. ", b.cause()));
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1555,28 +1590,33 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	}
 
 	public void patchBlocScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PATCHBlocScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PATCHBlocScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PATCHBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1636,6 +1676,40 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getBlocScolaire a échoué. ", b.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getBlocScolaire a échoué. ", a.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+		try {
+			reponse200GETBlocScolaire(listeBlocScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1643,36 +1717,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-		reponse200GETBlocScolaire(listeBlocScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200GETBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1735,6 +1783,40 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", b.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", a.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+		try {
+			reponse200RechercheBlocScolaire(listeBlocScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("rechercheBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("rechercheBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1742,36 +1824,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void rechercheBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-		reponse200RechercheBlocScolaire(listeBlocScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("rechercheBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("rechercheBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200RechercheBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1878,6 +1934,43 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", b.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", a.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pagerechercheBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageRechercheBlocScolaire(listeBlocScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pagerechercheBlocScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pagerechercheBlocScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1885,36 +1978,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", ex));
+			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pagerechercheBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-		reponse200PageRechercheBlocScolaire(listeBlocScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pagerechercheBlocScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pagerechercheBlocScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200PageRechercheBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -2333,6 +2400,9 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
+	public void rechercheBlocScolaireUri(String uri, String apiMethode, ListeRecherche<BlocScolaire> listeRecherche) {
+	}
+
 	public void rechercheBlocScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<BlocScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -2401,6 +2471,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								break;
 						}
 					}
+					rechercheBlocScolaireUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}

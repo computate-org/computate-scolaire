@@ -731,7 +731,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putcopySchoolMom(", o.getPk(), ", $('#putcopySchoolMomForm')); ")
+								.a("onclick", "putcopySchoolMom($('#putcopySchoolMomForm'), ", schoolMom == null ? "null" : schoolMom.getPk(), "); ")
 								.f().sx("Duplicate moms")
 							.g("button");
 

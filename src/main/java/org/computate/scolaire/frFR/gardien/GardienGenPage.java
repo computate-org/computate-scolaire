@@ -706,7 +706,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopieGardienScolaire(", o.getPk(), ", $('#putcopieGardienScolaireForm')); ")
+								.a("onclick", "putcopieGardienScolaire($('#putcopieGardienScolaireForm'), ", gardienScolaire == null ? "null" : gardienScolaire.getPk(), "); ")
 								.f().sx("Dupliquer gardiens")
 							.g("button");
 

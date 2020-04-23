@@ -692,7 +692,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopieSaisonScolaire(", o.getPk(), ", $('#putcopieSaisonScolaireForm')); ")
+								.a("onclick", "putcopieSaisonScolaire($('#putcopieSaisonScolaireForm'), ", saisonScolaire == null ? "null" : saisonScolaire.getPk(), "); ")
 								.f().sx("Dupliquer saisons")
 							.g("button");
 

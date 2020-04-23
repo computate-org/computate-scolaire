@@ -1102,7 +1102,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putcopySchoolEnrollment(", o.getPk(), ", $('#putcopySchoolEnrollmentForm')); ")
+								.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment == null ? "null" : schoolEnrollment.getPk(), "); ")
 								.f().sx("Duplicate enrollments")
 							.g("button");
 

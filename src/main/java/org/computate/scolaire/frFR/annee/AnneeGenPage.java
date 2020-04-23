@@ -691,7 +691,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopieAnneeScolaire(", o.getPk(), ", $('#putcopieAnneeScolaireForm')); ")
+								.a("onclick", "putcopieAnneeScolaire($('#putcopieAnneeScolaireForm'), ", anneeScolaire == null ? "null" : anneeScolaire.getPk(), "); ")
 								.f().sx("Dupliquer années")
 							.g("button");
 

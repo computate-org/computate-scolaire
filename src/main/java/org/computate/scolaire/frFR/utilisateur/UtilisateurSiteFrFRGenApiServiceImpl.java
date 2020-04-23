@@ -129,6 +129,40 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", b.cause()));
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", a.cause()));
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheUtilisateurSiteReponse(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
+		try {
+			reponse200RechercheUtilisateurSite(listeUtilisateurSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("rechercheUtilisateurSite sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("rechercheUtilisateurSite sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -136,36 +170,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void rechercheUtilisateurSiteReponse(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-		reponse200RechercheUtilisateurSite(listeUtilisateurSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("rechercheUtilisateurSite sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("rechercheUtilisateurSite sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200RechercheUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -329,15 +337,18 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchUtilisateurSite a échoué. ", b.cause()));
 							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchUtilisateurSite a échoué. ", a.cause()));
 					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -728,28 +739,33 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	}
 
 	public void patchUtilisateurSiteReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PATCHUtilisateurSite(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchUtilisateurSite sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchUtilisateurSite sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PATCHUtilisateurSite(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchUtilisateurSite sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchUtilisateurSite sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PATCHUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -815,15 +831,18 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postUtilisateurSite a échoué. ", b.cause()));
 							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postUtilisateurSite a échoué. ", a.cause()));
 					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -978,31 +997,36 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public void postUtilisateurSiteReponse(UtilisateurSite utilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = utilisateurSite.getRequeteSite_();
-		reponse200POSTUtilisateurSite(utilisateurSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postUtilisateurSite sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postUtilisateurSite sql close. "));
-								RequeteApi requeteApi = requeteApiUtilisateurSite(utilisateurSite);
-								utilisateurSite.requeteApiUtilisateurSite();
-								requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200POSTUtilisateurSite(utilisateurSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postUtilisateurSite sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postUtilisateurSite sql close. "));
+									RequeteApi requeteApi = requeteApiUtilisateurSite(utilisateurSite);
+									utilisateurSite.requeteApiUtilisateurSite();
+									requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200POSTUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1047,6 +1071,43 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pagerechercheUtilisateurSite a échoué. ", b.cause()));
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pagerechercheUtilisateurSite a échoué. ", a.cause()));
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pagerechercheUtilisateurSiteReponse(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageRechercheUtilisateurSite(listeUtilisateurSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pagerechercheUtilisateurSite sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pagerechercheUtilisateurSite sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1054,36 +1115,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurUtilisateurSite(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheUtilisateurSite a échoué. ", ex));
+			erreurUtilisateurSite(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pagerechercheUtilisateurSiteReponse(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-		reponse200PageRechercheUtilisateurSite(listeUtilisateurSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pagerechercheUtilisateurSite sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pagerechercheUtilisateurSite sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200PageRechercheUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1502,6 +1537,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
+	public void rechercheUtilisateurSiteUri(String uri, String apiMethode, ListeRecherche<UtilisateurSite> listeRecherche) {
+	}
+
 	public void rechercheUtilisateurSite(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<UtilisateurSite>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -1579,6 +1617,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								break;
 						}
 					}
+					rechercheUtilisateurSiteUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}

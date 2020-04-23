@@ -735,7 +735,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putcopySchool(", o.getPk(), ", $('#putcopySchoolForm')); ")
+								.a("onclick", "putcopySchool($('#putcopySchoolForm'), ", school == null ? "null" : school.getPk(), "); ")
 								.f().sx("Duplicate schools")
 							.g("button");
 

@@ -732,7 +732,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putcopieMereScolaire(", o.getPk(), ", $('#putcopieMereScolaireForm')); ")
+								.a("onclick", "putcopieMereScolaire($('#putcopieMereScolaireForm'), ", mereScolaire == null ? "null" : mereScolaire.getPk(), "); ")
 								.f().sx("Dupliquer mères")
 							.g("button");
 

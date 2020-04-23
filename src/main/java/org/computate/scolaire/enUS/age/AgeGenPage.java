@@ -688,7 +688,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-								.a("onclick", "putcopySchoolAge(", o.getPk(), ", $('#putcopySchoolAgeForm')); ")
+								.a("onclick", "putcopySchoolAge($('#putcopySchoolAgeForm'), ", schoolAge == null ? "null" : schoolAge.getPk(), "); ")
 								.f().sx("Duplicate ages")
 							.g("button");
 

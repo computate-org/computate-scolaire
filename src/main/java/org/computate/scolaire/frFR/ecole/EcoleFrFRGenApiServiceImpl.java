@@ -154,15 +154,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postEcole a échoué. ", b.cause()));
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postEcole a échoué. ", a.cause()));
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -292,31 +295,36 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public void postEcoleReponse(Ecole ecole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = ecole.getRequeteSite_();
-		reponse200POSTEcole(ecole, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postEcole sql close. "));
-								RequeteApi requeteApi = requeteApiEcole(ecole);
-								ecole.requeteApiEcole();
-								requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200POSTEcole(ecole, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postEcole sql close. "));
+									RequeteApi requeteApi = requeteApiEcole(ecole);
+									ecole.requeteApiEcole();
+									requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200POSTEcole(Ecole o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -439,15 +447,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchEcole a échoué. ", b.cause()));
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchEcole a échoué. ", a.cause()));
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -742,28 +753,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	}
 
 	public void patchEcoleReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PATCHEcole(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PATCHEcole(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PATCHEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -823,6 +839,40 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getEcole a échoué. ", b.cause()));
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getEcole a échoué. ", a.cause()));
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
+		try {
+			reponse200GETEcole(listeEcole, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -830,36 +880,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
-		reponse200GETEcole(listeEcole, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200GETEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -922,6 +946,40 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("rechercheEcole a échoué. ", b.cause()));
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheEcole a échoué. ", a.cause()));
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
+		try {
+			reponse200RechercheEcole(listeEcole, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("rechercheEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("rechercheEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -929,36 +987,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void rechercheEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
-		reponse200RechercheEcole(listeEcole, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("rechercheEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("rechercheEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200RechercheEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1092,15 +1124,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportEcole a échoué. ", b.cause()));
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportEcole a échoué. ", a.cause()));
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1177,28 +1212,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	}
 
 	public void putimportEcoleReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTImportEcole(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTImportEcole(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTImportEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1290,15 +1330,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putfusionEcole a échoué. ", b.cause()));
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putfusionEcole a échoué. ", a.cause()));
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1375,28 +1418,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	}
 
 	public void putfusionEcoleReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTFusionEcole(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putfusionEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putfusionEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTFusionEcole(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putfusionEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putfusionEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTFusionEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1500,15 +1548,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopieEcole a échoué. ", b.cause()));
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopieEcole a échoué. ", a.cause()));
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1531,8 +1582,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeEcole.size());
+				requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 				if(listeEcole.next()) {
-					requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopieEcole(requeteApi, listeEcole, gestionnaireEvenements);
 				} else {
 					reponse200PUTCopieEcole(requeteSite, gestionnaireEvenements);
@@ -1676,28 +1727,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	}
 
 	public void putcopieEcoleReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTCopieEcole(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopieEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopieEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTCopieEcole(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopieEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopieEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTCopieEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1762,6 +1818,43 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pagerechercheEcole a échoué. ", b.cause()));
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pagerechercheEcole a échoué. ", a.cause()));
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheEcole a échoué. ", ex));
+			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pagerechercheEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageRechercheEcole(listeEcole, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pagerechercheEcole sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pagerechercheEcole sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurEcole(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurEcole(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1769,36 +1862,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					erreurEcole(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheEcole a échoué. ", ex));
+			erreurEcole(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pagerechercheEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
-		reponse200PageRechercheEcole(listeEcole, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pagerechercheEcole sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pagerechercheEcole sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurEcole(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcole(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcole(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200PageRechercheEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -2211,6 +2278,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
+	public void rechercheEcoleUri(String uri, String apiMethode, ListeRecherche<Ecole> listeRecherche) {
+	}
+
 	public void rechercheEcole(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Ecole>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -2279,6 +2349,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								break;
 						}
 					}
+					rechercheEcoleUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}

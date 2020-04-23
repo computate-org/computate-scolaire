@@ -129,6 +129,40 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchSiteUser failed. ", b.cause()));
+							errorSiteUser(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchSiteUser failed. ", a.cause()));
+					errorSiteUser(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+		try {
+			response200SearchSiteUser(listSiteUser, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchSiteUser sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchSiteUser sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSiteUser(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSiteUser(siteRequest, eventHandler, b);
 						}
 					});
@@ -136,36 +170,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					errorSiteUser(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
-		response200SearchSiteUser(listSiteUser, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchSiteUser sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchSiteUser sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSiteUser(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSiteUser(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSiteUser(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -329,15 +337,18 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSiteUser failed. ", b.cause()));
 							errorSiteUser(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSiteUser failed. ", a.cause()));
 					errorSiteUser(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -728,28 +739,33 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	}
 
 	public void patchSiteUserResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHSiteUser(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchSiteUser sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchSiteUser sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSiteUser(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSiteUser(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSiteUser(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHSiteUser(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchSiteUser sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchSiteUser sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSiteUser(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSiteUser(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSiteUser(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -815,15 +831,18 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSiteUser failed. ", b.cause()));
 							errorSiteUser(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSiteUser failed. ", a.cause()));
 					errorSiteUser(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -978,31 +997,36 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public void postSiteUserResponse(SiteUser siteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = siteUser.getSiteRequest_();
-		response200POSTSiteUser(siteUser, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postSiteUser sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postSiteUser sql close. "));
-								ApiRequest apiRequest = apiRequestSiteUser(siteUser);
-								siteUser.apiRequestSiteUser();
-								siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSiteUser(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSiteUser(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSiteUser(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTSiteUser(siteUser, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postSiteUser sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postSiteUser sql close. "));
+									ApiRequest apiRequest = apiRequestSiteUser(siteUser);
+									siteUser.apiRequestSiteUser();
+									siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSiteUser(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSiteUser(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSiteUser(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1047,6 +1071,43 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageSiteUser failed. ", b.cause()));
+							errorSiteUser(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageSiteUser failed. ", a.cause()));
+					errorSiteUser(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageSiteUser(listSiteUser, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageSiteUser sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageSiteUser sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSiteUser(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSiteUser(siteRequest, eventHandler, b);
 						}
 					});
@@ -1054,36 +1115,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					errorSiteUser(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageSiteUserResponse(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
-		response200SearchPageSiteUser(listSiteUser, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageSiteUser sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageSiteUser sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSiteUser(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSiteUser(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSiteUser(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1502,6 +1537,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchSiteUserUri(String uri, String apiMethod, SearchList<SiteUser> searchList) {
+	}
+
 	public void aSearchSiteUser(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SiteUser>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -1579,6 +1617,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								break;
 						}
 					}
+					aSearchSiteUserUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

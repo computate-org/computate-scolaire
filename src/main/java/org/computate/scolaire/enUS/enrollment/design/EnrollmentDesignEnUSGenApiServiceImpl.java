@@ -152,15 +152,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postEnrollmentDesign failed. ", b.cause()));
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postEnrollmentDesign failed. ", a.cause()));
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -257,31 +260,36 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 	public void postEnrollmentDesignResponse(EnrollmentDesign enrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = enrollmentDesign.getSiteRequest_();
-		response200POSTEnrollmentDesign(enrollmentDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postEnrollmentDesign sql close. "));
-								ApiRequest apiRequest = apiRequestEnrollmentDesign(enrollmentDesign);
-								enrollmentDesign.apiRequestEnrollmentDesign();
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTEnrollmentDesign(enrollmentDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postEnrollmentDesign sql close. "));
+									ApiRequest apiRequest = apiRequestEnrollmentDesign(enrollmentDesign);
+									enrollmentDesign.apiRequestEnrollmentDesign();
+									siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTEnrollmentDesign(EnrollmentDesign o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -374,15 +382,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportEnrollmentDesign failed. ", b.cause()));
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportEnrollmentDesign failed. ", a.cause()));
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -459,28 +470,33 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	}
 
 	public void putimportEnrollmentDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportEnrollmentDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportEnrollmentDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -572,15 +588,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", b.cause()));
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", a.cause()));
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -657,28 +676,33 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	}
 
 	public void putmergeEnrollmentDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeEnrollmentDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeEnrollmentDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -782,15 +806,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", b.cause()));
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", a.cause()));
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -813,8 +840,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listEnrollmentDesign.size());
+				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 				if(listEnrollmentDesign.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopyEnrollmentDesign(apiRequest, listEnrollmentDesign, eventHandler);
 				} else {
 					response200PUTCopyEnrollmentDesign(siteRequest, eventHandler);
@@ -936,28 +963,33 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	}
 
 	public void putcopyEnrollmentDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopyEnrollmentDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopyEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopyEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopyEnrollmentDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopyEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopyEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopyEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1079,15 +1111,18 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchEnrollmentDesign failed. ", b.cause()));
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchEnrollmentDesign failed. ", a.cause()));
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1266,28 +1301,33 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	}
 
 	public void patchEnrollmentDesignResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHEnrollmentDesign(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHEnrollmentDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1347,6 +1387,40 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getEnrollmentDesign failed. ", b.cause()));
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getEnrollmentDesign failed. ", a.cause()));
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
+		try {
+			response200GETEnrollmentDesign(listEnrollmentDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1354,36 +1428,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-		response200GETEnrollmentDesign(listEnrollmentDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1446,6 +1494,40 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchEnrollmentDesign failed. ", b.cause()));
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchEnrollmentDesign failed. ", a.cause()));
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
+		try {
+			response200SearchEnrollmentDesign(listEnrollmentDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1453,36 +1535,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-		response200SearchEnrollmentDesign(listEnrollmentDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1589,6 +1645,43 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageEnrollmentDesign failed. ", b.cause()));
+							errorEnrollmentDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageEnrollmentDesign failed. ", a.cause()));
+					errorEnrollmentDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageEnrollmentDesign(listEnrollmentDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageEnrollmentDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageEnrollmentDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorEnrollmentDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorEnrollmentDesign(siteRequest, eventHandler, b);
 						}
 					});
@@ -1596,36 +1689,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					errorEnrollmentDesign(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorEnrollmentDesign(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageEnrollmentDesign failed. ", ex));
+			errorEnrollmentDesign(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageEnrollmentDesignResponse(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-		response200SearchPageEnrollmentDesign(listEnrollmentDesign, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageEnrollmentDesign sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageEnrollmentDesign sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorEnrollmentDesign(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorEnrollmentDesign(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorEnrollmentDesign(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2032,6 +2099,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchEnrollmentDesignUri(String uri, String apiMethod, SearchList<EnrollmentDesign> searchList) {
+	}
+
 	public void aSearchEnrollmentDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<EnrollmentDesign>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2100,6 +2170,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								break;
 						}
 					}
+					aSearchEnrollmentDesignUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

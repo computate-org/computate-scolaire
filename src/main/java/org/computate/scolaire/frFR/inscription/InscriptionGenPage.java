@@ -1103,7 +1103,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putcopieInscriptionScolaire(", o.getPk(), ", $('#putcopieInscriptionScolaireForm')); ")
+								.a("onclick", "putcopieInscriptionScolaire($('#putcopieInscriptionScolaireForm'), ", inscriptionScolaire == null ? "null" : inscriptionScolaire.getPk(), "); ")
 								.f().sx("Dupliquer inscriptions")
 							.g("button");
 

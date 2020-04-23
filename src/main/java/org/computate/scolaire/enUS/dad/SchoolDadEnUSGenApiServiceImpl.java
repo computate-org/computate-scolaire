@@ -154,15 +154,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSchoolDad failed. ", b.cause()));
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSchoolDad failed. ", a.cause()));
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -308,31 +311,36 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 
 	public void postSchoolDadResponse(SchoolDad schoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolDad.getSiteRequest_();
-		response200POSTSchoolDad(schoolDad, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postSchoolDad sql close. "));
-								ApiRequest apiRequest = apiRequestSchoolDad(schoolDad);
-								schoolDad.apiRequestSchoolDad();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTSchoolDad(schoolDad, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postSchoolDad sql close. "));
+									ApiRequest apiRequest = apiRequestSchoolDad(schoolDad);
+									schoolDad.apiRequestSchoolDad();
+									siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTSchoolDad(SchoolDad o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -425,15 +433,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportSchoolDad failed. ", b.cause()));
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportSchoolDad failed. ", a.cause()));
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -510,28 +521,33 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	}
 
 	public void putimportSchoolDadResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportSchoolDad(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportSchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportSchoolDad(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportSchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportSchoolDad(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -623,15 +639,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeSchoolDad failed. ", b.cause()));
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeSchoolDad failed. ", a.cause()));
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -708,28 +727,33 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	}
 
 	public void putmergeSchoolDadResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeSchoolDad(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeSchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeSchoolDad(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeSchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeSchoolDad(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -833,15 +857,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopySchoolDad failed. ", b.cause()));
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopySchoolDad failed. ", a.cause()));
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -864,8 +891,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolDad.size());
+				siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
 				if(listSchoolDad.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolDad(apiRequest, listSchoolDad, eventHandler);
 				} else {
 					response200PUTCopySchoolDad(siteRequest, eventHandler);
@@ -1025,28 +1052,33 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	}
 
 	public void putcopySchoolDadResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopySchoolDad(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopySchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopySchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopySchoolDad(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopySchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopySchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopySchoolDad(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1168,15 +1200,18 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSchoolDad failed. ", b.cause()));
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSchoolDad failed. ", a.cause()));
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1511,28 +1546,33 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	}
 
 	public void patchSchoolDadResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHSchoolDad(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchSchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHSchoolDad(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchSchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHSchoolDad(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1571,6 +1611,40 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getSchoolDad failed. ", b.cause()));
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getSchoolDad failed. ", a.cause()));
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
+		try {
+			response200GETSchoolDad(listSchoolDad, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getSchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
@@ -1578,36 +1652,10 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
-		response200GETSchoolDad(listSchoolDad, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getSchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETSchoolDad(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1649,6 +1697,40 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchSchoolDad failed. ", b.cause()));
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchSchoolDad failed. ", a.cause()));
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
+		try {
+			response200SearchSchoolDad(listSchoolDad, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchSchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
@@ -1656,36 +1738,10 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
-		response200SearchSchoolDad(listSchoolDad, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchSchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchSchoolDad(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1771,6 +1827,43 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageSchoolDad failed. ", b.cause()));
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageSchoolDad failed. ", a.cause()));
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageSchoolDad(listSchoolDad, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageSchoolDad sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageSchoolDad sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolDad(siteRequest, eventHandler, b);
 						}
 					});
@@ -1778,36 +1871,10 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 					errorSchoolDad(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
-		response200SearchPageSchoolDad(listSchoolDad, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageSchoolDad sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageSchoolDad sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolDad(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolDad(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolDad(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageSchoolDad(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2220,6 +2287,9 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchSchoolDadUri(String uri, String apiMethod, SearchList<SchoolDad> searchList) {
+	}
+
 	public void aSearchSchoolDad(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolDad>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2297,6 +2367,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								break;
 						}
 					}
+					aSearchSchoolDadUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

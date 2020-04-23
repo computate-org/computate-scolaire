@@ -156,15 +156,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSchoolYear failed. ", b.cause()));
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSchoolYear failed. ", a.cause()));
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -300,31 +303,36 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 	public void postSchoolYearResponse(SchoolYear schoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolYear.getSiteRequest_();
-		response200POSTSchoolYear(schoolYear, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postSchoolYear sql close. "));
-								ApiRequest apiRequest = apiRequestSchoolYear(schoolYear);
-								schoolYear.apiRequestSchoolYear();
-								siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTSchoolYear(schoolYear, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postSchoolYear sql close. "));
+									ApiRequest apiRequest = apiRequestSchoolYear(schoolYear);
+									schoolYear.apiRequestSchoolYear();
+									siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTSchoolYear(SchoolYear o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -417,15 +425,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportSchoolYear failed. ", b.cause()));
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportSchoolYear failed. ", a.cause()));
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -502,28 +513,33 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	}
 
 	public void putimportSchoolYearResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportSchoolYear(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportSchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportSchoolYear(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportSchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportSchoolYear(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -615,15 +631,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeSchoolYear failed. ", b.cause()));
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeSchoolYear failed. ", a.cause()));
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -700,28 +719,33 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	}
 
 	public void putmergeSchoolYearResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeSchoolYear(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeSchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeSchoolYear(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeSchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeSchoolYear(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -825,15 +849,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopySchoolYear failed. ", b.cause()));
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopySchoolYear failed. ", a.cause()));
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -856,8 +883,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolYear.size());
+				siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 				if(listSchoolYear.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopySchoolYear(apiRequest, listSchoolYear, eventHandler);
 				} else {
 					response200PUTCopySchoolYear(siteRequest, eventHandler);
@@ -993,28 +1020,33 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	}
 
 	public void putcopySchoolYearResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopySchoolYear(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopySchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopySchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopySchoolYear(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopySchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopySchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopySchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopySchoolYear(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1136,15 +1168,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSchoolYear failed. ", b.cause()));
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSchoolYear failed. ", a.cause()));
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1447,28 +1482,33 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	}
 
 	public void patchSchoolYearResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHSchoolYear(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchSchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHSchoolYear(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchSchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHSchoolYear(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1528,6 +1568,40 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getSchoolYear failed. ", b.cause()));
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getSchoolYear failed. ", a.cause()));
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
+		try {
+			response200GETSchoolYear(listSchoolYear, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getSchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
@@ -1535,36 +1609,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
-		response200GETSchoolYear(listSchoolYear, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getSchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETSchoolYear(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1627,6 +1675,40 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchSchoolYear failed. ", b.cause()));
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchSchoolYear failed. ", a.cause()));
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
+		try {
+			response200SearchSchoolYear(listSchoolYear, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchSchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
@@ -1634,36 +1716,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
-		response200SearchSchoolYear(listSchoolYear, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchSchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchSchoolYear(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1770,6 +1826,43 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageSchoolYear failed. ", b.cause()));
+							errorSchoolYear(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageSchoolYear failed. ", a.cause()));
+					errorSchoolYear(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageSchoolYear(listSchoolYear, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageSchoolYear sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageSchoolYear sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolYear(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorSchoolYear(siteRequest, eventHandler, b);
 						}
 					});
@@ -1777,36 +1870,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					errorSchoolYear(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorSchoolYear(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSchoolYear failed. ", ex));
+			errorSchoolYear(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
-		response200SearchPageSchoolYear(listSchoolYear, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageSchoolYear sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageSchoolYear sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorSchoolYear(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorSchoolYear(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorSchoolYear(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageSchoolYear(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2225,6 +2292,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchSchoolYearUri(String uri, String apiMethod, SearchList<SchoolYear> searchList) {
+	}
+
 	public void aSearchSchoolYear(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolYear>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2293,6 +2363,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								break;
 						}
 					}
+					aSearchSchoolYearUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

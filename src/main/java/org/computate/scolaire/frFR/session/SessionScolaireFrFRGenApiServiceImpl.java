@@ -156,15 +156,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSessionScolaire a échoué. ", b.cause()));
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSessionScolaire a échoué. ", a.cause()));
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -300,31 +303,36 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 	public void postSessionScolaireReponse(SessionScolaire sessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = sessionScolaire.getRequeteSite_();
-		reponse200POSTSessionScolaire(sessionScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postSessionScolaire sql close. "));
-								RequeteApi requeteApi = requeteApiSessionScolaire(sessionScolaire);
-								sessionScolaire.requeteApiSessionScolaire();
-								requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200POSTSessionScolaire(sessionScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postSessionScolaire sql close. "));
+									RequeteApi requeteApi = requeteApiSessionScolaire(sessionScolaire);
+									sessionScolaire.requeteApiSessionScolaire();
+									requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200POSTSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -417,15 +425,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportSessionScolaire a échoué. ", b.cause()));
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportSessionScolaire a échoué. ", a.cause()));
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -502,28 +513,33 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	}
 
 	public void putimportSessionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTImportSessionScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTImportSessionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTImportSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -615,15 +631,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putfusionSessionScolaire a échoué. ", b.cause()));
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putfusionSessionScolaire a échoué. ", a.cause()));
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -700,28 +719,33 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	}
 
 	public void putfusionSessionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTFusionSessionScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putfusionSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putfusionSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTFusionSessionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putfusionSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putfusionSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTFusionSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -825,15 +849,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopieSessionScolaire a échoué. ", b.cause()));
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopieSessionScolaire a échoué. ", a.cause()));
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -856,8 +883,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeSessionScolaire.size());
+				requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 				if(listeSessionScolaire.next()) {
-					requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopieSessionScolaire(requeteApi, listeSessionScolaire, gestionnaireEvenements);
 				} else {
 					reponse200PUTCopieSessionScolaire(requeteSite, gestionnaireEvenements);
@@ -993,28 +1020,33 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	}
 
 	public void putcopieSessionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTCopieSessionScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopieSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopieSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTCopieSessionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopieSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopieSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTCopieSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1136,15 +1168,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSessionScolaire a échoué. ", b.cause()));
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSessionScolaire a échoué. ", a.cause()));
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1447,28 +1482,33 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	}
 
 	public void patchSessionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PATCHSessionScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PATCHSessionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PATCHSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1528,6 +1568,40 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getSessionScolaire a échoué. ", b.cause()));
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getSessionScolaire a échoué. ", a.cause()));
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		try {
+			reponse200GETSessionScolaire(listeSessionScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1535,36 +1609,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
-		reponse200GETSessionScolaire(listeSessionScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200GETSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1627,6 +1675,40 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("rechercheSessionScolaire a échoué. ", b.cause()));
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheSessionScolaire a échoué. ", a.cause()));
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		try {
+			reponse200RechercheSessionScolaire(listeSessionScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("rechercheSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("rechercheSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1634,36 +1716,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void rechercheSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
-		reponse200RechercheSessionScolaire(listeSessionScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("rechercheSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("rechercheSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200RechercheSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1770,6 +1826,43 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pagerechercheSessionScolaire a échoué. ", b.cause()));
+							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pagerechercheSessionScolaire a échoué. ", a.cause()));
+					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pagerechercheSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageRechercheSessionScolaire(listeSessionScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pagerechercheSessionScolaire sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pagerechercheSessionScolaire sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1777,36 +1870,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheSessionScolaire a échoué. ", ex));
+			erreurSessionScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pagerechercheSessionScolaireReponse(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
-		reponse200PageRechercheSessionScolaire(listeSessionScolaire, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pagerechercheSessionScolaire sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pagerechercheSessionScolaire sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200PageRechercheSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -2225,6 +2292,9 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
+	public void rechercheSessionScolaireUri(String uri, String apiMethode, ListeRecherche<SessionScolaire> listeRecherche) {
+	}
+
 	public void rechercheSessionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<SessionScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -2293,6 +2363,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								break;
 						}
 					}
+					rechercheSessionScolaireUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}

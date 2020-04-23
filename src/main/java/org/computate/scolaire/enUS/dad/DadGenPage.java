@@ -731,7 +731,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "putcopySchoolDad(", o.getPk(), ", $('#putcopySchoolDadForm')); ")
+								.a("onclick", "putcopySchoolDad($('#putcopySchoolDadForm'), ", schoolDad == null ? "null" : schoolDad.getPk(), "); ")
 								.f().sx("Duplicate dads")
 							.g("button");
 

@@ -695,7 +695,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopieEnfantScolaire(", o.getPk(), ", $('#putcopieEnfantScolaireForm')); ")
+								.a("onclick", "putcopieEnfantScolaire($('#putcopieEnfantScolaireForm'), ", enfantScolaire == null ? "null" : enfantScolaire.getPk(), "); ")
 								.f().sx("Dupliquer enfants")
 							.g("button");
 

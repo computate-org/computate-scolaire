@@ -732,7 +732,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "putcopiePereScolaire(", o.getPk(), ", $('#putcopiePereScolaireForm')); ")
+								.a("onclick", "putcopiePereScolaire($('#putcopiePereScolaireForm'), ", pereScolaire == null ? "null" : pereScolaire.getPk(), "); ")
 								.f().sx("Dupliquer pères")
 							.g("button");
 

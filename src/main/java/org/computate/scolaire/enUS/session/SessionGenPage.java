@@ -688,7 +688,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putcopySchoolSession(", o.getPk(), ", $('#putcopySchoolSessionForm')); ")
+								.a("onclick", "putcopySchoolSession($('#putcopySchoolSessionForm'), ", schoolSession == null ? "null" : schoolSession.getPk(), "); ")
 								.f().sx("Duplicate sessions")
 							.g("button");
 

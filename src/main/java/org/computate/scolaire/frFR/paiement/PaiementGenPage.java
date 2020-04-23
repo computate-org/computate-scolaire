@@ -864,7 +864,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putcopiePaiementScolaire(", o.getPk(), ", $('#putcopiePaiementScolaireForm')); ")
+								.a("onclick", "putcopiePaiementScolaire($('#putcopiePaiementScolaireForm'), ", paiementScolaire == null ? "null" : paiementScolaire.getPk(), "); ")
 								.f().sx("Dupliquer paiements")
 							.g("button");
 
