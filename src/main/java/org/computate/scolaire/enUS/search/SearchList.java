@@ -105,7 +105,7 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 			try {
 				QueryResponse o = siteRequest_.getSiteContext_().getSolrClient().query(solrQuery);
 				c.o(o);
-			} catch (SolrServerException | IOException e) {
+			} catch (Exception e) {
 				throw new RuntimeException(String.format("Solr exception: %s", solrQuery.toString()), e);
 			}
 		}

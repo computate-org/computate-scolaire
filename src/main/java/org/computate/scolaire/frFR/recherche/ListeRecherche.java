@@ -176,7 +176,7 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 			try {
 				QueryResponse o = requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery);
 				c.o(o);
-			} catch (SolrServerException | IOException e) {
+			} catch (Exception e) {
 				throw new RuntimeException(String.format("Solr exception: %s", solrQuery.toString()), e);
 			}
 		}
