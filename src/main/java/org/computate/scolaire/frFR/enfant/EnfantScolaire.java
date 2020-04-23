@@ -63,7 +63,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/     
+*/  
 public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**

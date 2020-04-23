@@ -479,6 +479,75 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		return (DesignDisplayPage)this;
 	}
 
+	/////////////
+	// yearKey //
+	/////////////
+
+	/**	L'entité « yearKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long yearKey;
+	@JsonIgnore
+	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
+
+	/**	<br/>L'entité « yearKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearKey(Wrap<Long> c);
+
+	public Long getYearKey() {
+		return yearKey;
+	}
+
+	public void setYearKey(Long yearKey) {
+		this.yearKey = yearKey;
+		this.yearKeyWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setYearKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearKey = Long.parseLong(o);
+		this.yearKeyWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage yearKeyInit() {
+		if(!yearKeyWrap.alreadyInitialized) {
+			_yearKey(yearKeyWrap);
+			if(yearKey == null)
+				setYearKey(yearKeyWrap.o);
+		}
+		yearKeyWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Long solrYearKey() {
+		return yearKey;
+	}
+
+	public String strYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String jsonYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String nomAffichageYearKey() {
+		return null;
+	}
+
+	public String htmTooltipYearKey() {
+		return null;
+	}
+
+	public String htmYearKey() {
+		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
 	///////////////
 	// schoolKey //
 	///////////////
@@ -1661,6 +1730,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		enrollmentEnrollmentInit();
 		yearSearchInit();
 		year_Init();
+		yearKeyInit();
 		schoolKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
@@ -1765,6 +1835,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				return oDesignDisplayPage.yearSearch;
 			case "year_":
 				return oDesignDisplayPage.year_;
+			case "yearKey":
+				return oDesignDisplayPage.yearKey;
 			case "schoolKey":
 				return oDesignDisplayPage.schoolKey;
 			case "schoolName":

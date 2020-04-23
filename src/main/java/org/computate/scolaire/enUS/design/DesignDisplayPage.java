@@ -46,7 +46,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	 **/
 	protected void _designId(Wrap<String> c) {
 		if(pageDesign != null)
-			c.o(pageDesign.getId());
+			c.o(pageDesign.getObjectId());
 	}
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
@@ -78,52 +78,13 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
 
-		String id = operationRequest.getParams().getJsonObject("path").getString("id");
-		if(id != null) {
-			l.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-		}
-
-		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-			String entityVar = null;
-			String valueIndexed = null;
-			String varIndexed = null;
-			String valueSort = null;
-			Integer aSearchStart = null;
-			Integer aSearchNum = null;
-			String paramName = paramRequest.getKey();
-			Object paramValuesObject = paramRequest.getValue();
-			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-			try {
-				for(Object paramObject : paramObjects) {
-					switch(paramName) {
-						case "q":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
-							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-							l.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-							if(!"*".equals(entityVar)) {
-								l.setHighlight(true);
-								l.setHighlightSnippets(3);
-								l.addHighlightField(varIndexed);
-								l.setParam("hl.encoder", "html");
-							}
-							break;
-						case "fq":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							if(!"design".equals(entityVar)) {
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-								l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
-							}
-							break;
-					}
-				}
-			} catch(Exception e) {
-				ExceptionUtils.rethrow(e);
+		for(String var : siteRequest_.getRequestVars().keySet()) {
+			String val = siteRequest_.getRequestVars().get(var);
+			if(!"design".equals(var)) {
+				String varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(var);
+				l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 			}
-		});
+		}
 	}
 
 	protected void _schoolEnrollment(Wrap<SchoolEnrollment> c) {
@@ -193,62 +154,17 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(yearKey != null)
+		if(yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
-
-		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-			String entityVar = null;
-			String valueIndexed = null;
-			String varIndexed = null;
-			String valueSort = null;
-			Integer aSearchStart = null;
-			Integer aSearchNum = null;
-			String paramName = paramRequest.getKey();
-			Object paramValuesObject = paramRequest.getValue();
-			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-			try {
-				for(Object paramObject : paramObjects) {
-					switch(paramName) {
-//						case "q":
-//							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-//							varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
-//							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-//							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-//							l.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
-//							if(!"*".equals(entityVar)) {
-//								l.setHighlight(true);
-//								l.setHighlightSnippets(3);
-//								l.addHighlightField(varIndexed);
-//								l.setParam("hl.encoder", "html");
-//							}
-//							break;
-						case "fq":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-							l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
-							break;
-//						case "sort":
-//							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-//							valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-//							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-//							l.addSort(varIndexed, ORDER.valueOf(valueSort));
-//							break;
-//						case "start":
-//							aSearchStart = (Integer)paramObject;
-//							l.setStart(aSearchStart);
-//							break;
-//						case "rows":
-//							aSearchNum = (Integer)paramObject;
-//							l.setRows(aSearchNum);
-//							break;
-					}
+		} else {
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = SchoolYear.varIndexedSchoolYear(var);
+					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 				}
-			} catch(Exception e) {
-				ExceptionUtils.rethrow(e);
 			}
-		});
+		}
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
@@ -263,6 +179,11 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 				throw new RuntimeException("More than one year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
 		}
+	}
+
+	protected void _yearKey(Wrap<Long> c) {
+		if(year_ != null)
+			c.o(year_.getPk());
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
