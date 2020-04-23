@@ -764,7 +764,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putcopieDesignPage(", o.getPk(), ", $('#putcopieDesignPageForm')); ")
+								.a("onclick", "putcopieDesignPage($('#putcopieDesignPageForm'), ", designPage == null ? "null" : designPage.getPk(), "); ")
 								.f().sx("Dupliquer design de pages")
 							.g("button");
 

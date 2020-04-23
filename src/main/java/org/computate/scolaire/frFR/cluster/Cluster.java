@@ -413,6 +413,29 @@ public class Cluster extends ClusterGen<Object> {
 		}
 	}
 
+	/**	
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * VarUrlPk: true
+	 * r: objetId
+	 * r.enUS: objectId
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 * r: objetNomVar
+	 * r.enUS: objectNameVar
+	 * **/   
+	protected void _pageUrlApi(Couverture<String> c)  {
+		if(pk != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/api/" + objetNomVar + "/" + pk;
+			c.o(o);
+		}
+	}
+
 	/**
 	 * H1: true
 	 * r: ecoleNom

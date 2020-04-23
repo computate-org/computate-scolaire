@@ -897,8 +897,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listPageDesign.size());
+				siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 				if(listPageDesign.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopyPageDesign(apiRequest, listPageDesign, eventHandler);
 				} else {
 					response200PUTCopyPageDesign(siteRequest, eventHandler);

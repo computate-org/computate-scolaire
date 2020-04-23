@@ -871,7 +871,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopiePartHtml(", o.getPk(), ", $('#putcopiePartHtmlForm')); ")
+								.a("onclick", "putcopiePartHtml($('#putcopiePartHtmlForm'), ", partHtml == null ? "null" : partHtml.getPk(), "); ")
 								.f().sx("Dupliquer part de HTMLs")
 							.g("button");
 

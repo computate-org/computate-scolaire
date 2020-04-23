@@ -897,8 +897,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeDesignPage.size());
+				requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 				if(listeDesignPage.next()) {
-					requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopieDesignPage(requeteApi, listeDesignPage, gestionnaireEvenements);
 				} else {
 					reponse200PUTCopieDesignPage(requeteSite, gestionnaireEvenements);

@@ -154,15 +154,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postHtmlPart failed. ", b.cause()));
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postHtmlPart failed. ", a.cause()));
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -372,31 +375,36 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 	public void postHtmlPartResponse(HtmlPart htmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = htmlPart.getSiteRequest_();
-		response200POSTHtmlPart(htmlPart, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postHtmlPart sql close. "));
-								ApiRequest apiRequest = apiRequestHtmlPart(htmlPart);
-								htmlPart.apiRequestHtmlPart();
-								siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTHtmlPart(htmlPart, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postHtmlPart sql close. "));
+									ApiRequest apiRequest = apiRequestHtmlPart(htmlPart);
+									htmlPart.apiRequestHtmlPart();
+									siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTHtmlPart(HtmlPart o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -489,15 +497,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportHtmlPart failed. ", b.cause()));
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportHtmlPart failed. ", a.cause()));
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -574,28 +585,33 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 	public void putimportHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportHtmlPart(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportHtmlPart(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -687,15 +703,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeHtmlPart failed. ", b.cause()));
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeHtmlPart failed. ", a.cause()));
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -772,28 +791,33 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 	public void putmergeHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeHtmlPart(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeHtmlPart(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -897,15 +921,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopyHtmlPart failed. ", b.cause()));
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopyHtmlPart failed. ", a.cause()));
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -928,8 +955,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listHtmlPart.size());
+				siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 				if(listHtmlPart.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopyHtmlPart(apiRequest, listHtmlPart, eventHandler);
 				} else {
 					response200PUTCopyHtmlPart(siteRequest, eventHandler);
@@ -1153,28 +1180,33 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 	public void putcopyHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopyHtmlPart(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopyHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopyHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopyHtmlPart(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopyHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopyHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopyHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1296,15 +1328,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchHtmlPart failed. ", b.cause()));
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchHtmlPart failed. ", a.cause()));
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1799,28 +1834,33 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	}
 
 	public void patchHtmlPartResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHHtmlPart(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHHtmlPart(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1880,6 +1920,40 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getHtmlPart failed. ", b.cause()));
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getHtmlPart failed. ", a.cause()));
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		try {
+			response200GETHtmlPart(listHtmlPart, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
@@ -1887,36 +1961,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-		response200GETHtmlPart(listHtmlPart, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1979,6 +2027,40 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchHtmlPart failed. ", b.cause()));
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchHtmlPart failed. ", a.cause()));
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		try {
+			response200SearchHtmlPart(listHtmlPart, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
@@ -1986,36 +2068,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-		response200SearchHtmlPart(listHtmlPart, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2122,6 +2178,43 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageHtmlPart failed. ", b.cause()));
+							errorHtmlPart(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageHtmlPart failed. ", a.cause()));
+					errorHtmlPart(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageHtmlPart(listHtmlPart, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageHtmlPart sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageHtmlPart sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorHtmlPart(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorHtmlPart(siteRequest, eventHandler, b);
 						}
 					});
@@ -2129,36 +2222,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					errorHtmlPart(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorHtmlPart(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageHtmlPart failed. ", ex));
+			errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageHtmlPartResponse(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-		response200SearchPageHtmlPart(listHtmlPart, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageHtmlPart sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageHtmlPart sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorHtmlPart(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorHtmlPart(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorHtmlPart(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -2571,6 +2638,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchHtmlPartUri(String uri, String apiMethod, SearchList<HtmlPart> searchList) {
+	}
+
 	public void aSearchHtmlPart(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<HtmlPart>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2639,6 +2709,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								break;
 						}
 					}
+					aSearchHtmlPartUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

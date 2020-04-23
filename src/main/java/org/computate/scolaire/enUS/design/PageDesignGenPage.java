@@ -764,7 +764,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putcopyPageDesign(", o.getPk(), ", $('#putcopyPageDesignForm')); ")
+								.a("onclick", "putcopyPageDesign($('#putcopyPageDesignForm'), ", pageDesign == null ? "null" : pageDesign.getPk(), "); ")
 								.f().sx("Duplicate page designs")
 							.g("button");
 
