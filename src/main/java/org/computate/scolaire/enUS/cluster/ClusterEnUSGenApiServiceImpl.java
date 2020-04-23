@@ -104,24 +104,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postCluster started. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
@@ -152,15 +134,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postCluster failed. ", b.cause()));
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postCluster failed. ", a.cause()));
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -228,6 +213,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
 						break;
+					case "sessionId":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -249,31 +238,36 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 	public void postClusterResponse(Cluster cluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = cluster.getSiteRequest_();
-		response200POSTCluster(cluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postCluster sql close. "));
-								ApiRequest apiRequest = apiRequestCluster(cluster);
-								cluster.apiRequestCluster();
-								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200POSTCluster(cluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postCluster sql close. "));
+									ApiRequest apiRequest = apiRequestCluster(cluster);
+									cluster.apiRequestCluster();
+									siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -292,24 +286,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportCluster started. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
@@ -366,15 +342,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportCluster failed. ", b.cause()));
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportCluster failed. ", a.cause()));
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -451,28 +430,33 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 	public void putimportClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTImportCluster(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTImportCluster(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTImportCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -490,24 +474,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeCluster started. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
@@ -564,15 +530,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putmergeCluster failed. ", b.cause()));
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putmergeCluster failed. ", a.cause()));
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -649,28 +618,33 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 	public void putmergeClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTMergeCluster(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putmergeCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putmergeCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTMergeCluster(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putmergeCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putmergeCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putmergeCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTMergeCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -688,24 +662,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopyCluster started. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
@@ -774,15 +730,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopyCluster failed. ", b.cause()));
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopyCluster failed. ", a.cause()));
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -805,8 +764,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listCluster.size());
+				siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 				if(listCluster.next()) {
-					siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 					listPUTCopyCluster(apiRequest, listCluster, eventHandler);
 				} else {
 					response200PUTCopyCluster(siteRequest, eventHandler);
@@ -900,6 +859,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						putSql.append(SiteContextEnUS.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
 						break;
+					case "sessionId":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -920,28 +883,33 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 	public void putcopyClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PUTCopyCluster(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopyCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopyCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PUTCopyCluster(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopyCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopyCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopyCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PUTCopyCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -959,24 +927,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchCluster started. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				eventHandler.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "roles required: " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
@@ -1063,15 +1013,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchCluster failed. ", b.cause()));
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchCluster failed. ", a.cause()));
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 
@@ -1208,6 +1161,16 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
+					case "setSessionId":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+						} else {
+							o2.setSessionId(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+						}
+						break;
 				}
 			}
 			sqlConnection.queryWithParams(
@@ -1230,28 +1193,33 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 	public void patchClusterResponse(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		response200PATCHCluster(siteRequest, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
+		try {
+			response200PATCHCluster(siteRequest, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
+		}
 	}
 	public void response200PATCHCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1290,6 +1258,40 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getCluster failed. ", b.cause()));
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getCluster failed. ", a.cause()));
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		try {
+			response200GETCluster(listCluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
@@ -1297,36 +1299,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-		response200GETCluster(listCluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200GETCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1368,6 +1344,40 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchCluster failed. ", b.cause()));
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchCluster failed. ", a.cause()));
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		try {
+			response200SearchCluster(listCluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
@@ -1375,36 +1385,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-		response200SearchCluster(listCluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1490,6 +1474,43 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("searchpageCluster failed. ", b.cause()));
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("searchpageCluster failed. ", a.cause()));
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageCluster failed. ", ex));
+			errorCluster(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void searchpageClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200SearchPageCluster(listCluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("searchpageCluster sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("searchpageCluster sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
 							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
@@ -1497,36 +1518,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
-		} catch(Exception e) {
-			errorCluster(siteRequest, eventHandler, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageCluster failed. ", ex));
+			errorCluster(siteRequest, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void searchpageClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-		response200SearchPageCluster(listCluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection sqlConnection = siteRequest.getSqlConnection();
-				sqlConnection.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("searchpageCluster sql commit. "));
-						sqlConnection.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("searchpageCluster sql close. "));
-								eventHandler.handle(Future.succeededFuture(a.result()));
-							} else {
-								errorCluster(siteRequest, eventHandler, c);
-							}
-						});
-					} else {
-						errorCluster(siteRequest, eventHandler, b);
-					}
-				});
-			} else {
-				errorCluster(siteRequest, eventHandler, a);
-			}
-		});
 	}
 	public void response200SearchPageCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
@@ -1933,6 +1928,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		searchList.getSiteRequest_().getRequestVars().put(var, value);
 	}
 
+	public void aSearchClusterUri(String uri, String apiMethod, SearchList<Cluster> searchList) {
+	}
+
 	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -2010,6 +2008,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								break;
 						}
 					}
+					aSearchClusterUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));
 				}

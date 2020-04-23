@@ -234,6 +234,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
+			o.htmSessionId("PUTCopy");
 			o.htmUserId("PUTCopy");
 			o.htmUserKey("PUTCopy");
 			o.htmUserName("PUTCopy");
@@ -262,6 +263,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 			o.htmUserId("PATCH");
 			o.htmUserKey("PATCH");
 			o.htmUserName("PATCH");
@@ -292,6 +294,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
+			o.htmSessionId("Search");
 			o.htmObjectTitle("Search");
 			o.htmUserId("Search");
 			o.htmUserKey("Search");

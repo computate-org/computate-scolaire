@@ -156,7 +156,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
-	 */
+	 */ 
 	protected void _anneeRecherche(ListeRecherche<AnneeScolaire> l) {
 		if(anneeCle != null) {
 			l.setQuery("*:*");

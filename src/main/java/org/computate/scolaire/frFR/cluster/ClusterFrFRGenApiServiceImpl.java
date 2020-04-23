@@ -104,24 +104,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postCluster a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
@@ -152,15 +134,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postCluster a échoué. ", b.cause()));
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postCluster a échoué. ", a.cause()));
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -228,6 +213,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "sessionId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -249,31 +238,36 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	public void postClusterReponse(Cluster cluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = cluster.getRequeteSite_();
-		reponse200POSTCluster(cluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("postCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("postCluster sql close. "));
-								RequeteApi requeteApi = requeteApiCluster(cluster);
-								cluster.requeteApiCluster();
-								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200POSTCluster(cluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("postCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("postCluster sql close. "));
+									RequeteApi requeteApi = requeteApiCluster(cluster);
+									cluster.requeteApiCluster();
+									requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("postCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -292,24 +286,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportCluster a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
@@ -366,15 +342,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putimportCluster a échoué. ", b.cause()));
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putimportCluster a échoué. ", a.cause()));
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -451,28 +430,33 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 	public void putimportClusterReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTImportCluster(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putimportCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putimportCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTImportCluster(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putimportCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putimportCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putimportCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTImportCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -490,24 +474,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionCluster a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
@@ -564,15 +530,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putfusionCluster a échoué. ", b.cause()));
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putfusionCluster a échoué. ", a.cause()));
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -649,28 +618,33 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 	public void putfusionClusterReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTFusionCluster(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putfusionCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putfusionCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTFusionCluster(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putfusionCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putfusionCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putfusionCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTFusionCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -688,24 +662,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopieCluster a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
@@ -774,15 +730,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopieCluster a échoué. ", b.cause()));
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopieCluster a échoué. ", a.cause()));
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -805,8 +764,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeCluster.size());
+				requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 				if(listeCluster.next()) {
-					requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 					listePUTCopieCluster(requeteApi, listeCluster, gestionnaireEvenements);
 				} else {
 					reponse200PUTCopieCluster(requeteSite, gestionnaireEvenements);
@@ -900,6 +859,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						putSql.append(SiteContexteFrFR.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "sessionId":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -920,28 +883,33 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 	public void putcopieClusterReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PUTCopieCluster(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("putcopieCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("putcopieCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PUTCopieCluster(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("putcopieCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("putcopieCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("putcopieCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PUTCopieCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -959,24 +927,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchCluster a démarré. "));
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				gestionnaireEvenements.handle(Future.succeededFuture(
-					new OperationResponse(401, "UNAUTHORIZED", 
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
-								.encodePrettily()
-							), new CaseInsensitiveHeaders()
-					)
-				));
-			}
-
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
@@ -1063,15 +1013,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchCluster a échoué. ", b.cause()));
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchCluster a échoué. ", a.cause()));
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
 		}
 	}
 
@@ -1208,6 +1161,16 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "setSessionId":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+						} else {
+							o2.setSessionId(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+						}
+						break;
 				}
 			}
 			connexionSql.queryWithParams(
@@ -1230,28 +1193,33 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 	public void patchClusterReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		reponse200PATCHCluster(requeteSite, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("patchCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("patchCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
+		try {
+			reponse200PATCHCluster(requeteSite, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("patchCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("patchCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
+		}
 	}
 	public void reponse200PATCHCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1290,6 +1258,40 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("getCluster a échoué. ", b.cause()));
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("getCluster a échoué. ", a.cause()));
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void getClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+		try {
+			reponse200GETCluster(listeCluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("getCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("getCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1297,36 +1299,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("getCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void getClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
-		reponse200GETCluster(listeCluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("getCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("getCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200GETCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1368,6 +1344,40 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("rechercheCluster a échoué. ", b.cause()));
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheCluster a échoué. ", a.cause()));
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+		try {
+			reponse200RechercheCluster(listeCluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("rechercheCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("rechercheCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1375,36 +1385,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void rechercheClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
-		reponse200RechercheCluster(listeCluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("rechercheCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("rechercheCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200RechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1490,6 +1474,43 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								}
 							});
 						} else {
+							LOGGER.error(String.format("pagerechercheCluster a échoué. ", b.cause()));
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("pagerechercheCluster a échoué. ", a.cause()));
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheCluster a échoué. ", ex));
+			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void pagerechercheClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200PageRechercheCluster(listeCluster, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("pagerechercheCluster sql commit. "));
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("pagerechercheCluster sql close. "));
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
 							erreurCluster(requeteSite, gestionnaireEvenements, b);
 						}
 					});
@@ -1497,36 +1518,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					erreurCluster(requeteSite, gestionnaireEvenements, a);
 				}
 			});
-		} catch(Exception e) {
-			erreurCluster(requeteSite, gestionnaireEvenements, Future.failedFuture(e));
+		} catch(Exception ex) {
+			LOGGER.error(String.format("pagerechercheCluster a échoué. ", ex));
+			erreurCluster(requeteSite, null, Future.failedFuture(ex));
 		}
-	}
-
-
-	public void pagerechercheClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
-		reponse200PageRechercheCluster(listeCluster, a -> {
-			if(a.succeeded()) {
-				SQLConnection connexionSql = requeteSite.getConnexionSql();
-				connexionSql.commit(b -> {
-					if(b.succeeded()) {
-						LOGGER.info(String.format("pagerechercheCluster sql commit. "));
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info(String.format("pagerechercheCluster sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-							} else {
-								erreurCluster(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurCluster(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurCluster(requeteSite, gestionnaireEvenements, a);
-			}
-		});
 	}
 	public void reponse200PageRechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
@@ -1933,6 +1928,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		listeRecherche.getRequeteSite_().getRequeteVars().put(var, valeur);
 	}
 
+	public void rechercheClusterUri(String uri, String apiMethode, ListeRecherche<Cluster> listeRecherche) {
+	}
+
 	public void rechercheCluster(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -2010,6 +2008,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								break;
 						}
 					}
+					rechercheClusterUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}

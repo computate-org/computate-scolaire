@@ -215,6 +215,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "sessionId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						break;
 					case "inscriptionCle":
 						{
 							Long l = Long.parseLong(jsonObject.getString(entiteVar));
@@ -971,6 +975,10 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						putSql.append(SiteContexteFrFR.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "sessionId":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						break;
 					case "inscriptionCle":
 						putSql.append(SiteContexteFrFR.SQL_addA);
 						putSqlParams.addAll(Arrays.asList("inscriptionCle", pk, "paiementCles", Long.parseLong(jsonObject.getString(entiteVar))));
@@ -1367,6 +1375,16 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setSessionId":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+						} else {
+							o2.setSessionId(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
 						}
 						break;
 					case "setInscriptionCle":

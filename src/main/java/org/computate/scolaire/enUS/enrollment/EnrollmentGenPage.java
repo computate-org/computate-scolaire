@@ -506,6 +506,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
+			o.htmSessionId("PUTCopy");
 			o.htmChildCompleteName("PUTCopy");
 			o.htmChildCompleteNamePreferred("PUTCopy");
 			o.htmChildBirthDate("PUTCopy");
@@ -590,6 +591,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 			o.htmChildCompleteName("PATCH");
 			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
@@ -676,6 +678,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
+			o.htmSessionId("Search");
 			o.htmObjectTitle("Search");
 			o.htmChildCompleteName("Search");
 			o.htmChildCompleteNamePreferred("Search");

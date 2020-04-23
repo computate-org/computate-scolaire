@@ -233,6 +233,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
+			o.htmSessionId("PUTCopie");
 		} g("div");
 	}
 
@@ -256,6 +257,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 		} g("div");
 	}
 
@@ -281,6 +283,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
+			o.htmSessionId("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

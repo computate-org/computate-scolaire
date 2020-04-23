@@ -153,6 +153,13 @@ public class Cluster extends ClusterGen<Object> {
 		}
 	}
 
+	protected void _pageUrlApi(Wrap<String> c) {
+		if(pk != null) {
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/api/" + objectNameVar + "/" + pk;
+			c.o(o);
+		}
+	}
+
 	protected void _pageH1(Wrap<String> c) {
 		try {
 			Class<?> cl = getClass();

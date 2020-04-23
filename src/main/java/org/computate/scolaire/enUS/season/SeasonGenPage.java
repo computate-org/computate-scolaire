@@ -229,6 +229,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
+			o.htmSessionId("PUTCopy");
 			o.htmSeasonSummer("PUTCopy");
 			o.htmSeasonWinter("PUTCopy");
 		} g("div");
@@ -253,6 +254,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 			o.htmSeasonSummer("PATCH");
 			o.htmSeasonWinter("PATCH");
 		} g("div");
@@ -279,6 +281,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
+			o.htmSessionId("Search");
 			o.htmObjectTitle("Search");
 			o.htmSeasonSummer("Search");
 			o.htmSeasonWinter("Search");

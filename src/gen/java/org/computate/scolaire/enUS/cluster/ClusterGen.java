@@ -550,22 +550,20 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void htmCreated(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ s.e("div").a("class", "w3-padding ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterCreated").f();
 					{ s.e("div").a("class", "w3-card ").f();
 						{ s.e("div").a("class", "w3-cell-row w3-gray ").f();
-							s.e("label").a("class", "").f().sx("created").g("label");
+							s.e("label").a("for", classApiMethodMethod, "_created").a("class", "").f().sx("created").g("label");
 						} s.g("div");
-						{ s.e("div").a("class", "w3-cell-row  ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
-								{ s.e("div").a("class", "w3-rest ").f();
-									s.e("span").f().sx(strCreated()).g("span");
-								} s.g("div");
-							} s.g("div");
+								inputCreated(classApiMethodMethod);
+									} s.g("div");
 						} s.g("div");
 					} s.g("div");
 				} s.g("div");
-			}
+			} s.g("div");
 		} s.g("div");
 	}
 
@@ -655,22 +653,20 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void htmModified(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ s.e("div").a("class", "w3-padding ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterModified").f();
 					{ s.e("div").a("class", "w3-card ").f();
 						{ s.e("div").a("class", "w3-cell-row w3-gray ").f();
-							s.e("label").a("class", "").f().sx("modified").g("label");
+							s.e("label").a("for", classApiMethodMethod, "_modified").a("class", "").f().sx("modified").g("label");
 						} s.g("div");
-						{ s.e("div").a("class", "w3-cell-row  ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
-								{ s.e("div").a("class", "w3-rest ").f();
-									s.e("span").f().sx(strModified()).g("span");
-								} s.g("div");
-							} s.g("div");
+								inputModified(classApiMethodMethod);
+									} s.g("div");
 						} s.g("div");
 					} s.g("div");
 				} s.g("div");
-			}
+			} s.g("div");
 		} s.g("div");
 	}
 
@@ -1211,6 +1207,28 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmSessionId() {
 		return sessionId == null ? "" : StringEscapeUtils.escapeHtml4(strSessionId());
+	}
+
+	public void inputSessionId(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+	}
+
+	public void htmSessionId(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterSessionId").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputSessionId(classApiMethodMethod);
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
 	}
 
 	///////////
@@ -1777,6 +1795,68 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pageUrlPk == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrlPk());
 	}
 
+	////////////////
+	// pageUrlApi //
+	////////////////
+
+	/**	L'entité « pageUrlApi »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String pageUrlApi;
+	@JsonIgnore
+	public Wrap<String> pageUrlApiWrap = new Wrap<String>().p(this).c(String.class).var("pageUrlApi").o(pageUrlApi);
+
+	/**	<br/>L'entité « pageUrlApi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUrlApi">Trouver l'entité pageUrlApi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pageUrlApi(Wrap<String> c);
+
+	public String getPageUrlApi() {
+		return pageUrlApi;
+	}
+
+	public void setPageUrlApi(String pageUrlApi) {
+		this.pageUrlApi = pageUrlApi;
+		this.pageUrlApiWrap.alreadyInitialized = true;
+	}
+	protected Cluster pageUrlApiInit() {
+		if(!pageUrlApiWrap.alreadyInitialized) {
+			_pageUrlApi(pageUrlApiWrap);
+			if(pageUrlApi == null)
+				setPageUrlApi(pageUrlApiWrap.o);
+		}
+		pageUrlApiWrap.alreadyInitialized(true);
+		return (Cluster)this;
+	}
+
+	public String solrPageUrlApi() {
+		return pageUrlApi;
+	}
+
+	public String strPageUrlApi() {
+		return pageUrlApi == null ? "" : pageUrlApi;
+	}
+
+	public String jsonPageUrlApi() {
+		return pageUrlApi == null ? "" : pageUrlApi;
+	}
+
+	public String nomAffichagePageUrlApi() {
+		return null;
+	}
+
+	public String htmTooltipPageUrlApi() {
+		return null;
+	}
+
+	public String htmPageUrlApi() {
+		return pageUrlApi == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrlApi());
+	}
+
 	////////////
 	// pageH1 //
 	////////////
@@ -1880,6 +1960,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		objectTextInit();
 		pageUrlIdInit();
 		pageUrlPkInit();
+		pageUrlApiInit();
 		pageH1Init();
 	}
 
@@ -1960,6 +2041,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.pageUrlId;
 			case "pageUrlPk":
 				return oCluster.pageUrlPk;
+			case "pageUrlApi":
+				return oCluster.pageUrlApi;
 			case "pageH1":
 				return oCluster.pageH1;
 			default:
@@ -2031,6 +2114,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				return val;
 			case "deleted":
 				setDeleted(val);
+				savesCluster.add(var);
+				return val;
+			case "sessionId":
+				setSessionId(val);
 				savesCluster.add(var);
 				return val;
 			default:
@@ -2149,6 +2236,12 @@ public abstract class ClusterGen<DEV> extends Object {
 				String pageUrlPk = (String)solrDocument.get("pageUrlPk_stored_string");
 				if(pageUrlPk != null)
 					oCluster.setPageUrlPk(pageUrlPk);
+			}
+
+			if(savesCluster.contains("pageUrlApi")) {
+				String pageUrlApi = (String)solrDocument.get("pageUrlApi_stored_string");
+				if(pageUrlApi != null)
+					oCluster.setPageUrlApi(pageUrlApi);
 			}
 		}
 	}
@@ -2297,6 +2390,10 @@ public abstract class ClusterGen<DEV> extends Object {
 			document.addField("pageUrlPk_indexed_string", pageUrlPk);
 			document.addField("pageUrlPk_stored_string", pageUrlPk);
 		}
+		if(pageUrlApi != null) {
+			document.addField("pageUrlApi_indexed_string", pageUrlApi);
+			document.addField("pageUrlApi_stored_string", pageUrlApi);
+		}
 	}
 
 	public void unindexCluster() {
@@ -2354,6 +2451,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return "pageUrlId_indexed_string";
 			case "pageUrlPk":
 				return "pageUrlPk_indexed_string";
+			case "pageUrlApi":
+				return "pageUrlApi_indexed_string";
 			default:
 				return null;
 		}
@@ -2458,6 +2557,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		String pageUrlPk = (String)solrDocument.get("pageUrlPk_stored_string");
 		if(pageUrlPk != null)
 			oCluster.setPageUrlPk(pageUrlPk);
+
+		String pageUrlApi = (String)solrDocument.get("pageUrlApi_stored_string");
+		if(pageUrlApi != null)
+			oCluster.setPageUrlApi(pageUrlApi);
 	}
 
 	//////////////////
@@ -2479,6 +2582,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				apiRequest.addVars("archived");
 			if(!Objects.equals(deleted, original.getDeleted()))
 				apiRequest.addVars("deleted");
+			if(!Objects.equals(sessionId, original.getSessionId()))
+				apiRequest.addVars("sessionId");
 		}
 	}
 
@@ -2487,7 +2592,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(inheritPk, created, modified, archived, deleted);
+		return Objects.hash(inheritPk, created, modified, archived, deleted, sessionId);
 	}
 
 	////////////
@@ -2504,7 +2609,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				&& Objects.equals( created, that.created )
 				&& Objects.equals( modified, that.modified )
 				&& Objects.equals( archived, that.archived )
-				&& Objects.equals( deleted, that.deleted );
+				&& Objects.equals( deleted, that.deleted )
+				&& Objects.equals( sessionId, that.sessionId );
 	}
 
 	//////////////
@@ -2519,6 +2625,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		sb.append( ", modified: " ).append(modified);
 		sb.append( ", archived: " ).append(archived);
 		sb.append( ", deleted: " ).append(deleted);
+		sb.append( ", sessionId: \"" ).append(sessionId).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

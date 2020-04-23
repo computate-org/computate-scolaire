@@ -262,6 +262,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
+			o.htmSessionId("PUTCopy");
 			o.htmChildCompleteNamePreferred("PUTCopy");
 			o.htmChildBirthDate("PUTCopy");
 			o.htmMomCompleteNamePreferred("PUTCopy");
@@ -309,6 +310,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
 			o.htmMomCompleteNamePreferred("PATCH");
@@ -358,6 +360,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
+			o.htmSessionId("Search");
 			o.htmObjectTitle("Search");
 			o.htmChildCompleteNamePreferred("Search");
 			o.htmChildBirthDate("Search");

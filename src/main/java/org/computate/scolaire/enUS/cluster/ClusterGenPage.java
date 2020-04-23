@@ -185,6 +185,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
+			o.htmSessionId("PUTCopy");
 		} g("div");
 	}
 
@@ -199,6 +200,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 		} g("div");
 	}
 
@@ -215,6 +217,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
+			o.htmSessionId("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}
@@ -625,7 +628,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "putcopyCluster(", o.getPk(), ", $('#putcopyClusterForm')); ")
+								.a("onclick", "putcopyCluster($('#putcopyClusterForm'), ", cluster == null ? "null" : cluster.getPk(), "); ")
 								.f().sx("Duplicate clusters")
 							.g("button");
 

@@ -63,7 +63,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * Role.enUS: SiteAdmin
  * RoleLire.frFR: User
  * RoleLire.enUS: User
- */              
+ */               
 public class Cluster extends ClusterGen<Object> {   
 
 	/**
@@ -222,9 +222,11 @@ public class Cluster extends ClusterGen<Object> {
 	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * Modifier: false
 	 * r: requeteSite
 	 * r.enUS: siteRequest
-	 */                  
+	 */                 
 	protected void _sessionId(Couverture<String> c) {
 		c.o(requeteSite_.getSessionId());
 	}
@@ -417,7 +419,6 @@ public class Cluster extends ClusterGen<Object> {
 	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
-	 * VarUrlPk: true
 	 * r: objetId
 	 * r.enUS: objectId
 	 * r: requeteSite

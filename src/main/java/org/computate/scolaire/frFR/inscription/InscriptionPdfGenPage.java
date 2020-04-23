@@ -506,6 +506,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
+			o.htmSessionId("PUTCopie");
 			o.htmEnfantNomComplet("PUTCopie");
 			o.htmEnfantNomCompletPrefere("PUTCopie");
 			o.htmEnfantDateNaissance("PUTCopie");
@@ -590,6 +591,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 			o.htmEnfantNomComplet("PATCH");
 			o.htmEnfantNomCompletPrefere("PATCH");
 			o.htmEnfantDateNaissance("PATCH");
@@ -676,6 +678,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
+			o.htmSessionId("Recherche");
 			o.htmObjetTitre("Recherche");
 			o.htmEnfantNomComplet("Recherche");
 			o.htmEnfantNomCompletPrefere("Recherche");

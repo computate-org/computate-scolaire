@@ -235,6 +235,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
+			o.htmSessionId("PUTCopie");
 			o.htmUtilisateurId("PUTCopie");
 			o.htmUtilisateurCle("PUTCopie");
 			o.htmUtilisateurNom("PUTCopie");
@@ -263,6 +264,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 			o.htmUtilisateurId("PATCH");
 			o.htmUtilisateurCle("PATCH");
 			o.htmUtilisateurNom("PATCH");
@@ -293,6 +295,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
+			o.htmSessionId("Recherche");
 			o.htmObjetTitre("Recherche");
 			o.htmUtilisateurId("Recherche");
 			o.htmUtilisateurCle("Recherche");

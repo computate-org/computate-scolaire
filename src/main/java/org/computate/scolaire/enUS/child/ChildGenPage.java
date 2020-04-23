@@ -231,6 +231,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
+			o.htmSessionId("PUTCopy");
 		} g("div");
 	}
 
@@ -256,6 +257,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
+			o.htmSessionId("PATCH");
 		} g("div");
 	}
 
@@ -284,6 +286,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
+			o.htmSessionId("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}
