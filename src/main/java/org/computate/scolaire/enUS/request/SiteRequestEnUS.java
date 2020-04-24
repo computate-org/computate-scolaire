@@ -39,7 +39,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _siteContext_(Wrap<SiteContextEnUS> c) {
 	}
 
-	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+)");
+	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+).*");
 
 	/**	
 	 *	The site configuration. 
@@ -103,7 +103,6 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		if(userVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 			c.o(o);
-			LOGGER.info(String.format("principalJson: %s", o));
 		}
 	}
 
@@ -111,7 +110,6 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		if(jsonPrincipal != null) {
 			String o = jsonPrincipal.getString("sub");
 			c.o(o);
-			LOGGER.info(String.format("utilisateurId: %s", o));
 		}
 	}
 
@@ -121,12 +119,10 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _sessionId(Wrap<String> c) {
 		if(operationRequest != null) {
 			String cookie = operationRequest.getHeaders().get("Cookie");
-			LOGGER.info(String.format("cookie: %s", cookie));
 			if(StringUtils.isNotBlank(cookie)) {
 				Matcher m = PATTERN_SESSION.matcher(cookie);
 				if(m.matches()) {
 					c.o(m.group(1));
-					LOGGER.info(String.format("sessionId: %s", m.group(1)));
 				}
 			}
 		}

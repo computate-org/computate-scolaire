@@ -51,7 +51,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _siteContexte_(Couverture<SiteContexteFrFR> c) {
 	}
 
-	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+)");
+	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+).*");
 
 	/**	
 	 * Var.enUS: siteConfig_
@@ -173,7 +173,6 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		if(utilisateurVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 			c.o(o);
-			LOGGER.info(String.format("principalJson: %s", o));
 		}
 	}
 
@@ -188,7 +187,6 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		if(principalJson != null) {
 			String o = principalJson.getString("sub");
 			c.o(o);
-			LOGGER.info(String.format("utilisateurId: %s", o));
 		}
 	}
 
@@ -212,12 +210,10 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _sessionId(Couverture<String> c) {
 		if(operationRequete != null) {
 			String cookie = operationRequete.getHeaders().get("Cookie");
-			LOGGER.info(String.format("cookie: %s", cookie));
 			if(StringUtils.isNotBlank(cookie)) {
 				Matcher m = PATTERN_SESSION.matcher(cookie);
 				if(m.matches()) {
 					c.o(m.group(1));
-					LOGGER.info(String.format("sessionId: %s", m.group(1)));
 				}
 			}
 		}
