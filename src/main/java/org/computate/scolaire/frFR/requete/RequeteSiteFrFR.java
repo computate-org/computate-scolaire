@@ -34,7 +34,7 @@ import io.vertx.ext.web.api.OperationRequest;
 /**
  * MotCle: classeNomSimpleRequeteSite
  * NomCanonique.enUS: org.computate.scolaire.enUS.request.SiteRequestEnUS
- */   
+ */  
 public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Serializable {  
 
 	private static final long serialVersionUID = -6737494107881513257L;
@@ -168,11 +168,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Var.enUS: jsonPrincipal
 	 * r: utilisateurVertx
 	 * r.enUS: userVertx
-	 */
+	 */ 
 	protected void _principalJson(Couverture<JsonObject> c) {
 		if(utilisateurVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 			c.o(o);
+			LOGGER.info(String.format("principalJson: %s", o));
 		}
 	}
 
@@ -187,6 +188,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		if(principalJson != null) {
 			String o = principalJson.getString("sub");
 			c.o(o);
+			LOGGER.info(String.format("utilisateurId: %s", o));
 		}
 	}
 
@@ -210,10 +212,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _sessionId(Couverture<String> c) {
 		if(operationRequete != null) {
 			String cookie = operationRequete.getHeaders().get("Cookie");
+			LOGGER.info(String.format("cookie: %s", cookie));
 			if(StringUtils.isNotBlank(cookie)) {
 				Matcher m = PATTERN_SESSION.matcher(cookie);
 				if(m.matches()) {
 					c.o(m.group(1));
+					LOGGER.info(String.format("sessionId: %s", m.group(1)));
 				}
 			}
 		}

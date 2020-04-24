@@ -8,6 +8,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.Stack;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -20,6 +21,7 @@ import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
+import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.http.CaseInsensitiveHeaders;
 import java.math.MathContext;
@@ -45,6 +47,7 @@ import java.lang.Object;
  * <br/>
  **/
 public abstract class SiteRequestEnUSGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteRequestEnUS.class);
 
 	//////////////////
 	// siteContext_ //
