@@ -11,6 +11,7 @@ import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.gardien.GardienGenPage;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -21,12 +22,14 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import io.vertx.core.logging.Logger;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class GardienPageGen<DEV> extends GardienGenPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(GardienPage.class);
 
 	//////////////
 	// initLoin //

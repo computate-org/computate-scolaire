@@ -198,8 +198,6 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 
 	/**   
 	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: principalJson
@@ -216,6 +214,24 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 					c.o(m.group(1));
 				}
 			}
+		}
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: sessionIdBefore
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * r: operationRequete
+	 * r.enUS: operationRequest
+	 * r: sessionIdAvant
+	 * r.enUS: sessionIdBefore
+	 */                   
+	protected void _sessionIdAvant(Couverture<String> c) {
+		if(operationRequete != null) {
+			c.o(operationRequete.getParams().getJsonObject("cookie").getString("sessionIdAvant"));
 		}
 	}
 

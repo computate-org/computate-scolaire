@@ -64,7 +64,12 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	protected void _sessionId(Wrap<String> c) {
-		c.o(siteRequest_.getSessionId());
+	}
+
+	protected void _userId(Wrap<String> c) {
+	}
+
+	protected void _userKey(Wrap<Long> c) {
 	}
 
 	protected void _saves(Wrap<List<String>> c) {

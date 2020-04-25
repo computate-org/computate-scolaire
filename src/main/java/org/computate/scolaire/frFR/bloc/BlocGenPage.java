@@ -255,6 +255,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
 			o.htmSessionId("PUTCopie");
+			o.htmUtilisateurId("PUTCopie");
+			o.htmUtilisateurCle("PUTCopie");
 			o.htmEcoleAddresse("PUTCopie");
 		} g("div");
 	}
@@ -287,6 +289,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
 			o.htmSessionId("PATCH");
+			o.htmUtilisateurId("PATCH");
+			o.htmUtilisateurCle("PATCH");
 			o.htmEcoleAddresse("PATCH");
 		} g("div");
 	}
@@ -321,6 +325,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
 			o.htmSessionId("Recherche");
+			o.htmUtilisateurId("Recherche");
+			o.htmUtilisateurCle("Recherche");
 			o.htmObjetTitre("Recherche");
 			o.htmEcoleAddresse("Recherche");
 		} g("div");

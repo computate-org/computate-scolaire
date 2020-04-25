@@ -4,6 +4,7 @@ import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 
 /**
  * Traduire: false
+ * NomCanonique.enUS: org.computate.scolaire.enUS.block.SchoolBlockEnUSApiServiceImpl
  **/
 public class BlocScolaireFrFRApiServiceImpl extends BlocScolaireFrFRGenApiServiceImpl {
 

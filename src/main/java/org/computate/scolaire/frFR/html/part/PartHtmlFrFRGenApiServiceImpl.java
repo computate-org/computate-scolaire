@@ -78,7 +78,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRApiServiceImpl;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -209,6 +209,19 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			StringBuilder postSql = new StringBuilder();
 			List<Object> postSqlParams = new ArrayList<Object>();
 
+			if(requeteSite.getSessionId() != null) {
+				postSql.append(SiteContexteFrFR.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("sessionId", requeteSite.getSessionId(), pk));
+			}
+			if(requeteSite.getUtilisateurId() != null) {
+				postSql.append(SiteContexteFrFR.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+			}
+			if(requeteSite.getUtilisateurCle() != null) {
+				postSql.append(SiteContexteFrFR.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+			}
+
 			if(jsonObject != null) {
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
@@ -236,6 +249,14 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "sessionId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurCle":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
 						break;
 					case "designPageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -1058,6 +1079,14 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						putSql.append(SiteContexteFrFR.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
 						break;
+					case "utilisateurId":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurCle":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						break;
 					case "designPageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
@@ -1424,79 +1453,108 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
-			JsonObject requeteJson = requeteSite.getObjetJson();
+			JsonObject jsonObject = requeteSite.getObjetJson();
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
-			Set<String> methodeNoms = requeteJson.fieldNames();
+			Set<String> methodeNoms = jsonObject.fieldNames();
 			PartHtml o2 = new PartHtml();
+
+			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
+				patchSql.append(SiteContexteFrFR.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+			}
+			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
+				patchSql.append(SiteContexteFrFR.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+			}
 
 			patchSql.append(SiteContexteFrFR.SQL_modifier);
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.html.part.PartHtml"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
 						} else {
-							o2.setInheritPk(requeteJson.getString(methodeNom));
+							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
 						}
 						break;
 					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
+							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
-							o2.setModifie(requeteJson.getString(methodeNom));
+							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
-							o2.setArchive(requeteJson.getBoolean(methodeNom));
+							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
-							o2.setSupprime(requeteJson.getBoolean(methodeNom));
+							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
 					case "setSessionId":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
 						} else {
-							o2.setSessionId(requeteJson.getString(methodeNom));
+							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
 						}
 						break;
+					case "setUtilisateurId":
+						if(jsonObject.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId"));
+						} else {
+							o2.setUtilisateurId(jsonObject.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+						}
+						break;
+					case "setUtilisateurCle":
+						if(jsonObject.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle"));
+						} else {
+							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
+						}
+						break;
 					case "addDesignPageCles":
 						{
-							Long l = Long.parseLong(requeteJson.getString(methodeNom));
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
 								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
 								listeRecherche.setQuery("*:*");
@@ -1513,7 +1571,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						}
 						break;
 					case "addAllDesignPageCles":
-						JsonArray addAllDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
+						JsonArray addAllDesignPageClesValeurs = jsonObject.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllDesignPageClesValeurs.size(); i++) {
 							Long l = Long.parseLong(addAllDesignPageClesValeurs.getString(i));
 							if(l != null) {
@@ -1532,7 +1590,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						}
 						break;
 					case "setDesignPageCles":
-						JsonArray setDesignPageClesValeurs = requeteJson.getJsonArray(methodeNom);
+						JsonArray setDesignPageClesValeurs = jsonObject.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles"));
 						for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
@@ -1554,7 +1612,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "removeDesignPageCles":
 						{
-							Long l = Long.parseLong(requeteJson.getString(methodeNom));
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
 								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
 								listeRecherche.setQuery("*:*");
@@ -1571,261 +1629,261 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						}
 						break;
 					case "setHtmlLien":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlLien"));
 						} else {
-							o2.setHtmlLien(requeteJson.getString(methodeNom));
+							o2.setHtmlLien(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlLien", o2.jsonHtmlLien(), pk));
 						}
 						break;
 					case "setHtmlElement":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlElement"));
 						} else {
-							o2.setHtmlElement(requeteJson.getString(methodeNom));
+							o2.setHtmlElement(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlElement", o2.jsonHtmlElement(), pk));
 						}
 						break;
 					case "setHtmlId":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlId"));
 						} else {
-							o2.setHtmlId(requeteJson.getString(methodeNom));
+							o2.setHtmlId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlId", o2.jsonHtmlId(), pk));
 						}
 						break;
 					case "setHtmlClasses":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlClasses"));
 						} else {
-							o2.setHtmlClasses(requeteJson.getString(methodeNom));
+							o2.setHtmlClasses(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlClasses", o2.jsonHtmlClasses(), pk));
 						}
 						break;
 					case "setHtmlStyle":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlStyle"));
 						} else {
-							o2.setHtmlStyle(requeteJson.getString(methodeNom));
+							o2.setHtmlStyle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlStyle", o2.jsonHtmlStyle(), pk));
 						}
 						break;
 					case "setHtmlAvant":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlAvant"));
 						} else {
-							o2.setHtmlAvant(requeteJson.getString(methodeNom));
+							o2.setHtmlAvant(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlAvant", o2.jsonHtmlAvant(), pk));
 						}
 						break;
 					case "setHtmlApres":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlApres"));
 						} else {
-							o2.setHtmlApres(requeteJson.getString(methodeNom));
+							o2.setHtmlApres(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlApres", o2.jsonHtmlApres(), pk));
 						}
 						break;
 					case "setHtmlTexte":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlTexte"));
 						} else {
-							o2.setHtmlTexte(requeteJson.getString(methodeNom));
+							o2.setHtmlTexte(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlTexte", o2.jsonHtmlTexte(), pk));
 						}
 						break;
 					case "setHtmlVar":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar"));
 						} else {
-							o2.setHtmlVar(requeteJson.getString(methodeNom));
+							o2.setHtmlVar(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
 						}
 						break;
 					case "setHtmlVarSpan":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarSpan"));
 						} else {
-							o2.setHtmlVarSpan(requeteJson.getString(methodeNom));
+							o2.setHtmlVarSpan(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarSpan", o2.jsonHtmlVarSpan(), pk));
 						}
 						break;
 					case "setHtmlVarForm":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForm"));
 						} else {
-							o2.setHtmlVarForm(requeteJson.getString(methodeNom));
+							o2.setHtmlVarForm(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarForm", o2.jsonHtmlVarForm(), pk));
 						}
 						break;
 					case "setHtmlVarInput":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarInput"));
 						} else {
-							o2.setHtmlVarInput(requeteJson.getString(methodeNom));
+							o2.setHtmlVarInput(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
 						}
 						break;
 					case "setHtmlVarForEach":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach"));
 						} else {
-							o2.setHtmlVarForEach(requeteJson.getString(methodeNom));
+							o2.setHtmlVarForEach(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarForEach", o2.jsonHtmlVarForEach(), pk));
 						}
 						break;
 					case "setHtmlExclure":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlExclure"));
 						} else {
-							o2.setHtmlExclure(requeteJson.getBoolean(methodeNom));
+							o2.setHtmlExclure(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlExclure", o2.jsonHtmlExclure(), pk));
 						}
 						break;
 					case "setPdfExclure":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "pdfExclure"));
 						} else {
-							o2.setPdfExclure(requeteJson.getBoolean(methodeNom));
+							o2.setPdfExclure(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("pdfExclure", o2.jsonPdfExclure(), pk));
 						}
 						break;
 					case "setConnecterDeconnecter":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "connecterDeconnecter"));
 						} else {
-							o2.setConnecterDeconnecter(requeteJson.getBoolean(methodeNom));
+							o2.setConnecterDeconnecter(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("connecterDeconnecter", o2.jsonConnecterDeconnecter(), pk));
 						}
 						break;
 					case "setTri1":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri1"));
 						} else {
-							o2.setTri1(requeteJson.getString(methodeNom));
+							o2.setTri1(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri1", o2.jsonTri1(), pk));
 						}
 						break;
 					case "setTri2":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri2"));
 						} else {
-							o2.setTri2(requeteJson.getString(methodeNom));
+							o2.setTri2(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri2", o2.jsonTri2(), pk));
 						}
 						break;
 					case "setTri3":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri3"));
 						} else {
-							o2.setTri3(requeteJson.getString(methodeNom));
+							o2.setTri3(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri3", o2.jsonTri3(), pk));
 						}
 						break;
 					case "setTri4":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri4"));
 						} else {
-							o2.setTri4(requeteJson.getString(methodeNom));
+							o2.setTri4(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri4", o2.jsonTri4(), pk));
 						}
 						break;
 					case "setTri5":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri5"));
 						} else {
-							o2.setTri5(requeteJson.getString(methodeNom));
+							o2.setTri5(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri5", o2.jsonTri5(), pk));
 						}
 						break;
 					case "setTri6":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri6"));
 						} else {
-							o2.setTri6(requeteJson.getString(methodeNom));
+							o2.setTri6(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri6", o2.jsonTri6(), pk));
 						}
 						break;
 					case "setTri7":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri7"));
 						} else {
-							o2.setTri7(requeteJson.getString(methodeNom));
+							o2.setTri7(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri7", o2.jsonTri7(), pk));
 						}
 						break;
 					case "setTri8":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri8"));
 						} else {
-							o2.setTri8(requeteJson.getString(methodeNom));
+							o2.setTri8(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri8", o2.jsonTri8(), pk));
 						}
 						break;
 					case "setTri9":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri9"));
 						} else {
-							o2.setTri9(requeteJson.getString(methodeNom));
+							o2.setTri9(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri9", o2.jsonTri9(), pk));
 						}
 						break;
 					case "setTri10":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "tri10"));
 						} else {
-							o2.setTri10(requeteJson.getString(methodeNom));
+							o2.setTri10(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("tri10", o2.jsonTri10(), pk));
 						}
@@ -2456,7 +2514,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					if(selectCAsync.succeeded()) {
 						try {
 							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
+							UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 							if(utilisateurValeurs == null) {
 								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
@@ -2482,27 +2540,15 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 										UtilisateurSite utilisateurSite = b.result();
 										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, false, c -> {
 											if(c.succeeded()) {
-												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+												utilisateurService.definirIndexerUtilisateurSite(utilisateurSite, d -> {
 													if(d.succeeded()) {
-														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
-															if(e.succeeded()) {
-																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
-																	if(f.succeeded()) {
-																		requeteSite.setUtilisateurSite(utilisateurSite);
-																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
-																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
-																		gestionnaireEvenements.handle(Future.succeededFuture());
-																	} else {
-																		erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-																	}
-																});
-															} else {
-																erreurPartHtml(requeteSite, gestionnaireEvenements, e);
-															}
-														});
+														requeteSite.setUtilisateurSite(utilisateurSite);
+														requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+														requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+														requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+														requeteSite.setUtilisateurId(principalJson.getString("sub"));
+														requeteSite.setUtilisateurCle(utilisateurSite.getPk());
+														gestionnaireEvenements.handle(Future.succeededFuture());
 													} else {
 														erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 													}
@@ -2562,27 +2608,15 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
 										if(c.succeeded()) {
 											UtilisateurSite utilisateurSite2 = c.result();
-											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
+											utilisateurService.definirIndexerUtilisateurSite(utilisateurSite2, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
-														if(e.succeeded()) {
-															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
-																if(f.succeeded()) {
-																	requeteSite.setUtilisateurSite(utilisateurSite2);
-																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
-																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
-																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
-																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
-																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
-																	gestionnaireEvenements.handle(Future.succeededFuture());
-																} else {
-																	erreurPartHtml(requeteSite, gestionnaireEvenements, f);
-																}
-															});
-														} else {
-															erreurPartHtml(requeteSite, gestionnaireEvenements, e);
-														}
-													});
+													requeteSite.setUtilisateurSite(utilisateurSite2);
+													requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+													requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+													requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+													requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+													requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
+													gestionnaireEvenements.handle(Future.succeededFuture());
 												} else {
 													erreurPartHtml(requeteSite, gestionnaireEvenements, d);
 												}
@@ -2857,7 +2891,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Recharger relations a réussi. ");
-						PartHtmlFrFRGenApiServiceImpl service = new PartHtmlFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						PartHtmlFrFRApiServiceImpl service = new PartHtmlFrFRApiServiceImpl(requeteSite2.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(PartHtml o2 : listeRecherche.getList()) {
 							futures2.add(

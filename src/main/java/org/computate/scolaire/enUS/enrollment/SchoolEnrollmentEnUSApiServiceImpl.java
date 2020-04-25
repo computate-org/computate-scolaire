@@ -53,6 +53,7 @@ import net.authorize.api.controller.base.ApiOperationBase;
 
 /**
  * Translate: false
+ * CanonicalName.frFR: org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRApiServiceImpl
  **/
 public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenApiServiceImpl {
 

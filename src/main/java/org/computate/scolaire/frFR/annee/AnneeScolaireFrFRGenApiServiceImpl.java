@@ -80,7 +80,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRApiServiceImpl;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -211,6 +211,19 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			StringBuilder postSql = new StringBuilder();
 			List<Object> postSqlParams = new ArrayList<Object>();
 
+			if(requeteSite.getSessionId() != null) {
+				postSql.append(SiteContexteFrFR.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("sessionId", requeteSite.getSessionId(), pk));
+			}
+			if(requeteSite.getUtilisateurId() != null) {
+				postSql.append(SiteContexteFrFR.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+			}
+			if(requeteSite.getUtilisateurCle() != null) {
+				postSql.append(SiteContexteFrFR.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+			}
+
 			if(jsonObject != null) {
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
@@ -238,6 +251,14 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "sessionId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurId":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurCle":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleCle":
 						{
@@ -986,6 +1007,14 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						putSql.append(SiteContexteFrFR.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
 						break;
+					case "utilisateurId":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "utilisateurCle":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						break;
 					case "ecoleCle":
 						putSql.append(SiteContexteFrFR.SQL_addA);
 						putSqlParams.addAll(Arrays.asList("anneeCles", Long.parseLong(jsonObject.getString(entiteVar)), "ecoleCle", pk));
@@ -1264,74 +1293,103 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
-			JsonObject requeteJson = requeteSite.getObjetJson();
+			JsonObject jsonObject = requeteSite.getObjetJson();
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
-			Set<String> methodeNoms = requeteJson.fieldNames();
+			Set<String> methodeNoms = jsonObject.fieldNames();
 			AnneeScolaire o2 = new AnneeScolaire();
+
+			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
+				patchSql.append(SiteContexteFrFR.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+			}
+			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
+				patchSql.append(SiteContexteFrFR.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+			}
 
 			patchSql.append(SiteContexteFrFR.SQL_modifier);
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.annee.AnneeScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
 						} else {
-							o2.setInheritPk(requeteJson.getString(methodeNom));
+							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
 						}
 						break;
 					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
+							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
-							o2.setModifie(requeteJson.getString(methodeNom));
+							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
-							o2.setArchive(requeteJson.getBoolean(methodeNom));
+							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						if(requeteJson.getBoolean(methodeNom) == null) {
+						if(jsonObject.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
-							o2.setSupprime(requeteJson.getBoolean(methodeNom));
+							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
 					case "setSessionId":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
 						} else {
-							o2.setSessionId(requeteJson.getString(methodeNom));
+							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+						}
+						break;
+					case "setUtilisateurId":
+						if(jsonObject.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId"));
+						} else {
+							o2.setUtilisateurId(jsonObject.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+						}
+						break;
+					case "setUtilisateurCle":
+						if(jsonObject.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle"));
+						} else {
+							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
 						}
 						break;
 					case "setEcoleCle":
@@ -1346,7 +1404,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
-									o2.setEcoleCle(requeteJson.getString(methodeNom));
+									o2.setEcoleCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("anneeCles", l, "ecoleCle", pk));
 								}
@@ -1365,7 +1423,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
-									o2.setEcoleCle(requeteJson.getString(methodeNom));
+									o2.setEcoleCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCles", l, "ecoleCle", pk));
 								}
@@ -1374,7 +1432,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "addSaisonCles":
 						{
-							Long l = Long.parseLong(requeteJson.getString(methodeNom));
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
 								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -1391,7 +1449,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 						break;
 					case "addAllSaisonCles":
-						JsonArray addAllSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
+						JsonArray addAllSaisonClesValeurs = jsonObject.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
 							Long l = Long.parseLong(addAllSaisonClesValeurs.getString(i));
 							if(l != null) {
@@ -1410,7 +1468,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 						break;
 					case "setSaisonCles":
-						JsonArray setSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
+						JsonArray setSaisonClesValeurs = jsonObject.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("anneeCle", "saisonCles", pk));
 						for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
@@ -1432,7 +1490,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "removeSaisonCles":
 						{
-							Long l = Long.parseLong(requeteJson.getString(methodeNom));
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
 								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -1449,31 +1507,31 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 						break;
 					case "setAnneeDebut":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeDebut"));
 						} else {
-							o2.setAnneeDebut(requeteJson.getString(methodeNom));
+							o2.setAnneeDebut(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("anneeDebut", o2.jsonAnneeDebut(), pk));
 						}
 						break;
 					case "setAnneeFin":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeFin"));
 						} else {
-							o2.setAnneeFin(requeteJson.getString(methodeNom));
+							o2.setAnneeFin(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("anneeFin", o2.jsonAnneeFin(), pk));
 						}
 						break;
 					case "setAnneeFraisInscription":
-						if(requeteJson.getString(methodeNom) == null) {
+						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeFraisInscription"));
 						} else {
-							o2.setAnneeFraisInscription(requeteJson.getString(methodeNom));
+							o2.setAnneeFraisInscription(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("anneeFraisInscription", o2.jsonAnneeFraisInscription(), pk));
 						}
@@ -2110,7 +2168,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					if(selectCAsync.succeeded()) {
 						try {
 							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							UtilisateurSiteFrFRGenApiServiceImpl utilisateurService = new UtilisateurSiteFrFRGenApiServiceImpl(siteContexte);
+							UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 							if(utilisateurValeurs == null) {
 								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
 								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
@@ -2136,27 +2194,15 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 										UtilisateurSite utilisateurSite = b.result();
 										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, false, c -> {
 											if(c.succeeded()) {
-												utilisateurService.definirUtilisateurSite(utilisateurSite, d -> {
+												utilisateurService.definirIndexerUtilisateurSite(utilisateurSite, d -> {
 													if(d.succeeded()) {
-														utilisateurService.attribuerUtilisateurSite(utilisateurSite, e -> {
-															if(e.succeeded()) {
-																utilisateurService.indexerUtilisateurSite(utilisateurSite, f -> {
-																	if(f.succeeded()) {
-																		requeteSite.setUtilisateurSite(utilisateurSite);
-																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
-																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
-																		gestionnaireEvenements.handle(Future.succeededFuture());
-																	} else {
-																		erreurAnneeScolaire(requeteSite, gestionnaireEvenements, f);
-																	}
-																});
-															} else {
-																erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
-															}
-														});
+														requeteSite.setUtilisateurSite(utilisateurSite);
+														requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+														requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+														requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+														requeteSite.setUtilisateurId(principalJson.getString("sub"));
+														requeteSite.setUtilisateurCle(utilisateurSite.getPk());
+														gestionnaireEvenements.handle(Future.succeededFuture());
 													} else {
 														erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
 													}
@@ -2216,27 +2262,15 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
 										if(c.succeeded()) {
 											UtilisateurSite utilisateurSite2 = c.result();
-											utilisateurService.definirUtilisateurSite(utilisateurSite2, d -> {
+											utilisateurService.definirIndexerUtilisateurSite(utilisateurSite2, d -> {
 												if(d.succeeded()) {
-													utilisateurService.attribuerUtilisateurSite(utilisateurSite2, e -> {
-														if(e.succeeded()) {
-															utilisateurService.indexerUtilisateurSite(utilisateurSite2, f -> {
-																if(f.succeeded()) {
-																	requeteSite.setUtilisateurSite(utilisateurSite2);
-																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
-																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
-																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
-																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
-																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
-																	gestionnaireEvenements.handle(Future.succeededFuture());
-																} else {
-																	erreurAnneeScolaire(requeteSite, gestionnaireEvenements, f);
-																}
-															});
-														} else {
-															erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
-														}
-													});
+													requeteSite.setUtilisateurSite(utilisateurSite2);
+													requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+													requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+													requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+													requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+													requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
+													gestionnaireEvenements.handle(Future.succeededFuture());
 												} else {
 													erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
 												}
@@ -2524,7 +2558,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Recharger relations a réussi. ");
-						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						AnneeScolaireFrFRApiServiceImpl service = new AnneeScolaireFrFRApiServiceImpl(requeteSite2.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(AnneeScolaire o2 : listeRecherche.getList()) {
 							futures2.add(

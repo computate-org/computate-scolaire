@@ -4,6 +4,7 @@ import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 
 /**
  * Traduire: false
+ * NomCanonique.enUS: org.computate.scolaire.enUS.dad.SchoolDadEnUSApiServiceImpl
  **/
 public class PereScolaireFrFRApiServiceImpl extends PereScolaireFrFRGenApiServiceImpl {
 

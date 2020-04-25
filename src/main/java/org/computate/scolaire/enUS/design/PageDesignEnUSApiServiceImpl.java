@@ -10,6 +10,7 @@ import io.vertx.core.Handler;
 
 /**
  * Translate: false
+ * CanonicalName.frFR: org.computate.scolaire.frFR.design.DesignPageFrFRApiServiceImpl
  **/
 public class PageDesignEnUSApiServiceImpl extends PageDesignEnUSGenApiServiceImpl {
 

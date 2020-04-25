@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.utilisateur;              
+package org.computate.scolaire.frFR.utilisateur;             
 
 import java.util.List;
 
@@ -89,42 +89,6 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * NomAffichage.enUS: payments
 	 */              
 	protected void _paiementCles(List<Long> o) {}
-
-	/**  
-	 * Var.enUS: userId
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: L'identifiant Keycloak pour cet utilisateur. 
-	 * NomAffichage.frFR: utilisateur ID
-	 * NomAffichage.enUS: user ID
-	 * r: requeteSite_
-	 * r.enUS: siteRequest_
-	 * r: UtilisateurId
-	 * r.enUS: UserId
-	 */     
-	protected void _utilisateurId(Couverture<String> c) {
-		String o = requeteSite_.getUtilisateurId();
-		c.o(o);
-	}
-
-	/**  
-	 * Var.enUS: userKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: Clé primaire dans la base de données pour cet utilisateur. 
-	 * NomAffichage.frFR: utilisateur clé
-	 * NomAffichage.enUS: user key
-	 * r: requeteSite_
-	 * r.enUS: siteRequest_
-	 * r: UtilisateurCle
-	 * r.enUS: UserKey
-	 */ 
-	protected void _utilisateurCle(Couverture<Long> c) {
-		Long o = requeteSite_.getUtilisateurCle();
-		c.o(o);
-	}
 
 	/**
 	 * Var.enUS: userName

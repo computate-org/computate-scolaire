@@ -66,7 +66,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
@@ -96,7 +96,6 @@ import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
-import io.vertx.ext.web.handler.impl.CookieHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
@@ -503,6 +502,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: authHandler
 	 * r: getSiteUrlBase
 	 * r.enUS: getSiteBaseUrl
+	 * r: sessionIdAvant
+	 * r.enUS: sessionIdBefore
 	 * r: setRouteur
 	 * r.enUS: setRouter
 	 * r: deconnexion
@@ -548,7 +549,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				}
 		
 		//		ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
-				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+				LocalSessionStore sessionStore = LocalSessionStore.create(vertx, "computate-scolaire-sessions");
 				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
 				sessionHandler.setAuthProvider(authFournisseur);
 		
@@ -558,7 +559,6 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						usineRouteur.mountServicesFromExtensions();
 						siteContexteFrFR.setUsineRouteur(usineRouteur);
 		
-						usineRouteur.addGlobalHandler(new CookieHandlerImpl());
 						usineRouteur.addGlobalHandler(sessionHandler);
 						usineRouteur.addHandlerByOperationId("callback", ctx -> {
 		
@@ -589,6 +589,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 											if (session != null) {
 												// the user has upgraded from unauthenticated to authenticated
 												// session should be upgraded as recommended by owasp
+												ctx.addCookie(Cookie.cookie("sessionIdAvant", session.id()));
 												session.regenerateId();
 												// we should redirect the UA so this link becomes invalid
 												ctx.response()
@@ -620,11 +621,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		
 						usineRouteur.addHandlerByOperationId("deconnexion", rc -> {
 							Session session = rc.session();
-							if (session != null) {
-								session.destroy();
-							}
+//							if (session != null) {
+//								session.destroy();
+//							}
 							rc.clearUser();
-							rc.reroute("/ecole");
+							rc.reroute("/");
 						});
 						usineRouteur.addFailureHandlerByOperationId("deconnexion", c -> {});
 		

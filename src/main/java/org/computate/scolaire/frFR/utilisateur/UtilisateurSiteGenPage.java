@@ -296,9 +296,9 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
 			o.htmSessionId("Recherche");
-			o.htmObjetTitre("Recherche");
 			o.htmUtilisateurId("Recherche");
 			o.htmUtilisateurCle("Recherche");
+			o.htmObjetTitre("Recherche");
 			o.htmUtilisateurNom("Recherche");
 			o.htmUtilisateurMail("Recherche");
 		} g("div");

@@ -78,7 +78,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.user.SiteUserEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -209,6 +209,19 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			StringBuilder postSql = new StringBuilder();
 			List<Object> postSqlParams = new ArrayList<Object>();
 
+			if(siteRequest.getSessionId() != null) {
+				postSql.append(SiteContextEnUS.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("sessionId", siteRequest.getSessionId(), pk));
+			}
+			if(siteRequest.getUserId() != null) {
+				postSql.append(SiteContextEnUS.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("userId", siteRequest.getUserId(), pk));
+			}
+			if(siteRequest.getUserKey() != null) {
+				postSql.append(SiteContextEnUS.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
+			}
+
 			if(jsonObject != null) {
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
@@ -236,6 +249,14 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "sessionId":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
+						break;
+					case "userId":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("userId", jsonObject.getString(entityVar), pk));
+						break;
+					case "userKey":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
 						break;
 					case "pageDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -1058,6 +1079,14 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						putSql.append(SiteContextEnUS.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
 						break;
+					case "userId":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("userId", jsonObject.getString(entityVar), pk));
+						break;
+					case "userKey":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
+						break;
 					case "pageDesignKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
@@ -1424,79 +1453,108 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			JsonObject requestJson = siteRequest.getJsonObject();
+			JsonObject jsonObject = siteRequest.getJsonObject();
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
-			Set<String> methodNames = requestJson.fieldNames();
+			Set<String> methodNames = jsonObject.fieldNames();
 			HtmlPart o2 = new HtmlPart();
+
+			if(o.getUserId() == null && siteRequest.getUserId() != null) {
+				patchSql.append(SiteContextEnUS.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("userId", siteRequest.getUserId(), pk));
+			}
+			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
+				patchSql.append(SiteContextEnUS.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
+			}
 
 			patchSql.append(SiteContextEnUS.SQL_modify);
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.html.part.HtmlPart"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
 						} else {
-							o2.setInheritPk(requestJson.getString(methodName));
+							o2.setInheritPk(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
 						}
 						break;
 					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
-							o2.setCreated(requestJson.getString(methodName));
+							o2.setCreated(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
-							o2.setModified(requestJson.getString(methodName));
+							o2.setModified(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
-							o2.setArchived(requestJson.getBoolean(methodName));
+							o2.setArchived(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
-							o2.setDeleted(requestJson.getBoolean(methodName));
+							o2.setDeleted(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
 					case "setSessionId":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
 						} else {
-							o2.setSessionId(requestJson.getString(methodName));
+							o2.setSessionId(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
 						}
 						break;
+					case "setUserId":
+						if(jsonObject.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "userId"));
+						} else {
+							o2.setUserId(jsonObject.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("userId", o2.jsonUserId(), pk));
+						}
+						break;
+					case "setUserKey":
+						if(jsonObject.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "userKey"));
+						} else {
+							o2.setUserKey(jsonObject.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("userKey", o2.jsonUserKey(), pk));
+						}
+						break;
 					case "addPageDesignKeys":
 						{
-							Long l = Long.parseLong(requestJson.getString(methodName));
+							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
 								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 								searchList.setQuery("*:*");
@@ -1513,7 +1571,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						}
 						break;
 					case "addAllPageDesignKeys":
-						JsonArray addAllPageDesignKeysValues = requestJson.getJsonArray(methodName);
+						JsonArray addAllPageDesignKeysValues = jsonObject.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllPageDesignKeysValues.size(); i++) {
 							Long l = Long.parseLong(addAllPageDesignKeysValues.getString(i));
 							if(l != null) {
@@ -1532,7 +1590,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						}
 						break;
 					case "setPageDesignKeys":
-						JsonArray setPageDesignKeysValues = requestJson.getJsonArray(methodName);
+						JsonArray setPageDesignKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
 						for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
@@ -1554,7 +1612,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "removePageDesignKeys":
 						{
-							Long l = Long.parseLong(requestJson.getString(methodName));
+							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
 								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 								searchList.setQuery("*:*");
@@ -1571,261 +1629,261 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						}
 						break;
 					case "setHtmlLink":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlLink"));
 						} else {
-							o2.setHtmlLink(requestJson.getString(methodName));
+							o2.setHtmlLink(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlLink", o2.jsonHtmlLink(), pk));
 						}
 						break;
 					case "setHtmlElement":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlElement"));
 						} else {
-							o2.setHtmlElement(requestJson.getString(methodName));
+							o2.setHtmlElement(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlElement", o2.jsonHtmlElement(), pk));
 						}
 						break;
 					case "setHtmlId":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlId"));
 						} else {
-							o2.setHtmlId(requestJson.getString(methodName));
+							o2.setHtmlId(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlId", o2.jsonHtmlId(), pk));
 						}
 						break;
 					case "setHtmlClasses":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlClasses"));
 						} else {
-							o2.setHtmlClasses(requestJson.getString(methodName));
+							o2.setHtmlClasses(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlClasses", o2.jsonHtmlClasses(), pk));
 						}
 						break;
 					case "setHtmlStyle":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlStyle"));
 						} else {
-							o2.setHtmlStyle(requestJson.getString(methodName));
+							o2.setHtmlStyle(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlStyle", o2.jsonHtmlStyle(), pk));
 						}
 						break;
 					case "setHtmlBefore":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlBefore"));
 						} else {
-							o2.setHtmlBefore(requestJson.getString(methodName));
+							o2.setHtmlBefore(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlBefore", o2.jsonHtmlBefore(), pk));
 						}
 						break;
 					case "setHtmlAfter":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlAfter"));
 						} else {
-							o2.setHtmlAfter(requestJson.getString(methodName));
+							o2.setHtmlAfter(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlAfter", o2.jsonHtmlAfter(), pk));
 						}
 						break;
 					case "setHtmlText":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlText"));
 						} else {
-							o2.setHtmlText(requestJson.getString(methodName));
+							o2.setHtmlText(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlText", o2.jsonHtmlText(), pk));
 						}
 						break;
 					case "setHtmlVar":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar"));
 						} else {
-							o2.setHtmlVar(requestJson.getString(methodName));
+							o2.setHtmlVar(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
 						}
 						break;
 					case "setHtmlVarSpan":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarSpan"));
 						} else {
-							o2.setHtmlVarSpan(requestJson.getString(methodName));
+							o2.setHtmlVarSpan(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarSpan", o2.jsonHtmlVarSpan(), pk));
 						}
 						break;
 					case "setHtmlVarForm":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForm"));
 						} else {
-							o2.setHtmlVarForm(requestJson.getString(methodName));
+							o2.setHtmlVarForm(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarForm", o2.jsonHtmlVarForm(), pk));
 						}
 						break;
 					case "setHtmlVarInput":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarInput"));
 						} else {
-							o2.setHtmlVarInput(requestJson.getString(methodName));
+							o2.setHtmlVarInput(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
 						}
 						break;
 					case "setHtmlVarForEach":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach"));
 						} else {
-							o2.setHtmlVarForEach(requestJson.getString(methodName));
+							o2.setHtmlVarForEach(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarForEach", o2.jsonHtmlVarForEach(), pk));
 						}
 						break;
 					case "setHtmlExclude":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "htmlExclude"));
 						} else {
-							o2.setHtmlExclude(requestJson.getBoolean(methodName));
+							o2.setHtmlExclude(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlExclude", o2.jsonHtmlExclude(), pk));
 						}
 						break;
 					case "setPdfExclude":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "pdfExclude"));
 						} else {
-							o2.setPdfExclude(requestJson.getBoolean(methodName));
+							o2.setPdfExclude(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("pdfExclude", o2.jsonPdfExclude(), pk));
 						}
 						break;
 					case "setLoginLogout":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "loginLogout"));
 						} else {
-							o2.setLoginLogout(requestJson.getBoolean(methodName));
+							o2.setLoginLogout(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("loginLogout", o2.jsonLoginLogout(), pk));
 						}
 						break;
 					case "setSort1":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort1"));
 						} else {
-							o2.setSort1(requestJson.getString(methodName));
+							o2.setSort1(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort1", o2.jsonSort1(), pk));
 						}
 						break;
 					case "setSort2":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort2"));
 						} else {
-							o2.setSort2(requestJson.getString(methodName));
+							o2.setSort2(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort2", o2.jsonSort2(), pk));
 						}
 						break;
 					case "setSort3":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort3"));
 						} else {
-							o2.setSort3(requestJson.getString(methodName));
+							o2.setSort3(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort3", o2.jsonSort3(), pk));
 						}
 						break;
 					case "setSort4":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort4"));
 						} else {
-							o2.setSort4(requestJson.getString(methodName));
+							o2.setSort4(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort4", o2.jsonSort4(), pk));
 						}
 						break;
 					case "setSort5":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort5"));
 						} else {
-							o2.setSort5(requestJson.getString(methodName));
+							o2.setSort5(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort5", o2.jsonSort5(), pk));
 						}
 						break;
 					case "setSort6":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort6"));
 						} else {
-							o2.setSort6(requestJson.getString(methodName));
+							o2.setSort6(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort6", o2.jsonSort6(), pk));
 						}
 						break;
 					case "setSort7":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort7"));
 						} else {
-							o2.setSort7(requestJson.getString(methodName));
+							o2.setSort7(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort7", o2.jsonSort7(), pk));
 						}
 						break;
 					case "setSort8":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort8"));
 						} else {
-							o2.setSort8(requestJson.getString(methodName));
+							o2.setSort8(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort8", o2.jsonSort8(), pk));
 						}
 						break;
 					case "setSort9":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort9"));
 						} else {
-							o2.setSort9(requestJson.getString(methodName));
+							o2.setSort9(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort9", o2.jsonSort9(), pk));
 						}
 						break;
 					case "setSort10":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sort10"));
 						} else {
-							o2.setSort10(requestJson.getString(methodName));
+							o2.setSort10(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sort10", o2.jsonSort10(), pk));
 						}
@@ -2456,7 +2514,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					if(selectCAsync.succeeded()) {
 						try {
 							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
+							SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 							if(userValues == null) {
 								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
 								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
@@ -2482,27 +2540,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 										SiteUser siteUser = b.result();
 										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
-												userService.defineSiteUser(siteUser, d -> {
+												userService.defineIndexSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
-														userService.attributeSiteUser(siteUser, e -> {
-															if(e.succeeded()) {
-																userService.indexSiteUser(siteUser, f -> {
-																	if(f.succeeded()) {
-																		siteRequest.setSiteUser(siteUser);
-																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
-																		siteRequest.setUserKey(siteUser.getPk());
-																		eventHandler.handle(Future.succeededFuture());
-																	} else {
-																		errorHtmlPart(siteRequest, eventHandler, f);
-																	}
-																});
-															} else {
-																errorHtmlPart(siteRequest, eventHandler, e);
-															}
-														});
+														siteRequest.setSiteUser(siteUser);
+														siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+														siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+														siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+														siteRequest.setUserId(jsonPrincipal.getString("sub"));
+														siteRequest.setUserKey(siteUser.getPk());
+														eventHandler.handle(Future.succeededFuture());
 													} else {
 														errorHtmlPart(siteRequest, eventHandler, d);
 													}
@@ -2562,27 +2608,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
-											userService.defineSiteUser(siteUser2, d -> {
+											userService.defineIndexSiteUser(siteUser2, d -> {
 												if(d.succeeded()) {
-													userService.attributeSiteUser(siteUser2, e -> {
-														if(e.succeeded()) {
-															userService.indexSiteUser(siteUser2, f -> {
-																if(f.succeeded()) {
-																	siteRequest.setSiteUser(siteUser2);
-																	siteRequest.setUserName(siteUser2.getUserName());
-																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
-																	siteRequest.setUserLastName(siteUser2.getUserLastName());
-																	siteRequest.setUserId(siteUser2.getUserId());
-																	siteRequest.setUserKey(siteUser2.getPk());
-																	eventHandler.handle(Future.succeededFuture());
-																} else {
-																	errorHtmlPart(siteRequest, eventHandler, f);
-																}
-															});
-														} else {
-															errorHtmlPart(siteRequest, eventHandler, e);
-														}
-													});
+													siteRequest.setSiteUser(siteUser2);
+													siteRequest.setUserName(siteUser2.getUserName());
+													siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+													siteRequest.setUserLastName(siteUser2.getUserLastName());
+													siteRequest.setUserId(siteUser2.getUserId());
+													siteRequest.setUserKey(siteUser2.getPk());
+													eventHandler.handle(Future.succeededFuture());
 												} else {
 													errorHtmlPart(siteRequest, eventHandler, d);
 												}
@@ -2857,7 +2891,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Refresh relations succeeded. ");
-						HtmlPartEnUSGenApiServiceImpl service = new HtmlPartEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						HtmlPartEnUSApiServiceImpl service = new HtmlPartEnUSApiServiceImpl(siteRequest2.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
 						for(HtmlPart o2 : searchList.getList()) {
 							futures2.add(

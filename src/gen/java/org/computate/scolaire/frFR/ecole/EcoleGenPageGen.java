@@ -2,33 +2,36 @@ package org.computate.scolaire.frFR.ecole;
 
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
-import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
-import org.apache.commons.text.StringEscapeUtils;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.cluster.ClusterPage;
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.cluster.ClusterPage;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(EcoleGenPage.class);
 
 	////////////////
 	// listeEcole //

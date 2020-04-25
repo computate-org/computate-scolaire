@@ -228,7 +228,36 @@ public class Cluster extends ClusterGen<Object> {
 	 * r.enUS: siteRequest
 	 */                 
 	protected void _sessionId(Couverture<String> c) {
-		c.o(requeteSite_.getSessionId());
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: userId
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Modifier: false
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: utilisateurId
+	 * r.enUS: userId
+	 */                 
+	protected void _utilisateurId(Couverture<String> c) {
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: userKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Modifier: false
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: utilisateurId
+	 * r.enUS: userId
+	 */                 
+	protected void _utilisateurCle(Couverture<Long> c) {
 	}
 
 	/**   

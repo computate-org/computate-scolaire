@@ -80,7 +80,7 @@ import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.user.SiteUserEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -211,6 +211,19 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			StringBuilder postSql = new StringBuilder();
 			List<Object> postSqlParams = new ArrayList<Object>();
 
+			if(siteRequest.getSessionId() != null) {
+				postSql.append(SiteContextEnUS.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("sessionId", siteRequest.getSessionId(), pk));
+			}
+			if(siteRequest.getUserId() != null) {
+				postSql.append(SiteContextEnUS.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("userId", siteRequest.getUserId(), pk));
+			}
+			if(siteRequest.getUserKey() != null) {
+				postSql.append(SiteContextEnUS.SQL_setD);
+				postSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
+			}
+
 			if(jsonObject != null) {
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
@@ -238,6 +251,14 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					case "sessionId":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
+						break;
+					case "userId":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("userId", jsonObject.getString(entityVar), pk));
+						break;
+					case "userKey":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
 						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -986,6 +1007,14 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						putSql.append(SiteContextEnUS.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
 						break;
+					case "userId":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("userId", jsonObject.getString(entityVar), pk));
+						break;
+					case "userKey":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
+						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
@@ -1264,79 +1293,108 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			JsonObject requestJson = siteRequest.getJsonObject();
+			JsonObject jsonObject = siteRequest.getJsonObject();
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
-			Set<String> methodNames = requestJson.fieldNames();
+			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolAge o2 = new SchoolAge();
+
+			if(o.getUserId() == null && siteRequest.getUserId() != null) {
+				patchSql.append(SiteContextEnUS.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("userId", siteRequest.getUserId(), pk));
+			}
+			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
+				patchSql.append(SiteContextEnUS.SQL_setD);
+				patchSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
+			}
 
 			patchSql.append(SiteContextEnUS.SQL_modify);
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.age.SchoolAge"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
 						} else {
-							o2.setInheritPk(requestJson.getString(methodName));
+							o2.setInheritPk(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
 						}
 						break;
 					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
-							o2.setCreated(requestJson.getString(methodName));
+							o2.setCreated(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
-							o2.setModified(requestJson.getString(methodName));
+							o2.setModified(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
-							o2.setArchived(requestJson.getBoolean(methodName));
+							o2.setArchived(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						if(requestJson.getBoolean(methodName) == null) {
+						if(jsonObject.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
-							o2.setDeleted(requestJson.getBoolean(methodName));
+							o2.setDeleted(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
 					case "setSessionId":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
 						} else {
-							o2.setSessionId(requestJson.getString(methodName));
+							o2.setSessionId(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
 						}
 						break;
+					case "setUserId":
+						if(jsonObject.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "userId"));
+						} else {
+							o2.setUserId(jsonObject.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("userId", o2.jsonUserId(), pk));
+						}
+						break;
+					case "setUserKey":
+						if(jsonObject.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "userKey"));
+						} else {
+							o2.setUserKey(jsonObject.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("userKey", o2.jsonUserKey(), pk));
+						}
+						break;
 					case "addBlockKeys":
 						{
-							Long l = Long.parseLong(requestJson.getString(methodName));
+							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
 								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
 								searchList.setQuery("*:*");
@@ -1353,7 +1411,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						break;
 					case "addAllBlockKeys":
-						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
+						JsonArray addAllBlockKeysValues = jsonObject.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
 							Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
 							if(l != null) {
@@ -1372,7 +1430,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						break;
 					case "setBlockKeys":
-						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
+						JsonArray setBlockKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("ageKey", "blockKeys", pk));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
@@ -1394,7 +1452,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "removeBlockKeys":
 						{
-							Long l = Long.parseLong(requestJson.getString(methodName));
+							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
 								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
 								searchList.setQuery("*:*");
@@ -1422,7 +1480,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.initDeepSearchList(siteRequest);
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
-									o2.setSessionKey(requestJson.getString(methodName));
+									o2.setSessionKey(jsonObject.getString(methodName));
 									patchSql.append(SiteContextEnUS.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("ageKeys", l, "sessionKey", pk));
 								}
@@ -1441,7 +1499,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.initDeepSearchList(siteRequest);
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
-									o2.setSessionKey(requestJson.getString(methodName));
+									o2.setSessionKey(jsonObject.getString(methodName));
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("ageKeys", l, "sessionKey", pk));
 								}
@@ -1449,31 +1507,31 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						break;
 					case "setSchoolAddress":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
 						} else {
-							o2.setSchoolAddress(requestJson.getString(methodName));
+							o2.setSchoolAddress(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.jsonSchoolAddress(), pk));
 						}
 						break;
 					case "setAgeStart":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ageStart"));
 						} else {
-							o2.setAgeStart(requestJson.getString(methodName));
+							o2.setAgeStart(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ageStart", o2.jsonAgeStart(), pk));
 						}
 						break;
 					case "setAgeEnd":
-						if(requestJson.getString(methodName) == null) {
+						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ageEnd"));
 						} else {
-							o2.setAgeEnd(requestJson.getString(methodName));
+							o2.setAgeEnd(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ageEnd", o2.jsonAgeEnd(), pk));
 						}
@@ -2110,7 +2168,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					if(selectCAsync.succeeded()) {
 						try {
 							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							SiteUserEnUSGenApiServiceImpl userService = new SiteUserEnUSGenApiServiceImpl(siteContext);
+							SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 							if(userValues == null) {
 								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
 								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
@@ -2136,27 +2194,15 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 										SiteUser siteUser = b.result();
 										userService.sqlPOSTSiteUser(siteUser, false, c -> {
 											if(c.succeeded()) {
-												userService.defineSiteUser(siteUser, d -> {
+												userService.defineIndexSiteUser(siteUser, d -> {
 													if(d.succeeded()) {
-														userService.attributeSiteUser(siteUser, e -> {
-															if(e.succeeded()) {
-																userService.indexSiteUser(siteUser, f -> {
-																	if(f.succeeded()) {
-																		siteRequest.setSiteUser(siteUser);
-																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
-																		siteRequest.setUserKey(siteUser.getPk());
-																		eventHandler.handle(Future.succeededFuture());
-																	} else {
-																		errorSchoolAge(siteRequest, eventHandler, f);
-																	}
-																});
-															} else {
-																errorSchoolAge(siteRequest, eventHandler, e);
-															}
-														});
+														siteRequest.setSiteUser(siteUser);
+														siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+														siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+														siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+														siteRequest.setUserId(jsonPrincipal.getString("sub"));
+														siteRequest.setUserKey(siteUser.getPk());
+														eventHandler.handle(Future.succeededFuture());
 													} else {
 														errorSchoolAge(siteRequest, eventHandler, d);
 													}
@@ -2216,27 +2262,15 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
 											SiteUser siteUser2 = c.result();
-											userService.defineSiteUser(siteUser2, d -> {
+											userService.defineIndexSiteUser(siteUser2, d -> {
 												if(d.succeeded()) {
-													userService.attributeSiteUser(siteUser2, e -> {
-														if(e.succeeded()) {
-															userService.indexSiteUser(siteUser2, f -> {
-																if(f.succeeded()) {
-																	siteRequest.setSiteUser(siteUser2);
-																	siteRequest.setUserName(siteUser2.getUserName());
-																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
-																	siteRequest.setUserLastName(siteUser2.getUserLastName());
-																	siteRequest.setUserId(siteUser2.getUserId());
-																	siteRequest.setUserKey(siteUser2.getPk());
-																	eventHandler.handle(Future.succeededFuture());
-																} else {
-																	errorSchoolAge(siteRequest, eventHandler, f);
-																}
-															});
-														} else {
-															errorSchoolAge(siteRequest, eventHandler, e);
-														}
-													});
+													siteRequest.setSiteUser(siteUser2);
+													siteRequest.setUserName(siteUser2.getUserName());
+													siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+													siteRequest.setUserLastName(siteUser2.getUserLastName());
+													siteRequest.setUserId(siteUser2.getUserId());
+													siteRequest.setUserKey(siteUser2.getPk());
+													eventHandler.handle(Future.succeededFuture());
 												} else {
 													errorSchoolAge(siteRequest, eventHandler, d);
 												}
@@ -2524,7 +2558,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
 						LOGGER.info("Refresh relations succeeded. ");
-						SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						SchoolAgeEnUSApiServiceImpl service = new SchoolAgeEnUSApiServiceImpl(siteRequest2.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolAge o2 : searchList.getList()) {
 							futures2.add(

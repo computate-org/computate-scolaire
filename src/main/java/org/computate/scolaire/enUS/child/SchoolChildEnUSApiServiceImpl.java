@@ -4,6 +4,7 @@ import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 
 /**
  * Translate: false
+ * CanonicalName.frFR: org.computate.scolaire.frFR.enfant.EnfantScolaireFrFRApiServiceImpl
  **/
 public class SchoolChildEnUSApiServiceImpl extends SchoolChildEnUSGenApiServiceImpl {
 

@@ -3,10 +3,14 @@ package org.computate.scolaire.enUS.user;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.search.SearchList;
 
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.CreateCustomerProfileRequest;
@@ -20,6 +24,7 @@ import net.authorize.api.controller.base.ApiOperationBase;
 
 /**
  * Traduire: false
+ * CanonicalName.frFR: org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRApiServiceImpl
  **/
 public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
@@ -28,11 +33,29 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 	}
 
 	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
+		String sessionIdBefore = siteRequest.getSessionIdBefore();
 		String customerProfileId;
 		if(patch)
 			customerProfileId = jsonObject.getString("setCustomerProfileId");
 		else
 			customerProfileId = jsonObject.getString("customerProfileId");
+
+		SearchList<SchoolEnrollment> enrollmentList = new SearchList<SchoolEnrollment>();
+		if(sessionIdBefore != null) {
+			enrollmentList.setStore(true);
+			enrollmentList.setQuery("*:*");
+			enrollmentList.setC(SchoolEnrollment.class);
+			enrollmentList.setSiteRequest_(siteRequest);
+			enrollmentList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionIdBefore));
+			enrollmentList.addFilterQuery("!userId_indexed_string:[* TO *]");
+			enrollmentList.initDeepForClass(siteRequest);
+			for(SchoolEnrollment enrollment : enrollmentList.getList()) {
+				if(patch)
+					jsonObject.put("addEnrollmentKeys", enrollment.getPk().toString());
+				else
+					jsonObject.put("enrollmentKeys", new JsonArray().add(enrollment.getPk().toString()));
+			}
+		}
 
 		if(customerProfileId == null) {
 			SiteConfig siteConfig = siteRequest.getSiteConfig_();
@@ -83,8 +106,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 				jsonObject.put("customerProfileId", customerProfileId);
 			return true;
 		}
-		else {
-			return false;
-		}
+		else 
+			return enrollmentList.size() > 0;
 	}
 }

@@ -58,7 +58,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/    
+*/  
 public class PereScolaire extends PereScolaireGen<Cluster> {
 
 	/**
@@ -168,7 +168,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * r.enUS: userKeys
 	 * r: inscriptionRecherche
 	 * r.enUS: enrollmentSearch
-	 */                  
+	 */                 
 	protected void _utilisateurCles(List<Long> l) {
 		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("utilisateurCles_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}

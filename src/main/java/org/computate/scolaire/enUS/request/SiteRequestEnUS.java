@@ -128,6 +128,12 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
+	protected void _sessionIdBefore(Wrap<String> c) {
+		if(operationRequest != null) {
+			c.o(operationRequest.getParams().getJsonObject("cookie").getString("sessionIdBefore"));
+		}
+	}
+
 	protected void _userName(Wrap<String> c) {
 		if(jsonPrincipal != null) {
 			String o = jsonPrincipal.getString("preferred_username");

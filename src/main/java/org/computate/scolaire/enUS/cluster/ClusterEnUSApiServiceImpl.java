@@ -19,6 +19,7 @@ import io.vertx.ext.web.api.OperationResponse;
 
 /**
  * Translate: false
+ * CanonicalName.frFR: org.computate.scolaire.frFR.cluster.ClusterFrFRApiServiceImpl
  **/
 public class ClusterEnUSApiServiceImpl extends ClusterEnUSGenApiServiceImpl {
 

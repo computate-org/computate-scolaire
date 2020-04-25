@@ -10,6 +10,7 @@ import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.apache.commons.collections.CollectionUtils;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
+import io.vertx.core.logging.Logger;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -36,6 +38,7 @@ import java.lang.Object;
  * <br/>
  **/
 public abstract class ApiEcrivainGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(ApiEcrivain.class);
 
 	//////////////////
 	// requeteSite_ //

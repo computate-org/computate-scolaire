@@ -10,6 +10,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -20,6 +21,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.paiement.PaiementGenPage;
 
 /**	
@@ -27,6 +29,7 @@ import org.computate.scolaire.frFR.paiement.PaiementGenPage;
  * <br/>
  **/
 public abstract class PaiementPageGen<DEV> extends PaiementGenPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(PaiementPage.class);
 
 	//////////////
 	// initLoin //

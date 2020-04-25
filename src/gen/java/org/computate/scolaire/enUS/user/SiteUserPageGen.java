@@ -5,10 +5,12 @@ import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.user.SiteUserGenPage;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
@@ -31,6 +33,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  * <br/>
  **/
 public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteUserPage.class);
 
 	//////////////////////
 	// pageDesignSearch //

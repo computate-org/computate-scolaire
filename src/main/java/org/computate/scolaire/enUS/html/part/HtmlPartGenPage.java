@@ -337,6 +337,8 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
 			o.htmSessionId("PUTCopy");
+			o.htmUserId("PUTCopy");
+			o.htmUserKey("PUTCopy");
 		} g("div");
 	}
 
@@ -399,6 +401,8 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
 			o.htmSessionId("PATCH");
+			o.htmUserId("PATCH");
+			o.htmUserKey("PATCH");
 		} g("div");
 	}
 
@@ -463,6 +467,8 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
 			o.htmSessionId("Search");
+			o.htmUserId("Search");
+			o.htmUserKey("Search");
 			o.htmObjectTitle("Search");
 		} g("div");
 	}

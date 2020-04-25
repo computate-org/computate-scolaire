@@ -237,6 +237,8 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
 			o.htmSessionId("PUTCopie");
+			o.htmUtilisateurId("PUTCopie");
+			o.htmUtilisateurCle("PUTCopie");
 		} g("div");
 	}
 
@@ -265,6 +267,8 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
 			o.htmSessionId("PATCH");
+			o.htmUtilisateurId("PATCH");
+			o.htmUtilisateurCle("PATCH");
 		} g("div");
 	}
 
@@ -295,6 +299,8 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
 			o.htmSessionId("Recherche");
+			o.htmUtilisateurId("Recherche");
+			o.htmUtilisateurCle("Recherche");
 			o.htmObjetTitre("Recherche");
 		} g("div");
 	}

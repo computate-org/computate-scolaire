@@ -66,7 +66,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * <br/>
  **/
 public abstract class InscriptionScolaireGen<DEV> extends Cluster {
-	private static final Logger LOGGER = LoggerFactory.getLogger(InscriptionScolaire.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(InscriptionScolaire.class);
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
@@ -1876,7 +1876,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param utilisateurCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _utilisateurCles(List<Long> o);
+	protected abstract void _utilisateurCles(List<Long> l);
 
 	public List<Long> getUtilisateurCles() {
 		return utilisateurCles;

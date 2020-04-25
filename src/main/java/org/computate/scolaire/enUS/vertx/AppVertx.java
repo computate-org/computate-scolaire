@@ -62,7 +62,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
@@ -92,7 +92,6 @@ import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
-import io.vertx.ext.web.handler.impl.CookieHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
@@ -332,7 +331,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				}
 		
 		//		ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
-				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+				LocalSessionStore sessionStore = LocalSessionStore.create(vertx, "computate-scolaire-sessions");
 				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
 				sessionHandler.setAuthProvider(authProvider);
 		
@@ -342,7 +341,6 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						routerFactory.mountServicesFromExtensions();
 						siteContextEnUS.setRouterFactory(routerFactory);
 		
-						routerFactory.addGlobalHandler(new CookieHandlerImpl());
 						routerFactory.addGlobalHandler(sessionHandler);
 						routerFactory.addHandlerByOperationId("callback", ctx -> {
 		
@@ -373,6 +371,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 											if (session != null) {
 												// the user has upgraded from unauthenticated to authenticated
 												// session should be upgraded as recommended by owasp
+												ctx.addCookie(Cookie.cookie("sessionIdBefore", session.id()));
 												session.regenerateId();
 												// we should redirect the UA so this link becomes invalid
 												ctx.response()
@@ -404,11 +403,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		
 						routerFactory.addHandlerByOperationId("logout", rc -> {
 							Session session = rc.session();
-							if (session != null) {
-								session.destroy();
-							}
+//							if (session != null) {
+//								session.destroy();
+//							}
 							rc.clearUser();
-							rc.reroute("/school");
+							rc.reroute("/");
 						});
 						routerFactory.addFailureHandlerByOperationId("logout", c -> {});
 		

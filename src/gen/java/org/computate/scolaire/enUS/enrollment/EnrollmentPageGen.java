@@ -1,23 +1,25 @@
 package org.computate.scolaire.enUS.enrollment;
 
-import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
-import org.computate.scolaire.enUS.cluster.Cluster;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import java.math.MathContext;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import org.apache.commons.lang3.StringUtils;
-import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import org.apache.commons.collections.CollectionUtils;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.computate.scolaire.enUS.search.SearchList;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
 import java.util.Optional;
@@ -29,6 +31,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  * <br/>
  **/
 public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(EnrollmentPage.class);
 
 	///////////////////////
 	// listSchoolPayment //

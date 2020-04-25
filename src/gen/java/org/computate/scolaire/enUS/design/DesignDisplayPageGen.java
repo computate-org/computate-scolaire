@@ -8,6 +8,7 @@ import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.String;
 import java.time.ZoneOffset;
+import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -48,6 +50,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  * <br/>
  **/
 public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(DesignDisplayPage.class);
 
 	////////////////
 	// pageDesign //

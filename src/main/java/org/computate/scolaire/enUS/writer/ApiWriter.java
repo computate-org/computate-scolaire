@@ -608,6 +608,16 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		if(!wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 			wPaths.tl(3, "parameters:");
 			wPaths.s(wRequestHeaders);
+
+			wPaths.tl(4, "- name: vertx-web.session");
+			wPaths.tl(5, "in: cookie");
+			wPaths.tl(5, "schema:");
+			wPaths.tl(6, "type: string");
+			wPaths.tl(4, "- name: sessionIdBefore");
+			wPaths.tl(5, "in: cookie");
+			wPaths.tl(5, "schema:");
+			wPaths.tl(6, "type: string");
+
 			if(id || "GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod)) {
 				wPaths.tl(4, "- name: id");
 				wPaths.tl(5, "in: path");

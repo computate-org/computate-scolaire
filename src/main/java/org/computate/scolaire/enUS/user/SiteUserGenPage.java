@@ -295,9 +295,9 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
 			o.htmSessionId("Search");
-			o.htmObjectTitle("Search");
 			o.htmUserId("Search");
 			o.htmUserKey("Search");
+			o.htmObjectTitle("Search");
 			o.htmUserName("Search");
 			o.htmUserEmail("Search");
 		} g("div");

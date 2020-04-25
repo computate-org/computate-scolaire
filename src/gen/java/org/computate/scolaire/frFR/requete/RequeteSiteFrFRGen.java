@@ -739,6 +739,68 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	}
 
 	////////////////////
+	// sessionIdAvant //
+	////////////////////
+
+	/**	L'entité « sessionIdAvant »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String sessionIdAvant;
+	@JsonIgnore
+	public Couverture<String> sessionIdAvantCouverture = new Couverture<String>().p(this).c(String.class).var("sessionIdAvant").o(sessionIdAvant);
+
+	/**	<br/>L'entité « sessionIdAvant »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionIdAvant">Trouver l'entité sessionIdAvant dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionIdAvant(Couverture<String> c);
+
+	public String getSessionIdAvant() {
+		return sessionIdAvant;
+	}
+
+	public void setSessionIdAvant(String sessionIdAvant) {
+		this.sessionIdAvant = sessionIdAvant;
+		this.sessionIdAvantCouverture.dejaInitialise = true;
+	}
+	protected RequeteSiteFrFR sessionIdAvantInit() {
+		if(!sessionIdAvantCouverture.dejaInitialise) {
+			_sessionIdAvant(sessionIdAvantCouverture);
+			if(sessionIdAvant == null)
+				setSessionIdAvant(sessionIdAvantCouverture.o);
+		}
+		sessionIdAvantCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
+	public String solrSessionIdAvant() {
+		return sessionIdAvant;
+	}
+
+	public String strSessionIdAvant() {
+		return sessionIdAvant == null ? "" : sessionIdAvant;
+	}
+
+	public String jsonSessionIdAvant() {
+		return sessionIdAvant == null ? "" : sessionIdAvant;
+	}
+
+	public String nomAffichageSessionIdAvant() {
+		return null;
+	}
+
+	public String htmTooltipSessionIdAvant() {
+		return null;
+	}
+
+	public String htmSessionIdAvant() {
+		return sessionIdAvant == null ? "" : StringEscapeUtils.escapeHtml4(strSessionIdAvant());
+	}
+
+	////////////////////
 	// utilisateurNom //
 	////////////////////
 
@@ -1580,6 +1642,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		utilisateurIdInit();
 		utilisateurCleInit();
 		sessionIdInit();
+		sessionIdAvantInit();
 		utilisateurNomInit();
 		utilisateurNomFamilleInit();
 		utilisateurPrenomInit();
@@ -1668,6 +1731,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.utilisateurCle;
 			case "sessionId":
 				return oRequeteSiteFrFR.sessionId;
+			case "sessionIdAvant":
+				return oRequeteSiteFrFR.sessionIdAvant;
 			case "utilisateurNom":
 				return oRequeteSiteFrFR.utilisateurNom;
 			case "utilisateurNomFamille":

@@ -57,7 +57,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * <br/>
  **/
 public abstract class SchoolAgeGen<DEV> extends Cluster {
-	private static final Logger LOGGER = LoggerFactory.getLogger(SchoolAge.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolAge.class);
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");

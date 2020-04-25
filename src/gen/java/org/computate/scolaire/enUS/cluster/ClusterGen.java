@@ -56,7 +56,7 @@ import java.lang.Object;
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
@@ -1231,6 +1231,181 @@ public abstract class ClusterGen<DEV> extends Object {
 		} s.g("div");
 	}
 
+	////////////
+	// userId //
+	////////////
+
+	/**	L'entité « userId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String userId;
+	@JsonIgnore
+	public Wrap<String> userIdWrap = new Wrap<String>().p(this).c(String.class).var("userId").o(userId);
+
+	/**	<br/>L'entité « userId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userId">Trouver l'entité userId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userId(Wrap<String> c);
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+		this.userIdWrap.alreadyInitialized = true;
+	}
+	protected Cluster userIdInit() {
+		if(!userIdWrap.alreadyInitialized) {
+			_userId(userIdWrap);
+			if(userId == null)
+				setUserId(userIdWrap.o);
+		}
+		userIdWrap.alreadyInitialized(true);
+		return (Cluster)this;
+	}
+
+	public String solrUserId() {
+		return userId;
+	}
+
+	public String strUserId() {
+		return userId == null ? "" : userId;
+	}
+
+	public String jsonUserId() {
+		return userId == null ? "" : userId;
+	}
+
+	public String nomAffichageUserId() {
+		return null;
+	}
+
+	public String htmTooltipUserId() {
+		return null;
+	}
+
+	public String htmUserId() {
+		return userId == null ? "" : StringEscapeUtils.escapeHtml4(strUserId());
+	}
+
+	public void inputUserId(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+	}
+
+	public void htmUserId(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterUserId").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputUserId(classApiMethodMethod);
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
+	}
+
+	/////////////
+	// userKey //
+	/////////////
+
+	/**	L'entité « userKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long userKey;
+	@JsonIgnore
+	public Wrap<Long> userKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("userKey").o(userKey);
+
+	/**	<br/>L'entité « userKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKey">Trouver l'entité userKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userKey(Wrap<Long> c);
+
+	public Long getUserKey() {
+		return userKey;
+	}
+
+	public void setUserKey(Long userKey) {
+		this.userKey = userKey;
+		this.userKeyWrap.alreadyInitialized = true;
+	}
+	public Cluster setUserKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.userKey = Long.parseLong(o);
+		this.userKeyWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	protected Cluster userKeyInit() {
+		if(!userKeyWrap.alreadyInitialized) {
+			_userKey(userKeyWrap);
+			if(userKey == null)
+				setUserKey(userKeyWrap.o);
+		}
+		userKeyWrap.alreadyInitialized(true);
+		return (Cluster)this;
+	}
+
+	public Long solrUserKey() {
+		return userKey;
+	}
+
+	public String strUserKey() {
+		return userKey == null ? "" : userKey.toString();
+	}
+
+	public String jsonUserKey() {
+		return userKey == null ? "" : userKey.toString();
+	}
+
+	public String nomAffichageUserKey() {
+		return null;
+	}
+
+	public String htmTooltipUserKey() {
+		return null;
+	}
+
+	public String htmUserKey() {
+		return userKey == null ? "" : StringEscapeUtils.escapeHtml4(strUserKey());
+	}
+
+	public void inputUserKey(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+	}
+
+	public void htmUserKey(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggest", classApiMethodMethod, "ClusterUserKey").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputUserKey(classApiMethodMethod);
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
+	}
+
 	///////////
 	// saves //
 	///////////
@@ -1952,6 +2127,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		classSimpleNameInit();
 		classCanonicalNamesInit();
 		sessionIdInit();
+		userIdInit();
+		userKeyInit();
 		savesInit();
 		objectTitleInit();
 		objectIdInit();
@@ -2025,6 +2202,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.classCanonicalNames;
 			case "sessionId":
 				return oCluster.sessionId;
+			case "userId":
+				return oCluster.userId;
+			case "userKey":
+				return oCluster.userKey;
 			case "saves":
 				return oCluster.saves;
 			case "objectTitle":
@@ -2120,6 +2301,14 @@ public abstract class ClusterGen<DEV> extends Object {
 				setSessionId(val);
 				savesCluster.add(var);
 				return val;
+			case "userId":
+				setUserId(val);
+				savesCluster.add(var);
+				return val;
+			case "userKey":
+				setUserKey(val);
+				savesCluster.add(var);
+				return val;
 			default:
 				return null;
 		}
@@ -2201,6 +2390,18 @@ public abstract class ClusterGen<DEV> extends Object {
 				String sessionId = (String)solrDocument.get("sessionId_stored_string");
 				if(sessionId != null)
 					oCluster.setSessionId(sessionId);
+			}
+
+			if(savesCluster.contains("userId")) {
+				String userId = (String)solrDocument.get("userId_stored_string");
+				if(userId != null)
+					oCluster.setUserId(userId);
+			}
+
+			if(savesCluster.contains("userKey")) {
+				Long userKey = (Long)solrDocument.get("userKey_stored_long");
+				if(userKey != null)
+					oCluster.setUserKey(userKey);
 			}
 
 			if(savesCluster.contains("saves")) {
@@ -2359,6 +2560,14 @@ public abstract class ClusterGen<DEV> extends Object {
 			document.addField("sessionId_indexed_string", sessionId);
 			document.addField("sessionId_stored_string", sessionId);
 		}
+		if(userId != null) {
+			document.addField("userId_indexed_string", userId);
+			document.addField("userId_stored_string", userId);
+		}
+		if(userKey != null) {
+			document.addField("userKey_indexed_long", userKey);
+			document.addField("userKey_stored_long", userKey);
+		}
 		if(saves != null) {
 			for(java.lang.String o : saves) {
 				document.addField("saves_indexed_strings", o);
@@ -2437,6 +2646,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				return "classCanonicalNames_indexed_strings";
 			case "sessionId":
 				return "sessionId_indexed_string";
+			case "userId":
+				return "userId_indexed_string";
+			case "userKey":
+				return "userKey_indexed_long";
 			case "saves":
 				return "saves_indexed_strings";
 			case "objectTitle":
@@ -2531,6 +2744,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(sessionId != null)
 			oCluster.setSessionId(sessionId);
 
+		String userId = (String)solrDocument.get("userId_stored_string");
+		if(userId != null)
+			oCluster.setUserId(userId);
+
+		Long userKey = (Long)solrDocument.get("userKey_stored_long");
+		if(userKey != null)
+			oCluster.setUserKey(userKey);
+
 		List<String> saves = (List<String>)solrDocument.get("saves_stored_strings");
 		if(saves != null)
 			oCluster.setSaves(saves);
@@ -2584,6 +2805,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				apiRequest.addVars("deleted");
 			if(!Objects.equals(sessionId, original.getSessionId()))
 				apiRequest.addVars("sessionId");
+			if(!Objects.equals(userId, original.getUserId()))
+				apiRequest.addVars("userId");
+			if(!Objects.equals(userKey, original.getUserKey()))
+				apiRequest.addVars("userKey");
 		}
 	}
 
@@ -2592,7 +2817,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(inheritPk, created, modified, archived, deleted, sessionId);
+		return Objects.hash(inheritPk, created, modified, archived, deleted, sessionId, userId, userKey);
 	}
 
 	////////////
@@ -2610,7 +2835,9 @@ public abstract class ClusterGen<DEV> extends Object {
 				&& Objects.equals( modified, that.modified )
 				&& Objects.equals( archived, that.archived )
 				&& Objects.equals( deleted, that.deleted )
-				&& Objects.equals( sessionId, that.sessionId );
+				&& Objects.equals( sessionId, that.sessionId )
+				&& Objects.equals( userId, that.userId )
+				&& Objects.equals( userKey, that.userKey );
 	}
 
 	//////////////
@@ -2626,6 +2853,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		sb.append( ", archived: " ).append(archived);
 		sb.append( ", deleted: " ).append(deleted);
 		sb.append( ", sessionId: \"" ).append(sessionId).append( "\"" );
+		sb.append( ", userId: \"" ).append(userId).append( "\"" );
+		sb.append( ", userKey: " ).append(userKey);
 		sb.append(" }");
 		return sb.toString();
 	}

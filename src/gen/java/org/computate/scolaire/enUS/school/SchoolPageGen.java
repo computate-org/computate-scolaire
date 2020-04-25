@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -27,6 +29,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  * <br/>
  **/
 public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolPage.class);
 
 	//////////////
 	// initDeep //

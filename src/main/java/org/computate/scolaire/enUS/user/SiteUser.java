@@ -14,16 +14,6 @@ public class SiteUser extends SiteUserGen<Cluster> {
 
 	protected void _paymentKeys(List<Long> o) {}
 
-	protected void _userId(Wrap<String> c) {
-		String o = siteRequest_.getUserId();
-		c.o(o);
-	}
-
-	protected void _userKey(Wrap<Long> c) {
-		Long o = siteRequest_.getUserKey();
-		c.o(o);
-	}
-
 	protected void _userName(Wrap<String> c) {
 		String o = siteRequest_.getUserName();
 		c.o(o);

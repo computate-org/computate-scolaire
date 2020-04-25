@@ -10,6 +10,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -21,6 +22,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import io.vertx.core.logging.Logger;
 
 /**	
  *	A Java class to start the Vert.x application as a main method. 
@@ -28,6 +30,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
  * <br/>
  **/
 public abstract class AppVertxGen<DEV> extends AbstractVerticle {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(AppVertx.class);
 	public static final String configureDataConnectionError1 = "Could not open the database client connection. ";
 	public static final String configureDataConnectionError = configureDataConnectionError1;
 	public static final String configureDataConnectionSuccess1 = "The database client connection was successful. ";

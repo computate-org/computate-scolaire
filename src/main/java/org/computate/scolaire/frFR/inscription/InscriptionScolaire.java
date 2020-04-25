@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                          
+package org.computate.scolaire.frFR.inscription;                           
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -449,8 +449,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the users in the database. 
 	 * NomAffichage.frFR: utilisateurs
 	 * NomAffichage.enUS: users
-	 */              
-	protected void _utilisateurCles(List<Long> o) {}
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: utilisateurCle
+	 * r.enUS: userKey
+	 */             
+	protected void _utilisateurCles(List<Long> l) {
+	}
 
 	/**
 	 * {@inheritDoc}

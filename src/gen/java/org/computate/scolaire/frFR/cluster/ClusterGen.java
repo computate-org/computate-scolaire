@@ -56,7 +56,7 @@ import java.lang.Object;
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
@@ -1232,6 +1232,181 @@ public abstract class ClusterGen<DEV> extends Object {
 		} s.g("div");
 	}
 
+	///////////////////
+	// utilisateurId //
+	///////////////////
+
+	/**	L'entité « utilisateurId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String utilisateurId;
+	@JsonIgnore
+	public Couverture<String> utilisateurIdCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurId").o(utilisateurId);
+
+	/**	<br/>L'entité « utilisateurId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurId">Trouver l'entité utilisateurId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _utilisateurId(Couverture<String> c);
+
+	public String getUtilisateurId() {
+		return utilisateurId;
+	}
+
+	public void setUtilisateurId(String utilisateurId) {
+		this.utilisateurId = utilisateurId;
+		this.utilisateurIdCouverture.dejaInitialise = true;
+	}
+	protected Cluster utilisateurIdInit() {
+		if(!utilisateurIdCouverture.dejaInitialise) {
+			_utilisateurId(utilisateurIdCouverture);
+			if(utilisateurId == null)
+				setUtilisateurId(utilisateurIdCouverture.o);
+		}
+		utilisateurIdCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrUtilisateurId() {
+		return utilisateurId;
+	}
+
+	public String strUtilisateurId() {
+		return utilisateurId == null ? "" : utilisateurId;
+	}
+
+	public String jsonUtilisateurId() {
+		return utilisateurId == null ? "" : utilisateurId;
+	}
+
+	public String nomAffichageUtilisateurId() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurId() {
+		return null;
+	}
+
+	public String htmUtilisateurId() {
+		return utilisateurId == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurId());
+	}
+
+	public void inputUtilisateurId(String classeApiMethodeMethode) {
+		Cluster s = (Cluster)this;
+	}
+
+	public void htmUtilisateurId(String classeApiMethodeMethode) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggere", classeApiMethodeMethode, "ClusterUtilisateurId").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputUtilisateurId(classeApiMethodeMethode);
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
+	}
+
+	////////////////////
+	// utilisateurCle //
+	////////////////////
+
+	/**	L'entité « utilisateurCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long utilisateurCle;
+	@JsonIgnore
+	public Couverture<Long> utilisateurCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("utilisateurCle").o(utilisateurCle);
+
+	/**	<br/>L'entité « utilisateurCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCle">Trouver l'entité utilisateurCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _utilisateurCle(Couverture<Long> c);
+
+	public Long getUtilisateurCle() {
+		return utilisateurCle;
+	}
+
+	public void setUtilisateurCle(Long utilisateurCle) {
+		this.utilisateurCle = utilisateurCle;
+		this.utilisateurCleCouverture.dejaInitialise = true;
+	}
+	public Cluster setUtilisateurCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.utilisateurCle = Long.parseLong(o);
+		this.utilisateurCleCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	protected Cluster utilisateurCleInit() {
+		if(!utilisateurCleCouverture.dejaInitialise) {
+			_utilisateurCle(utilisateurCleCouverture);
+			if(utilisateurCle == null)
+				setUtilisateurCle(utilisateurCleCouverture.o);
+		}
+		utilisateurCleCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public Long solrUtilisateurCle() {
+		return utilisateurCle;
+	}
+
+	public String strUtilisateurCle() {
+		return utilisateurCle == null ? "" : utilisateurCle.toString();
+	}
+
+	public String jsonUtilisateurCle() {
+		return utilisateurCle == null ? "" : utilisateurCle.toString();
+	}
+
+	public String nomAffichageUtilisateurCle() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurCle() {
+		return null;
+	}
+
+	public String htmUtilisateurCle() {
+		return utilisateurCle == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurCle());
+	}
+
+	public void inputUtilisateurCle(String classeApiMethodeMethode) {
+		Cluster s = (Cluster)this;
+	}
+
+	public void htmUtilisateurCle(String classeApiMethodeMethode) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("div").a("id", "suggere", classeApiMethodeMethode, "ClusterUtilisateurCle").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								inputUtilisateurCle(classeApiMethodeMethode);
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
+	}
+
 	/////////////////
 	// sauvegardes //
 	/////////////////
@@ -1953,6 +2128,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		classeNomSimpleInit();
 		classeNomsCanoniquesInit();
 		sessionIdInit();
+		utilisateurIdInit();
+		utilisateurCleInit();
 		sauvegardesInit();
 		objetTitreInit();
 		objetIdInit();
@@ -2026,6 +2203,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.classeNomsCanoniques;
 			case "sessionId":
 				return oCluster.sessionId;
+			case "utilisateurId":
+				return oCluster.utilisateurId;
+			case "utilisateurCle":
+				return oCluster.utilisateurCle;
 			case "sauvegardes":
 				return oCluster.sauvegardes;
 			case "objetTitre":
@@ -2121,6 +2302,14 @@ public abstract class ClusterGen<DEV> extends Object {
 				setSessionId(val);
 				sauvegardesCluster.add(var);
 				return val;
+			case "utilisateurId":
+				setUtilisateurId(val);
+				sauvegardesCluster.add(var);
+				return val;
+			case "utilisateurCle":
+				setUtilisateurCle(val);
+				sauvegardesCluster.add(var);
+				return val;
 			default:
 				return null;
 		}
@@ -2202,6 +2391,18 @@ public abstract class ClusterGen<DEV> extends Object {
 				String sessionId = (String)solrDocument.get("sessionId_stored_string");
 				if(sessionId != null)
 					oCluster.setSessionId(sessionId);
+			}
+
+			if(sauvegardesCluster.contains("utilisateurId")) {
+				String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
+				if(utilisateurId != null)
+					oCluster.setUtilisateurId(utilisateurId);
+			}
+
+			if(sauvegardesCluster.contains("utilisateurCle")) {
+				Long utilisateurCle = (Long)solrDocument.get("utilisateurCle_stored_long");
+				if(utilisateurCle != null)
+					oCluster.setUtilisateurCle(utilisateurCle);
 			}
 
 			if(sauvegardesCluster.contains("sauvegardes")) {
@@ -2360,6 +2561,14 @@ public abstract class ClusterGen<DEV> extends Object {
 			document.addField("sessionId_indexed_string", sessionId);
 			document.addField("sessionId_stored_string", sessionId);
 		}
+		if(utilisateurId != null) {
+			document.addField("utilisateurId_indexed_string", utilisateurId);
+			document.addField("utilisateurId_stored_string", utilisateurId);
+		}
+		if(utilisateurCle != null) {
+			document.addField("utilisateurCle_indexed_long", utilisateurCle);
+			document.addField("utilisateurCle_stored_long", utilisateurCle);
+		}
 		if(sauvegardes != null) {
 			for(java.lang.String o : sauvegardes) {
 				document.addField("sauvegardes_indexed_strings", o);
@@ -2438,6 +2647,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				return "classeNomsCanoniques_indexed_strings";
 			case "sessionId":
 				return "sessionId_indexed_string";
+			case "utilisateurId":
+				return "utilisateurId_indexed_string";
+			case "utilisateurCle":
+				return "utilisateurCle_indexed_long";
 			case "sauvegardes":
 				return "sauvegardes_indexed_strings";
 			case "objetTitre":
@@ -2532,6 +2745,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(sessionId != null)
 			oCluster.setSessionId(sessionId);
 
+		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
+		if(utilisateurId != null)
+			oCluster.setUtilisateurId(utilisateurId);
+
+		Long utilisateurCle = (Long)solrDocument.get("utilisateurCle_stored_long");
+		if(utilisateurCle != null)
+			oCluster.setUtilisateurCle(utilisateurCle);
+
 		List<String> sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
 		if(sauvegardes != null)
 			oCluster.setSauvegardes(sauvegardes);
@@ -2585,6 +2806,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				requeteApi.addVars("supprime");
 			if(!Objects.equals(sessionId, original.getSessionId()))
 				requeteApi.addVars("sessionId");
+			if(!Objects.equals(utilisateurId, original.getUtilisateurId()))
+				requeteApi.addVars("utilisateurId");
+			if(!Objects.equals(utilisateurCle, original.getUtilisateurCle()))
+				requeteApi.addVars("utilisateurCle");
 		}
 	}
 
@@ -2593,7 +2818,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(inheritPk, cree, modifie, archive, supprime, sessionId);
+		return Objects.hash(inheritPk, cree, modifie, archive, supprime, sessionId, utilisateurId, utilisateurCle);
 	}
 
 	////////////
@@ -2611,7 +2836,9 @@ public abstract class ClusterGen<DEV> extends Object {
 				&& Objects.equals( modifie, that.modifie )
 				&& Objects.equals( archive, that.archive )
 				&& Objects.equals( supprime, that.supprime )
-				&& Objects.equals( sessionId, that.sessionId );
+				&& Objects.equals( sessionId, that.sessionId )
+				&& Objects.equals( utilisateurId, that.utilisateurId )
+				&& Objects.equals( utilisateurCle, that.utilisateurCle );
 	}
 
 	//////////////
@@ -2627,6 +2854,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		sb.append( ", archive: " ).append(archive);
 		sb.append( ", supprime: " ).append(supprime);
 		sb.append( ", sessionId: \"" ).append(sessionId).append( "\"" );
+		sb.append( ", utilisateurId: \"" ).append(utilisateurId).append( "\"" );
+		sb.append( ", utilisateurCle: " ).append(utilisateurCle);
 		sb.append(" }");
 		return sb.toString();
 	}

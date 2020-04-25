@@ -1325,6 +1325,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: wResponseSchema
 	 * r: contexteRows
 	 * r.enUS: contextRows
+	 * r: sessionIdAvant
+	 * r.enUS: sessionIdBefore
 	 * 
 	 * r: classeSuperApiOperationIdMethodeRequete
 	 * r.enUS: classSuperApiOperationIdMethodRequest
@@ -1396,6 +1398,16 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		if(!wRequeteEnTete.getVide() || "GET".equals(classeApiMethodeMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 			wChemins.tl(3, "parameters:");
 			wChemins.s(wRequeteEnTete);
+
+			wChemins.tl(4, "- name: vertx-web.session");
+			wChemins.tl(5, "in: cookie");
+			wChemins.tl(5, "schema:");
+			wChemins.tl(6, "type: string");
+			wChemins.tl(4, "- name: sessionIdAvant");
+			wChemins.tl(5, "in: cookie");
+			wChemins.tl(5, "schema:");
+			wChemins.tl(6, "type: string");
+
 			if(id || "GET".equals(classeApiMethode) || "DELETE".equals(classeApiMethodeMethode)) {
 				wChemins.tl(4, "- name: id");
 				wChemins.tl(5, "in: path");

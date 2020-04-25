@@ -507,6 +507,8 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
 			o.htmSessionId("PUTCopy");
+			o.htmUserId("PUTCopy");
+			o.htmUserKey("PUTCopy");
 			o.htmChildCompleteName("PUTCopy");
 			o.htmChildCompleteNamePreferred("PUTCopy");
 			o.htmChildBirthDate("PUTCopy");
@@ -592,6 +594,8 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
 			o.htmSessionId("PATCH");
+			o.htmUserId("PATCH");
+			o.htmUserKey("PATCH");
 			o.htmChildCompleteName("PATCH");
 			o.htmChildCompleteNamePreferred("PATCH");
 			o.htmChildBirthDate("PATCH");
@@ -679,6 +683,8 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
 			o.htmSessionId("Search");
+			o.htmUserId("Search");
+			o.htmUserKey("Search");
 			o.htmObjectTitle("Search");
 			o.htmChildCompleteName("Search");
 			o.htmChildCompleteNamePreferred("Search");

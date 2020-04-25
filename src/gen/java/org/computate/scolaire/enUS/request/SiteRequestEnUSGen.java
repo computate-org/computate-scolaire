@@ -742,6 +742,68 @@ The site configuration.
 		return sessionId == null ? "" : StringEscapeUtils.escapeHtml4(strSessionId());
 	}
 
+	/////////////////////
+	// sessionIdBefore //
+	/////////////////////
+
+	/**	L'entité « sessionIdBefore »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String sessionIdBefore;
+	@JsonIgnore
+	public Wrap<String> sessionIdBeforeWrap = new Wrap<String>().p(this).c(String.class).var("sessionIdBefore").o(sessionIdBefore);
+
+	/**	<br/>L'entité « sessionIdBefore »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionIdBefore">Trouver l'entité sessionIdBefore dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionIdBefore(Wrap<String> c);
+
+	public String getSessionIdBefore() {
+		return sessionIdBefore;
+	}
+
+	public void setSessionIdBefore(String sessionIdBefore) {
+		this.sessionIdBefore = sessionIdBefore;
+		this.sessionIdBeforeWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS sessionIdBeforeInit() {
+		if(!sessionIdBeforeWrap.alreadyInitialized) {
+			_sessionIdBefore(sessionIdBeforeWrap);
+			if(sessionIdBefore == null)
+				setSessionIdBefore(sessionIdBeforeWrap.o);
+		}
+		sessionIdBeforeWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public String solrSessionIdBefore() {
+		return sessionIdBefore;
+	}
+
+	public String strSessionIdBefore() {
+		return sessionIdBefore == null ? "" : sessionIdBefore;
+	}
+
+	public String jsonSessionIdBefore() {
+		return sessionIdBefore == null ? "" : sessionIdBefore;
+	}
+
+	public String nomAffichageSessionIdBefore() {
+		return null;
+	}
+
+	public String htmTooltipSessionIdBefore() {
+		return null;
+	}
+
+	public String htmSessionIdBefore() {
+		return sessionIdBefore == null ? "" : StringEscapeUtils.escapeHtml4(strSessionIdBefore());
+	}
+
 	//////////////
 	// userName //
 	//////////////
@@ -1584,6 +1646,7 @@ The site configuration.
 		userIdInit();
 		userKeyInit();
 		sessionIdInit();
+		sessionIdBeforeInit();
 		userNameInit();
 		userLastNameInit();
 		userFirstNameInit();
@@ -1672,6 +1735,8 @@ The site configuration.
 				return oSiteRequestEnUS.userKey;
 			case "sessionId":
 				return oSiteRequestEnUS.sessionId;
+			case "sessionIdBefore":
+				return oSiteRequestEnUS.sessionIdBefore;
 			case "userName":
 				return oSiteRequestEnUS.userName;
 			case "userLastName":
