@@ -267,12 +267,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 														listSiteUser.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
 														SiteUser o = listSiteUser.getList().stream().findFirst().orElse(null);
-														if(o != null) {
-															apiRequest.setPk(o.getPk());
-															apiRequest.setOriginal(o);
-															apiRequestSiteUser(o);
-															o.apiRequestSiteUser();
-														}
 														sqlSiteUser(siteRequest2, e -> {
 															if(e.succeeded()) {
 																try {
@@ -342,8 +336,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			futures.add(
 				patchSiteUserFuture(o, false, a -> {
 					if(a.succeeded()) {
-							SiteUser siteUser = a.result();
-							apiRequestSiteUser(siteUser);
 					} else {
 						errorSiteUser(siteRequest, eventHandler, a);
 					}
@@ -352,9 +344,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSiteUser.size());
 				if(listSiteUser.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHSiteUser(apiRequest, listSiteUser, dt, eventHandler);
 				} else {
 					response200PATCHSiteUser(siteRequest, eventHandler);
@@ -369,6 +359,11 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		Promise<SiteUser> promise = Promise.promise();
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			if(apiRequest != null && apiRequest.getNumFound() == 1L) {
+				apiRequest.setOriginal(o);
+				apiRequest.setPk(o.getPk());
+			}
 			sqlPATCHSiteUser(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					SiteUser siteUser = a.result();
@@ -378,6 +373,14 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(c.succeeded()) {
 									indexSiteUser(siteUser, d -> {
 										if(d.succeeded()) {
+											if(apiRequest != null) {
+												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+												apiRequestSiteUser(siteUser);
+												if(apiRequest.getNumFound() == 1L) {
+													siteUser.apiRequestSiteUser();
+												}
+												siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+											}
 											eventHandler.handle(Future.succeededFuture(siteUser));
 											promise.complete(siteUser);
 										} else {
@@ -756,6 +759,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("patchSiteUser sql close. "));
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null)
+										siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSiteUser(siteRequest, eventHandler, c);
@@ -804,6 +810,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							postSiteUserFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									SiteUser siteUser = c.result();
+									apiRequest.setPk(siteUser.getPk());
 									apiRequestSiteUser(siteUser);
 									postSiteUserResponse(siteUser, d -> {
 										if(d.succeeded()) {
@@ -846,6 +853,12 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						if(b.succeeded()) {
 							defineIndexSiteUser(siteUser, c -> {
 								if(c.succeeded()) {
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null) {
+										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+										siteUser.apiRequestSiteUser();
+										siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+									}
 									eventHandler.handle(Future.succeededFuture(siteUser));
 									promise.complete(siteUser);
 								} else {
@@ -1019,9 +1032,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("postSiteUser sql close. "));
-									ApiRequest apiRequest = apiRequestSiteUser(siteUser);
-									siteUser.apiRequestSiteUser();
-									siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSiteUser(siteRequest, eventHandler, c);
@@ -1370,6 +1380,13 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								siteRequest2.setUserId(siteRequest.getUserId());
 								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(1);
+								apiRequest.setNumFound(1L);
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest2);
+								siteRequest2.setApiRequest_(apiRequest);
+
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
@@ -1439,6 +1456,13 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 									siteRequest2.setUserKey(siteRequest.getUserKey());
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
+
+									ApiRequest apiRequest = new ApiRequest();
+									apiRequest.setRows(1);
+									apiRequest.setNumFound(1L);
+									apiRequest.setNumPATCH(0L);
+									apiRequest.initDeepApiRequest(siteRequest2);
+									siteRequest2.setApiRequest_(apiRequest);
 
 									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
@@ -1694,7 +1718,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSiteUser(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-				searchList.setPopulate(true);
+				searchList.setStore(true);
 				searchList.setQuery("*:*");
 				searchList.setC(SiteUser.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
@@ -1707,40 +1731,78 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				{
 					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					for(Long pk : o.getEnrollmentKeys()) {
-						SchoolEnrollment o2 = new SchoolEnrollment();
+					SearchList<SchoolEnrollment> searchList2 = new SearchList<SchoolEnrollment>();
+					if(pk != null) {
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolEnrollment.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest2);
+					}
+					SchoolEnrollment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-						o2.setPk(pk);
-						o2.setSiteRequest_(siteRequest2);
-						futures.add(
-							service.patchSchoolEnrollmentFuture(o2, false, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
-								} else {
-									LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
-									eventHandler.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
+						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+
+							o2.setPk(pk);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolEnrollmentFuture(o2, false, a -> {
+									if(a.succeeded()) {
+										LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
+									} else {
+										LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
 					}
 				}
 
 				{
 					SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 					for(Long pk : o.getPaymentKeys()) {
-						SchoolPayment o2 = new SchoolPayment();
+					SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
+					if(pk != null) {
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolPayment.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest2);
+					}
+					SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-						o2.setPk(pk);
-						o2.setSiteRequest_(siteRequest2);
-						futures.add(
-							service.patchSchoolPaymentFuture(o2, false, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
-								} else {
-									LOGGER.info(String.format("SchoolPayment %s failed. ", pk));
-									eventHandler.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
+						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+
+							o2.setPk(pk);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolPaymentFuture(o2, false, a -> {
+									if(a.succeeded()) {
+										LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
+									} else {
+										LOGGER.info(String.format("SchoolPayment %s failed. ", pk));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
 					}
 				}
 

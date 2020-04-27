@@ -138,6 +138,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							postEcoleFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									Ecole ecole = c.result();
+									requeteApi.setPk(ecole.getPk());
 									requeteApiEcole(ecole);
 									postEcoleReponse(ecole, d -> {
 										if(d.succeeded()) {
@@ -180,6 +181,12 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						if(b.succeeded()) {
 							definirIndexerEcole(ecole, c -> {
 								if(c.succeeded()) {
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null) {
+										requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+										ecole.requeteApiEcole();
+										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+									}
 									gestionnaireEvenements.handle(Future.succeededFuture(ecole));
 									promise.complete(ecole);
 								} else {
@@ -330,9 +337,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("postEcole sql close. "));
-									RequeteApi requeteApi = requeteApiEcole(ecole);
-									ecole.requeteApiEcole();
-									requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -420,12 +424,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 														listeEcole.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
 														Ecole o = listeEcole.getList().stream().findFirst().orElse(null);
-														if(o != null) {
-															requeteApi.setPk(o.getPk());
-															requeteApi.setOriginal(o);
-															requeteApiEcole(o);
-															o.requeteApiEcole();
-														}
 														sqlEcole(requeteSite2, e -> {
 															if(e.succeeded()) {
 																try {
@@ -495,8 +493,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			futures.add(
 				patchEcoleFuture(o, false, a -> {
 					if(a.succeeded()) {
-							Ecole ecole = a.result();
-							requeteApiEcole(ecole);
 					} else {
 						erreurEcole(requeteSite, gestionnaireEvenements, a);
 					}
@@ -505,9 +501,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeEcole.size());
 				if(listeEcole.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHEcole(requeteApi, listeEcole, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHEcole(requeteSite, gestionnaireEvenements);
@@ -522,6 +516,11 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		Promise<Ecole> promise = Promise.promise();
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			if(requeteApi != null && requeteApi.getNumFound() == 1L) {
+				requeteApi.setOriginal(o);
+				requeteApi.setPk(o.getPk());
+			}
 			sqlPATCHEcole(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					Ecole ecole = a.result();
@@ -531,6 +530,14 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(c.succeeded()) {
 									indexerEcole(ecole, d -> {
 										if(d.succeeded()) {
+											if(requeteApi != null) {
+												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+												requeteApiEcole(ecole);
+												if(requeteApi.getNumFound() == 1L) {
+													ecole.requeteApiEcole();
+												}
+												requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+											}
 											gestionnaireEvenements.handle(Future.succeededFuture(ecole));
 											promise.complete(ecole);
 										} else {
@@ -827,6 +834,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("patchEcole sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1286,6 +1296,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putimportEcole sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1492,6 +1505,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putfusionEcole sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1813,6 +1829,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putcopieEcole sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -2175,6 +2194,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
 								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
+								RequeteApi requeteApi = new RequeteApi();
+								requeteApi.setRows(1);
+								requeteApi.setNumFound(1L);
+								requeteApi.setNumPATCH(0L);
+								requeteApi.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi);
+
 								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
 										UtilisateurSite utilisateurSite = b.result();
@@ -2244,6 +2270,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									RequeteApi requeteApi = new RequeteApi();
+									requeteApi.setRows(1);
+									requeteApi.setNumFound(1L);
+									requeteApi.setNumPATCH(0L);
+									requeteApi.initLoinRequeteApi(requeteSite2);
+									requeteSite2.setRequeteApi_(requeteApi);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
 										if(c.succeeded()) {
@@ -2490,7 +2523,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourEcole(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<Ecole> listeRecherche = new ListeRecherche<Ecole>();
-				listeRecherche.setPeupler(true);
+				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(Ecole.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
@@ -2502,20 +2535,39 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				{
 					AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					for(Long pk : o.getAnneeCles()) {
-						AnneeScolaire o2 = new AnneeScolaire();
+					ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
+					if(pk != null) {
+						listeRecherche2.setStocker(true);
+						listeRecherche2.setQuery("*:*");
+						listeRecherche2.setC(AnneeScolaire.class);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
+						listeRecherche2.setRows(1);
+						listeRecherche2.initLoinListeRecherche(requeteSite2);
+					}
+					AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite2);
-						futures.add(
-							service.patchAnneeScolaireFuture(o2, false, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
-								} else {
-									LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk));
-									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
+						if(o2 != null) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1l);
+							requeteApi.setNumPATCH(0L);
+							requeteApi.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi);
+							requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+
+							o2.setPk(pk);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchAnneeScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+										LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
+									} else {
+										LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
 					}
 				}
 

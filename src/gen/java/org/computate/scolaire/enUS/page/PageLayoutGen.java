@@ -12,6 +12,7 @@ import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -21,6 +22,7 @@ import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
+import io.vertx.core.logging.Logger;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -44,6 +46,7 @@ import java.lang.Object;
  * <br/>
  **/
 public abstract class PageLayoutGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(PageLayout.class);
 
 	///////////////
 	// pageParts //

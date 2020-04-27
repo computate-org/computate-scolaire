@@ -136,6 +136,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							postEnrollmentDesignFuture(siteRequest, false, c -> {
 								if(c.succeeded()) {
 									EnrollmentDesign enrollmentDesign = c.result();
+									apiRequest.setPk(enrollmentDesign.getPk());
 									apiRequestEnrollmentDesign(enrollmentDesign);
 									postEnrollmentDesignResponse(enrollmentDesign, d -> {
 										if(d.succeeded()) {
@@ -178,6 +179,12 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						if(b.succeeded()) {
 							defineIndexEnrollmentDesign(enrollmentDesign, c -> {
 								if(c.succeeded()) {
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null) {
+										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+										enrollmentDesign.apiRequestEnrollmentDesign();
+										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+									}
 									eventHandler.handle(Future.succeededFuture(enrollmentDesign));
 									promise.complete(enrollmentDesign);
 								} else {
@@ -295,9 +302,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("postEnrollmentDesign sql close. "));
-									ApiRequest apiRequest = apiRequestEnrollmentDesign(enrollmentDesign);
-									enrollmentDesign.apiRequestEnrollmentDesign();
-									siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -505,6 +509,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putimportEnrollmentDesign sql close. "));
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null)
+										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -711,6 +718,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putmergeEnrollmentDesign sql close. "));
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null)
+										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1010,6 +1020,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putcopyEnrollmentDesign sql close. "));
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null)
+										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1096,12 +1109,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 														listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
 														EnrollmentDesign o = listEnrollmentDesign.getList().stream().findFirst().orElse(null);
-														if(o != null) {
-															apiRequest.setPk(o.getPk());
-															apiRequest.setOriginal(o);
-															apiRequestEnrollmentDesign(o);
-															o.apiRequestEnrollmentDesign();
-														}
 														sqlEnrollmentDesign(siteRequest2, e -> {
 															if(e.succeeded()) {
 																try {
@@ -1171,8 +1178,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			futures.add(
 				patchEnrollmentDesignFuture(o, false, a -> {
 					if(a.succeeded()) {
-							EnrollmentDesign enrollmentDesign = a.result();
-							apiRequestEnrollmentDesign(enrollmentDesign);
 					} else {
 						errorEnrollmentDesign(siteRequest, eventHandler, a);
 					}
@@ -1181,9 +1186,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listEnrollmentDesign.size());
 				if(listEnrollmentDesign.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 					listPATCHEnrollmentDesign(apiRequest, listEnrollmentDesign, dt, eventHandler);
 				} else {
 					response200PATCHEnrollmentDesign(siteRequest, eventHandler);
@@ -1198,6 +1201,11 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		Promise<EnrollmentDesign> promise = Promise.promise();
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			if(apiRequest != null && apiRequest.getNumFound() == 1L) {
+				apiRequest.setOriginal(o);
+				apiRequest.setPk(o.getPk());
+			}
 			sqlPATCHEnrollmentDesign(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					EnrollmentDesign enrollmentDesign = a.result();
@@ -1207,6 +1215,14 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								if(c.succeeded()) {
 									indexEnrollmentDesign(enrollmentDesign, d -> {
 										if(d.succeeded()) {
+											if(apiRequest != null) {
+												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+												apiRequestEnrollmentDesign(enrollmentDesign);
+												if(apiRequest.getNumFound() == 1L) {
+													enrollmentDesign.apiRequestEnrollmentDesign();
+												}
+												siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+											}
 											eventHandler.handle(Future.succeededFuture(enrollmentDesign));
 											promise.complete(enrollmentDesign);
 										} else {
@@ -1387,6 +1403,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("patchEnrollmentDesign sql close. "));
+									ApiRequest apiRequest = siteRequest.getApiRequest_();
+									if(apiRequest != null)
+										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1996,6 +2015,13 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								siteRequest2.setUserId(siteRequest.getUserId());
 								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(1);
+								apiRequest.setNumFound(1L);
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest2);
+								siteRequest2.setApiRequest_(apiRequest);
+
 								userService.createSiteUser(siteRequest2, b -> {
 									if(b.succeeded()) {
 										SiteUser siteUser = b.result();
@@ -2065,6 +2091,13 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 									siteRequest2.setUserKey(siteRequest.getUserKey());
 									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 									siteUser.setSiteRequest_(siteRequest2);
+
+									ApiRequest apiRequest = new ApiRequest();
+									apiRequest.setRows(1);
+									apiRequest.setNumFound(1L);
+									apiRequest.setNumPATCH(0L);
+									apiRequest.initDeepApiRequest(siteRequest2);
+									siteRequest2.setApiRequest_(apiRequest);
 
 									userService.sqlPATCHSiteUser(siteUser, false, c -> {
 										if(c.succeeded()) {
@@ -2311,7 +2344,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<EnrollmentDesign> searchList = new SearchList<EnrollmentDesign>();
-				searchList.setPopulate(true);
+				searchList.setStore(true);
 				searchList.setQuery("*:*");
 				searchList.setC(EnrollmentDesign.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");

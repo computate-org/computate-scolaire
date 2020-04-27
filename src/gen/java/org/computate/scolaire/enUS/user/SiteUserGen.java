@@ -63,7 +63,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public static final String SiteUser_SearchAllNameBy = "search site users by ";
 	public static final String SiteUser_ThePluralName = "the site users";
 	public static final String SiteUser_NoNameFound = "no site user found";
-	public static final String SiteUser_NameVar = "siteUser";
+	public static final String SiteUser_NameVar = "user";
 	public static final String SiteUser_OfName = "of site user";
 	public static final String SiteUser_ANameAdjective = "a site user";
 	public static final String SiteUser_NameAdjectiveSingular = "site user";

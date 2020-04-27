@@ -120,6 +120,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							postPaiementScolaireFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									PaiementScolaire paiementScolaire = c.result();
+									requeteApi.setPk(paiementScolaire.getPk());
 									requeteApiPaiementScolaire(paiementScolaire);
 									postPaiementScolaireReponse(paiementScolaire, d -> {
 										if(d.succeeded()) {
@@ -162,6 +163,12 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						if(b.succeeded()) {
 							definirIndexerPaiementScolaire(paiementScolaire, c -> {
 								if(c.succeeded()) {
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null) {
+										requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+										paiementScolaire.requeteApiPaiementScolaire();
+										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+									}
 									gestionnaireEvenements.handle(Future.succeededFuture(paiementScolaire));
 									promise.complete(paiementScolaire);
 								} else {
@@ -391,9 +398,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("postPaiementScolaire sql close. "));
-									RequeteApi requeteApi = requeteApiPaiementScolaire(paiementScolaire);
-									paiementScolaire.requeteApiPaiementScolaire();
-									requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -583,6 +587,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putimportPaiementScolaire sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -771,6 +778,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putfusionPaiementScolaire sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1144,6 +1154,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putcopiePaiementScolaire sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1212,12 +1225,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 														listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
 														PaiementScolaire o = listePaiementScolaire.getList().stream().findFirst().orElse(null);
-														if(o != null) {
-															requeteApi.setPk(o.getPk());
-															requeteApi.setOriginal(o);
-															requeteApiPaiementScolaire(o);
-															o.requeteApiPaiementScolaire();
-														}
 														sqlPaiementScolaire(requeteSite2, e -> {
 															if(e.succeeded()) {
 																try {
@@ -1287,8 +1294,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			futures.add(
 				patchPaiementScolaireFuture(o, false, a -> {
 					if(a.succeeded()) {
-							PaiementScolaire paiementScolaire = a.result();
-							requeteApiPaiementScolaire(paiementScolaire);
 					} else {
 						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, a);
 					}
@@ -1297,9 +1302,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listePaiementScolaire.size());
 				if(listePaiementScolaire.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHPaiementScolaire(requeteSite, gestionnaireEvenements);
@@ -1314,6 +1317,11 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		Promise<PaiementScolaire> promise = Promise.promise();
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			if(requeteApi != null && requeteApi.getNumFound() == 1L) {
+				requeteApi.setOriginal(o);
+				requeteApi.setPk(o.getPk());
+			}
 			sqlPATCHPaiementScolaire(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					PaiementScolaire paiementScolaire = a.result();
@@ -1323,6 +1331,14 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								if(c.succeeded()) {
 									indexerPaiementScolaire(paiementScolaire, d -> {
 										if(d.succeeded()) {
+											if(requeteApi != null) {
+												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+												requeteApiPaiementScolaire(paiementScolaire);
+												if(requeteApi.getNumFound() == 1L) {
+													paiementScolaire.requeteApiPaiementScolaire();
+												}
+												requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+											}
 											gestionnaireEvenements.handle(Future.succeededFuture(paiementScolaire));
 											promise.complete(paiementScolaire);
 										} else {
@@ -1767,6 +1783,9 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("patchPaiementScolaire sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -2319,6 +2338,13 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
 								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
+								RequeteApi requeteApi = new RequeteApi();
+								requeteApi.setRows(1);
+								requeteApi.setNumFound(1L);
+								requeteApi.setNumPATCH(0L);
+								requeteApi.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi);
+
 								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
 										UtilisateurSite utilisateurSite = b.result();
@@ -2388,6 +2414,13 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									RequeteApi requeteApi = new RequeteApi();
+									requeteApi.setRows(1);
+									requeteApi.setNumFound(1L);
+									requeteApi.setNumPATCH(0L);
+									requeteApi.initLoinRequeteApi(requeteSite2);
+									requeteSite2.setRequeteApi_(requeteApi);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
 										if(c.succeeded()) {
@@ -2648,7 +2681,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
-				listeRecherche.setPeupler(true);
+				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PaiementScolaire.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
@@ -2658,23 +2691,43 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				List<Future> futures = new ArrayList<>();
 
 				{
-					InscriptionScolaire o2 = new InscriptionScolaire();
-					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 					Long pk = o.getInscriptionCle();
-
+					ListeRecherche<InscriptionScolaire> listeRecherche2 = new ListeRecherche<InscriptionScolaire>();
 					if(pk != null) {
-						o2.setPk(pk);
-						o2.setRequeteSite_(requeteSite2);
-						futures.add(
-							service.patchInscriptionScolaireFuture(o2, false, a -> {
-								if(a.succeeded()) {
-									LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
-								} else {
-									LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
-									gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-								}
-							})
-						);
+						listeRecherche2.setStocker(true);
+						listeRecherche2.setQuery("*:*");
+						listeRecherche2.setC(InscriptionScolaire.class);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
+						listeRecherche2.setRows(1);
+						listeRecherche2.initLoinListeRecherche(requeteSite2);
+					}
+					InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+					if(o2 != null) {
+						InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite2);
+						requeteSite2.setRequeteApi_(requeteApi);
+						requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+
+						if(pk != null) {
+							o2.setPk(pk);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchInscriptionScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+										LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
+									} else {
+										LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
 					}
 				}
 

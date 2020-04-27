@@ -118,6 +118,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							postClusterFuture(requeteSite, false, c -> {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
+									requeteApi.setPk(cluster.getPk());
 									requeteApiCluster(cluster);
 									postClusterReponse(cluster, d -> {
 										if(d.succeeded()) {
@@ -160,6 +161,12 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						if(b.succeeded()) {
 							definirIndexerCluster(cluster, c -> {
 								if(c.succeeded()) {
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null) {
+										requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+										cluster.requeteApiCluster();
+										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+									}
 									gestionnaireEvenements.handle(Future.succeededFuture(cluster));
 									promise.complete(cluster);
 								} else {
@@ -269,9 +276,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("postCluster sql close. "));
-									RequeteApi requeteApi = requeteApiCluster(cluster);
-									cluster.requeteApiCluster();
-									requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -461,6 +465,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putimportCluster sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -649,6 +656,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putfusionCluster sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -922,6 +932,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("putcopieCluster sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -990,12 +1003,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 														listeCluster.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
 														Cluster o = listeCluster.getList().stream().findFirst().orElse(null);
-														if(o != null) {
-															requeteApi.setPk(o.getPk());
-															requeteApi.setOriginal(o);
-															requeteApiCluster(o);
-															o.requeteApiCluster();
-														}
 														sqlCluster(requeteSite2, e -> {
 															if(e.succeeded()) {
 																try {
@@ -1065,8 +1072,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			futures.add(
 				patchClusterFuture(o, false, a -> {
 					if(a.succeeded()) {
-							Cluster cluster = a.result();
-							requeteApiCluster(cluster);
 					} else {
 						erreurCluster(requeteSite, gestionnaireEvenements, a);
 					}
@@ -1075,9 +1080,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeCluster.size());
 				if(listeCluster.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 					listePATCHCluster(requeteApi, listeCluster, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHCluster(requeteSite, gestionnaireEvenements);
@@ -1092,6 +1095,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		Promise<Cluster> promise = Promise.promise();
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			if(requeteApi != null && requeteApi.getNumFound() == 1L) {
+				requeteApi.setOriginal(o);
+				requeteApi.setPk(o.getPk());
+			}
 			sqlPATCHCluster(o, inheritPk, a -> {
 				if(a.succeeded()) {
 					Cluster cluster = a.result();
@@ -1101,6 +1109,14 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								if(c.succeeded()) {
 									indexerCluster(cluster, d -> {
 										if(d.succeeded()) {
+											if(requeteApi != null) {
+												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+												requeteApiCluster(cluster);
+												if(requeteApi.getNumFound() == 1L) {
+													cluster.requeteApiCluster();
+												}
+												requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+											}
 											gestionnaireEvenements.handle(Future.succeededFuture(cluster));
 											promise.complete(cluster);
 										} else {
@@ -1261,6 +1277,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
 									LOGGER.info(String.format("patchCluster sql close. "));
+									RequeteApi requeteApi = requeteSite.getRequeteApi_();
+									if(requeteApi != null)
+										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1807,6 +1826,13 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
 								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
+								RequeteApi requeteApi = new RequeteApi();
+								requeteApi.setRows(1);
+								requeteApi.setNumFound(1L);
+								requeteApi.setNumPATCH(0L);
+								requeteApi.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi);
+
 								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
 									if(b.succeeded()) {
 										UtilisateurSite utilisateurSite = b.result();
@@ -1876,6 +1902,13 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
 									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 									utilisateurSite.setRequeteSite_(requeteSite2);
+
+									RequeteApi requeteApi = new RequeteApi();
+									requeteApi.setRows(1);
+									requeteApi.setNumFound(1L);
+									requeteApi.setNumPATCH(0L);
+									requeteApi.initLoinRequeteApi(requeteSite2);
+									requeteSite2.setRequeteApi_(requeteApi);
 
 									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
 										if(c.succeeded()) {
@@ -2131,7 +2164,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourCluster(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();
-				listeRecherche.setPeupler(true);
+				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(Cluster.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");

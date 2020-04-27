@@ -61,7 +61,10 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
 				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
 				) {
-			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
+			l.addFilterQuery(
+				"sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----"))
+						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
+			);
 		}
 
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
@@ -119,7 +122,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			while(i < size) {
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
-				if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
+				if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 					blockKeyBefore = enrollment.getBlockKey();
 					enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
 					enrollmentBlocks.add(enrollment);
@@ -161,7 +164,8 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 				String val = siteRequest_.getRequestVars().get(var);
 				if(!"design".equals(var)) {
 					String varIndexed = SchoolYear.varIndexedSchoolYear(var);
-					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 				}
 			}
 		}

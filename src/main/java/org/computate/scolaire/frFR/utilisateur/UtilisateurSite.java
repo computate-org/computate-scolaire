@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.utilisateur;             
+package org.computate.scolaire.frFR.utilisateur;          
 
 import java.util.List;
 
@@ -46,10 +46,13 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * IconeGroupe: regular
  * IconeNom: user-cog
  * 
+ * NomVar.frFR: utilisateur
+ * NomVar.enUS: user
+ * 
  * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */  
+ */      
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
 
 	/**

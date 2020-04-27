@@ -513,7 +513,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: pageHomeUri
 	 */
 	protected void _pageAccueilUri(Couverture<String> c)  {
-		c.o("");
+		c.o("/");
 	}
 
 	/**
