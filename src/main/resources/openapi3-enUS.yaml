@@ -10440,1043 +10440,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /api/dad:
-    post:
-      operationId: postSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTSchoolDadRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/POSTSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    patch:
-      operationId: patchSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PATCHSchoolDadRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PATCHSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    get:
-      operationId: searchSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/dad/copy:
-    put:
-      operationId: putcopySchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PUTCopySchoolDadRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PUTCopySchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/dad/import:
-    put:
-      operationId: putimportSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PUTImportSchoolDadRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PUTImportSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/dad/merge:
-    put:
-      operationId: putmergeSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PUTMergeSchoolDadRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PUTMergeSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/dad/{id}:
-    get:
-      operationId: getSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/GETSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /dad:
-    get:
-      operationId: searchpageSchoolDad
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /dad/{id}:
-    get:
-      operationId: searchpageSchoolDadId
-      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
-      description: >+
-      summary: >+
-      tags:
-        - Dad
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: var
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolDadResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
   /api/mom:
     post:
       operationId: postSchoolMom
@@ -12468,6 +11431,1043 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/requestBodies/SearchPageSchoolMomResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/dad:
+    post:
+      operationId: postSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSchoolDadRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSchoolDadRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: searchSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/dad/copy:
+    put:
+      operationId: putcopySchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTCopySchoolDadRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PUTCopySchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/dad/import:
+    put:
+      operationId: putimportSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTImportSchoolDadRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PUTImportSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/dad/merge:
+    put:
+      operationId: putmergeSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTMergeSchoolDadRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PUTMergeSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/dad/{id}:
+    get:
+      operationId: getSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /dad:
+    get:
+      operationId: searchpageSchoolDad
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolDadResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /dad/{id}:
+    get:
+      operationId: searchpageSchoolDadId
+      x-vertx-event-bus: computate-scolaire-enUS-SchoolDad
+      description: >+
+      summary: >+
+      tags:
+        - Dad
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolDadResponse'
         '400':
           description: >+
                 <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
@@ -16109,6 +16109,258 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /email:
+    get:
+      operationId: designemailsearchpagePageDesign
+      x-vertx-event-bus: computate-scolaire-enUS-PageDesign
+      description: >+
+      summary: >+
+      tags:
+        - Page Design
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/requestBodies/DesignEmailSearchPagePageDesignResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /email/{id}:
+    get:
+      operationId: designemailsearchpagePageDesignId
+      x-vertx-event-bus: computate-scolaire-enUS-PageDesign
+      description: >+
+      summary: >+
+      tags:
+        - Page Design
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/requestBodies/DesignEmailSearchPagePageDesignResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
   /page:
     get:
       operationId: designdisplaysearchpagePageDesign
@@ -16567,6 +16819,258 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/requestBodies/SearchPagePageDesignResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /pdf:
+    get:
+      operationId: designpdfsearchpagePageDesign
+      x-vertx-event-bus: computate-scolaire-enUS-PageDesign
+      description: >+
+      summary: >+
+      tags:
+        - Page Design
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/requestBodies/DesignPdfSearchPagePageDesignResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /pdf/{id}:
+    get:
+      operationId: designpdfsearchpagePageDesignId
+      x-vertx-event-bus: computate-scolaire-enUS-PageDesign
+      description: >+
+      summary: >+
+      tags:
+        - Page Design
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: var
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/requestBodies/DesignPdfSearchPagePageDesignResponse'
         '400':
           description: >+
                 <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
@@ -19362,71 +19866,6 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSchoolChildResponse'
-    POSTSchoolDadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolDadRequest'
-    POSTSchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolDadResponse'
-    PATCHSchoolDadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolDadRequest'
-    PATCHSchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolDadResponse'
-    SearchSchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchSchoolDadResponse'
-    PUTCopySchoolDadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PUTCopySchoolDadRequest'
-    PUTCopySchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PUTCopySchoolDadResponse'
-    PUTImportSchoolDadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PUTImportSchoolDadRequest'
-    PUTImportSchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PUTImportSchoolDadResponse'
-    PUTMergeSchoolDadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PUTMergeSchoolDadRequest'
-    PUTMergeSchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PUTMergeSchoolDadResponse'
-    GETSchoolDadResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/GETSchoolDadResponse'
-    SearchPageSchoolDadResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchPageSchoolDadResponse'
     POSTSchoolMomRequest:
       content:
         application/json:
@@ -19492,6 +19931,71 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSchoolMomResponse'
+    POSTSchoolDadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolDadRequest'
+    POSTSchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolDadResponse'
+    PATCHSchoolDadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolDadRequest'
+    PATCHSchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolDadResponse'
+    SearchSchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSchoolDadResponse'
+    PUTCopySchoolDadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PUTCopySchoolDadRequest'
+    PUTCopySchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PUTCopySchoolDadResponse'
+    PUTImportSchoolDadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PUTImportSchoolDadRequest'
+    PUTImportSchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PUTImportSchoolDadResponse'
+    PUTMergeSchoolDadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PUTMergeSchoolDadRequest'
+    PUTMergeSchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PUTMergeSchoolDadResponse'
+    GETSchoolDadResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSchoolDadResponse'
+    SearchPageSchoolDadResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSchoolDadResponse'
     POSTSchoolGuardianRequest:
       content:
         application/json:
@@ -19717,6 +20221,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/GETPageDesignResponse'
+    DesignEmailSearchPagePageDesignResponse:
+      content:
+        application/pdf:
+          schema:
+            $ref: '#/components/schemas/DesignEmailSearchPagePageDesignResponse'
     DesignDisplaySearchPagePageDesignResponse:
       content:
         text/html; charset=utf-8:
@@ -19727,6 +20236,11 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPagePageDesignResponse'
+    DesignPdfSearchPagePageDesignResponse:
+      content:
+        application/pdf:
+          schema:
+            $ref: '#/components/schemas/DesignPdfSearchPagePageDesignResponse'
     POSTHtmlPartRequest:
       content:
         application/json:
@@ -34866,1201 +35380,6 @@ components:
     SearchPageSchoolChildResponse:
       allOf:
         - type: string
-    POSTSchoolDadRequest:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterRequest"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    POSTSchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterResponse"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    PATCHSchoolDadRequest:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterRequest"
-        - type: object
-          properties:
-            setDadKey:
-              type: string
-              nullable: true
-            removeDadKey:
-              type: string
-            removeAllDadKey:
-              type: string
-            setEnrollmentKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeEnrollmentKeys:
-              type: string
-            removeAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
-            addEnrollmentKeys:
-              type: string
-            addAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
-            setFamilySort:
-              type: string
-              nullable: true
-            removeFamilySort:
-              type: string
-            removeAllFamilySort:
-              type: string
-            setSchoolSort:
-              type: string
-              nullable: true
-            removeSchoolSort:
-              type: string
-            removeAllSchoolSort:
-              type: string
-            setUserKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeUserKeys:
-              type: string
-            removeAllUserKeys:
-              type: array
-              items:
-                type: string
-            addUserKeys:
-              type: string
-            addAllUserKeys:
-              type: array
-              items:
-                type: string
-            setSchoolKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSchoolKeys:
-              type: string
-            removeAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            addSchoolKeys:
-              type: string
-            addAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            setYearKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeYearKeys:
-              type: string
-            removeAllYearKeys:
-              type: array
-              items:
-                type: string
-            addYearKeys:
-              type: string
-            addAllYearKeys:
-              type: array
-              items:
-                type: string
-            setSeasonKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSeasonKeys:
-              type: string
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            addSeasonKeys:
-              type: string
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            setSessionKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSessionKeys:
-              type: string
-            removeAllSessionKeys:
-              type: array
-              items:
-                type: string
-            addSessionKeys:
-              type: string
-            addAllSessionKeys:
-              type: array
-              items:
-                type: string
-            setAgeKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAgeKeys:
-              type: string
-            removeAllAgeKeys:
-              type: array
-              items:
-                type: string
-            addAgeKeys:
-              type: string
-            addAllAgeKeys:
-              type: array
-              items:
-                type: string
-            setPersonFirstName:
-              type: string
-              nullable: true
-            removePersonFirstName:
-              type: string
-            removeAllPersonFirstName:
-              type: string
-            setPersonFirstNamePreferred:
-              type: string
-              nullable: true
-            removePersonFirstNamePreferred:
-              type: string
-            removeAllPersonFirstNamePreferred:
-              type: string
-            setFamilyName:
-              type: string
-              nullable: true
-            removeFamilyName:
-              type: string
-            removeAllFamilyName:
-              type: string
-            setPersonCompleteName:
-              type: string
-              nullable: true
-            removePersonCompleteName:
-              type: string
-            removeAllPersonCompleteName:
-              type: string
-            setPersonCompleteNamePreferred:
-              type: string
-              nullable: true
-            removePersonCompleteNamePreferred:
-              type: string
-            removeAllPersonCompleteNamePreferred:
-              type: string
-            setPersonFormalName:
-              type: string
-              nullable: true
-            removePersonFormalName:
-              type: string
-            removeAllPersonFormalName:
-              type: string
-            setPersonOccupation:
-              type: string
-              nullable: true
-            removePersonOccupation:
-              type: string
-            removeAllPersonOccupation:
-              type: string
-            setPersonPhoneNumber:
-              type: string
-              nullable: true
-            removePersonPhoneNumber:
-              type: string
-            removeAllPersonPhoneNumber:
-              type: string
-            setPersonEmail:
-              type: string
-              nullable: true
-            removePersonEmail:
-              type: string
-            removeAllPersonEmail:
-              type: string
-            setPersonRelation:
-              type: string
-              nullable: true
-            removePersonRelation:
-              type: string
-            removeAllPersonRelation:
-              type: string
-            setPersonSms:
-              type: boolean
-              nullable: true
-            removePersonSms:
-              type: boolean
-            removeAllPersonSms:
-              type: boolean
-            setPersonReceiveEmail:
-              type: boolean
-              nullable: true
-            removePersonReceiveEmail:
-              type: boolean
-            removeAllPersonReceiveEmail:
-              type: boolean
-            setPersonEmergencyContact:
-              type: boolean
-              nullable: true
-            removePersonEmergencyContact:
-              type: boolean
-            removeAllPersonEmergencyContact:
-              type: boolean
-            setPersonPickup:
-              type: boolean
-              nullable: true
-            removePersonPickup:
-              type: boolean
-            removeAllPersonPickup:
-              type: boolean
-            setDadCompleteName:
-              type: string
-              nullable: true
-            removeDadCompleteName:
-              type: string
-            removeAllDadCompleteName:
-              type: string
-    PATCHSchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterResponse"
-        - type: object
-          properties:
-            setDadKey:
-              type: string
-              nullable: true
-            removeDadKey:
-              type: string
-            removeAllDadKey:
-              type: string
-            setEnrollmentKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeEnrollmentKeys:
-              type: string
-            removeAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
-            addEnrollmentKeys:
-              type: string
-            addAllEnrollmentKeys:
-              type: array
-              items:
-                type: string
-            setFamilySort:
-              type: string
-              nullable: true
-            removeFamilySort:
-              type: string
-            removeAllFamilySort:
-              type: string
-            setSchoolSort:
-              type: string
-              nullable: true
-            removeSchoolSort:
-              type: string
-            removeAllSchoolSort:
-              type: string
-            setUserKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeUserKeys:
-              type: string
-            removeAllUserKeys:
-              type: array
-              items:
-                type: string
-            addUserKeys:
-              type: string
-            addAllUserKeys:
-              type: array
-              items:
-                type: string
-            setSchoolKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSchoolKeys:
-              type: string
-            removeAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            addSchoolKeys:
-              type: string
-            addAllSchoolKeys:
-              type: array
-              items:
-                type: string
-            setYearKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeYearKeys:
-              type: string
-            removeAllYearKeys:
-              type: array
-              items:
-                type: string
-            addYearKeys:
-              type: string
-            addAllYearKeys:
-              type: array
-              items:
-                type: string
-            setSeasonKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSeasonKeys:
-              type: string
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            addSeasonKeys:
-              type: string
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: string
-            setSessionKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSessionKeys:
-              type: string
-            removeAllSessionKeys:
-              type: array
-              items:
-                type: string
-            addSessionKeys:
-              type: string
-            addAllSessionKeys:
-              type: array
-              items:
-                type: string
-            setAgeKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAgeKeys:
-              type: string
-            removeAllAgeKeys:
-              type: array
-              items:
-                type: string
-            addAgeKeys:
-              type: string
-            addAllAgeKeys:
-              type: array
-              items:
-                type: string
-            setPersonFirstName:
-              type: string
-              nullable: true
-            removePersonFirstName:
-              type: string
-            removeAllPersonFirstName:
-              type: string
-            setPersonFirstNamePreferred:
-              type: string
-              nullable: true
-            removePersonFirstNamePreferred:
-              type: string
-            removeAllPersonFirstNamePreferred:
-              type: string
-            setFamilyName:
-              type: string
-              nullable: true
-            removeFamilyName:
-              type: string
-            removeAllFamilyName:
-              type: string
-            setPersonCompleteName:
-              type: string
-              nullable: true
-            removePersonCompleteName:
-              type: string
-            removeAllPersonCompleteName:
-              type: string
-            setPersonCompleteNamePreferred:
-              type: string
-              nullable: true
-            removePersonCompleteNamePreferred:
-              type: string
-            removeAllPersonCompleteNamePreferred:
-              type: string
-            setPersonFormalName:
-              type: string
-              nullable: true
-            removePersonFormalName:
-              type: string
-            removeAllPersonFormalName:
-              type: string
-            setPersonOccupation:
-              type: string
-              nullable: true
-            removePersonOccupation:
-              type: string
-            removeAllPersonOccupation:
-              type: string
-            setPersonPhoneNumber:
-              type: string
-              nullable: true
-            removePersonPhoneNumber:
-              type: string
-            removeAllPersonPhoneNumber:
-              type: string
-            setPersonEmail:
-              type: string
-              nullable: true
-            removePersonEmail:
-              type: string
-            removeAllPersonEmail:
-              type: string
-            setPersonRelation:
-              type: string
-              nullable: true
-            removePersonRelation:
-              type: string
-            removeAllPersonRelation:
-              type: string
-            setPersonSms:
-              type: boolean
-              nullable: true
-            removePersonSms:
-              type: boolean
-            removeAllPersonSms:
-              type: boolean
-            setPersonReceiveEmail:
-              type: boolean
-              nullable: true
-            removePersonReceiveEmail:
-              type: boolean
-            removeAllPersonReceiveEmail:
-              type: boolean
-            setPersonEmergencyContact:
-              type: boolean
-              nullable: true
-            removePersonEmergencyContact:
-              type: boolean
-            removeAllPersonEmergencyContact:
-              type: boolean
-            setPersonPickup:
-              type: boolean
-              nullable: true
-            removePersonPickup:
-              type: boolean
-            removeAllPersonPickup:
-              type: boolean
-            setDadCompleteName:
-              type: string
-              nullable: true
-            removeDadCompleteName:
-              type: string
-            removeAllDadCompleteName:
-              type: string
-    SearchSchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/SearchClusterResponse"
-        - type: array
-          items:
-            type: object
-            properties:
-              dadKey:
-                type: string
-              enrollmentKeys:
-                type: array
-                items:
-                  type: string
-              familySort:
-                type: string
-              schoolSort:
-                type: string
-              userKeys:
-                type: array
-                items:
-                  type: string
-              schoolKeys:
-                type: array
-                items:
-                  type: string
-              yearKeys:
-                type: array
-                items:
-                  type: string
-              seasonKeys:
-                type: array
-                items:
-                  type: string
-              sessionKeys:
-                type: array
-                items:
-                  type: string
-              ageKeys:
-                type: array
-                items:
-                  type: string
-              personFirstName:
-                type: string
-              personFirstNamePreferred:
-                type: string
-              familyName:
-                type: string
-              personCompleteName:
-                type: string
-              personCompleteNamePreferred:
-                type: string
-              personFormalName:
-                type: string
-              personOccupation:
-                type: string
-              personPhoneNumber:
-                type: string
-              personEmail:
-                type: string
-              personRelation:
-                type: string
-              personSms:
-                type: boolean
-              personReceiveEmail:
-                type: boolean
-              personEmergencyContact:
-                type: boolean
-              personPickup:
-                type: boolean
-              dadCompleteName:
-                type: string
-    PUTCopySchoolDadRequest:
-      allOf:
-        - $ref: "#/components/schemas/PUTCopyClusterRequest"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    PUTCopySchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/PUTCopyClusterResponse"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    PUTImportSchoolDadRequest:
-      allOf:
-        - $ref: "#/components/schemas/PUTImportClusterRequest"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    PUTImportSchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/PUTImportClusterResponse"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    PUTMergeSchoolDadRequest:
-      allOf:
-        - $ref: "#/components/schemas/PUTMergeClusterRequest"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    PUTMergeSchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/PUTMergeClusterResponse"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    GETSchoolDadResponse:
-      allOf:
-        - $ref: "#/components/schemas/GETClusterResponse"
-        - type: object
-          properties:
-            dadKey:
-              type: string
-            enrollmentKeys:
-              type: array
-              items:
-                type: string
-            familySort:
-              type: string
-            schoolSort:
-              type: string
-            userKeys:
-              type: array
-              items:
-                type: string
-            schoolKeys:
-              type: array
-              items:
-                type: string
-            yearKeys:
-              type: array
-              items:
-                type: string
-            seasonKeys:
-              type: array
-              items:
-                type: string
-            sessionKeys:
-              type: array
-              items:
-                type: string
-            ageKeys:
-              type: array
-              items:
-                type: string
-            personFirstName:
-              type: string
-            personFirstNamePreferred:
-              type: string
-            familyName:
-              type: string
-            personCompleteName:
-              type: string
-            personCompleteNamePreferred:
-              type: string
-            personFormalName:
-              type: string
-            personOccupation:
-              type: string
-            personPhoneNumber:
-              type: string
-            personEmail:
-              type: string
-            personRelation:
-              type: string
-            personSms:
-              type: boolean
-            personReceiveEmail:
-              type: boolean
-            personEmergencyContact:
-              type: boolean
-            personPickup:
-              type: boolean
-            dadCompleteName:
-              type: string
-    SearchPageSchoolDadResponse:
-      allOf:
-        - type: string
     POSTSchoolMomRequest:
       allOf:
         - $ref: "#/components/schemas/POSTClusterRequest"
@@ -37254,6 +36573,1201 @@ components:
             momCompleteName:
               type: string
     SearchPageSchoolMomResponse:
+      allOf:
+        - type: string
+    POSTSchoolDadRequest:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequest"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    POSTSchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterResponse"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    PATCHSchoolDadRequest:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequest"
+        - type: object
+          properties:
+            setDadKey:
+              type: string
+              nullable: true
+            removeDadKey:
+              type: string
+            removeAllDadKey:
+              type: string
+            setEnrollmentKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeEnrollmentKeys:
+              type: string
+            removeAllEnrollmentKeys:
+              type: array
+              items:
+                type: string
+            addEnrollmentKeys:
+              type: string
+            addAllEnrollmentKeys:
+              type: array
+              items:
+                type: string
+            setFamilySort:
+              type: string
+              nullable: true
+            removeFamilySort:
+              type: string
+            removeAllFamilySort:
+              type: string
+            setSchoolSort:
+              type: string
+              nullable: true
+            removeSchoolSort:
+              type: string
+            removeAllSchoolSort:
+              type: string
+            setUserKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeUserKeys:
+              type: string
+            removeAllUserKeys:
+              type: array
+              items:
+                type: string
+            addUserKeys:
+              type: string
+            addAllUserKeys:
+              type: array
+              items:
+                type: string
+            setSchoolKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSchoolKeys:
+              type: string
+            removeAllSchoolKeys:
+              type: array
+              items:
+                type: string
+            addSchoolKeys:
+              type: string
+            addAllSchoolKeys:
+              type: array
+              items:
+                type: string
+            setYearKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeYearKeys:
+              type: string
+            removeAllYearKeys:
+              type: array
+              items:
+                type: string
+            addYearKeys:
+              type: string
+            addAllYearKeys:
+              type: array
+              items:
+                type: string
+            setSeasonKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSeasonKeys:
+              type: string
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            addSeasonKeys:
+              type: string
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            setSessionKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSessionKeys:
+              type: string
+            removeAllSessionKeys:
+              type: array
+              items:
+                type: string
+            addSessionKeys:
+              type: string
+            addAllSessionKeys:
+              type: array
+              items:
+                type: string
+            setAgeKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAgeKeys:
+              type: string
+            removeAllAgeKeys:
+              type: array
+              items:
+                type: string
+            addAgeKeys:
+              type: string
+            addAllAgeKeys:
+              type: array
+              items:
+                type: string
+            setPersonFirstName:
+              type: string
+              nullable: true
+            removePersonFirstName:
+              type: string
+            removeAllPersonFirstName:
+              type: string
+            setPersonFirstNamePreferred:
+              type: string
+              nullable: true
+            removePersonFirstNamePreferred:
+              type: string
+            removeAllPersonFirstNamePreferred:
+              type: string
+            setFamilyName:
+              type: string
+              nullable: true
+            removeFamilyName:
+              type: string
+            removeAllFamilyName:
+              type: string
+            setPersonCompleteName:
+              type: string
+              nullable: true
+            removePersonCompleteName:
+              type: string
+            removeAllPersonCompleteName:
+              type: string
+            setPersonCompleteNamePreferred:
+              type: string
+              nullable: true
+            removePersonCompleteNamePreferred:
+              type: string
+            removeAllPersonCompleteNamePreferred:
+              type: string
+            setPersonFormalName:
+              type: string
+              nullable: true
+            removePersonFormalName:
+              type: string
+            removeAllPersonFormalName:
+              type: string
+            setPersonOccupation:
+              type: string
+              nullable: true
+            removePersonOccupation:
+              type: string
+            removeAllPersonOccupation:
+              type: string
+            setPersonPhoneNumber:
+              type: string
+              nullable: true
+            removePersonPhoneNumber:
+              type: string
+            removeAllPersonPhoneNumber:
+              type: string
+            setPersonEmail:
+              type: string
+              nullable: true
+            removePersonEmail:
+              type: string
+            removeAllPersonEmail:
+              type: string
+            setPersonRelation:
+              type: string
+              nullable: true
+            removePersonRelation:
+              type: string
+            removeAllPersonRelation:
+              type: string
+            setPersonSms:
+              type: boolean
+              nullable: true
+            removePersonSms:
+              type: boolean
+            removeAllPersonSms:
+              type: boolean
+            setPersonReceiveEmail:
+              type: boolean
+              nullable: true
+            removePersonReceiveEmail:
+              type: boolean
+            removeAllPersonReceiveEmail:
+              type: boolean
+            setPersonEmergencyContact:
+              type: boolean
+              nullable: true
+            removePersonEmergencyContact:
+              type: boolean
+            removeAllPersonEmergencyContact:
+              type: boolean
+            setPersonPickup:
+              type: boolean
+              nullable: true
+            removePersonPickup:
+              type: boolean
+            removeAllPersonPickup:
+              type: boolean
+            setDadCompleteName:
+              type: string
+              nullable: true
+            removeDadCompleteName:
+              type: string
+            removeAllDadCompleteName:
+              type: string
+    PATCHSchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterResponse"
+        - type: object
+          properties:
+            setDadKey:
+              type: string
+              nullable: true
+            removeDadKey:
+              type: string
+            removeAllDadKey:
+              type: string
+            setEnrollmentKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeEnrollmentKeys:
+              type: string
+            removeAllEnrollmentKeys:
+              type: array
+              items:
+                type: string
+            addEnrollmentKeys:
+              type: string
+            addAllEnrollmentKeys:
+              type: array
+              items:
+                type: string
+            setFamilySort:
+              type: string
+              nullable: true
+            removeFamilySort:
+              type: string
+            removeAllFamilySort:
+              type: string
+            setSchoolSort:
+              type: string
+              nullable: true
+            removeSchoolSort:
+              type: string
+            removeAllSchoolSort:
+              type: string
+            setUserKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeUserKeys:
+              type: string
+            removeAllUserKeys:
+              type: array
+              items:
+                type: string
+            addUserKeys:
+              type: string
+            addAllUserKeys:
+              type: array
+              items:
+                type: string
+            setSchoolKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSchoolKeys:
+              type: string
+            removeAllSchoolKeys:
+              type: array
+              items:
+                type: string
+            addSchoolKeys:
+              type: string
+            addAllSchoolKeys:
+              type: array
+              items:
+                type: string
+            setYearKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeYearKeys:
+              type: string
+            removeAllYearKeys:
+              type: array
+              items:
+                type: string
+            addYearKeys:
+              type: string
+            addAllYearKeys:
+              type: array
+              items:
+                type: string
+            setSeasonKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSeasonKeys:
+              type: string
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            addSeasonKeys:
+              type: string
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            setSessionKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSessionKeys:
+              type: string
+            removeAllSessionKeys:
+              type: array
+              items:
+                type: string
+            addSessionKeys:
+              type: string
+            addAllSessionKeys:
+              type: array
+              items:
+                type: string
+            setAgeKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAgeKeys:
+              type: string
+            removeAllAgeKeys:
+              type: array
+              items:
+                type: string
+            addAgeKeys:
+              type: string
+            addAllAgeKeys:
+              type: array
+              items:
+                type: string
+            setPersonFirstName:
+              type: string
+              nullable: true
+            removePersonFirstName:
+              type: string
+            removeAllPersonFirstName:
+              type: string
+            setPersonFirstNamePreferred:
+              type: string
+              nullable: true
+            removePersonFirstNamePreferred:
+              type: string
+            removeAllPersonFirstNamePreferred:
+              type: string
+            setFamilyName:
+              type: string
+              nullable: true
+            removeFamilyName:
+              type: string
+            removeAllFamilyName:
+              type: string
+            setPersonCompleteName:
+              type: string
+              nullable: true
+            removePersonCompleteName:
+              type: string
+            removeAllPersonCompleteName:
+              type: string
+            setPersonCompleteNamePreferred:
+              type: string
+              nullable: true
+            removePersonCompleteNamePreferred:
+              type: string
+            removeAllPersonCompleteNamePreferred:
+              type: string
+            setPersonFormalName:
+              type: string
+              nullable: true
+            removePersonFormalName:
+              type: string
+            removeAllPersonFormalName:
+              type: string
+            setPersonOccupation:
+              type: string
+              nullable: true
+            removePersonOccupation:
+              type: string
+            removeAllPersonOccupation:
+              type: string
+            setPersonPhoneNumber:
+              type: string
+              nullable: true
+            removePersonPhoneNumber:
+              type: string
+            removeAllPersonPhoneNumber:
+              type: string
+            setPersonEmail:
+              type: string
+              nullable: true
+            removePersonEmail:
+              type: string
+            removeAllPersonEmail:
+              type: string
+            setPersonRelation:
+              type: string
+              nullable: true
+            removePersonRelation:
+              type: string
+            removeAllPersonRelation:
+              type: string
+            setPersonSms:
+              type: boolean
+              nullable: true
+            removePersonSms:
+              type: boolean
+            removeAllPersonSms:
+              type: boolean
+            setPersonReceiveEmail:
+              type: boolean
+              nullable: true
+            removePersonReceiveEmail:
+              type: boolean
+            removeAllPersonReceiveEmail:
+              type: boolean
+            setPersonEmergencyContact:
+              type: boolean
+              nullable: true
+            removePersonEmergencyContact:
+              type: boolean
+            removeAllPersonEmergencyContact:
+              type: boolean
+            setPersonPickup:
+              type: boolean
+              nullable: true
+            removePersonPickup:
+              type: boolean
+            removeAllPersonPickup:
+              type: boolean
+            setDadCompleteName:
+              type: string
+              nullable: true
+            removeDadCompleteName:
+              type: string
+            removeAllDadCompleteName:
+              type: string
+    SearchSchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/SearchClusterResponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              dadKey:
+                type: string
+              enrollmentKeys:
+                type: array
+                items:
+                  type: string
+              familySort:
+                type: string
+              schoolSort:
+                type: string
+              userKeys:
+                type: array
+                items:
+                  type: string
+              schoolKeys:
+                type: array
+                items:
+                  type: string
+              yearKeys:
+                type: array
+                items:
+                  type: string
+              seasonKeys:
+                type: array
+                items:
+                  type: string
+              sessionKeys:
+                type: array
+                items:
+                  type: string
+              ageKeys:
+                type: array
+                items:
+                  type: string
+              personFirstName:
+                type: string
+              personFirstNamePreferred:
+                type: string
+              familyName:
+                type: string
+              personCompleteName:
+                type: string
+              personCompleteNamePreferred:
+                type: string
+              personFormalName:
+                type: string
+              personOccupation:
+                type: string
+              personPhoneNumber:
+                type: string
+              personEmail:
+                type: string
+              personRelation:
+                type: string
+              personSms:
+                type: boolean
+              personReceiveEmail:
+                type: boolean
+              personEmergencyContact:
+                type: boolean
+              personPickup:
+                type: boolean
+              dadCompleteName:
+                type: string
+    PUTCopySchoolDadRequest:
+      allOf:
+        - $ref: "#/components/schemas/PUTCopyClusterRequest"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    PUTCopySchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/PUTCopyClusterResponse"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    PUTImportSchoolDadRequest:
+      allOf:
+        - $ref: "#/components/schemas/PUTImportClusterRequest"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    PUTImportSchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/PUTImportClusterResponse"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    PUTMergeSchoolDadRequest:
+      allOf:
+        - $ref: "#/components/schemas/PUTMergeClusterRequest"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    PUTMergeSchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/PUTMergeClusterResponse"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    GETSchoolDadResponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterResponse"
+        - type: object
+          properties:
+            dadKey:
+              type: string
+            enrollmentKeys:
+              type: array
+              items:
+                type: string
+            familySort:
+              type: string
+            schoolSort:
+              type: string
+            userKeys:
+              type: array
+              items:
+                type: string
+            schoolKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            ageKeys:
+              type: array
+              items:
+                type: string
+            personFirstName:
+              type: string
+            personFirstNamePreferred:
+              type: string
+            familyName:
+              type: string
+            personCompleteName:
+              type: string
+            personCompleteNamePreferred:
+              type: string
+            personFormalName:
+              type: string
+            personOccupation:
+              type: string
+            personPhoneNumber:
+              type: string
+            personEmail:
+              type: string
+            personRelation:
+              type: string
+            personSms:
+              type: boolean
+            personReceiveEmail:
+              type: boolean
+            personEmergencyContact:
+              type: boolean
+            personPickup:
+              type: boolean
+            dadCompleteName:
+              type: string
+    SearchPageSchoolDadResponse:
       allOf:
         - type: string
     POSTSchoolGuardianRequest:
@@ -41303,12 +41817,20 @@ components:
               type: string
             designHidden:
               type: boolean
+    DesignEmailSearchPagePageDesignResponse:
+      allOf:
+        - type: string
+        - format: binary
     DesignDisplaySearchPagePageDesignResponse:
       allOf:
         - type: string
     SearchPagePageDesignResponse:
       allOf:
         - type: string
+    DesignPdfSearchPagePageDesignResponse:
+      allOf:
+        - type: string
+        - format: binary
     POSTHtmlPartRequest:
       allOf:
         - $ref: "#/components/schemas/POSTClusterRequest"
