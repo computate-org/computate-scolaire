@@ -180,7 +180,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
 /**
  * Translate: false
  **/
-public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
+public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
@@ -220,11 +220,11 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/page-design");
+		c.o("/email");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/page-design-999.png");
+			c.o("/png/email-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -235,19 +235,19 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 			c.o("drafting-compass");
 	}
 
-	@Override public void initDeepPageDesignGenPage() {
-		initPageDesignGenPage();
+	@Override public void initDeepDesignEmailGenPage() {
+		initDesignEmailGenPage();
 		super.initDeepPageLayout();
 	}
 
-	@Override public void htmlScriptsPageDesignGenPage() {
-		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
+	@Override public void htmlScriptsDesignEmailGenPage() {
+		e("script").a("src", staticBaseUrl, "/js/enUS/DesignEmailPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/HtmlPartPage.js").f().g("script");
 	}
 
-	@Override public void htmlScriptPageDesignGenPage() {
+	@Override public void htmlScriptDesignEmailGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "document.onkeydown = function(evt) {");
 		tl(2, "evt = evt || window.event;");
@@ -437,14 +437,14 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	@Override public void htmlBodyPageDesignGenPage() {
+	@Override public void htmlBodyDesignEmailGenPage() {
 
 		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		JsonObject params = operationRequest.getParams();
 		if(listPageDesign == null || listPageDesign.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/page-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+				{ e("a").a("href", "/email").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("page designs").g("span");
@@ -463,7 +463,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 			siteRequest_.setRequestPk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/page-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+					{ e("a").a("href", "/email").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 						if(contextIconCssClasses != null)
 							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -488,7 +488,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/page-design").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+				{ e("a").a("href", "/email").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -549,7 +549,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/page-design?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/email?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -557,25 +557,25 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/page-design?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/email?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/page-design?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/email?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/page-design?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/email?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
-				table1PageDesignGenPage();
+				table1DesignEmailGenPage();
 		}
 
 		if(listPageDesign != null && listPageDesign.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -602,29 +602,29 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 			} g("div");
 
 		}
-		htmlBodyFormsPageDesignGenPage();
+		htmlBodyFormsDesignEmailGenPage();
 		g("div");
 	}
 
-	public void table1PageDesignGenPage() {
+	public void table1DesignEmailGenPage() {
 		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-			table2PageDesignGenPage();
+			table2DesignEmailGenPage();
 		} g("table");
 	}
 
-	public void table2PageDesignGenPage() {
-		thead1PageDesignGenPage();
-		tbody1PageDesignGenPage();
-		tfoot1PageDesignGenPage();
+	public void table2DesignEmailGenPage() {
+		thead1DesignEmailGenPage();
+		tbody1DesignEmailGenPage();
+		tfoot1DesignEmailGenPage();
 	}
 
-	public void thead1PageDesignGenPage() {
+	public void thead1DesignEmailGenPage() {
 		{ e("thead").a("class", "w3-khaki w3-hover-khaki ").f();
-			thead2PageDesignGenPage();
+			thead2DesignEmailGenPage();
 		} g("thead");
 	}
 
-	public void thead2PageDesignGenPage() {
+	public void thead2DesignEmailGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
 				e("th").f().sx("created").g("th");
@@ -635,19 +635,19 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 			} g("tr");
 	}
 
-	public void tbody1PageDesignGenPage() {
+	public void tbody1DesignEmailGenPage() {
 		{ e("tbody").f();
-			tbody2PageDesignGenPage();
+			tbody2DesignEmailGenPage();
 		} g("tbody");
 	}
 
-	public void tbody2PageDesignGenPage() {
+	public void tbody2DesignEmailGenPage() {
 		Map<String, Map<String, List<String>>> highlighting = listPageDesign.getQueryResponse().getHighlighting();
 		for(int i = 0; i < listPageDesign.size(); i++) {
 			PageDesign o = listPageDesign.getList().get(i);
 			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-			String uri = "/page-design/" + o.getPk();
+			String uri = "/email/" + o.getPk();
 			{ e("tr").f();
 				if(getColumnCreated()) {
 					{ e("td").f();
@@ -672,13 +672,13 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		}
 	}
 
-	public void tfoot1PageDesignGenPage() {
+	public void tfoot1DesignEmailGenPage() {
 		{ e("tfoot").a("class", "w3-khaki w3-hover-khaki ").f();
-			tfoot2PageDesignGenPage();
+			tfoot2DesignEmailGenPage();
 		} g("tfoot");
 	}
 
-	public void tfoot2PageDesignGenPage() {
+	public void tfoot2DesignEmailGenPage() {
 		{ e("tr").f();
 			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listPageDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 			if(getColumnCreated()) {
@@ -700,7 +700,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		return true;
 	}
 
-	public void htmlBodyFormsPageDesignGenPage() {
+	public void htmlBodyFormsDesignEmailGenPage() {
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -710,8 +710,8 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 			if(listPageDesign != null && listPageDesign.size() == 1) {
 				{ e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-						.a("id", "refreshThisPageDesignGenPage")
-						.a("onclick", "patchPageDesignVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisPageDesignGenPage')); }, function() { addError($('#refreshThisPageDesignGenPage')); }); return false; ").f();
+						.a("id", "refreshThisDesignEmailGenPage")
+						.a("onclick", "patchPageDesignVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisDesignEmailGenPage')); }, function() { addError($('#refreshThisDesignEmailGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					sx("refresh this page design");
 				} g("button");
@@ -888,12 +888,12 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestedPageDesignGenPage(this, null, listPageDesign);
+		htmlSuggestedDesignEmailGenPage(this, null, listPageDesign);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestedPageDesignGenPage(PageLayout p, String id, SearchList<PageDesign> listPageDesign) {
+	public static void htmlSuggestedDesignEmailGenPage(PageLayout p, String id, SearchList<PageDesign> listPageDesign) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
@@ -945,11 +945,11 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 			}
 
 			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PageDesignGenPage.ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PageDesignGenPage.ROLES)
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), DesignEmailGenPage.ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), DesignEmailGenPage.ROLES)
 					) {
 					{ p.e("div").a("class", "").f();
-						{ p.e("button").a("id", "refreshAllPageDesignGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchPageDesignVals([], {}, function() { addGlow($('#refreshAllPageDesignGenPage", id, "')); }, function() { addError($('#refreshAllPageDesignGenPage", id, "')); }); ").f();
+						{ p.e("button").a("id", "refreshAllDesignEmailGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchPageDesignVals([], {}, function() { addGlow($('#refreshAllDesignEmailGenPage", id, "')); }, function() { addError($('#refreshAllDesignEmailGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the page designs");
 						} p.g("button");
@@ -971,13 +971,13 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 					.a("id", "suggestPageDesign", id)
 					.a("autocomplete", "off")
 					.a("oninput", "suggestPageDesignObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListPageDesign", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/page-design?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/email?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listPageDesign != null)
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
-					.a("onclick", "window.location.href = '/page-design?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/email?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
@@ -990,7 +990,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 				} p.g("div");
 			} p.g("div");
 			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/page-design").a("class", "").f();
+				{ p.e("a").a("href", "/email").a("class", "").f();
 					p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
 					p.sx("see all the page designs");
 				} p.g("a");

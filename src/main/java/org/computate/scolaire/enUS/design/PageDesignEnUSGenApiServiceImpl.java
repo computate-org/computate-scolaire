@@ -2163,6 +2163,216 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		}
 	}
 
+	// DesignPdfSearchPage //
+
+	@Override
+	public void designpdfsearchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		designpdfsearchpagePageDesign(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void designpdfsearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
+		try {
+			sqlPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					userPageDesign(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchPageDesign(siteRequest, false, true, "/pdf", "DesignPdfSearchPage", c -> {
+								if(c.succeeded()) {
+									SearchList<PageDesign> listPageDesign = c.result();
+									designpdfsearchpagePageDesignResponse(listPageDesign, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("designpdfsearchpagePageDesign succeeded. "));
+										} else {
+											LOGGER.error(String.format("designpdfsearchpagePageDesign failed. ", d.cause()));
+											errorPageDesign(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("designpdfsearchpagePageDesign failed. ", c.cause()));
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("designpdfsearchpagePageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("designpdfsearchpagePageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designpdfsearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void designpdfsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			response200DesignPdfSearchPagePageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("designpdfsearchpagePageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("designpdfsearchpagePageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designpdfsearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200DesignPdfSearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
+			DesignPdfPage page = new DesignPdfPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/pdf");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listPageDesign.size() == 1)
+				siteRequest.setRequestPk(listPageDesign.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListPageDesign(listPageDesign);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepDesignPdfPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// DesignEmailSearchPage //
+
+	@Override
+	public void designemailsearchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		designemailsearchpagePageDesign(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void designemailsearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
+		try {
+			sqlPageDesign(siteRequest, a -> {
+				if(a.succeeded()) {
+					userPageDesign(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchPageDesign(siteRequest, false, true, "/email", "DesignEmailSearchPage", c -> {
+								if(c.succeeded()) {
+									SearchList<PageDesign> listPageDesign = c.result();
+									designemailsearchpagePageDesignResponse(listPageDesign, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("designemailsearchpagePageDesign succeeded. "));
+										} else {
+											LOGGER.error(String.format("designemailsearchpagePageDesign failed. ", d.cause()));
+											errorPageDesign(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("designemailsearchpagePageDesign failed. ", c.cause()));
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("designemailsearchpagePageDesign failed. ", b.cause()));
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("designemailsearchpagePageDesign failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designemailsearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void designemailsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			response200DesignEmailSearchPagePageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							LOGGER.info(String.format("designemailsearchpagePageDesign sql commit. "));
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									LOGGER.info(String.format("designemailsearchpagePageDesign sql close. "));
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorPageDesign(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorPageDesign(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designemailsearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200DesignEmailSearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
+			DesignEmailPage page = new DesignEmailPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/email");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listPageDesign.size() == 1)
+				siteRequest.setRequestPk(listPageDesign.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListPageDesign(listPageDesign);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepDesignEmailPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// HomePageSearchPage //
 
 	@Override

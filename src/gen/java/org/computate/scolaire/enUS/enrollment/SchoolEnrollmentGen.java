@@ -9368,11 +9368,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature1");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature1) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature1) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature1");
 					a("src", StringUtils.isBlank(enrollmentSignature1) ? "data:image/png;base64," : enrollmentSignature1).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature1) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature1) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature1").f();
@@ -9513,11 +9513,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature2");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature2) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature2) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature2");
 					a("src", StringUtils.isBlank(enrollmentSignature2) ? "data:image/png;base64," : enrollmentSignature2).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature2) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature2) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature2").f();
@@ -9658,11 +9658,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature3");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature3) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature3) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature3");
 					a("src", StringUtils.isBlank(enrollmentSignature3) ? "data:image/png;base64," : enrollmentSignature3).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature3) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature3) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature3").f();
@@ -9803,11 +9803,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature4");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature4) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature4) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature4");
 					a("src", StringUtils.isBlank(enrollmentSignature4) ? "data:image/png;base64," : enrollmentSignature4).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature4) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature4) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature4").f();
@@ -9948,11 +9948,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature5");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature5) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature5) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature5");
 					a("src", StringUtils.isBlank(enrollmentSignature5) ? "data:image/png;base64," : enrollmentSignature5).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature5) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature5) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature5").f();
@@ -10093,11 +10093,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature6");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature6) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature6) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature6");
 					a("src", StringUtils.isBlank(enrollmentSignature6) ? "data:image/png;base64," : enrollmentSignature6).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature6) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature6) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature6").f();
@@ -10238,11 +10238,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature7");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature7) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature7) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature7");
 					a("src", StringUtils.isBlank(enrollmentSignature7) ? "data:image/png;base64," : enrollmentSignature7).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature7) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature7) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature7").f();
@@ -10383,11 +10383,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature8");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature8) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature8) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature8");
 					a("src", StringUtils.isBlank(enrollmentSignature8) ? "data:image/png;base64," : enrollmentSignature8).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature8) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature8) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature8").f();
@@ -10528,11 +10528,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature9");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature9) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature9) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature9");
 					a("src", StringUtils.isBlank(enrollmentSignature9) ? "data:image/png;base64," : enrollmentSignature9).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature9) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature9) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature9").f();
@@ -10673,11 +10673,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature10");
-					a("style", "border: 1px solid black; display: ", StringUtils.isBlank(enrollmentSignature10) ? "block" : "none", "; ");
+					a("style", "display: ", StringUtils.isBlank(enrollmentSignature10) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature10");
 					a("src", StringUtils.isBlank(enrollmentSignature10) ? "data:image/png;base64," : enrollmentSignature10).a("alt", "");
-					a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature10) ? "none" : "block", "; ");
+					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature10) ? "none" : "block", "; ");
 				fg();
 			g("div");
 			e("div").a("id", "signatureDiv2SchoolEnrollment", pk, "enrollmentSignature10").f();

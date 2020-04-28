@@ -55,6 +55,30 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperDesignDisplaySearchPage.enUS: ClusterPage
  * ApiUriDesignDisplaySearchPage.enUS: /page
  * 
+ * ApiMethode.frFR: DesignPdfPageRecherche
+ * PageDesignPdfPageRecherche.frFR: DesignPdfPage
+ * PageSuperDesignPdfPageRecherche.frFR: ClusterPage
+ * ApiUriDesignPdfPageRecherche.frFR: /pdf
+ * ApiTypeMedia200DesignPdfPageRecherche: application/pdf
+ * 
+ * ApiMethode.enUS: DesignPdfSearchPage
+ * PageDesignPdfSearchPage.enUS: DesignPdfPage
+ * PageSuperDesignPdfSearchPage.enUS: ClusterPage
+ * ApiUriDesignPdfSearchPage.enUS: /pdf
+ * ApiTypeMedia200DesignPdfSearchPage: application/pdf
+ * 
+ * ApiMethode.frFR: DesignMailPageRecherche
+ * PageDesignMailPageRecherche.frFR: DesignMailPage
+ * PageSuperDesignMailPageRecherche.frFR: ClusterPage
+ * ApiUriDesignMailPageRecherche.frFR: /mail
+ * ApiTypeMedia200DesignMailPageRecherche: application/pdf
+ * 
+ * ApiMethode.enUS: DesignEmailSearchPage
+ * PageDesignEmailSearchPage.enUS: DesignEmailPage
+ * PageSuperDesignEmailSearchPage.enUS: ClusterPage
+ * ApiUriDesignEmailSearchPage.enUS: /email
+ * ApiTypeMedia200DesignEmailSearchPage: application/pdf
+ * 
  * ApiMethode.frFR: PageAccueilRecherchePage
  * PagePageAccueilRecherchePage.frFR: DesignPageAffichage
  * PageSuperPageAccueilRecherchePage.frFR: ClusterPage

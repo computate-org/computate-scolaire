@@ -153,12 +153,12 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/enrollment-form/", o.getPk(), "?var=design:main%20enrollment%20form").f().sx("View enrollment form").g("a");
+					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/page/main-enrollment-form?var=enrollmentKey:", o.getPk()).f().sx("View enrollment form").g("a");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/enrollment-pdf/", o.getPk(), "?var=design:main%20enrollment%20form").f().sx("View enrollment PDF").g("a");
+					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/pdf/main-enrollment-form?var=enrollmentKey:", o.getPk()).f().sx("View enrollment PDF").g("a");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
@@ -202,11 +202,34 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					) {
 				{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-						.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'5',paymentDescription:'Late pick-up fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
-						.f().sx("Add a $5 late pick-up fee")
-					.g("button");
+					{ e("div").a("class", "").f();
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'5',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.f().sx("Add a $5 late pick-up/drop-off fee")
+						.g("button");
+					} g("div");
+					{ e("div").a("class", "").f();
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'10',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.f().sx("Add a $10 late pick-up/drop-off fee")
+						.g("button");
+					} g("div");
+					{ e("div").a("class", "").f();
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'15',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.f().sx("Add a $15 late pick-up/drop-off fee")
+						.g("button");
+					} g("div");
+					{ e("div").a("class", "").f();
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'20',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.f().sx("Add a $20 late pick-up/drop-off fee")
+						.g("button");
+					} g("div");
 				} g("div");
 			}
 		} g("div");

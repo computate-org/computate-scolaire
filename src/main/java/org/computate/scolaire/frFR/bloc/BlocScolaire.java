@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;                        
+package org.computate.scolaire.frFR.bloc;                         
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
