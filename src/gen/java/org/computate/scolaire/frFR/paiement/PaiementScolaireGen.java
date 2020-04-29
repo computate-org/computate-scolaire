@@ -3688,862 +3688,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	//////////////////
-	// fraisMontant //
-	//////////////////
-
-	/**	L'entité « fraisMontant »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal fraisMontant;
-	@JsonIgnore
-	public Couverture<BigDecimal> fraisMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontant").o(fraisMontant);
-
-	/**	<br/>L'entité « fraisMontant »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontant">Trouver l'entité fraisMontant dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _fraisMontant(Couverture<BigDecimal> c);
-
-	public BigDecimal getFraisMontant() {
-		return fraisMontant;
-	}
-
-	public void setFraisMontant(BigDecimal fraisMontant) {
-		this.fraisMontant = fraisMontant;
-		this.fraisMontantCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setFraisMontant(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.fraisMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setFraisMontant(Double o) {
-			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.fraisMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setFraisMontant(Integer o) {
-			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.fraisMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire fraisMontantInit() {
-		if(!fraisMontantCouverture.dejaInitialise) {
-			_fraisMontant(fraisMontantCouverture);
-			if(fraisMontant == null)
-				setFraisMontant(fraisMontantCouverture.o);
-		}
-		fraisMontantCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Double solrFraisMontant() {
-		return fraisMontant == null ? null : fraisMontant.doubleValue();
-	}
-
-	public String strFraisMontant() {
-		return fraisMontant == null ? "" : fraisMontant.setScale(2).toString();
-	}
-
-	public String jsonFraisMontant() {
-		return fraisMontant == null ? "" : fraisMontant.toString();
-	}
-
-	public String nomAffichageFraisMontant() {
-		return "frais montant";
-	}
-
-	public String htmTooltipFraisMontant() {
-		return null;
-	}
-
-	public String htmFraisMontant() {
-		return fraisMontant == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontant());
-	}
-
-	public void inputFraisMontant(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "frais montant")
-				.a("title", "La clé primaire des enfants dans la base de données. ")
-				.a("id", classeApiMethodeMethode, "_fraisMontant");
-				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setFraisMontant inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
-					a("name", "setFraisMontant");
-				} else {
-					a("class", "valeurFraisMontant w3-input w3-border inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
-					a("name", "fraisMontant");
-				}
-				if("Page".equals(classeApiMethodeMethode)) {
-					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ");
-				}
-				a("value", strFraisMontant())
-			.fg();
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
-				sx(htmFraisMontant());
-			}
-		}
-	}
-
-	public void htmFraisMontant(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontant").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_fraisMontant").a("class", "").f().sx("frais montant").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputFraisMontant(classeApiMethodeMethode);
-							} g("div");
-							if(
-									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-									) {
-								if("Page".equals(classeApiMethodeMethode)) {
-									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-										{ e("button")
-											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontant')); $('#", classeApiMethodeMethode, "_fraisMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ")
-											.f();
-											e("i").a("class", "far fa-eraser ").f().g("i");
-										} g("button");
-									} g("div");
-								}
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	////////////////////////
-	// fraisMontantFuture //
-	////////////////////////
-
-	/**	L'entité « fraisMontantFuture »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal fraisMontantFuture;
-	@JsonIgnore
-	public Couverture<BigDecimal> fraisMontantFutureCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontantFuture").o(fraisMontantFuture);
-
-	/**	<br/>L'entité « fraisMontantFuture »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontantFuture">Trouver l'entité fraisMontantFuture dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _fraisMontantFuture(Couverture<BigDecimal> c);
-
-	public BigDecimal getFraisMontantFuture() {
-		return fraisMontantFuture;
-	}
-
-	public void setFraisMontantFuture(BigDecimal fraisMontantFuture) {
-		this.fraisMontantFuture = fraisMontantFuture;
-		this.fraisMontantFutureCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setFraisMontantFuture(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setFraisMontantFuture(Double o) {
-			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setFraisMontantFuture(Integer o) {
-			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire fraisMontantFutureInit() {
-		if(!fraisMontantFutureCouverture.dejaInitialise) {
-			_fraisMontantFuture(fraisMontantFutureCouverture);
-			if(fraisMontantFuture == null)
-				setFraisMontantFuture(fraisMontantFutureCouverture.o);
-		}
-		fraisMontantFutureCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Double solrFraisMontantFuture() {
-		return fraisMontantFuture == null ? null : fraisMontantFuture.doubleValue();
-	}
-
-	public String strFraisMontantFuture() {
-		return fraisMontantFuture == null ? "" : fraisMontantFuture.setScale(2).toString();
-	}
-
-	public String jsonFraisMontantFuture() {
-		return fraisMontantFuture == null ? "" : fraisMontantFuture.toString();
-	}
-
-	public String nomAffichageFraisMontantFuture() {
-		return "frais montant future";
-	}
-
-	public String htmTooltipFraisMontantFuture() {
-		return null;
-	}
-
-	public String htmFraisMontantFuture() {
-		return fraisMontantFuture == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantFuture());
-	}
-
-	public void inputFraisMontantFuture(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "frais montant future")
-				.a("title", "La clé primaire des enfants dans la base de données. ")
-				.a("id", classeApiMethodeMethode, "_fraisMontantFuture");
-				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setFraisMontantFuture inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
-					a("name", "setFraisMontantFuture");
-				} else {
-					a("class", "valeurFraisMontantFuture w3-input w3-border inputPaiementScolaire", pk, "FraisMontantFuture w3-input w3-border ");
-					a("name", "fraisMontantFuture");
-				}
-				if("Page".equals(classeApiMethodeMethode)) {
-					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontantFuture', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ");
-				}
-				a("value", strFraisMontantFuture())
-			.fg();
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
-				sx(htmFraisMontantFuture());
-			}
-		}
-	}
-
-	public void htmFraisMontantFuture(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontantFuture").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_fraisMontantFuture").a("class", "").f().sx("frais montant future").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputFraisMontantFuture(classeApiMethodeMethode);
-							} g("div");
-							if(
-									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-									) {
-								if("Page".equals(classeApiMethodeMethode)) {
-									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-										{ e("button")
-											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); $('#", classeApiMethodeMethode, "_fraisMontantFuture').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontantFuture', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontantFuture')); }); ")
-											.f();
-											e("i").a("class", "far fa-eraser ").f().g("i");
-										} g("button");
-									} g("div");
-								}
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	//////////////////////
-	// fraisInscription //
-	//////////////////////
-
-	/**	L'entité « fraisInscription »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean fraisInscription;
-	@JsonIgnore
-	public Couverture<Boolean> fraisInscriptionCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisInscription").o(fraisInscription);
-
-	/**	<br/>L'entité « fraisInscription »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisInscription">Trouver l'entité fraisInscription dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _fraisInscription(Couverture<Boolean> c);
-
-	public Boolean getFraisInscription() {
-		return fraisInscription;
-	}
-
-	public void setFraisInscription(Boolean fraisInscription) {
-		this.fraisInscription = fraisInscription;
-		this.fraisInscriptionCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setFraisInscription(String o) {
-		this.fraisInscription = Boolean.parseBoolean(o);
-		this.fraisInscriptionCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire fraisInscriptionInit() {
-		if(!fraisInscriptionCouverture.dejaInitialise) {
-			_fraisInscription(fraisInscriptionCouverture);
-			if(fraisInscription == null)
-				setFraisInscription(fraisInscriptionCouverture.o);
-		}
-		fraisInscriptionCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Boolean solrFraisInscription() {
-		return fraisInscription;
-	}
-
-	public String strFraisInscription() {
-		return fraisInscription == null ? "" : fraisInscription.toString();
-	}
-
-	public String jsonFraisInscription() {
-		return fraisInscription == null ? "" : fraisInscription.toString();
-	}
-
-	public String nomAffichageFraisInscription() {
-		return "frais d'inscription";
-	}
-
-	public String htmTooltipFraisInscription() {
-		return null;
-	}
-
-	public String htmFraisInscription() {
-		return fraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strFraisInscription());
-	}
-
-	public void inputFraisInscription(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_fraisInscription")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_fraisInscription");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
-				a("name", "setFraisInscription");
-			} else {
-				a("class", "valeurFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
-				a("name", "fraisInscription");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisInscription', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisInscription')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getFraisInscription() != null && getFraisInscription())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
-				sx(htmFraisInscription());
-			}
-		}
-	}
-
-	public void htmFraisInscription(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisInscription").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_fraisInscription").a("class", "").f().sx("frais d'inscription").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputFraisInscription(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////////////
-	// fraisPremierDernier //
-	/////////////////////////
-
-	/**	L'entité « fraisPremierDernier »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean fraisPremierDernier;
-	@JsonIgnore
-	public Couverture<Boolean> fraisPremierDernierCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisPremierDernier").o(fraisPremierDernier);
-
-	/**	<br/>L'entité « fraisPremierDernier »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisPremierDernier">Trouver l'entité fraisPremierDernier dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _fraisPremierDernier(Couverture<Boolean> c);
-
-	public Boolean getFraisPremierDernier() {
-		return fraisPremierDernier;
-	}
-
-	public void setFraisPremierDernier(Boolean fraisPremierDernier) {
-		this.fraisPremierDernier = fraisPremierDernier;
-		this.fraisPremierDernierCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setFraisPremierDernier(String o) {
-		this.fraisPremierDernier = Boolean.parseBoolean(o);
-		this.fraisPremierDernierCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire fraisPremierDernierInit() {
-		if(!fraisPremierDernierCouverture.dejaInitialise) {
-			_fraisPremierDernier(fraisPremierDernierCouverture);
-			if(fraisPremierDernier == null)
-				setFraisPremierDernier(fraisPremierDernierCouverture.o);
-		}
-		fraisPremierDernierCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Boolean solrFraisPremierDernier() {
-		return fraisPremierDernier;
-	}
-
-	public String strFraisPremierDernier() {
-		return fraisPremierDernier == null ? "" : fraisPremierDernier.toString();
-	}
-
-	public String jsonFraisPremierDernier() {
-		return fraisPremierDernier == null ? "" : fraisPremierDernier.toString();
-	}
-
-	public String nomAffichageFraisPremierDernier() {
-		return "frais mois premier et dernier";
-	}
-
-	public String htmTooltipFraisPremierDernier() {
-		return null;
-	}
-
-	public String htmFraisPremierDernier() {
-		return fraisPremierDernier == null ? "" : StringEscapeUtils.escapeHtml4(strFraisPremierDernier());
-	}
-
-	public void inputFraisPremierDernier(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_fraisPremierDernier")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_fraisPremierDernier");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
-				a("name", "setFraisPremierDernier");
-			} else {
-				a("class", "valeurFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
-				a("name", "fraisPremierDernier");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisPremierDernier', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getFraisPremierDernier() != null && getFraisPremierDernier())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
-				sx(htmFraisPremierDernier());
-			}
-		}
-	}
-
-	public void htmFraisPremierDernier(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisPremierDernier").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_fraisPremierDernier").a("class", "").f().sx("frais mois premier et dernier").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputFraisPremierDernier(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////
-	// fraisMois //
-	///////////////
-
-	/**	L'entité « fraisMois »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean fraisMois;
-	@JsonIgnore
-	public Couverture<Boolean> fraisMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisMois").o(fraisMois);
-
-	/**	<br/>L'entité « fraisMois »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMois">Trouver l'entité fraisMois dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _fraisMois(Couverture<Boolean> c);
-
-	public Boolean getFraisMois() {
-		return fraisMois;
-	}
-
-	public void setFraisMois(Boolean fraisMois) {
-		this.fraisMois = fraisMois;
-		this.fraisMoisCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setFraisMois(String o) {
-		this.fraisMois = Boolean.parseBoolean(o);
-		this.fraisMoisCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire fraisMoisInit() {
-		if(!fraisMoisCouverture.dejaInitialise) {
-			_fraisMois(fraisMoisCouverture);
-			if(fraisMois == null)
-				setFraisMois(fraisMoisCouverture.o);
-		}
-		fraisMoisCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Boolean solrFraisMois() {
-		return fraisMois;
-	}
-
-	public String strFraisMois() {
-		return fraisMois == null ? "" : fraisMois.toString();
-	}
-
-	public String jsonFraisMois() {
-		return fraisMois == null ? "" : fraisMois.toString();
-	}
-
-	public String nomAffichageFraisMois() {
-		return "frais du mois";
-	}
-
-	public String htmTooltipFraisMois() {
-		return null;
-	}
-
-	public String htmFraisMois() {
-		return fraisMois == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMois());
-	}
-
-	public void inputFraisMois(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_fraisMois")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_fraisMois");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
-				a("name", "setFraisMois");
-			} else {
-				a("class", "valeurFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
-				a("name", "fraisMois");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMois')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getFraisMois() != null && getFraisMois())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
-				sx(htmFraisMois());
-			}
-		}
-	}
-
-	public void htmFraisMois(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMois").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_fraisMois").a("class", "").f().sx("frais du mois").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputFraisMois(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////
-	// fraisRetard //
-	/////////////////
-
-	/**	L'entité « fraisRetard »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean fraisRetard;
-	@JsonIgnore
-	public Couverture<Boolean> fraisRetardCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisRetard").o(fraisRetard);
-
-	/**	<br/>L'entité « fraisRetard »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisRetard">Trouver l'entité fraisRetard dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _fraisRetard(Couverture<Boolean> c);
-
-	public Boolean getFraisRetard() {
-		return fraisRetard;
-	}
-
-	public void setFraisRetard(Boolean fraisRetard) {
-		this.fraisRetard = fraisRetard;
-		this.fraisRetardCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setFraisRetard(String o) {
-		this.fraisRetard = Boolean.parseBoolean(o);
-		this.fraisRetardCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire fraisRetardInit() {
-		if(!fraisRetardCouverture.dejaInitialise) {
-			_fraisRetard(fraisRetardCouverture);
-			if(fraisRetard == null)
-				setFraisRetard(fraisRetardCouverture.o);
-		}
-		fraisRetardCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Boolean solrFraisRetard() {
-		return fraisRetard;
-	}
-
-	public String strFraisRetard() {
-		return fraisRetard == null ? "" : fraisRetard.toString();
-	}
-
-	public String jsonFraisRetard() {
-		return fraisRetard == null ? "" : fraisRetard.toString();
-	}
-
-	public String nomAffichageFraisRetard() {
-		return "frais de retard";
-	}
-
-	public String htmTooltipFraisRetard() {
-		return null;
-	}
-
-	public String htmFraisRetard() {
-		return fraisRetard == null ? "" : StringEscapeUtils.escapeHtml4(strFraisRetard());
-	}
-
-	public void inputFraisRetard(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_fraisRetard")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_fraisRetard");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFraisRetard inputPaiementScolaire", pk, "FraisRetard w3-input w3-border ");
-				a("name", "setFraisRetard");
-			} else {
-				a("class", "valeurFraisRetard inputPaiementScolaire", pk, "FraisRetard w3-input w3-border ");
-				a("name", "fraisRetard");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisRetard', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisRetard')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisRetard')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getFraisRetard() != null && getFraisRetard())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
-				sx(htmFraisRetard());
-			}
-		}
-	}
-
-	public void htmFraisRetard(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisRetard").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_fraisRetard").a("class", "").f().sx("frais de retard").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputFraisRetard(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////////
 	// paiementEspeces //
 	/////////////////////
@@ -5555,7 +4699,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaiementRecu() {
-		return "paiement dû";
+		return "paiement récu";
 	}
 
 	public String htmTooltipPaiementRecu() {
@@ -5622,12 +4766,924 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementRecu").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_paiementRecu").a("class", "").f().sx("paiement dû").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_paiementRecu").a("class", "").f().sx("paiement récu").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputPaiementRecu(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////
+	// fraisMontant //
+	//////////////////
+
+	/**	L'entité « fraisMontant »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontant;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontant").o(fraisMontant);
+
+	/**	<br/>L'entité « fraisMontant »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontant">Trouver l'entité fraisMontant dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontant(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontant() {
+		return fraisMontant;
+	}
+
+	public void setFraisMontant(BigDecimal fraisMontant) {
+		this.fraisMontant = fraisMontant;
+		this.fraisMontantCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontant(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontant(Double o) {
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontant(Integer o) {
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantInit() {
+		if(!fraisMontantCouverture.dejaInitialise) {
+			_fraisMontant(fraisMontantCouverture);
+			if(fraisMontant == null)
+				setFraisMontant(fraisMontantCouverture.o);
+		}
+		fraisMontantCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontant() {
+		return fraisMontant == null ? null : fraisMontant.doubleValue();
+	}
+
+	public String strFraisMontant() {
+		return fraisMontant == null ? "" : fraisMontant.setScale(2).toString();
+	}
+
+	public String jsonFraisMontant() {
+		return fraisMontant == null ? "" : fraisMontant.toString();
+	}
+
+	public String nomAffichageFraisMontant() {
+		return "frais montant";
+	}
+
+	public String htmTooltipFraisMontant() {
+		return null;
+	}
+
+	public String htmFraisMontant() {
+		return fraisMontant == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontant());
+	}
+
+	public void inputFraisMontant(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "frais montant")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_fraisMontant");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setFraisMontant inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
+					a("name", "setFraisMontant");
+				} else {
+					a("class", "valeurFraisMontant w3-input w3-border inputPaiementScolaire", pk, "FraisMontant w3-input w3-border ");
+					a("name", "fraisMontant");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMontant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ");
+				}
+				a("value", strFraisMontant())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisMontant());
+			}
+		}
+	}
+
+	public void htmFraisMontant(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontant").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontant").a("class", "").f().sx("frais montant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontant(classeApiMethodeMethode);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_fraisMontant')); $('#", classeApiMethodeMethode, "_fraisMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=pk]').val() }], 'setFraisMontant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMontant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMontant')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////
+	// fraisMontantDu //
+	////////////////////
+
+	/**	L'entité « fraisMontantDu »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontantDu;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantDuCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontantDu").o(fraisMontantDu);
+
+	/**	<br/>L'entité « fraisMontantDu »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontantDu">Trouver l'entité fraisMontantDu dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontantDu(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontantDu() {
+		return fraisMontantDu;
+	}
+
+	public void setFraisMontantDu(BigDecimal fraisMontantDu) {
+		this.fraisMontantDu = fraisMontantDu;
+		this.fraisMontantDuCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontantDu(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantDuCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantDu(Double o) {
+			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantDuCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantDu(Integer o) {
+			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantDuCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantDuInit() {
+		if(!fraisMontantDuCouverture.dejaInitialise) {
+			_fraisMontantDu(fraisMontantDuCouverture);
+			if(fraisMontantDu == null)
+				setFraisMontantDu(fraisMontantDuCouverture.o);
+		}
+		fraisMontantDuCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontantDu() {
+		return fraisMontantDu == null ? null : fraisMontantDu.doubleValue();
+	}
+
+	public String strFraisMontantDu() {
+		return fraisMontantDu == null ? "" : fraisMontantDu.setScale(2).toString();
+	}
+
+	public String jsonFraisMontantDu() {
+		return fraisMontantDu == null ? "" : fraisMontantDu.toString();
+	}
+
+	public String nomAffichageFraisMontantDu() {
+		return "frais montant dû";
+	}
+
+	public String htmTooltipFraisMontantDu() {
+		return null;
+	}
+
+	public String htmFraisMontantDu() {
+		return fraisMontantDu == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantDu());
+	}
+
+	public void inputFraisMontantDu(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+	}
+
+	public void htmFraisMontantDu(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontantDu").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontantDu").a("class", "").f().sx("frais montant dû").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontantDu(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// fraisMontantFuture //
+	////////////////////////
+
+	/**	L'entité « fraisMontantFuture »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontantFuture;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantFutureCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontantFuture").o(fraisMontantFuture);
+
+	/**	<br/>L'entité « fraisMontantFuture »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontantFuture">Trouver l'entité fraisMontantFuture dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontantFuture(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontantFuture() {
+		return fraisMontantFuture;
+	}
+
+	public void setFraisMontantFuture(BigDecimal fraisMontantFuture) {
+		this.fraisMontantFuture = fraisMontantFuture;
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontantFuture(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantFuture(Double o) {
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantFuture(Integer o) {
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.fraisMontantFutureCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantFutureInit() {
+		if(!fraisMontantFutureCouverture.dejaInitialise) {
+			_fraisMontantFuture(fraisMontantFutureCouverture);
+			if(fraisMontantFuture == null)
+				setFraisMontantFuture(fraisMontantFutureCouverture.o);
+		}
+		fraisMontantFutureCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontantFuture() {
+		return fraisMontantFuture == null ? null : fraisMontantFuture.doubleValue();
+	}
+
+	public String strFraisMontantFuture() {
+		return fraisMontantFuture == null ? "" : fraisMontantFuture.setScale(2).toString();
+	}
+
+	public String jsonFraisMontantFuture() {
+		return fraisMontantFuture == null ? "" : fraisMontantFuture.toString();
+	}
+
+	public String nomAffichageFraisMontantFuture() {
+		return "frais montant future";
+	}
+
+	public String htmTooltipFraisMontantFuture() {
+		return null;
+	}
+
+	public String htmFraisMontantFuture() {
+		return fraisMontantFuture == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantFuture());
+	}
+
+	public void inputFraisMontantFuture(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+	}
+
+	public void htmFraisMontantFuture(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontantFuture").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontantFuture").a("class", "").f().sx("frais montant future").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontantFuture(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////
+	// fraisPremierDernier //
+	/////////////////////////
+
+	/**	L'entité « fraisPremierDernier »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisPremierDernier;
+	@JsonIgnore
+	public Couverture<Boolean> fraisPremierDernierCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisPremierDernier").o(fraisPremierDernier);
+
+	/**	<br/>L'entité « fraisPremierDernier »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisPremierDernier">Trouver l'entité fraisPremierDernier dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisPremierDernier(Couverture<Boolean> c);
+
+	public Boolean getFraisPremierDernier() {
+		return fraisPremierDernier;
+	}
+
+	public void setFraisPremierDernier(Boolean fraisPremierDernier) {
+		this.fraisPremierDernier = fraisPremierDernier;
+		this.fraisPremierDernierCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisPremierDernier(String o) {
+		this.fraisPremierDernier = Boolean.parseBoolean(o);
+		this.fraisPremierDernierCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisPremierDernierInit() {
+		if(!fraisPremierDernierCouverture.dejaInitialise) {
+			_fraisPremierDernier(fraisPremierDernierCouverture);
+			if(fraisPremierDernier == null)
+				setFraisPremierDernier(fraisPremierDernierCouverture.o);
+		}
+		fraisPremierDernierCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisPremierDernier() {
+		return fraisPremierDernier;
+	}
+
+	public String strFraisPremierDernier() {
+		return fraisPremierDernier == null ? "" : fraisPremierDernier.toString();
+	}
+
+	public String jsonFraisPremierDernier() {
+		return fraisPremierDernier == null ? "" : fraisPremierDernier.toString();
+	}
+
+	public String nomAffichageFraisPremierDernier() {
+		return "frais mois premier et dernier";
+	}
+
+	public String htmTooltipFraisPremierDernier() {
+		return null;
+	}
+
+	public String htmFraisPremierDernier() {
+		return fraisPremierDernier == null ? "" : StringEscapeUtils.escapeHtml4(strFraisPremierDernier());
+	}
+
+	public void inputFraisPremierDernier(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisPremierDernier")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisPremierDernier");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
+				a("name", "setFraisPremierDernier");
+			} else {
+				a("class", "valeurFraisPremierDernier inputPaiementScolaire", pk, "FraisPremierDernier w3-input w3-border ");
+				a("name", "fraisPremierDernier");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisPremierDernier', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisPremierDernier')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisPremierDernier() != null && getFraisPremierDernier())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisPremierDernier());
+			}
+		}
+	}
+
+	public void htmFraisPremierDernier(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisPremierDernier").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisPremierDernier").a("class", "").f().sx("frais mois premier et dernier").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisPremierDernier(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////
+	// fraisInscription //
+	//////////////////////
+
+	/**	L'entité « fraisInscription »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisInscription;
+	@JsonIgnore
+	public Couverture<Boolean> fraisInscriptionCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisInscription").o(fraisInscription);
+
+	/**	<br/>L'entité « fraisInscription »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisInscription">Trouver l'entité fraisInscription dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisInscription(Couverture<Boolean> c);
+
+	public Boolean getFraisInscription() {
+		return fraisInscription;
+	}
+
+	public void setFraisInscription(Boolean fraisInscription) {
+		this.fraisInscription = fraisInscription;
+		this.fraisInscriptionCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisInscription(String o) {
+		this.fraisInscription = Boolean.parseBoolean(o);
+		this.fraisInscriptionCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisInscriptionInit() {
+		if(!fraisInscriptionCouverture.dejaInitialise) {
+			_fraisInscription(fraisInscriptionCouverture);
+			if(fraisInscription == null)
+				setFraisInscription(fraisInscriptionCouverture.o);
+		}
+		fraisInscriptionCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisInscription() {
+		return fraisInscription;
+	}
+
+	public String strFraisInscription() {
+		return fraisInscription == null ? "" : fraisInscription.toString();
+	}
+
+	public String jsonFraisInscription() {
+		return fraisInscription == null ? "" : fraisInscription.toString();
+	}
+
+	public String nomAffichageFraisInscription() {
+		return "frais d'inscription";
+	}
+
+	public String htmTooltipFraisInscription() {
+		return null;
+	}
+
+	public String htmFraisInscription() {
+		return fraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strFraisInscription());
+	}
+
+	public void inputFraisInscription(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisInscription")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisInscription");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
+				a("name", "setFraisInscription");
+			} else {
+				a("class", "valeurFraisInscription inputPaiementScolaire", pk, "FraisInscription w3-input w3-border ");
+				a("name", "fraisInscription");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisInscription', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisInscription')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisInscription() != null && getFraisInscription())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisInscription());
+			}
+		}
+	}
+
+	public void htmFraisInscription(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisInscription").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisInscription").a("class", "").f().sx("frais d'inscription").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisInscription(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////
+	// fraisMois //
+	///////////////
+
+	/**	L'entité « fraisMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisMois;
+	@JsonIgnore
+	public Couverture<Boolean> fraisMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisMois").o(fraisMois);
+
+	/**	<br/>L'entité « fraisMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMois">Trouver l'entité fraisMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMois(Couverture<Boolean> c);
+
+	public Boolean getFraisMois() {
+		return fraisMois;
+	}
+
+	public void setFraisMois(Boolean fraisMois) {
+		this.fraisMois = fraisMois;
+		this.fraisMoisCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMois(String o) {
+		this.fraisMois = Boolean.parseBoolean(o);
+		this.fraisMoisCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMoisInit() {
+		if(!fraisMoisCouverture.dejaInitialise) {
+			_fraisMois(fraisMoisCouverture);
+			if(fraisMois == null)
+				setFraisMois(fraisMoisCouverture.o);
+		}
+		fraisMoisCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisMois() {
+		return fraisMois;
+	}
+
+	public String strFraisMois() {
+		return fraisMois == null ? "" : fraisMois.toString();
+	}
+
+	public String jsonFraisMois() {
+		return fraisMois == null ? "" : fraisMois.toString();
+	}
+
+	public String nomAffichageFraisMois() {
+		return "frais du mois";
+	}
+
+	public String htmTooltipFraisMois() {
+		return null;
+	}
+
+	public String htmFraisMois() {
+		return fraisMois == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMois());
+	}
+
+	public void inputFraisMois(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisMois")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisMois");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
+				a("name", "setFraisMois");
+			} else {
+				a("class", "valeurFraisMois inputPaiementScolaire", pk, "FraisMois w3-input w3-border ");
+				a("name", "fraisMois");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisMois')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisMois() != null && getFraisMois())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisMois());
+			}
+		}
+	}
+
+	public void htmFraisMois(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMois").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMois").a("class", "").f().sx("frais du mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMois(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// fraisRetard //
+	/////////////////
+
+	/**	L'entité « fraisRetard »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisRetard;
+	@JsonIgnore
+	public Couverture<Boolean> fraisRetardCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisRetard").o(fraisRetard);
+
+	/**	<br/>L'entité « fraisRetard »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisRetard">Trouver l'entité fraisRetard dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisRetard(Couverture<Boolean> c);
+
+	public Boolean getFraisRetard() {
+		return fraisRetard;
+	}
+
+	public void setFraisRetard(Boolean fraisRetard) {
+		this.fraisRetard = fraisRetard;
+		this.fraisRetardCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisRetard(String o) {
+		this.fraisRetard = Boolean.parseBoolean(o);
+		this.fraisRetardCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisRetardInit() {
+		if(!fraisRetardCouverture.dejaInitialise) {
+			_fraisRetard(fraisRetardCouverture);
+			if(fraisRetard == null)
+				setFraisRetard(fraisRetardCouverture.o);
+		}
+		fraisRetardCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrFraisRetard() {
+		return fraisRetard;
+	}
+
+	public String strFraisRetard() {
+		return fraisRetard == null ? "" : fraisRetard.toString();
+	}
+
+	public String jsonFraisRetard() {
+		return fraisRetard == null ? "" : fraisRetard.toString();
+	}
+
+	public String nomAffichageFraisRetard() {
+		return "frais de retard";
+	}
+
+	public String htmTooltipFraisRetard() {
+		return null;
+	}
+
+	public String htmFraisRetard() {
+		return fraisRetard == null ? "" : StringEscapeUtils.escapeHtml4(strFraisRetard());
+	}
+
+	public void inputFraisRetard(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_fraisRetard")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_fraisRetard");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setFraisRetard inputPaiementScolaire", pk, "FraisRetard w3-input w3-border ");
+				a("name", "setFraisRetard");
+			} else {
+				a("class", "valeurFraisRetard inputPaiementScolaire", pk, "FraisRetard w3-input w3-border ");
+				a("name", "fraisRetard");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFraisRetard', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_fraisRetard')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_fraisRetard')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getFraisRetard() != null && getFraisRetard())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
+					) {
+				sx(htmFraisRetard());
+			}
+		}
+	}
+
+	public void htmFraisRetard(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisRetard").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisRetard").a("class", "").f().sx("frais de retard").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisRetard(classeApiMethodeMethode);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -5896,12 +5952,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		paiementDescriptionInit();
 		paiementDateInit();
 		paiementMontantInit();
-		fraisMontantInit();
-		fraisMontantFutureInit();
-		fraisInscriptionInit();
-		fraisPremierDernierInit();
-		fraisMoisInit();
-		fraisRetardInit();
 		paiementEspecesInit();
 		paiementChequeInit();
 		paiementSystemeInit();
@@ -5910,6 +5960,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		customerProfileIdInit();
 		transactionStatusInit();
 		paiementRecuInit();
+		fraisMontantInit();
+		fraisMontantDuInit();
+		fraisMontantFutureInit();
+		fraisPremierDernierInit();
+		fraisInscriptionInit();
+		fraisMoisInit();
+		fraisRetardInit();
 		paiementNomCourtInit();
 		paiementNomCompletInit();
 	}
@@ -6034,18 +6091,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementDate;
 			case "paiementMontant":
 				return oPaiementScolaire.paiementMontant;
-			case "fraisMontant":
-				return oPaiementScolaire.fraisMontant;
-			case "fraisMontantFuture":
-				return oPaiementScolaire.fraisMontantFuture;
-			case "fraisInscription":
-				return oPaiementScolaire.fraisInscription;
-			case "fraisPremierDernier":
-				return oPaiementScolaire.fraisPremierDernier;
-			case "fraisMois":
-				return oPaiementScolaire.fraisMois;
-			case "fraisRetard":
-				return oPaiementScolaire.fraisRetard;
 			case "paiementEspeces":
 				return oPaiementScolaire.paiementEspeces;
 			case "paiementCheque":
@@ -6062,6 +6107,20 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.transactionStatus;
 			case "paiementRecu":
 				return oPaiementScolaire.paiementRecu;
+			case "fraisMontant":
+				return oPaiementScolaire.fraisMontant;
+			case "fraisMontantDu":
+				return oPaiementScolaire.fraisMontantDu;
+			case "fraisMontantFuture":
+				return oPaiementScolaire.fraisMontantFuture;
+			case "fraisPremierDernier":
+				return oPaiementScolaire.fraisPremierDernier;
+			case "fraisInscription":
+				return oPaiementScolaire.fraisInscription;
+			case "fraisMois":
+				return oPaiementScolaire.fraisMois;
+			case "fraisRetard":
+				return oPaiementScolaire.fraisRetard;
 			case "paiementNomCourt":
 				return oPaiementScolaire.paiementNomCourt;
 			case "paiementNomComplet":
@@ -6158,30 +6217,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				setPaiementMontant(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
-			case "fraisMontant":
-				setFraisMontant(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
-			case "fraisMontantFuture":
-				setFraisMontantFuture(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
-			case "fraisInscription":
-				setFraisInscription(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
-			case "fraisPremierDernier":
-				setFraisPremierDernier(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
-			case "fraisMois":
-				setFraisMois(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
-			case "fraisRetard":
-				setFraisRetard(val);
-				sauvegardesPaiementScolaire.add(var);
-				return val;
 			case "paiementEspeces":
 				setPaiementEspeces(val);
 				sauvegardesPaiementScolaire.add(var);
@@ -6212,6 +6247,34 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return val;
 			case "paiementRecu":
 				setPaiementRecu(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisMontant":
+				setFraisMontant(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisMontantDu":
+				setFraisMontantDu(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisMontantFuture":
+				setFraisMontantFuture(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisPremierDernier":
+				setFraisPremierDernier(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisInscription":
+				setFraisInscription(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisMois":
+				setFraisMois(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "fraisRetard":
+				setFraisRetard(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementNomCourt":
@@ -6473,42 +6536,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setPaiementMontant(paiementMontant);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisMontant")) {
-				Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
-				if(fraisMontant != null)
-					oPaiementScolaire.setFraisMontant(fraisMontant);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("fraisMontantFuture")) {
-				Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
-				if(fraisMontantFuture != null)
-					oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("fraisInscription")) {
-				Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
-				if(fraisInscription != null)
-					oPaiementScolaire.setFraisInscription(fraisInscription);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("fraisPremierDernier")) {
-				Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
-				if(fraisPremierDernier != null)
-					oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("fraisMois")) {
-				Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
-				if(fraisMois != null)
-					oPaiementScolaire.setFraisMois(fraisMois);
-			}
-
-			if(sauvegardesPaiementScolaire.contains("fraisRetard")) {
-				Boolean fraisRetard = (Boolean)solrDocument.get("fraisRetard_stored_boolean");
-				if(fraisRetard != null)
-					oPaiementScolaire.setFraisRetard(fraisRetard);
-			}
-
 			if(sauvegardesPaiementScolaire.contains("paiementEspeces")) {
 				Boolean paiementEspeces = (Boolean)solrDocument.get("paiementEspeces_stored_boolean");
 				if(paiementEspeces != null)
@@ -6555,6 +6582,48 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Boolean paiementRecu = (Boolean)solrDocument.get("paiementRecu_stored_boolean");
 				if(paiementRecu != null)
 					oPaiementScolaire.setPaiementRecu(paiementRecu);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMontant")) {
+				Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
+				if(fraisMontant != null)
+					oPaiementScolaire.setFraisMontant(fraisMontant);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMontantDu")) {
+				Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
+				if(fraisMontantDu != null)
+					oPaiementScolaire.setFraisMontantDu(fraisMontantDu);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMontantFuture")) {
+				Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
+				if(fraisMontantFuture != null)
+					oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisPremierDernier")) {
+				Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
+				if(fraisPremierDernier != null)
+					oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisInscription")) {
+				Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
+				if(fraisInscription != null)
+					oPaiementScolaire.setFraisInscription(fraisInscription);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisMois")) {
+				Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
+				if(fraisMois != null)
+					oPaiementScolaire.setFraisMois(fraisMois);
+			}
+
+			if(sauvegardesPaiementScolaire.contains("fraisRetard")) {
+				Boolean fraisRetard = (Boolean)solrDocument.get("fraisRetard_stored_boolean");
+				if(fraisRetard != null)
+					oPaiementScolaire.setFraisRetard(fraisRetard);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("paiementNomCourt")) {
@@ -6810,30 +6879,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementMontant_indexed_double", paiementMontant.doubleValue());
 			document.addField("paiementMontant_stored_double", paiementMontant.doubleValue());
 		}
-		if(fraisMontant != null) {
-			document.addField("fraisMontant_indexed_double", fraisMontant.doubleValue());
-			document.addField("fraisMontant_stored_double", fraisMontant.doubleValue());
-		}
-		if(fraisMontantFuture != null) {
-			document.addField("fraisMontantFuture_indexed_double", fraisMontantFuture.doubleValue());
-			document.addField("fraisMontantFuture_stored_double", fraisMontantFuture.doubleValue());
-		}
-		if(fraisInscription != null) {
-			document.addField("fraisInscription_indexed_boolean", fraisInscription);
-			document.addField("fraisInscription_stored_boolean", fraisInscription);
-		}
-		if(fraisPremierDernier != null) {
-			document.addField("fraisPremierDernier_indexed_boolean", fraisPremierDernier);
-			document.addField("fraisPremierDernier_stored_boolean", fraisPremierDernier);
-		}
-		if(fraisMois != null) {
-			document.addField("fraisMois_indexed_boolean", fraisMois);
-			document.addField("fraisMois_stored_boolean", fraisMois);
-		}
-		if(fraisRetard != null) {
-			document.addField("fraisRetard_indexed_boolean", fraisRetard);
-			document.addField("fraisRetard_stored_boolean", fraisRetard);
-		}
 		if(paiementEspeces != null) {
 			document.addField("paiementEspeces_indexed_boolean", paiementEspeces);
 			document.addField("paiementEspeces_stored_boolean", paiementEspeces);
@@ -6865,6 +6910,34 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementRecu != null) {
 			document.addField("paiementRecu_indexed_boolean", paiementRecu);
 			document.addField("paiementRecu_stored_boolean", paiementRecu);
+		}
+		if(fraisMontant != null) {
+			document.addField("fraisMontant_indexed_double", fraisMontant.doubleValue());
+			document.addField("fraisMontant_stored_double", fraisMontant.doubleValue());
+		}
+		if(fraisMontantDu != null) {
+			document.addField("fraisMontantDu_indexed_double", fraisMontantDu.doubleValue());
+			document.addField("fraisMontantDu_stored_double", fraisMontantDu.doubleValue());
+		}
+		if(fraisMontantFuture != null) {
+			document.addField("fraisMontantFuture_indexed_double", fraisMontantFuture.doubleValue());
+			document.addField("fraisMontantFuture_stored_double", fraisMontantFuture.doubleValue());
+		}
+		if(fraisPremierDernier != null) {
+			document.addField("fraisPremierDernier_indexed_boolean", fraisPremierDernier);
+			document.addField("fraisPremierDernier_stored_boolean", fraisPremierDernier);
+		}
+		if(fraisInscription != null) {
+			document.addField("fraisInscription_indexed_boolean", fraisInscription);
+			document.addField("fraisInscription_stored_boolean", fraisInscription);
+		}
+		if(fraisMois != null) {
+			document.addField("fraisMois_indexed_boolean", fraisMois);
+			document.addField("fraisMois_stored_boolean", fraisMois);
+		}
+		if(fraisRetard != null) {
+			document.addField("fraisRetard_indexed_boolean", fraisRetard);
+			document.addField("fraisRetard_stored_boolean", fraisRetard);
 		}
 		if(paiementNomCourt != null) {
 			document.addField("paiementNomCourt_indexed_string", paiementNomCourt);
@@ -6975,18 +7048,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementDate_indexed_date";
 			case "paiementMontant":
 				return "paiementMontant_indexed_double";
-			case "fraisMontant":
-				return "fraisMontant_indexed_double";
-			case "fraisMontantFuture":
-				return "fraisMontantFuture_indexed_double";
-			case "fraisInscription":
-				return "fraisInscription_indexed_boolean";
-			case "fraisPremierDernier":
-				return "fraisPremierDernier_indexed_boolean";
-			case "fraisMois":
-				return "fraisMois_indexed_boolean";
-			case "fraisRetard":
-				return "fraisRetard_indexed_boolean";
 			case "paiementEspeces":
 				return "paiementEspeces_indexed_boolean";
 			case "paiementCheque":
@@ -7003,6 +7064,20 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "transactionStatus_indexed_string";
 			case "paiementRecu":
 				return "paiementRecu_indexed_boolean";
+			case "fraisMontant":
+				return "fraisMontant_indexed_double";
+			case "fraisMontantDu":
+				return "fraisMontantDu_indexed_double";
+			case "fraisMontantFuture":
+				return "fraisMontantFuture_indexed_double";
+			case "fraisPremierDernier":
+				return "fraisPremierDernier_indexed_boolean";
+			case "fraisInscription":
+				return "fraisInscription_indexed_boolean";
+			case "fraisMois":
+				return "fraisMois_indexed_boolean";
+			case "fraisRetard":
+				return "fraisRetard_indexed_boolean";
 			case "paiementNomCourt":
 				return "paiementNomCourt_indexed_string";
 			case "paiementNomComplet":
@@ -7192,30 +7267,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementMontant != null)
 			oPaiementScolaire.setPaiementMontant(paiementMontant);
 
-		Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
-		if(fraisMontant != null)
-			oPaiementScolaire.setFraisMontant(fraisMontant);
-
-		Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
-		if(fraisMontantFuture != null)
-			oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
-
-		Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
-		if(fraisInscription != null)
-			oPaiementScolaire.setFraisInscription(fraisInscription);
-
-		Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
-		if(fraisPremierDernier != null)
-			oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
-
-		Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
-		if(fraisMois != null)
-			oPaiementScolaire.setFraisMois(fraisMois);
-
-		Boolean fraisRetard = (Boolean)solrDocument.get("fraisRetard_stored_boolean");
-		if(fraisRetard != null)
-			oPaiementScolaire.setFraisRetard(fraisRetard);
-
 		Boolean paiementEspeces = (Boolean)solrDocument.get("paiementEspeces_stored_boolean");
 		if(paiementEspeces != null)
 			oPaiementScolaire.setPaiementEspeces(paiementEspeces);
@@ -7247,6 +7298,34 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Boolean paiementRecu = (Boolean)solrDocument.get("paiementRecu_stored_boolean");
 		if(paiementRecu != null)
 			oPaiementScolaire.setPaiementRecu(paiementRecu);
+
+		Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
+		if(fraisMontant != null)
+			oPaiementScolaire.setFraisMontant(fraisMontant);
+
+		Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
+		if(fraisMontantDu != null)
+			oPaiementScolaire.setFraisMontantDu(fraisMontantDu);
+
+		Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
+		if(fraisMontantFuture != null)
+			oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
+
+		Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
+		if(fraisPremierDernier != null)
+			oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
+
+		Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
+		if(fraisInscription != null)
+			oPaiementScolaire.setFraisInscription(fraisInscription);
+
+		Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
+		if(fraisMois != null)
+			oPaiementScolaire.setFraisMois(fraisMois);
+
+		Boolean fraisRetard = (Boolean)solrDocument.get("fraisRetard_stored_boolean");
+		if(fraisRetard != null)
+			oPaiementScolaire.setFraisRetard(fraisRetard);
 
 		String paiementNomCourt = (String)solrDocument.get("paiementNomCourt_stored_string");
 		if(paiementNomCourt != null)
@@ -7288,18 +7367,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("paiementDate");
 			if(!Objects.equals(paiementMontant, original.getPaiementMontant()))
 				requeteApi.addVars("paiementMontant");
-			if(!Objects.equals(fraisMontant, original.getFraisMontant()))
-				requeteApi.addVars("fraisMontant");
-			if(!Objects.equals(fraisMontantFuture, original.getFraisMontantFuture()))
-				requeteApi.addVars("fraisMontantFuture");
-			if(!Objects.equals(fraisInscription, original.getFraisInscription()))
-				requeteApi.addVars("fraisInscription");
-			if(!Objects.equals(fraisPremierDernier, original.getFraisPremierDernier()))
-				requeteApi.addVars("fraisPremierDernier");
-			if(!Objects.equals(fraisMois, original.getFraisMois()))
-				requeteApi.addVars("fraisMois");
-			if(!Objects.equals(fraisRetard, original.getFraisRetard()))
-				requeteApi.addVars("fraisRetard");
 			if(!Objects.equals(paiementEspeces, original.getPaiementEspeces()))
 				requeteApi.addVars("paiementEspeces");
 			if(!Objects.equals(paiementCheque, original.getPaiementCheque()))
@@ -7316,6 +7383,20 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("transactionStatus");
 			if(!Objects.equals(paiementRecu, original.getPaiementRecu()))
 				requeteApi.addVars("paiementRecu");
+			if(!Objects.equals(fraisMontant, original.getFraisMontant()))
+				requeteApi.addVars("fraisMontant");
+			if(!Objects.equals(fraisMontantDu, original.getFraisMontantDu()))
+				requeteApi.addVars("fraisMontantDu");
+			if(!Objects.equals(fraisMontantFuture, original.getFraisMontantFuture()))
+				requeteApi.addVars("fraisMontantFuture");
+			if(!Objects.equals(fraisPremierDernier, original.getFraisPremierDernier()))
+				requeteApi.addVars("fraisPremierDernier");
+			if(!Objects.equals(fraisInscription, original.getFraisInscription()))
+				requeteApi.addVars("fraisInscription");
+			if(!Objects.equals(fraisMois, original.getFraisMois()))
+				requeteApi.addVars("fraisMois");
+			if(!Objects.equals(fraisRetard, original.getFraisRetard()))
+				requeteApi.addVars("fraisRetard");
 			if(!Objects.equals(paiementNomCourt, original.getPaiementNomCourt()))
 				requeteApi.addVars("paiementNomCourt");
 			super.requeteApiCluster();
@@ -7327,7 +7408,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, fraisMontant, fraisMontantFuture, fraisInscription, fraisPremierDernier, fraisMois, fraisRetard, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, paiementNomCourt);
+		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisMontantDu, fraisMontantFuture, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, paiementNomCourt);
 	}
 
 	////////////
@@ -7351,12 +7432,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( paiementDescription, that.paiementDescription )
 				&& Objects.equals( paiementDate, that.paiementDate )
 				&& Objects.equals( paiementMontant, that.paiementMontant )
-				&& Objects.equals( fraisMontant, that.fraisMontant )
-				&& Objects.equals( fraisMontantFuture, that.fraisMontantFuture )
-				&& Objects.equals( fraisInscription, that.fraisInscription )
-				&& Objects.equals( fraisPremierDernier, that.fraisPremierDernier )
-				&& Objects.equals( fraisMois, that.fraisMois )
-				&& Objects.equals( fraisRetard, that.fraisRetard )
 				&& Objects.equals( paiementEspeces, that.paiementEspeces )
 				&& Objects.equals( paiementCheque, that.paiementCheque )
 				&& Objects.equals( paiementSysteme, that.paiementSysteme )
@@ -7365,6 +7440,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( transactionStatus, that.transactionStatus )
 				&& Objects.equals( paiementRecu, that.paiementRecu )
+				&& Objects.equals( fraisMontant, that.fraisMontant )
+				&& Objects.equals( fraisMontantDu, that.fraisMontantDu )
+				&& Objects.equals( fraisMontantFuture, that.fraisMontantFuture )
+				&& Objects.equals( fraisPremierDernier, that.fraisPremierDernier )
+				&& Objects.equals( fraisInscription, that.fraisInscription )
+				&& Objects.equals( fraisMois, that.fraisMois )
+				&& Objects.equals( fraisRetard, that.fraisRetard )
 				&& Objects.equals( paiementNomCourt, that.paiementNomCourt );
 	}
 
@@ -7386,12 +7468,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );
 		sb.append( ", paiementDate: " ).append(paiementDate);
 		sb.append( ", paiementMontant: " ).append(paiementMontant);
-		sb.append( ", fraisMontant: " ).append(fraisMontant);
-		sb.append( ", fraisMontantFuture: " ).append(fraisMontantFuture);
-		sb.append( ", fraisInscription: " ).append(fraisInscription);
-		sb.append( ", fraisPremierDernier: " ).append(fraisPremierDernier);
-		sb.append( ", fraisMois: " ).append(fraisMois);
-		sb.append( ", fraisRetard: " ).append(fraisRetard);
 		sb.append( ", paiementEspeces: " ).append(paiementEspeces);
 		sb.append( ", paiementCheque: " ).append(paiementCheque);
 		sb.append( ", paiementSysteme: " ).append(paiementSysteme);
@@ -7400,6 +7476,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append( ", paiementRecu: " ).append(paiementRecu);
+		sb.append( ", fraisMontant: " ).append(fraisMontant);
+		sb.append( ", fraisMontantDu: " ).append(fraisMontantDu);
+		sb.append( ", fraisMontantFuture: " ).append(fraisMontantFuture);
+		sb.append( ", fraisPremierDernier: " ).append(fraisPremierDernier);
+		sb.append( ", fraisInscription: " ).append(fraisInscription);
+		sb.append( ", fraisMois: " ).append(fraisMois);
+		sb.append( ", fraisRetard: " ).append(fraisRetard);
 		sb.append( ", paiementNomCourt: \"" ).append(paiementNomCourt).append( "\"" );
 		sb.append(" }");
 		return sb.toString();

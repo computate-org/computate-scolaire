@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.config;
 
 import java.io.File;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.ZoneId;
 
 import org.apache.commons.configuration2.INIConfiguration;
@@ -1023,4 +1024,30 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 			o = config.getString(prefixeEchappe + c.var);
 		c.o(o);
 	}
+
+	/**	
+	 * Var.enUS: paymentDay
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _paiementJour(Couverture<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = Integer.parseInt(StringUtils.defaultIfBlank(System.getenv(c.var), "25"));
+		else
+			o = config.getInteger(prefixeEchappe + c.var, 25);
+		c.o(o);
+	}
+
+	/**	
+	 * Var.enUS: paymentNext
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 **/
+	protected void _paiementProchain(Couverture<LocalDate> c) {
+		LocalDate now = LocalDate.now();
+		LocalDate o = LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(25);
+		c.o(o);
+	}
+
 }

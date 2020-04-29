@@ -5,6 +5,8 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -72,6 +74,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 */   
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
+	private LocalDate now;
+
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: paymentKey
@@ -92,7 +96,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: InscriptionScolaire.paiementCles
-	 * HtmlLigne: 6
+	 * HtmlLigne: 7
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
 	 * Description.enUS: The primary key of the school children in the database. 
@@ -724,7 +728,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.enUS: payment each month
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCellule: 3
+	 * HtmlCellule: 4
 	 */                   
 	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
 		c.o(false);
@@ -739,7 +743,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.enUS: complete payment
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCellule: 2
+	 * HtmlCellule: 3
 	 */                       
 	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
 		c.o(false);
@@ -790,91 +794,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.enUS: payment amount
 	 */              
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeAmount
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Facet: sum
-	 * HtmlColonne: 5
-	 * NomAffichage.frFR: frais montant
-	 * NomAffichage.enUS: charge amount
-	 */                   
-	protected void _fraisMontant(Couverture<BigDecimal> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeAmountFuture
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Facet: sum
-	 * NomAffichage.frFR: frais montant future
-	 * NomAffichage.enUS: future charge amount
-	 * r: fraisMontant
-	 * r.enUS: chargeAmount
-	 * r: paiementDate
-	 * r.enUS: paymentDate
-	 */                   
-	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(LocalDate.now()) > 0)
-			c.o(fraisMontant);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeEnrollment
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * NomAffichage.frFR: frais d'inscription
-	 * NomAffichage.enUS: enrollment fee
-	 */                 
-	protected void _fraisInscription(Couverture<Boolean> c) {
-		c.o(false);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeFirstLast
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * NomAffichage.frFR: frais mois premier et dernier
-	 * NomAffichage.enUS: first and last month charge
-	 */                    
-	protected void _fraisPremierDernier(Couverture<Boolean> c) {
-		c.o(false);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeMonth
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * NomAffichage.frFR: frais du mois
-	 * NomAffichage.enUS: monthly fee
-	 */                    
-	protected void _fraisMois(Couverture<Boolean> c) {
-		c.o(false);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeLateFee
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * NomAffichage.frFR: frais de retard
-	 * NomAffichage.enUS: late fee
-	 */                    
-	protected void _fraisRetard(Couverture<Boolean> c) {
-		c.o(false);
 	}
 
 	/**
@@ -984,12 +903,150 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 6
-	 * HtmlCellule: 2
-	 * NomAffichage.frFR: paiement dû
-	 * NomAffichage.enUS: payment due
+	 * HtmlLigne: 5
+	 * HtmlCellule: 5
+	 * NomAffichage.frFR: paiement récu
+	 * NomAffichage.enUS: payment received
 	 */                  
 	protected void _paiementRecu(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmount
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * HtmlLigne: 6
+	 * HtmlCellule: 1
+	 * HtmlColonne: 5
+	 * NomAffichage.frFR: frais montant
+	 * NomAffichage.enUS: charge amount
+	 */                   
+	protected void _fraisMontant(Couverture<BigDecimal> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountDue
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * Modifier: false
+	 * NomAffichage.frFR: frais montant dû
+	 * NomAffichage.enUS: charge amount due
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 */                   
+	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
+		LocalDate paiementProchaine = requeteSite_.getConfigSite_().getPaiementProchain();
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchaine.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchaine) < 0)
+			c.o(fraisMontant);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountFuture
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * Modifier: false
+	 * NomAffichage.frFR: frais montant future
+	 * NomAffichage.enUS: future charge amount
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 */                   
+	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
+		LocalDate paiementProchaine = requeteSite_.getConfigSite_().getPaiementProchain();
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchaine) > 0)
+			c.o(fraisMontant);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeFirstLast
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 2
+	 * NomAffichage.frFR: frais mois premier et dernier
+	 * NomAffichage.enUS: first and last month charge
+	 */                    
+	protected void _fraisPremierDernier(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeEnrollment
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 3
+	 * NomAffichage.frFR: frais d'inscription
+	 * NomAffichage.enUS: enrollment fee
+	 */                 
+	protected void _fraisInscription(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 4
+	 * NomAffichage.frFR: frais du mois
+	 * NomAffichage.enUS: monthly fee
+	 */                    
+	protected void _fraisMois(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeLateFee
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 5
+	 * NomAffichage.frFR: frais de retard
+	 * NomAffichage.enUS: late fee
+	 */                    
+	protected void _fraisRetard(Couverture<Boolean> c) {
 		c.o(false);
 	}
 
@@ -1070,7 +1127,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionJourDebut().getYear(), inscription_.getSessionJourFin().getYear()));
 			else if(inscription_ != null && fraisRetard)
 				o.append("");
-			else
+			else if(paiementDate != null)
 				o.append(String.format("Frais de %s", fd.format(paiementDate.plusMonths(1))));
 		}
 		if(paiementMontant != null) {

@@ -28,7 +28,8 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 		BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
 		BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
 		BigDecimal sum_chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-		if(sum_chargeAmount.subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) <= 0) {
+		BigDecimal sum_chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+		if(sum_chargeAmount.subtract(sum_paymentAmount).subtract(sum_chargeAmountFuture).compareTo(BigDecimal.ZERO) <= 0) {
 			e("div").a("class", "w3-panel w3-green ").f();
 			sx("You are current with all payments. Thank you! ");
 			g("div");
@@ -39,7 +40,7 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 			g("div");
 		}
 
-		if(sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
+		if(sum_chargeAmount.subtract(sum_chargeAmountDue).subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
 			e("div").a("class", "w3-panel w3-red ").f();
 			sx(String.format("You are late on payments for $%s. ", sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount)));
 			g("div");

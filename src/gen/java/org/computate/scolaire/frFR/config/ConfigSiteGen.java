@@ -1,26 +1,40 @@
 package org.computate.scolaire.frFR.config;
 
-import org.apache.commons.configuration2.INIConfiguration;
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
+import java.util.Date;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.math.NumberUtils;
-import java.util.Optional;
 import java.lang.Boolean;
-import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
+import java.time.ZoneOffset;
+import io.vertx.core.logging.Logger;
+import org.apache.commons.configuration2.INIConfiguration;
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.lang.Object;
 
 /**	
  *	Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
@@ -28,6 +42,7 @@ import java.lang.String;
  * <br/>
  **/
 public abstract class ConfigSiteGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(ConfigSite.class);
 
 	//////////////////
 	// configChemin //
@@ -36,6 +51,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « configChemin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String configChemin;
 	@JsonIgnore
 	public Couverture<String> configCheminCouverture = new Couverture<String>().p(this).c(String.class).var("configChemin").o(configChemin);
@@ -97,6 +113,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « config »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected INIConfiguration config;
 	@JsonIgnore
 	public Couverture<INIConfiguration> configCouverture = new Couverture<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
@@ -134,6 +151,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « identifiantSite »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String identifiantSite;
 	@JsonIgnore
 	public Couverture<String> identifiantSiteCouverture = new Couverture<String>().p(this).c(String.class).var("identifiantSite").o(identifiantSite);
@@ -195,6 +213,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « prefixeEchappe »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String prefixeEchappe;
 	@JsonIgnore
 	public Couverture<String> prefixeEchappeCouverture = new Couverture<String>().p(this).c(String.class).var("prefixeEchappe").o(prefixeEchappe);
@@ -256,6 +275,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « appliChemin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String appliChemin;
 	@JsonIgnore
 	public Couverture<String> appliCheminCouverture = new Couverture<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
@@ -317,6 +337,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « racineDocument »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String racineDocument;
 	@JsonIgnore
 	public Couverture<String> racineDocumentCouverture = new Couverture<String>().p(this).c(String.class).var("racineDocument").o(racineDocument);
@@ -378,6 +399,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « nomEntreprise »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String nomEntreprise;
 	@JsonIgnore
 	public Couverture<String> nomEntrepriseCouverture = new Couverture<String>().p(this).c(String.class).var("nomEntreprise").o(nomEntreprise);
@@ -439,6 +461,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « nomDomaine »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String nomDomaine;
 	@JsonIgnore
 	public Couverture<String> nomDomaineCouverture = new Couverture<String>().p(this).c(String.class).var("nomDomaine").o(nomDomaine);
@@ -500,6 +523,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « siteNomHote »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteNomHote;
 	@JsonIgnore
 	public Couverture<String> siteNomHoteCouverture = new Couverture<String>().p(this).c(String.class).var("siteNomHote").o(siteNomHote);
@@ -562,6 +586,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer sitePort;
 	@JsonIgnore
 	public Couverture<Integer> sitePortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
@@ -629,6 +654,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authRoyaume »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authRoyaume;
 	@JsonIgnore
 	public Couverture<String> authRoyaumeCouverture = new Couverture<String>().p(this).c(String.class).var("authRoyaume").o(authRoyaume);
@@ -690,6 +716,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authRessource »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authRessource;
 	@JsonIgnore
 	public Couverture<String> authRessourceCouverture = new Couverture<String>().p(this).c(String.class).var("authRessource").o(authRessource);
@@ -751,6 +778,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authSecret »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authSecret;
 	@JsonIgnore
 	public Couverture<String> authSecretCouverture = new Couverture<String>().p(this).c(String.class).var("authSecret").o(authSecret);
@@ -812,6 +840,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authSslRequis »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authSslRequis;
 	@JsonIgnore
 	public Couverture<String> authSslRequisCouverture = new Couverture<String>().p(this).c(String.class).var("authSslRequis").o(authSslRequis);
@@ -873,6 +902,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « sslJksChemin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sslJksChemin;
 	@JsonIgnore
 	public Couverture<String> sslJksCheminCouverture = new Couverture<String>().p(this).c(String.class).var("sslJksChemin").o(sslJksChemin);
@@ -934,6 +964,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « sslJksMotDePasse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sslJksMotDePasse;
 	@JsonIgnore
 	public Couverture<String> sslJksMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("sslJksMotDePasse").o(sslJksMotDePasse);
@@ -995,6 +1026,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authUrl;
 	@JsonIgnore
 	public Couverture<String> authUrlCouverture = new Couverture<String>().p(this).c(String.class).var("authUrl").o(authUrl);
@@ -1056,6 +1088,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « cryptageSel »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String cryptageSel;
 	@JsonIgnore
 	public Couverture<String> cryptageSelCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageSel").o(cryptageSel);
@@ -1117,6 +1150,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « cryptageMotDePasse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String cryptageMotDePasse;
 	@JsonIgnore
 	public Couverture<String> cryptageMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
@@ -1178,6 +1212,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « siteUrlBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteUrlBase;
 	@JsonIgnore
 	public Couverture<String> siteUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("siteUrlBase").o(siteUrlBase);
@@ -1239,6 +1274,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « siteNomAffichage »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteNomAffichage;
 	@JsonIgnore
 	public Couverture<String> siteNomAffichageCouverture = new Couverture<String>().p(this).c(String.class).var("siteNomAffichage").o(siteNomAffichage);
@@ -1300,6 +1336,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcClassePilote »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcClassePilote;
 	@JsonIgnore
 	public Couverture<String> jdbcClassePiloteCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcClassePilote").o(jdbcClassePilote);
@@ -1361,6 +1398,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcUtilisateur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcUtilisateur;
 	@JsonIgnore
 	public Couverture<String> jdbcUtilisateurCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUtilisateur").o(jdbcUtilisateur);
@@ -1422,6 +1460,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcMotDePasse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcMotDePasse;
 	@JsonIgnore
 	public Couverture<String> jdbcMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcMotDePasse").o(jdbcMotDePasse);
@@ -1484,6 +1523,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcTailleMaxPiscine;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTailleMaxPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMaxPiscine").o(jdbcTailleMaxPiscine);
@@ -1552,6 +1592,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcTailleInitialePiscine;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTailleInitialePiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
@@ -1620,6 +1661,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcTailleMinPiscine;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTailleMinPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMinPiscine").o(jdbcTailleMinPiscine);
@@ -1688,6 +1730,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMaxDeclarations;
 	@JsonIgnore
 	public Couverture<Integer> jdbcMaxDeclarationsCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarations").o(jdbcMaxDeclarations);
@@ -1756,6 +1799,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMaxDeclarationsParConnexion;
 	@JsonIgnore
 	public Couverture<Integer> jdbcMaxDeclarationsParConnexionCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarationsParConnexion").o(jdbcMaxDeclarationsParConnexion);
@@ -1824,6 +1868,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcTempsInactiviteMax;
 	@JsonIgnore
 	public Couverture<Integer> jdbcTempsInactiviteMaxCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTempsInactiviteMax").o(jdbcTempsInactiviteMax);
@@ -1891,6 +1936,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « jdbcUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcUrl;
 	@JsonIgnore
 	public Couverture<String> jdbcUrlCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
@@ -1952,6 +1998,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « solrUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String solrUrl;
 	@JsonIgnore
 	public Couverture<String> solrUrlCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
@@ -2013,6 +2060,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « solrUrlComputate »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String solrUrlComputate;
 	@JsonIgnore
 	public Couverture<String> solrUrlComputateCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
@@ -2074,6 +2122,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « compteFacebook »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String compteFacebook;
 	@JsonIgnore
 	public Couverture<String> compteFacebookCouverture = new Couverture<String>().p(this).c(String.class).var("compteFacebook").o(compteFacebook);
@@ -2135,6 +2184,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « compteTwitter »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String compteTwitter;
 	@JsonIgnore
 	public Couverture<String> compteTwitterCouverture = new Couverture<String>().p(this).c(String.class).var("compteTwitter").o(compteTwitter);
@@ -2196,6 +2246,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « compteInstagram »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String compteInstagram;
 	@JsonIgnore
 	public Couverture<String> compteInstagramCouverture = new Couverture<String>().p(this).c(String.class).var("compteInstagram").o(compteInstagram);
@@ -2257,6 +2308,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « compteYoutube »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String compteYoutube;
 	@JsonIgnore
 	public Couverture<String> compteYoutubeCouverture = new Couverture<String>().p(this).c(String.class).var("compteYoutube").o(compteYoutube);
@@ -2318,6 +2370,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « comptePinterest »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String comptePinterest;
 	@JsonIgnore
 	public Couverture<String> comptePinterestCouverture = new Couverture<String>().p(this).c(String.class).var("comptePinterest").o(comptePinterest);
@@ -2379,6 +2432,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « compteMail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String compteMail;
 	@JsonIgnore
 	public Couverture<String> compteMailCouverture = new Couverture<String>().p(this).c(String.class).var("compteMail").o(compteMail);
@@ -2440,6 +2494,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « roleAdmin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String roleAdmin;
 	@JsonIgnore
 	public Couverture<String> roleAdminCouverture = new Couverture<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
@@ -2501,6 +2556,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailAdmin »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String mailAdmin;
 	@JsonIgnore
 	public Couverture<String> mailAdminCouverture = new Couverture<String>().p(this).c(String.class).var("mailAdmin").o(mailAdmin);
@@ -2563,6 +2619,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer nombreExecuteurs;
 	@JsonIgnore
 	public Couverture<Integer> nombreExecuteursCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
@@ -2630,6 +2687,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « openApiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiVersion;
 	@JsonIgnore
 	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
@@ -2691,6 +2749,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiDescription »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiDescription;
 	@JsonIgnore
 	public Couverture<String> apiDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
@@ -2752,6 +2811,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiTitre »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiTitre;
 	@JsonIgnore
 	public Couverture<String> apiTitreCouverture = new Couverture<String>().p(this).c(String.class).var("apiTitre").o(apiTitre);
@@ -2813,6 +2873,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiTermsService »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiTermsService;
 	@JsonIgnore
 	public Couverture<String> apiTermsServiceCouverture = new Couverture<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
@@ -2874,6 +2935,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiVersion »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiVersion;
 	@JsonIgnore
 	public Couverture<String> apiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
@@ -2935,6 +2997,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiContactMail »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiContactMail;
 	@JsonIgnore
 	public Couverture<String> apiContactMailCouverture = new Couverture<String>().p(this).c(String.class).var("apiContactMail").o(apiContactMail);
@@ -2996,6 +3059,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiLicenceNom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiLicenceNom;
 	@JsonIgnore
 	public Couverture<String> apiLicenceNomCouverture = new Couverture<String>().p(this).c(String.class).var("apiLicenceNom").o(apiLicenceNom);
@@ -3057,6 +3121,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiLicenceUrl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiLicenceUrl;
 	@JsonIgnore
 	public Couverture<String> apiLicenceUrlCouverture = new Couverture<String>().p(this).c(String.class).var("apiLicenceUrl").o(apiLicenceUrl);
@@ -3118,6 +3183,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiNomHote »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiNomHote;
 	@JsonIgnore
 	public Couverture<String> apiNomHoteCouverture = new Couverture<String>().p(this).c(String.class).var("apiNomHote").o(apiNomHote);
@@ -3179,6 +3245,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « apiCheminBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiCheminBase;
 	@JsonIgnore
 	public Couverture<String> apiCheminBaseCouverture = new Couverture<String>().p(this).c(String.class).var("apiCheminBase").o(apiCheminBase);
@@ -3240,6 +3307,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « statiqueUrlBase »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String statiqueUrlBase;
 	@JsonIgnore
 	public Couverture<String> statiqueUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
@@ -3301,6 +3369,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailHote »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String mailHote;
 	@JsonIgnore
 	public Couverture<String> mailHoteCouverture = new Couverture<String>().p(this).c(String.class).var("mailHote").o(mailHote);
@@ -3363,6 +3432,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer mailPort;
 	@JsonIgnore
 	public Couverture<Integer> mailPortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("mailPort").o(mailPort);
@@ -3430,6 +3500,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailUtilisateur »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String mailUtilisateur;
 	@JsonIgnore
 	public Couverture<String> mailUtilisateurCouverture = new Couverture<String>().p(this).c(String.class).var("mailUtilisateur").o(mailUtilisateur);
@@ -3491,6 +3562,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailMotDePasse »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String mailMotDePasse;
 	@JsonIgnore
 	public Couverture<String> mailMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("mailMotDePasse").o(mailMotDePasse);
@@ -3552,6 +3624,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailDe »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String mailDe;
 	@JsonIgnore
 	public Couverture<String> mailDeCouverture = new Couverture<String>().p(this).c(String.class).var("mailDe").o(mailDe);
@@ -3613,6 +3686,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailAuth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean mailAuth;
 	@JsonIgnore
 	public Couverture<Boolean> mailAuthCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("mailAuth").o(mailAuth);
@@ -3679,6 +3753,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « mailSsl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean mailSsl;
 	@JsonIgnore
 	public Couverture<Boolean> mailSslCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("mailSsl").o(mailSsl);
@@ -3745,6 +3820,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « siteZone »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteZone;
 	@JsonIgnore
 	public Couverture<String> siteZoneCouverture = new Couverture<String>().p(this).c(String.class).var("siteZone").o(siteZone);
@@ -3806,6 +3882,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authorizeApiLoginId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authorizeApiLoginId;
 	@JsonIgnore
 	public Couverture<String> authorizeApiLoginIdCouverture = new Couverture<String>().p(this).c(String.class).var("authorizeApiLoginId").o(authorizeApiLoginId);
@@ -3867,6 +3944,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	/**	L'entité « authorizeTransactionKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authorizeTransactionKey;
 	@JsonIgnore
 	public Couverture<String> authorizeTransactionKeyCouverture = new Couverture<String>().p(this).c(String.class).var("authorizeTransactionKey").o(authorizeTransactionKey);
@@ -3919,6 +3997,154 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public String htmAuthorizeTransactionKey() {
 		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
+	}
+
+	//////////////////
+	// paiementJour //
+	//////////////////
+
+	/**	L'entité « paiementJour »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paiementJour;
+	@JsonIgnore
+	public Couverture<Integer> paiementJourCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("paiementJour").o(paiementJour);
+
+	/**	<br/>L'entité « paiementJour »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementJour">Trouver l'entité paiementJour dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementJour(Couverture<Integer> c);
+
+	public Integer getPaiementJour() {
+		return paiementJour;
+	}
+
+	public void setPaiementJour(Integer paiementJour) {
+		this.paiementJour = paiementJour;
+		this.paiementJourCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setPaiementJour(String o) {
+		if(NumberUtils.isParsable(o))
+			this.paiementJour = Integer.parseInt(o);
+		this.paiementJourCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite paiementJourInit() {
+		if(!paiementJourCouverture.dejaInitialise) {
+			_paiementJour(paiementJourCouverture);
+			if(paiementJour == null)
+				setPaiementJour(paiementJourCouverture.o);
+		}
+		paiementJourCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Integer solrPaiementJour() {
+		return paiementJour;
+	}
+
+	public String strPaiementJour() {
+		return paiementJour == null ? "" : paiementJour.toString();
+	}
+
+	public String jsonPaiementJour() {
+		return paiementJour == null ? "" : paiementJour.toString();
+	}
+
+	public String nomAffichagePaiementJour() {
+		return null;
+	}
+
+	public String htmTooltipPaiementJour() {
+		return null;
+	}
+
+	public String htmPaiementJour() {
+		return paiementJour == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementJour());
+	}
+
+	//////////////////////
+	// paiementProchain //
+	//////////////////////
+
+	/**	L'entité « paiementProchain »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate paiementProchain;
+	@JsonIgnore
+	public Couverture<LocalDate> paiementProchainCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementProchain").o(paiementProchain);
+
+	/**	<br/>L'entité « paiementProchain »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementProchain">Trouver l'entité paiementProchain dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementProchain(Couverture<LocalDate> c);
+
+	public LocalDate getPaiementProchain() {
+		return paiementProchain;
+	}
+
+	public void setPaiementProchain(LocalDate paiementProchain) {
+		this.paiementProchain = paiementProchain;
+		this.paiementProchainCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setPaiementProchain(Instant o) {
+		this.paiementProchain = LocalDate.from(o);
+		this.paiementProchainCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public ConfigSite setPaiementProchain(String o) {
+		this.paiementProchain = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.paiementProchainCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	public ConfigSite setPaiementProchain(Date o) {
+		this.paiementProchain = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.paiementProchainCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite paiementProchainInit() {
+		if(!paiementProchainCouverture.dejaInitialise) {
+			_paiementProchain(paiementProchainCouverture);
+			if(paiementProchain == null)
+				setPaiementProchain(paiementProchainCouverture.o);
+		}
+		paiementProchainCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Date solrPaiementProchain() {
+		return paiementProchain == null ? null : Date.from(paiementProchain.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strPaiementProchain() {
+		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonPaiementProchain() {
+		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichagePaiementProchain() {
+		return null;
+	}
+
+	public String htmTooltipPaiementProchain() {
+		return null;
+	}
+
+	public String htmPaiementProchain() {
+		return paiementProchain == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementProchain());
 	}
 
 	//////////////
@@ -4003,6 +4229,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		siteZoneInit();
 		authorizeApiLoginIdInit();
 		authorizeTransactionKeyInit();
+		paiementJourInit();
+		paiementProchainInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -4155,6 +4383,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.authorizeApiLoginId;
 			case "authorizeTransactionKey":
 				return oConfigSite.authorizeTransactionKey;
+			case "paiementJour":
+				return oConfigSite.paiementJour;
+			case "paiementProchain":
+				return oConfigSite.paiementProchain;
 			default:
 				return null;
 		}

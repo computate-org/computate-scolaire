@@ -5,6 +5,8 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -16,6 +18,8 @@ import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolPayment extends SchoolPaymentGen<Cluster> {
+
+	private LocalDate now;
 
 	protected void _paymentKey(Wrap<Long> c) {
 		c.o(pk);
@@ -213,30 +217,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentAmount(Wrap<BigDecimal> c) {
 	}
 
-	protected void _chargeAmount(Wrap<BigDecimal> c) {
-	}
-
-	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(LocalDate.now()) > 0)
-			c.o(chargeAmount);
-	}
-
-	protected void _chargeEnrollment(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
-	protected void _chargeFirstLast(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
-	protected void _chargeMonth(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
-	protected void _chargeLateFee(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
 	protected void _paymentCash(Wrap<Boolean> c) {
 		c.o(false);
 	}
@@ -265,6 +245,37 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _chargeAmount(Wrap<BigDecimal> c) {
+	}
+
+	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
+		LocalDate paymentNexte = siteRequest_.getSiteConfig_().getPaymentNext();
+		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNexte.minusMonths(1)) >= 0 && paymentDate.compareTo(paymentNexte) < 0)
+			c.o(chargeAmount);
+	}
+
+	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
+		LocalDate paymentNexte = siteRequest_.getSiteConfig_().getPaymentNext();
+		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNexte) > 0)
+			c.o(chargeAmount);
+	}
+
+	protected void _chargeFirstLast(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _chargeEnrollment(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _chargeMonth(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _chargeLateFee(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	protected void _paymentShortName(Wrap<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM", Locale.US);
@@ -278,7 +289,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(String.format("%s-%s enrollment fee", enrollment_.getSessionStartDate().getYear(), enrollment_.getSessionEndDate().getYear()));
 			else if(enrollment_ != null && chargeLateFee)
 				o.append("");
-			else
+			else if(paymentDate != null)
 				o.append(String.format("%s tuition", fd.format(paymentDate.plusMonths(1))));
 		}
 		if(paymentAmount != null) {

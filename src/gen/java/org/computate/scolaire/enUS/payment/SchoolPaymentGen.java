@@ -3679,860 +3679,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	//////////////////
-	// chargeAmount //
-	//////////////////
-
-	/**	L'entité « chargeAmount »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal chargeAmount;
-	@JsonIgnore
-	public Wrap<BigDecimal> chargeAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmount").o(chargeAmount);
-
-	/**	<br/>L'entité « chargeAmount »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmount">Trouver l'entité chargeAmount dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeAmount(Wrap<BigDecimal> c);
-
-	public BigDecimal getChargeAmount() {
-		return chargeAmount;
-	}
-
-	public void setChargeAmount(BigDecimal chargeAmount) {
-		this.chargeAmount = chargeAmount;
-		this.chargeAmountWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmount(Double o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmount(Integer o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeAmountInit() {
-		if(!chargeAmountWrap.alreadyInitialized) {
-			_chargeAmount(chargeAmountWrap);
-			if(chargeAmount == null)
-				setChargeAmount(chargeAmountWrap.o);
-		}
-		chargeAmountWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Double solrChargeAmount() {
-		return chargeAmount == null ? null : chargeAmount.doubleValue();
-	}
-
-	public String strChargeAmount() {
-		return chargeAmount == null ? "" : chargeAmount.setScale(2).toString();
-	}
-
-	public String jsonChargeAmount() {
-		return chargeAmount == null ? "" : chargeAmount.toString();
-	}
-
-	public String nomAffichageChargeAmount() {
-		return "charge amount";
-	}
-
-	public String htmTooltipChargeAmount() {
-		return null;
-	}
-
-	public String htmChargeAmount() {
-		return chargeAmount == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmount());
-	}
-
-	public void inputChargeAmount(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "charge amount")
-				.a("id", classApiMethodMethod, "_chargeAmount");
-				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChargeAmount inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
-					a("name", "setChargeAmount");
-				} else {
-					a("class", "valueChargeAmount w3-input w3-border inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
-					a("name", "chargeAmount");
-				}
-				if("Page".equals(classApiMethodMethod)) {
-					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmount', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmount')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmount')); }); ");
-				}
-				a("value", strChargeAmount())
-			.fg();
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-					) {
-				sx(htmChargeAmount());
-			}
-		}
-	}
-
-	public void htmChargeAmount(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmount").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeAmount").a("class", "").f().sx("charge amount").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeAmount(classApiMethodMethod);
-							} g("div");
-							if(
-									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-									) {
-								if("Page".equals(classApiMethodMethod)) {
-									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-										{ e("button")
-											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_chargeAmount')); $('#", classApiMethodMethod, "_chargeAmount').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setChargeAmount', null, function() { addGlow($('#", classApiMethodMethod, "_chargeAmount')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmount')); }); ")
-											.f();
-											e("i").a("class", "far fa-eraser ").f().g("i");
-										} g("button");
-									} g("div");
-								}
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	////////////////////////
-	// chargeAmountFuture //
-	////////////////////////
-
-	/**	L'entité « chargeAmountFuture »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal chargeAmountFuture;
-	@JsonIgnore
-	public Wrap<BigDecimal> chargeAmountFutureWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountFuture").o(chargeAmountFuture);
-
-	/**	<br/>L'entité « chargeAmountFuture »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountFuture">Trouver l'entité chargeAmountFuture dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeAmountFuture(Wrap<BigDecimal> c);
-
-	public BigDecimal getChargeAmountFuture() {
-		return chargeAmountFuture;
-	}
-
-	public void setChargeAmountFuture(BigDecimal chargeAmountFuture) {
-		this.chargeAmountFuture = chargeAmountFuture;
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeAmountFuture(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmountFuture(Double o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmountFuture(Integer o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeAmountFutureInit() {
-		if(!chargeAmountFutureWrap.alreadyInitialized) {
-			_chargeAmountFuture(chargeAmountFutureWrap);
-			if(chargeAmountFuture == null)
-				setChargeAmountFuture(chargeAmountFutureWrap.o);
-		}
-		chargeAmountFutureWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Double solrChargeAmountFuture() {
-		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
-	}
-
-	public String strChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2).toString();
-	}
-
-	public String jsonChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
-	}
-
-	public String nomAffichageChargeAmountFuture() {
-		return "future charge amount";
-	}
-
-	public String htmTooltipChargeAmountFuture() {
-		return null;
-	}
-
-	public String htmChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountFuture());
-	}
-
-	public void inputChargeAmountFuture(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "future charge amount")
-				.a("id", classApiMethodMethod, "_chargeAmountFuture");
-				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChargeAmountFuture inputSchoolPayment", pk, "ChargeAmountFuture w3-input w3-border ");
-					a("name", "setChargeAmountFuture");
-				} else {
-					a("class", "valueChargeAmountFuture w3-input w3-border inputSchoolPayment", pk, "ChargeAmountFuture w3-input w3-border ");
-					a("name", "chargeAmountFuture");
-				}
-				if("Page".equals(classApiMethodMethod)) {
-					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmountFuture', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmountFuture')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmountFuture')); }); ");
-				}
-				a("value", strChargeAmountFuture())
-			.fg();
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-					) {
-				sx(htmChargeAmountFuture());
-			}
-		}
-	}
-
-	public void htmChargeAmountFuture(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountFuture").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeAmountFuture").a("class", "").f().sx("future charge amount").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeAmountFuture(classApiMethodMethod);
-							} g("div");
-							if(
-									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-									) {
-								if("Page".equals(classApiMethodMethod)) {
-									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-										{ e("button")
-											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_chargeAmountFuture')); $('#", classApiMethodMethod, "_chargeAmountFuture').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setChargeAmountFuture', null, function() { addGlow($('#", classApiMethodMethod, "_chargeAmountFuture')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmountFuture')); }); ")
-											.f();
-											e("i").a("class", "far fa-eraser ").f().g("i");
-										} g("button");
-									} g("div");
-								}
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	//////////////////////
-	// chargeEnrollment //
-	//////////////////////
-
-	/**	L'entité « chargeEnrollment »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean chargeEnrollment;
-	@JsonIgnore
-	public Wrap<Boolean> chargeEnrollmentWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeEnrollment").o(chargeEnrollment);
-
-	/**	<br/>L'entité « chargeEnrollment »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeEnrollment">Trouver l'entité chargeEnrollment dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeEnrollment(Wrap<Boolean> c);
-
-	public Boolean getChargeEnrollment() {
-		return chargeEnrollment;
-	}
-
-	public void setChargeEnrollment(Boolean chargeEnrollment) {
-		this.chargeEnrollment = chargeEnrollment;
-		this.chargeEnrollmentWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeEnrollment(String o) {
-		this.chargeEnrollment = Boolean.parseBoolean(o);
-		this.chargeEnrollmentWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeEnrollmentInit() {
-		if(!chargeEnrollmentWrap.alreadyInitialized) {
-			_chargeEnrollment(chargeEnrollmentWrap);
-			if(chargeEnrollment == null)
-				setChargeEnrollment(chargeEnrollmentWrap.o);
-		}
-		chargeEnrollmentWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Boolean solrChargeEnrollment() {
-		return chargeEnrollment;
-	}
-
-	public String strChargeEnrollment() {
-		return chargeEnrollment == null ? "" : chargeEnrollment.toString();
-	}
-
-	public String jsonChargeEnrollment() {
-		return chargeEnrollment == null ? "" : chargeEnrollment.toString();
-	}
-
-	public String nomAffichageChargeEnrollment() {
-		return "enrollment fee";
-	}
-
-	public String htmTooltipChargeEnrollment() {
-		return null;
-	}
-
-	public String htmChargeEnrollment() {
-		return chargeEnrollment == null ? "" : StringEscapeUtils.escapeHtml4(strChargeEnrollment());
-	}
-
-	public void inputChargeEnrollment(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_chargeEnrollment")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_chargeEnrollment");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
-				a("name", "setChargeEnrollment");
-			} else {
-				a("class", "valueChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
-				a("name", "chargeEnrollment");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeEnrollment', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeEnrollment')); }, function() { addError($('#", classApiMethodMethod, "_chargeEnrollment')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getChargeEnrollment() != null && getChargeEnrollment())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-					) {
-				sx(htmChargeEnrollment());
-			}
-		}
-	}
-
-	public void htmChargeEnrollment(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeEnrollment").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeEnrollment").a("class", "").f().sx("enrollment fee").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeEnrollment(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////////
-	// chargeFirstLast //
-	/////////////////////
-
-	/**	L'entité « chargeFirstLast »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean chargeFirstLast;
-	@JsonIgnore
-	public Wrap<Boolean> chargeFirstLastWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeFirstLast").o(chargeFirstLast);
-
-	/**	<br/>L'entité « chargeFirstLast »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeFirstLast">Trouver l'entité chargeFirstLast dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeFirstLast(Wrap<Boolean> c);
-
-	public Boolean getChargeFirstLast() {
-		return chargeFirstLast;
-	}
-
-	public void setChargeFirstLast(Boolean chargeFirstLast) {
-		this.chargeFirstLast = chargeFirstLast;
-		this.chargeFirstLastWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeFirstLast(String o) {
-		this.chargeFirstLast = Boolean.parseBoolean(o);
-		this.chargeFirstLastWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeFirstLastInit() {
-		if(!chargeFirstLastWrap.alreadyInitialized) {
-			_chargeFirstLast(chargeFirstLastWrap);
-			if(chargeFirstLast == null)
-				setChargeFirstLast(chargeFirstLastWrap.o);
-		}
-		chargeFirstLastWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Boolean solrChargeFirstLast() {
-		return chargeFirstLast;
-	}
-
-	public String strChargeFirstLast() {
-		return chargeFirstLast == null ? "" : chargeFirstLast.toString();
-	}
-
-	public String jsonChargeFirstLast() {
-		return chargeFirstLast == null ? "" : chargeFirstLast.toString();
-	}
-
-	public String nomAffichageChargeFirstLast() {
-		return "first and last month charge";
-	}
-
-	public String htmTooltipChargeFirstLast() {
-		return null;
-	}
-
-	public String htmChargeFirstLast() {
-		return chargeFirstLast == null ? "" : StringEscapeUtils.escapeHtml4(strChargeFirstLast());
-	}
-
-	public void inputChargeFirstLast(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_chargeFirstLast")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_chargeFirstLast");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
-				a("name", "setChargeFirstLast");
-			} else {
-				a("class", "valueChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
-				a("name", "chargeFirstLast");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeFirstLast', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeFirstLast')); }, function() { addError($('#", classApiMethodMethod, "_chargeFirstLast')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getChargeFirstLast() != null && getChargeFirstLast())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-					) {
-				sx(htmChargeFirstLast());
-			}
-		}
-	}
-
-	public void htmChargeFirstLast(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeFirstLast").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeFirstLast").a("class", "").f().sx("first and last month charge").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeFirstLast(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////
-	// chargeMonth //
-	/////////////////
-
-	/**	L'entité « chargeMonth »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean chargeMonth;
-	@JsonIgnore
-	public Wrap<Boolean> chargeMonthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeMonth").o(chargeMonth);
-
-	/**	<br/>L'entité « chargeMonth »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeMonth">Trouver l'entité chargeMonth dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeMonth(Wrap<Boolean> c);
-
-	public Boolean getChargeMonth() {
-		return chargeMonth;
-	}
-
-	public void setChargeMonth(Boolean chargeMonth) {
-		this.chargeMonth = chargeMonth;
-		this.chargeMonthWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeMonth(String o) {
-		this.chargeMonth = Boolean.parseBoolean(o);
-		this.chargeMonthWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeMonthInit() {
-		if(!chargeMonthWrap.alreadyInitialized) {
-			_chargeMonth(chargeMonthWrap);
-			if(chargeMonth == null)
-				setChargeMonth(chargeMonthWrap.o);
-		}
-		chargeMonthWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Boolean solrChargeMonth() {
-		return chargeMonth;
-	}
-
-	public String strChargeMonth() {
-		return chargeMonth == null ? "" : chargeMonth.toString();
-	}
-
-	public String jsonChargeMonth() {
-		return chargeMonth == null ? "" : chargeMonth.toString();
-	}
-
-	public String nomAffichageChargeMonth() {
-		return "monthly fee";
-	}
-
-	public String htmTooltipChargeMonth() {
-		return null;
-	}
-
-	public String htmChargeMonth() {
-		return chargeMonth == null ? "" : StringEscapeUtils.escapeHtml4(strChargeMonth());
-	}
-
-	public void inputChargeMonth(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_chargeMonth")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_chargeMonth");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
-				a("name", "setChargeMonth");
-			} else {
-				a("class", "valueChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
-				a("name", "chargeMonth");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeMonth')); }, function() { addError($('#", classApiMethodMethod, "_chargeMonth')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getChargeMonth() != null && getChargeMonth())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-					) {
-				sx(htmChargeMonth());
-			}
-		}
-	}
-
-	public void htmChargeMonth(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeMonth").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeMonth").a("class", "").f().sx("monthly fee").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeMonth(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////////
-	// chargeLateFee //
-	///////////////////
-
-	/**	L'entité « chargeLateFee »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean chargeLateFee;
-	@JsonIgnore
-	public Wrap<Boolean> chargeLateFeeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeLateFee").o(chargeLateFee);
-
-	/**	<br/>L'entité « chargeLateFee »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeLateFee">Trouver l'entité chargeLateFee dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeLateFee(Wrap<Boolean> c);
-
-	public Boolean getChargeLateFee() {
-		return chargeLateFee;
-	}
-
-	public void setChargeLateFee(Boolean chargeLateFee) {
-		this.chargeLateFee = chargeLateFee;
-		this.chargeLateFeeWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeLateFee(String o) {
-		this.chargeLateFee = Boolean.parseBoolean(o);
-		this.chargeLateFeeWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeLateFeeInit() {
-		if(!chargeLateFeeWrap.alreadyInitialized) {
-			_chargeLateFee(chargeLateFeeWrap);
-			if(chargeLateFee == null)
-				setChargeLateFee(chargeLateFeeWrap.o);
-		}
-		chargeLateFeeWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Boolean solrChargeLateFee() {
-		return chargeLateFee;
-	}
-
-	public String strChargeLateFee() {
-		return chargeLateFee == null ? "" : chargeLateFee.toString();
-	}
-
-	public String jsonChargeLateFee() {
-		return chargeLateFee == null ? "" : chargeLateFee.toString();
-	}
-
-	public String nomAffichageChargeLateFee() {
-		return "late fee";
-	}
-
-	public String htmTooltipChargeLateFee() {
-		return null;
-	}
-
-	public String htmChargeLateFee() {
-		return chargeLateFee == null ? "" : StringEscapeUtils.escapeHtml4(strChargeLateFee());
-	}
-
-	public void inputChargeLateFee(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_chargeLateFee")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_chargeLateFee");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChargeLateFee inputSchoolPayment", pk, "ChargeLateFee w3-input w3-border ");
-				a("name", "setChargeLateFee");
-			} else {
-				a("class", "valueChargeLateFee inputSchoolPayment", pk, "ChargeLateFee w3-input w3-border ");
-				a("name", "chargeLateFee");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeLateFee', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeLateFee')); }, function() { addError($('#", classApiMethodMethod, "_chargeLateFee')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getChargeLateFee() != null && getChargeLateFee())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-					) {
-				sx(htmChargeLateFee());
-			}
-		}
-	}
-
-	public void htmChargeLateFee(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeLateFee").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeLateFee").a("class", "").f().sx("late fee").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeLateFee(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////
 	// paymentCash //
 	/////////////////
@@ -5540,7 +4686,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaymentRecieved() {
-		return "payment due";
+		return "payment received";
 	}
 
 	public String htmTooltipPaymentRecieved() {
@@ -5607,12 +4753,923 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentRecieved").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_paymentRecieved").a("class", "").f().sx("payment due").g("label");
+							e("label").a("for", classApiMethodMethod, "_paymentRecieved").a("class", "").f().sx("payment received").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputPaymentRecieved(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////
+	// chargeAmount //
+	//////////////////
+
+	/**	L'entité « chargeAmount »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmount;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmount").o(chargeAmount);
+
+	/**	<br/>L'entité « chargeAmount »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmount">Trouver l'entité chargeAmount dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeAmount(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmount() {
+		return chargeAmount;
+	}
+
+	public void setChargeAmount(BigDecimal chargeAmount) {
+		this.chargeAmount = chargeAmount;
+		this.chargeAmountWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmount(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmount(Double o) {
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmount(Integer o) {
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountInit() {
+		if(!chargeAmountWrap.alreadyInitialized) {
+			_chargeAmount(chargeAmountWrap);
+			if(chargeAmount == null)
+				setChargeAmount(chargeAmountWrap.o);
+		}
+		chargeAmountWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmount() {
+		return chargeAmount == null ? null : chargeAmount.doubleValue();
+	}
+
+	public String strChargeAmount() {
+		return chargeAmount == null ? "" : chargeAmount.setScale(2).toString();
+	}
+
+	public String jsonChargeAmount() {
+		return chargeAmount == null ? "" : chargeAmount.toString();
+	}
+
+	public String nomAffichageChargeAmount() {
+		return "charge amount";
+	}
+
+	public String htmTooltipChargeAmount() {
+		return null;
+	}
+
+	public String htmChargeAmount() {
+		return chargeAmount == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmount());
+	}
+
+	public void inputChargeAmount(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "charge amount")
+				.a("id", classApiMethodMethod, "_chargeAmount");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setChargeAmount inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
+					a("name", "setChargeAmount");
+				} else {
+					a("class", "valueChargeAmount w3-input w3-border inputSchoolPayment", pk, "ChargeAmount w3-input w3-border ");
+					a("name", "chargeAmount");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeAmount', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_chargeAmount')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmount')); }); ");
+				}
+				a("value", strChargeAmount())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeAmount());
+			}
+		}
+	}
+
+	public void htmChargeAmount(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmount").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmount").a("class", "").f().sx("charge amount").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmount(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_chargeAmount')); $('#", classApiMethodMethod, "_chargeAmount').val(null); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:' + $('#SchoolPaymentForm :input[name=pk]').val() }], 'setChargeAmount', null, function() { addGlow($('#", classApiMethodMethod, "_chargeAmount')); }, function() { addError($('#", classApiMethodMethod, "_chargeAmount')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////
+	// chargeAmountDue //
+	/////////////////////
+
+	/**	L'entité « chargeAmountDue »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountDue;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountDueWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountDue").o(chargeAmountDue);
+
+	/**	<br/>L'entité « chargeAmountDue »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountDue">Trouver l'entité chargeAmountDue dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeAmountDue(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountDue() {
+		return chargeAmountDue;
+	}
+
+	public void setChargeAmountDue(BigDecimal chargeAmountDue) {
+		this.chargeAmountDue = chargeAmountDue;
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmountDue(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountDue(Double o) {
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountDue(Integer o) {
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountDueInit() {
+		if(!chargeAmountDueWrap.alreadyInitialized) {
+			_chargeAmountDue(chargeAmountDueWrap);
+			if(chargeAmountDue == null)
+				setChargeAmountDue(chargeAmountDueWrap.o);
+		}
+		chargeAmountDueWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmountDue() {
+		return chargeAmountDue == null ? null : chargeAmountDue.doubleValue();
+	}
+
+	public String strChargeAmountDue() {
+		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2).toString();
+	}
+
+	public String jsonChargeAmountDue() {
+		return chargeAmountDue == null ? "" : chargeAmountDue.toString();
+	}
+
+	public String nomAffichageChargeAmountDue() {
+		return "charge amount due";
+	}
+
+	public String htmTooltipChargeAmountDue() {
+		return null;
+	}
+
+	public String htmChargeAmountDue() {
+		return chargeAmountDue == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountDue());
+	}
+
+	public void inputChargeAmountDue(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+	}
+
+	public void htmChargeAmountDue(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountDue").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmountDue").a("class", "").f().sx("charge amount due").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmountDue(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// chargeAmountFuture //
+	////////////////////////
+
+	/**	L'entité « chargeAmountFuture »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountFuture;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountFutureWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountFuture").o(chargeAmountFuture);
+
+	/**	<br/>L'entité « chargeAmountFuture »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountFuture">Trouver l'entité chargeAmountFuture dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeAmountFuture(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountFuture() {
+		return chargeAmountFuture;
+	}
+
+	public void setChargeAmountFuture(BigDecimal chargeAmountFuture) {
+		this.chargeAmountFuture = chargeAmountFuture;
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmountFuture(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountFuture(Double o) {
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountFuture(Integer o) {
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountFutureInit() {
+		if(!chargeAmountFutureWrap.alreadyInitialized) {
+			_chargeAmountFuture(chargeAmountFutureWrap);
+			if(chargeAmountFuture == null)
+				setChargeAmountFuture(chargeAmountFutureWrap.o);
+		}
+		chargeAmountFutureWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmountFuture() {
+		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
+	}
+
+	public String strChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2).toString();
+	}
+
+	public String jsonChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
+	}
+
+	public String nomAffichageChargeAmountFuture() {
+		return "future charge amount";
+	}
+
+	public String htmTooltipChargeAmountFuture() {
+		return null;
+	}
+
+	public String htmChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountFuture());
+	}
+
+	public void inputChargeAmountFuture(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+	}
+
+	public void htmChargeAmountFuture(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountFuture").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmountFuture").a("class", "").f().sx("future charge amount").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmountFuture(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////
+	// chargeFirstLast //
+	/////////////////////
+
+	/**	L'entité « chargeFirstLast »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean chargeFirstLast;
+	@JsonIgnore
+	public Wrap<Boolean> chargeFirstLastWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeFirstLast").o(chargeFirstLast);
+
+	/**	<br/>L'entité « chargeFirstLast »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeFirstLast">Trouver l'entité chargeFirstLast dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeFirstLast(Wrap<Boolean> c);
+
+	public Boolean getChargeFirstLast() {
+		return chargeFirstLast;
+	}
+
+	public void setChargeFirstLast(Boolean chargeFirstLast) {
+		this.chargeFirstLast = chargeFirstLast;
+		this.chargeFirstLastWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeFirstLast(String o) {
+		this.chargeFirstLast = Boolean.parseBoolean(o);
+		this.chargeFirstLastWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeFirstLastInit() {
+		if(!chargeFirstLastWrap.alreadyInitialized) {
+			_chargeFirstLast(chargeFirstLastWrap);
+			if(chargeFirstLast == null)
+				setChargeFirstLast(chargeFirstLastWrap.o);
+		}
+		chargeFirstLastWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Boolean solrChargeFirstLast() {
+		return chargeFirstLast;
+	}
+
+	public String strChargeFirstLast() {
+		return chargeFirstLast == null ? "" : chargeFirstLast.toString();
+	}
+
+	public String jsonChargeFirstLast() {
+		return chargeFirstLast == null ? "" : chargeFirstLast.toString();
+	}
+
+	public String nomAffichageChargeFirstLast() {
+		return "first and last month charge";
+	}
+
+	public String htmTooltipChargeFirstLast() {
+		return null;
+	}
+
+	public String htmChargeFirstLast() {
+		return chargeFirstLast == null ? "" : StringEscapeUtils.escapeHtml4(strChargeFirstLast());
+	}
+
+	public void inputChargeFirstLast(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeFirstLast")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeFirstLast");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
+				a("name", "setChargeFirstLast");
+			} else {
+				a("class", "valueChargeFirstLast inputSchoolPayment", pk, "ChargeFirstLast w3-input w3-border ");
+				a("name", "chargeFirstLast");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeFirstLast', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeFirstLast')); }, function() { addError($('#", classApiMethodMethod, "_chargeFirstLast')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeFirstLast() != null && getChargeFirstLast())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeFirstLast());
+			}
+		}
+	}
+
+	public void htmChargeFirstLast(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeFirstLast").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeFirstLast").a("class", "").f().sx("first and last month charge").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeFirstLast(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////
+	// chargeEnrollment //
+	//////////////////////
+
+	/**	L'entité « chargeEnrollment »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean chargeEnrollment;
+	@JsonIgnore
+	public Wrap<Boolean> chargeEnrollmentWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeEnrollment").o(chargeEnrollment);
+
+	/**	<br/>L'entité « chargeEnrollment »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeEnrollment">Trouver l'entité chargeEnrollment dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeEnrollment(Wrap<Boolean> c);
+
+	public Boolean getChargeEnrollment() {
+		return chargeEnrollment;
+	}
+
+	public void setChargeEnrollment(Boolean chargeEnrollment) {
+		this.chargeEnrollment = chargeEnrollment;
+		this.chargeEnrollmentWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeEnrollment(String o) {
+		this.chargeEnrollment = Boolean.parseBoolean(o);
+		this.chargeEnrollmentWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeEnrollmentInit() {
+		if(!chargeEnrollmentWrap.alreadyInitialized) {
+			_chargeEnrollment(chargeEnrollmentWrap);
+			if(chargeEnrollment == null)
+				setChargeEnrollment(chargeEnrollmentWrap.o);
+		}
+		chargeEnrollmentWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Boolean solrChargeEnrollment() {
+		return chargeEnrollment;
+	}
+
+	public String strChargeEnrollment() {
+		return chargeEnrollment == null ? "" : chargeEnrollment.toString();
+	}
+
+	public String jsonChargeEnrollment() {
+		return chargeEnrollment == null ? "" : chargeEnrollment.toString();
+	}
+
+	public String nomAffichageChargeEnrollment() {
+		return "enrollment fee";
+	}
+
+	public String htmTooltipChargeEnrollment() {
+		return null;
+	}
+
+	public String htmChargeEnrollment() {
+		return chargeEnrollment == null ? "" : StringEscapeUtils.escapeHtml4(strChargeEnrollment());
+	}
+
+	public void inputChargeEnrollment(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeEnrollment")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeEnrollment");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
+				a("name", "setChargeEnrollment");
+			} else {
+				a("class", "valueChargeEnrollment inputSchoolPayment", pk, "ChargeEnrollment w3-input w3-border ");
+				a("name", "chargeEnrollment");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeEnrollment', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeEnrollment')); }, function() { addError($('#", classApiMethodMethod, "_chargeEnrollment')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeEnrollment() != null && getChargeEnrollment())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeEnrollment());
+			}
+		}
+	}
+
+	public void htmChargeEnrollment(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeEnrollment").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeEnrollment").a("class", "").f().sx("enrollment fee").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeEnrollment(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// chargeMonth //
+	/////////////////
+
+	/**	L'entité « chargeMonth »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean chargeMonth;
+	@JsonIgnore
+	public Wrap<Boolean> chargeMonthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeMonth").o(chargeMonth);
+
+	/**	<br/>L'entité « chargeMonth »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeMonth">Trouver l'entité chargeMonth dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeMonth(Wrap<Boolean> c);
+
+	public Boolean getChargeMonth() {
+		return chargeMonth;
+	}
+
+	public void setChargeMonth(Boolean chargeMonth) {
+		this.chargeMonth = chargeMonth;
+		this.chargeMonthWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeMonth(String o) {
+		this.chargeMonth = Boolean.parseBoolean(o);
+		this.chargeMonthWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeMonthInit() {
+		if(!chargeMonthWrap.alreadyInitialized) {
+			_chargeMonth(chargeMonthWrap);
+			if(chargeMonth == null)
+				setChargeMonth(chargeMonthWrap.o);
+		}
+		chargeMonthWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Boolean solrChargeMonth() {
+		return chargeMonth;
+	}
+
+	public String strChargeMonth() {
+		return chargeMonth == null ? "" : chargeMonth.toString();
+	}
+
+	public String jsonChargeMonth() {
+		return chargeMonth == null ? "" : chargeMonth.toString();
+	}
+
+	public String nomAffichageChargeMonth() {
+		return "monthly fee";
+	}
+
+	public String htmTooltipChargeMonth() {
+		return null;
+	}
+
+	public String htmChargeMonth() {
+		return chargeMonth == null ? "" : StringEscapeUtils.escapeHtml4(strChargeMonth());
+	}
+
+	public void inputChargeMonth(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeMonth")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeMonth");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
+				a("name", "setChargeMonth");
+			} else {
+				a("class", "valueChargeMonth inputSchoolPayment", pk, "ChargeMonth w3-input w3-border ");
+				a("name", "chargeMonth");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeMonth')); }, function() { addError($('#", classApiMethodMethod, "_chargeMonth')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeMonth() != null && getChargeMonth())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeMonth());
+			}
+		}
+	}
+
+	public void htmChargeMonth(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeMonth").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeMonth").a("class", "").f().sx("monthly fee").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeMonth(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////
+	// chargeLateFee //
+	///////////////////
+
+	/**	L'entité « chargeLateFee »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean chargeLateFee;
+	@JsonIgnore
+	public Wrap<Boolean> chargeLateFeeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargeLateFee").o(chargeLateFee);
+
+	/**	<br/>L'entité « chargeLateFee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeLateFee">Trouver l'entité chargeLateFee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeLateFee(Wrap<Boolean> c);
+
+	public Boolean getChargeLateFee() {
+		return chargeLateFee;
+	}
+
+	public void setChargeLateFee(Boolean chargeLateFee) {
+		this.chargeLateFee = chargeLateFee;
+		this.chargeLateFeeWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeLateFee(String o) {
+		this.chargeLateFee = Boolean.parseBoolean(o);
+		this.chargeLateFeeWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeLateFeeInit() {
+		if(!chargeLateFeeWrap.alreadyInitialized) {
+			_chargeLateFee(chargeLateFeeWrap);
+			if(chargeLateFee == null)
+				setChargeLateFee(chargeLateFeeWrap.o);
+		}
+		chargeLateFeeWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Boolean solrChargeLateFee() {
+		return chargeLateFee;
+	}
+
+	public String strChargeLateFee() {
+		return chargeLateFee == null ? "" : chargeLateFee.toString();
+	}
+
+	public String jsonChargeLateFee() {
+		return chargeLateFee == null ? "" : chargeLateFee.toString();
+	}
+
+	public String nomAffichageChargeLateFee() {
+		return "late fee";
+	}
+
+	public String htmTooltipChargeLateFee() {
+		return null;
+	}
+
+	public String htmChargeLateFee() {
+		return chargeLateFee == null ? "" : StringEscapeUtils.escapeHtml4(strChargeLateFee());
+	}
+
+	public void inputChargeLateFee(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_chargeLateFee")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_chargeLateFee");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setChargeLateFee inputSchoolPayment", pk, "ChargeLateFee w3-input w3-border ");
+				a("name", "setChargeLateFee");
+			} else {
+				a("class", "valueChargeLateFee inputSchoolPayment", pk, "ChargeLateFee w3-input w3-border ");
+				a("name", "chargeLateFee");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChargeLateFee', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_chargeLateFee')); }, function() { addError($('#", classApiMethodMethod, "_chargeLateFee')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getChargeLateFee() != null && getChargeLateFee())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+					) {
+				sx(htmChargeLateFee());
+			}
+		}
+	}
+
+	public void htmChargeLateFee(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeLateFee").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeLateFee").a("class", "").f().sx("late fee").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeLateFee(classApiMethodMethod);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -5880,12 +5937,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		paymentDescriptionInit();
 		paymentDateInit();
 		paymentAmountInit();
-		chargeAmountInit();
-		chargeAmountFutureInit();
-		chargeEnrollmentInit();
-		chargeFirstLastInit();
-		chargeMonthInit();
-		chargeLateFeeInit();
 		paymentCashInit();
 		paymentCheckInit();
 		paymentSystemInit();
@@ -5894,6 +5945,13 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		customerProfileIdInit();
 		transactionStatusInit();
 		paymentRecievedInit();
+		chargeAmountInit();
+		chargeAmountDueInit();
+		chargeAmountFutureInit();
+		chargeFirstLastInit();
+		chargeEnrollmentInit();
+		chargeMonthInit();
+		chargeLateFeeInit();
 		paymentShortNameInit();
 		paymentCompleteNameInit();
 	}
@@ -6018,18 +6076,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.paymentDate;
 			case "paymentAmount":
 				return oSchoolPayment.paymentAmount;
-			case "chargeAmount":
-				return oSchoolPayment.chargeAmount;
-			case "chargeAmountFuture":
-				return oSchoolPayment.chargeAmountFuture;
-			case "chargeEnrollment":
-				return oSchoolPayment.chargeEnrollment;
-			case "chargeFirstLast":
-				return oSchoolPayment.chargeFirstLast;
-			case "chargeMonth":
-				return oSchoolPayment.chargeMonth;
-			case "chargeLateFee":
-				return oSchoolPayment.chargeLateFee;
 			case "paymentCash":
 				return oSchoolPayment.paymentCash;
 			case "paymentCheck":
@@ -6046,6 +6092,20 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.transactionStatus;
 			case "paymentRecieved":
 				return oSchoolPayment.paymentRecieved;
+			case "chargeAmount":
+				return oSchoolPayment.chargeAmount;
+			case "chargeAmountDue":
+				return oSchoolPayment.chargeAmountDue;
+			case "chargeAmountFuture":
+				return oSchoolPayment.chargeAmountFuture;
+			case "chargeFirstLast":
+				return oSchoolPayment.chargeFirstLast;
+			case "chargeEnrollment":
+				return oSchoolPayment.chargeEnrollment;
+			case "chargeMonth":
+				return oSchoolPayment.chargeMonth;
+			case "chargeLateFee":
+				return oSchoolPayment.chargeLateFee;
 			case "paymentShortName":
 				return oSchoolPayment.paymentShortName;
 			case "paymentCompleteName":
@@ -6142,30 +6202,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				setPaymentAmount(val);
 				savesSchoolPayment.add(var);
 				return val;
-			case "chargeAmount":
-				setChargeAmount(val);
-				savesSchoolPayment.add(var);
-				return val;
-			case "chargeAmountFuture":
-				setChargeAmountFuture(val);
-				savesSchoolPayment.add(var);
-				return val;
-			case "chargeEnrollment":
-				setChargeEnrollment(val);
-				savesSchoolPayment.add(var);
-				return val;
-			case "chargeFirstLast":
-				setChargeFirstLast(val);
-				savesSchoolPayment.add(var);
-				return val;
-			case "chargeMonth":
-				setChargeMonth(val);
-				savesSchoolPayment.add(var);
-				return val;
-			case "chargeLateFee":
-				setChargeLateFee(val);
-				savesSchoolPayment.add(var);
-				return val;
 			case "paymentCash":
 				setPaymentCash(val);
 				savesSchoolPayment.add(var);
@@ -6196,6 +6232,34 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return val;
 			case "paymentRecieved":
 				setPaymentRecieved(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeAmount":
+				setChargeAmount(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeAmountDue":
+				setChargeAmountDue(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeAmountFuture":
+				setChargeAmountFuture(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeFirstLast":
+				setChargeFirstLast(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeEnrollment":
+				setChargeEnrollment(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeMonth":
+				setChargeMonth(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeLateFee":
+				setChargeLateFee(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentShortName":
@@ -6457,42 +6521,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setPaymentAmount(paymentAmount);
 			}
 
-			if(savesSchoolPayment.contains("chargeAmount")) {
-				Double chargeAmount = (Double)solrDocument.get("chargeAmount_stored_double");
-				if(chargeAmount != null)
-					oSchoolPayment.setChargeAmount(chargeAmount);
-			}
-
-			if(savesSchoolPayment.contains("chargeAmountFuture")) {
-				Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
-				if(chargeAmountFuture != null)
-					oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
-			}
-
-			if(savesSchoolPayment.contains("chargeEnrollment")) {
-				Boolean chargeEnrollment = (Boolean)solrDocument.get("chargeEnrollment_stored_boolean");
-				if(chargeEnrollment != null)
-					oSchoolPayment.setChargeEnrollment(chargeEnrollment);
-			}
-
-			if(savesSchoolPayment.contains("chargeFirstLast")) {
-				Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
-				if(chargeFirstLast != null)
-					oSchoolPayment.setChargeFirstLast(chargeFirstLast);
-			}
-
-			if(savesSchoolPayment.contains("chargeMonth")) {
-				Boolean chargeMonth = (Boolean)solrDocument.get("chargeMonth_stored_boolean");
-				if(chargeMonth != null)
-					oSchoolPayment.setChargeMonth(chargeMonth);
-			}
-
-			if(savesSchoolPayment.contains("chargeLateFee")) {
-				Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
-				if(chargeLateFee != null)
-					oSchoolPayment.setChargeLateFee(chargeLateFee);
-			}
-
 			if(savesSchoolPayment.contains("paymentCash")) {
 				Boolean paymentCash = (Boolean)solrDocument.get("paymentCash_stored_boolean");
 				if(paymentCash != null)
@@ -6539,6 +6567,48 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				Boolean paymentRecieved = (Boolean)solrDocument.get("paymentRecieved_stored_boolean");
 				if(paymentRecieved != null)
 					oSchoolPayment.setPaymentRecieved(paymentRecieved);
+			}
+
+			if(savesSchoolPayment.contains("chargeAmount")) {
+				Double chargeAmount = (Double)solrDocument.get("chargeAmount_stored_double");
+				if(chargeAmount != null)
+					oSchoolPayment.setChargeAmount(chargeAmount);
+			}
+
+			if(savesSchoolPayment.contains("chargeAmountDue")) {
+				Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
+				if(chargeAmountDue != null)
+					oSchoolPayment.setChargeAmountDue(chargeAmountDue);
+			}
+
+			if(savesSchoolPayment.contains("chargeAmountFuture")) {
+				Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
+				if(chargeAmountFuture != null)
+					oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
+			}
+
+			if(savesSchoolPayment.contains("chargeFirstLast")) {
+				Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
+				if(chargeFirstLast != null)
+					oSchoolPayment.setChargeFirstLast(chargeFirstLast);
+			}
+
+			if(savesSchoolPayment.contains("chargeEnrollment")) {
+				Boolean chargeEnrollment = (Boolean)solrDocument.get("chargeEnrollment_stored_boolean");
+				if(chargeEnrollment != null)
+					oSchoolPayment.setChargeEnrollment(chargeEnrollment);
+			}
+
+			if(savesSchoolPayment.contains("chargeMonth")) {
+				Boolean chargeMonth = (Boolean)solrDocument.get("chargeMonth_stored_boolean");
+				if(chargeMonth != null)
+					oSchoolPayment.setChargeMonth(chargeMonth);
+			}
+
+			if(savesSchoolPayment.contains("chargeLateFee")) {
+				Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
+				if(chargeLateFee != null)
+					oSchoolPayment.setChargeLateFee(chargeLateFee);
 			}
 
 			if(savesSchoolPayment.contains("paymentShortName")) {
@@ -6794,30 +6864,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("paymentAmount_indexed_double", paymentAmount.doubleValue());
 			document.addField("paymentAmount_stored_double", paymentAmount.doubleValue());
 		}
-		if(chargeAmount != null) {
-			document.addField("chargeAmount_indexed_double", chargeAmount.doubleValue());
-			document.addField("chargeAmount_stored_double", chargeAmount.doubleValue());
-		}
-		if(chargeAmountFuture != null) {
-			document.addField("chargeAmountFuture_indexed_double", chargeAmountFuture.doubleValue());
-			document.addField("chargeAmountFuture_stored_double", chargeAmountFuture.doubleValue());
-		}
-		if(chargeEnrollment != null) {
-			document.addField("chargeEnrollment_indexed_boolean", chargeEnrollment);
-			document.addField("chargeEnrollment_stored_boolean", chargeEnrollment);
-		}
-		if(chargeFirstLast != null) {
-			document.addField("chargeFirstLast_indexed_boolean", chargeFirstLast);
-			document.addField("chargeFirstLast_stored_boolean", chargeFirstLast);
-		}
-		if(chargeMonth != null) {
-			document.addField("chargeMonth_indexed_boolean", chargeMonth);
-			document.addField("chargeMonth_stored_boolean", chargeMonth);
-		}
-		if(chargeLateFee != null) {
-			document.addField("chargeLateFee_indexed_boolean", chargeLateFee);
-			document.addField("chargeLateFee_stored_boolean", chargeLateFee);
-		}
 		if(paymentCash != null) {
 			document.addField("paymentCash_indexed_boolean", paymentCash);
 			document.addField("paymentCash_stored_boolean", paymentCash);
@@ -6849,6 +6895,34 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(paymentRecieved != null) {
 			document.addField("paymentRecieved_indexed_boolean", paymentRecieved);
 			document.addField("paymentRecieved_stored_boolean", paymentRecieved);
+		}
+		if(chargeAmount != null) {
+			document.addField("chargeAmount_indexed_double", chargeAmount.doubleValue());
+			document.addField("chargeAmount_stored_double", chargeAmount.doubleValue());
+		}
+		if(chargeAmountDue != null) {
+			document.addField("chargeAmountDue_indexed_double", chargeAmountDue.doubleValue());
+			document.addField("chargeAmountDue_stored_double", chargeAmountDue.doubleValue());
+		}
+		if(chargeAmountFuture != null) {
+			document.addField("chargeAmountFuture_indexed_double", chargeAmountFuture.doubleValue());
+			document.addField("chargeAmountFuture_stored_double", chargeAmountFuture.doubleValue());
+		}
+		if(chargeFirstLast != null) {
+			document.addField("chargeFirstLast_indexed_boolean", chargeFirstLast);
+			document.addField("chargeFirstLast_stored_boolean", chargeFirstLast);
+		}
+		if(chargeEnrollment != null) {
+			document.addField("chargeEnrollment_indexed_boolean", chargeEnrollment);
+			document.addField("chargeEnrollment_stored_boolean", chargeEnrollment);
+		}
+		if(chargeMonth != null) {
+			document.addField("chargeMonth_indexed_boolean", chargeMonth);
+			document.addField("chargeMonth_stored_boolean", chargeMonth);
+		}
+		if(chargeLateFee != null) {
+			document.addField("chargeLateFee_indexed_boolean", chargeLateFee);
+			document.addField("chargeLateFee_stored_boolean", chargeLateFee);
 		}
 		if(paymentShortName != null) {
 			document.addField("paymentShortName_indexed_string", paymentShortName);
@@ -6959,18 +7033,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentDate_indexed_date";
 			case "paymentAmount":
 				return "paymentAmount_indexed_double";
-			case "chargeAmount":
-				return "chargeAmount_indexed_double";
-			case "chargeAmountFuture":
-				return "chargeAmountFuture_indexed_double";
-			case "chargeEnrollment":
-				return "chargeEnrollment_indexed_boolean";
-			case "chargeFirstLast":
-				return "chargeFirstLast_indexed_boolean";
-			case "chargeMonth":
-				return "chargeMonth_indexed_boolean";
-			case "chargeLateFee":
-				return "chargeLateFee_indexed_boolean";
 			case "paymentCash":
 				return "paymentCash_indexed_boolean";
 			case "paymentCheck":
@@ -6987,6 +7049,20 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "transactionStatus_indexed_string";
 			case "paymentRecieved":
 				return "paymentRecieved_indexed_boolean";
+			case "chargeAmount":
+				return "chargeAmount_indexed_double";
+			case "chargeAmountDue":
+				return "chargeAmountDue_indexed_double";
+			case "chargeAmountFuture":
+				return "chargeAmountFuture_indexed_double";
+			case "chargeFirstLast":
+				return "chargeFirstLast_indexed_boolean";
+			case "chargeEnrollment":
+				return "chargeEnrollment_indexed_boolean";
+			case "chargeMonth":
+				return "chargeMonth_indexed_boolean";
+			case "chargeLateFee":
+				return "chargeLateFee_indexed_boolean";
 			case "paymentShortName":
 				return "paymentShortName_indexed_string";
 			case "paymentCompleteName":
@@ -7176,30 +7252,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(paymentAmount != null)
 			oSchoolPayment.setPaymentAmount(paymentAmount);
 
-		Double chargeAmount = (Double)solrDocument.get("chargeAmount_stored_double");
-		if(chargeAmount != null)
-			oSchoolPayment.setChargeAmount(chargeAmount);
-
-		Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
-		if(chargeAmountFuture != null)
-			oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
-
-		Boolean chargeEnrollment = (Boolean)solrDocument.get("chargeEnrollment_stored_boolean");
-		if(chargeEnrollment != null)
-			oSchoolPayment.setChargeEnrollment(chargeEnrollment);
-
-		Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
-		if(chargeFirstLast != null)
-			oSchoolPayment.setChargeFirstLast(chargeFirstLast);
-
-		Boolean chargeMonth = (Boolean)solrDocument.get("chargeMonth_stored_boolean");
-		if(chargeMonth != null)
-			oSchoolPayment.setChargeMonth(chargeMonth);
-
-		Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
-		if(chargeLateFee != null)
-			oSchoolPayment.setChargeLateFee(chargeLateFee);
-
 		Boolean paymentCash = (Boolean)solrDocument.get("paymentCash_stored_boolean");
 		if(paymentCash != null)
 			oSchoolPayment.setPaymentCash(paymentCash);
@@ -7231,6 +7283,34 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Boolean paymentRecieved = (Boolean)solrDocument.get("paymentRecieved_stored_boolean");
 		if(paymentRecieved != null)
 			oSchoolPayment.setPaymentRecieved(paymentRecieved);
+
+		Double chargeAmount = (Double)solrDocument.get("chargeAmount_stored_double");
+		if(chargeAmount != null)
+			oSchoolPayment.setChargeAmount(chargeAmount);
+
+		Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
+		if(chargeAmountDue != null)
+			oSchoolPayment.setChargeAmountDue(chargeAmountDue);
+
+		Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
+		if(chargeAmountFuture != null)
+			oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
+
+		Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
+		if(chargeFirstLast != null)
+			oSchoolPayment.setChargeFirstLast(chargeFirstLast);
+
+		Boolean chargeEnrollment = (Boolean)solrDocument.get("chargeEnrollment_stored_boolean");
+		if(chargeEnrollment != null)
+			oSchoolPayment.setChargeEnrollment(chargeEnrollment);
+
+		Boolean chargeMonth = (Boolean)solrDocument.get("chargeMonth_stored_boolean");
+		if(chargeMonth != null)
+			oSchoolPayment.setChargeMonth(chargeMonth);
+
+		Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
+		if(chargeLateFee != null)
+			oSchoolPayment.setChargeLateFee(chargeLateFee);
 
 		String paymentShortName = (String)solrDocument.get("paymentShortName_stored_string");
 		if(paymentShortName != null)
@@ -7272,18 +7352,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("paymentDate");
 			if(!Objects.equals(paymentAmount, original.getPaymentAmount()))
 				apiRequest.addVars("paymentAmount");
-			if(!Objects.equals(chargeAmount, original.getChargeAmount()))
-				apiRequest.addVars("chargeAmount");
-			if(!Objects.equals(chargeAmountFuture, original.getChargeAmountFuture()))
-				apiRequest.addVars("chargeAmountFuture");
-			if(!Objects.equals(chargeEnrollment, original.getChargeEnrollment()))
-				apiRequest.addVars("chargeEnrollment");
-			if(!Objects.equals(chargeFirstLast, original.getChargeFirstLast()))
-				apiRequest.addVars("chargeFirstLast");
-			if(!Objects.equals(chargeMonth, original.getChargeMonth()))
-				apiRequest.addVars("chargeMonth");
-			if(!Objects.equals(chargeLateFee, original.getChargeLateFee()))
-				apiRequest.addVars("chargeLateFee");
 			if(!Objects.equals(paymentCash, original.getPaymentCash()))
 				apiRequest.addVars("paymentCash");
 			if(!Objects.equals(paymentCheck, original.getPaymentCheck()))
@@ -7300,6 +7368,20 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("transactionStatus");
 			if(!Objects.equals(paymentRecieved, original.getPaymentRecieved()))
 				apiRequest.addVars("paymentRecieved");
+			if(!Objects.equals(chargeAmount, original.getChargeAmount()))
+				apiRequest.addVars("chargeAmount");
+			if(!Objects.equals(chargeAmountDue, original.getChargeAmountDue()))
+				apiRequest.addVars("chargeAmountDue");
+			if(!Objects.equals(chargeAmountFuture, original.getChargeAmountFuture()))
+				apiRequest.addVars("chargeAmountFuture");
+			if(!Objects.equals(chargeFirstLast, original.getChargeFirstLast()))
+				apiRequest.addVars("chargeFirstLast");
+			if(!Objects.equals(chargeEnrollment, original.getChargeEnrollment()))
+				apiRequest.addVars("chargeEnrollment");
+			if(!Objects.equals(chargeMonth, original.getChargeMonth()))
+				apiRequest.addVars("chargeMonth");
+			if(!Objects.equals(chargeLateFee, original.getChargeLateFee()))
+				apiRequest.addVars("chargeLateFee");
 			if(!Objects.equals(paymentShortName, original.getPaymentShortName()))
 				apiRequest.addVars("paymentShortName");
 			super.apiRequestCluster();
@@ -7311,7 +7393,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, chargeAmount, chargeAmountFuture, chargeEnrollment, chargeFirstLast, chargeMonth, chargeLateFee, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, paymentShortName);
+		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeAmountDue, chargeAmountFuture, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, paymentShortName);
 	}
 
 	////////////
@@ -7335,12 +7417,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( paymentDescription, that.paymentDescription )
 				&& Objects.equals( paymentDate, that.paymentDate )
 				&& Objects.equals( paymentAmount, that.paymentAmount )
-				&& Objects.equals( chargeAmount, that.chargeAmount )
-				&& Objects.equals( chargeAmountFuture, that.chargeAmountFuture )
-				&& Objects.equals( chargeEnrollment, that.chargeEnrollment )
-				&& Objects.equals( chargeFirstLast, that.chargeFirstLast )
-				&& Objects.equals( chargeMonth, that.chargeMonth )
-				&& Objects.equals( chargeLateFee, that.chargeLateFee )
 				&& Objects.equals( paymentCash, that.paymentCash )
 				&& Objects.equals( paymentCheck, that.paymentCheck )
 				&& Objects.equals( paymentSystem, that.paymentSystem )
@@ -7349,6 +7425,13 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( transactionStatus, that.transactionStatus )
 				&& Objects.equals( paymentRecieved, that.paymentRecieved )
+				&& Objects.equals( chargeAmount, that.chargeAmount )
+				&& Objects.equals( chargeAmountDue, that.chargeAmountDue )
+				&& Objects.equals( chargeAmountFuture, that.chargeAmountFuture )
+				&& Objects.equals( chargeFirstLast, that.chargeFirstLast )
+				&& Objects.equals( chargeEnrollment, that.chargeEnrollment )
+				&& Objects.equals( chargeMonth, that.chargeMonth )
+				&& Objects.equals( chargeLateFee, that.chargeLateFee )
 				&& Objects.equals( paymentShortName, that.paymentShortName );
 	}
 
@@ -7370,12 +7453,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", paymentDescription: \"" ).append(paymentDescription).append( "\"" );
 		sb.append( ", paymentDate: " ).append(paymentDate);
 		sb.append( ", paymentAmount: " ).append(paymentAmount);
-		sb.append( ", chargeAmount: " ).append(chargeAmount);
-		sb.append( ", chargeAmountFuture: " ).append(chargeAmountFuture);
-		sb.append( ", chargeEnrollment: " ).append(chargeEnrollment);
-		sb.append( ", chargeFirstLast: " ).append(chargeFirstLast);
-		sb.append( ", chargeMonth: " ).append(chargeMonth);
-		sb.append( ", chargeLateFee: " ).append(chargeLateFee);
 		sb.append( ", paymentCash: " ).append(paymentCash);
 		sb.append( ", paymentCheck: " ).append(paymentCheck);
 		sb.append( ", paymentSystem: " ).append(paymentSystem);
@@ -7384,6 +7461,13 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append( ", paymentRecieved: " ).append(paymentRecieved);
+		sb.append( ", chargeAmount: " ).append(chargeAmount);
+		sb.append( ", chargeAmountDue: " ).append(chargeAmountDue);
+		sb.append( ", chargeAmountFuture: " ).append(chargeAmountFuture);
+		sb.append( ", chargeFirstLast: " ).append(chargeFirstLast);
+		sb.append( ", chargeEnrollment: " ).append(chargeEnrollment);
+		sb.append( ", chargeMonth: " ).append(chargeMonth);
+		sb.append( ", chargeLateFee: " ).append(chargeLateFee);
 		sb.append( ", paymentShortName: \"" ).append(paymentShortName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();

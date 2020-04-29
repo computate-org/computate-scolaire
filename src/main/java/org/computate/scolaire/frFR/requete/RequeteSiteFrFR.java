@@ -470,7 +470,6 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	public RequeteSiteFrFR copy() {
 		RequeteSiteFrFR o = new RequeteSiteFrFR();
 		o.setSiteContexte_(siteContexte_);
-		o.setRequeteApi_(requeteApi_);
 		o.setObjetJson(objetJson);
 		o.setRechercheSolr(rechercheSolr);
 		o.setOperationRequete(operationRequete);

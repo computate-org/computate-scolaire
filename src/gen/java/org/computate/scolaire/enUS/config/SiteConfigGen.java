@@ -1,26 +1,40 @@
 package org.computate.scolaire.enUS.config;
 
-import org.apache.commons.configuration2.INIConfiguration;
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
-import org.computate.scolaire.enUS.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
+import java.util.Date;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
+import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.math.NumberUtils;
-import java.util.Optional;
 import java.lang.Boolean;
-import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
+import java.time.ZoneOffset;
+import io.vertx.core.logging.Logger;
+import org.apache.commons.configuration2.INIConfiguration;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.lang.Object;
 
 /**	
  *	Loads the properties in the application config file into specific fields. 
@@ -28,6 +42,7 @@ import java.lang.String;
  * <br/>
  **/
 public abstract class SiteConfigGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteConfig.class);
 
 	////////////////
 	// configPath //
@@ -37,6 +52,7 @@ public abstract class SiteConfigGen<DEV> extends Object {
 The path to the config file of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String configPath;
 	@JsonIgnore
 	public Wrap<String> configPathWrap = new Wrap<String>().p(this).c(String.class).var("configPath").o(configPath);
@@ -100,6 +116,7 @@ The path to the config file of the site.
 The INI Configuration Object for the config file. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected INIConfiguration config;
 	@JsonIgnore
 	public Wrap<INIConfiguration> configWrap = new Wrap<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
@@ -139,6 +156,7 @@ The INI Configuration Object for the config file.
 The name of the principal group of settings of the config for this website. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteIdentifier;
 	@JsonIgnore
 	public Wrap<String> siteIdentifierWrap = new Wrap<String>().p(this).c(String.class).var("siteIdentifier").o(siteIdentifier);
@@ -202,6 +220,7 @@ The name of the principal group of settings of the config for this website.
 The already escaped prefix to find the properties of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String prefixEscaped;
 	@JsonIgnore
 	public Wrap<String> prefixEscapedWrap = new Wrap<String>().p(this).c(String.class).var("prefixEscaped").o(prefixEscaped);
@@ -265,6 +284,7 @@ The already escaped prefix to find the properties of the site.
 The path to the project of the site cloned from git. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String appPath;
 	@JsonIgnore
 	public Wrap<String> appPathWrap = new Wrap<String>().p(this).c(String.class).var("appPath").o(appPath);
@@ -328,6 +348,7 @@ The path to the project of the site cloned from git.
 The path to the docroot for the project. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String docRoot;
 	@JsonIgnore
 	public Wrap<String> docRootWrap = new Wrap<String>().p(this).c(String.class).var("docRoot").o(docRoot);
@@ -391,6 +412,7 @@ The path to the docroot for the project.
 The name of the company. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String companyName;
 	@JsonIgnore
 	public Wrap<String> companyNameWrap = new Wrap<String>().p(this).c(String.class).var("companyName").o(companyName);
@@ -454,6 +476,7 @@ The name of the company.
 The domain name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String domainName;
 	@JsonIgnore
 	public Wrap<String> domainNameWrap = new Wrap<String>().p(this).c(String.class).var("domainName").o(domainName);
@@ -517,6 +540,7 @@ The domain name of the site.
 The host name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteHostName;
 	@JsonIgnore
 	public Wrap<String> siteHostNameWrap = new Wrap<String>().p(this).c(String.class).var("siteHostName").o(siteHostName);
@@ -581,6 +605,7 @@ The port of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer sitePort;
 	@JsonIgnore
 	public Wrap<Integer> sitePortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
@@ -650,6 +675,7 @@ The port of the site.
 The Keycloak realm of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authRealm;
 	@JsonIgnore
 	public Wrap<String> authRealmWrap = new Wrap<String>().p(this).c(String.class).var("authRealm").o(authRealm);
@@ -713,6 +739,7 @@ The Keycloak realm of the site.
 The Keycloak client ID of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authResource;
 	@JsonIgnore
 	public Wrap<String> authResourceWrap = new Wrap<String>().p(this).c(String.class).var("authResource").o(authResource);
@@ -776,6 +803,7 @@ The Keycloak client ID of the site.
 The Keycloak client secret of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authSecret;
 	@JsonIgnore
 	public Wrap<String> authSecretWrap = new Wrap<String>().p(this).c(String.class).var("authSecret").o(authSecret);
@@ -839,6 +867,7 @@ The Keycloak client secret of the site.
 Whether SSL is required in Keycloak for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authSslRequired;
 	@JsonIgnore
 	public Wrap<String> authSslRequiredWrap = new Wrap<String>().p(this).c(String.class).var("authSslRequired").o(authSslRequired);
@@ -902,6 +931,7 @@ Whether SSL is required in Keycloak for the site.
 The path to the Java keystore for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sslJksPath;
 	@JsonIgnore
 	public Wrap<String> sslJksPathWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPath").o(sslJksPath);
@@ -965,6 +995,7 @@ The path to the Java keystore for the site.
 The password for the Java keystore for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String sslJksPassword;
 	@JsonIgnore
 	public Wrap<String> sslJksPasswordWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPassword").o(sslJksPassword);
@@ -1028,6 +1059,7 @@ The password for the Java keystore for the site.
 The URL to the Keycloak server. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authUrl;
 	@JsonIgnore
 	public Wrap<String> authUrlWrap = new Wrap<String>().p(this).c(String.class).var("authUrl").o(authUrl);
@@ -1091,6 +1123,7 @@ The URL to the Keycloak server.
 The encryption salt to use for all database encryption. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String encryptionSalt;
 	@JsonIgnore
 	public Wrap<String> encryptionSaltWrap = new Wrap<String>().p(this).c(String.class).var("encryptionSalt").o(encryptionSalt);
@@ -1154,6 +1187,7 @@ The encryption salt to use for all database encryption.
 The encryption password to use for all encryption of the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String encryptionPassword;
 	@JsonIgnore
 	public Wrap<String> encryptionPasswordWrap = new Wrap<String>().p(this).c(String.class).var("encryptionPassword").o(encryptionPassword);
@@ -1217,6 +1251,7 @@ The encryption password to use for all encryption of the database.
 The base URL for the URLs of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteBaseUrl;
 	@JsonIgnore
 	public Wrap<String> siteBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("siteBaseUrl").o(siteBaseUrl);
@@ -1280,6 +1315,7 @@ The base URL for the URLs of the site.
 The display name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteDisplayName;
 	@JsonIgnore
 	public Wrap<String> siteDisplayNameWrap = new Wrap<String>().p(this).c(String.class).var("siteDisplayName").o(siteDisplayName);
@@ -1343,6 +1379,7 @@ The display name of the site.
 The class name of the JDBC driver class for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcDriverClass;
 	@JsonIgnore
 	public Wrap<String> jdbcDriverClassWrap = new Wrap<String>().p(this).c(String.class).var("jdbcDriverClass").o(jdbcDriverClass);
@@ -1406,6 +1443,7 @@ The class name of the JDBC driver class for the database.
 The username for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcUsername;
 	@JsonIgnore
 	public Wrap<String> jdbcUsernameWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUsername").o(jdbcUsername);
@@ -1469,6 +1507,7 @@ The username for the database.
 The password for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcPassword;
 	@JsonIgnore
 	public Wrap<String> jdbcPasswordWrap = new Wrap<String>().p(this).c(String.class).var("jdbcPassword").o(jdbcPassword);
@@ -1533,6 +1572,7 @@ The max pool size for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMaxPoolSize;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxPoolSize").o(jdbcMaxPoolSize);
@@ -1603,6 +1643,7 @@ The max pool size for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcInitialPoolSize;
 	@JsonIgnore
 	public Wrap<Integer> jdbcInitialPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcInitialPoolSize").o(jdbcInitialPoolSize);
@@ -1673,6 +1714,7 @@ The max pool size for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMinPoolSize;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMinPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMinPoolSize").o(jdbcMinPoolSize);
@@ -1743,6 +1785,7 @@ The max statements for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMaxStatements;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatements").o(jdbcMaxStatements);
@@ -1813,6 +1856,7 @@ The max statements per connection for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMaxStatementsPerConnection;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsPerConnectionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatementsPerConnection").o(jdbcMaxStatementsPerConnection);
@@ -1883,6 +1927,7 @@ The max idle time for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer jdbcMaxIdleTime;
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxIdleTimeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxIdleTime").o(jdbcMaxIdleTime);
@@ -1952,6 +1997,7 @@ The max idle time for the database.
 The JDBC URL to the database. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String jdbcUrl;
 	@JsonIgnore
 	public Wrap<String> jdbcUrlWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
@@ -2015,6 +2061,7 @@ The JDBC URL to the database.
 The URL to the SOLR search engine. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String solrUrl;
 	@JsonIgnore
 	public Wrap<String> solrUrlWrap = new Wrap<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
@@ -2078,6 +2125,7 @@ The URL to the SOLR search engine.
 The URL to the SOLR search engine for the computate project. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String solrUrlComputate;
 	@JsonIgnore
 	public Wrap<String> solrUrlComputateWrap = new Wrap<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
@@ -2141,6 +2189,7 @@ The URL to the SOLR search engine for the computate project.
 The Facebook account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String accountFacebook;
 	@JsonIgnore
 	public Wrap<String> accountFacebookWrap = new Wrap<String>().p(this).c(String.class).var("accountFacebook").o(accountFacebook);
@@ -2204,6 +2253,7 @@ The Facebook account for the site.
 The Twitter account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String accountTwitter;
 	@JsonIgnore
 	public Wrap<String> accountTwitterWrap = new Wrap<String>().p(this).c(String.class).var("accountTwitter").o(accountTwitter);
@@ -2267,6 +2317,7 @@ The Twitter account for the site.
 The Instagram account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String accountInstagram;
 	@JsonIgnore
 	public Wrap<String> accountInstagramWrap = new Wrap<String>().p(this).c(String.class).var("accountInstagram").o(accountInstagram);
@@ -2330,6 +2381,7 @@ The Instagram account for the site.
 The Youtube account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String accountYoutube;
 	@JsonIgnore
 	public Wrap<String> accountYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("accountYoutube").o(accountYoutube);
@@ -2393,6 +2445,7 @@ The Youtube account for the site.
 The Pinterest account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String accountPinterest;
 	@JsonIgnore
 	public Wrap<String> accountPinterestWrap = new Wrap<String>().p(this).c(String.class).var("accountPinterest").o(accountPinterest);
@@ -2456,6 +2509,7 @@ The Pinterest account for the site.
 The Email account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String accountEmail;
 	@JsonIgnore
 	public Wrap<String> accountEmailWrap = new Wrap<String>().p(this).c(String.class).var("accountEmail").o(accountEmail);
@@ -2519,6 +2573,7 @@ The Email account for the site.
 The OpenID Connect role for an administrator. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String roleAdmin;
 	@JsonIgnore
 	public Wrap<String> roleAdminWrap = new Wrap<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
@@ -2582,6 +2637,7 @@ The OpenID Connect role for an administrator.
 The email address for the administrator of the site for the error reports. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String emailAdmin;
 	@JsonIgnore
 	public Wrap<String> emailAdminWrap = new Wrap<String>().p(this).c(String.class).var("emailAdmin").o(emailAdmin);
@@ -2646,6 +2702,7 @@ The number of executors for executing background tasks in the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer numberExecutors;
 	@JsonIgnore
 	public Wrap<Integer> numberExecutorsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("numberExecutors").o(numberExecutors);
@@ -2715,6 +2772,7 @@ The number of executors for executing background tasks in the site.
 The version of OpenAPI used with Vert.x which should probably be 3.0. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String openApiVersion;
 	@JsonIgnore
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
@@ -2778,6 +2836,7 @@ The version of OpenAPI used with Vert.x which should probably be 3.0.
 The description of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiDescription;
 	@JsonIgnore
 	public Wrap<String> apiDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
@@ -2841,6 +2900,7 @@ The description of your site API.
 The title of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiTitle;
 	@JsonIgnore
 	public Wrap<String> apiTitleWrap = new Wrap<String>().p(this).c(String.class).var("apiTitle").o(apiTitle);
@@ -2904,6 +2964,7 @@ The title of your site API.
 The terms of service of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiTermsService;
 	@JsonIgnore
 	public Wrap<String> apiTermsServiceWrap = new Wrap<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
@@ -2967,6 +3028,7 @@ The terms of service of your site API.
 The version of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiVersion;
 	@JsonIgnore
 	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
@@ -3030,6 +3092,7 @@ The version of your site API.
 The contact email of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiContactEmail;
 	@JsonIgnore
 	public Wrap<String> apiContactEmailWrap = new Wrap<String>().p(this).c(String.class).var("apiContactEmail").o(apiContactEmail);
@@ -3093,6 +3156,7 @@ The contact email of your site API.
 The open source license name of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiLicenseName;
 	@JsonIgnore
 	public Wrap<String> apiLicenseNameWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseName").o(apiLicenseName);
@@ -3156,6 +3220,7 @@ The open source license name of your site API.
 The open source license URL of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiLicenseUrl;
 	@JsonIgnore
 	public Wrap<String> apiLicenseUrlWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseUrl").o(apiLicenseUrl);
@@ -3219,6 +3284,7 @@ The open source license URL of your site API.
 The host name of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiHostName;
 	@JsonIgnore
 	public Wrap<String> apiHostNameWrap = new Wrap<String>().p(this).c(String.class).var("apiHostName").o(apiHostName);
@@ -3282,6 +3348,7 @@ The host name of your site API.
 The base path of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String apiBasePath;
 	@JsonIgnore
 	public Wrap<String> apiBasePathWrap = new Wrap<String>().p(this).c(String.class).var("apiBasePath").o(apiBasePath);
@@ -3345,6 +3412,7 @@ The base path of your site API.
 The base URL of your static files. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String staticBaseUrl;
 	@JsonIgnore
 	public Wrap<String> staticBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("staticBaseUrl").o(staticBaseUrl);
@@ -3407,6 +3475,7 @@ The base URL of your static files.
 	/**	L'entité « emailHost »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String emailHost;
 	@JsonIgnore
 	public Wrap<String> emailHostWrap = new Wrap<String>().p(this).c(String.class).var("emailHost").o(emailHost);
@@ -3469,6 +3538,7 @@ The base URL of your static files.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer emailPort;
 	@JsonIgnore
 	public Wrap<Integer> emailPortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("emailPort").o(emailPort);
@@ -3536,6 +3606,7 @@ The base URL of your static files.
 	/**	L'entité « emailUsername »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String emailUsername;
 	@JsonIgnore
 	public Wrap<String> emailUsernameWrap = new Wrap<String>().p(this).c(String.class).var("emailUsername").o(emailUsername);
@@ -3597,6 +3668,7 @@ The base URL of your static files.
 	/**	L'entité « emailPassword »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String emailPassword;
 	@JsonIgnore
 	public Wrap<String> emailPasswordWrap = new Wrap<String>().p(this).c(String.class).var("emailPassword").o(emailPassword);
@@ -3658,6 +3730,7 @@ The base URL of your static files.
 	/**	L'entité « emailFrom »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String emailFrom;
 	@JsonIgnore
 	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
@@ -3719,6 +3792,7 @@ The base URL of your static files.
 	/**	L'entité « emailAuth »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean emailAuth;
 	@JsonIgnore
 	public Wrap<Boolean> emailAuthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("emailAuth").o(emailAuth);
@@ -3785,6 +3859,7 @@ The base URL of your static files.
 	/**	L'entité « emailSsl »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean emailSsl;
 	@JsonIgnore
 	public Wrap<Boolean> emailSslWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("emailSsl").o(emailSsl);
@@ -3852,6 +3927,7 @@ The base URL of your static files.
 The default timezone of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String siteZone;
 	@JsonIgnore
 	public Wrap<String> siteZoneWrap = new Wrap<String>().p(this).c(String.class).var("siteZone").o(siteZone);
@@ -3914,6 +3990,7 @@ The default timezone of the site.
 	/**	L'entité « authorizeApiLoginId »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authorizeApiLoginId;
 	@JsonIgnore
 	public Wrap<String> authorizeApiLoginIdWrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId").o(authorizeApiLoginId);
@@ -3975,6 +4052,7 @@ The default timezone of the site.
 	/**	L'entité « authorizeTransactionKey »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String authorizeTransactionKey;
 	@JsonIgnore
 	public Wrap<String> authorizeTransactionKeyWrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey").o(authorizeTransactionKey);
@@ -4027,6 +4105,154 @@ The default timezone of the site.
 
 	public String htmAuthorizeTransactionKey() {
 		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
+	}
+
+	////////////////
+	// paymentDay //
+	////////////////
+
+	/**	L'entité « paymentDay »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paymentDay;
+	@JsonIgnore
+	public Wrap<Integer> paymentDayWrap = new Wrap<Integer>().p(this).c(Integer.class).var("paymentDay").o(paymentDay);
+
+	/**	<br/>L'entité « paymentDay »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentDay">Trouver l'entité paymentDay dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paymentDay(Wrap<Integer> c);
+
+	public Integer getPaymentDay() {
+		return paymentDay;
+	}
+
+	public void setPaymentDay(Integer paymentDay) {
+		this.paymentDay = paymentDay;
+		this.paymentDayWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setPaymentDay(String o) {
+		if(NumberUtils.isParsable(o))
+			this.paymentDay = Integer.parseInt(o);
+		this.paymentDayWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig paymentDayInit() {
+		if(!paymentDayWrap.alreadyInitialized) {
+			_paymentDay(paymentDayWrap);
+			if(paymentDay == null)
+				setPaymentDay(paymentDayWrap.o);
+		}
+		paymentDayWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Integer solrPaymentDay() {
+		return paymentDay;
+	}
+
+	public String strPaymentDay() {
+		return paymentDay == null ? "" : paymentDay.toString();
+	}
+
+	public String jsonPaymentDay() {
+		return paymentDay == null ? "" : paymentDay.toString();
+	}
+
+	public String nomAffichagePaymentDay() {
+		return null;
+	}
+
+	public String htmTooltipPaymentDay() {
+		return null;
+	}
+
+	public String htmPaymentDay() {
+		return paymentDay == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentDay());
+	}
+
+	/////////////////
+	// paymentNext //
+	/////////////////
+
+	/**	L'entité « paymentNext »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate paymentNext;
+	@JsonIgnore
+	public Wrap<LocalDate> paymentNextWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("paymentNext").o(paymentNext);
+
+	/**	<br/>L'entité « paymentNext »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentNext">Trouver l'entité paymentNext dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paymentNext(Wrap<LocalDate> c);
+
+	public LocalDate getPaymentNext() {
+		return paymentNext;
+	}
+
+	public void setPaymentNext(LocalDate paymentNext) {
+		this.paymentNext = paymentNext;
+		this.paymentNextWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setPaymentNext(Instant o) {
+		this.paymentNext = LocalDate.from(o);
+		this.paymentNextWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SiteConfig setPaymentNext(String o) {
+		this.paymentNext = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.paymentNextWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	public SiteConfig setPaymentNext(Date o) {
+		this.paymentNext = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.paymentNextWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig paymentNextInit() {
+		if(!paymentNextWrap.alreadyInitialized) {
+			_paymentNext(paymentNextWrap);
+			if(paymentNext == null)
+				setPaymentNext(paymentNextWrap.o);
+		}
+		paymentNextWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Date solrPaymentNext() {
+		return paymentNext == null ? null : Date.from(paymentNext.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strPaymentNext() {
+		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	}
+
+	public String jsonPaymentNext() {
+		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	}
+
+	public String nomAffichagePaymentNext() {
+		return null;
+	}
+
+	public String htmTooltipPaymentNext() {
+		return null;
+	}
+
+	public String htmPaymentNext() {
+		return paymentNext == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentNext());
 	}
 
 	//////////////
@@ -4111,6 +4337,8 @@ The default timezone of the site.
 		siteZoneInit();
 		authorizeApiLoginIdInit();
 		authorizeTransactionKeyInit();
+		paymentDayInit();
+		paymentNextInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -4263,6 +4491,10 @@ The default timezone of the site.
 				return oSiteConfig.authorizeApiLoginId;
 			case "authorizeTransactionKey":
 				return oSiteConfig.authorizeTransactionKey;
+			case "paymentDay":
+				return oSiteConfig.paymentDay;
+			case "paymentNext":
+				return oSiteConfig.paymentNext;
 			default:
 				return null;
 		}

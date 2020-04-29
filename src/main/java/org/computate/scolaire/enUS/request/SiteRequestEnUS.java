@@ -220,7 +220,6 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	public SiteRequestEnUS copy() {
 		SiteRequestEnUS o = new SiteRequestEnUS();
 		o.setSiteContext_(siteContext_);
-		o.setApiRequest_(apiRequest_);
 		o.setJsonObject(jsonObject);
 		o.setSolrQuery(solrQuery);
 		o.setOperationRequest(operationRequest);
