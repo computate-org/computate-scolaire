@@ -1875,10 +1875,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 									e("span").a("class", "var", parent.getClass().getSimpleName(), pk, StringUtils.capitalize(var), " ").f().s(s).g("span");
 								}
 								else {
-									s(s);
+									sx(s);
 								}
 							} catch (Exception e) {
-								s(obtenirPourClasse(htmlVar));
+								sx(obtenirPourClasse(htmlVar));
 							}
 						}
 					}

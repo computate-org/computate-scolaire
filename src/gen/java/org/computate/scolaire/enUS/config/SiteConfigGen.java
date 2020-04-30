@@ -4216,11 +4216,6 @@ The default timezone of the site.
 		this.paymentNextWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	public SiteConfig setPaymentNext(Date o) {
-		this.paymentNext = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
-		this.paymentNextWrap.alreadyInitialized = true;
-		return (SiteConfig)this;
-	}
 	protected SiteConfig paymentNextInit() {
 		if(!paymentNextWrap.alreadyInitialized) {
 			_paymentNext(paymentNextWrap);

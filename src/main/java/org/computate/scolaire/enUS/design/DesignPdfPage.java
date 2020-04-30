@@ -120,7 +120,8 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 			String val = siteRequest_.getRequestVars().get(var);
 			if(!"design".equals(var)) {
 				String varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(var);
-				l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				if(varIndexed != null)
+					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 			}
 		}
 	}
@@ -304,31 +305,14 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
-		OperationRequest operationRequest = siteRequest_.getOperationRequest();
-
-		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-			String entityVar = null;
-			String valueIndexed = null;
-			String varIndexed = null;
-			String paramName = paramRequest.getKey();
-			Object paramValuesObject = paramRequest.getValue();
-			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-	
-			try {
-				for(Object paramObject : paramObjects) {
-					switch(paramName) {
-						case "fq":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-							l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
-							break;
-					}
-				}
-			} catch(Exception e) {
-				ExceptionUtils.rethrow(e);
+		for(String var : siteRequest_.getRequestVars().keySet()) {
+			String val = siteRequest_.getRequestVars().get(var);
+			if(!"design".equals(var)) {
+				String varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(var);
+				if(varIndexed != null)
+					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 			}
-		});
+		}
 	}
 
 	protected void _blocks(Wrap<List<SchoolBlock>> c) {

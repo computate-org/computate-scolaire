@@ -1040,10 +1040,10 @@ public class PageLayout extends PageLayoutGen<Object> {
 									e("span").a("class", "var", parent.getClass().getSimpleName(), pk, StringUtils.capitalize(var), " ").f().s(s).g("span");
 								}
 								else {
-									s(s);
+									sx(s);
 								}
 							} catch (Exception e) {
-								s(obtainForClass(htmlVar));
+								sx(obtainForClass(htmlVar));
 							}
 						}
 					}

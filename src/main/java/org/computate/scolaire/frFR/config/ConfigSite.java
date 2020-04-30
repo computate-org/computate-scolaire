@@ -23,7 +23,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * enUS: Loads the properties in the application config file into specific fields. 
  * frFR: Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
  */    
-public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {   
+public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {  
 
 	/**	
 	 * Var.enUS: configPath

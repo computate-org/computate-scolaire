@@ -4108,11 +4108,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.paiementProchainCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
 	}
-	public ConfigSite setPaiementProchain(Date o) {
-		this.paiementProchain = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.paiementProchainCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
-	}
 	protected ConfigSite paiementProchainInit() {
 		if(!paiementProchainCouverture.dejaInitialise) {
 			_paiementProchain(paiementProchainCouverture);
