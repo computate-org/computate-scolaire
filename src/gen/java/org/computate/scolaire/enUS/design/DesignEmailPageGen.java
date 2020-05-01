@@ -1228,150 +1228,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
-	////////////////
-	// yearSearch //
-	////////////////
-
-	/**	L'entité « yearSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
-	@JsonIgnore
-	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
-
-	/**	<br/>L'entité « yearSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
-	 * <br/>
-	 * @param yearSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _yearSearch(SearchList<SchoolYear> l);
-
-	public SearchList<SchoolYear> getYearSearch() {
-		return yearSearch;
-	}
-
-	public void setYearSearch(SearchList<SchoolYear> yearSearch) {
-		this.yearSearch = yearSearch;
-		this.yearSearchWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage yearSearchInit() {
-		if(!yearSearchWrap.alreadyInitialized) {
-			_yearSearch(yearSearch);
-		}
-		yearSearch.initDeepForClass(siteRequest_);
-		yearSearchWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	///////////
-	// year_ //
-	///////////
-
-	/**	L'entité « year_ »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SchoolYear year_;
-	@JsonIgnore
-	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
-
-	/**	<br/>L'entité « year_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _year_(Wrap<SchoolYear> c);
-
-	public SchoolYear getYear_() {
-		return year_;
-	}
-
-	public void setYear_(SchoolYear year_) {
-		this.year_ = year_;
-		this.year_Wrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage year_Init() {
-		if(!year_Wrap.alreadyInitialized) {
-			_year_(year_Wrap);
-			if(year_ == null)
-				setYear_(year_Wrap.o);
-		}
-		year_Wrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	/////////////
-	// yearKey //
-	/////////////
-
-	/**	L'entité « yearKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long yearKey;
-	@JsonIgnore
-	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
-
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearKey(Wrap<Long> c);
-
-	public Long getYearKey() {
-		return yearKey;
-	}
-
-	public void setYearKey(Long yearKey) {
-		this.yearKey = yearKey;
-		this.yearKeyWrap.alreadyInitialized = true;
-	}
-	public DesignEmailPage setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
-		this.yearKeyWrap.alreadyInitialized = true;
-		return (DesignEmailPage)this;
-	}
-	protected DesignEmailPage yearKeyInit() {
-		if(!yearKeyWrap.alreadyInitialized) {
-			_yearKey(yearKeyWrap);
-			if(yearKey == null)
-				setYearKey(yearKeyWrap.o);
-		}
-		yearKeyWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public Long solrYearKey() {
-		return yearKey;
-	}
-
-	public String strYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String jsonYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String nomAffichageYearKey() {
-		return null;
-	}
-
-	public String htmTooltipYearKey() {
-		return null;
-	}
-
-	public String htmYearKey() {
-		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
-	}
-
 	//////////////////
 	// schoolSearch //
 	//////////////////
@@ -1445,316 +1301,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		}
 		school_Wrap.alreadyInitialized(true);
 		return (DesignEmailPage)this;
-	}
-
-	///////////////
-	// emailFrom //
-	///////////////
-
-	/**	L'entité « emailFrom »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String emailFrom;
-	@JsonIgnore
-	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
-
-	/**	<br/>L'entité « emailFrom »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Trouver l'entité emailFrom dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _emailFrom(Wrap<String> c);
-
-	public String getEmailFrom() {
-		return emailFrom;
-	}
-
-	public void setEmailFrom(String emailFrom) {
-		this.emailFrom = emailFrom;
-		this.emailFromWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage emailFromInit() {
-		if(!emailFromWrap.alreadyInitialized) {
-			_emailFrom(emailFromWrap);
-			if(emailFrom == null)
-				setEmailFrom(emailFromWrap.o);
-		}
-		emailFromWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public String solrEmailFrom() {
-		return emailFrom;
-	}
-
-	public String strEmailFrom() {
-		return emailFrom == null ? "" : emailFrom;
-	}
-
-	public String jsonEmailFrom() {
-		return emailFrom == null ? "" : emailFrom;
-	}
-
-	public String nomAffichageEmailFrom() {
-		return null;
-	}
-
-	public String htmTooltipEmailFrom() {
-		return null;
-	}
-
-	public String htmEmailFrom() {
-		return emailFrom == null ? "" : StringEscapeUtils.escapeHtml4(strEmailFrom());
-	}
-
-	///////////////////
-	// emailToSchool //
-	///////////////////
-
-	/**	L'entité « emailToSchool »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String emailToSchool;
-	@JsonIgnore
-	public Wrap<String> emailToSchoolWrap = new Wrap<String>().p(this).c(String.class).var("emailToSchool").o(emailToSchool);
-
-	/**	<br/>L'entité « emailToSchool »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToSchool">Trouver l'entité emailToSchool dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _emailToSchool(Wrap<String> c);
-
-	public String getEmailToSchool() {
-		return emailToSchool;
-	}
-
-	public void setEmailToSchool(String emailToSchool) {
-		this.emailToSchool = emailToSchool;
-		this.emailToSchoolWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage emailToSchoolInit() {
-		if(!emailToSchoolWrap.alreadyInitialized) {
-			_emailToSchool(emailToSchoolWrap);
-			if(emailToSchool == null)
-				setEmailToSchool(emailToSchoolWrap.o);
-		}
-		emailToSchoolWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public String solrEmailToSchool() {
-		return emailToSchool;
-	}
-
-	public String strEmailToSchool() {
-		return emailToSchool == null ? "" : emailToSchool;
-	}
-
-	public String jsonEmailToSchool() {
-		return emailToSchool == null ? "" : emailToSchool;
-	}
-
-	public String nomAffichageEmailToSchool() {
-		return null;
-	}
-
-	public String htmTooltipEmailToSchool() {
-		return null;
-	}
-
-	public String htmEmailToSchool() {
-		return emailToSchool == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToSchool());
-	}
-
-	////////////////////
-	// emailToAddress //
-	////////////////////
-
-	/**	L'entité « emailToAddress »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String emailToAddress;
-	@JsonIgnore
-	public Wrap<String> emailToAddressWrap = new Wrap<String>().p(this).c(String.class).var("emailToAddress").o(emailToAddress);
-
-	/**	<br/>L'entité « emailToAddress »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToAddress">Trouver l'entité emailToAddress dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _emailToAddress(Wrap<String> c);
-
-	public String getEmailToAddress() {
-		return emailToAddress;
-	}
-
-	public void setEmailToAddress(String emailToAddress) {
-		this.emailToAddress = emailToAddress;
-		this.emailToAddressWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage emailToAddressInit() {
-		if(!emailToAddressWrap.alreadyInitialized) {
-			_emailToAddress(emailToAddressWrap);
-			if(emailToAddress == null)
-				setEmailToAddress(emailToAddressWrap.o);
-		}
-		emailToAddressWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public String solrEmailToAddress() {
-		return emailToAddress;
-	}
-
-	public String strEmailToAddress() {
-		return emailToAddress == null ? "" : emailToAddress;
-	}
-
-	public String jsonEmailToAddress() {
-		return emailToAddress == null ? "" : emailToAddress;
-	}
-
-	public String nomAffichageEmailToAddress() {
-		return null;
-	}
-
-	public String htmTooltipEmailToAddress() {
-		return null;
-	}
-
-	public String htmEmailToAddress() {
-		return emailToAddress == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToAddress());
-	}
-
-	/////////////////
-	// emailToName //
-	/////////////////
-
-	/**	L'entité « emailToName »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String emailToName;
-	@JsonIgnore
-	public Wrap<String> emailToNameWrap = new Wrap<String>().p(this).c(String.class).var("emailToName").o(emailToName);
-
-	/**	<br/>L'entité « emailToName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToName">Trouver l'entité emailToName dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _emailToName(Wrap<String> c);
-
-	public String getEmailToName() {
-		return emailToName;
-	}
-
-	public void setEmailToName(String emailToName) {
-		this.emailToName = emailToName;
-		this.emailToNameWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage emailToNameInit() {
-		if(!emailToNameWrap.alreadyInitialized) {
-			_emailToName(emailToNameWrap);
-			if(emailToName == null)
-				setEmailToName(emailToNameWrap.o);
-		}
-		emailToNameWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public String solrEmailToName() {
-		return emailToName;
-	}
-
-	public String strEmailToName() {
-		return emailToName == null ? "" : emailToName;
-	}
-
-	public String jsonEmailToName() {
-		return emailToName == null ? "" : emailToName;
-	}
-
-	public String nomAffichageEmailToName() {
-		return null;
-	}
-
-	public String htmTooltipEmailToName() {
-		return null;
-	}
-
-	public String htmEmailToName() {
-		return emailToName == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToName());
-	}
-
-	//////////////////
-	// emailMessage //
-	//////////////////
-
-	/**	L'entité « emailMessage »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String emailMessage;
-	@JsonIgnore
-	public Wrap<String> emailMessageWrap = new Wrap<String>().p(this).c(String.class).var("emailMessage").o(emailMessage);
-
-	/**	<br/>L'entité « emailMessage »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailMessage">Trouver l'entité emailMessage dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _emailMessage(Wrap<String> c);
-
-	public String getEmailMessage() {
-		return emailMessage;
-	}
-
-	public void setEmailMessage(String emailMessage) {
-		this.emailMessage = emailMessage;
-		this.emailMessageWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage emailMessageInit() {
-		if(!emailMessageWrap.alreadyInitialized) {
-			_emailMessage(emailMessageWrap);
-			if(emailMessage == null)
-				setEmailMessage(emailMessageWrap.o);
-		}
-		emailMessageWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public String solrEmailMessage() {
-		return emailMessage;
-	}
-
-	public String strEmailMessage() {
-		return emailMessage == null ? "" : emailMessage;
-	}
-
-	public String jsonEmailMessage() {
-		return emailMessage == null ? "" : emailMessage;
-	}
-
-	public String nomAffichageEmailMessage() {
-		return null;
-	}
-
-	public String htmTooltipEmailMessage() {
-		return null;
-	}
-
-	public String htmEmailMessage() {
-		return emailMessage == null ? "" : StringEscapeUtils.escapeHtml4(strEmailMessage());
 	}
 
 	///////////////
@@ -2196,6 +1742,150 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String htmSchoolAdministratorName() {
 		return schoolAdministratorName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAdministratorName());
+	}
+
+	////////////////
+	// yearSearch //
+	////////////////
+
+	/**	L'entité « yearSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
+
+	/**	<br/>L'entité « yearSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	 * <br/>
+	 * @param yearSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _yearSearch(SearchList<SchoolYear> l);
+
+	public SearchList<SchoolYear> getYearSearch() {
+		return yearSearch;
+	}
+
+	public void setYearSearch(SearchList<SchoolYear> yearSearch) {
+		this.yearSearch = yearSearch;
+		this.yearSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage yearSearchInit() {
+		if(!yearSearchWrap.alreadyInitialized) {
+			_yearSearch(yearSearch);
+		}
+		yearSearch.initDeepForClass(siteRequest_);
+		yearSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	///////////
+	// year_ //
+	///////////
+
+	/**	L'entité « year_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolYear year_;
+	@JsonIgnore
+	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
+
+	/**	<br/>L'entité « year_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _year_(Wrap<SchoolYear> c);
+
+	public SchoolYear getYear_() {
+		return year_;
+	}
+
+	public void setYear_(SchoolYear year_) {
+		this.year_ = year_;
+		this.year_Wrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage year_Init() {
+		if(!year_Wrap.alreadyInitialized) {
+			_year_(year_Wrap);
+			if(year_ == null)
+				setYear_(year_Wrap.o);
+		}
+		year_Wrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	/////////////
+	// yearKey //
+	/////////////
+
+	/**	L'entité « yearKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long yearKey;
+	@JsonIgnore
+	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
+
+	/**	<br/>L'entité « yearKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearKey(Wrap<Long> c);
+
+	public Long getYearKey() {
+		return yearKey;
+	}
+
+	public void setYearKey(Long yearKey) {
+		this.yearKey = yearKey;
+		this.yearKeyWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage setYearKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearKey = Long.parseLong(o);
+		this.yearKeyWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage yearKeyInit() {
+		if(!yearKeyWrap.alreadyInitialized) {
+			_yearKey(yearKeyWrap);
+			if(yearKey == null)
+				setYearKey(yearKeyWrap.o);
+		}
+		yearKeyWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public Long solrYearKey() {
+		return yearKey;
+	}
+
+	public String strYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String jsonYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String nomAffichageYearKey() {
+		return null;
+	}
+
+	public String htmTooltipYearKey() {
+		return null;
+	}
+
+	public String htmYearKey() {
+		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
 	///////////////
@@ -2822,6 +2512,378 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	///////////////
+	// emailFrom //
+	///////////////
+
+	/**	L'entité « emailFrom »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailFrom;
+	@JsonIgnore
+	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
+
+	/**	<br/>L'entité « emailFrom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Trouver l'entité emailFrom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailFrom(Wrap<String> c);
+
+	public String getEmailFrom() {
+		return emailFrom;
+	}
+
+	public void setEmailFrom(String emailFrom) {
+		this.emailFrom = emailFrom;
+		this.emailFromWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailFromInit() {
+		if(!emailFromWrap.alreadyInitialized) {
+			_emailFrom(emailFromWrap);
+			if(emailFrom == null)
+				setEmailFrom(emailFromWrap.o);
+		}
+		emailFromWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailFrom() {
+		return emailFrom;
+	}
+
+	public String strEmailFrom() {
+		return emailFrom == null ? "" : emailFrom;
+	}
+
+	public String jsonEmailFrom() {
+		return emailFrom == null ? "" : emailFrom;
+	}
+
+	public String nomAffichageEmailFrom() {
+		return null;
+	}
+
+	public String htmTooltipEmailFrom() {
+		return null;
+	}
+
+	public String htmEmailFrom() {
+		return emailFrom == null ? "" : StringEscapeUtils.escapeHtml4(strEmailFrom());
+	}
+
+	///////////////////
+	// emailToSchool //
+	///////////////////
+
+	/**	L'entité « emailToSchool »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailToSchool;
+	@JsonIgnore
+	public Wrap<String> emailToSchoolWrap = new Wrap<String>().p(this).c(String.class).var("emailToSchool").o(emailToSchool);
+
+	/**	<br/>L'entité « emailToSchool »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToSchool">Trouver l'entité emailToSchool dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailToSchool(Wrap<String> c);
+
+	public String getEmailToSchool() {
+		return emailToSchool;
+	}
+
+	public void setEmailToSchool(String emailToSchool) {
+		this.emailToSchool = emailToSchool;
+		this.emailToSchoolWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailToSchoolInit() {
+		if(!emailToSchoolWrap.alreadyInitialized) {
+			_emailToSchool(emailToSchoolWrap);
+			if(emailToSchool == null)
+				setEmailToSchool(emailToSchoolWrap.o);
+		}
+		emailToSchoolWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailToSchool() {
+		return emailToSchool;
+	}
+
+	public String strEmailToSchool() {
+		return emailToSchool == null ? "" : emailToSchool;
+	}
+
+	public String jsonEmailToSchool() {
+		return emailToSchool == null ? "" : emailToSchool;
+	}
+
+	public String nomAffichageEmailToSchool() {
+		return null;
+	}
+
+	public String htmTooltipEmailToSchool() {
+		return null;
+	}
+
+	public String htmEmailToSchool() {
+		return emailToSchool == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToSchool());
+	}
+
+	////////////////////
+	// emailToAddress //
+	////////////////////
+
+	/**	L'entité « emailToAddress »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailToAddress;
+	@JsonIgnore
+	public Wrap<String> emailToAddressWrap = new Wrap<String>().p(this).c(String.class).var("emailToAddress").o(emailToAddress);
+
+	/**	<br/>L'entité « emailToAddress »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToAddress">Trouver l'entité emailToAddress dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailToAddress(Wrap<String> c);
+
+	public String getEmailToAddress() {
+		return emailToAddress;
+	}
+
+	public void setEmailToAddress(String emailToAddress) {
+		this.emailToAddress = emailToAddress;
+		this.emailToAddressWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailToAddressInit() {
+		if(!emailToAddressWrap.alreadyInitialized) {
+			_emailToAddress(emailToAddressWrap);
+			if(emailToAddress == null)
+				setEmailToAddress(emailToAddressWrap.o);
+		}
+		emailToAddressWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailToAddress() {
+		return emailToAddress;
+	}
+
+	public String strEmailToAddress() {
+		return emailToAddress == null ? "" : emailToAddress;
+	}
+
+	public String jsonEmailToAddress() {
+		return emailToAddress == null ? "" : emailToAddress;
+	}
+
+	public String nomAffichageEmailToAddress() {
+		return null;
+	}
+
+	public String htmTooltipEmailToAddress() {
+		return null;
+	}
+
+	public String htmEmailToAddress() {
+		return emailToAddress == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToAddress());
+	}
+
+	/////////////////
+	// emailToName //
+	/////////////////
+
+	/**	L'entité « emailToName »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailToName;
+	@JsonIgnore
+	public Wrap<String> emailToNameWrap = new Wrap<String>().p(this).c(String.class).var("emailToName").o(emailToName);
+
+	/**	<br/>L'entité « emailToName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToName">Trouver l'entité emailToName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailToName(Wrap<String> c);
+
+	public String getEmailToName() {
+		return emailToName;
+	}
+
+	public void setEmailToName(String emailToName) {
+		this.emailToName = emailToName;
+		this.emailToNameWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailToNameInit() {
+		if(!emailToNameWrap.alreadyInitialized) {
+			_emailToName(emailToNameWrap);
+			if(emailToName == null)
+				setEmailToName(emailToNameWrap.o);
+		}
+		emailToNameWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailToName() {
+		return emailToName;
+	}
+
+	public String strEmailToName() {
+		return emailToName == null ? "" : emailToName;
+	}
+
+	public String jsonEmailToName() {
+		return emailToName == null ? "" : emailToName;
+	}
+
+	public String nomAffichageEmailToName() {
+		return null;
+	}
+
+	public String htmTooltipEmailToName() {
+		return null;
+	}
+
+	public String htmEmailToName() {
+		return emailToName == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToName());
+	}
+
+	//////////////////
+	// emailMessage //
+	//////////////////
+
+	/**	L'entité « emailMessage »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailMessage;
+	@JsonIgnore
+	public Wrap<String> emailMessageWrap = new Wrap<String>().p(this).c(String.class).var("emailMessage").o(emailMessage);
+
+	/**	<br/>L'entité « emailMessage »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailMessage">Trouver l'entité emailMessage dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailMessage(Wrap<String> c);
+
+	public String getEmailMessage() {
+		return emailMessage;
+	}
+
+	public void setEmailMessage(String emailMessage) {
+		this.emailMessage = emailMessage;
+		this.emailMessageWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailMessageInit() {
+		if(!emailMessageWrap.alreadyInitialized) {
+			_emailMessage(emailMessageWrap);
+			if(emailMessage == null)
+				setEmailMessage(emailMessageWrap.o);
+		}
+		emailMessageWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailMessage() {
+		return emailMessage;
+	}
+
+	public String strEmailMessage() {
+		return emailMessage == null ? "" : emailMessage;
+	}
+
+	public String jsonEmailMessage() {
+		return emailMessage == null ? "" : emailMessage;
+	}
+
+	public String nomAffichageEmailMessage() {
+		return null;
+	}
+
+	public String htmTooltipEmailMessage() {
+		return null;
+	}
+
+	public String htmEmailMessage() {
+		return emailMessage == null ? "" : StringEscapeUtils.escapeHtml4(strEmailMessage());
+	}
+
+	//////////////////
+	// emailSubject //
+	//////////////////
+
+	/**	L'entité « emailSubject »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailSubject;
+	@JsonIgnore
+	public Wrap<String> emailSubjectWrap = new Wrap<String>().p(this).c(String.class).var("emailSubject").o(emailSubject);
+
+	/**	<br/>L'entité « emailSubject »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailSubject">Trouver l'entité emailSubject dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailSubject(Wrap<String> c);
+
+	public String getEmailSubject() {
+		return emailSubject;
+	}
+
+	public void setEmailSubject(String emailSubject) {
+		this.emailSubject = emailSubject;
+		this.emailSubjectWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailSubjectInit() {
+		if(!emailSubjectWrap.alreadyInitialized) {
+			_emailSubject(emailSubjectWrap);
+			if(emailSubject == null)
+				setEmailSubject(emailSubjectWrap.o);
+		}
+		emailSubjectWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailSubject() {
+		return emailSubject;
+	}
+
+	public String strEmailSubject() {
+		return emailSubject == null ? "" : emailSubject;
+	}
+
+	public String jsonEmailSubject() {
+		return emailSubject == null ? "" : emailSubject;
+	}
+
+	public String nomAffichageEmailSubject() {
+		return null;
+	}
+
+	public String htmTooltipEmailSubject() {
+		return null;
+	}
+
+	public String htmEmailSubject() {
+		return emailSubject == null ? "" : StringEscapeUtils.escapeHtml4(strEmailSubject());
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2869,16 +2931,8 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		enrollmentBlocksInit();
 		enrollmentBlockInit();
 		enrollmentEnrollmentInit();
-		yearSearchInit();
-		year_Init();
-		yearKeyInit();
 		schoolSearchInit();
 		school_Init();
-		emailFromInit();
-		emailToSchoolInit();
-		emailToAddressInit();
-		emailToNameInit();
-		emailMessageInit();
 		schoolKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
@@ -2886,6 +2940,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		schoolAddressInit();
 		schoolPhoneNumberInit();
 		schoolAdministratorNameInit();
+		yearSearchInit();
+		year_Init();
+		yearKeyInit();
 		yearStartInit();
 		yearEndInit();
 		seasonStartDateInit();
@@ -2899,6 +2956,12 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		sessionBlockInit();
 		ageBlockInit();
 		blockBlockInit();
+		emailFromInit();
+		emailToSchoolInit();
+		emailToAddressInit();
+		emailToNameInit();
+		emailMessageInit();
+		emailSubjectInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2943,10 +3006,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 			enrollmentBlock.setSiteRequest_(siteRequest_);
 		if(enrollmentEnrollment != null)
 			enrollmentEnrollment.setSiteRequest_(siteRequest_);
-		if(yearSearch != null)
-			yearSearch.setSiteRequest_(siteRequest_);
 		if(schoolSearch != null)
 			schoolSearch.setSiteRequest_(siteRequest_);
+		if(yearSearch != null)
+			yearSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -3035,26 +3098,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.enrollmentBlock;
 			case "enrollmentEnrollment":
 				return oDesignEmailPage.enrollmentEnrollment;
-			case "yearSearch":
-				return oDesignEmailPage.yearSearch;
-			case "year_":
-				return oDesignEmailPage.year_;
-			case "yearKey":
-				return oDesignEmailPage.yearKey;
 			case "schoolSearch":
 				return oDesignEmailPage.schoolSearch;
 			case "school_":
 				return oDesignEmailPage.school_;
-			case "emailFrom":
-				return oDesignEmailPage.emailFrom;
-			case "emailToSchool":
-				return oDesignEmailPage.emailToSchool;
-			case "emailToAddress":
-				return oDesignEmailPage.emailToAddress;
-			case "emailToName":
-				return oDesignEmailPage.emailToName;
-			case "emailMessage":
-				return oDesignEmailPage.emailMessage;
 			case "schoolKey":
 				return oDesignEmailPage.schoolKey;
 			case "schoolName":
@@ -3069,6 +3116,12 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.schoolPhoneNumber;
 			case "schoolAdministratorName":
 				return oDesignEmailPage.schoolAdministratorName;
+			case "yearSearch":
+				return oDesignEmailPage.yearSearch;
+			case "year_":
+				return oDesignEmailPage.year_;
+			case "yearKey":
+				return oDesignEmailPage.yearKey;
 			case "yearStart":
 				return oDesignEmailPage.yearStart;
 			case "yearEnd":
@@ -3095,6 +3148,18 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.ageBlock;
 			case "blockBlock":
 				return oDesignEmailPage.blockBlock;
+			case "emailFrom":
+				return oDesignEmailPage.emailFrom;
+			case "emailToSchool":
+				return oDesignEmailPage.emailToSchool;
+			case "emailToAddress":
+				return oDesignEmailPage.emailToAddress;
+			case "emailToName":
+				return oDesignEmailPage.emailToName;
+			case "emailMessage":
+				return oDesignEmailPage.emailMessage;
+			case "emailSubject":
+				return oDesignEmailPage.emailSubject;
 			default:
 				return super.obtainDesignEmailGenPage(var);
 		}

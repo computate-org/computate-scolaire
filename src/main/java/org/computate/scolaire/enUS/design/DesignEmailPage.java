@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -218,7 +220,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _attachmentDesignId(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailDesignId"));
+		c.o(siteRequest_.getRequestVars().get("attachmentDesignId"));
 	}
 
 	protected void _attachmentDesignSearch(SearchList<PageDesign> l) {
@@ -274,7 +276,6 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	/////////////////
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
-		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		l.setStore(true);
 		l.setQuery("*:*");
 		l.setC(SchoolEnrollment.class);
@@ -375,6 +376,10 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _enrollmentEnrollment(Wrap<SchoolEnrollment> c) {
 	}
 
+	///////////
+	// Years //
+	///////////
+
 	protected void _yearSearch(SearchList<SchoolYear> l) {
 		l.setStore(true);
 		l.setQuery("*:*");
@@ -414,6 +419,20 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			c.o(year_.getPk());
 	}
 
+	protected void _yearStart(Wrap<Integer> c) {
+		if(year_ != null)
+			c.o(year_.getYearStart());
+	}
+
+	protected void _yearEnd(Wrap<Integer> c) {
+		if(year_ != null)
+			c.o(year_.getYearEnd());
+	}
+
+	/////////////
+	// Schools //
+	/////////////
+
 	protected void _schoolSearch(SearchList<School> l) {
 		l.setStore(true);
 		l.setQuery("*:*");
@@ -451,92 +470,44 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
-	protected void _emailFrom(Wrap<String> c) {
-		if(school_ != null)
-			c.o(school_.getSchoolEmailFrom());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
-	protected void _emailToSchool(Wrap<String> c) {
-		if(school_ != null)
-			c.o(school_.getSchoolEmailTo());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
-	protected void _emailToAddress(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailToAddress"));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
-	protected void _emailToName(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailToName"));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
-	protected void _emailMessage(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailMessage"));
-	}
-
 	protected void _schoolKey(Wrap<Long> c) {
-		if(year_ != null)
-			c.o(year_.getSchoolKey());
+		if(school_ != null)
+			c.o(school_.getSchoolKey());
 	}
 
 	protected void _schoolName(Wrap<String> c) {
-		if(year_ != null)
-			c.o(year_.getSchoolName());
+		if(school_ != null)
+			c.o(school_.getSchoolName());
 	}
 
 	protected void _schoolCompleteName(Wrap<String> c) {
-		if(year_ != null)
-			c.o(year_.getSchoolCompleteName());
+		if(school_ != null)
+			c.o(school_.getSchoolCompleteName());
 	}
 
 	protected void _schoolLocation(Wrap<String> c) {
-		if(year_ != null)
-			c.o((String)year_.getSchoolLocation());
+		if(school_ != null)
+			c.o((String)school_.getSchoolLocation());
 	}
 
 	protected void _schoolAddress(Wrap<String> c) {
-		if(year_ != null)
-			c.o((String)year_.getSchoolAddress());
+		if(school_ != null)
+			c.o((String)school_.getSchoolAddress());
 	}
 
 	protected void _schoolPhoneNumber(Wrap<String> c) {
-		if(year_ != null)
-			c.o((String)year_.getSchoolPhoneNumber());
+		if(school_ != null)
+			c.o((String)school_.getSchoolPhoneNumber());
 	}
 
 	protected void _schoolAdministratorName(Wrap<String> c) {
-		if(year_ != null)
-			c.o((String)year_.getSchoolAdministratorName());
+		if(school_ != null)
+			c.o((String)school_.getSchoolAdministratorName());
 	}
 
-	protected void _yearStart(Wrap<Integer> c) {
-		if(year_ != null)
-			c.o(year_.getYearStart());
-	}
-
-	protected void _yearEnd(Wrap<Integer> c) {
-		if(year_ != null)
-			c.o(year_.getYearEnd());
-	}
+	/////////////
+	// Seasons //
+	/////////////
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {}
 
@@ -667,6 +638,70 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _blockBlock(Wrap<SchoolBlock> c) {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailFrom(Wrap<String> c) {
+		if(school_ != null)
+			c.o(school_.getSchoolEmailFrom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToSchool(Wrap<String> c) {
+		if(school_ != null)
+			c.o(school_.getSchoolEmailTo());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToAddress(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailToAddress"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToName(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailToName"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailMessage(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailMessage"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailSubject(Wrap<String> c) {
+		String format = siteRequest_.getRequestVars().get("emailSubject");
+		if(format == null)
+			throw new RuntimeException("The email subject field was blank. ");
+		Matcher matcher = Pattern.compile("\\$\\{(\\w+)}", Pattern.MULTILINE).matcher(format);
+		boolean found = matcher.find();
+		StringBuffer sb = new StringBuffer();
+		
+		while(found) {
+			String var = matcher.group(1);
+			Object o = obtainDesignEmailPage(var);
+			matcher.appendReplacement(sb, o == null ? "" : o.toString());
+			found = matcher.find();
+		}
+		matcher.appendTail(sb);
+		c.o(sb.toString());
+	}
+
 	@Override public void htmlPageLayout() {
 
 		SiteContextEnUS siteContext = siteRequest_.getSiteContext_();
@@ -744,7 +779,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		}
 
 		message.setHtml(wEmail.toString());
-		message.setSubject(String.format("Enrollment of %s for the %s", schoolEnrollment.getChildCompleteName(), schoolEnrollment.getSeasonCompleteName()));
+//		message.setSubject(String.format("Enrollment of %s for the %s", schoolEnrollment.getChildCompleteName(), schoolEnrollment.getSeasonCompleteName()));
+		message.setSubject(emailSubject);
 
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
