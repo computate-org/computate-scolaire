@@ -294,9 +294,13 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
 						break;
-					case "schoolEmail":
+					case "schoolEmailFrom":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("schoolEmailFrom", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolEmailTo":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolEmailTo", jsonObject.getString(entityVar), pk));
 						break;
 					case "schoolLocation":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -772,14 +776,24 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.jsonSchoolAdministratorName(), pk));
 						}
 						break;
-					case "setSchoolEmail":
+					case "setSchoolEmailFrom":
 						if(jsonObject.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolEmail"));
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolEmailFrom"));
 						} else {
-							o2.setSchoolEmail(jsonObject.getString(methodName));
+							o2.setSchoolEmailFrom(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("schoolEmail", o2.jsonSchoolEmail(), pk));
+							patchSqlParams.addAll(Arrays.asList("schoolEmailFrom", o2.jsonSchoolEmailFrom(), pk));
+						}
+						break;
+					case "setSchoolEmailTo":
+						if(jsonObject.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolEmailTo"));
+						} else {
+							o2.setSchoolEmailTo(jsonObject.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolEmailTo", o2.jsonSchoolEmailTo(), pk));
 						}
 						break;
 					case "setSchoolLocation":
@@ -1787,9 +1801,13 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						putSql.append(SiteContextEnUS.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
 						break;
-					case "schoolEmail":
+					case "schoolEmailFrom":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("schoolEmail", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList("schoolEmailFrom", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolEmailTo":
+						putSql.append(SiteContextEnUS.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("schoolEmailTo", jsonObject.getString(entityVar), pk));
 						break;
 					case "schoolLocation":
 						putSql.append(SiteContextEnUS.SQL_setD);

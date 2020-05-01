@@ -24,6 +24,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.design.PageDesign;
+import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -92,43 +93,43 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
-	////////
-	// w2 //
-	////////
+	///////////
+	// wPage //
+	///////////
 
-	/**	L'entité « w2 »
+	/**	L'entité « wPage »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected AllWriter w2;
+	protected AllWriter wPage;
 	@JsonIgnore
-	public Wrap<AllWriter> w2Wrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w2").o(w2);
+	public Wrap<AllWriter> wPageWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wPage").o(wPage);
 
-	/**	<br/>L'entité « w2 »
+	/**	<br/>L'entité « wPage »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:w2">Trouver l'entité w2 dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:wPage">Trouver l'entité wPage dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _w2(Wrap<AllWriter> c);
+	protected abstract void _wPage(Wrap<AllWriter> c);
 
-	public AllWriter getW2() {
-		return w2;
+	public AllWriter getWPage() {
+		return wPage;
 	}
 
-	public void setW2(AllWriter w2) {
-		this.w2 = w2;
-		this.w2Wrap.alreadyInitialized = true;
+	public void setWPage(AllWriter wPage) {
+		this.wPage = wPage;
+		this.wPageWrap.alreadyInitialized = true;
 	}
-	protected DesignEmailPage w2Init() {
-		if(!w2Wrap.alreadyInitialized) {
-			_w2(w2Wrap);
-			if(w2 == null)
-				setW2(w2Wrap.o);
+	protected DesignEmailPage wPageInit() {
+		if(!wPageWrap.alreadyInitialized) {
+			_wPage(wPageWrap);
+			if(wPage == null)
+				setWPage(wPageWrap.o);
 		}
-		if(w2 != null)
-			w2.initDeepForClass(siteRequest_);
-		w2Wrap.alreadyInitialized(true);
+		if(wPage != null)
+			wPage.initDeepForClass(siteRequest_);
+		wPageWrap.alreadyInitialized(true);
 		return (DesignEmailPage)this;
 	}
 
@@ -172,66 +173,806 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
-	//////////////
-	// designId //
-	//////////////
+	//////////////////
+	// pageDesignId //
+	//////////////////
 
-	/**	L'entité « designId »
+	/**	L'entité « pageDesignId »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String designId;
+	protected String pageDesignId;
 	@JsonIgnore
-	public Wrap<String> designIdWrap = new Wrap<String>().p(this).c(String.class).var("designId").o(designId);
+	public Wrap<String> pageDesignIdWrap = new Wrap<String>().p(this).c(String.class).var("pageDesignId").o(pageDesignId);
 
-	/**	<br/>L'entité « designId »
+	/**	<br/>L'entité « pageDesignId »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designId">Trouver l'entité designId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesignId">Trouver l'entité pageDesignId dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _designId(Wrap<String> c);
+	protected abstract void _pageDesignId(Wrap<String> c);
 
-	public String getDesignId() {
-		return designId;
+	public String getPageDesignId() {
+		return pageDesignId;
 	}
 
-	public void setDesignId(String designId) {
-		this.designId = designId;
-		this.designIdWrap.alreadyInitialized = true;
+	public void setPageDesignId(String pageDesignId) {
+		this.pageDesignId = pageDesignId;
+		this.pageDesignIdWrap.alreadyInitialized = true;
 	}
-	protected DesignEmailPage designIdInit() {
-		if(!designIdWrap.alreadyInitialized) {
-			_designId(designIdWrap);
-			if(designId == null)
-				setDesignId(designIdWrap.o);
+	protected DesignEmailPage pageDesignIdInit() {
+		if(!pageDesignIdWrap.alreadyInitialized) {
+			_pageDesignId(pageDesignIdWrap);
+			if(pageDesignId == null)
+				setPageDesignId(pageDesignIdWrap.o);
 		}
-		designIdWrap.alreadyInitialized(true);
+		pageDesignIdWrap.alreadyInitialized(true);
 		return (DesignEmailPage)this;
 	}
 
-	public String solrDesignId() {
-		return designId;
+	public String solrPageDesignId() {
+		return pageDesignId;
 	}
 
-	public String strDesignId() {
-		return designId == null ? "" : designId;
+	public String strPageDesignId() {
+		return pageDesignId == null ? "" : pageDesignId;
 	}
 
-	public String jsonDesignId() {
-		return designId == null ? "" : designId;
+	public String jsonPageDesignId() {
+		return pageDesignId == null ? "" : pageDesignId;
 	}
 
-	public String nomAffichageDesignId() {
+	public String nomAffichagePageDesignId() {
 		return null;
 	}
 
-	public String htmTooltipDesignId() {
+	public String htmTooltipPageDesignId() {
 		return null;
 	}
 
-	public String htmDesignId() {
-		return designId == null ? "" : StringEscapeUtils.escapeHtml4(strDesignId());
+	public String htmPageDesignId() {
+		return pageDesignId == null ? "" : StringEscapeUtils.escapeHtml4(strPageDesignId());
+	}
+
+	////////////////////////
+	// pageHtmlPartSearch //
+	////////////////////////
+
+	/**	L'entité « pageHtmlPartSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<HtmlPart> pageHtmlPartSearch = new SearchList<HtmlPart>();
+	@JsonIgnore
+	public Wrap<SearchList<HtmlPart>> pageHtmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("pageHtmlPartSearch").o(pageHtmlPartSearch);
+
+	/**	<br/>L'entité « pageHtmlPartSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageHtmlPartSearch">Trouver l'entité pageHtmlPartSearch dans Solr</a>
+	 * <br/>
+	 * @param pageHtmlPartSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _pageHtmlPartSearch(SearchList<HtmlPart> l);
+
+	public SearchList<HtmlPart> getPageHtmlPartSearch() {
+		return pageHtmlPartSearch;
+	}
+
+	public void setPageHtmlPartSearch(SearchList<HtmlPart> pageHtmlPartSearch) {
+		this.pageHtmlPartSearch = pageHtmlPartSearch;
+		this.pageHtmlPartSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage pageHtmlPartSearchInit() {
+		if(!pageHtmlPartSearchWrap.alreadyInitialized) {
+			_pageHtmlPartSearch(pageHtmlPartSearch);
+		}
+		pageHtmlPartSearch.initDeepForClass(siteRequest_);
+		pageHtmlPartSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	//////////////////////
+	// pageHtmlPartList //
+	//////////////////////
+
+	/**	L'entité « pageHtmlPartList »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<HtmlPart> pageHtmlPartList;
+	@JsonIgnore
+	public Wrap<List<HtmlPart>> pageHtmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("pageHtmlPartList").o(pageHtmlPartList);
+
+	/**	<br/>L'entité « pageHtmlPartList »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageHtmlPartList">Trouver l'entité pageHtmlPartList dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pageHtmlPartList(Wrap<List<HtmlPart>> c);
+
+	public List<HtmlPart> getPageHtmlPartList() {
+		return pageHtmlPartList;
+	}
+
+	public void setPageHtmlPartList(List<HtmlPart> pageHtmlPartList) {
+		this.pageHtmlPartList = pageHtmlPartList;
+		this.pageHtmlPartListWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage addPageHtmlPartList(HtmlPart...objets) {
+		for(HtmlPart o : objets) {
+			addPageHtmlPartList(o);
+		}
+		return (DesignEmailPage)this;
+	}
+	public DesignEmailPage addPageHtmlPartList(HtmlPart o) {
+		if(o != null && !pageHtmlPartList.contains(o))
+			this.pageHtmlPartList.add(o);
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage pageHtmlPartListInit() {
+		if(!pageHtmlPartListWrap.alreadyInitialized) {
+			_pageHtmlPartList(pageHtmlPartListWrap);
+			if(pageHtmlPartList == null)
+				setPageHtmlPartList(pageHtmlPartListWrap.o);
+		}
+		pageHtmlPartListWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	////////////
+	// wEmail //
+	////////////
+
+	/**	L'entité « wEmail »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected AllWriter wEmail;
+	@JsonIgnore
+	public Wrap<AllWriter> wEmailWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wEmail").o(wEmail);
+
+	/**	<br/>L'entité « wEmail »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:wEmail">Trouver l'entité wEmail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _wEmail(Wrap<AllWriter> c);
+
+	public AllWriter getWEmail() {
+		return wEmail;
+	}
+
+	public void setWEmail(AllWriter wEmail) {
+		this.wEmail = wEmail;
+		this.wEmailWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage wEmailInit() {
+		if(!wEmailWrap.alreadyInitialized) {
+			_wEmail(wEmailWrap);
+			if(wEmail == null)
+				setWEmail(wEmailWrap.o);
+		}
+		if(wEmail != null)
+			wEmail.initDeepForClass(siteRequest_);
+		wEmailWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	//////////////////////
+	// emailContentType //
+	//////////////////////
+
+	/**	L'entité « emailContentType »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailContentType;
+	@JsonIgnore
+	public Wrap<String> emailContentTypeWrap = new Wrap<String>().p(this).c(String.class).var("emailContentType").o(emailContentType);
+
+	/**	<br/>L'entité « emailContentType »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailContentType">Trouver l'entité emailContentType dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailContentType(Wrap<String> c);
+
+	public String getEmailContentType() {
+		return emailContentType;
+	}
+
+	public void setEmailContentType(String emailContentType) {
+		this.emailContentType = emailContentType;
+		this.emailContentTypeWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailContentTypeInit() {
+		if(!emailContentTypeWrap.alreadyInitialized) {
+			_emailContentType(emailContentTypeWrap);
+			if(emailContentType == null)
+				setEmailContentType(emailContentTypeWrap.o);
+		}
+		emailContentTypeWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailContentType() {
+		return emailContentType;
+	}
+
+	public String strEmailContentType() {
+		return emailContentType == null ? "" : emailContentType;
+	}
+
+	public String jsonEmailContentType() {
+		return emailContentType == null ? "" : emailContentType;
+	}
+
+	public String nomAffichageEmailContentType() {
+		return null;
+	}
+
+	public String htmTooltipEmailContentType() {
+		return null;
+	}
+
+	public String htmEmailContentType() {
+		return emailContentType == null ? "" : StringEscapeUtils.escapeHtml4(strEmailContentType());
+	}
+
+	///////////////////
+	// emailDesignId //
+	///////////////////
+
+	/**	L'entité « emailDesignId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailDesignId;
+	@JsonIgnore
+	public Wrap<String> emailDesignIdWrap = new Wrap<String>().p(this).c(String.class).var("emailDesignId").o(emailDesignId);
+
+	/**	<br/>L'entité « emailDesignId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailDesignId">Trouver l'entité emailDesignId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailDesignId(Wrap<String> c);
+
+	public String getEmailDesignId() {
+		return emailDesignId;
+	}
+
+	public void setEmailDesignId(String emailDesignId) {
+		this.emailDesignId = emailDesignId;
+		this.emailDesignIdWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailDesignIdInit() {
+		if(!emailDesignIdWrap.alreadyInitialized) {
+			_emailDesignId(emailDesignIdWrap);
+			if(emailDesignId == null)
+				setEmailDesignId(emailDesignIdWrap.o);
+		}
+		emailDesignIdWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailDesignId() {
+		return emailDesignId;
+	}
+
+	public String strEmailDesignId() {
+		return emailDesignId == null ? "" : emailDesignId;
+	}
+
+	public String jsonEmailDesignId() {
+		return emailDesignId == null ? "" : emailDesignId;
+	}
+
+	public String nomAffichageEmailDesignId() {
+		return null;
+	}
+
+	public String htmTooltipEmailDesignId() {
+		return null;
+	}
+
+	public String htmEmailDesignId() {
+		return emailDesignId == null ? "" : StringEscapeUtils.escapeHtml4(strEmailDesignId());
+	}
+
+	///////////////////////
+	// emailDesignSearch //
+	///////////////////////
+
+	/**	L'entité « emailDesignSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<PageDesign> emailDesignSearch = new SearchList<PageDesign>();
+	@JsonIgnore
+	public Wrap<SearchList<PageDesign>> emailDesignSearchWrap = new Wrap<SearchList<PageDesign>>().p(this).c(SearchList.class).var("emailDesignSearch").o(emailDesignSearch);
+
+	/**	<br/>L'entité « emailDesignSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailDesignSearch">Trouver l'entité emailDesignSearch dans Solr</a>
+	 * <br/>
+	 * @param emailDesignSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _emailDesignSearch(SearchList<PageDesign> l);
+
+	public SearchList<PageDesign> getEmailDesignSearch() {
+		return emailDesignSearch;
+	}
+
+	public void setEmailDesignSearch(SearchList<PageDesign> emailDesignSearch) {
+		this.emailDesignSearch = emailDesignSearch;
+		this.emailDesignSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailDesignSearchInit() {
+		if(!emailDesignSearchWrap.alreadyInitialized) {
+			_emailDesignSearch(emailDesignSearch);
+		}
+		emailDesignSearch.initDeepForClass(siteRequest_);
+		emailDesignSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	/////////////////
+	// emailDesign //
+	/////////////////
+
+	/**	L'entité « emailDesign »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected PageDesign emailDesign;
+	@JsonIgnore
+	public Wrap<PageDesign> emailDesignWrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("emailDesign").o(emailDesign);
+
+	/**	<br/>L'entité « emailDesign »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailDesign">Trouver l'entité emailDesign dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailDesign(Wrap<PageDesign> c);
+
+	public PageDesign getEmailDesign() {
+		return emailDesign;
+	}
+
+	public void setEmailDesign(PageDesign emailDesign) {
+		this.emailDesign = emailDesign;
+		this.emailDesignWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailDesignInit() {
+		if(!emailDesignWrap.alreadyInitialized) {
+			_emailDesign(emailDesignWrap);
+			if(emailDesign == null)
+				setEmailDesign(emailDesignWrap.o);
+		}
+		if(emailDesign != null)
+			emailDesign.initDeepForClass(siteRequest_);
+		emailDesignWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	/////////////////////////
+	// emailHtmlPartSearch //
+	/////////////////////////
+
+	/**	L'entité « emailHtmlPartSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<HtmlPart> emailHtmlPartSearch = new SearchList<HtmlPart>();
+	@JsonIgnore
+	public Wrap<SearchList<HtmlPart>> emailHtmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("emailHtmlPartSearch").o(emailHtmlPartSearch);
+
+	/**	<br/>L'entité « emailHtmlPartSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailHtmlPartSearch">Trouver l'entité emailHtmlPartSearch dans Solr</a>
+	 * <br/>
+	 * @param emailHtmlPartSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _emailHtmlPartSearch(SearchList<HtmlPart> l);
+
+	public SearchList<HtmlPart> getEmailHtmlPartSearch() {
+		return emailHtmlPartSearch;
+	}
+
+	public void setEmailHtmlPartSearch(SearchList<HtmlPart> emailHtmlPartSearch) {
+		this.emailHtmlPartSearch = emailHtmlPartSearch;
+		this.emailHtmlPartSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailHtmlPartSearchInit() {
+		if(!emailHtmlPartSearchWrap.alreadyInitialized) {
+			_emailHtmlPartSearch(emailHtmlPartSearch);
+		}
+		emailHtmlPartSearch.initDeepForClass(siteRequest_);
+		emailHtmlPartSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	///////////////////////
+	// emailHtmlPartList //
+	///////////////////////
+
+	/**	L'entité « emailHtmlPartList »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<HtmlPart> emailHtmlPartList;
+	@JsonIgnore
+	public Wrap<List<HtmlPart>> emailHtmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("emailHtmlPartList").o(emailHtmlPartList);
+
+	/**	<br/>L'entité « emailHtmlPartList »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailHtmlPartList">Trouver l'entité emailHtmlPartList dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailHtmlPartList(Wrap<List<HtmlPart>> c);
+
+	public List<HtmlPart> getEmailHtmlPartList() {
+		return emailHtmlPartList;
+	}
+
+	public void setEmailHtmlPartList(List<HtmlPart> emailHtmlPartList) {
+		this.emailHtmlPartList = emailHtmlPartList;
+		this.emailHtmlPartListWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage addEmailHtmlPartList(HtmlPart...objets) {
+		for(HtmlPart o : objets) {
+			addEmailHtmlPartList(o);
+		}
+		return (DesignEmailPage)this;
+	}
+	public DesignEmailPage addEmailHtmlPartList(HtmlPart o) {
+		if(o != null && !emailHtmlPartList.contains(o))
+			this.emailHtmlPartList.add(o);
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage emailHtmlPartListInit() {
+		if(!emailHtmlPartListWrap.alreadyInitialized) {
+			_emailHtmlPartList(emailHtmlPartListWrap);
+			if(emailHtmlPartList == null)
+				setEmailHtmlPartList(emailHtmlPartListWrap.o);
+		}
+		emailHtmlPartListWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	/////////////////
+	// wAttachment //
+	/////////////////
+
+	/**	L'entité « wAttachment »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected AllWriter wAttachment;
+	@JsonIgnore
+	public Wrap<AllWriter> wAttachmentWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wAttachment").o(wAttachment);
+
+	/**	<br/>L'entité « wAttachment »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:wAttachment">Trouver l'entité wAttachment dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _wAttachment(Wrap<AllWriter> c);
+
+	public AllWriter getWAttachment() {
+		return wAttachment;
+	}
+
+	public void setWAttachment(AllWriter wAttachment) {
+		this.wAttachment = wAttachment;
+		this.wAttachmentWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage wAttachmentInit() {
+		if(!wAttachmentWrap.alreadyInitialized) {
+			_wAttachment(wAttachmentWrap);
+			if(wAttachment == null)
+				setWAttachment(wAttachmentWrap.o);
+		}
+		if(wAttachment != null)
+			wAttachment.initDeepForClass(siteRequest_);
+		wAttachmentWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	///////////////////////////
+	// attachmentContentType //
+	///////////////////////////
+
+	/**	L'entité « attachmentContentType »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String attachmentContentType;
+	@JsonIgnore
+	public Wrap<String> attachmentContentTypeWrap = new Wrap<String>().p(this).c(String.class).var("attachmentContentType").o(attachmentContentType);
+
+	/**	<br/>L'entité « attachmentContentType »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:attachmentContentType">Trouver l'entité attachmentContentType dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _attachmentContentType(Wrap<String> c);
+
+	public String getAttachmentContentType() {
+		return attachmentContentType;
+	}
+
+	public void setAttachmentContentType(String attachmentContentType) {
+		this.attachmentContentType = attachmentContentType;
+		this.attachmentContentTypeWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage attachmentContentTypeInit() {
+		if(!attachmentContentTypeWrap.alreadyInitialized) {
+			_attachmentContentType(attachmentContentTypeWrap);
+			if(attachmentContentType == null)
+				setAttachmentContentType(attachmentContentTypeWrap.o);
+		}
+		attachmentContentTypeWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrAttachmentContentType() {
+		return attachmentContentType;
+	}
+
+	public String strAttachmentContentType() {
+		return attachmentContentType == null ? "" : attachmentContentType;
+	}
+
+	public String jsonAttachmentContentType() {
+		return attachmentContentType == null ? "" : attachmentContentType;
+	}
+
+	public String nomAffichageAttachmentContentType() {
+		return null;
+	}
+
+	public String htmTooltipAttachmentContentType() {
+		return null;
+	}
+
+	public String htmAttachmentContentType() {
+		return attachmentContentType == null ? "" : StringEscapeUtils.escapeHtml4(strAttachmentContentType());
+	}
+
+	////////////////////////
+	// attachmentDesignId //
+	////////////////////////
+
+	/**	L'entité « attachmentDesignId »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String attachmentDesignId;
+	@JsonIgnore
+	public Wrap<String> attachmentDesignIdWrap = new Wrap<String>().p(this).c(String.class).var("attachmentDesignId").o(attachmentDesignId);
+
+	/**	<br/>L'entité « attachmentDesignId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:attachmentDesignId">Trouver l'entité attachmentDesignId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _attachmentDesignId(Wrap<String> c);
+
+	public String getAttachmentDesignId() {
+		return attachmentDesignId;
+	}
+
+	public void setAttachmentDesignId(String attachmentDesignId) {
+		this.attachmentDesignId = attachmentDesignId;
+		this.attachmentDesignIdWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage attachmentDesignIdInit() {
+		if(!attachmentDesignIdWrap.alreadyInitialized) {
+			_attachmentDesignId(attachmentDesignIdWrap);
+			if(attachmentDesignId == null)
+				setAttachmentDesignId(attachmentDesignIdWrap.o);
+		}
+		attachmentDesignIdWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrAttachmentDesignId() {
+		return attachmentDesignId;
+	}
+
+	public String strAttachmentDesignId() {
+		return attachmentDesignId == null ? "" : attachmentDesignId;
+	}
+
+	public String jsonAttachmentDesignId() {
+		return attachmentDesignId == null ? "" : attachmentDesignId;
+	}
+
+	public String nomAffichageAttachmentDesignId() {
+		return null;
+	}
+
+	public String htmTooltipAttachmentDesignId() {
+		return null;
+	}
+
+	public String htmAttachmentDesignId() {
+		return attachmentDesignId == null ? "" : StringEscapeUtils.escapeHtml4(strAttachmentDesignId());
+	}
+
+	////////////////////////////
+	// attachmentDesignSearch //
+	////////////////////////////
+
+	/**	L'entité « attachmentDesignSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<PageDesign> attachmentDesignSearch = new SearchList<PageDesign>();
+	@JsonIgnore
+	public Wrap<SearchList<PageDesign>> attachmentDesignSearchWrap = new Wrap<SearchList<PageDesign>>().p(this).c(SearchList.class).var("attachmentDesignSearch").o(attachmentDesignSearch);
+
+	/**	<br/>L'entité « attachmentDesignSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:attachmentDesignSearch">Trouver l'entité attachmentDesignSearch dans Solr</a>
+	 * <br/>
+	 * @param attachmentDesignSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _attachmentDesignSearch(SearchList<PageDesign> l);
+
+	public SearchList<PageDesign> getAttachmentDesignSearch() {
+		return attachmentDesignSearch;
+	}
+
+	public void setAttachmentDesignSearch(SearchList<PageDesign> attachmentDesignSearch) {
+		this.attachmentDesignSearch = attachmentDesignSearch;
+		this.attachmentDesignSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage attachmentDesignSearchInit() {
+		if(!attachmentDesignSearchWrap.alreadyInitialized) {
+			_attachmentDesignSearch(attachmentDesignSearch);
+		}
+		attachmentDesignSearch.initDeepForClass(siteRequest_);
+		attachmentDesignSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	//////////////////////
+	// attachmentDesign //
+	//////////////////////
+
+	/**	L'entité « attachmentDesign »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected PageDesign attachmentDesign;
+	@JsonIgnore
+	public Wrap<PageDesign> attachmentDesignWrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("attachmentDesign").o(attachmentDesign);
+
+	/**	<br/>L'entité « attachmentDesign »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:attachmentDesign">Trouver l'entité attachmentDesign dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _attachmentDesign(Wrap<PageDesign> c);
+
+	public PageDesign getAttachmentDesign() {
+		return attachmentDesign;
+	}
+
+	public void setAttachmentDesign(PageDesign attachmentDesign) {
+		this.attachmentDesign = attachmentDesign;
+		this.attachmentDesignWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage attachmentDesignInit() {
+		if(!attachmentDesignWrap.alreadyInitialized) {
+			_attachmentDesign(attachmentDesignWrap);
+			if(attachmentDesign == null)
+				setAttachmentDesign(attachmentDesignWrap.o);
+		}
+		if(attachmentDesign != null)
+			attachmentDesign.initDeepForClass(siteRequest_);
+		attachmentDesignWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	//////////////////////////////
+	// attachmentHtmlPartSearch //
+	//////////////////////////////
+
+	/**	L'entité « attachmentHtmlPartSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<HtmlPart> attachmentHtmlPartSearch = new SearchList<HtmlPart>();
+	@JsonIgnore
+	public Wrap<SearchList<HtmlPart>> attachmentHtmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("attachmentHtmlPartSearch").o(attachmentHtmlPartSearch);
+
+	/**	<br/>L'entité « attachmentHtmlPartSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:attachmentHtmlPartSearch">Trouver l'entité attachmentHtmlPartSearch dans Solr</a>
+	 * <br/>
+	 * @param attachmentHtmlPartSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _attachmentHtmlPartSearch(SearchList<HtmlPart> l);
+
+	public SearchList<HtmlPart> getAttachmentHtmlPartSearch() {
+		return attachmentHtmlPartSearch;
+	}
+
+	public void setAttachmentHtmlPartSearch(SearchList<HtmlPart> attachmentHtmlPartSearch) {
+		this.attachmentHtmlPartSearch = attachmentHtmlPartSearch;
+		this.attachmentHtmlPartSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage attachmentHtmlPartSearchInit() {
+		if(!attachmentHtmlPartSearchWrap.alreadyInitialized) {
+			_attachmentHtmlPartSearch(attachmentHtmlPartSearch);
+		}
+		attachmentHtmlPartSearch.initDeepForClass(siteRequest_);
+		attachmentHtmlPartSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	////////////////////////////
+	// attachmentHtmlPartList //
+	////////////////////////////
+
+	/**	L'entité « attachmentHtmlPartList »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<HtmlPart> attachmentHtmlPartList;
+	@JsonIgnore
+	public Wrap<List<HtmlPart>> attachmentHtmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("attachmentHtmlPartList").o(attachmentHtmlPartList);
+
+	/**	<br/>L'entité « attachmentHtmlPartList »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:attachmentHtmlPartList">Trouver l'entité attachmentHtmlPartList dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _attachmentHtmlPartList(Wrap<List<HtmlPart>> c);
+
+	public List<HtmlPart> getAttachmentHtmlPartList() {
+		return attachmentHtmlPartList;
+	}
+
+	public void setAttachmentHtmlPartList(List<HtmlPart> attachmentHtmlPartList) {
+		this.attachmentHtmlPartList = attachmentHtmlPartList;
+		this.attachmentHtmlPartListWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage addAttachmentHtmlPartList(HtmlPart...objets) {
+		for(HtmlPart o : objets) {
+			addAttachmentHtmlPartList(o);
+		}
+		return (DesignEmailPage)this;
+	}
+	public DesignEmailPage addAttachmentHtmlPartList(HtmlPart o) {
+		if(o != null && !attachmentHtmlPartList.contains(o))
+			this.attachmentHtmlPartList.add(o);
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage attachmentHtmlPartListInit() {
+		if(!attachmentHtmlPartListWrap.alreadyInitialized) {
+			_attachmentHtmlPartList(attachmentHtmlPartListWrap);
+			if(attachmentHtmlPartList == null)
+				setAttachmentHtmlPartList(attachmentHtmlPartListWrap.o);
+		}
+		attachmentHtmlPartListWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
 	}
 
 	//////////////////////
@@ -629,6 +1370,391 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String htmYearKey() {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
+	//////////////////
+	// schoolSearch //
+	//////////////////
+
+	/**	L'entité « schoolSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<School>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<School> schoolSearch = new SearchList<School>();
+	@JsonIgnore
+	public Wrap<SearchList<School>> schoolSearchWrap = new Wrap<SearchList<School>>().p(this).c(SearchList.class).var("schoolSearch").o(schoolSearch);
+
+	/**	<br/>L'entité « schoolSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<School>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSearch">Trouver l'entité schoolSearch dans Solr</a>
+	 * <br/>
+	 * @param schoolSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _schoolSearch(SearchList<School> l);
+
+	public SearchList<School> getSchoolSearch() {
+		return schoolSearch;
+	}
+
+	public void setSchoolSearch(SearchList<School> schoolSearch) {
+		this.schoolSearch = schoolSearch;
+		this.schoolSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage schoolSearchInit() {
+		if(!schoolSearchWrap.alreadyInitialized) {
+			_schoolSearch(schoolSearch);
+		}
+		schoolSearch.initDeepForClass(siteRequest_);
+		schoolSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	/////////////
+	// school_ //
+	/////////////
+
+	/**	L'entité « school_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected School school_;
+	@JsonIgnore
+	public Wrap<School> school_Wrap = new Wrap<School>().p(this).c(School.class).var("school_").o(school_);
+
+	/**	<br/>L'entité « school_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school_">Trouver l'entité school_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _school_(Wrap<School> c);
+
+	public School getSchool_() {
+		return school_;
+	}
+
+	public void setSchool_(School school_) {
+		this.school_ = school_;
+		this.school_Wrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage school_Init() {
+		if(!school_Wrap.alreadyInitialized) {
+			_school_(school_Wrap);
+			if(school_ == null)
+				setSchool_(school_Wrap.o);
+		}
+		school_Wrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	///////////////
+	// emailFrom //
+	///////////////
+
+	/**	L'entité « emailFrom »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailFrom;
+	@JsonIgnore
+	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
+
+	/**	<br/>L'entité « emailFrom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Trouver l'entité emailFrom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailFrom(Wrap<String> c);
+
+	public String getEmailFrom() {
+		return emailFrom;
+	}
+
+	public void setEmailFrom(String emailFrom) {
+		this.emailFrom = emailFrom;
+		this.emailFromWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailFromInit() {
+		if(!emailFromWrap.alreadyInitialized) {
+			_emailFrom(emailFromWrap);
+			if(emailFrom == null)
+				setEmailFrom(emailFromWrap.o);
+		}
+		emailFromWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailFrom() {
+		return emailFrom;
+	}
+
+	public String strEmailFrom() {
+		return emailFrom == null ? "" : emailFrom;
+	}
+
+	public String jsonEmailFrom() {
+		return emailFrom == null ? "" : emailFrom;
+	}
+
+	public String nomAffichageEmailFrom() {
+		return null;
+	}
+
+	public String htmTooltipEmailFrom() {
+		return null;
+	}
+
+	public String htmEmailFrom() {
+		return emailFrom == null ? "" : StringEscapeUtils.escapeHtml4(strEmailFrom());
+	}
+
+	///////////////////
+	// emailToSchool //
+	///////////////////
+
+	/**	L'entité « emailToSchool »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailToSchool;
+	@JsonIgnore
+	public Wrap<String> emailToSchoolWrap = new Wrap<String>().p(this).c(String.class).var("emailToSchool").o(emailToSchool);
+
+	/**	<br/>L'entité « emailToSchool »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToSchool">Trouver l'entité emailToSchool dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailToSchool(Wrap<String> c);
+
+	public String getEmailToSchool() {
+		return emailToSchool;
+	}
+
+	public void setEmailToSchool(String emailToSchool) {
+		this.emailToSchool = emailToSchool;
+		this.emailToSchoolWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailToSchoolInit() {
+		if(!emailToSchoolWrap.alreadyInitialized) {
+			_emailToSchool(emailToSchoolWrap);
+			if(emailToSchool == null)
+				setEmailToSchool(emailToSchoolWrap.o);
+		}
+		emailToSchoolWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailToSchool() {
+		return emailToSchool;
+	}
+
+	public String strEmailToSchool() {
+		return emailToSchool == null ? "" : emailToSchool;
+	}
+
+	public String jsonEmailToSchool() {
+		return emailToSchool == null ? "" : emailToSchool;
+	}
+
+	public String nomAffichageEmailToSchool() {
+		return null;
+	}
+
+	public String htmTooltipEmailToSchool() {
+		return null;
+	}
+
+	public String htmEmailToSchool() {
+		return emailToSchool == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToSchool());
+	}
+
+	////////////////////
+	// emailToAddress //
+	////////////////////
+
+	/**	L'entité « emailToAddress »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailToAddress;
+	@JsonIgnore
+	public Wrap<String> emailToAddressWrap = new Wrap<String>().p(this).c(String.class).var("emailToAddress").o(emailToAddress);
+
+	/**	<br/>L'entité « emailToAddress »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToAddress">Trouver l'entité emailToAddress dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailToAddress(Wrap<String> c);
+
+	public String getEmailToAddress() {
+		return emailToAddress;
+	}
+
+	public void setEmailToAddress(String emailToAddress) {
+		this.emailToAddress = emailToAddress;
+		this.emailToAddressWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailToAddressInit() {
+		if(!emailToAddressWrap.alreadyInitialized) {
+			_emailToAddress(emailToAddressWrap);
+			if(emailToAddress == null)
+				setEmailToAddress(emailToAddressWrap.o);
+		}
+		emailToAddressWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailToAddress() {
+		return emailToAddress;
+	}
+
+	public String strEmailToAddress() {
+		return emailToAddress == null ? "" : emailToAddress;
+	}
+
+	public String jsonEmailToAddress() {
+		return emailToAddress == null ? "" : emailToAddress;
+	}
+
+	public String nomAffichageEmailToAddress() {
+		return null;
+	}
+
+	public String htmTooltipEmailToAddress() {
+		return null;
+	}
+
+	public String htmEmailToAddress() {
+		return emailToAddress == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToAddress());
+	}
+
+	/////////////////
+	// emailToName //
+	/////////////////
+
+	/**	L'entité « emailToName »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailToName;
+	@JsonIgnore
+	public Wrap<String> emailToNameWrap = new Wrap<String>().p(this).c(String.class).var("emailToName").o(emailToName);
+
+	/**	<br/>L'entité « emailToName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToName">Trouver l'entité emailToName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailToName(Wrap<String> c);
+
+	public String getEmailToName() {
+		return emailToName;
+	}
+
+	public void setEmailToName(String emailToName) {
+		this.emailToName = emailToName;
+		this.emailToNameWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailToNameInit() {
+		if(!emailToNameWrap.alreadyInitialized) {
+			_emailToName(emailToNameWrap);
+			if(emailToName == null)
+				setEmailToName(emailToNameWrap.o);
+		}
+		emailToNameWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailToName() {
+		return emailToName;
+	}
+
+	public String strEmailToName() {
+		return emailToName == null ? "" : emailToName;
+	}
+
+	public String jsonEmailToName() {
+		return emailToName == null ? "" : emailToName;
+	}
+
+	public String nomAffichageEmailToName() {
+		return null;
+	}
+
+	public String htmTooltipEmailToName() {
+		return null;
+	}
+
+	public String htmEmailToName() {
+		return emailToName == null ? "" : StringEscapeUtils.escapeHtml4(strEmailToName());
+	}
+
+	//////////////////
+	// emailMessage //
+	//////////////////
+
+	/**	L'entité « emailMessage »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String emailMessage;
+	@JsonIgnore
+	public Wrap<String> emailMessageWrap = new Wrap<String>().p(this).c(String.class).var("emailMessage").o(emailMessage);
+
+	/**	<br/>L'entité « emailMessage »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailMessage">Trouver l'entité emailMessage dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailMessage(Wrap<String> c);
+
+	public String getEmailMessage() {
+		return emailMessage;
+	}
+
+	public void setEmailMessage(String emailMessage) {
+		this.emailMessage = emailMessage;
+		this.emailMessageWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage emailMessageInit() {
+		if(!emailMessageWrap.alreadyInitialized) {
+			_emailMessage(emailMessageWrap);
+			if(emailMessage == null)
+				setEmailMessage(emailMessageWrap.o);
+		}
+		emailMessageWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public String solrEmailMessage() {
+		return emailMessage;
+	}
+
+	public String strEmailMessage() {
+		return emailMessage == null ? "" : emailMessage;
+	}
+
+	public String jsonEmailMessage() {
+		return emailMessage == null ? "" : emailMessage;
+	}
+
+	public String nomAffichageEmailMessage() {
+		return null;
+	}
+
+	public String htmTooltipEmailMessage() {
+		return null;
+	}
+
+	public String htmEmailMessage() {
+		return emailMessage == null ? "" : StringEscapeUtils.escapeHtml4(strEmailMessage());
 	}
 
 	///////////////
@@ -1696,92 +2822,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
-	////////////////////
-	// htmlPartSearch //
-	////////////////////
-
-	/**	L'entité « htmlPartSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<HtmlPart> htmlPartSearch = new SearchList<HtmlPart>();
-	@JsonIgnore
-	public Wrap<SearchList<HtmlPart>> htmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("htmlPartSearch").o(htmlPartSearch);
-
-	/**	<br/>L'entité « htmlPartSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartSearch">Trouver l'entité htmlPartSearch dans Solr</a>
-	 * <br/>
-	 * @param htmlPartSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _htmlPartSearch(SearchList<HtmlPart> l);
-
-	public SearchList<HtmlPart> getHtmlPartSearch() {
-		return htmlPartSearch;
-	}
-
-	public void setHtmlPartSearch(SearchList<HtmlPart> htmlPartSearch) {
-		this.htmlPartSearch = htmlPartSearch;
-		this.htmlPartSearchWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage htmlPartSearchInit() {
-		if(!htmlPartSearchWrap.alreadyInitialized) {
-			_htmlPartSearch(htmlPartSearch);
-		}
-		htmlPartSearch.initDeepForClass(siteRequest_);
-		htmlPartSearchWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	//////////////////
-	// htmlPartList //
-	//////////////////
-
-	/**	L'entité « htmlPartList »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected List<HtmlPart> htmlPartList;
-	@JsonIgnore
-	public Wrap<List<HtmlPart>> htmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("htmlPartList").o(htmlPartList);
-
-	/**	<br/>L'entité « htmlPartList »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartList">Trouver l'entité htmlPartList dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _htmlPartList(Wrap<List<HtmlPart>> c);
-
-	public List<HtmlPart> getHtmlPartList() {
-		return htmlPartList;
-	}
-
-	public void setHtmlPartList(List<HtmlPart> htmlPartList) {
-		this.htmlPartList = htmlPartList;
-		this.htmlPartListWrap.alreadyInitialized = true;
-	}
-	public DesignEmailPage addHtmlPartList(HtmlPart...objets) {
-		for(HtmlPart o : objets) {
-			addHtmlPartList(o);
-		}
-		return (DesignEmailPage)this;
-	}
-	public DesignEmailPage addHtmlPartList(HtmlPart o) {
-		if(o != null && !htmlPartList.contains(o))
-			this.htmlPartList.add(o);
-		return (DesignEmailPage)this;
-	}
-	protected DesignEmailPage htmlPartListInit() {
-		if(!htmlPartListWrap.alreadyInitialized) {
-			_htmlPartList(htmlPartListWrap);
-			if(htmlPartList == null)
-				setHtmlPartList(htmlPartListWrap.o);
-		}
-		htmlPartListWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -1804,9 +2844,25 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public void initDesignEmailPage() {
 		w1Init();
-		w2Init();
+		wPageInit();
 		pageDesignInit();
-		designIdInit();
+		pageDesignIdInit();
+		pageHtmlPartSearchInit();
+		pageHtmlPartListInit();
+		wEmailInit();
+		emailContentTypeInit();
+		emailDesignIdInit();
+		emailDesignSearchInit();
+		emailDesignInit();
+		emailHtmlPartSearchInit();
+		emailHtmlPartListInit();
+		wAttachmentInit();
+		attachmentContentTypeInit();
+		attachmentDesignIdInit();
+		attachmentDesignSearchInit();
+		attachmentDesignInit();
+		attachmentHtmlPartSearchInit();
+		attachmentHtmlPartListInit();
 		enrollmentSearchInit();
 		schoolEnrollmentInit();
 		enrollmentsInit();
@@ -1816,6 +2872,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		yearSearchInit();
 		year_Init();
 		yearKeyInit();
+		schoolSearchInit();
+		school_Init();
+		emailFromInit();
+		emailToSchoolInit();
+		emailToAddressInit();
+		emailToNameInit();
+		emailMessageInit();
 		schoolKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
@@ -1836,8 +2899,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		sessionBlockInit();
 		ageBlockInit();
 		blockBlockInit();
-		htmlPartSearchInit();
-		htmlPartListInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -1852,10 +2913,28 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 			super.siteRequestDesignEmailGenPage(siteRequest_);
 		if(w1 != null)
 			w1.setSiteRequest_(siteRequest_);
-		if(w2 != null)
-			w2.setSiteRequest_(siteRequest_);
+		if(wPage != null)
+			wPage.setSiteRequest_(siteRequest_);
 		if(pageDesign != null)
 			pageDesign.setSiteRequest_(siteRequest_);
+		if(pageHtmlPartSearch != null)
+			pageHtmlPartSearch.setSiteRequest_(siteRequest_);
+		if(wEmail != null)
+			wEmail.setSiteRequest_(siteRequest_);
+		if(emailDesignSearch != null)
+			emailDesignSearch.setSiteRequest_(siteRequest_);
+		if(emailDesign != null)
+			emailDesign.setSiteRequest_(siteRequest_);
+		if(emailHtmlPartSearch != null)
+			emailHtmlPartSearch.setSiteRequest_(siteRequest_);
+		if(wAttachment != null)
+			wAttachment.setSiteRequest_(siteRequest_);
+		if(attachmentDesignSearch != null)
+			attachmentDesignSearch.setSiteRequest_(siteRequest_);
+		if(attachmentDesign != null)
+			attachmentDesign.setSiteRequest_(siteRequest_);
+		if(attachmentHtmlPartSearch != null)
+			attachmentHtmlPartSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
 		if(schoolEnrollment != null)
@@ -1866,6 +2945,8 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 			enrollmentEnrollment.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
+		if(schoolSearch != null)
+			schoolSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -1876,8 +2957,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 			ageBlock.setSiteRequest_(siteRequest_);
 		if(blockBlock != null)
 			blockBlock.setSiteRequest_(siteRequest_);
-		if(htmlPartSearch != null)
-			htmlPartSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -1906,12 +2985,44 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		switch(var) {
 			case "w1":
 				return oDesignEmailPage.w1;
-			case "w2":
-				return oDesignEmailPage.w2;
+			case "wPage":
+				return oDesignEmailPage.wPage;
 			case "pageDesign":
 				return oDesignEmailPage.pageDesign;
-			case "designId":
-				return oDesignEmailPage.designId;
+			case "pageDesignId":
+				return oDesignEmailPage.pageDesignId;
+			case "pageHtmlPartSearch":
+				return oDesignEmailPage.pageHtmlPartSearch;
+			case "pageHtmlPartList":
+				return oDesignEmailPage.pageHtmlPartList;
+			case "wEmail":
+				return oDesignEmailPage.wEmail;
+			case "emailContentType":
+				return oDesignEmailPage.emailContentType;
+			case "emailDesignId":
+				return oDesignEmailPage.emailDesignId;
+			case "emailDesignSearch":
+				return oDesignEmailPage.emailDesignSearch;
+			case "emailDesign":
+				return oDesignEmailPage.emailDesign;
+			case "emailHtmlPartSearch":
+				return oDesignEmailPage.emailHtmlPartSearch;
+			case "emailHtmlPartList":
+				return oDesignEmailPage.emailHtmlPartList;
+			case "wAttachment":
+				return oDesignEmailPage.wAttachment;
+			case "attachmentContentType":
+				return oDesignEmailPage.attachmentContentType;
+			case "attachmentDesignId":
+				return oDesignEmailPage.attachmentDesignId;
+			case "attachmentDesignSearch":
+				return oDesignEmailPage.attachmentDesignSearch;
+			case "attachmentDesign":
+				return oDesignEmailPage.attachmentDesign;
+			case "attachmentHtmlPartSearch":
+				return oDesignEmailPage.attachmentHtmlPartSearch;
+			case "attachmentHtmlPartList":
+				return oDesignEmailPage.attachmentHtmlPartList;
 			case "enrollmentSearch":
 				return oDesignEmailPage.enrollmentSearch;
 			case "schoolEnrollment":
@@ -1930,6 +3041,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.year_;
 			case "yearKey":
 				return oDesignEmailPage.yearKey;
+			case "schoolSearch":
+				return oDesignEmailPage.schoolSearch;
+			case "school_":
+				return oDesignEmailPage.school_;
+			case "emailFrom":
+				return oDesignEmailPage.emailFrom;
+			case "emailToSchool":
+				return oDesignEmailPage.emailToSchool;
+			case "emailToAddress":
+				return oDesignEmailPage.emailToAddress;
+			case "emailToName":
+				return oDesignEmailPage.emailToName;
+			case "emailMessage":
+				return oDesignEmailPage.emailMessage;
 			case "schoolKey":
 				return oDesignEmailPage.schoolKey;
 			case "schoolName":
@@ -1970,10 +3095,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.ageBlock;
 			case "blockBlock":
 				return oDesignEmailPage.blockBlock;
-			case "htmlPartSearch":
-				return oDesignEmailPage.htmlPartSearch;
-			case "htmlPartList":
-				return oDesignEmailPage.htmlPartList;
 			default:
 				return super.obtainDesignEmailGenPage(var);
 		}

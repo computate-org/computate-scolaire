@@ -3,8 +3,8 @@ package org.computate.scolaire.enUS.design;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,13 +21,13 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.child.SchoolChild;
-import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
@@ -41,7 +41,6 @@ import com.itextpdf.text.DocumentException;
 
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.buffer.Buffer;
-import io.vertx.core.json.JsonArray;
 import io.vertx.ext.mail.MailAttachment;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailMessage;
@@ -52,10 +51,6 @@ import io.vertx.ext.web.api.OperationRequest;
  **/
 public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 
-	@Override protected void _pageContentType(Wrap<String> c) {
-		c.o("application/pdf");
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -64,11 +59,15 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		c.o(siteRequest_.getW());
 	}
 
+	//////////
+	// Page //
+	//////////
+
 	/**
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _w2(Wrap<AllWriter> c) {
+	protected void _wPage(Wrap<AllWriter> c) {
 		AllWriter o = AllWriter.create(siteRequest_);
 		c.o(o);
 	}
@@ -86,10 +85,193 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _designId(Wrap<String> c) {
+	protected void _pageDesignId(Wrap<String> c) {
 		if(pageDesign != null)
 			c.o(pageDesign.getObjectId());
+		else
+			throw new RuntimeException("No page design found. ");
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _pageHtmlPartSearch(SearchList<HtmlPart> l) {
+		if(pageDesign != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pageDesignKeys_indexed_longs:" + pageDesign.getPk());
+			l.setC(HtmlPart.class);
+			l.setStore(true);
+			l.addSort("sort1_indexed_double", ORDER.asc);
+			l.addSort("sort2_indexed_double", ORDER.asc);
+			l.addSort("sort3_indexed_double", ORDER.asc);
+			l.addSort("sort4_indexed_double", ORDER.asc);
+			l.addSort("sort5_indexed_double", ORDER.asc);
+			l.addSort("sort6_indexed_double", ORDER.asc);
+			l.addSort("sort7_indexed_double", ORDER.asc);
+			l.addSort("sort8_indexed_double", ORDER.asc);
+			l.addSort("sort9_indexed_double", ORDER.asc);
+			l.addSort("sort10_indexed_double", ORDER.asc);
+			l.setRows(100000);
+		}
+	}
+
+	protected void _pageHtmlPartList(Wrap<List<HtmlPart>> c) {
+		if(pageHtmlPartSearch.size() > 0)
+			c.o(pageHtmlPartSearch.getList());
+	}
+
+	///////////
+	// Email //
+	///////////
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _wEmail(Wrap<AllWriter> c) {
+		AllWriter o = AllWriter.create(siteRequest_);
+		c.o(o);
+	}
+
+	protected void _emailContentType(Wrap<String> c) {
+		c.o("text/html");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailDesignId(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailDesignId"));
+	}
+
+	protected void _emailDesignSearch(SearchList<PageDesign> l) {
+		if(emailDesignId != null) {
+			l.setStore(true);
+			l.setQuery("*:*");
+			l.setC(PageDesign.class);
+			l.setRows(1);
+			l.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(emailDesignId));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailDesign(Wrap<PageDesign> c) {
+		if(emailDesignSearch.size() == 1)
+			c.o(emailDesignSearch.get(0));
+		else
+			throw new RuntimeException("No email design found. ");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailHtmlPartSearch(SearchList<HtmlPart> l) {
+		if(emailDesign != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pageDesignKeys_indexed_longs:" + emailDesign.getPk());
+			l.setC(HtmlPart.class);
+			l.setStore(true);
+			l.addSort("sort1_indexed_double", ORDER.asc);
+			l.addSort("sort2_indexed_double", ORDER.asc);
+			l.addSort("sort3_indexed_double", ORDER.asc);
+			l.addSort("sort4_indexed_double", ORDER.asc);
+			l.addSort("sort5_indexed_double", ORDER.asc);
+			l.addSort("sort6_indexed_double", ORDER.asc);
+			l.addSort("sort7_indexed_double", ORDER.asc);
+			l.addSort("sort8_indexed_double", ORDER.asc);
+			l.addSort("sort9_indexed_double", ORDER.asc);
+			l.addSort("sort10_indexed_double", ORDER.asc);
+			l.setRows(100000);
+		}
+	}
+
+	protected void _emailHtmlPartList(Wrap<List<HtmlPart>> c) {
+		if(emailHtmlPartSearch.size() > 0)
+			c.o(emailHtmlPartSearch.getList());
+	}
+
+	////////////////
+	// Attachment //
+	////////////////
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _wAttachment(Wrap<AllWriter> c) {
+		AllWriter o = AllWriter.create(siteRequest_);
+		c.o(o);
+	}
+
+	protected void _attachmentContentType(Wrap<String> c) {
+		c.o("application/pdf");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _attachmentDesignId(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailDesignId"));
+	}
+
+	protected void _attachmentDesignSearch(SearchList<PageDesign> l) {
+		if(attachmentDesignId != null) {
+			l.setStore(true);
+			l.setQuery("*:*");
+			l.setC(PageDesign.class);
+			l.setRows(1);
+			l.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(attachmentDesignId));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _attachmentDesign(Wrap<PageDesign> c) {
+		if(attachmentDesignSearch.size() == 1)
+			c.o(attachmentDesignSearch.get(0));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _attachmentHtmlPartSearch(SearchList<HtmlPart> l) {
+		if(attachmentDesign != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pageDesignKeys_indexed_longs:" + attachmentDesign.getPk());
+			l.setC(HtmlPart.class);
+			l.setStore(true);
+			l.addSort("sort1_indexed_double", ORDER.asc);
+			l.addSort("sort2_indexed_double", ORDER.asc);
+			l.addSort("sort3_indexed_double", ORDER.asc);
+			l.addSort("sort4_indexed_double", ORDER.asc);
+			l.addSort("sort5_indexed_double", ORDER.asc);
+			l.addSort("sort6_indexed_double", ORDER.asc);
+			l.addSort("sort7_indexed_double", ORDER.asc);
+			l.addSort("sort8_indexed_double", ORDER.asc);
+			l.addSort("sort9_indexed_double", ORDER.asc);
+			l.addSort("sort10_indexed_double", ORDER.asc);
+			l.setRows(100000);
+		}
+	}
+
+	protected void _attachmentHtmlPartList(Wrap<List<HtmlPart>> c) {
+		if(attachmentHtmlPartSearch.size() > 0)
+			c.o(attachmentHtmlPartSearch.getList());
+	}
+
+	/////////////////
+	// Enrollments //
+	/////////////////
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
 		OperationRequest operationRequest = siteRequest_.getOperationRequest();
@@ -115,10 +297,10 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
-		if("name-roster".equals(designId)) {
+		if("name-roster".equals(pageDesignId)) {
 			l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
 		}
-		else if("birthday-roster".equals(designId)) {
+		else if("birthday-roster".equals(pageDesignId)) {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
@@ -127,7 +309,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			String val = siteRequest_.getRequestVars().get(var);
 			if(!"design".equals(var)) {
 				String varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(var);
-				l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				if(varIndexed != null)
+					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 			}
 		}
 	}
@@ -193,7 +376,6 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
-		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		l.setStore(true);
 		l.setQuery("*:*");
 		l.setC(SchoolYear.class);
@@ -214,7 +396,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if("main-enrollment-form".equals(designId)) {
+		if("main-enrollment-form".equals(pageDesignId)) {
 			if(yearSearch.size() == 0) {
 				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -230,6 +412,85 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _yearKey(Wrap<Long> c) {
 		if(year_ != null)
 			c.o(year_.getPk());
+	}
+
+	protected void _schoolSearch(SearchList<School> l) {
+		l.setStore(true);
+		l.setQuery("*:*");
+		l.setC(School.class);
+
+		Long schoolKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getSchoolKey).orElse(null);
+		if(schoolKey != null) {
+			l.addFilterQuery("pk_indexed_long:" + schoolKey);
+		} else {
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = School.varIndexedSchool(var);
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				}
+			}
+		}
+	}
+
+	protected void _school_(Wrap<School> c) {
+		if("main-enrollment-form".equals(pageDesignId)) {
+			if(schoolSearch.size() == 0) {
+				throw new RuntimeException("No school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+			}
+			else if(schoolSearch.size() == 1) {
+				c.o(schoolSearch.get(0));
+			}
+			else  {
+				throw new RuntimeException("More than one school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+			}
+		}
+		else if(schoolSearch.size() == 1) {
+			c.o(schoolSearch.get(0));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailFrom(Wrap<String> c) {
+		if(school_ != null)
+			c.o(school_.getSchoolEmailFrom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToSchool(Wrap<String> c) {
+		if(school_ != null)
+			c.o(school_.getSchoolEmailTo());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToAddress(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailToAddress"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToName(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailToName"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailMessage(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailMessage"));
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
@@ -311,31 +572,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
-		OperationRequest operationRequest = siteRequest_.getOperationRequest();
-
-		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-			String entityVar = null;
-			String valueIndexed = null;
-			String varIndexed = null;
-			String paramName = paramRequest.getKey();
-			Object paramValuesObject = paramRequest.getValue();
-			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-	
-			try {
-				for(Object paramObject : paramObjects) {
-					switch(paramName) {
-						case "fq":
-							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-							l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
-							break;
-					}
-				}
-			} catch(Exception e) {
-				ExceptionUtils.rethrow(e);
+		for(String var : siteRequest_.getRequestVars().keySet()) {
+			String val = siteRequest_.getRequestVars().get(var);
+			if(!"design".equals(var)) {
+				String varIndexed = SchoolYear.varIndexedSchoolYear(var);
+				if(varIndexed != null)
+					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
 			}
-		});
+		}
 	}
 
 	protected void _blocks(Wrap<List<SchoolBlock>> c) {
@@ -423,105 +667,99 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _blockBlock(Wrap<SchoolBlock> c) {
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
-	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
-		if(pageDesign != null) {
-			l.setQuery("*:*");
-			l.addFilterQuery("pageDesignKeys_indexed_longs:" + pageDesign.getPk());
-			l.setC(HtmlPart.class);
-			l.setStore(true);
-			l.addSort("sort1_indexed_double", ORDER.asc);
-			l.addSort("sort2_indexed_double", ORDER.asc);
-			l.addSort("sort3_indexed_double", ORDER.asc);
-			l.addSort("sort4_indexed_double", ORDER.asc);
-			l.addSort("sort5_indexed_double", ORDER.asc);
-			l.addSort("sort6_indexed_double", ORDER.asc);
-			l.addSort("sort7_indexed_double", ORDER.asc);
-			l.addSort("sort8_indexed_double", ORDER.asc);
-			l.addSort("sort9_indexed_double", ORDER.asc);
-			l.addSort("sort10_indexed_double", ORDER.asc);
-			l.setRows(100000);
-		}
-	}
-
-	protected void _htmlPartList(Wrap<List<HtmlPart>> c) {
-		if(htmlPartSearch.size() > 0)
-			c.o(htmlPartSearch.getList());
-	}
-
 	@Override public void htmlPageLayout() {
-		siteRequest_.setW(w2);
-		setW(w2);
-		if(htmlPartList != null) {
-			htmlPageLayout2(htmlPartList, null, 0, htmlPartList.size());
+
+		SiteContextEnUS siteContext = siteRequest_.getSiteContext_();
+		MailClient mailClient = siteContext.getMailClient();
+		MailMessage message = new MailMessage();
+		message.setFrom(emailFrom);
+		if(StringUtils.isBlank(emailToAddress))
+			throw new RuntimeException("The email to field was blank. ");
+		if(StringUtils.isBlank(emailToSchool))
+			throw new RuntimeException("The request was not matched to a school. ");
+		ArrayList<String> tos = new ArrayList<>();
+		tos.addAll(Arrays.asList(emailToSchool.trim().split("\\s*,\\s*")));
+		tos.add(emailToAddress);
+		message.setTo(tos);
+
+		if(pageDesign != null) {
+			siteRequest_.setW(wPage);
+			setW(wPage);
+			if(pageHtmlPartList != null) {
+				htmlPageLayout2(pageHtmlPartList, null, 0, pageHtmlPartList.size());
+			}
 		}
 
-		try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-//			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-//			renderer.setTimeouted(true);
-//			for(File fichier : FileUtils.listFiles(new File(siteConfig.docroot.chaîne() + "/ttf"), new String[] { "ttf" }, false)) {
-//				FontResolver resolver = renderer.getFontResolver();
-//				String chemin = fichier.getAbsolutePath();
-//				renderer.getFontResolver().addFont(chemin, true);
-//			}
+		if(emailDesign != null) {
+			siteRequest_.setW(wEmail);
+			setW(wEmail);
+			if(emailHtmlPartList != null) {
+				htmlPageLayout2(emailHtmlPartList, null, 0, emailHtmlPartList.size());
+			}
+		}
+
+		if(attachmentDesign != null) {
+			siteRequest_.setW(wAttachment);
+			setW(wAttachment);
+			if(attachmentHtmlPartList != null) {
+				htmlPageLayout2(attachmentHtmlPartList, null, 0, attachmentHtmlPartList.size());
+			}
 	
-			String str = w2.toString();
-			DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
-			fac.setNamespaceAware(false);
-			fac.setValidating(false);
-			fac.setFeature("http://xml.org/sax/features/namespaces", false);
-			fac.setFeature("http://xml.org/sax/features/validation", false);
-			fac.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-			fac.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
-			DocumentBuilder builder = fac.newDocumentBuilder();
-			builder.setEntityResolver(FSEntityResolver.instance());
-			Document doc = builder.parse(new ByteArrayInputStream(str.getBytes()));
-
-			ITextRenderer renderer = new ITextRenderer();
-			renderer.setDocument(doc, null);
-			renderer.layout();
-			renderer.createPDF(os);
-			renderer.finishPDF();
-
-			SiteConfig siteConfig = siteRequest_.getSiteConfig_();
-			SiteContextEnUS siteContext = siteRequest_.getSiteContext_();
-			MailClient mailClient = siteContext.getMailClient();
-			MailMessage message = new MailMessage();
-			message.setFrom(siteConfig.getEmailFrom());
-			message.setTo(siteConfig.getEmailFrom());
-			message.setText("this is the plain message text");
-			message.setSubject(String.format("Enrollment of %s for the %s", schoolEnrollment.getChildCompleteName(), schoolEnrollment.getSeasonCompleteName()));
-			MailAttachment attachment = new MailAttachment();
-			attachment.setContentType("application/pdf");
-			attachment.setData(Buffer.buffer(os.toByteArray()));
-			attachment.setName(schoolEnrollment.getObjectId());
-			message.setAttachment(attachment);
-			WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-			workerExecutor.executeBlocking(
-				blockingCodeHandler -> {
-					mailClient.sendMail(message, result -> {
-						if (result.succeeded()) {
-							System.out.println(result.result());
-						} else {
-							result.cause().printStackTrace();
-						}
-					});
-				}, resultHandler -> {
+			try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+	//			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	//			renderer.setTimeouted(true);
+	//			for(File fichier : FileUtils.listFiles(new File(siteConfig.docroot.chaîne() + "/ttf"), new String[] { "ttf" }, false)) {
+	//				FontResolver resolver = renderer.getFontResolver();
+	//				String chemin = fichier.getAbsolutePath();
+	//				renderer.getFontResolver().addFont(chemin, true);
+	//			}
+		
+				DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
+				fac.setNamespaceAware(false);
+				fac.setValidating(false);
+				fac.setFeature("http://xml.org/sax/features/namespaces", false);
+				fac.setFeature("http://xml.org/sax/features/validation", false);
+				fac.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+				fac.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+	
+				DocumentBuilder builder = fac.newDocumentBuilder();
+				builder.setEntityResolver(FSEntityResolver.instance());
+				Document doc = builder.parse(new ByteArrayInputStream(wAttachment.toString().getBytes()));
+	
+				if("application/pdf".equals(attachmentContentType)) {
+					ITextRenderer renderer = new ITextRenderer();
+					renderer.setDocument(doc, null);
+					renderer.layout();
+					renderer.createPDF(os);
+					renderer.finishPDF();
+					MailAttachment attachment = new MailAttachment();
+					attachment.setContentType("application/pdf");
+					attachment.setData(Buffer.buffer(os.toByteArray()));
+					attachment.setName(schoolEnrollment.getObjectId());
+					message.setAttachment(attachment);
 				}
-			);
-
-			siteRequest_.getRequestHeaders()
-					.add("Content-Disposition", "inline; filename=\"" + schoolEnrollment.getObjectId() + ".pdf\"")
-					.add("Content-Transfer-Encoding", "binary")
-					.add("Accept-Ranges", "bytes")
-					;
-			w1.getBuffer().appendBytes(os.toByteArray());
-		} catch (IOException | ParserConfigurationException | SAXException | DocumentException e) {
-			ExceptionUtils.rethrow(e);
+			} catch (IOException | ParserConfigurationException | SAXException | DocumentException e) {
+				ExceptionUtils.rethrow(e);
+			}
 		}
+
+		message.setHtml(wEmail.toString());
+		message.setSubject(String.format("Enrollment of %s for the %s", schoolEnrollment.getChildCompleteName(), schoolEnrollment.getSeasonCompleteName()));
+
+		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+		workerExecutor.executeBlocking(
+			blockingCodeHandler -> {
+				mailClient.sendMail(message, result -> {
+					if (result.succeeded()) {
+						System.out.println(result.result());
+					} else {
+						result.cause().printStackTrace();
+					}
+				});
+			}, resultHandler -> {
+			}
+		);
+
+		w1.getBuffer().appendString(wPage.toString());
 	}
 }

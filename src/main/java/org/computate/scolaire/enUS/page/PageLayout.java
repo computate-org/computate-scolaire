@@ -429,7 +429,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 											g("div");
 											e("div").f();
 												e("span").a("class", "font-weight-bold ").f().sx("Email: ").g("span");
-												e("span").f().sx(school.getSchoolEmail()).g("span");
+												e("span").f().sx(school.getSchoolEmailFrom()).g("span");
 											g("div");
 										g("div");
 										if(i == 2)

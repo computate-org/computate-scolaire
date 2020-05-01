@@ -294,9 +294,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "ecoleMail":
+					case "ecoleMailDe":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ecoleMail", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("ecoleMailDe", jsonObject.getString(entiteVar), pk));
+						break;
+					case "ecoleMailA":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleMailA", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleEmplacement":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -772,14 +776,24 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.jsonEcoleAdministrateurNom(), pk));
 						}
 						break;
-					case "setEcoleMail":
+					case "setEcoleMailDe":
 						if(jsonObject.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ecoleMail"));
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleMailDe"));
 						} else {
-							o2.setEcoleMail(jsonObject.getString(methodeNom));
+							o2.setEcoleMailDe(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ecoleMail", o2.jsonEcoleMail(), pk));
+							patchSqlParams.addAll(Arrays.asList("ecoleMailDe", o2.jsonEcoleMailDe(), pk));
+						}
+						break;
+					case "setEcoleMailA":
+						if(jsonObject.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleMailA"));
+						} else {
+							o2.setEcoleMailA(jsonObject.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("ecoleMailA", o2.jsonEcoleMailA(), pk));
 						}
 						break;
 					case "setEcoleEmplacement":
@@ -1787,9 +1801,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						putSql.append(SiteContexteFrFR.SQL_setD);
 						putSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "ecoleMail":
+					case "ecoleMailDe":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("ecoleMail", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList("ecoleMailDe", jsonObject.getString(entiteVar), pk));
+						break;
+					case "ecoleMailA":
+						putSql.append(SiteContexteFrFR.SQL_setD);
+						putSqlParams.addAll(Arrays.asList("ecoleMailA", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleEmplacement":
 						putSql.append(SiteContexteFrFR.SQL_setD);

@@ -232,7 +232,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlBefore
-	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: HTML avant
 	 * NomAffichage.enUS: HTML before
@@ -253,7 +252,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlAfter
-	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: HTML après
 	 * NomAffichage.enUS: HTML after
@@ -271,7 +269,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlText
-	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: texte
 	 * NomAffichage.enUS: text

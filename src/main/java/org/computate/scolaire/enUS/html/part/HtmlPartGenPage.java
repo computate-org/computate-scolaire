@@ -428,15 +428,6 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmHtmlStyle("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlBefore("Search");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlAfter("Search");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlText("Search");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVar("Search");
 			o.htmHtmlVarSpan("Search");
 		} g("div");

@@ -1229,106 +1229,106 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////
-	// ecoleMail //
-	///////////////
+	/////////////////
+	// ecoleMailDe //
+	/////////////////
 
-	/**	L'entité « ecoleMail »
+	/**	L'entité « ecoleMailDe »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String ecoleMail;
+	protected String ecoleMailDe;
 	@JsonIgnore
-	public Couverture<String> ecoleMailCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleMail").o(ecoleMail);
+	public Couverture<String> ecoleMailDeCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleMailDe").o(ecoleMailDe);
 
-	/**	<br/>L'entité « ecoleMail »
+	/**	<br/>L'entité « ecoleMailDe »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleMail">Trouver l'entité ecoleMail dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleMailDe">Trouver l'entité ecoleMailDe dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecoleMail(Couverture<String> c);
+	protected abstract void _ecoleMailDe(Couverture<String> c);
 
-	public String getEcoleMail() {
-		return ecoleMail;
+	public String getEcoleMailDe() {
+		return ecoleMailDe;
 	}
 
-	public void setEcoleMail(String ecoleMail) {
-		this.ecoleMail = ecoleMail;
-		this.ecoleMailCouverture.dejaInitialise = true;
+	public void setEcoleMailDe(String ecoleMailDe) {
+		this.ecoleMailDe = ecoleMailDe;
+		this.ecoleMailDeCouverture.dejaInitialise = true;
 	}
-	protected Ecole ecoleMailInit() {
-		if(!ecoleMailCouverture.dejaInitialise) {
-			_ecoleMail(ecoleMailCouverture);
-			if(ecoleMail == null)
-				setEcoleMail(ecoleMailCouverture.o);
+	protected Ecole ecoleMailDeInit() {
+		if(!ecoleMailDeCouverture.dejaInitialise) {
+			_ecoleMailDe(ecoleMailDeCouverture);
+			if(ecoleMailDe == null)
+				setEcoleMailDe(ecoleMailDeCouverture.o);
 		}
-		ecoleMailCouverture.dejaInitialise(true);
+		ecoleMailDeCouverture.dejaInitialise(true);
 		return (Ecole)this;
 	}
 
-	public String solrEcoleMail() {
-		return ecoleMail;
+	public String solrEcoleMailDe() {
+		return ecoleMailDe;
 	}
 
-	public String strEcoleMail() {
-		return ecoleMail == null ? "" : ecoleMail;
+	public String strEcoleMailDe() {
+		return ecoleMailDe == null ? "" : ecoleMailDe;
 	}
 
-	public String jsonEcoleMail() {
-		return ecoleMail == null ? "" : ecoleMail;
+	public String jsonEcoleMailDe() {
+		return ecoleMailDe == null ? "" : ecoleMailDe;
 	}
 
-	public String nomAffichageEcoleMail() {
-		return "mail de l'école";
+	public String nomAffichageEcoleMailDe() {
+		return "mail de l'école de";
 	}
 
-	public String htmTooltipEcoleMail() {
+	public String htmTooltipEcoleMailDe() {
 		return null;
 	}
 
-	public String htmEcoleMail() {
-		return ecoleMail == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleMail());
+	public String htmEcoleMailDe() {
+		return ecoleMailDe == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleMailDe());
 	}
 
-	public void inputEcoleMail(String classeApiMethodeMethode) {
+	public void inputEcoleMailDe(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
 		{
 			e("input")
 				.a("type", "text")
-				.a("placeholder", "mail de l'école")
+				.a("placeholder", "mail de l'école de")
 				.a("title", "Description.enUS: ")
-				.a("id", classeApiMethodeMethode, "_ecoleMail");
+				.a("id", classeApiMethodeMethode, "_ecoleMailDe");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setEcoleMail inputEcole", pk, "EcoleMail w3-input w3-border ");
-					a("name", "setEcoleMail");
+					a("class", "setEcoleMailDe inputEcole", pk, "EcoleMailDe w3-input w3-border ");
+					a("name", "setEcoleMailDe");
 				} else {
-					a("class", "valeurEcoleMail w3-input w3-border inputEcole", pk, "EcoleMail w3-input w3-border ");
-					a("name", "ecoleMail");
+					a("class", "valeurEcoleMailDe w3-input w3-border inputEcole", pk, "EcoleMailDe w3-input w3-border ");
+					a("name", "ecoleMailDe");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchEcoleVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMail')); }); ");
+					a("onchange", "patchEcoleVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleMailDe', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMailDe')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMailDe')); }); ");
 				}
-				a("value", strEcoleMail())
+				a("value", strEcoleMailDe())
 			.fg();
 
 		}
 	}
 
-	public void htmEcoleMail(String classeApiMethodeMethode) {
+	public void htmEcoleMailDe(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleMail").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleMailDe").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", classeApiMethodeMethode, "_ecoleMail").a("class", "").f().sx("mail de l'école").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_ecoleMailDe").a("class", "").f().sx("mail de l'école de").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								inputEcoleMail(classeApiMethodeMethode);
+								inputEcoleMailDe(classeApiMethodeMethode);
 							} g("div");
 							{
 								if("Page".equals(classeApiMethodeMethode)) {
@@ -1336,7 +1336,128 @@ public abstract class EcoleGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleMail')); $('#", classeApiMethodeMethode, "_ecoleMail').val(null); patchEcoleVal([{ name: 'fq', value: 'pk:' + $('#EcoleForm :input[name=pk]').val() }], 'setEcoleMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMail')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleMailDe')); $('#", classeApiMethodeMethode, "_ecoleMailDe').val(null); patchEcoleVal([{ name: 'fq', value: 'pk:' + $('#EcoleForm :input[name=pk]').val() }], 'setEcoleMailDe', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMailDe')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMailDe')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////
+	// ecoleMailA //
+	////////////////
+
+	/**	L'entité « ecoleMailA »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleMailA;
+	@JsonIgnore
+	public Couverture<String> ecoleMailACouverture = new Couverture<String>().p(this).c(String.class).var("ecoleMailA").o(ecoleMailA);
+
+	/**	<br/>L'entité « ecoleMailA »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleMailA">Trouver l'entité ecoleMailA dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleMailA(Couverture<String> c);
+
+	public String getEcoleMailA() {
+		return ecoleMailA;
+	}
+
+	public void setEcoleMailA(String ecoleMailA) {
+		this.ecoleMailA = ecoleMailA;
+		this.ecoleMailACouverture.dejaInitialise = true;
+	}
+	protected Ecole ecoleMailAInit() {
+		if(!ecoleMailACouverture.dejaInitialise) {
+			_ecoleMailA(ecoleMailACouverture);
+			if(ecoleMailA == null)
+				setEcoleMailA(ecoleMailACouverture.o);
+		}
+		ecoleMailACouverture.dejaInitialise(true);
+		return (Ecole)this;
+	}
+
+	public String solrEcoleMailA() {
+		return ecoleMailA;
+	}
+
+	public String strEcoleMailA() {
+		return ecoleMailA == null ? "" : ecoleMailA;
+	}
+
+	public String jsonEcoleMailA() {
+		return ecoleMailA == null ? "" : ecoleMailA;
+	}
+
+	public String nomAffichageEcoleMailA() {
+		return "mail de l'école à";
+	}
+
+	public String htmTooltipEcoleMailA() {
+		return null;
+	}
+
+	public String htmEcoleMailA() {
+		return ecoleMailA == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleMailA());
+	}
+
+	public void inputEcoleMailA(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "mail de l'école à")
+				.a("title", "Description.enUS: ")
+				.a("id", classeApiMethodeMethode, "_ecoleMailA");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEcoleMailA inputEcole", pk, "EcoleMailA w3-input w3-border ");
+					a("name", "setEcoleMailA");
+				} else {
+					a("class", "valeurEcoleMailA w3-input w3-border inputEcole", pk, "EcoleMailA w3-input w3-border ");
+					a("name", "ecoleMailA");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchEcoleVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleMailA', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMailA')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMailA')); }); ");
+				}
+				a("value", strEcoleMailA())
+			.fg();
+
+		}
+	}
+
+	public void htmEcoleMailA(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleMailA").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ecoleMailA").a("class", "").f().sx("mail de l'école à").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEcoleMailA(classeApiMethodeMethode);
+							} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleMailA')); $('#", classeApiMethodeMethode, "_ecoleMailA').val(null); patchEcoleVal([{ name: 'fq', value: 'pk:' + $('#EcoleForm :input[name=pk]').val() }], 'setEcoleMailA', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMailA')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMailA')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1747,7 +1868,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		ecoleNomInit();
 		ecoleNumeroTelephoneInit();
 		ecoleAdministrateurNomInit();
-		ecoleMailInit();
+		ecoleMailDeInit();
+		ecoleMailAInit();
 		ecoleEmplacementInit();
 		ecoleAddresseInit();
 		ecoleNomCourtInit();
@@ -1814,8 +1936,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.ecoleNumeroTelephone;
 			case "ecoleAdministrateurNom":
 				return oEcole.ecoleAdministrateurNom;
-			case "ecoleMail":
-				return oEcole.ecoleMail;
+			case "ecoleMailDe":
+				return oEcole.ecoleMailDe;
+			case "ecoleMailA":
+				return oEcole.ecoleMailA;
 			case "ecoleEmplacement":
 				return oEcole.ecoleEmplacement;
 			case "ecoleAddresse":
@@ -1892,8 +2016,12 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				setEcoleAdministrateurNom(val);
 				sauvegardesEcole.add(var);
 				return val;
-			case "ecoleMail":
-				setEcoleMail(val);
+			case "ecoleMailDe":
+				setEcoleMailDe(val);
+				sauvegardesEcole.add(var);
+				return val;
+			case "ecoleMailA":
+				setEcoleMailA(val);
 				sauvegardesEcole.add(var);
 				return val;
 			case "ecoleEmplacement":
@@ -1997,10 +2125,16 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 			}
 
-			if(sauvegardesEcole.contains("ecoleMail")) {
-				String ecoleMail = (String)solrDocument.get("ecoleMail_stored_string");
-				if(ecoleMail != null)
-					oEcole.setEcoleMail(ecoleMail);
+			if(sauvegardesEcole.contains("ecoleMailDe")) {
+				String ecoleMailDe = (String)solrDocument.get("ecoleMailDe_stored_string");
+				if(ecoleMailDe != null)
+					oEcole.setEcoleMailDe(ecoleMailDe);
+			}
+
+			if(sauvegardesEcole.contains("ecoleMailA")) {
+				String ecoleMailA = (String)solrDocument.get("ecoleMailA_stored_string");
+				if(ecoleMailA != null)
+					oEcole.setEcoleMailA(ecoleMailA);
 			}
 
 			if(sauvegardesEcole.contains("ecoleEmplacement")) {
@@ -2168,9 +2302,13 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
 			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
 		}
-		if(ecoleMail != null) {
-			document.addField("ecoleMail_indexed_string", ecoleMail);
-			document.addField("ecoleMail_stored_string", ecoleMail);
+		if(ecoleMailDe != null) {
+			document.addField("ecoleMailDe_indexed_string", ecoleMailDe);
+			document.addField("ecoleMailDe_stored_string", ecoleMailDe);
+		}
+		if(ecoleMailA != null) {
+			document.addField("ecoleMailA_indexed_string", ecoleMailA);
+			document.addField("ecoleMailA_stored_string", ecoleMailA);
 		}
 		if(ecoleEmplacement != null) {
 			document.addField("ecoleEmplacement_indexed_string", ecoleEmplacement);
@@ -2235,8 +2373,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return "ecoleNumeroTelephone_indexed_string";
 			case "ecoleAdministrateurNom":
 				return "ecoleAdministrateurNom_indexed_string";
-			case "ecoleMail":
-				return "ecoleMail_indexed_string";
+			case "ecoleMailDe":
+				return "ecoleMailDe_indexed_string";
+			case "ecoleMailA":
+				return "ecoleMailA_indexed_string";
 			case "ecoleEmplacement":
 				return "ecoleEmplacement_indexed_string";
 			case "ecoleAddresse":
@@ -2322,9 +2462,13 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleAdministrateurNom != null)
 			oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 
-		String ecoleMail = (String)solrDocument.get("ecoleMail_stored_string");
-		if(ecoleMail != null)
-			oEcole.setEcoleMail(ecoleMail);
+		String ecoleMailDe = (String)solrDocument.get("ecoleMailDe_stored_string");
+		if(ecoleMailDe != null)
+			oEcole.setEcoleMailDe(ecoleMailDe);
+
+		String ecoleMailA = (String)solrDocument.get("ecoleMailA_stored_string");
+		if(ecoleMailA != null)
+			oEcole.setEcoleMailA(ecoleMailA);
 
 		String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 		if(ecoleEmplacement != null)
@@ -2362,8 +2506,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				requeteApi.addVars("ecoleNumeroTelephone");
 			if(!Objects.equals(ecoleAdministrateurNom, original.getEcoleAdministrateurNom()))
 				requeteApi.addVars("ecoleAdministrateurNom");
-			if(!Objects.equals(ecoleMail, original.getEcoleMail()))
-				requeteApi.addVars("ecoleMail");
+			if(!Objects.equals(ecoleMailDe, original.getEcoleMailDe()))
+				requeteApi.addVars("ecoleMailDe");
+			if(!Objects.equals(ecoleMailA, original.getEcoleMailA()))
+				requeteApi.addVars("ecoleMailA");
 			if(!Objects.equals(ecoleEmplacement, original.getEcoleEmplacement()))
 				requeteApi.addVars("ecoleEmplacement");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
@@ -2377,7 +2523,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleMail, ecoleEmplacement, ecoleAddresse);
+		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
 	}
 
 	////////////
@@ -2395,7 +2541,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
-				&& Objects.equals( ecoleMail, that.ecoleMail )
+				&& Objects.equals( ecoleMailDe, that.ecoleMailDe )
+				&& Objects.equals( ecoleMailA, that.ecoleMailA )
 				&& Objects.equals( ecoleEmplacement, that.ecoleEmplacement )
 				&& Objects.equals( ecoleAddresse, that.ecoleAddresse );
 	}
@@ -2412,7 +2559,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
 		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
-		sb.append( ", ecoleMail: \"" ).append(ecoleMail).append( "\"" );
+		sb.append( ", ecoleMailDe: \"" ).append(ecoleMailDe).append( "\"" );
+		sb.append( ", ecoleMailA: \"" ).append(ecoleMailA).append( "\"" );
 		sb.append( ", ecoleEmplacement: \"" ).append(ecoleEmplacement).append( "\"" );
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append(" }");

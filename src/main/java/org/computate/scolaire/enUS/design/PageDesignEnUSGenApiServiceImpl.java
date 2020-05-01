@@ -2320,6 +2320,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void designemailsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
 			response200DesignEmailSearchPagePageDesign(listPageDesign, a -> {
 				if(a.succeeded()) {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();

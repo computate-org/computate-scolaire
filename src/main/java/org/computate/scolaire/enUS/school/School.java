@@ -39,7 +39,10 @@ public class School extends SchoolGen<Cluster> {
 	protected void _schoolAdministratorName(Wrap<String> c) {
 	}
 
-	protected void _schoolEmail(Wrap<String> c) {
+	protected void _schoolEmailFrom(Wrap<String> c) {
+	}
+
+	protected void _schoolEmailTo(Wrap<String> c) {
 	}
 
 	protected void _schoolLocation(Wrap<String> c) {

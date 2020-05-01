@@ -4087,15 +4087,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			document.addField("htmlStyle_stored_string", htmlStyle);
 		}
 		if(htmlAvant != null) {
-			document.addField("htmlAvant_indexed_string", htmlAvant);
 			document.addField("htmlAvant_stored_string", htmlAvant);
 		}
 		if(htmlApres != null) {
-			document.addField("htmlApres_indexed_string", htmlApres);
 			document.addField("htmlApres_stored_string", htmlApres);
 		}
 		if(htmlTexte != null) {
-			document.addField("htmlTexte_indexed_string", htmlTexte);
 			document.addField("htmlTexte_stored_string", htmlTexte);
 		}
 		if(htmlVar != null) {
@@ -4207,12 +4204,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return "htmlClasses_indexed_string";
 			case "htmlStyle":
 				return "htmlStyle_indexed_string";
-			case "htmlAvant":
-				return "htmlAvant_indexed_string";
-			case "htmlApres":
-				return "htmlApres_indexed_string";
-			case "htmlTexte":
-				return "htmlTexte_indexed_string";
 			case "htmlVar":
 				return "htmlVar_indexed_string";
 			case "htmlVarSpan":

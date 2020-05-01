@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;            
+package org.computate.scolaire.frFR.design;  
 
 import java.util.List;
 
@@ -77,7 +77,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageDesignEmailSearchPage.enUS: DesignEmailPage
  * PageSuperDesignEmailSearchPage.enUS: ClusterPage
  * ApiUriDesignEmailSearchPage.enUS: /email
- * ApiTypeMedia200DesignEmailSearchPage: application/pdf
  * 
  * ApiMethode.frFR: PageAccueilRecherchePage
  * PagePageAccueilRecherchePage.frFR: DesignPageAffichage

@@ -1224,105 +1224,105 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	/////////////////
-	// schoolEmail //
-	/////////////////
+	/////////////////////
+	// schoolEmailFrom //
+	/////////////////////
 
-	/**	L'entité « schoolEmail »
+	/**	L'entité « schoolEmailFrom »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String schoolEmail;
+	protected String schoolEmailFrom;
 	@JsonIgnore
-	public Wrap<String> schoolEmailWrap = new Wrap<String>().p(this).c(String.class).var("schoolEmail").o(schoolEmail);
+	public Wrap<String> schoolEmailFromWrap = new Wrap<String>().p(this).c(String.class).var("schoolEmailFrom").o(schoolEmailFrom);
 
-	/**	<br/>L'entité « schoolEmail »
+	/**	<br/>L'entité « schoolEmailFrom »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEmail">Trouver l'entité schoolEmail dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEmailFrom">Trouver l'entité schoolEmailFrom dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _schoolEmail(Wrap<String> c);
+	protected abstract void _schoolEmailFrom(Wrap<String> c);
 
-	public String getSchoolEmail() {
-		return schoolEmail;
+	public String getSchoolEmailFrom() {
+		return schoolEmailFrom;
 	}
 
-	public void setSchoolEmail(String schoolEmail) {
-		this.schoolEmail = schoolEmail;
-		this.schoolEmailWrap.alreadyInitialized = true;
+	public void setSchoolEmailFrom(String schoolEmailFrom) {
+		this.schoolEmailFrom = schoolEmailFrom;
+		this.schoolEmailFromWrap.alreadyInitialized = true;
 	}
-	protected School schoolEmailInit() {
-		if(!schoolEmailWrap.alreadyInitialized) {
-			_schoolEmail(schoolEmailWrap);
-			if(schoolEmail == null)
-				setSchoolEmail(schoolEmailWrap.o);
+	protected School schoolEmailFromInit() {
+		if(!schoolEmailFromWrap.alreadyInitialized) {
+			_schoolEmailFrom(schoolEmailFromWrap);
+			if(schoolEmailFrom == null)
+				setSchoolEmailFrom(schoolEmailFromWrap.o);
 		}
-		schoolEmailWrap.alreadyInitialized(true);
+		schoolEmailFromWrap.alreadyInitialized(true);
 		return (School)this;
 	}
 
-	public String solrSchoolEmail() {
-		return schoolEmail;
+	public String solrSchoolEmailFrom() {
+		return schoolEmailFrom;
 	}
 
-	public String strSchoolEmail() {
-		return schoolEmail == null ? "" : schoolEmail;
+	public String strSchoolEmailFrom() {
+		return schoolEmailFrom == null ? "" : schoolEmailFrom;
 	}
 
-	public String jsonSchoolEmail() {
-		return schoolEmail == null ? "" : schoolEmail;
+	public String jsonSchoolEmailFrom() {
+		return schoolEmailFrom == null ? "" : schoolEmailFrom;
 	}
 
-	public String nomAffichageSchoolEmail() {
-		return "email of school";
+	public String nomAffichageSchoolEmailFrom() {
+		return "emails from (1 only)";
 	}
 
-	public String htmTooltipSchoolEmail() {
+	public String htmTooltipSchoolEmailFrom() {
 		return null;
 	}
 
-	public String htmSchoolEmail() {
-		return schoolEmail == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolEmail());
+	public String htmSchoolEmailFrom() {
+		return schoolEmailFrom == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolEmailFrom());
 	}
 
-	public void inputSchoolEmail(String classApiMethodMethod) {
+	public void inputSchoolEmailFrom(String classApiMethodMethod) {
 		School s = (School)this;
 		{
 			e("input")
 				.a("type", "text")
-				.a("placeholder", "email of school")
-				.a("id", classApiMethodMethod, "_schoolEmail");
+				.a("placeholder", "emails from (1 only)")
+				.a("id", classApiMethodMethod, "_schoolEmailFrom");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSchoolEmail inputSchool", pk, "SchoolEmail w3-input w3-border ");
-					a("name", "setSchoolEmail");
+					a("class", "setSchoolEmailFrom inputSchool", pk, "SchoolEmailFrom w3-input w3-border ");
+					a("name", "setSchoolEmailFrom");
 				} else {
-					a("class", "valueSchoolEmail w3-input w3-border inputSchool", pk, "SchoolEmail w3-input w3-border ");
-					a("name", "schoolEmail");
+					a("class", "valueSchoolEmailFrom w3-input w3-border inputSchool", pk, "SchoolEmailFrom w3-input w3-border ");
+					a("name", "schoolEmailFrom");
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolEmail', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolEmail')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmail')); }); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolEmailFrom', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolEmailFrom')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmailFrom')); }); ");
 				}
-				a("value", strSchoolEmail())
+				a("value", strSchoolEmailFrom())
 			.fg();
 
 		}
 	}
 
-	public void htmSchoolEmail(String classApiMethodMethod) {
+	public void htmSchoolEmailFrom(String classApiMethodMethod) {
 		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolEmail").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolEmailFrom").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", classApiMethodMethod, "_schoolEmail").a("class", "").f().sx("email of school").g("label");
+							e("label").a("for", classApiMethodMethod, "_schoolEmailFrom").a("class", "").f().sx("emails from (1 only)").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								inputSchoolEmail(classApiMethodMethod);
+								inputSchoolEmailFrom(classApiMethodMethod);
 							} g("div");
 							{
 								if("Page".equals(classApiMethodMethod)) {
@@ -1330,7 +1330,127 @@ public abstract class SchoolGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolEmail')); $('#", classApiMethodMethod, "_schoolEmail').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolEmail', null, function() { addGlow($('#", classApiMethodMethod, "_schoolEmail')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmail')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolEmailFrom')); $('#", classApiMethodMethod, "_schoolEmailFrom').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolEmailFrom', null, function() { addGlow($('#", classApiMethodMethod, "_schoolEmailFrom')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmailFrom')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////
+	// schoolEmailTo //
+	///////////////////
+
+	/**	L'entité « schoolEmailTo »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolEmailTo;
+	@JsonIgnore
+	public Wrap<String> schoolEmailToWrap = new Wrap<String>().p(this).c(String.class).var("schoolEmailTo").o(schoolEmailTo);
+
+	/**	<br/>L'entité « schoolEmailTo »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEmailTo">Trouver l'entité schoolEmailTo dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolEmailTo(Wrap<String> c);
+
+	public String getSchoolEmailTo() {
+		return schoolEmailTo;
+	}
+
+	public void setSchoolEmailTo(String schoolEmailTo) {
+		this.schoolEmailTo = schoolEmailTo;
+		this.schoolEmailToWrap.alreadyInitialized = true;
+	}
+	protected School schoolEmailToInit() {
+		if(!schoolEmailToWrap.alreadyInitialized) {
+			_schoolEmailTo(schoolEmailToWrap);
+			if(schoolEmailTo == null)
+				setSchoolEmailTo(schoolEmailToWrap.o);
+		}
+		schoolEmailToWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public String solrSchoolEmailTo() {
+		return schoolEmailTo;
+	}
+
+	public String strSchoolEmailTo() {
+		return schoolEmailTo == null ? "" : schoolEmailTo;
+	}
+
+	public String jsonSchoolEmailTo() {
+		return schoolEmailTo == null ? "" : schoolEmailTo;
+	}
+
+	public String nomAffichageSchoolEmailTo() {
+		return "emails to (1 or more by ,)";
+	}
+
+	public String htmTooltipSchoolEmailTo() {
+		return null;
+	}
+
+	public String htmSchoolEmailTo() {
+		return schoolEmailTo == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolEmailTo());
+	}
+
+	public void inputSchoolEmailTo(String classApiMethodMethod) {
+		School s = (School)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "emails to (1 or more by ,)")
+				.a("id", classApiMethodMethod, "_schoolEmailTo");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolEmailTo inputSchool", pk, "SchoolEmailTo w3-input w3-border ");
+					a("name", "setSchoolEmailTo");
+				} else {
+					a("class", "valueSchoolEmailTo w3-input w3-border inputSchool", pk, "SchoolEmailTo w3-input w3-border ");
+					a("name", "schoolEmailTo");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patchSchoolVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolEmailTo', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolEmailTo')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmailTo')); }); ");
+				}
+				a("value", strSchoolEmailTo())
+			.fg();
+
+		}
+	}
+
+	public void htmSchoolEmailTo(String classApiMethodMethod) {
+		School s = (School)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolEmailTo").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classApiMethodMethod, "_schoolEmailTo").a("class", "").f().sx("emails to (1 or more by ,)").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSchoolEmailTo(classApiMethodMethod);
+							} g("div");
+							{
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolEmailTo')); $('#", classApiMethodMethod, "_schoolEmailTo').val(null); patchSchoolVal([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolEmailTo', null, function() { addGlow($('#", classApiMethodMethod, "_schoolEmailTo')); }, function() { addError($('#", classApiMethodMethod, "_schoolEmailTo')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1739,7 +1859,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolNameInit();
 		schoolPhoneNumberInit();
 		schoolAdministratorNameInit();
-		schoolEmailInit();
+		schoolEmailFromInit();
+		schoolEmailToInit();
 		schoolLocationInit();
 		schoolAddressInit();
 		schoolShortNameInit();
@@ -1806,8 +1927,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolPhoneNumber;
 			case "schoolAdministratorName":
 				return oSchool.schoolAdministratorName;
-			case "schoolEmail":
-				return oSchool.schoolEmail;
+			case "schoolEmailFrom":
+				return oSchool.schoolEmailFrom;
+			case "schoolEmailTo":
+				return oSchool.schoolEmailTo;
 			case "schoolLocation":
 				return oSchool.schoolLocation;
 			case "schoolAddress":
@@ -1884,8 +2007,12 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				setSchoolAdministratorName(val);
 				savesSchool.add(var);
 				return val;
-			case "schoolEmail":
-				setSchoolEmail(val);
+			case "schoolEmailFrom":
+				setSchoolEmailFrom(val);
+				savesSchool.add(var);
+				return val;
+			case "schoolEmailTo":
+				setSchoolEmailTo(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolLocation":
@@ -1989,10 +2116,16 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					oSchool.setSchoolAdministratorName(schoolAdministratorName);
 			}
 
-			if(savesSchool.contains("schoolEmail")) {
-				String schoolEmail = (String)solrDocument.get("schoolEmail_stored_string");
-				if(schoolEmail != null)
-					oSchool.setSchoolEmail(schoolEmail);
+			if(savesSchool.contains("schoolEmailFrom")) {
+				String schoolEmailFrom = (String)solrDocument.get("schoolEmailFrom_stored_string");
+				if(schoolEmailFrom != null)
+					oSchool.setSchoolEmailFrom(schoolEmailFrom);
+			}
+
+			if(savesSchool.contains("schoolEmailTo")) {
+				String schoolEmailTo = (String)solrDocument.get("schoolEmailTo_stored_string");
+				if(schoolEmailTo != null)
+					oSchool.setSchoolEmailTo(schoolEmailTo);
 			}
 
 			if(savesSchool.contains("schoolLocation")) {
@@ -2160,9 +2293,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolAdministratorName_indexed_string", schoolAdministratorName);
 			document.addField("schoolAdministratorName_stored_string", schoolAdministratorName);
 		}
-		if(schoolEmail != null) {
-			document.addField("schoolEmail_indexed_string", schoolEmail);
-			document.addField("schoolEmail_stored_string", schoolEmail);
+		if(schoolEmailFrom != null) {
+			document.addField("schoolEmailFrom_indexed_string", schoolEmailFrom);
+			document.addField("schoolEmailFrom_stored_string", schoolEmailFrom);
+		}
+		if(schoolEmailTo != null) {
+			document.addField("schoolEmailTo_indexed_string", schoolEmailTo);
+			document.addField("schoolEmailTo_stored_string", schoolEmailTo);
 		}
 		if(schoolLocation != null) {
 			document.addField("schoolLocation_indexed_string", schoolLocation);
@@ -2227,8 +2364,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return "schoolPhoneNumber_indexed_string";
 			case "schoolAdministratorName":
 				return "schoolAdministratorName_indexed_string";
-			case "schoolEmail":
-				return "schoolEmail_indexed_string";
+			case "schoolEmailFrom":
+				return "schoolEmailFrom_indexed_string";
+			case "schoolEmailTo":
+				return "schoolEmailTo_indexed_string";
 			case "schoolLocation":
 				return "schoolLocation_indexed_string";
 			case "schoolAddress":
@@ -2314,9 +2453,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		if(schoolAdministratorName != null)
 			oSchool.setSchoolAdministratorName(schoolAdministratorName);
 
-		String schoolEmail = (String)solrDocument.get("schoolEmail_stored_string");
-		if(schoolEmail != null)
-			oSchool.setSchoolEmail(schoolEmail);
+		String schoolEmailFrom = (String)solrDocument.get("schoolEmailFrom_stored_string");
+		if(schoolEmailFrom != null)
+			oSchool.setSchoolEmailFrom(schoolEmailFrom);
+
+		String schoolEmailTo = (String)solrDocument.get("schoolEmailTo_stored_string");
+		if(schoolEmailTo != null)
+			oSchool.setSchoolEmailTo(schoolEmailTo);
 
 		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 		if(schoolLocation != null)
@@ -2354,8 +2497,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				apiRequest.addVars("schoolPhoneNumber");
 			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
 				apiRequest.addVars("schoolAdministratorName");
-			if(!Objects.equals(schoolEmail, original.getSchoolEmail()))
-				apiRequest.addVars("schoolEmail");
+			if(!Objects.equals(schoolEmailFrom, original.getSchoolEmailFrom()))
+				apiRequest.addVars("schoolEmailFrom");
+			if(!Objects.equals(schoolEmailTo, original.getSchoolEmailTo()))
+				apiRequest.addVars("schoolEmailTo");
 			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
 				apiRequest.addVars("schoolLocation");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
@@ -2369,7 +2514,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolAdministratorName, schoolEmail, schoolLocation, schoolAddress);
+		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolAdministratorName, schoolEmailFrom, schoolEmailTo, schoolLocation, schoolAddress);
 	}
 
 	////////////
@@ -2387,7 +2532,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				&& Objects.equals( schoolName, that.schoolName )
 				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
 				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
-				&& Objects.equals( schoolEmail, that.schoolEmail )
+				&& Objects.equals( schoolEmailFrom, that.schoolEmailFrom )
+				&& Objects.equals( schoolEmailTo, that.schoolEmailTo )
 				&& Objects.equals( schoolLocation, that.schoolLocation )
 				&& Objects.equals( schoolAddress, that.schoolAddress );
 	}
@@ -2404,7 +2550,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
 		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
 		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
-		sb.append( ", schoolEmail: \"" ).append(schoolEmail).append( "\"" );
+		sb.append( ", schoolEmailFrom: \"" ).append(schoolEmailFrom).append( "\"" );
+		sb.append( ", schoolEmailTo: \"" ).append(schoolEmailTo).append( "\"" );
 		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
 		sb.append(" }");
