@@ -1228,6 +1228,288 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	////////////////
+	// yearSearch //
+	////////////////
+
+	/**	L'entité « yearSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
+
+	/**	<br/>L'entité « yearSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	 * <br/>
+	 * @param yearSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _yearSearch(SearchList<SchoolYear> l);
+
+	public SearchList<SchoolYear> getYearSearch() {
+		return yearSearch;
+	}
+
+	public void setYearSearch(SearchList<SchoolYear> yearSearch) {
+		this.yearSearch = yearSearch;
+		this.yearSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage yearSearchInit() {
+		if(!yearSearchWrap.alreadyInitialized) {
+			_yearSearch(yearSearch);
+		}
+		yearSearch.initDeepForClass(siteRequest_);
+		yearSearchWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	///////////
+	// year_ //
+	///////////
+
+	/**	L'entité « year_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolYear year_;
+	@JsonIgnore
+	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
+
+	/**	<br/>L'entité « year_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _year_(Wrap<SchoolYear> c);
+
+	public SchoolYear getYear_() {
+		return year_;
+	}
+
+	public void setYear_(SchoolYear year_) {
+		this.year_ = year_;
+		this.year_Wrap.alreadyInitialized = true;
+	}
+	protected DesignEmailPage year_Init() {
+		if(!year_Wrap.alreadyInitialized) {
+			_year_(year_Wrap);
+			if(year_ == null)
+				setYear_(year_Wrap.o);
+		}
+		year_Wrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	/////////////
+	// yearKey //
+	/////////////
+
+	/**	L'entité « yearKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Long yearKey;
+	@JsonIgnore
+	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
+
+	/**	<br/>L'entité « yearKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearKey(Wrap<Long> c);
+
+	public Long getYearKey() {
+		return yearKey;
+	}
+
+	public void setYearKey(Long yearKey) {
+		this.yearKey = yearKey;
+		this.yearKeyWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage setYearKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearKey = Long.parseLong(o);
+		this.yearKeyWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage yearKeyInit() {
+		if(!yearKeyWrap.alreadyInitialized) {
+			_yearKey(yearKeyWrap);
+			if(yearKey == null)
+				setYearKey(yearKeyWrap.o);
+		}
+		yearKeyWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public Long solrYearKey() {
+		return yearKey;
+	}
+
+	public String strYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String jsonYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String nomAffichageYearKey() {
+		return null;
+	}
+
+	public String htmTooltipYearKey() {
+		return null;
+	}
+
+	public String htmYearKey() {
+		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
+	///////////////
+	// yearStart //
+	///////////////
+
+	/**	L'entité « yearStart »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer yearStart;
+	@JsonIgnore
+	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
+
+	/**	<br/>L'entité « yearStart »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Trouver l'entité yearStart dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearStart(Wrap<Integer> c);
+
+	public Integer getYearStart() {
+		return yearStart;
+	}
+
+	public void setYearStart(Integer yearStart) {
+		this.yearStart = yearStart;
+		this.yearStartWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage setYearStart(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearStart = Integer.parseInt(o);
+		this.yearStartWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage yearStartInit() {
+		if(!yearStartWrap.alreadyInitialized) {
+			_yearStart(yearStartWrap);
+			if(yearStart == null)
+				setYearStart(yearStartWrap.o);
+		}
+		yearStartWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public Integer solrYearStart() {
+		return yearStart;
+	}
+
+	public String strYearStart() {
+		return yearStart == null ? "" : yearStart.toString();
+	}
+
+	public String jsonYearStart() {
+		return yearStart == null ? "" : yearStart.toString();
+	}
+
+	public String nomAffichageYearStart() {
+		return null;
+	}
+
+	public String htmTooltipYearStart() {
+		return null;
+	}
+
+	public String htmYearStart() {
+		return yearStart == null ? "" : StringEscapeUtils.escapeHtml4(strYearStart());
+	}
+
+	/////////////
+	// yearEnd //
+	/////////////
+
+	/**	L'entité « yearEnd »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer yearEnd;
+	@JsonIgnore
+	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
+
+	/**	<br/>L'entité « yearEnd »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Trouver l'entité yearEnd dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearEnd(Wrap<Integer> c);
+
+	public Integer getYearEnd() {
+		return yearEnd;
+	}
+
+	public void setYearEnd(Integer yearEnd) {
+		this.yearEnd = yearEnd;
+		this.yearEndWrap.alreadyInitialized = true;
+	}
+	public DesignEmailPage setYearEnd(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearEnd = Integer.parseInt(o);
+		this.yearEndWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	protected DesignEmailPage yearEndInit() {
+		if(!yearEndWrap.alreadyInitialized) {
+			_yearEnd(yearEndWrap);
+			if(yearEnd == null)
+				setYearEnd(yearEndWrap.o);
+		}
+		yearEndWrap.alreadyInitialized(true);
+		return (DesignEmailPage)this;
+	}
+
+	public Integer solrYearEnd() {
+		return yearEnd;
+	}
+
+	public String strYearEnd() {
+		return yearEnd == null ? "" : yearEnd.toString();
+	}
+
+	public String jsonYearEnd() {
+		return yearEnd == null ? "" : yearEnd.toString();
+	}
+
+	public String nomAffichageYearEnd() {
+		return null;
+	}
+
+	public String htmTooltipYearEnd() {
+		return null;
+	}
+
+	public String htmYearEnd() {
+		return yearEnd == null ? "" : StringEscapeUtils.escapeHtml4(strYearEnd());
+	}
+
 	//////////////////
 	// schoolSearch //
 	//////////////////
@@ -1742,288 +2024,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String htmSchoolAdministratorName() {
 		return schoolAdministratorName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAdministratorName());
-	}
-
-	////////////////
-	// yearSearch //
-	////////////////
-
-	/**	L'entité « yearSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
-	@JsonIgnore
-	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
-
-	/**	<br/>L'entité « yearSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
-	 * <br/>
-	 * @param yearSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _yearSearch(SearchList<SchoolYear> l);
-
-	public SearchList<SchoolYear> getYearSearch() {
-		return yearSearch;
-	}
-
-	public void setYearSearch(SearchList<SchoolYear> yearSearch) {
-		this.yearSearch = yearSearch;
-		this.yearSearchWrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage yearSearchInit() {
-		if(!yearSearchWrap.alreadyInitialized) {
-			_yearSearch(yearSearch);
-		}
-		yearSearch.initDeepForClass(siteRequest_);
-		yearSearchWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	///////////
-	// year_ //
-	///////////
-
-	/**	L'entité « year_ »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SchoolYear year_;
-	@JsonIgnore
-	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
-
-	/**	<br/>L'entité « year_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _year_(Wrap<SchoolYear> c);
-
-	public SchoolYear getYear_() {
-		return year_;
-	}
-
-	public void setYear_(SchoolYear year_) {
-		this.year_ = year_;
-		this.year_Wrap.alreadyInitialized = true;
-	}
-	protected DesignEmailPage year_Init() {
-		if(!year_Wrap.alreadyInitialized) {
-			_year_(year_Wrap);
-			if(year_ == null)
-				setYear_(year_Wrap.o);
-		}
-		year_Wrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	/////////////
-	// yearKey //
-	/////////////
-
-	/**	L'entité « yearKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long yearKey;
-	@JsonIgnore
-	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
-
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearKey(Wrap<Long> c);
-
-	public Long getYearKey() {
-		return yearKey;
-	}
-
-	public void setYearKey(Long yearKey) {
-		this.yearKey = yearKey;
-		this.yearKeyWrap.alreadyInitialized = true;
-	}
-	public DesignEmailPage setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
-		this.yearKeyWrap.alreadyInitialized = true;
-		return (DesignEmailPage)this;
-	}
-	protected DesignEmailPage yearKeyInit() {
-		if(!yearKeyWrap.alreadyInitialized) {
-			_yearKey(yearKeyWrap);
-			if(yearKey == null)
-				setYearKey(yearKeyWrap.o);
-		}
-		yearKeyWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public Long solrYearKey() {
-		return yearKey;
-	}
-
-	public String strYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String jsonYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String nomAffichageYearKey() {
-		return null;
-	}
-
-	public String htmTooltipYearKey() {
-		return null;
-	}
-
-	public String htmYearKey() {
-		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
-	}
-
-	///////////////
-	// yearStart //
-	///////////////
-
-	/**	L'entité « yearStart »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer yearStart;
-	@JsonIgnore
-	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
-
-	/**	<br/>L'entité « yearStart »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Trouver l'entité yearStart dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearStart(Wrap<Integer> c);
-
-	public Integer getYearStart() {
-		return yearStart;
-	}
-
-	public void setYearStart(Integer yearStart) {
-		this.yearStart = yearStart;
-		this.yearStartWrap.alreadyInitialized = true;
-	}
-	public DesignEmailPage setYearStart(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearStart = Integer.parseInt(o);
-		this.yearStartWrap.alreadyInitialized = true;
-		return (DesignEmailPage)this;
-	}
-	protected DesignEmailPage yearStartInit() {
-		if(!yearStartWrap.alreadyInitialized) {
-			_yearStart(yearStartWrap);
-			if(yearStart == null)
-				setYearStart(yearStartWrap.o);
-		}
-		yearStartWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public Integer solrYearStart() {
-		return yearStart;
-	}
-
-	public String strYearStart() {
-		return yearStart == null ? "" : yearStart.toString();
-	}
-
-	public String jsonYearStart() {
-		return yearStart == null ? "" : yearStart.toString();
-	}
-
-	public String nomAffichageYearStart() {
-		return null;
-	}
-
-	public String htmTooltipYearStart() {
-		return null;
-	}
-
-	public String htmYearStart() {
-		return yearStart == null ? "" : StringEscapeUtils.escapeHtml4(strYearStart());
-	}
-
-	/////////////
-	// yearEnd //
-	/////////////
-
-	/**	L'entité « yearEnd »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer yearEnd;
-	@JsonIgnore
-	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
-
-	/**	<br/>L'entité « yearEnd »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Trouver l'entité yearEnd dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearEnd(Wrap<Integer> c);
-
-	public Integer getYearEnd() {
-		return yearEnd;
-	}
-
-	public void setYearEnd(Integer yearEnd) {
-		this.yearEnd = yearEnd;
-		this.yearEndWrap.alreadyInitialized = true;
-	}
-	public DesignEmailPage setYearEnd(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearEnd = Integer.parseInt(o);
-		this.yearEndWrap.alreadyInitialized = true;
-		return (DesignEmailPage)this;
-	}
-	protected DesignEmailPage yearEndInit() {
-		if(!yearEndWrap.alreadyInitialized) {
-			_yearEnd(yearEndWrap);
-			if(yearEnd == null)
-				setYearEnd(yearEndWrap.o);
-		}
-		yearEndWrap.alreadyInitialized(true);
-		return (DesignEmailPage)this;
-	}
-
-	public Integer solrYearEnd() {
-		return yearEnd;
-	}
-
-	public String strYearEnd() {
-		return yearEnd == null ? "" : yearEnd.toString();
-	}
-
-	public String jsonYearEnd() {
-		return yearEnd == null ? "" : yearEnd.toString();
-	}
-
-	public String nomAffichageYearEnd() {
-		return null;
-	}
-
-	public String htmTooltipYearEnd() {
-		return null;
-	}
-
-	public String htmYearEnd() {
-		return yearEnd == null ? "" : StringEscapeUtils.escapeHtml4(strYearEnd());
 	}
 
 	/////////////////////
@@ -2931,6 +2931,11 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		enrollmentBlocksInit();
 		enrollmentBlockInit();
 		enrollmentEnrollmentInit();
+		yearSearchInit();
+		year_Init();
+		yearKeyInit();
+		yearStartInit();
+		yearEndInit();
 		schoolSearchInit();
 		school_Init();
 		schoolKeyInit();
@@ -2940,11 +2945,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		schoolAddressInit();
 		schoolPhoneNumberInit();
 		schoolAdministratorNameInit();
-		yearSearchInit();
-		year_Init();
-		yearKeyInit();
-		yearStartInit();
-		yearEndInit();
 		seasonStartDateInit();
 		mom_Init();
 		dad_Init();
@@ -3006,10 +3006,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 			enrollmentBlock.setSiteRequest_(siteRequest_);
 		if(enrollmentEnrollment != null)
 			enrollmentEnrollment.setSiteRequest_(siteRequest_);
-		if(schoolSearch != null)
-			schoolSearch.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
+		if(schoolSearch != null)
+			schoolSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -3098,6 +3098,16 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.enrollmentBlock;
 			case "enrollmentEnrollment":
 				return oDesignEmailPage.enrollmentEnrollment;
+			case "yearSearch":
+				return oDesignEmailPage.yearSearch;
+			case "year_":
+				return oDesignEmailPage.year_;
+			case "yearKey":
+				return oDesignEmailPage.yearKey;
+			case "yearStart":
+				return oDesignEmailPage.yearStart;
+			case "yearEnd":
+				return oDesignEmailPage.yearEnd;
 			case "schoolSearch":
 				return oDesignEmailPage.schoolSearch;
 			case "school_":
@@ -3116,16 +3126,6 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 				return oDesignEmailPage.schoolPhoneNumber;
 			case "schoolAdministratorName":
 				return oDesignEmailPage.schoolAdministratorName;
-			case "yearSearch":
-				return oDesignEmailPage.yearSearch;
-			case "year_":
-				return oDesignEmailPage.year_;
-			case "yearKey":
-				return oDesignEmailPage.yearKey;
-			case "yearStart":
-				return oDesignEmailPage.yearStart;
-			case "yearEnd":
-				return oDesignEmailPage.yearEnd;
 			case "seasonStartDate":
 				return oDesignEmailPage.seasonStartDate;
 			case "mom_":

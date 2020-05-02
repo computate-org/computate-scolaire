@@ -166,8 +166,8 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PartHtml.designPageCles
-	 * HtmlLigne: 4
-	 * HtmlCellule: 2
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
 	 */           

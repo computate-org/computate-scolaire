@@ -268,17 +268,17 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, true); ");
+			tl(2, "suggestPageDesignParentDesignKeys([{'name':'fq','value':'childDesignKeys:' + pk}], $('#listPageDesignParentDesignKeys_Page'), pk, true); ");
 		} else {
-			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, false); ");
+			tl(2, "suggestPageDesignParentDesignKeys([{'name':'fq','value':'childDesignKeys:' + pk}], $('#listPageDesignParentDesignKeys_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestPageDesignParentDesignKeys([{'name':'fq','value':'childDesignKeys:' + pk}], $('#listPageDesignParentDesignKeys_Page'), pk, true); ");
+			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, true); ");
 		} else {
-			tl(2, "suggestPageDesignParentDesignKeys([{'name':'fq','value':'childDesignKeys:' + pk}], $('#listPageDesignParentDesignKeys_Page'), pk, false); ");
+			tl(2, "suggestPageDesignHtmlPartKeys([{'name':'fq','value':'pageDesignKeys:' + pk}], $('#listPageDesignHtmlPartKeys_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
@@ -309,8 +309,10 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmDesignHidden("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("Page");
 			o.htmParentDesignKeys("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlPartKeys("Page");
 		} g("div");
 	}
 
@@ -330,8 +332,10 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmDesignHidden("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("POST");
 			o.htmParentDesignKeys("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlPartKeys("POST");
 		} g("div");
 	}
 
@@ -373,8 +377,10 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmDesignHidden("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("PUTCopy");
 			o.htmParentDesignKeys("PUTCopy");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlPartKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
@@ -398,8 +404,10 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmDesignHidden("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("PATCH");
 			o.htmParentDesignKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlPartKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -425,8 +433,10 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmDesignHidden("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlPartKeys("Search");
 			o.htmParentDesignKeys("Search");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlPartKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");

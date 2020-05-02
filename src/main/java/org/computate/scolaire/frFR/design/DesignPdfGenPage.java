@@ -268,17 +268,17 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCles:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, true); ");
+			tl(2, "suggereDesignPageDesignParentCles([{'name':'fq','value':'designEnfantCles:' + pk}], $('#listDesignPageDesignParentCles_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCles:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, false); ");
+			tl(2, "suggereDesignPageDesignParentCles([{'name':'fq','value':'designEnfantCles:' + pk}], $('#listDesignPageDesignParentCles_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereDesignPageDesignParentCles([{'name':'fq','value':'designEnfantCles:' + pk}], $('#listDesignPageDesignParentCles_Page'), pk, true); ");
+			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCles:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereDesignPageDesignParentCles([{'name':'fq','value':'designEnfantCles:' + pk}], $('#listDesignPageDesignParentCles_Page'), pk, false); ");
+			tl(2, "suggereDesignPagePartHtmlCles([{'name':'fq','value':'designPageCles:' + pk}], $('#listDesignPagePartHtmlCles_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
@@ -309,8 +309,10 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 			o.htmDesignCache("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("Page");
 			o.htmDesignParentCles("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPartHtmlCles("Page");
 		} g("div");
 	}
 
@@ -330,8 +332,10 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 			o.htmDesignCache("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("POST");
 			o.htmDesignParentCles("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPartHtmlCles("POST");
 		} g("div");
 	}
 
@@ -373,8 +377,10 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 			o.htmDesignCache("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("PUTCopie");
 			o.htmDesignParentCles("PUTCopie");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPartHtmlCles("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
@@ -398,8 +404,10 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 			o.htmDesignCache("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("PATCH");
 			o.htmDesignParentCles("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPartHtmlCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -425,8 +433,10 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 			o.htmDesignCache("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPartHtmlCles("Recherche");
 			o.htmDesignParentCles("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmPartHtmlCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");

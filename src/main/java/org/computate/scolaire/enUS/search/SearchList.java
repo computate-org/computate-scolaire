@@ -679,6 +679,9 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 			ExceptionUtils.rethrow(e);
 		}
 		sb.append(list.toString());
+		Long numFound = Optional.ofNullable(getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(null);
+		if(numFound != null)
+			sb.append("numFound: ").append(numFound).append("\n");
 		return sb.toString();
 	}
 }
