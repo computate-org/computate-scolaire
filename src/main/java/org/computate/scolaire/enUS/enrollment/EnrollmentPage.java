@@ -158,7 +158,10 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/pdf/main-enrollment-form?var=enrollmentKey:", o.getPk()).f().sx("View enrollment PDF").g("a");
+					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+					.a("href", "/pdf/main-enrollment-form?var=enrollmentKey:", o.getPk(), "&var=emailDesignId:email-enrollment&var=emailSubject:Enrollment for ", urlEncode(schoolEnrollment.getChildCompleteNamePreferred()), "%20asks%20${schoolName}%20a%20question.&var=emailToAddress:' + encodeURIComponent($('#email-questions-email').val()) + '&var=emailToName:' + encodeURIComponent($('#email-questions-name').val()) + '&var=emailMessage:' + encodeURIComponent($('#email-questions-question')")
+//					.a("onclick", "window.location.href = '/email/enrollment-sent?var=enrollmentKey:", o.getPk(), "&var=emailDesignId:email-enrollment&var=emailSubject:Enrollment for ' + encodeURIComponent($('#childCompleteName').val()) + 'at ", urlEncode(school_.getSchoolCompleteName()), "&var=emailToAddress:' + encodeURIComponent($('#email-questions-email').val()) + '&var=emailToName:' + encodeURIComponent($('#email-questions-name').val()) + '&var=emailMessage:' + encodeURIComponent($('#email-questions-question').val()); ")
+					.f().sx("View enrollment PDF").g("a");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();

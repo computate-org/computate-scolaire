@@ -468,7 +468,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 
 	@Override public void htmlPageLayout() {
 		if(htmlPartList != null) {
-			htmlPageLayout2(htmlPartList, null, 0, htmlPartList.size());
+			htmlPageLayout2(pageContentType, htmlPartList, null, 0, htmlPartList.size());
 		}
 	}
 }

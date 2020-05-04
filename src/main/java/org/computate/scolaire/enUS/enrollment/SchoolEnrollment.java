@@ -549,15 +549,61 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentParentNames(Wrap<String> c) {
 		StringBuilder b = new StringBuilder();
-		for(SchoolMom o : moms) {
-			if(b.length() > 0)
-				b.append(", ");
-			b.append(o.getPersonCompleteName());
+		if(moms.size() == 0 && dads.size() == 0) {
+			for(SchoolGuardian o : guardians) {
+				if(o.getPersonCompleteNamePreferred() != null) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonCompleteNamePreferred());
+				}
+			}
 		}
-		for(SchoolDad o : dads) {
-			if(b.length() > 0)
-				b.append(", ");
-			b.append(o.getPersonCompleteName());
+		else {
+			for(SchoolMom o : moms) {
+				if(o.getPersonCompleteNamePreferred() != null) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonCompleteNamePreferred());
+				}
+			}
+			for(SchoolDad o : dads) {
+				if(o.getPersonCompleteNamePreferred() != null) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonCompleteNamePreferred());
+				}
+			}
+		}
+		c.o(b.toString());
+	}
+
+	protected void _enrollmentParentEmails(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(moms.size() == 0 && dads.size() == 0) {
+			for(SchoolGuardian o : guardians) {
+				String personEmail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personEmail)) {
+					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">, ");
+				}
+			}
+		}
+		else {
+			for(SchoolMom o : moms) {
+				String personEmail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personEmail)) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">, ");
+				}
+			}
+			for(SchoolDad o : dads) {
+				String personEmail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personEmail)) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">, ");
+				}
+			}
 		}
 		c.o(b.toString());
 	}
@@ -577,11 +623,26 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentParentEmailLines(Wrap<String> c) {
 		StringBuilder b = new StringBuilder();
 		if(moms.size() == 0 && dads.size() == 0) {
-			guardians.stream().forEach(o -> b.append(o.getPersonEmail()).append("\n"));
+			for(SchoolGuardian o : guardians) {
+				String personneMail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonEmail()).append("\n");
+				}
+			}
 		}
 		else {
-			moms.stream().forEach(o -> b.append(o.getPersonEmail()).append("\n"));
-			dads.stream().forEach(o -> b.append(o.getPersonEmail()).append("\n"));
+			for(SchoolMom o : moms) {
+				String personneMail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonEmail()).append("\n");
+				}
+			}
+			for(SchoolDad o : dads) {
+				String personneMail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonEmail()).append("\n");
+				}
+			}
 		}
 		c.o(b.toString().trim());
 	}

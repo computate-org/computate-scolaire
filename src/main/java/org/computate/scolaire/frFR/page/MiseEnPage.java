@@ -1728,6 +1728,9 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: pageContentType
+	 * r: pageTypeContenu
+	 * r.enUS: pageContentType
 	 * r: obtenirPourClasse
 	 * r.enUS: obtainForClass
 	 * r: pageTypeContenu
@@ -1743,7 +1746,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: ecrireConnecterDeconnecter
 	 * r.enUS: writeLoginLogout
 	 */
-	public Integer htmlPageLayout2(List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
+	public Integer htmlPageLayout2(String pageTypeContenu, List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
 
 		Integer i;
 
@@ -1850,7 +1853,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								for(Object o : list) {
 									try {
 										MethodUtils.invokeExactMethod(parent, "set" + StringUtils.capitalize(var), o);
-										i = htmlPageLayout2(htmlPartList, htmlPart, forStart, size);
+										i = htmlPageLayout2(pageTypeContenu, htmlPartList, htmlPart, forStart, size);
 									} catch (RuntimeException e) {
 										throw e;
 									} catch (Exception e) {
@@ -1858,7 +1861,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 									}
 								}
 								if(list.size() == 0) {
-									i = htmlPageLayout2(htmlPartList, htmlPart, -forStart, size);
+									i = htmlPageLayout2(pageTypeContenu, htmlPartList, htmlPart, -forStart, size);
 								}
 								i = i - 1;
 							} catch (RuntimeException e) {
@@ -1951,5 +1954,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		}
 
 		return i;
+	}
+
+	public String urlEncode(String s)  {
+		try {
+			return URLEncoder.encode(s, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			ExceptionUtils.rethrow(e);
+			return "";
+		}
 	}
 }

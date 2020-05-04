@@ -72,40 +72,6 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /enrollment
  * 
- * ApiMethode.frFR: FormPageRecherche
- * PageFormPageRecherche.frFR: InscriptionFormPage
- * PageSuperFormPageRecherche.frFR: ClusterPage
- * ApiUriFormPageRecherche.frFR: /inscription-form
- * 
- * ApiMethode.enUS: FormSearchPage
- * PageFormSearchPage.enUS: EnrollmentFormPage
- * PageSuperFormSearchPage.enUS: ClusterPage
- * ApiUriFormSearchPage.enUS: /enrollment-form
- * 
- * ApiMethode.frFR: PdfPageRecherche
- * PagePdfPageRecherche.frFR: InscriptionPdfPage
- * PageSuperPdfPageRecherche.frFR: ClusterPage
- * ApiUriPdfPageRecherche.frFR: /inscription-pdf
- * ApiTypeMedia200PdfPageRecherche: application/pdf
- * 
- * ApiMethode.enUS: PdfSearchPage
- * PagePdfSearchPage.enUS: EnrollmentPdfPage
- * PageSuperPdfSearchPage.enUS: ClusterPage
- * ApiUriPdfSearchPage.enUS: /enrollment-pdf
- * ApiTypeMedia200PdfSearchPage: application/pdf
- * 
- * ApiMethode.frFR: MailPageRecherche
- * PageMailPageRecherche.frFR: InscriptionMailPage
- * PageSuperMailPageRecherche.frFR: ClusterPage
- * ApiUriMailPageRecherche.frFR: /inscription-mail
- * ApiTypeMedia200MailPageRecherche: application/pdf
- * 
- * ApiMethode.enUS: EmailSearchPage
- * PageEmailSearchPage.enUS: EnrollmentEmailPage
- * PageSuperEmailSearchPage.enUS: ClusterPage
- * ApiUriEmailSearchPage.enUS: /enrollment-email
- * ApiTypeMedia200EmailSearchPage: application/pdf
- * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
  * Couleur: blue-gray
@@ -1852,31 +1818,102 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentParentNames
-	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
 	 * r: MereScolaire
 	 * r.enUS: SchoolMom
 	 * r: PereScolaire
 	 * r.enUS: SchoolDad
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
 	 * r: meres
 	 * r.enUS: moms
 	 * r: peres
 	 * r.enUS: dads
-	 * r: PersonneNomComplet
-	 * r.enUS: PersonCompleteName
+	 * r: gardien
+	 * r.enUS: guardian
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
 	 */     
 	protected void _inscriptionNomsParents(Couverture<String> c) {
 		StringBuilder b = new StringBuilder();
-		for(MereScolaire o : meres) {
-			if(b.length() > 0)
-				b.append(", ");
-			b.append(o.getPersonneNomComplet());
+		if(meres.size() == 0 && peres.size() == 0) {
+			for(GardienScolaire o : gardiens) {
+				if(o.getPersonneNomCompletPrefere() != null) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonneNomCompletPrefere());
+				}
+			}
 		}
-		for(PereScolaire o : peres) {
-			if(b.length() > 0)
-				b.append(", ");
-			b.append(o.getPersonneNomComplet());
+		else {
+			for(MereScolaire o : meres) {
+				if(o.getPersonneNomCompletPrefere() != null) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonneNomCompletPrefere());
+				}
+			}
+			for(PereScolaire o : peres) {
+				if(o.getPersonneNomCompletPrefere() != null) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonneNomCompletPrefere());
+				}
+			}
+		}
+		c.o(b.toString());
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentParentEmails
+	 * Stocke: true
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardien
+	 * r.enUS: guardian
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneMail
+	 * r.enUS: PersonEmail
+	 * r: personneMail
+	 * r.enUS: personEmail
+	 */     
+	protected void _inscriptionMailsParents(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		if(meres.size() == 0 && peres.size() == 0) {
+			for(GardienScolaire o : gardiens) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">, ");
+				}
+			}
+		}
+		else {
+			for(MereScolaire o : meres) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">, ");
+				}
+			}
+			for(PereScolaire o : peres) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">, ");
+				}
+			}
 		}
 		c.o(b.toString());
 	}
@@ -1907,6 +1944,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * Var.enUS: enrollmentParentEmailLines
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
 	 * r: meres
 	 * r.enUS: moms
 	 * r: peres
@@ -1920,11 +1963,26 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _inscriptionMailParentLignes(Couverture<String> c) {
 		StringBuilder b = new StringBuilder();
 		if(meres.size() == 0 && peres.size() == 0) {
-			gardiens.stream().forEach(o -> b.append(o.getPersonneMail()).append("\n"));
+			for(GardienScolaire o : gardiens) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonneMail()).append("\n");
+				}
+			}
 		}
 		else {
-			meres.stream().forEach(o -> b.append(o.getPersonneMail()).append("\n"));
-			peres.stream().forEach(o -> b.append(o.getPersonneMail()).append("\n"));
+			for(MereScolaire o : meres) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonneMail()).append("\n");
+				}
+			}
+			for(PereScolaire o : peres) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					b.append(o.getPersonneMail()).append("\n");
+				}
+			}
 		}
 		c.o(b.toString().trim());
 	}

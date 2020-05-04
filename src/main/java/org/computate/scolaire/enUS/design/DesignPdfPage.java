@@ -433,7 +433,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		siteRequest_.setW(w2);
 		setW(w2);
 		if(htmlPartList != null) {
-			htmlPageLayout2(htmlPartList, null, 0, htmlPartList.size());
+			htmlPageLayout2(pageContentType, htmlPartList, null, 0, htmlPartList.size());
 		}
 
 		try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {

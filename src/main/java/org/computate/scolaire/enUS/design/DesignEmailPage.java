@@ -46,7 +46,6 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.mail.MailAttachment;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailMessage;
-import io.vertx.ext.web.api.OperationRequest;
 
 /**
  * Translate: false
@@ -145,7 +144,10 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _emailDesignId(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailDesignId"));
+		if("enrollment-sent".equals(pageDesignId))
+			c.o("email-enrollment");
+		else
+			c.o(siteRequest_.getRequestVars().get("emailDesignId"));
 	}
 
 	protected void _emailDesignSearch(SearchList<PageDesign> l) {
@@ -220,6 +222,9 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _attachmentDesignId(Wrap<String> c) {
+		if("enrollment-sent".equals(pageDesignId))
+			c.o("main-enrollment-form");
+		else
 		c.o(siteRequest_.getRequestVars().get("attachmentDesignId"));
 	}
 
@@ -250,6 +255,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		if(attachmentDesign != null) {
 			l.setQuery("*:*");
 			l.addFilterQuery("pageDesignKeys_indexed_longs:" + attachmentDesign.getPk());
+			l.addFilterQuery("pdfExclude_indexed_boolean:false");
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);
@@ -401,7 +407,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if("main-enrollment-form".equals(pageDesignId)) {
+		if("main-enrollment-form".equals(pageDesignId) || "enrollment-sent".equals(pageDesignId)) {
 			if(yearSearch.size() == 0) {
 				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -454,7 +460,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _school_(Wrap<School> c) {
-		if("main-enrollment-form".equals(pageDesignId)) {
+		if("main-enrollment-form".equals(pageDesignId) || "enrollment-sent".equals(pageDesignId)) {
 			if(schoolSearch.size() == 0) {
 				throw new RuntimeException("No school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -661,7 +667,15 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _emailToAddress(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailToAddress"));
+		if("enrollment-sent".equals(pageDesignId)) {
+			StringBuilder b = new StringBuilder();
+			b.append(schoolEnrollment.getEnrollmentParentEmails());
+			b.append(school_.getSchoolEmailTo());
+			c.o(b.toString());
+		}
+		else {
+			c.o(siteRequest_.getRequestVars().get("emailToAddress"));
+		}
 	}
 
 	/**
@@ -669,7 +683,12 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _emailToName(Wrap<String> c) {
-		c.o(siteRequest_.getRequestVars().get("emailToName"));
+		if("enrollment-sent".equals(pageDesignId)) {
+			c.o(schoolEnrollment.getEnrollmentParentNames());
+		}
+		else {
+			c.o(siteRequest_.getRequestVars().get("emailToName"));
+		}
 	}
 
 	/**
@@ -685,21 +704,28 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _emailSubject(Wrap<String> c) {
-		String format = siteRequest_.getRequestVars().get("emailSubject");
-		if(format == null)
-			throw new RuntimeException("The email subject field was blank. ");
-		Matcher matcher = Pattern.compile("\\$\\{(\\w+)}", Pattern.MULTILINE).matcher(format);
-		boolean found = matcher.find();
-		StringBuffer sb = new StringBuffer();
-		
-		while(found) {
-			String var = matcher.group(1);
-			Object o = obtainDesignEmailPage(var);
-			matcher.appendReplacement(sb, o == null ? "" : o.toString());
-			found = matcher.find();
+		if("enrollment-sent".equals(pageDesignId)) {
+			StringBuilder b = new StringBuilder();
+			b.append("Enrollment form for ").append(schoolEnrollment.getChildCompleteNamePreferred()).append(" for ").append(schoolEnrollment.getBlockShortName());
+			c.o(b.toString());
 		}
-		matcher.appendTail(sb);
-		c.o(sb.toString());
+		else {
+			String format = siteRequest_.getRequestVars().get("emailSubject");
+			if(format == null)
+				throw new RuntimeException("The email subject field was blank. ");
+			Matcher matcher = Pattern.compile("\\$\\{(\\w+)}", Pattern.MULTILINE).matcher(format);
+			boolean found = matcher.find();
+			StringBuffer sb = new StringBuffer();
+			
+			while(found) {
+				String var = matcher.group(1);
+				Object o = obtainDesignEmailPage(var);
+				matcher.appendReplacement(sb, o == null ? "" : o.toString());
+				found = matcher.find();
+			}
+			matcher.appendTail(sb);
+			c.o(sb.toString());
+		}
 	}
 
 	@Override public void htmlPageLayout() {
@@ -714,14 +740,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			throw new RuntimeException("The request was not matched to a school. ");
 		ArrayList<String> tos = new ArrayList<>();
 		tos.addAll(Arrays.asList(emailToSchool.trim().split("\\s*,\\s*")));
-		tos.add(emailToAddress);
+		tos.addAll(Arrays.asList(emailToAddress.trim().split("\\s*,\\s*")));
 		message.setTo(tos);
 
 		if(pageDesign != null) {
 			siteRequest_.setW(wPage);
 			setW(wPage);
 			if(pageHtmlPartList != null) {
-				htmlPageLayout2(pageHtmlPartList, null, 0, pageHtmlPartList.size());
+				htmlPageLayout2(pageContentType, pageHtmlPartList, null, 0, pageHtmlPartList.size());
 			}
 		}
 
@@ -729,7 +755,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			siteRequest_.setW(wEmail);
 			setW(wEmail);
 			if(emailHtmlPartList != null) {
-				htmlPageLayout2(emailHtmlPartList, null, 0, emailHtmlPartList.size());
+				htmlPageLayout2(emailContentType, emailHtmlPartList, null, 0, emailHtmlPartList.size());
 			}
 		}
 
@@ -737,7 +763,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			siteRequest_.setW(wAttachment);
 			setW(wAttachment);
 			if(attachmentHtmlPartList != null) {
-				htmlPageLayout2(attachmentHtmlPartList, null, 0, attachmentHtmlPartList.size());
+				htmlPageLayout2(attachmentContentType, attachmentHtmlPartList, null, 0, attachmentHtmlPartList.size());
 			}
 	
 			try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {

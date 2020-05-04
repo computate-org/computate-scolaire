@@ -24,6 +24,7 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 			}
 			if(fq.length() > 0) {
 				r.setQuery("*:*");
+				r.setRows(100);
 				r.setC(PageDesign.class);
 				r.setStore(true);
 				r.addFilterQuery(fq.toString());
@@ -135,7 +136,7 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 			b.append("for each {").append(htmlVarForEach).append("}").append(" into {").append(htmlVar).append("}");
 		else {
 			if(htmlVarSpan != null)
-				b.append("<span>").append(htmlVar).append("</span>");
+				b.append("<span>").append(htmlVarSpan).append("</span>");
 			else if(htmlVar != null)
 				b.append("{").append(htmlVar).append("}");
 		}
