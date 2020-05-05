@@ -188,8 +188,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				createCustomerProfileRequest.setHostedProfileSettings(settings);
 		
 				GetHostedProfilePageController controller = new GetHostedProfilePageController(createCustomerProfileRequest);
-//				GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
-				GetTransactionListForCustomerController.setEnvironment(Environment.SANDBOX);
+				GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+//				GetTransactionListForCustomerController.setEnvironment(Environment.SANDBOX);
 				controller.execute();
 				if(controller.getErrorResponse() != null)
 					controller.toString();
