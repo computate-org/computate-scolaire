@@ -337,10 +337,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postSchoolMom sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -526,13 +524,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportSchoolMom sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -717,13 +710,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putmergeSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putmergeSchoolMom sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -1039,13 +1027,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopySchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopySchoolMom sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -1566,13 +1549,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchSchoolMom sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -1652,10 +1630,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getSchoolMom sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -1738,10 +1714,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchSchoolMom sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);
@@ -1871,10 +1845,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchpageSchoolMom sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchpageSchoolMom sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolMom(siteRequest, eventHandler, c);

@@ -325,10 +325,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postSchoolGuardian sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -514,13 +512,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportSchoolGuardian sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -705,13 +698,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putmergeSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putmergeSchoolGuardian sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -1015,13 +1003,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopySchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopySchoolGuardian sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -1512,13 +1495,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchSchoolGuardian sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -1598,10 +1576,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getSchoolGuardian sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -1684,10 +1660,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchSchoolGuardian sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);
@@ -1817,10 +1791,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchpageSchoolGuardian sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchpageSchoolGuardian sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolGuardian(siteRequest, eventHandler, c);

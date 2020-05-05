@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.math.BigDecimal;
 import java.lang.Long;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.year.SchoolYear;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
@@ -27,6 +29,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -51,6 +54,7 @@ import java.time.format.DateTimeFormatter;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1542,7 +1546,9 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	/**	L'entité « seasonStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore

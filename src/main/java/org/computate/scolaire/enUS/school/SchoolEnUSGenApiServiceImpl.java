@@ -337,10 +337,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postSchool sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -844,13 +842,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchSchool sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -951,10 +944,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getSchool sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -1058,10 +1049,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchSchool sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -1306,13 +1295,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportSchool sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -1515,13 +1499,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putmergeSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putmergeSchool sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -1843,13 +1822,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopySchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopySchool sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
@@ -1958,10 +1932,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchpageSchool sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchpageSchool sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchool(siteRequest, eventHandler, c);

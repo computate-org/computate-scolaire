@@ -2241,7 +2241,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _inscriptionDate8(Couverture<LocalDate> c) {
 	}
 
-	/**       
+	/** 
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentDate9
 	 * Indexe: true

@@ -398,10 +398,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postPaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postPaiementScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -587,13 +585,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportPaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportPaiementScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -778,13 +771,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putfusionPaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putfusionPaiementScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1158,13 +1146,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopiePaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopiePaiementScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1797,13 +1780,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchPaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchPaiementScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1883,10 +1861,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getPaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getPaiementScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1969,10 +1945,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("recherchePaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("recherchePaiementScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
@@ -2102,10 +2076,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("pagerecherchePaiementScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("pagerecherchePaiementScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);

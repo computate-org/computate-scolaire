@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.math.BigDecimal;
 import java.lang.Long;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
 import java.time.LocalTime;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
@@ -24,6 +25,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
 import org.computate.scolaire.frFR.gardien.GardienScolaire;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
@@ -33,6 +35,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -60,6 +63,7 @@ import java.time.format.DateTimeFormatter;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe enrollmentCompleteName dans Solr</a>
@@ -3644,7 +3648,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « enfantDateNaissance »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate enfantDateNaissance;
 	@JsonIgnore
@@ -4504,7 +4510,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « saisonJourDebut »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate saisonJourDebut;
 	@JsonIgnore
@@ -4859,7 +4867,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « sessionJourDebut »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate sessionJourDebut;
 	@JsonIgnore
@@ -4938,7 +4948,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « sessionJourFin »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate sessionJourFin;
 	@JsonIgnore
@@ -8415,7 +8427,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDateFrais »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDateFrais;
 	@JsonIgnore
@@ -10771,7 +10785,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate1 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate1;
 	@JsonIgnore
@@ -10909,7 +10925,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate2 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate2;
 	@JsonIgnore
@@ -11047,7 +11065,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate3 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate3;
 	@JsonIgnore
@@ -11185,7 +11205,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate4 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate4;
 	@JsonIgnore
@@ -11323,7 +11345,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate5 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate5;
 	@JsonIgnore
@@ -11461,7 +11485,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate6 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate6;
 	@JsonIgnore
@@ -11599,7 +11625,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate7 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate7;
 	@JsonIgnore
@@ -11737,7 +11765,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate8 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate8;
 	@JsonIgnore
@@ -11875,7 +11905,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate9 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate9;
 	@JsonIgnore
@@ -12013,7 +12045,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	L'entité « inscriptionDate10 »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate10;
 	@JsonIgnore

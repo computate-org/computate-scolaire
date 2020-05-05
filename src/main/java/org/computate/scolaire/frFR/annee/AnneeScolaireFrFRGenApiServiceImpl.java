@@ -341,10 +341,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postAnneeScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -548,13 +546,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportAnneeScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -757,13 +750,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putfusionAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putfusionAnneeScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1073,13 +1061,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopieAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopieAnneeScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1580,13 +1563,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchAnneeScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1687,10 +1665,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getAnneeScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1794,10 +1770,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("rechercheAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("rechercheAnneeScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1948,10 +1922,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("pagerechercheAnneeScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("pagerechercheAnneeScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);

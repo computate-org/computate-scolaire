@@ -62,7 +62,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.asc: tri8
  * Tri.asc: tri9
  * Tri.asc: tri10
- * Lignes: 1000
+ * Lignes: 300
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin

@@ -272,10 +272,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postCluster sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -461,13 +459,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportCluster sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -652,13 +645,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putfusionCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putfusionCluster sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -928,13 +916,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopieCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopieCluster sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1273,13 +1256,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchCluster sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1359,10 +1337,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getCluster sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1445,10 +1421,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("rechercheCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("rechercheCluster sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);
@@ -1578,10 +1552,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("pagerechercheCluster sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("pagerechercheCluster sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurCluster(requeteSite, gestionnaireEvenements, c);

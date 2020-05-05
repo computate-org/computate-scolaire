@@ -337,10 +337,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postEcole sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -844,13 +842,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchEcole sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -951,10 +944,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getEcole sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1058,10 +1049,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("rechercheEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("rechercheEcole sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1306,13 +1295,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportEcole sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1515,13 +1499,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putfusionEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putfusionEcole sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1843,13 +1822,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopieEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopieEcole sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
@@ -1958,10 +1932,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("pagerechercheEcole sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("pagerechercheEcole sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);

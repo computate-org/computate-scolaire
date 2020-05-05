@@ -337,10 +337,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postPereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postPereScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -526,13 +524,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportPereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportPereScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -717,13 +710,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putfusionPereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putfusionPereScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1039,13 +1027,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopiePereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopiePereScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1566,13 +1549,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchPereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchPereScolaire sql close. "));
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null)
-										requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1652,10 +1630,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getPereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getPereScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1738,10 +1714,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("recherchePereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("recherchePereScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
@@ -1871,10 +1845,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					SQLConnection connexionSql = requeteSite.getConnexionSql();
 					connexionSql.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("pagerecherchePereScolaire sql commit. "));
 							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("pagerecherchePereScolaire sql close. "));
 									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 								} else {
 									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);

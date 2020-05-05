@@ -298,10 +298,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postEnrollmentDesign sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -505,13 +503,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportEnrollmentDesign sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -714,13 +707,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putmergeEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putmergeEnrollmentDesign sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1016,13 +1004,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopyEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopyEnrollmentDesign sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1399,13 +1382,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchEnrollmentDesign sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1506,10 +1484,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getEnrollmentDesign sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1613,10 +1589,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchEnrollmentDesign sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
@@ -1767,10 +1741,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchpageEnrollmentDesign sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchpageEnrollmentDesign sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);

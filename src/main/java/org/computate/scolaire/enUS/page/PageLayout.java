@@ -1082,7 +1082,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 									e("img").a("class", "").a("style", "width: 1em; height: 1em; position: relative; top: 3px; ").a("src", siteRequest_.getSiteConfig_().getStaticBaseUrl(), ((Boolean)o) ? "/png/check-square-o.png" : "/png/square-o.png").fg();
 								}
 								else if (o instanceof String && o.toString().startsWith("data:image")) {
-									e("img").a("class", "").a("style", "").a("src", o.toString()).fg();
+									e("img").a("class", "").a("style", "height: 100px; ").a("src", o.toString()).fg();
 								}
 								else {
 									e("span").a("style", "border-bottom: 1px solid black; display: block; ").f();

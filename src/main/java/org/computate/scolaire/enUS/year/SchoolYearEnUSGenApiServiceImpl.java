@@ -341,10 +341,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postSchoolYear sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -548,13 +546,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportSchoolYear sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -757,13 +750,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putmergeSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putmergeSchoolYear sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -1073,13 +1061,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopySchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopySchoolYear sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -1580,13 +1563,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchSchoolYear sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -1687,10 +1665,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getSchoolYear sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -1794,10 +1770,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchSchoolYear sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);
@@ -1948,10 +1922,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchpageSchoolYear sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchpageSchoolYear sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorSchoolYear(siteRequest, eventHandler, c);

@@ -2,49 +2,53 @@ package org.computate.scolaire.enUS.design;
 
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
-import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import java.text.NumberFormat;
-import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.block.SchoolBlock;
-import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.computate.scolaire.enUS.year.SchoolYear;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Objects;
+import java.util.List;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
+import java.time.LocalDate;
+import org.computate.scolaire.enUS.mom.SchoolMom;
+import java.util.Optional;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.enUS.html.part.HtmlPart;
+import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.String;
+import org.computate.scolaire.enUS.dad.SchoolDad;
+import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import org.computate.scolaire.enUS.year.SchoolYear;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import java.util.List;
 import java.time.temporal.ChronoUnit;
-import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.design.DesignDisplayGenPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.computate.scolaire.enUS.mom.SchoolMom;
-import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1523,7 +1527,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	/**	L'entité « seasonStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore

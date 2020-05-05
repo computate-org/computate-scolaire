@@ -272,10 +272,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("postCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("postCluster sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -461,13 +459,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putimportCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putimportCluster sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -652,13 +645,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putmergeCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putmergeCluster sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -928,13 +916,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("putcopyCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("putcopyCluster sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -1273,13 +1256,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("patchCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("patchCluster sql close. "));
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null)
-										siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -1359,10 +1337,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("getCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("getCluster sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -1445,10 +1421,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchCluster sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);
@@ -1578,10 +1552,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					SQLConnection sqlConnection = siteRequest.getSqlConnection();
 					sqlConnection.commit(b -> {
 						if(b.succeeded()) {
-							LOGGER.info(String.format("searchpageCluster sql commit. "));
 							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									LOGGER.info(String.format("searchpageCluster sql close. "));
 									eventHandler.handle(Future.succeededFuture(a.result()));
 								} else {
 									errorCluster(siteRequest, eventHandler, c);

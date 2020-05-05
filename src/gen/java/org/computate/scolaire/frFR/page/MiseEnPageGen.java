@@ -27,6 +27,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import java.time.ZoneId;

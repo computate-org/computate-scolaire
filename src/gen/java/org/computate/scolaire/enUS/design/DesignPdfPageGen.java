@@ -13,6 +13,7 @@ import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.String;
@@ -27,6 +28,7 @@ import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -44,6 +46,8 @@ import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignPdfPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1217,7 +1221,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	/**	L'entité « seasonStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate seasonStartDate;
 	@JsonIgnore
