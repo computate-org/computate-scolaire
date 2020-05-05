@@ -2132,7 +2132,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForCluster(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<Cluster> searchList = new SearchList<Cluster>();

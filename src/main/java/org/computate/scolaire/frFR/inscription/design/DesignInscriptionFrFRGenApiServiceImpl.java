@@ -2318,7 +2318,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourDesignInscription(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<DesignInscription> listeRecherche = new ListeRecherche<DesignInscription>();

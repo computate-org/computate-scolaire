@@ -2312,7 +2312,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<EnrollmentDesign> searchList = new SearchList<EnrollmentDesign>();

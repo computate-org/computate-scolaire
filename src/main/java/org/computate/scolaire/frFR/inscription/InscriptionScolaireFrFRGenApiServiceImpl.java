@@ -4976,7 +4976,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
@@ -5012,14 +5012,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					if(o2 != null) {
 						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 
-						RequeteApi requeteApi = new RequeteApi();
-						requeteApi.setRows(1);
-						requeteApi.setNumFound(1L);
-						requeteApi.setNumPATCH(0L);
-						requeteApi.initLoinRequeteApi(requeteSite2);
-						requeteSite2.setRequeteApi_(requeteApi);
-						requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 						if(pk != null) {
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
@@ -5052,14 +5044,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					BlocScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -5091,14 +5075,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 					if(o2 != null) {
 						EnfantScolaireFrFRGenApiServiceImpl service = new EnfantScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-
-						RequeteApi requeteApi = new RequeteApi();
-						requeteApi.setRows(1);
-						requeteApi.setNumFound(1L);
-						requeteApi.setNumPATCH(0L);
-						requeteApi.initLoinRequeteApi(requeteSite2);
-						requeteSite2.setRequeteApi_(requeteApi);
-						requeteSite2.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
 
 						if(pk != null) {
 							o2.setPk(pk);
@@ -5132,14 +5108,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					MereScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -5171,14 +5139,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					PereScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -5210,14 +5170,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					GardienScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -5249,14 +5201,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					PaiementScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -5288,14 +5232,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					UtilisateurSite o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(

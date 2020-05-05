@@ -2505,7 +2505,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
@@ -2534,14 +2534,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					AgeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi).toString());
-
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -2573,14 +2565,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 					if(o2 != null) {
 						SaisonScolaireFrFRGenApiServiceImpl service = new SaisonScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-
-						RequeteApi requeteApi = new RequeteApi();
-						requeteApi.setRows(1);
-						requeteApi.setNumFound(1L);
-						requeteApi.setNumPATCH(0L);
-						requeteApi.initLoinRequeteApi(requeteSite2);
-						requeteSite2.setRequeteApi_(requeteApi);
-						requeteSite2.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
 
 						if(pk != null) {
 							o2.setPk(pk);

@@ -2132,7 +2132,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
-			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourCluster(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();

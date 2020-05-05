@@ -4976,7 +4976,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(null))) {
+			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
@@ -5012,14 +5012,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					if(o2 != null) {
 						SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 
-						ApiRequest apiRequest = new ApiRequest();
-						apiRequest.setRows(1);
-						apiRequest.setNumFound(1L);
-						apiRequest.setNumPATCH(0L);
-						apiRequest.initDeepApiRequest(siteRequest2);
-						siteRequest2.setApiRequest_(apiRequest);
-						siteRequest2.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
-
 						if(pk != null) {
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
@@ -5052,14 +5044,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolBlock o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
-
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5091,14 +5075,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 					if(o2 != null) {
 						SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-
-						ApiRequest apiRequest = new ApiRequest();
-						apiRequest.setRows(1);
-						apiRequest.setNumFound(1L);
-						apiRequest.setNumPATCH(0L);
-						apiRequest.initDeepApiRequest(siteRequest2);
-						siteRequest2.setApiRequest_(apiRequest);
-						siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
 
 						if(pk != null) {
 							o2.setPk(pk);
@@ -5132,14 +5108,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolMom o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5171,14 +5139,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolDad o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
-
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5210,14 +5170,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolGuardian o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
-
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5249,14 +5201,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
-
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5288,14 +5232,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SiteUser o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
-
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
