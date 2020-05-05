@@ -1026,6 +1026,32 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	}
 
 	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeEnvironment(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeUrl(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
 	 * Var.enUS: paymentDay
 	 * r: prefixeEchappe
 	 * r.enUS: prefixEscaped

@@ -4394,6 +4394,112 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+	// PaymentSentSearchPage //
+
+	@Override
+	public void paymentsentsearchpageSchoolEnrollmentId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		paymentsentsearchpageSchoolEnrollment(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void paymentsentsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		try {
+			sqlSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolEnrollment(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/payment-sent", "PaymentSentSearchPage", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+									paymentsentsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("paymentsentsearchpageSchoolEnrollment succeeded. "));
+										} else {
+											LOGGER.error(String.format("paymentsentsearchpageSchoolEnrollment failed. ", d.cause()));
+											errorSchoolEnrollment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("paymentsentsearchpageSchoolEnrollment failed. ", c.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("paymentsentsearchpageSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("paymentsentsearchpageSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("paymentsentsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void paymentsentsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200PaymentSentSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("paymentsentsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200PaymentSentSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listSchoolEnrollment.getSiteRequest_(), buffer);
+			DesignDisplayPage page = new DesignDisplayPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment/payment-sent");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listSchoolEnrollment.size() == 1)
+				siteRequest.setRequestPk(listSchoolEnrollment.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListSchoolEnrollment(listSchoolEnrollment);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepDesignDisplayPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// General //
 
 	public Future<SchoolEnrollment> defineIndexSchoolEnrollment(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
@@ -5012,6 +5118,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					if(o2 != null) {
 						SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 
+						ApiRequest apiRequest = new ApiRequest();
+						apiRequest.setRows(1);
+						apiRequest.setNumFound(1L);
+						apiRequest.setNumPATCH(0L);
+						apiRequest.initDeepApiRequest(siteRequest2);
+						siteRequest2.setApiRequest_(apiRequest);
+						siteRequest2.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
+
 						if(pk != null) {
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
@@ -5044,6 +5158,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolBlock o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5075,6 +5197,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 					if(o2 != null) {
 						SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+
+						ApiRequest apiRequest = new ApiRequest();
+						apiRequest.setRows(1);
+						apiRequest.setNumFound(1L);
+						apiRequest.setNumPATCH(0L);
+						apiRequest.initDeepApiRequest(siteRequest2);
+						siteRequest2.setApiRequest_(apiRequest);
+						siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
 
 						if(pk != null) {
 							o2.setPk(pk);
@@ -5108,6 +5238,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolMom o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5139,6 +5277,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolDad o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5170,6 +5316,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolGuardian o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5201,6 +5355,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -5232,6 +5394,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					SiteUser o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(

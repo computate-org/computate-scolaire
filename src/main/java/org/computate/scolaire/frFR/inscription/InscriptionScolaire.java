@@ -72,6 +72,11 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /enrollment
  * 
+ * ApiMethode.enUS: PaymentSentSearchPage
+ * PagePaymentSentSearchPage.enUS: DesignDisplayPage
+ * PageSuperPaymentSentSearchPage.enUS: ClusterPage
+ * ApiUriPaymentSentSearchPage.enUS: /enrollment/payment-sent
+ * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
  * Couleur: blue-gray

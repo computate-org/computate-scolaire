@@ -3018,6 +3018,14 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					DesignPage o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1l);
+							requeteApi.setNumPATCH(0L);
+							requeteApi.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi);
+							requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -3049,6 +3057,14 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					DesignPage o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1l);
+							requeteApi.setNumPATCH(0L);
+							requeteApi.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi);
+							requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -3080,6 +3096,14 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					PartHtml o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1l);
+							requeteApi.setNumPATCH(0L);
+							requeteApi.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi);
+							requeteSite2.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requeteApi).toString());
+
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(

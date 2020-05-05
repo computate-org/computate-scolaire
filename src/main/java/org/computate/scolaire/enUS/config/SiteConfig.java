@@ -748,6 +748,24 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
+	protected void _authorizeEnvironment(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _authorizeUrl(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
 	protected void _paymentDay(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)

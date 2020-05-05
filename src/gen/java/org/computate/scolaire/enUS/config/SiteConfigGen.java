@@ -12,6 +12,7 @@ import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
@@ -24,6 +25,7 @@ import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
@@ -35,6 +37,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  *	Loads the properties in the application config file into specific fields. 
@@ -4107,6 +4111,130 @@ The default timezone of the site.
 		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
 	}
 
+	//////////////////////////
+	// authorizeEnvironment //
+	//////////////////////////
+
+	/**	L'entité « authorizeEnvironment »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String authorizeEnvironment;
+	@JsonIgnore
+	public Wrap<String> authorizeEnvironmentWrap = new Wrap<String>().p(this).c(String.class).var("authorizeEnvironment").o(authorizeEnvironment);
+
+	/**	<br/>L'entité « authorizeEnvironment »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeEnvironment">Trouver l'entité authorizeEnvironment dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeEnvironment(Wrap<String> c);
+
+	public String getAuthorizeEnvironment() {
+		return authorizeEnvironment;
+	}
+
+	public void setAuthorizeEnvironment(String authorizeEnvironment) {
+		this.authorizeEnvironment = authorizeEnvironment;
+		this.authorizeEnvironmentWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig authorizeEnvironmentInit() {
+		if(!authorizeEnvironmentWrap.alreadyInitialized) {
+			_authorizeEnvironment(authorizeEnvironmentWrap);
+			if(authorizeEnvironment == null)
+				setAuthorizeEnvironment(authorizeEnvironmentWrap.o);
+		}
+		authorizeEnvironmentWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrAuthorizeEnvironment() {
+		return authorizeEnvironment;
+	}
+
+	public String strAuthorizeEnvironment() {
+		return authorizeEnvironment == null ? "" : authorizeEnvironment;
+	}
+
+	public String jsonAuthorizeEnvironment() {
+		return authorizeEnvironment == null ? "" : authorizeEnvironment;
+	}
+
+	public String nomAffichageAuthorizeEnvironment() {
+		return null;
+	}
+
+	public String htmTooltipAuthorizeEnvironment() {
+		return null;
+	}
+
+	public String htmAuthorizeEnvironment() {
+		return authorizeEnvironment == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeEnvironment());
+	}
+
+	//////////////////
+	// authorizeUrl //
+	//////////////////
+
+	/**	L'entité « authorizeUrl »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String authorizeUrl;
+	@JsonIgnore
+	public Wrap<String> authorizeUrlWrap = new Wrap<String>().p(this).c(String.class).var("authorizeUrl").o(authorizeUrl);
+
+	/**	<br/>L'entité « authorizeUrl »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeUrl">Trouver l'entité authorizeUrl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeUrl(Wrap<String> c);
+
+	public String getAuthorizeUrl() {
+		return authorizeUrl;
+	}
+
+	public void setAuthorizeUrl(String authorizeUrl) {
+		this.authorizeUrl = authorizeUrl;
+		this.authorizeUrlWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig authorizeUrlInit() {
+		if(!authorizeUrlWrap.alreadyInitialized) {
+			_authorizeUrl(authorizeUrlWrap);
+			if(authorizeUrl == null)
+				setAuthorizeUrl(authorizeUrlWrap.o);
+		}
+		authorizeUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrAuthorizeUrl() {
+		return authorizeUrl;
+	}
+
+	public String strAuthorizeUrl() {
+		return authorizeUrl == null ? "" : authorizeUrl;
+	}
+
+	public String jsonAuthorizeUrl() {
+		return authorizeUrl == null ? "" : authorizeUrl;
+	}
+
+	public String nomAffichageAuthorizeUrl() {
+		return null;
+	}
+
+	public String htmTooltipAuthorizeUrl() {
+		return null;
+	}
+
+	public String htmAuthorizeUrl() {
+		return authorizeUrl == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeUrl());
+	}
+
 	////////////////
 	// paymentDay //
 	////////////////
@@ -4183,7 +4311,9 @@ The default timezone of the site.
 	/**	L'entité « paymentNext »
 	 *	 is defined as null before being initialized. 
 	 */
-	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate paymentNext;
 	@JsonIgnore
@@ -4332,6 +4462,8 @@ The default timezone of the site.
 		siteZoneInit();
 		authorizeApiLoginIdInit();
 		authorizeTransactionKeyInit();
+		authorizeEnvironmentInit();
+		authorizeUrlInit();
 		paymentDayInit();
 		paymentNextInit();
 	}
@@ -4486,6 +4618,10 @@ The default timezone of the site.
 				return oSiteConfig.authorizeApiLoginId;
 			case "authorizeTransactionKey":
 				return oSiteConfig.authorizeTransactionKey;
+			case "authorizeEnvironment":
+				return oSiteConfig.authorizeEnvironment;
+			case "authorizeUrl":
+				return oSiteConfig.authorizeUrl;
 			case "paymentDay":
 				return oSiteConfig.paymentDay;
 			case "paymentNext":

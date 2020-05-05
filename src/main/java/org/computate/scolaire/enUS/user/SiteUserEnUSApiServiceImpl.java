@@ -80,8 +80,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			createCustomerProfileRequest.setProfile(profile);
 	
 			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
-			GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
-//			GetTransactionListForCustomerController.setEnvironment(Environment.SANDBOX);
+			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 			controller.execute();
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(controller.getResults().toString());

@@ -68,8 +68,10 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				ArrayOfSetting settings = new ArrayOfSetting();
 				{
 					SettingType settingType = new SettingType();
+					String hostedPaymentReturnOptionsStr = "{ \"showReceipt\":false, \"url\": \"%s/enrollment/payment-sent/%s?var=transactionId:%s\", \"cancelUrl\": \"%s/%s\" }";
+					String hostedPaymentReturnOptions = String.format(hostedPaymentReturnOptionsStr, siteConfig.getSiteBaseUrl(), schoolEnrollment.getPk(), siteConfig.getSiteBaseUrl(), siteRequest_.getUserKey());
 					settingType.setSettingName("hostedPaymentReturnOptions");
-					settingType.setSettingValue("{\"showReceipt\":true}");
+					settingType.setSettingValue(hostedPaymentReturnOptions);
 					settings.getSetting().add(settingType);
 				}
 //				{
@@ -108,7 +110,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				LineItemType lineItem = new LineItemType();
 				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
 				LocalDate now = LocalDate.now();
-				LocalDate chargeEndDate = now.compareTo(now.withDayOfMonth(25)) > 0 ? now.plusMonths(2).withDayOfMonth(25) : now.plusMonths(1).withDayOfMonth(25);
+				LocalDate chargeEndDate = siteConfig.getPaymentNext();
 //				lineItem.setName(String.format("Payment for ", fd.format(chargeEndDate)));
 //				lineItem.setDescription(String.format("Payment for ", fd.format(chargeEndDate)));
 //				lineItem.setItemId(schoolEnrollment.getPk().toString());
@@ -124,8 +126,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
 		
 				GetHostedPaymentPageController controller = new GetHostedPaymentPageController(hostedPaymentPageRequest);
-				GetHostedPaymentPageController.setEnvironment(Environment.PRODUCTION);
-//				GetHostedPaymentPageController.setEnvironment(Environment.SANDBOX);
+				GetHostedPaymentPageController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 				controller.execute();
 				if(controller.getErrorResponse() != null)
 					throw new RuntimeException(controller.getResults().toString());
@@ -137,7 +138,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 					}
 					else {
 						{ e("div").a("class", "").f();
-							{ e("form").a("method", "post").a("target", "_blank").a("action", "https://accept.authorize.net/payment/payment").f();
+							{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
 								e("input").a("type", "hidden").a("name", "token").a("value", response.getToken()).fg();
 								e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
 							} g("form");

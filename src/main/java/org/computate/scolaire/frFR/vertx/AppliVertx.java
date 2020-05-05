@@ -28,6 +28,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.frFR.age.AgeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiService;
@@ -1536,6 +1537,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteRequest
 	 * r: requeteSite
 	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
 	 */ 
 	public Future<Void> futureAuthorizeNetInscriptionPaiements(
 			MerchantAuthenticationType merchantAuthenticationType
@@ -1543,6 +1546,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			,  Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
+			ConfigSite siteConfig = inscriptionScolaire.getRequeteSite_().getConfigSite_();
 			Paging paging = new Paging();
 			paging.setLimit(1000);
 			paging.setOffset(1);
@@ -1560,7 +1564,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			getRequest.setSorting(sorting);
 
 			GetTransactionListForCustomerController controller = new GetTransactionListForCustomerController(getRequest);
-			GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 			controller.execute();
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(controller.getResults().toString());
@@ -1771,7 +1775,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 								PaiementScolaireFrFRGenApiServiceImpl paiementService = new PaiementScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
 								InscriptionScolaireFrFRGenApiServiceImpl inscriptionService = new InscriptionScolaireFrFRGenApiServiceImpl(siteContexteFrFR);
 							
-								ApiOperationBase.setEnvironment(Environment.PRODUCTION);
+								ApiOperationBase.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
 				
 								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
 								String authorizeApiLoginId = configSite.getAuthorizeApiLoginId();
@@ -1789,7 +1793,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 										.plusDays(1).atStartOfDay(ZoneId.of(configSite.getSiteZone())))));
 				
 								GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);
-								GetSettledBatchListController.setEnvironment(Environment.PRODUCTION);
+								GetSettledBatchListController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
 								batchController.execute();
 								if(batchController.getErrorResponse() != null)
 									throw new RuntimeException(batchController.getResults().toString());
@@ -1995,6 +1999,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: siteContextEnUS
 	 * r: requeteSite
 	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
 	 */
 	public Future<Void> futureAuthorizeNetBatch(
 			MerchantAuthenticationType merchantAuthenticationType
@@ -2004,6 +2010,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			,  Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
+			ConfigSite configSite = requeteSite.getConfigSite_();
 			Paging paging = new Paging();
 			paging.setLimit(100);
 			paging.setOffset(1);
@@ -2021,7 +2028,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			getRequest.setSorting(sorting);
 
 			GetTransactionListController controller = new GetTransactionListController(getRequest);
-			GetTransactionListController.setEnvironment(Environment.PRODUCTION);
+			GetTransactionListController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
 			controller.execute();
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(batchController.getResults().toString());

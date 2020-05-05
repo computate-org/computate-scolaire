@@ -2697,6 +2697,14 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					if(o2 != null) {
 						InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite2);
+						requeteSite2.setRequeteApi_(requeteApi);
+						requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+
 						if(pk != null) {
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);

@@ -26,6 +26,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiService;
 import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
 import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiService;
@@ -838,6 +839,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	public Future<Void> futureAuthorizeNetEnrollmentPayments(MerchantAuthenticationType merchantAuthenticationType, SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
+			SiteConfig siteConfig = schoolEnrollment.getSiteRequest_().getSiteConfig_();
 			Paging paging = new Paging();
 			paging.setLimit(1000);
 			paging.setOffset(1);
@@ -855,7 +857,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			getRequest.setSorting(sorting);
 
 			GetTransactionListForCustomerController controller = new GetTransactionListForCustomerController(getRequest);
-			GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 			controller.execute();
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(controller.getResults().toString());
@@ -927,7 +929,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 								SchoolPaymentEnUSGenApiServiceImpl paymentService = new SchoolPaymentEnUSGenApiServiceImpl(siteContextEnUS);
 								SchoolEnrollmentEnUSGenApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSGenApiServiceImpl(siteContextEnUS);
 							
-								ApiOperationBase.setEnvironment(Environment.PRODUCTION);
+								ApiOperationBase.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 				
 								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
 								String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
@@ -945,7 +947,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 										.plusDays(1).atStartOfDay(ZoneId.of(siteConfig.getSiteZone())))));
 				
 								GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);
-								GetSettledBatchListController.setEnvironment(Environment.PRODUCTION);
+								GetSettledBatchListController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 								batchController.execute();
 								if(batchController.getErrorResponse() != null)
 									throw new RuntimeException(batchController.getResults().toString());
@@ -1110,6 +1112,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	public Future<Void> futureAuthorizeNetBatch(MerchantAuthenticationType merchantAuthenticationType, GetSettledBatchListController batchController, BatchDetailsType batch, SiteRequestEnUS siteRequest, Handler<AsyncResult<Void>> a) {
 		Promise<Void> promise = Promise.promise();
 		try {
+			SiteConfig configSite = siteRequest.getSiteConfig_();
 			Paging paging = new Paging();
 			paging.setLimit(100);
 			paging.setOffset(1);
@@ -1127,7 +1130,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			getRequest.setSorting(sorting);
 
 			GetTransactionListController controller = new GetTransactionListController(getRequest);
-			GetTransactionListController.setEnvironment(Environment.PRODUCTION);
+			GetTransactionListController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
 			controller.execute();
 			if(controller.getErrorResponse() != null)
 				throw new RuntimeException(batchController.getResults().toString());

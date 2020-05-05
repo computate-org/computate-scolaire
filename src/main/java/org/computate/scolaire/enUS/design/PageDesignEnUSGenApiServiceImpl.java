@@ -3021,6 +3021,14 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					PageDesign o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -3052,6 +3060,14 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					PageDesign o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
@@ -3083,6 +3099,14 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					HtmlPart o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(

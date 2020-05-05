@@ -75,7 +75,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
 /**
  * Translate: false
  **/
-public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
+public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
@@ -115,11 +115,11 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/enrollment");
+		c.o("/enrollment/payment-sent");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/enrollment-999.png");
+			c.o("/png/enrollment/payment-sent-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -130,13 +130,13 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			c.o("edit");
 	}
 
-	@Override public void initDeepEnrollmentGenPage() {
-		initEnrollmentGenPage();
+	@Override public void initDeepDesignDisplayGenPage() {
+		initDesignDisplayGenPage();
 		super.initDeepPageLayout();
 	}
 
-	@Override public void htmlScriptsEnrollmentGenPage() {
-		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentPage.js").f().g("script");
+	@Override public void htmlScriptsDesignDisplayGenPage() {
+		e("script").a("src", staticBaseUrl, "/js/enUS/DesignDisplayPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/ChildPage.js").f().g("script");
@@ -147,7 +147,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
 	}
 
-	@Override public void htmlScriptEnrollmentGenPage() {
+	@Override public void htmlScriptDesignDisplayGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "document.onkeydown = function(evt) {");
 		tl(2, "evt = evt || window.event;");
@@ -632,14 +632,14 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	@Override public void htmlBodyEnrollmentGenPage() {
+	@Override public void htmlBodyDesignDisplayGenPage() {
 
 		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		JsonObject params = operationRequest.getParams();
 		if(listSchoolEnrollment == null || listSchoolEnrollment.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/enrollment").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
+				{ e("a").a("href", "/enrollment/payment-sent").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("enrollments").g("span");
@@ -658,7 +658,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			siteRequest_.setRequestPk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/enrollment").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
+					{ e("a").a("href", "/enrollment/payment-sent").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 						if(contextIconCssClasses != null)
 							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -683,7 +683,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/enrollment").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
+				{ e("a").a("href", "/enrollment/payment-sent").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -744,7 +744,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/enrollment?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/enrollment/payment-sent?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -752,25 +752,25 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/enrollment?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/enrollment/payment-sent?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/enrollment?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/enrollment/payment-sent?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/enrollment?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/enrollment/payment-sent?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
-				table1EnrollmentGenPage();
+				table1DesignDisplayGenPage();
 		}
 
 		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -797,29 +797,29 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			} g("div");
 
 		}
-		htmlBodyFormsEnrollmentGenPage();
+		htmlBodyFormsDesignDisplayGenPage();
 		g("div");
 	}
 
-	public void table1EnrollmentGenPage() {
+	public void table1DesignDisplayGenPage() {
 		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-			table2EnrollmentGenPage();
+			table2DesignDisplayGenPage();
 		} g("table");
 	}
 
-	public void table2EnrollmentGenPage() {
-		thead1EnrollmentGenPage();
-		tbody1EnrollmentGenPage();
-		tfoot1EnrollmentGenPage();
+	public void table2DesignDisplayGenPage() {
+		thead1DesignDisplayGenPage();
+		tbody1DesignDisplayGenPage();
+		tfoot1DesignDisplayGenPage();
 	}
 
-	public void thead1EnrollmentGenPage() {
+	public void thead1DesignDisplayGenPage() {
 		{ e("thead").a("class", "w3-blue-gray w3-hover-blue-gray ").f();
-			thead2EnrollmentGenPage();
+			thead2DesignDisplayGenPage();
 		} g("thead");
 	}
 
-	public void thead2EnrollmentGenPage() {
+	public void thead2DesignDisplayGenPage() {
 			{ e("tr").f();
 			if(getColumnCreated()) {
 				e("th").f().sx("created").g("th");
@@ -830,19 +830,19 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			} g("tr");
 	}
 
-	public void tbody1EnrollmentGenPage() {
+	public void tbody1DesignDisplayGenPage() {
 		{ e("tbody").f();
-			tbody2EnrollmentGenPage();
+			tbody2DesignDisplayGenPage();
 		} g("tbody");
 	}
 
-	public void tbody2EnrollmentGenPage() {
+	public void tbody2DesignDisplayGenPage() {
 		Map<String, Map<String, List<String>>> highlighting = listSchoolEnrollment.getQueryResponse().getHighlighting();
 		for(int i = 0; i < listSchoolEnrollment.size(); i++) {
 			SchoolEnrollment o = listSchoolEnrollment.getList().get(i);
 			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-			String uri = "/enrollment/" + o.getPk();
+			String uri = "/enrollment/payment-sent/" + o.getPk();
 			{ e("tr").f();
 				if(getColumnCreated()) {
 					{ e("td").f();
@@ -867,13 +867,13 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		}
 	}
 
-	public void tfoot1EnrollmentGenPage() {
+	public void tfoot1DesignDisplayGenPage() {
 		{ e("tfoot").a("class", "w3-blue-gray w3-hover-blue-gray ").f();
-			tfoot2EnrollmentGenPage();
+			tfoot2DesignDisplayGenPage();
 		} g("tfoot");
 	}
 
-	public void tfoot2EnrollmentGenPage() {
+	public void tfoot2DesignDisplayGenPage() {
 		{ e("tr").f();
 			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 			if(getColumnCreated()) {
@@ -895,7 +895,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		return true;
 	}
 
-	public void htmlBodyFormsEnrollmentGenPage() {
+	public void htmlBodyFormsDesignDisplayGenPage() {
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -905,8 +905,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
 				{ e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-						.a("id", "refreshThisEnrollmentGenPage")
-						.a("onclick", "patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisEnrollmentGenPage')); }, function() { addError($('#refreshThisEnrollmentGenPage')); }); return false; ").f();
+						.a("id", "refreshThisDesignDisplayGenPage")
+						.a("onclick", "patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisDesignDisplayGenPage')); }, function() { addError($('#refreshThisDesignDisplayGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					sx("refresh this enrollment");
 				} g("button");
@@ -1083,12 +1083,12 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggestedEnrollmentGenPage(this, null, listSchoolEnrollment);
+		htmlSuggestedDesignDisplayGenPage(this, null, listSchoolEnrollment);
 	}
 
 	/**
 	**/
-	public static void htmlSuggestedEnrollmentGenPage(PageLayout p, String id, SearchList<SchoolEnrollment> listSchoolEnrollment) {
+	public static void htmlSuggestedDesignDisplayGenPage(PageLayout p, String id, SearchList<SchoolEnrollment> listSchoolEnrollment) {
 		SiteRequestEnUS siteRequest_ = p.getSiteRequest_();
 		try {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
@@ -1140,11 +1140,11 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			}
 
 			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), EnrollmentGenPage.ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), EnrollmentGenPage.ROLES)
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), DesignDisplayGenPage.ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), DesignDisplayGenPage.ROLES)
 					) {
 					{ p.e("div").a("class", "").f();
-						{ p.e("button").a("id", "refreshAllEnrollmentGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllEnrollmentGenPage", id, "')); }, function() { addError($('#refreshAllEnrollmentGenPage", id, "')); }); ").f();
+						{ p.e("button").a("id", "refreshAllDesignDisplayGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchSchoolEnrollmentVals([], {}, function() { addGlow($('#refreshAllDesignDisplayGenPage", id, "')); }, function() { addError($('#refreshAllDesignDisplayGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the enrollments");
 						} p.g("button");
@@ -1166,13 +1166,13 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					.a("id", "suggestSchoolEnrollment", id)
 					.a("autocomplete", "off")
 					.a("oninput", "suggestSchoolEnrollmentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/enrollment?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/enrollment/payment-sent?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolEnrollment != null)
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
-					.a("onclick", "window.location.href = '/enrollment?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/enrollment/payment-sent?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
@@ -1185,7 +1185,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				} p.g("div");
 			} p.g("div");
 			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/enrollment").a("class", "").f();
+				{ p.e("a").a("href", "/enrollment/payment-sent").a("class", "").f();
 					p.e("i").a("class", "fas fa-edit ").f().g("i");
 					p.sx("see all the enrollments");
 				} p.g("a");

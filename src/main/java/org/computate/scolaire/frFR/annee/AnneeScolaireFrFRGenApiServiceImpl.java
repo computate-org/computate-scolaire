@@ -2535,6 +2535,14 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					if(o2 != null) {
 						EcoleFrFRGenApiServiceImpl service = new EcoleFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite2);
+						requeteSite2.setRequeteApi_(requeteApi);
+						requeteSite2.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+
 						if(pk != null) {
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
@@ -2567,6 +2575,14 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					SaisonScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1l);
+							requeteApi.setNumPATCH(0L);
+							requeteApi.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi);
+							requeteSite2.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(

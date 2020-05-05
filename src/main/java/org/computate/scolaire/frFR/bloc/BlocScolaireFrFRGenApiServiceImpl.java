@@ -2642,6 +2642,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1l);
+							requeteApi.setNumPATCH(0L);
+							requeteApi.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi);
+							requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+
 							o2.setPk(pk);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
@@ -2673,6 +2681,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 					if(o2 != null) {
 						AgeScolaireFrFRGenApiServiceImpl service = new AgeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite2);
+						requeteSite2.setRequeteApi_(requeteApi);
+						requeteSite2.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi).toString());
 
 						if(pk != null) {
 							o2.setPk(pk);

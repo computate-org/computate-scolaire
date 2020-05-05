@@ -188,8 +188,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				createCustomerProfileRequest.setHostedProfileSettings(settings);
 		
 				GetHostedProfilePageController controller = new GetHostedProfilePageController(createCustomerProfileRequest);
-				GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
-//				GetTransactionListForCustomerController.setEnvironment(Environment.SANDBOX);
+				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 				controller.execute();
 				if(controller.getErrorResponse() != null)
 					controller.toString();
@@ -210,7 +209,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 						} g("h1");
 						{ e("div").a("class", "").f();
 							e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
-							{ e("form").a("method", "post").a("target", "_blank").a("action", "https://accept.authorize.net/customer/manage").f();
+							{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
 								e("input").a("type", "hidden").a("name", "token").a("value", response.getToken()).fg();
 				//				e("input").a("type", "hidden").a("name", "paymentProfileId").a("value", response.getToken()).fg();
 								e("button").a("type", "submit").f().sx("Manage payments").g("button");

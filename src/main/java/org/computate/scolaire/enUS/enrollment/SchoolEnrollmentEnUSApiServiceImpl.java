@@ -298,6 +298,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	public Future<Void> futureAuthorizeNetEnrollmentPayments(MerchantAuthenticationType merchantAuthenticationType, SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
 		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		Promise<Void> promise = Promise.promise();
 
 		if(schoolEnrollment.getCustomerProfileId() == null) {
@@ -324,7 +325,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				getRequest.setSorting(sorting);
 	
 				GetTransactionListForCustomerController controller = new GetTransactionListForCustomerController(getRequest);
-				GetTransactionListForCustomerController.setEnvironment(Environment.PRODUCTION);
+				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 				controller.execute();
 				if(controller.getErrorResponse() != null)
 					throw new RuntimeException(controller.getResults().toString());

@@ -2535,6 +2535,14 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					if(o2 != null) {
 						SchoolEnUSGenApiServiceImpl service = new SchoolEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 
+						ApiRequest apiRequest = new ApiRequest();
+						apiRequest.setRows(1);
+						apiRequest.setNumFound(1L);
+						apiRequest.setNumPATCH(0L);
+						apiRequest.initDeepApiRequest(siteRequest2);
+						siteRequest2.setApiRequest_(apiRequest);
+						siteRequest2.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+
 						if(pk != null) {
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
@@ -2567,6 +2575,14 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					SchoolSeason o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1l);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+
 							o2.setPk(pk);
 							o2.setSiteRequest_(siteRequest2);
 							futures.add(
