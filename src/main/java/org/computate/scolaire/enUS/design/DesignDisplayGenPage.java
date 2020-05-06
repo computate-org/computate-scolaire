@@ -175,6 +175,41 @@ import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.page.PageLayout;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
+import java.io.IOException;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.core.json.JsonArray;
+import java.net.URLDecoder;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
+import java.util.List;
+import java.util.Optional;
+import org.apache.solr.common.util.SimpleOrderedMap;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import org.apache.commons.collections.CollectionUtils;
+import java.util.Objects;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 
 /**
@@ -220,11 +255,11 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/");
+		c.o("/payment-sent");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/-999.png");
+			c.o("/png/payment-sent-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -454,7 +489,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		if(listPageDesign == null || listPageDesign.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+				{ e("a").a("href", "/payment-sent").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("page designs").g("span");
@@ -473,7 +508,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			siteRequest_.setRequestPk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+					{ e("a").a("href", "/payment-sent").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 						if(contextIconCssClasses != null)
 							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -498,7 +533,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+				{ e("a").a("href", "/payment-sent").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -559,7 +594,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/payment-sent?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -567,19 +602,19 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/payment-sent?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/payment-sent?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/payment-sent?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -657,7 +692,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			PageDesign o = listPageDesign.getList().get(i);
 			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-			String uri = "//" + o.getPk();
+			String uri = "/payment-sent/" + o.getPk();
 			{ e("tr").f();
 				if(getColumnCreated()) {
 					{ e("td").f();
@@ -981,13 +1016,13 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 					.a("id", "suggestPageDesign", id)
 					.a("autocomplete", "off")
 					.a("oninput", "suggestPageDesignObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListPageDesign", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
-					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/payment-sent?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listPageDesign != null)
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
-					.a("onclick", "window.location.href = '/?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/payment-sent?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
@@ -1000,7 +1035,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 				} p.g("div");
 			} p.g("div");
 			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/").a("class", "").f();
+				{ p.e("a").a("href", "/payment-sent").a("class", "").f();
 					p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
 					p.sx("see all the page designs");
 				} p.g("a");

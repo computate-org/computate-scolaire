@@ -88,6 +88,11 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperHomePageSearchPage.enUS: ClusterPage
  * ApiUriHomePageSearchPage.enUS: /
  * 
+ * ApiMethode.enUS: PaymentSentSearchPage
+ * PagePaymentSentSearchPage.enUS: DesignDisplayPage
+ * PageSuperPaymentSentSearchPage.enUS: ClusterPage
+ * ApiUriPaymentSentSearchPage.enUS: /payment-sent
+ * 
  * UnNom.frFR: un design de page
  * UnNom.enUS: a page design
  * Couleur: khaki

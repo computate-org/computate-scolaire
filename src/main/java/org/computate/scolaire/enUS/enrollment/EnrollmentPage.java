@@ -68,7 +68,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				ArrayOfSetting settings = new ArrayOfSetting();
 				{
 					SettingType settingType = new SettingType();
-					String hostedPaymentReturnOptionsStr = "{ \"showReceipt\":false, \"url\": \"%s/enrollment/payment-sent/%s?var=transactionId:%s\", \"cancelUrl\": \"%s/%s\" }";
+					String hostedPaymentReturnOptionsStr = "{ \"showReceipt\":false, \"url\": \"%s/payment-sent/%s?var=enrollmentKey:%s\", \"cancelUrl\": \"%s/%s\" }";
 					String hostedPaymentReturnOptions = String.format(hostedPaymentReturnOptionsStr, siteConfig.getSiteBaseUrl(), schoolEnrollment.getPk(), siteConfig.getSiteBaseUrl(), siteRequest_.getUserKey());
 					settingType.setSettingName("hostedPaymentReturnOptions");
 					settingType.setSettingValue(hostedPaymentReturnOptions);
@@ -121,7 +121,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				profile.setCustomerProfileId(siteUser.getCustomerProfileId());
 				transactionRequest.setProfile(profile);
 				OrderType order = new OrderType();
-				order.setDescription(String.format("%s payment for %s", fd.format(chargeEndDate), schoolEnrollment.getChildCompleteNamePreferred()));
+				order.setDescription(String.format("%s payment for %s %s", schoolEnrollment.getPk(), schoolEnrollment.getChildCompleteNamePreferred(), fd.format(chargeEndDate)));
 				transactionRequest.setOrder(order);
 				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
 		
