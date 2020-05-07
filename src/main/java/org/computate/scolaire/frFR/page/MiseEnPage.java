@@ -1958,7 +1958,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	public String urlEncode(String s)  {
 		try {
-			return URLEncoder.encode(s, "UTF-8");
+			return s == null ? "" : URLEncoder.encode(s, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			ExceptionUtils.rethrow(e);
 			return "";

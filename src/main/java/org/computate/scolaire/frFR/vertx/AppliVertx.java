@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.vertx;      
+package org.computate.scolaire.frFR.vertx;       
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.util.SimpleOrderedMap;
-import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.frFR.age.AgeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiService;

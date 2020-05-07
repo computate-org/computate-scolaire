@@ -3650,7 +3650,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate enfantDateNaissance;
 	@JsonIgnore
@@ -4512,7 +4512,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate saisonJourDebut;
 	@JsonIgnore
@@ -4869,7 +4869,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate sessionJourDebut;
 	@JsonIgnore
@@ -4950,7 +4950,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate sessionJourFin;
 	@JsonIgnore
@@ -8429,7 +8429,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDateFrais;
 	@JsonIgnore
@@ -10787,7 +10787,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate1;
 	@JsonIgnore
@@ -10927,7 +10927,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate2;
 	@JsonIgnore
@@ -11067,7 +11067,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate3;
 	@JsonIgnore
@@ -11207,7 +11207,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate4;
 	@JsonIgnore
@@ -11347,7 +11347,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate5;
 	@JsonIgnore
@@ -11487,7 +11487,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate6;
 	@JsonIgnore
@@ -11627,7 +11627,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate7;
 	@JsonIgnore
@@ -11767,7 +11767,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate8;
 	@JsonIgnore
@@ -11907,7 +11907,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate9;
 	@JsonIgnore
@@ -12047,7 +12047,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate inscriptionDate10;
 	@JsonIgnore

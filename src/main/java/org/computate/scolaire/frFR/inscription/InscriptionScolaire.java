@@ -72,6 +72,12 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /enrollment
  * 
+ * ApiMethode.enUS: RefreshSearchPage
+ * PageRefreshSearchPage.enUS: EnrollmentPage
+ * PageSuperRefreshSearchPage.enUS: ClusterPage
+ * ApiUriRefreshSearchPage.enUS: /refresh-enrollment
+ * RoleUtilisateurRefreshSearchPage.enUS: true
+ * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
  * Couleur: blue-gray
@@ -82,7 +88,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/  
+*/     
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**

@@ -194,15 +194,15 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									gestionnaireEvenements.handle(Future.succeededFuture(designPage));
 									promise.complete(designPage);
 								} else {
-									erreurDesignPage(requeteSite, null, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurDesignPage(requeteSite, null, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurDesignPage(requeteSite, null, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
@@ -2528,9 +2528,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 			Buffer.buffer().appendString(
 				new JsonObject() {{
-					put("erreur", new JsonObject() {{
-					put("message", e.getMessage());
-					}});
+					put("erreur", new JsonObject()
+						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+					);
 				}}.encodePrettily()
 			)
 			, new CaseInsensitiveHeaders()
@@ -2541,8 +2541,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		MailMessage message = new MailMessage();
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
-		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + e.getMessage()));
+		if(e != null)
+			message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
@@ -2565,20 +2566,22 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						connexionSql.close(b -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+								if(gestionnaireEvenements != null)
+									gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							} else {
-								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+								if(gestionnaireEvenements != null)
+									gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+						if(gestionnaireEvenements != null)
+							gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 					}
 				});
 			} else {
-				gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+				if(gestionnaireEvenements != null)
+					gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 			}
-		} else {
-			gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 		}
 	}
 

@@ -192,15 +192,15 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									eventHandler.handle(Future.succeededFuture(schoolAge));
 									promise.complete(schoolAge);
 								} else {
-									errorSchoolAge(siteRequest, null, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolAge(siteRequest, null, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolAge(siteRequest, null, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
@@ -2045,9 +2045,9 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 			Buffer.buffer().appendString(
 				new JsonObject() {{
-					put("error", new JsonObject() {{
-					put("message", e.getMessage());
-					}});
+					put("error", new JsonObject()
+						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+					);
 				}}.encodePrettily()
 			)
 			, new CaseInsensitiveHeaders()
@@ -2058,8 +2058,9 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		MailMessage message = new MailMessage();
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
-		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + e.getMessage()));
+		if(e != null)
+			message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
@@ -2082,20 +2083,22 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("sql close. "));
-								eventHandler.handle(Future.succeededFuture(responseOperation));
+								if(eventHandler != null)
+									eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
-								eventHandler.handle(Future.succeededFuture(responseOperation));
+								if(eventHandler != null)
+									eventHandler.handle(Future.succeededFuture(responseOperation));
 							}
 						});
 					} else {
-						eventHandler.handle(Future.succeededFuture(responseOperation));
+						if(eventHandler != null)
+							eventHandler.handle(Future.succeededFuture(responseOperation));
 					}
 				});
 			} else {
-				eventHandler.handle(Future.succeededFuture(responseOperation));
+				if(eventHandler != null)
+					eventHandler.handle(Future.succeededFuture(responseOperation));
 			}
-		} else {
-			eventHandler.handle(Future.succeededFuture(responseOperation));
 		}
 	}
 

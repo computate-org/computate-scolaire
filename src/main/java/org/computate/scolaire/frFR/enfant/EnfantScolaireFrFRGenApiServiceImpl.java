@@ -172,15 +172,15 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 									gestionnaireEvenements.handle(Future.succeededFuture(enfantScolaire));
 									promise.complete(enfantScolaire);
 								} else {
-									erreurEnfantScolaire(requeteSite, null, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurEnfantScolaire(requeteSite, null, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurEnfantScolaire(requeteSite, null, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
@@ -1854,9 +1854,9 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 			Buffer.buffer().appendString(
 				new JsonObject() {{
-					put("erreur", new JsonObject() {{
-					put("message", e.getMessage());
-					}});
+					put("erreur", new JsonObject()
+						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+					);
 				}}.encodePrettily()
 			)
 			, new CaseInsensitiveHeaders()
@@ -1867,8 +1867,9 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		MailMessage message = new MailMessage();
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
-		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + e.getMessage()));
+		if(e != null)
+			message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
@@ -1891,20 +1892,22 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						connexionSql.close(b -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("sql close. "));
-								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+								if(gestionnaireEvenements != null)
+									gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							} else {
-								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+								if(gestionnaireEvenements != null)
+									gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+						if(gestionnaireEvenements != null)
+							gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 					}
 				});
 			} else {
-				gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+				if(gestionnaireEvenements != null)
+					gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 			}
-		} else {
-			gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 		}
 	}
 

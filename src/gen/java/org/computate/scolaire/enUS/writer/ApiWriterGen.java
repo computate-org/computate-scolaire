@@ -15,6 +15,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -24,6 +25,7 @@ import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -32,6 +34,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1601,6 +1605,73 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classApiUriMethod == null ? "" : StringEscapeUtils.escapeHtml4(strClassApiUriMethod());
 	}
 
+	/////////////////////////
+	// classRoleUserMethod //
+	/////////////////////////
+
+	/**	L'entité « classRoleUserMethod »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean classRoleUserMethod;
+	@JsonIgnore
+	public Wrap<Boolean> classRoleUserMethodWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("classRoleUserMethod").o(classRoleUserMethod);
+
+	/**	<br/>L'entité « classRoleUserMethod »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classRoleUserMethod">Trouver l'entité classRoleUserMethod dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classRoleUserMethod(Wrap<Boolean> c);
+
+	public Boolean getClassRoleUserMethod() {
+		return classRoleUserMethod;
+	}
+
+	public void setClassRoleUserMethod(Boolean classRoleUserMethod) {
+		this.classRoleUserMethod = classRoleUserMethod;
+		this.classRoleUserMethodWrap.alreadyInitialized = true;
+	}
+	public ApiWriter setClassRoleUserMethod(String o) {
+		this.classRoleUserMethod = Boolean.parseBoolean(o);
+		this.classRoleUserMethodWrap.alreadyInitialized = true;
+		return (ApiWriter)this;
+	}
+	protected ApiWriter classRoleUserMethodInit() {
+		if(!classRoleUserMethodWrap.alreadyInitialized) {
+			_classRoleUserMethod(classRoleUserMethodWrap);
+			if(classRoleUserMethod == null)
+				setClassRoleUserMethod(classRoleUserMethodWrap.o);
+		}
+		classRoleUserMethodWrap.alreadyInitialized(true);
+		return (ApiWriter)this;
+	}
+
+	public Boolean solrClassRoleUserMethod() {
+		return classRoleUserMethod;
+	}
+
+	public String strClassRoleUserMethod() {
+		return classRoleUserMethod == null ? "" : classRoleUserMethod.toString();
+	}
+
+	public String jsonClassRoleUserMethod() {
+		return classRoleUserMethod == null ? "" : classRoleUserMethod.toString();
+	}
+
+	public String nomAffichageClassRoleUserMethod() {
+		return null;
+	}
+
+	public String htmTooltipClassRoleUserMethod() {
+		return null;
+	}
+
+	public String htmClassRoleUserMethod() {
+		return classRoleUserMethod == null ? "" : StringEscapeUtils.escapeHtml4(strClassRoleUserMethod());
+	}
+
 	//////////////////////////
 	// classApiMethodMethod //
 	//////////////////////////
@@ -2825,6 +2896,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		appNameInit();
 		classAbsolutePathInit();
 		classApiUriMethodInit();
+		classRoleUserMethodInit();
 		classApiMethodMethodInit();
 		classApiMediaType200MethodInit();
 		classApiOperationIdMethodInit();
@@ -2964,6 +3036,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 				return oApiWriter.classAbsolutePath;
 			case "classApiUriMethod":
 				return oApiWriter.classApiUriMethod;
+			case "classRoleUserMethod":
+				return oApiWriter.classRoleUserMethod;
 			case "classApiMethodMethod":
 				return oApiWriter.classApiMethodMethod;
 			case "classApiMediaType200Method":

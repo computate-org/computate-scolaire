@@ -35,15 +35,24 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 			g("div");
 		}
 		else {
+			if(sum_chargeAmount.subtract(sum_chargeAmountDue).subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
+				BigDecimal amount = sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount);
+				e("div").a("class", "w3-panel w3-red ").f();
+				sx(String.format("You are late on payments for $%s. ", amount));
+				g("div");
+			}
+			BigDecimal amount = sum_chargeAmount.subtract(sum_paymentAmount);
 			e("div").a("class", "w3-panel w3-blue ").f();
-			sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", sum_chargeAmount.subtract(sum_paymentAmount)));
+			sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", amount));
 			g("div");
-		}
-
-		if(sum_chargeAmount.subtract(sum_chargeAmountDue).subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
-			e("div").a("class", "w3-panel w3-red ").f();
-			sx(String.format("You are late on payments for $%s. ", sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount)));
-			g("div");
+			if(listSchoolPayment.size() > 0) {
+				SchoolPayment payment = listSchoolPayment.first();
+				Long enrollmentKey = payment.getEnrollmentKey();
+				String childCompleteNamePreferred = payment.getChildCompleteNamePreferred();
+				if(enrollmentKey != null && childCompleteNamePreferred != null) {
+					writeMakePayment(amount, enrollmentKey, childCompleteNamePreferred);
+				}
+			}
 		}
 		super.table1PaymentGenPage();
 	}

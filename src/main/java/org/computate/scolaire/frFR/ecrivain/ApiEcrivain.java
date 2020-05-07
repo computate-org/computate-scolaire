@@ -362,6 +362,20 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: classRoleUserMethod
+	 * r: classeApiMethode +
+	 * r.enUS: classApiMethod +
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 * r: frFR
+	 * r.enUS: enUS
+	 **/
+	protected void _classeRoleUtilisateurMethode(Couverture<Boolean> c) {
+		c.o(BooleanUtils.isTrue((Boolean)classeDocumentSolr.get("classeRoleUtilisateur" + classeApiMethode + "_frFR_stored_boolean")));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: classApiMethodMethod
 	 * r: classeApiMethode +
 	 * r.enUS: classApiMethod +
@@ -1350,6 +1364,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: writeApi
 	 * r: appliNom
 	 * r.enUS: appName
+	 * r: classeRoleUtilisateurMethode
+	 * r.enUS: classRoleUserMethod
 	 * r: classePublicLire
 	 * r.enUS: classPublicRead
 	 * r: classeRoleSession
@@ -1368,7 +1384,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
 			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-", classeNomSimple);
 	
-			if(classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isNotTrue(classePublicLire)) {
+			if(classeRoleUtilisateurMethode || classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isNotTrue(classePublicLire)) {
 				wChemins.tl(3, "security:");
 				wChemins.tl(4, "- openIdConnect:");
 				wChemins.tl(5, "- DefaultAuthScope");

@@ -186,15 +186,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									eventHandler.handle(Future.succeededFuture(schoolEnrollment));
 									promise.complete(schoolEnrollment);
 								} else {
-									errorSchoolEnrollment(siteRequest, null, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolEnrollment(siteRequest, null, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolEnrollment(siteRequest, null, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
@@ -4394,6 +4394,112 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+	// RefreshSearchPage //
+
+	@Override
+	public void refreshsearchpageSchoolEnrollmentId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		refreshsearchpageSchoolEnrollment(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void refreshsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		try {
+			sqlSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolEnrollment(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+									refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
+										} else {
+											LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
+											errorSchoolEnrollment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", c.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", a.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void refreshsearchpageSchoolEnrollmentResponse(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			response200RefreshSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", ex));
+			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200RefreshSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listSchoolEnrollment.getSiteRequest_(), buffer);
+			EnrollmentPage page = new EnrollmentPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/refresh-enrollment");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listSchoolEnrollment.size() == 1)
+				siteRequest.setRequestPk(listSchoolEnrollment.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListSchoolEnrollment(listSchoolEnrollment);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepEnrollmentPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// General //
 
 	public Future<SchoolEnrollment> defineIndexSchoolEnrollment(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
@@ -4507,9 +4613,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 			Buffer.buffer().appendString(
 				new JsonObject() {{
-					put("error", new JsonObject() {{
-					put("message", e.getMessage());
-					}});
+					put("error", new JsonObject()
+						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+					);
 				}}.encodePrettily()
 			)
 			, new CaseInsensitiveHeaders()
@@ -4520,8 +4626,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		MailMessage message = new MailMessage();
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
-		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + e.getMessage()));
+		if(e != null)
+			message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
@@ -4544,20 +4651,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("sql close. "));
-								eventHandler.handle(Future.succeededFuture(responseOperation));
+								if(eventHandler != null)
+									eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
-								eventHandler.handle(Future.succeededFuture(responseOperation));
+								if(eventHandler != null)
+									eventHandler.handle(Future.succeededFuture(responseOperation));
 							}
 						});
 					} else {
-						eventHandler.handle(Future.succeededFuture(responseOperation));
+						if(eventHandler != null)
+							eventHandler.handle(Future.succeededFuture(responseOperation));
 					}
 				});
 			} else {
-				eventHandler.handle(Future.succeededFuture(responseOperation));
+				if(eventHandler != null)
+					eventHandler.handle(Future.succeededFuture(responseOperation));
 			}
-		} else {
-			eventHandler.handle(Future.succeededFuture(responseOperation));
 		}
 	}
 

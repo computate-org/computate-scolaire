@@ -220,11 +220,11 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/");
+		c.o("/page");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/-999.png");
+			c.o("/png/page-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -454,7 +454,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 		if(listeDesignPage == null || listeDesignPage.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+				{ e("a").a("href", "/page").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("design de pages").g("span");
@@ -473,7 +473,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 			requeteSite_.setRequetePk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+					{ e("a").a("href", "/page").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 						if(contexteIconeClassesCss != null)
 							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -498,7 +498,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
+				{ e("a").a("href", "/page").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -559,7 +559,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/page?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -567,19 +567,19 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/page?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/page?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/page?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -657,7 +657,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 			DesignPage o = listeDesignPage.getList().get(i);
 			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-			String uri = "//" + o.getPk();
+			String uri = "/page/" + o.getPk();
 			{ e("tr").f();
 				if(getColonneCree()) {
 					{ e("td").f();
@@ -982,13 +982,13 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 					.a("id", "suggereDesignPage", id)
 					.a("autocomplete", "off")
 					.a("oninput", "suggereDesignPageObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListDesignPage", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/page?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeDesignPage != null)
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
-					.a("onclick", "window.location.href = '/?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/page?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
@@ -1001,7 +1001,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 				} p.g("div");
 			} p.g("div");
 			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/").a("class", "").f();
+				{ p.e("a").a("href", "/page").a("class", "").f();
 					p.e("i").a("class", "far fa-drafting-compass ").f().g("i");
 					p.sx("voir tous les design de pages");
 				} p.g("a");

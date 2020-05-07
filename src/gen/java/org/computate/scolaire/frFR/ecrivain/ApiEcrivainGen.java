@@ -15,6 +15,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -24,6 +25,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -32,6 +34,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1601,6 +1605,73 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeApiUriMethode == null ? "" : StringEscapeUtils.escapeHtml4(strClasseApiUriMethode());
 	}
 
+	//////////////////////////////////
+	// classeRoleUtilisateurMethode //
+	//////////////////////////////////
+
+	/**	L'entité « classeRoleUtilisateurMethode »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean classeRoleUtilisateurMethode;
+	@JsonIgnore
+	public Couverture<Boolean> classeRoleUtilisateurMethodeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeRoleUtilisateurMethode").o(classeRoleUtilisateurMethode);
+
+	/**	<br/>L'entité « classeRoleUtilisateurMethode »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classeRoleUtilisateurMethode">Trouver l'entité classeRoleUtilisateurMethode dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classeRoleUtilisateurMethode(Couverture<Boolean> c);
+
+	public Boolean getClasseRoleUtilisateurMethode() {
+		return classeRoleUtilisateurMethode;
+	}
+
+	public void setClasseRoleUtilisateurMethode(Boolean classeRoleUtilisateurMethode) {
+		this.classeRoleUtilisateurMethode = classeRoleUtilisateurMethode;
+		this.classeRoleUtilisateurMethodeCouverture.dejaInitialise = true;
+	}
+	public ApiEcrivain setClasseRoleUtilisateurMethode(String o) {
+		this.classeRoleUtilisateurMethode = Boolean.parseBoolean(o);
+		this.classeRoleUtilisateurMethodeCouverture.dejaInitialise = true;
+		return (ApiEcrivain)this;
+	}
+	protected ApiEcrivain classeRoleUtilisateurMethodeInit() {
+		if(!classeRoleUtilisateurMethodeCouverture.dejaInitialise) {
+			_classeRoleUtilisateurMethode(classeRoleUtilisateurMethodeCouverture);
+			if(classeRoleUtilisateurMethode == null)
+				setClasseRoleUtilisateurMethode(classeRoleUtilisateurMethodeCouverture.o);
+		}
+		classeRoleUtilisateurMethodeCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public Boolean solrClasseRoleUtilisateurMethode() {
+		return classeRoleUtilisateurMethode;
+	}
+
+	public String strClasseRoleUtilisateurMethode() {
+		return classeRoleUtilisateurMethode == null ? "" : classeRoleUtilisateurMethode.toString();
+	}
+
+	public String jsonClasseRoleUtilisateurMethode() {
+		return classeRoleUtilisateurMethode == null ? "" : classeRoleUtilisateurMethode.toString();
+	}
+
+	public String nomAffichageClasseRoleUtilisateurMethode() {
+		return null;
+	}
+
+	public String htmTooltipClasseRoleUtilisateurMethode() {
+		return null;
+	}
+
+	public String htmClasseRoleUtilisateurMethode() {
+		return classeRoleUtilisateurMethode == null ? "" : StringEscapeUtils.escapeHtml4(strClasseRoleUtilisateurMethode());
+	}
+
 	/////////////////////////////
 	// classeApiMethodeMethode //
 	/////////////////////////////
@@ -2825,6 +2896,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		appliNomInit();
 		classeCheminAbsoluInit();
 		classeApiUriMethodeInit();
+		classeRoleUtilisateurMethodeInit();
 		classeApiMethodeMethodeInit();
 		classeApiTypeMedia200MethodeInit();
 		classeApiOperationIdMethodeInit();
@@ -2964,6 +3036,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeCheminAbsolu;
 			case "classeApiUriMethode":
 				return oApiEcrivain.classeApiUriMethode;
+			case "classeRoleUtilisateurMethode":
+				return oApiEcrivain.classeRoleUtilisateurMethode;
 			case "classeApiMethodeMethode":
 				return oApiEcrivain.classeApiMethodeMethode;
 			case "classeApiTypeMedia200Methode":

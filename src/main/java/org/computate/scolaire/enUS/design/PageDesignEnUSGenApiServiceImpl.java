@@ -194,15 +194,15 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									eventHandler.handle(Future.succeededFuture(pageDesign));
 									promise.complete(pageDesign);
 								} else {
-									errorPageDesign(siteRequest, null, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorPageDesign(siteRequest, null, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorPageDesign(siteRequest, null, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
@@ -2448,112 +2448,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		}
 	}
 
-	// PaymentSentSearchPage //
-
-	@Override
-	public void paymentsentsearchpagePageDesignId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		paymentsentsearchpagePageDesign(operationRequest, eventHandler);
-	}
-
-	@Override
-	public void paymentsentsearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
-		try {
-			sqlPageDesign(siteRequest, a -> {
-				if(a.succeeded()) {
-					userPageDesign(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchPageDesign(siteRequest, false, true, "/payment-sent", "PaymentSentSearchPage", c -> {
-								if(c.succeeded()) {
-									SearchList<PageDesign> listPageDesign = c.result();
-									paymentsentsearchpagePageDesignResponse(listPageDesign, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("paymentsentsearchpagePageDesign succeeded. "));
-										} else {
-											LOGGER.error(String.format("paymentsentsearchpagePageDesign failed. ", d.cause()));
-											errorPageDesign(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									LOGGER.error(String.format("paymentsentsearchpagePageDesign failed. ", c.cause()));
-									errorPageDesign(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("paymentsentsearchpagePageDesign failed. ", b.cause()));
-							errorPageDesign(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("paymentsentsearchpagePageDesign failed. ", a.cause()));
-					errorPageDesign(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception ex) {
-			LOGGER.error(String.format("paymentsentsearchpagePageDesign failed. ", ex));
-			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
-		}
-	}
-
-
-	public void paymentsentsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-		try {
-			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(siteRequest, buffer);
-			siteRequest.setW(w);
-			response200PaymentSentSearchPagePageDesign(listPageDesign, a -> {
-				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorPageDesign(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorPageDesign(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorPageDesign(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception ex) {
-			LOGGER.error(String.format("paymentsentsearchpagePageDesign failed. ", ex));
-			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
-		}
-	}
-	public void response200PaymentSentSearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
-			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
-			DesignDisplayPage page = new DesignDisplayPage();
-			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
-			siteRequest.setRequestHeaders(requestHeaders);
-
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/payment-sent");
-			page.setPageSolrDocument(pageSolrDocument);
-			page.setW(w);
-			if(listPageDesign.size() == 1)
-				siteRequest.setRequestPk(listPageDesign.get(0).getPk());
-			siteRequest.setW(w);
-			page.setListPageDesign(listPageDesign);
-			page.setSiteRequest_(siteRequest);
-			page.initDeepDesignDisplayPage(siteRequest);
-			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// General //
 
 	public Future<PageDesign> defineIndexPageDesign(PageDesign pageDesign, Handler<AsyncResult<PageDesign>> eventHandler) {
@@ -2637,9 +2531,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 			Buffer.buffer().appendString(
 				new JsonObject() {{
-					put("error", new JsonObject() {{
-					put("message", e.getMessage());
-					}});
+					put("error", new JsonObject()
+						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+					);
 				}}.encodePrettily()
 			)
 			, new CaseInsensitiveHeaders()
@@ -2650,8 +2544,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		MailMessage message = new MailMessage();
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
-		message.setText(ExceptionUtils.getStackTrace(e));
-		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + e.getMessage()));
+		if(e != null)
+			message.setText(ExceptionUtils.getStackTrace(e));
+		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
@@ -2674,20 +2569,22 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						sqlConnection.close(b -> {
 							if(a.succeeded()) {
 								LOGGER.info(String.format("sql close. "));
-								eventHandler.handle(Future.succeededFuture(responseOperation));
+								if(eventHandler != null)
+									eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
-								eventHandler.handle(Future.succeededFuture(responseOperation));
+								if(eventHandler != null)
+									eventHandler.handle(Future.succeededFuture(responseOperation));
 							}
 						});
 					} else {
-						eventHandler.handle(Future.succeededFuture(responseOperation));
+						if(eventHandler != null)
+							eventHandler.handle(Future.succeededFuture(responseOperation));
 					}
 				});
 			} else {
-				eventHandler.handle(Future.succeededFuture(responseOperation));
+				if(eventHandler != null)
+					eventHandler.handle(Future.succeededFuture(responseOperation));
 			}
-		} else {
-			eventHandler.handle(Future.succeededFuture(responseOperation));
 		}
 	}
 
