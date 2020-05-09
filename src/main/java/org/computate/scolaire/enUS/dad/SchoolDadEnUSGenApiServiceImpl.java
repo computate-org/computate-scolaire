@@ -1785,6 +1785,129 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		}
 	}
 
+	// AdminSearch //
+
+	@Override
+	public void adminsearchSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
+		try {
+			sqlSchoolDad(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolDad(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolDad(siteRequest, false, true, "/api/admin/dad", "AdminSearch", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolDad> listSchoolDad = c.result();
+									adminsearchSchoolDadResponse(listSchoolDad, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("adminsearchSchoolDad succeeded. "));
+										} else {
+											LOGGER.error(String.format("adminsearchSchoolDad failed. ", d.cause()));
+											errorSchoolDad(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("adminsearchSchoolDad failed. ", c.cause()));
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("adminsearchSchoolDad failed. ", b.cause()));
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("adminsearchSchoolDad failed. ", a.cause()));
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("adminsearchSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void adminsearchSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
+		try {
+			response200AdminSearchSchoolDad(listSchoolDad, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolDad(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolDad(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolDad(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("adminsearchSchoolDad failed. ", ex));
+			errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200AdminSearchSchoolDad(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
+			QueryResponse responseSearch = listSchoolDad.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchoolDad.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("startNum", startNum);
+			json.put("foundNum", foundNum);
+			json.put("returnedNum", returnedNum);
+			json.put("searchTime", searchTime);
+			json.put("transmissionTime", transmissionTime);
+			JsonArray l = new JsonArray();
+			listSchoolDad.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolDad.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("list", l);
+			if(exceptionSearch != null) {
+				json.put("exceptionSearch", exceptionSearch.getMessage());
+			}
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// SearchPage //
 
 	@Override

@@ -35,6 +35,14 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
  * 
+ * ApiMethode.frFR: RechercheAdmin
+ * ApiUriRechercheAdmin.frFR: /api/admin/design-page
+ * RoleUtilisateurRechercheAdmin.frFR: true
+ * 
+ * ApiMethode.enUS: AdminSearch
+ * ApiUriAdminSearch.enUS: /api/admin/page-design
+ * RoleUtilisateurAdminSearch.enUS: true
+ * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: DesignPagePage
  * PageSuperPageRecherche.frFR: ClusterPage

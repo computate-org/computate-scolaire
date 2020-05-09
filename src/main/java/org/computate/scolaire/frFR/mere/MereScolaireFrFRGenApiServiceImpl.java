@@ -1785,6 +1785,129 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
+	// RechercheAdmin //
+
+	@Override
+	public void rechercheadminMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
+		try {
+			sqlMereScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurMereScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheMereScolaire(requeteSite, false, true, "/api/admin/mere", "RechercheAdmin", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+									rechercheadminMereScolaireReponse(listeMereScolaire, d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("rechercheadminMereScolaire a réussi. "));
+										} else {
+											LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", d.cause()));
+											erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", c.cause()));
+									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", b.cause()));
+							erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", a.cause()));
+					erreurMereScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", ex));
+			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheadminMereScolaireReponse(ListeRecherche<MereScolaire> listeMereScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
+		try {
+			reponse200RechercheAdminMereScolaire(listeMereScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurMereScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", ex));
+			erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200RechercheAdminMereScolaire(ListeRecherche<MereScolaire> listeMereScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
+			QueryResponse reponseRecherche = listeMereScolaire.getQueryResponse();
+			SolrDocumentList documentsSolr = listeMereScolaire.getSolrDocumentList();
+			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
+			Long millisTransmission = reponseRecherche.getElapsedTime();
+			Long numCommence = reponseRecherche.getResults().getStart();
+			Long numTrouve = reponseRecherche.getResults().getNumFound();
+			Integer numRetourne = reponseRecherche.getResults().size();
+			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
+			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
+			Exception exceptionRecherche = reponseRecherche.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("numCommence", numCommence);
+			json.put("numTrouve", numTrouve);
+			json.put("numRetourne", numRetourne);
+			json.put("tempsRecherche", tempsRecherche);
+			json.put("tempsTransmission", tempsTransmission);
+			JsonArray l = new JsonArray();
+			listeMereScolaire.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeMereScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("liste", l);
+			if(exceptionRecherche != null) {
+				json.put("exceptionRecherche", exceptionRecherche.getMessage());
+			}
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// PageRecherche //
 
 	@Override

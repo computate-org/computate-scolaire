@@ -24,9 +24,11 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: POST
  * 
  * ApiMethode.frFR: PUTImport
+ * RoleUtilisateurPUTImport.frFR: true
  * ApiMethode.frFR: PUTFusion
  * ApiMethode.frFR: PUTCopie
  * ApiMethode.enUS: PUTImport
+ * RoleUtilisateurPUTImport.enUS: true
  * ApiMethode.enUS: PUTMerge
  * ApiMethode.enUS: PUTCopy
 
@@ -34,6 +36,14 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode: GET
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
+ * 
+ * ApiMethode.frFR: RechercheAdmin
+ * ApiUriRechercheAdmin.frFR: /api/admin/mere
+ * RoleUtilisateurRechercheAdmin.frFR: true
+ * 
+ * ApiMethode.enUS: AdminSearch
+ * ApiUriAdminSearch.enUS: /api/admin/mom
+ * RoleUtilisateurAdminSearch.enUS: true
  * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: MerePage

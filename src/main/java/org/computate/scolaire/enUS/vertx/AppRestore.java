@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.crypto.Cipher;
@@ -30,8 +29,8 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
-import io.vertx.core.WorkerExecutor;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
@@ -60,7 +59,7 @@ public class AppRestore extends AbstractVerticle {
 	 *	Setup the startFuture to handle the configuration steps and starting the server. 
 	 **/
 	@Override()
-	public void  start(Future<Void> startFuture) throws Exception, Exception {
+	public void  start(Promise<Void> startPromise) throws Exception, Exception {
 		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 		SiteContextEnUS siteContext = new SiteContextEnUS();
 		siteRequest.setSiteContext_(siteContext);
@@ -70,20 +69,20 @@ public class AppRestore extends AbstractVerticle {
 		siteContext.initDeepSiteContextEnUS();
 		siteRequest.setSiteConfig_(siteContext.getSiteConfig());
 
-		start(siteRequest, startFuture);
+		start(siteRequest, startPromise);
 	}
 
-	public void  start(SiteRequestEnUS siteRequest, Future<Void> startFuture) throws Exception, Exception {
+	public void  start(SiteRequestEnUS siteRequest, Promise<Void> startPromise) throws Exception, Exception {
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
 		SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
 		siteRequest2.setSiteContext_(siteContext);
 		siteRequest2.initDeepSiteRequestEnUS();
 		siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
 		siteRequest = siteRequest2;
-		start2(siteRequest2, startFuture);
+		start2(siteRequest2, startPromise);
 	}
 
-	public void  start2(SiteRequestEnUS siteRequest, Future<Void> startFuture) throws Exception, Exception {
+	public void  start2(SiteRequestEnUS siteRequest, Promise<Void> startPromise) throws Exception, Exception {
 
 		try {
 			ZonedDateTime dateTime = ZonedDateTime.now();
@@ -110,7 +109,7 @@ public class AppRestore extends AbstractVerticle {
 												if(f.succeeded()) {
 													SQLConnection sqlConnection = siteRequest.getSqlConnection();
 													if(sqlConnection == null) {
-														startFuture.complete();
+														startPromise.complete();
 				//										eventHandler.handle(Future.succeededFuture(d.result()));
 													} else {
 														sqlConnection.commit(g -> {
@@ -118,46 +117,46 @@ public class AppRestore extends AbstractVerticle {
 																sqlConnection.close(h -> {
 																	if(h.succeeded()) {
 																		System.out.println("Completed!!!");
-																		startFuture.complete();
+																		startPromise.complete();
 				//														eventHandler.handle(Future.succeededFuture(d.result()));
 																	} else {
-																		startFuture.fail(h.cause());
+																		startPromise.fail(h.cause());
 				//														errorCluster(siteRequest, eventHandler, f);
 																	}
 																});
 															} else {
-																startFuture.fail(g.cause());
+																startPromise.fail(g.cause());
 				//												eventHandler.handle(Future.succeededFuture(d.result()));
 															}
 														});
 													}
 												} else {
-													startFuture.fail(f.cause());
+													startPromise.fail(f.cause());
 				//									errorCluster(siteRequest, eventHandler, d);
 												}
 											});
 										} else {
-											startFuture.fail(e.cause());
+											startPromise.fail(e.cause());
 				//							errorCluster(siteRequest, eventHandler, b);
 										}
 									});
 								} else {
-									startFuture.fail(d.cause());
+									startPromise.fail(d.cause());
 				//					errorCluster(siteRequest, eventHandler, a);
 								}
 							});
 						} else {
-							startFuture.fail(b.cause());
+							startPromise.fail(b.cause());
 //							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					startFuture.fail(a.cause());
+					startPromise.fail(a.cause());
 //					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			startFuture.fail(e);
+			startPromise.fail(e);
 //			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
@@ -171,7 +170,7 @@ public class AppRestore extends AbstractVerticle {
 	private Future<Void> configureData(SiteRequestEnUS siteRequest) {
 		SiteContextEnUSGen<Object> siteContextEnUS = siteRequest.getSiteContext_();
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 
 		JsonObject jdbcConfig = new JsonObject();
 		if (StringUtils.isNotEmpty(siteConfig.getJdbcUrl()))
@@ -201,9 +200,9 @@ public class AppRestore extends AbstractVerticle {
 		JDBCClient jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
 		siteContextEnUS.setSqlClient(jdbcClient);
-		future.complete();
+		promise.complete();
 
-		return future;
+		return promise.future();
 	}
 
 	public void nextDefinitions(SiteRequestEnUS siteRequest, ZonedDateTime dateTime, Handler<AsyncResult<List<JsonArray>>> eventHandler) {
@@ -299,8 +298,9 @@ public class AppRestore extends AbstractVerticle {
 		else {
 			rows.forEach(o -> {
 				futures.add(
-						futureDefinition(siteRequest, rows, dateTime, o, a -> {
+					futureDefinition(siteRequest, rows, dateTime, o, a -> {
 						if(a.succeeded()) {
+							a.toString();
 						} else {
 							eventHandler.handle(Future.failedFuture(a.cause()));
 						}
@@ -326,7 +326,7 @@ public class AppRestore extends AbstractVerticle {
 
 	public Future<List<JsonArray>> futureDefinition(SiteRequestEnUS siteRequest, List<JsonArray> rows, ZonedDateTime dateTime, JsonArray o,  Handler<AsyncResult<List<JsonArray>>> eventHandler) {
 
-		Future<List<JsonArray>> future = Future.future();
+		Promise<List<JsonArray>> promise = Promise.promise();
 		try {
 			Long pk = o.getLong(0);
 			String path = o.getString(2);
@@ -357,19 +357,20 @@ public class AppRestore extends AbstractVerticle {
 				}
 			}
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			if(scramble && StringUtils.equals(path, "personFirstName"))
+//			if(scramble && StringUtils.equals(path, "personFirstName"))
 			sqlConnection.queryWithParams(
 					"update d set modified=now(), value=?, current=true where pk=?;"
 					, new JsonArray(Arrays.asList(value, pk))
 					, selectCAsync
 			-> {
 				if(selectCAsync.succeeded()) {
-					future.complete(rows);
+					promise.complete(rows);
+					eventHandler.handle(Future.succeededFuture(rows));
 				} else {
 					eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}
@@ -410,7 +411,7 @@ public class AppRestore extends AbstractVerticle {
 	}
 
 	public Future<Cluster> futurePATCHCluster(Cluster o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		Future<Cluster> future = Future.future();
+		Promise<Cluster> promise = Promise.promise();
 		try {
 			defineCluster(o, b -> {
 				if(b.succeeded()) {
@@ -418,7 +419,7 @@ public class AppRestore extends AbstractVerticle {
 						if(c.succeeded()) {
 							indexCluster(o, d -> {
 								if(d.succeeded()) {
-									future.complete(o);
+									promise.complete(o);
 //									eventHandler.handle(Future.succeededFuture(d.result()));
 								} else {
 									eventHandler.handle(Future.failedFuture(d.cause()));
@@ -432,7 +433,7 @@ public class AppRestore extends AbstractVerticle {
 					eventHandler.handle(Future.failedFuture(b.cause()));
 				}
 			});
-			return future;
+			return promise.future();
 		} catch(Exception e) {
 			return Future.failedFuture(e);
 		}

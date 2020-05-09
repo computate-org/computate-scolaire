@@ -2990,6 +2990,129 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
+	// RechercheAdmin //
+
+	@Override
+	public void rechercheadminInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
+		try {
+			sqlInscriptionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurInscriptionScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheInscriptionScolaire(requeteSite, false, true, "/api/admin/inscription", "RechercheAdmin", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+									rechercheadminInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("rechercheadminInscriptionScolaire a réussi. "));
+										} else {
+											LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", d.cause()));
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", c.cause()));
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", b.cause()));
+							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", a.cause()));
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheadminInscriptionScolaireReponse(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+		try {
+			reponse200RechercheAdminInscriptionScolaire(listeInscriptionScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200RechercheAdminInscriptionScolaire(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+			QueryResponse reponseRecherche = listeInscriptionScolaire.getQueryResponse();
+			SolrDocumentList documentsSolr = listeInscriptionScolaire.getSolrDocumentList();
+			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
+			Long millisTransmission = reponseRecherche.getElapsedTime();
+			Long numCommence = reponseRecherche.getResults().getStart();
+			Long numTrouve = reponseRecherche.getResults().getNumFound();
+			Integer numRetourne = reponseRecherche.getResults().size();
+			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
+			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
+			Exception exceptionRecherche = reponseRecherche.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("numCommence", numCommence);
+			json.put("numTrouve", numTrouve);
+			json.put("numRetourne", numRetourne);
+			json.put("tempsRecherche", tempsRecherche);
+			json.put("tempsTransmission", tempsTransmission);
+			JsonArray l = new JsonArray();
+			listeInscriptionScolaire.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeInscriptionScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("liste", l);
+			if(exceptionRecherche != null) {
+				json.put("exceptionRecherche", exceptionRecherche.getMessage());
+			}
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// PATCHPaiements //
 
 	@Override

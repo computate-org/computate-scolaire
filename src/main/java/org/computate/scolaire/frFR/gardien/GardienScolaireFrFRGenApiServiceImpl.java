@@ -1731,6 +1731,129 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
+	// RechercheAdmin //
+
+	@Override
+	public void rechercheadminGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+		try {
+			sqlGardienScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurGardienScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheGardienScolaire(requeteSite, false, true, "/api/admin/gardien", "RechercheAdmin", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+									rechercheadminGardienScolaireReponse(listeGardienScolaire, d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("rechercheadminGardienScolaire a réussi. "));
+										} else {
+											LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", d.cause()));
+											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", c.cause()));
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", b.cause()));
+							erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", a.cause()));
+					erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", ex));
+			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechercheadminGardienScolaireReponse(ListeRecherche<GardienScolaire> listeGardienScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
+		try {
+			reponse200RechercheAdminGardienScolaire(listeGardienScolaire, a -> {
+				if(a.succeeded()) {
+					SQLConnection connexionSql = requeteSite.getConnexionSql();
+					connexionSql.commit(b -> {
+						if(b.succeeded()) {
+							connexionSql.close(c -> {
+								if(c.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+								} else {
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurGardienScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", ex));
+			erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200RechercheAdminGardienScolaire(ListeRecherche<GardienScolaire> listeGardienScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
+			QueryResponse reponseRecherche = listeGardienScolaire.getQueryResponse();
+			SolrDocumentList documentsSolr = listeGardienScolaire.getSolrDocumentList();
+			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
+			Long millisTransmission = reponseRecherche.getElapsedTime();
+			Long numCommence = reponseRecherche.getResults().getStart();
+			Long numTrouve = reponseRecherche.getResults().getNumFound();
+			Integer numRetourne = reponseRecherche.getResults().size();
+			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
+			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
+			Exception exceptionRecherche = reponseRecherche.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("numCommence", numCommence);
+			json.put("numTrouve", numTrouve);
+			json.put("numRetourne", numRetourne);
+			json.put("tempsRecherche", tempsRecherche);
+			json.put("tempsTransmission", tempsTransmission);
+			JsonArray l = new JsonArray();
+			listeGardienScolaire.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeGardienScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("liste", l);
+			if(exceptionRecherche != null) {
+				json.put("exceptionRecherche", exceptionRecherche.getMessage());
+			}
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// PageRecherche //
 
 	@Override

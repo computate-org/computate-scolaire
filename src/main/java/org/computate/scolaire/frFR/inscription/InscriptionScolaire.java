@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                            
+package org.computate.scolaire.frFR.inscription;                             
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -45,9 +45,11 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiMethode: POST
  * 
  * ApiMethode.frFR: PUTImport
+ * RoleUtilisateurPUTImport.frFR: true
  * ApiMethode.frFR: PUTFusion
  * ApiMethode.frFR: PUTCopie
  * ApiMethode.enUS: PUTImport
+ * RoleUtilisateurPUTImport.enUS: true
  * ApiMethode.enUS: PUTMerge
  * ApiMethode.enUS: PUTCopy
 
@@ -55,6 +57,14 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiMethode: GET
  * ApiMethode.frFR: Recherche
  * ApiMethode.enUS: Search
+ * 
+ * ApiMethode.frFR: RechercheAdmin
+ * ApiUriRechercheAdmin.frFR: /api/admin/inscription
+ * RoleUtilisateurRechercheAdmin.frFR: true
+ * 
+ * ApiMethode.enUS: AdminSearch
+ * ApiUriAdminSearch.enUS: /api/admin/enrollment
+ * RoleUtilisateurAdminSearch.enUS: true
  * 
  * ApiMethode.frFR: PATCHPaiements
  * ApiUriPATCHPayments.frFR: /inscription/paiements
@@ -88,7 +98,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/     
+*/      
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**

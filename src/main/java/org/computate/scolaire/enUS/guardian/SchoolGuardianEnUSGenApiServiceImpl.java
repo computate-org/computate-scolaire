@@ -1731,6 +1731,129 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
+	// AdminSearch //
+
+	@Override
+	public void adminsearchSchoolGuardian(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolGuardian(siteContext, operationRequest);
+		try {
+			sqlSchoolGuardian(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolGuardian(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolGuardian(siteRequest, false, true, "/api/admin/guardian", "AdminSearch", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolGuardian> listSchoolGuardian = c.result();
+									adminsearchSchoolGuardianResponse(listSchoolGuardian, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("adminsearchSchoolGuardian succeeded. "));
+										} else {
+											LOGGER.error(String.format("adminsearchSchoolGuardian failed. ", d.cause()));
+											errorSchoolGuardian(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									LOGGER.error(String.format("adminsearchSchoolGuardian failed. ", c.cause()));
+									errorSchoolGuardian(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("adminsearchSchoolGuardian failed. ", b.cause()));
+							errorSchoolGuardian(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("adminsearchSchoolGuardian failed. ", a.cause()));
+					errorSchoolGuardian(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("adminsearchSchoolGuardian failed. ", ex));
+			errorSchoolGuardian(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void adminsearchSchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+		try {
+			response200AdminSearchSchoolGuardian(listSchoolGuardian, a -> {
+				if(a.succeeded()) {
+					SQLConnection sqlConnection = siteRequest.getSqlConnection();
+					sqlConnection.commit(b -> {
+						if(b.succeeded()) {
+							sqlConnection.close(c -> {
+								if(c.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(a.result()));
+								} else {
+									errorSchoolGuardian(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolGuardian(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolGuardian(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("adminsearchSchoolGuardian failed. ", ex));
+			errorSchoolGuardian(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200AdminSearchSchoolGuardian(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
+			QueryResponse responseSearch = listSchoolGuardian.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchoolGuardian.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("startNum", startNum);
+			json.put("foundNum", foundNum);
+			json.put("returnedNum", returnedNum);
+			json.put("searchTime", searchTime);
+			json.put("transmissionTime", transmissionTime);
+			JsonArray l = new JsonArray();
+			listSchoolGuardian.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolGuardian.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("list", l);
+			if(exceptionSearch != null) {
+				json.put("exceptionSearch", exceptionSearch.getMessage());
+			}
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// SearchPage //
 
 	@Override

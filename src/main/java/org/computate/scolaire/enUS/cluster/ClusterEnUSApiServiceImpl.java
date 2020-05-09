@@ -6,6 +6,7 @@ import org.computate.scolaire.enUS.vertx.AppRestore;
 
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 
 /**
  * Translate: false
@@ -23,18 +24,18 @@ public class ClusterEnUSApiServiceImpl extends ClusterEnUSGenApiServiceImpl {
 //	}
 //
 	public Future<Void>  appRestore(SiteRequestEnUS siteRequest, Handler<Future<Void>> eventHandler) throws Exception, Exception {
-		Future<Void> future = Future.future();
+		Promise<Void> promise = Promise.promise();
 		AppRestore appRestore = new AppRestore();
 		appRestore.init(siteRequest.getVertx(), siteRequest.getVertx().getOrCreateContext());
 		try {
-			appRestore.start(siteRequest, future);
-			if(future.succeeded())
-				eventHandler.handle(Future.succeededFuture());
-			else
-				eventHandler.handle(Future.failedFuture(future.cause()));
+			appRestore.start(siteRequest, promise);
+//			if(promise.succeeded())
+//				eventHandler.handle(Future.succeededFuture());
+//			else
+//				eventHandler.handle(Future.failedFuture(promise.cause()));
 		} catch (Exception e) {
-			future.fail(e);
+			promise.fail(e);
 		}
-		return future;
+		return promise.future();
 	}
 }
