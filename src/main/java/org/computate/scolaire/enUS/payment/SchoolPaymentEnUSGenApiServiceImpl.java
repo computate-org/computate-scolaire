@@ -45,7 +45,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -121,7 +120,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								if(c.succeeded()) {
 									SchoolPayment schoolPayment = c.result();
 									apiRequest.setPk(schoolPayment.getPk());
-									apiRequestSchoolPayment(schoolPayment);
 									postSchoolPaymentResponse(schoolPayment, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
@@ -192,6 +190,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void sqlPOSTSchoolPayment(SchoolPayment o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -267,6 +268,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -555,7 +560,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						postSchoolPaymentFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								SchoolPayment schoolPayment = a.result();
-								apiRequestSchoolPayment(schoolPayment);
 							} else {
 								errorSchoolPayment(siteRequest2, eventHandler, a);
 							}
@@ -741,7 +745,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						postSchoolPaymentFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								SchoolPayment schoolPayment = a.result();
-								apiRequestSchoolPayment(schoolPayment);
 							} else {
 								errorSchoolPayment(siteRequest2, eventHandler, a);
 							}
@@ -899,7 +902,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				putcopySchoolPaymentFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						SchoolPayment schoolPayment = a.result();
-						apiRequestSchoolPayment(schoolPayment);
 					} else {
 						errorSchoolPayment(siteRequest, eventHandler, a);
 					}
@@ -974,6 +976,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void sqlPUTCopySchoolPayment(SchoolPayment o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1017,8 +1022,11 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						putSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
 						break;
 					case "enrollmentKey":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						putSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+						}
 						break;
 					case "childCompleteNamePreferred":
 						putSql.append(SiteContextEnUS.SQL_setD);
@@ -1324,7 +1332,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-												apiRequestSchoolPayment(schoolPayment);
 												if(apiRequest.getNumFound() == 1L) {
 													schoolPayment.apiRequestSchoolPayment();
 												}
@@ -1357,6 +1364,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void sqlPATCHSchoolPayment(SchoolPayment o, Boolean inheritPk, Handler<AsyncResult<SchoolPayment>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -1479,6 +1489,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									o2.setEnrollmentKey(jsonObject.getString(methodName));
 									patchSql.append(SiteContextEnUS.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -1498,6 +1512,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									o2.setEnrollmentKey(jsonObject.getString(methodName));
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("enrollmentKey", pk, "paymentKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -2172,21 +2190,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	public ApiRequest apiRequestSchoolPayment(SchoolPayment o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-			if(o.getEnrollmentKey() != null) {
-				if(!pks.contains(o.getEnrollmentKey())) {
-					pks.add(o.getEnrollmentKey());
-					classes.add("SchoolEnrollment");
-				}
-			}
-		}
-		return apiRequest;
-	}
-
 	public void errorSchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2669,6 +2672,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void indexSchoolPayment(SchoolPayment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
@@ -2684,43 +2690,45 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					Long pk = o.getEnrollmentKey();
-					SearchList<SchoolEnrollment> searchList2 = new SearchList<SchoolEnrollment>();
-					if(pk != null) {
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
+
+					if("SchoolEnrollment".equals(classSimpleName2) && pk2 != null) {
+						SearchList<SchoolEnrollment> searchList2 = new SearchList<SchoolEnrollment>();
 						searchList2.setStore(true);
 						searchList2.setQuery("*:*");
 						searchList2.setC(SchoolEnrollment.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
 						searchList2.setRows(1);
 						searchList2.initDeepSearchList(siteRequest2);
-					}
-					SchoolEnrollment o2 = searchList2.getList().stream().findFirst().orElse(null);
+						SchoolEnrollment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-					if(o2 != null) {
-						SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						if(o2 != null) {
+							SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 
-						ApiRequest apiRequest = new ApiRequest();
-						apiRequest.setRows(1);
-						apiRequest.setNumFound(1L);
-						apiRequest.setNumPATCH(0L);
-						apiRequest.initDeepApiRequest(siteRequest2);
-						siteRequest2.setApiRequest_(apiRequest);
-						siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1L);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
 
-						if(pk != null) {
-							o2.setPk(pk);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchSchoolEnrollmentFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
-									} else {
-										LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(pk2 != null) {
+								o2.setPk(pk2);
+								o2.setSiteRequest_(siteRequest2);
+								futures.add(
+									service.patchSchoolEnrollmentFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk2));
+										} else {
+											LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk2));
+											eventHandler.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

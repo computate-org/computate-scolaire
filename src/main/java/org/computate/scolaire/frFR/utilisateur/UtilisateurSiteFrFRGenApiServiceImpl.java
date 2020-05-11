@@ -47,7 +47,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -373,7 +372,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiUtilisateurSite(utilisateurSite);
 												if(requeteApi.getNumFound() == 1L) {
 													utilisateurSite.requeteApiUtilisateurSite();
 												}
@@ -406,6 +404,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void sqlPATCHUtilisateurSite(UtilisateurSite o, Boolean inheritPk, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -527,6 +528,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("InscriptionScolaire");
+									}
 								}
 							}
 						}
@@ -546,6 +551,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("InscriptionScolaire");
+									}
 								}
 							}
 						}
@@ -567,6 +576,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("InscriptionScolaire");
+									}
 								}
 							}
 						}
@@ -585,6 +598,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("InscriptionScolaire");
+									}
 								}
 							}
 						}
@@ -603,6 +620,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -622,6 +643,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -643,6 +668,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -661,6 +690,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -804,7 +837,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(c.succeeded()) {
 									UtilisateurSite utilisateurSite = c.result();
 									requeteApi.setPk(utilisateurSite.getPk());
-									requeteApiUtilisateurSite(utilisateurSite);
 									postUtilisateurSiteReponse(utilisateurSite, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -875,6 +907,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void sqlPOSTUtilisateurSite(UtilisateurSite o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -949,6 +984,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("InscriptionScolaire");
+									}
 								}
 							}
 						}
@@ -966,6 +1005,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -1205,27 +1248,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
-	}
-
-	public RequeteApi requeteApiUtilisateurSite(UtilisateurSite o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			for(Long pk : o.getInscriptionCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("InscriptionScolaire");
-				}
-			}
-			for(Long pk : o.getPaiementCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("PaiementScolaire");
-				}
-			}
-		}
-		return requeteApi;
 	}
 
 	public void erreurUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1704,6 +1726,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void indexerUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -1720,80 +1745,81 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getInscriptionCles()) {
-					ListeRecherche<InscriptionScolaire> listeRecherche2 = new ListeRecherche<InscriptionScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(InscriptionScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+					if("InscriptionScolaire".equals(classeNomSimple2) && pk2 != null) {
+						InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<InscriptionScolaire> listeRecherche2 = new ListeRecherche<InscriptionScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(InscriptionScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchInscriptionScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchInscriptionScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getPaiementCles()) {
-					ListeRecherche<PaiementScolaire> listeRecherche2 = new ListeRecherche<PaiementScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(PaiementScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					PaiementScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+					if("PaiementScolaire".equals(classeNomSimple2) && pk2 != null) {
+						PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<PaiementScolaire> listeRecherche2 = new ListeRecherche<PaiementScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(PaiementScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							PaiementScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchPaiementScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("PaiementScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchPaiementScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("PaiementScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

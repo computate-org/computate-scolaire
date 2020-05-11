@@ -45,7 +45,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -139,7 +138,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(c.succeeded()) {
 									PartHtml partHtml = c.result();
 									requeteApi.setPk(partHtml.getPk());
-									requeteApiPartHtml(partHtml);
 									postPartHtmlReponse(partHtml, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -210,6 +208,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void sqlPOSTPartHtml(PartHtml o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -278,6 +279,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("DesignPage");
+									}
 								}
 							}
 						}
@@ -588,7 +593,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						postPartHtmlFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								PartHtml partHtml = a.result();
-								requeteApiPartHtml(partHtml);
 							} else {
 								erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -792,7 +796,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						postPartHtmlFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								PartHtml partHtml = a.result();
-								requeteApiPartHtml(partHtml);
 							} else {
 								erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -968,7 +971,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				putcopiePartHtmlFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						PartHtml partHtml = a.result();
-						requeteApiPartHtml(partHtml);
 					} else {
 						erreurPartHtml(requeteSite, gestionnaireEvenements, a);
 					}
@@ -1043,6 +1045,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void sqlPUTCopiePartHtml(PartHtml o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1089,6 +1094,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("DesignPage");
+							}
 						}
 						break;
 					case "htmlLien":
@@ -1417,7 +1426,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiPartHtml(partHtml);
 												if(requeteApi.getNumFound() == 1L) {
 													partHtml.requeteApiPartHtml();
 												}
@@ -1450,6 +1458,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void sqlPATCHPartHtml(PartHtml o, Boolean inheritPk, Handler<AsyncResult<PartHtml>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -1565,6 +1576,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("DesignPage");
+									}
 								}
 							}
 						}
@@ -1584,6 +1599,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("DesignPage");
+									}
 								}
 							}
 						}
@@ -1605,6 +1624,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("DesignPage");
+									}
 								}
 							}
 						}
@@ -1623,6 +1646,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("DesignPage");
+									}
 								}
 							}
 						}
@@ -2370,21 +2397,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public RequeteApi requeteApiPartHtml(PartHtml o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			for(Long pk : o.getDesignPageCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("DesignPage");
-				}
-			}
-		}
-		return requeteApi;
-	}
-
 	public void erreurPartHtml(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2861,6 +2873,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void indexerPartHtml(PartHtml o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -2876,41 +2891,44 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					DesignPageFrFRGenApiServiceImpl service = new DesignPageFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getDesignPageCles()) {
-					ListeRecherche<DesignPage> listeRecherche2 = new ListeRecherche<DesignPage>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(DesignPage.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					DesignPage o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+					if("DesignPage".equals(classeNomSimple2) && pk2 != null) {
+						DesignPageFrFRGenApiServiceImpl service = new DesignPageFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<DesignPage> listeRecherche2 = new ListeRecherche<DesignPage>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(DesignPage.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							DesignPage o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchDesignPageFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("DesignPage %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("DesignPage %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchDesignPageFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("DesignPage %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("DesignPage %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

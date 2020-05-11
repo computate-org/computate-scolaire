@@ -49,7 +49,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -143,7 +142,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 								if(c.succeeded()) {
 									DesignInscription designInscription = c.result();
 									requeteApi.setPk(designInscription.getPk());
-									requeteApiDesignInscription(designInscription);
 									postDesignInscriptionReponse(designInscription, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -214,6 +212,9 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void sqlPOSTDesignInscription(DesignInscription o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -479,7 +480,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						postDesignInscriptionFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								DesignInscription designInscription = a.result();
-								requeteApiDesignInscription(designInscription);
 							} else {
 								erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -683,7 +683,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						postDesignInscriptionFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								DesignInscription designInscription = a.result();
-								requeteApiDesignInscription(designInscription);
 							} else {
 								erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -859,7 +858,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				putcopieDesignInscriptionFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						DesignInscription designInscription = a.result();
-						requeteApiDesignInscription(designInscription);
 					} else {
 						erreurDesignInscription(requeteSite, gestionnaireEvenements, a);
 					}
@@ -934,6 +932,9 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void sqlPUTCopieDesignInscription(DesignInscription o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1206,7 +1207,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiDesignInscription(designInscription);
 												if(requeteApi.getNumFound() == 1L) {
 													designInscription.requeteApiDesignInscription();
 												}
@@ -1239,6 +1239,9 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void sqlPATCHDesignInscription(DesignInscription o, Boolean inheritPk, Handler<AsyncResult<DesignInscription>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -1843,15 +1846,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		}
 	}
 
-	public RequeteApi requeteApiDesignInscription(DesignInscription o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-		}
-		return requeteApi;
-	}
-
 	public void erreurDesignInscription(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2319,6 +2313,9 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 	public void indexerDesignInscription(DesignInscription o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -2332,6 +2329,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
+
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
+				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {

@@ -59,7 +59,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -135,7 +134,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(c.succeeded()) {
 									InscriptionScolaire inscriptionScolaire = c.result();
 									requeteApi.setPk(inscriptionScolaire.getPk());
-									requeteApiInscriptionScolaire(inscriptionScolaire);
 									postInscriptionScolaireReponse(inscriptionScolaire, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -206,6 +204,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void sqlPOSTInscriptionScolaire(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -281,6 +282,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -298,6 +303,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -316,6 +325,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("EnfantScolaire");
+									}
 								}
 							}
 						}
@@ -333,6 +346,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -350,6 +367,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -367,6 +388,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -384,6 +409,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -401,6 +430,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -757,7 +790,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postInscriptionScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								InscriptionScolaire inscriptionScolaire = a.result();
-								requeteApiInscriptionScolaire(inscriptionScolaire);
 							} else {
 								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -943,7 +975,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postInscriptionScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								InscriptionScolaire inscriptionScolaire = a.result();
-								requeteApiInscriptionScolaire(inscriptionScolaire);
 							} else {
 								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -1101,7 +1132,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				putcopieInscriptionScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						InscriptionScolaire inscriptionScolaire = a.result();
-						requeteApiInscriptionScolaire(inscriptionScolaire);
 					} else {
 						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
 					}
@@ -1176,6 +1206,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void sqlPUTCopieInscriptionScolaire(InscriptionScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1219,47 +1252,77 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
 						break;
 					case "anneeCle":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						putSql.append(SiteContexteFrFR.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						putSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+						}
 						break;
 					case "blocCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("BlocScolaire");
+							}
 						}
 						break;
 					case "enfantCle":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						putSql.append(SiteContexteFrFR.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						putSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+						}
 						break;
 					case "mereCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("MereScolaire");
+							}
 						}
 						break;
 					case "pereCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("PereScolaire");
+							}
 						}
 						break;
 					case "gardienCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("GardienScolaire");
+							}
 						}
 						break;
 					case "paiementCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("PaiementScolaire");
+							}
 						}
 						break;
 					case "utilisateurCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("UtilisateurSite");
+							}
 						}
 						break;
 					case "enfantNomComplet":
@@ -1634,7 +1697,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiInscriptionScolaire(inscriptionScolaire);
 												if(requeteApi.getNumFound() == 1L) {
 													inscriptionScolaire.requeteApiInscriptionScolaire();
 												}
@@ -1667,6 +1729,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void sqlPATCHInscriptionScolaire(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -1789,6 +1854,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -1808,6 +1877,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -1826,6 +1899,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -1845,6 +1922,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -1866,6 +1947,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -1884,6 +1969,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -1903,6 +1992,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("EnfantScolaire");
+									}
 								}
 							}
 						}
@@ -1922,6 +2015,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("EnfantScolaire");
+									}
 								}
 							}
 						}
@@ -1940,6 +2037,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -1959,6 +2060,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -1980,6 +2085,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -1998,6 +2107,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -2016,6 +2129,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -2035,6 +2152,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -2056,6 +2177,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -2074,6 +2199,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -2092,6 +2221,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -2111,6 +2244,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -2132,6 +2269,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -2150,6 +2291,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -2168,6 +2313,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -2187,6 +2336,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -2208,6 +2361,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -2226,6 +2383,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -2244,6 +2405,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -2263,6 +2428,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -2284,6 +2453,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -2302,6 +2475,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -3262,7 +3439,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiInscriptionScolaire(inscriptionScolaire);
 												if(requeteApi.getNumFound() == 1L) {
 													inscriptionScolaire.requeteApiInscriptionScolaire();
 												}
@@ -3295,6 +3471,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void sqlPATCHPaiementsInscriptionScolaire(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -3417,6 +3596,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -3436,6 +3619,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -3454,6 +3641,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -3473,6 +3664,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -3494,6 +3689,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -3512,6 +3711,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("BlocScolaire");
+									}
 								}
 							}
 						}
@@ -3531,6 +3734,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("EnfantScolaire");
+									}
 								}
 							}
 						}
@@ -3550,6 +3757,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("EnfantScolaire");
+									}
 								}
 							}
 						}
@@ -3568,6 +3779,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -3587,6 +3802,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -3608,6 +3827,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -3626,6 +3849,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("MereScolaire");
+									}
 								}
 							}
 						}
@@ -3644,6 +3871,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -3663,6 +3894,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -3684,6 +3919,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -3702,6 +3941,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PereScolaire");
+									}
 								}
 							}
 						}
@@ -3720,6 +3963,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -3739,6 +3986,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -3760,6 +4011,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -3778,6 +4033,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("GardienScolaire");
+									}
 								}
 							}
 						}
@@ -3796,6 +4055,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -3815,6 +4078,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -3836,6 +4103,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -3854,6 +4125,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PaiementScolaire");
+									}
 								}
 							}
 						}
@@ -3872,6 +4147,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -3891,6 +4170,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -3912,6 +4195,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -3930,6 +4217,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("UtilisateurSite");
+									}
 								}
 							}
 						}
@@ -4567,63 +4858,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
-	public RequeteApi requeteApiInscriptionScolaire(InscriptionScolaire o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			if(o.getAnneeCle() != null) {
-				if(!pks.contains(o.getAnneeCle())) {
-					pks.add(o.getAnneeCle());
-					classes.add("AnneeScolaire");
-				}
-			}
-			for(Long pk : o.getBlocCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("BlocScolaire");
-				}
-			}
-			if(o.getEnfantCle() != null) {
-				if(!pks.contains(o.getEnfantCle())) {
-					pks.add(o.getEnfantCle());
-					classes.add("EnfantScolaire");
-				}
-			}
-			for(Long pk : o.getMereCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("MereScolaire");
-				}
-			}
-			for(Long pk : o.getPereCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("PereScolaire");
-				}
-			}
-			for(Long pk : o.getGardienCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("GardienScolaire");
-				}
-			}
-			for(Long pk : o.getPaiementCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("PaiementScolaire");
-				}
-			}
-			for(Long pk : o.getUtilisateurCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("UtilisateurSite");
-				}
-			}
-		}
-		return requeteApi;
-	}
-
 	public void erreurInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -5100,6 +5334,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void indexerInscriptionScolaire(InscriptionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -5122,318 +5359,305 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					Long pk = o.getAnneeCle();
-					ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
-					if(pk != null) {
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
+
+					if("AnneeScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
 						listeRecherche2.setStocker(true);
 						listeRecherche2.setQuery("*:*");
 						listeRecherche2.setC(AnneeScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
 						listeRecherche2.setRows(1);
 						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
-
-					if(o2 != null) {
-						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-
-						RequeteApi requeteApi = new RequeteApi();
-						requeteApi.setRows(1);
-						requeteApi.setNumFound(1L);
-						requeteApi.setNumPATCH(0L);
-						requeteApi.initLoinRequeteApi(requeteSite2);
-						requeteSite2.setRequeteApi_(requeteApi);
-						requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-
-						if(pk != null) {
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchAnneeScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
-						}
-					}
-				}
-
-				{
-					BlocScolaireFrFRGenApiServiceImpl service = new BlocScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getBlocCles()) {
-					ListeRecherche<BlocScolaire> listeRecherche2 = new ListeRecherche<BlocScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(BlocScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					BlocScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+						AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+							AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchBlocScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("BlocScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("BlocScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1L);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+							if(pk2 != null) {
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchAnneeScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					Long pk = o.getEnfantCle();
-					ListeRecherche<EnfantScolaire> listeRecherche2 = new ListeRecherche<EnfantScolaire>();
-					if(pk != null) {
+					if("BlocScolaire".equals(classeNomSimple2) && pk2 != null) {
+						BlocScolaireFrFRGenApiServiceImpl service = new BlocScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<BlocScolaire> listeRecherche2 = new ListeRecherche<BlocScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(BlocScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							BlocScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchBlocScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("BlocScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("BlocScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
+						}
+					}
+
+					if("EnfantScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<EnfantScolaire> listeRecherche2 = new ListeRecherche<EnfantScolaire>();
 						listeRecherche2.setStocker(true);
 						listeRecherche2.setQuery("*:*");
 						listeRecherche2.setC(EnfantScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
 						listeRecherche2.setRows(1);
 						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					EnfantScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
-
-					if(o2 != null) {
-						EnfantScolaireFrFRGenApiServiceImpl service = new EnfantScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-
-						RequeteApi requeteApi = new RequeteApi();
-						requeteApi.setRows(1);
-						requeteApi.setNumFound(1L);
-						requeteApi.setNumPATCH(0L);
-						requeteApi.initLoinRequeteApi(requeteSite2);
-						requeteSite2.setRequeteApi_(requeteApi);
-						requeteSite2.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi).toString());
-
-						if(pk != null) {
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchEnfantScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("EnfantScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("EnfantScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
-						}
-					}
-				}
-
-				{
-					MereScolaireFrFRGenApiServiceImpl service = new MereScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getMereCles()) {
-					ListeRecherche<MereScolaire> listeRecherche2 = new ListeRecherche<MereScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(MereScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					MereScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+						EnfantScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+							EnfantScolaireFrFRGenApiServiceImpl service = new EnfantScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchMereScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("MereScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("MereScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1L);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketEnfantScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+							if(pk2 != null) {
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchEnfantScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("EnfantScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("EnfantScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					PereScolaireFrFRGenApiServiceImpl service = new PereScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getPereCles()) {
-					ListeRecherche<PereScolaire> listeRecherche2 = new ListeRecherche<PereScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(PereScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					PereScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+					if("MereScolaire".equals(classeNomSimple2) && pk2 != null) {
+						MereScolaireFrFRGenApiServiceImpl service = new MereScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<MereScolaire> listeRecherche2 = new ListeRecherche<MereScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(MereScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							MereScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchPereScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("PereScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("PereScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchMereScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("MereScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("MereScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					GardienScolaireFrFRGenApiServiceImpl service = new GardienScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getGardienCles()) {
-					ListeRecherche<GardienScolaire> listeRecherche2 = new ListeRecherche<GardienScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(GardienScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					GardienScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+					if("PereScolaire".equals(classeNomSimple2) && pk2 != null) {
+						PereScolaireFrFRGenApiServiceImpl service = new PereScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<PereScolaire> listeRecherche2 = new ListeRecherche<PereScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(PereScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							PereScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchGardienScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("GardienScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("GardienScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchPereScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("PereScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("PereScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getPaiementCles()) {
-					ListeRecherche<PaiementScolaire> listeRecherche2 = new ListeRecherche<PaiementScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(PaiementScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					PaiementScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+					if("GardienScolaire".equals(classeNomSimple2) && pk2 != null) {
+						GardienScolaireFrFRGenApiServiceImpl service = new GardienScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<GardienScolaire> listeRecherche2 = new ListeRecherche<GardienScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(GardienScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							GardienScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchPaiementScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("PaiementScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchGardienScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("GardienScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("GardienScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					UtilisateurSiteFrFRGenApiServiceImpl service = new UtilisateurSiteFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getUtilisateurCles()) {
-					ListeRecherche<UtilisateurSite> listeRecherche2 = new ListeRecherche<UtilisateurSite>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(UtilisateurSite.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
+					if("PaiementScolaire".equals(classeNomSimple2) && pk2 != null) {
+						PaiementScolaireFrFRGenApiServiceImpl service = new PaiementScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<PaiementScolaire> listeRecherche2 = new ListeRecherche<PaiementScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(PaiementScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							PaiementScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchPaiementScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("PaiementScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("PaiementScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
+						}
 					}
-					UtilisateurSite o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
+					if("UtilisateurSite".equals(classeNomSimple2) && pk2 != null) {
+						UtilisateurSiteFrFRGenApiServiceImpl service = new UtilisateurSiteFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<UtilisateurSite> listeRecherche2 = new ListeRecherche<UtilisateurSite>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(UtilisateurSite.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							UtilisateurSite o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchUtilisateurSiteFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("UtilisateurSite %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("UtilisateurSite %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchUtilisateurSiteFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("UtilisateurSite %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("UtilisateurSite %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

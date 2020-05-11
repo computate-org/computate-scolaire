@@ -43,7 +43,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -119,7 +118,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
 									apiRequest.setPk(cluster.getPk());
-									apiRequestCluster(cluster);
 									postClusterResponse(cluster, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
@@ -190,6 +188,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	public void sqlPOSTCluster(Cluster o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -429,7 +430,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						postClusterFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								Cluster cluster = a.result();
-								apiRequestCluster(cluster);
 							} else {
 								errorCluster(siteRequest2, eventHandler, a);
 							}
@@ -615,7 +615,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						postClusterFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								Cluster cluster = a.result();
-								apiRequestCluster(cluster);
 							} else {
 								errorCluster(siteRequest2, eventHandler, a);
 							}
@@ -773,7 +772,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				putcopyClusterFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						Cluster cluster = a.result();
-						apiRequestCluster(cluster);
 					} else {
 						errorCluster(siteRequest, eventHandler, a);
 					}
@@ -848,6 +846,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	public void sqlPUTCopyCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1094,7 +1095,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-												apiRequestCluster(cluster);
 												if(apiRequest.getNumFound() == 1L) {
 													cluster.apiRequestCluster();
 												}
@@ -1127,6 +1127,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	public void sqlPATCHCluster(Cluster o, Boolean inheritPk, Handler<AsyncResult<Cluster>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -1648,15 +1651,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public ApiRequest apiRequestCluster(Cluster o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-		}
-		return apiRequest;
-	}
-
 	public void errorCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2133,6 +2127,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	public void indexCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
@@ -2146,6 +2143,11 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
+
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
+				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {

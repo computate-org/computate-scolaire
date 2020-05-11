@@ -47,7 +47,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -141,7 +140,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(c.succeeded()) {
 									SaisonScolaire saisonScolaire = c.result();
 									requeteApi.setPk(saisonScolaire.getPk());
-									requeteApiSaisonScolaire(saisonScolaire);
 									postSaisonScolaireReponse(saisonScolaire, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -212,6 +210,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void sqlPOSTSaisonScolaire(SaisonScolaire o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -281,6 +282,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -298,6 +303,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SessionScolaire");
+									}
 								}
 							}
 						}
@@ -520,7 +529,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						postSaisonScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								SaisonScolaire saisonScolaire = a.result();
-								requeteApiSaisonScolaire(saisonScolaire);
 							} else {
 								erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -724,7 +732,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						postSaisonScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								SaisonScolaire saisonScolaire = a.result();
-								requeteApiSaisonScolaire(saisonScolaire);
 							} else {
 								erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -900,7 +907,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				putcopieSaisonScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						SaisonScolaire saisonScolaire = a.result();
-						requeteApiSaisonScolaire(saisonScolaire);
 					} else {
 						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, a);
 					}
@@ -975,6 +981,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void sqlPUTCopieSaisonScolaire(SaisonScolaire o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1018,13 +1027,20 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
 						break;
 					case "anneeCle":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						putSql.append(SiteContexteFrFR.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						putSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", l));
+						}
 						break;
 					case "sessionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("SessionScolaire");
+							}
 						}
 						break;
 					case "saisonJourDebut":
@@ -1265,7 +1281,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiSaisonScolaire(saisonScolaire);
 												if(requeteApi.getNumFound() == 1L) {
 													saisonScolaire.requeteApiSaisonScolaire();
 												}
@@ -1298,6 +1313,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void sqlPATCHSaisonScolaire(SaisonScolaire o, Boolean inheritPk, Handler<AsyncResult<SaisonScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -1414,6 +1432,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -1433,6 +1455,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -1451,6 +1477,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SessionScolaire");
+									}
 								}
 							}
 						}
@@ -1470,6 +1500,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SessionScolaire");
+									}
 								}
 							}
 						}
@@ -1491,6 +1525,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SessionScolaire");
+									}
 								}
 							}
 						}
@@ -1509,6 +1547,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SessionScolaire");
+									}
 								}
 							}
 						}
@@ -2036,27 +2078,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		}
 	}
 
-	public RequeteApi requeteApiSaisonScolaire(SaisonScolaire o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			if(o.getAnneeCle() != null) {
-				if(!pks.contains(o.getAnneeCle())) {
-					pks.add(o.getAnneeCle());
-					classes.add("AnneeScolaire");
-				}
-			}
-			for(Long pk : o.getSessionCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("SessionScolaire");
-				}
-			}
-		}
-		return requeteApi;
-	}
-
 	public void erreurSaisonScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2524,6 +2545,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void indexerSaisonScolaire(SaisonScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -2540,82 +2564,82 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					Long pk = o.getAnneeCle();
-					ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
-					if(pk != null) {
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
+
+					if("AnneeScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
 						listeRecherche2.setStocker(true);
 						listeRecherche2.setQuery("*:*");
 						listeRecherche2.setC(AnneeScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
 						listeRecherche2.setRows(1);
 						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
-
-					if(o2 != null) {
-						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-
-						RequeteApi requeteApi = new RequeteApi();
-						requeteApi.setRows(1);
-						requeteApi.setNumFound(1L);
-						requeteApi.setNumPATCH(0L);
-						requeteApi.initLoinRequeteApi(requeteSite2);
-						requeteSite2.setRequeteApi_(requeteApi);
-						requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-
-						if(pk != null) {
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchAnneeScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
-						}
-					}
-				}
-
-				{
-					SessionScolaireFrFRGenApiServiceImpl service = new SessionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getSessionCles()) {
-					ListeRecherche<SessionScolaire> listeRecherche2 = new ListeRecherche<SessionScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(SessionScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					SessionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+						AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+							AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchSessionScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("SessionScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("SessionScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1L);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+							if(pk2 != null) {
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchAnneeScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
+						}
+					}
+
+					if("SessionScolaire".equals(classeNomSimple2) && pk2 != null) {
+						SessionScolaireFrFRGenApiServiceImpl service = new SessionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<SessionScolaire> listeRecherche2 = new ListeRecherche<SessionScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(SessionScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							SessionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchSessionScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("SessionScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("SessionScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

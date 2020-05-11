@@ -47,7 +47,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -373,7 +372,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-												apiRequestSiteUser(siteUser);
 												if(apiRequest.getNumFound() == 1L) {
 													siteUser.apiRequestSiteUser();
 												}
@@ -406,6 +404,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public void sqlPATCHSiteUser(SiteUser o, Boolean inheritPk, Handler<AsyncResult<SiteUser>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -527,6 +528,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -546,6 +551,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -567,6 +576,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -585,6 +598,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -603,6 +620,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolPayment");
+									}
 								}
 							}
 						}
@@ -622,6 +643,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolPayment");
+									}
 								}
 							}
 						}
@@ -643,6 +668,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolPayment");
+									}
 								}
 							}
 						}
@@ -661,6 +690,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolPayment");
+									}
 								}
 							}
 						}
@@ -804,7 +837,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(c.succeeded()) {
 									SiteUser siteUser = c.result();
 									apiRequest.setPk(siteUser.getPk());
-									apiRequestSiteUser(siteUser);
 									postSiteUserResponse(siteUser, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
@@ -875,6 +907,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public void sqlPOSTSiteUser(SiteUser o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -949,6 +984,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolEnrollment");
+									}
 								}
 							}
 						}
@@ -966,6 +1005,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolPayment");
+									}
 								}
 							}
 						}
@@ -1205,27 +1248,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
-	}
-
-	public ApiRequest apiRequestSiteUser(SiteUser o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-			for(Long pk : o.getEnrollmentKeys()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("SchoolEnrollment");
-				}
-			}
-			for(Long pk : o.getPaymentKeys()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("SchoolPayment");
-				}
-			}
-		}
-		return apiRequest;
 	}
 
 	public void errorSiteUser(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1704,6 +1726,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public void indexSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
@@ -1720,80 +1745,81 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-					for(Long pk : o.getEnrollmentKeys()) {
-					SearchList<SchoolEnrollment> searchList2 = new SearchList<SchoolEnrollment>();
-					if(pk != null) {
-						searchList2.setStore(true);
-						searchList2.setQuery("*:*");
-						searchList2.setC(SchoolEnrollment.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk);
-						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
-					}
-					SchoolEnrollment o2 = searchList2.getList().stream().findFirst().orElse(null);
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
 
-						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+					if("SchoolEnrollment".equals(classSimpleName2) && pk2 != null) {
+						SchoolEnrollmentEnUSGenApiServiceImpl service = new SchoolEnrollmentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						SearchList<SchoolEnrollment> searchList2 = new SearchList<SchoolEnrollment>();
+						if(pk2 != null) {
+							searchList2.setStore(true);
+							searchList2.setQuery("*:*");
+							searchList2.setC(SchoolEnrollment.class);
+							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+							searchList2.setRows(1);
+							searchList2.initDeepSearchList(siteRequest2);
+							SchoolEnrollment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchSchoolEnrollmentFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk));
-									} else {
-										LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								ApiRequest apiRequest2 = new ApiRequest();
+								apiRequest2.setRows(1);
+								apiRequest2.setNumFound(1l);
+								apiRequest2.setNumPATCH(0L);
+								apiRequest2.initDeepApiRequest(siteRequest2);
+								siteRequest2.setApiRequest_(apiRequest2);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
+
+								o2.setPk(pk2);
+								o2.setSiteRequest_(siteRequest2);
+								futures.add(
+									service.patchSchoolEnrollmentFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", pk2));
+										} else {
+											LOGGER.info(String.format("SchoolEnrollment %s failed. ", pk2));
+											eventHandler.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-					for(Long pk : o.getPaymentKeys()) {
-					SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
-					if(pk != null) {
-						searchList2.setStore(true);
-						searchList2.setQuery("*:*");
-						searchList2.setC(SchoolPayment.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk);
-						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
-					}
-					SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
+					if("SchoolPayment".equals(classSimpleName2) && pk2 != null) {
+						SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
+						if(pk2 != null) {
+							searchList2.setStore(true);
+							searchList2.setQuery("*:*");
+							searchList2.setC(SchoolPayment.class);
+							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+							searchList2.setRows(1);
+							searchList2.initDeepSearchList(siteRequest2);
+							SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+							if(o2 != null) {
+								ApiRequest apiRequest2 = new ApiRequest();
+								apiRequest2.setRows(1);
+								apiRequest2.setNumFound(1l);
+								apiRequest2.setNumPATCH(0L);
+								apiRequest2.initDeepApiRequest(siteRequest2);
+								siteRequest2.setApiRequest_(apiRequest2);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
 
-							o2.setPk(pk);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchSchoolPaymentFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk));
-									} else {
-										LOGGER.info(String.format("SchoolPayment %s failed. ", pk));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+								o2.setPk(pk2);
+								o2.setSiteRequest_(siteRequest2);
+								futures.add(
+									service.patchSchoolPaymentFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk2));
+										} else {
+											LOGGER.info(String.format("SchoolPayment %s failed. ", pk2));
+											eventHandler.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

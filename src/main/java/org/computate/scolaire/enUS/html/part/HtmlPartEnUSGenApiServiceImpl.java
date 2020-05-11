@@ -45,7 +45,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -139,7 +138,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(c.succeeded()) {
 									HtmlPart htmlPart = c.result();
 									apiRequest.setPk(htmlPart.getPk());
-									apiRequestHtmlPart(htmlPart);
 									postHtmlPartResponse(htmlPart, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
@@ -210,6 +208,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	public void sqlPOSTHtmlPart(HtmlPart o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -278,6 +279,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PageDesign");
+									}
 								}
 							}
 						}
@@ -588,7 +593,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						postHtmlPartFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								HtmlPart htmlPart = a.result();
-								apiRequestHtmlPart(htmlPart);
 							} else {
 								errorHtmlPart(siteRequest2, eventHandler, a);
 							}
@@ -792,7 +796,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						postHtmlPartFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								HtmlPart htmlPart = a.result();
-								apiRequestHtmlPart(htmlPart);
 							} else {
 								errorHtmlPart(siteRequest2, eventHandler, a);
 							}
@@ -968,7 +971,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				putcopyHtmlPartFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						HtmlPart htmlPart = a.result();
-						apiRequestHtmlPart(htmlPart);
 					} else {
 						errorHtmlPart(siteRequest, eventHandler, a);
 					}
@@ -1043,6 +1045,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	public void sqlPUTCopyHtmlPart(HtmlPart o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1089,6 +1094,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("PageDesign");
+							}
 						}
 						break;
 					case "htmlLink":
@@ -1417,7 +1426,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-												apiRequestHtmlPart(htmlPart);
 												if(apiRequest.getNumFound() == 1L) {
 													htmlPart.apiRequestHtmlPart();
 												}
@@ -1450,6 +1458,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	public void sqlPATCHHtmlPart(HtmlPart o, Boolean inheritPk, Handler<AsyncResult<HtmlPart>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -1565,6 +1576,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PageDesign");
+									}
 								}
 							}
 						}
@@ -1584,6 +1599,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PageDesign");
+									}
 								}
 							}
 						}
@@ -1605,6 +1624,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_setA2);
 									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PageDesign");
+									}
 								}
 							}
 						}
@@ -1623,6 +1646,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("PageDesign");
+									}
 								}
 							}
 						}
@@ -2370,21 +2397,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public ApiRequest apiRequestHtmlPart(HtmlPart o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-			for(Long pk : o.getPageDesignKeys()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("PageDesign");
-				}
-			}
-		}
-		return apiRequest;
-	}
-
 	public void errorHtmlPart(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2861,6 +2873,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 	public void indexHtmlPart(HtmlPart o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
@@ -2876,41 +2891,44 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-					for(Long pk : o.getPageDesignKeys()) {
-					SearchList<PageDesign> searchList2 = new SearchList<PageDesign>();
-					if(pk != null) {
-						searchList2.setStore(true);
-						searchList2.setQuery("*:*");
-						searchList2.setC(PageDesign.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk);
-						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
-					}
-					PageDesign o2 = searchList2.getList().stream().findFirst().orElse(null);
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
 
-						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+					if("PageDesign".equals(classSimpleName2) && pk2 != null) {
+						PageDesignEnUSGenApiServiceImpl service = new PageDesignEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						SearchList<PageDesign> searchList2 = new SearchList<PageDesign>();
+						if(pk2 != null) {
+							searchList2.setStore(true);
+							searchList2.setQuery("*:*");
+							searchList2.setC(PageDesign.class);
+							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+							searchList2.setRows(1);
+							searchList2.initDeepSearchList(siteRequest2);
+							PageDesign o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchPageDesignFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("PageDesign %s refreshed. ", pk));
-									} else {
-										LOGGER.info(String.format("PageDesign %s failed. ", pk));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								ApiRequest apiRequest2 = new ApiRequest();
+								apiRequest2.setRows(1);
+								apiRequest2.setNumFound(1l);
+								apiRequest2.setNumPATCH(0L);
+								apiRequest2.initDeepApiRequest(siteRequest2);
+								siteRequest2.setApiRequest_(apiRequest2);
+								siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest2).toString());
+
+								o2.setPk(pk2);
+								o2.setSiteRequest_(siteRequest2);
+								futures.add(
+									service.patchPageDesignFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("PageDesign %s refreshed. ", pk2));
+										} else {
+											LOGGER.info(String.format("PageDesign %s failed. ", pk2));
+											eventHandler.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

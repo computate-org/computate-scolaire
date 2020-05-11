@@ -45,7 +45,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -139,7 +138,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(c.succeeded()) {
 									Ecole ecole = c.result();
 									requeteApi.setPk(ecole.getPk());
-									requeteApiEcole(ecole);
 									postEcoleReponse(ecole, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -210,6 +208,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	public void sqlPOSTEcole(Ecole o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -278,6 +279,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -534,7 +539,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiEcole(ecole);
 												if(requeteApi.getNumFound() == 1L) {
 													ecole.requeteApiEcole();
 												}
@@ -567,6 +571,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	public void sqlPATCHEcole(Ecole o, Boolean inheritPk, Handler<AsyncResult<Ecole>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -682,6 +689,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -701,6 +712,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -722,6 +737,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -740,6 +759,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(l != null) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("AnneeScolaire");
+									}
 								}
 							}
 						}
@@ -1265,7 +1288,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						postEcoleFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								Ecole ecole = a.result();
-								requeteApiEcole(ecole);
 							} else {
 								erreurEcole(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -1469,7 +1491,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						postEcoleFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								Ecole ecole = a.result();
-								requeteApiEcole(ecole);
 							} else {
 								erreurEcole(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -1645,7 +1666,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				putcopieEcoleFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						Ecole ecole = a.result();
-						requeteApiEcole(ecole);
 					} else {
 						erreurEcole(requeteSite, gestionnaireEvenements, a);
 					}
@@ -1720,6 +1740,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	public void sqlPUTCopieEcole(Ecole o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1766,6 +1789,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("AnneeScolaire");
+							}
 						}
 						break;
 					case "ecoleNom":
@@ -2026,21 +2053,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
-	}
-
-	public RequeteApi requeteApiEcole(Ecole o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-			for(Long pk : o.getAnneeCles()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("AnneeScolaire");
-				}
-			}
-		}
-		return requeteApi;
 	}
 
 	public void erreurEcole(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -2510,6 +2522,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	public void indexerEcole(Ecole o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -2525,41 +2540,44 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-					for(Long pk : o.getAnneeCles()) {
-					ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
-					if(pk != null) {
-						listeRecherche2.setStocker(true);
-						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(AnneeScolaire.class);
-						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk);
-						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
-					}
-					AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
 
-						if(o2 != null) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1l);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite2);
-							requeteSite2.setRequeteApi_(requeteApi);
-							requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+					if("AnneeScolaire".equals(classeNomSimple2) && pk2 != null) {
+						AnneeScolaireFrFRGenApiServiceImpl service = new AnneeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
+						ListeRecherche<AnneeScolaire> listeRecherche2 = new ListeRecherche<AnneeScolaire>();
+						if(pk2 != null) {
+							listeRecherche2.setStocker(true);
+							listeRecherche2.setQuery("*:*");
+							listeRecherche2.setC(AnneeScolaire.class);
+							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+							listeRecherche2.setRows(1);
+							listeRecherche2.initLoinListeRecherche(requeteSite2);
+							AnneeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setRequeteSite_(requeteSite2);
-							futures.add(
-								service.patchAnneeScolaireFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk));
-									} else {
-										LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk));
-										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								RequeteApi requeteApi2 = new RequeteApi();
+								requeteApi2.setRows(1);
+								requeteApi2.setNumFound(1l);
+								requeteApi2.setNumPATCH(0L);
+								requeteApi2.initLoinRequeteApi(requeteSite2);
+								requeteSite2.setRequeteApi_(requeteApi2);
+								requeteSite2.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+								o2.setPk(pk2);
+								o2.setRequeteSite_(requeteSite2);
+								futures.add(
+									service.patchAnneeScolaireFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("AnneeScolaire %s rechargé. ", pk2));
+										} else {
+											LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk2));
+											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

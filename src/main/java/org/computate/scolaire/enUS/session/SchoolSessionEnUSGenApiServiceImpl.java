@@ -47,7 +47,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -141,7 +140,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(c.succeeded()) {
 									SchoolSession schoolSession = c.result();
 									apiRequest.setPk(schoolSession.getPk());
-									apiRequestSchoolSession(schoolSession);
 									postSchoolSessionResponse(schoolSession, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
@@ -212,6 +210,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	public void sqlPOSTSchoolSession(SchoolSession o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -280,6 +281,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolAge");
+									}
 								}
 							}
 						}
@@ -298,6 +303,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
 									postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolSeason");
+									}
 								}
 							}
 						}
@@ -516,7 +525,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						postSchoolSessionFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								SchoolSession schoolSession = a.result();
-								apiRequestSchoolSession(schoolSession);
 							} else {
 								errorSchoolSession(siteRequest2, eventHandler, a);
 							}
@@ -720,7 +728,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						postSchoolSessionFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								SchoolSession schoolSession = a.result();
-								apiRequestSchoolSession(schoolSession);
 							} else {
 								errorSchoolSession(siteRequest2, eventHandler, a);
 							}
@@ -896,7 +903,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				putcopySchoolSessionFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						SchoolSession schoolSession = a.result();
-						apiRequestSchoolSession(schoolSession);
 					} else {
 						errorSchoolSession(siteRequest, eventHandler, a);
 					}
@@ -971,6 +977,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	public void sqlPUTCopySchoolSession(SchoolSession o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1017,11 +1026,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
 							putSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("SchoolAge");
+							}
 						}
 						break;
 					case "seasonKey":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						putSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", l));
+						}
 						break;
 					case "schoolAddress":
 						putSql.append(SiteContextEnUS.SQL_setD);
@@ -1257,7 +1273,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-												apiRequestSchoolSession(schoolSession);
 												if(apiRequest.getNumFound() == 1L) {
 													schoolSession.apiRequestSchoolSession();
 												}
@@ -1290,6 +1305,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	public void sqlPATCHSchoolSession(SchoolSession o, Boolean inheritPk, Handler<AsyncResult<SchoolSession>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -1405,6 +1423,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolAge");
+									}
 								}
 							}
 						}
@@ -1424,6 +1446,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolAge");
+									}
 								}
 							}
 						}
@@ -1445,6 +1471,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
 									patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolAge");
+									}
 								}
 							}
 						}
@@ -1463,6 +1493,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l != null) {
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolAge");
+									}
 								}
 							}
 						}
@@ -1482,6 +1516,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									o2.setSeasonKey(jsonObject.getString(methodName));
 									patchSql.append(SiteContextEnUS.SQL_setA1);
 									patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolSeason");
+									}
 								}
 							}
 						}
@@ -1501,6 +1539,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									o2.setSeasonKey(jsonObject.getString(methodName));
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", l));
+									if(!pks.contains(l)) {
+										pks.add(l);
+										classes.add("SchoolSeason");
+									}
 								}
 							}
 						}
@@ -2018,27 +2060,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public ApiRequest apiRequestSchoolSession(SchoolSession o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-			for(Long pk : o.getAgeKeys()) {
-				if(!pks.contains(pk)) {
-					pks.add(pk);
-					classes.add("SchoolAge");
-				}
-			}
-			if(o.getSeasonKey() != null) {
-				if(!pks.contains(o.getSeasonKey())) {
-					pks.add(o.getSeasonKey());
-					classes.add("SchoolSeason");
-				}
-			}
-		}
-		return apiRequest;
-	}
-
 	public void errorSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2506,6 +2527,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	public void indexSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
@@ -2522,82 +2546,82 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
 
-				{
-					SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-					for(Long pk : o.getAgeKeys()) {
-					SearchList<SchoolAge> searchList2 = new SearchList<SchoolAge>();
-					if(pk != null) {
-						searchList2.setStore(true);
-						searchList2.setQuery("*:*");
-						searchList2.setC(SchoolAge.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk);
-						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
-					}
-					SchoolAge o2 = searchList2.getList().stream().findFirst().orElse(null);
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
 
-						if(o2 != null) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1l);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+					if("SchoolAge".equals(classSimpleName2) && pk2 != null) {
+						SchoolAgeEnUSGenApiServiceImpl service = new SchoolAgeEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						SearchList<SchoolAge> searchList2 = new SearchList<SchoolAge>();
+						if(pk2 != null) {
+							searchList2.setStore(true);
+							searchList2.setQuery("*:*");
+							searchList2.setC(SchoolAge.class);
+							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+							searchList2.setRows(1);
+							searchList2.initDeepSearchList(siteRequest2);
+							SchoolAge o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							o2.setPk(pk);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchSchoolAgeFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("SchoolAge %s refreshed. ", pk));
-									} else {
-										LOGGER.info(String.format("SchoolAge %s failed. ", pk));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(o2 != null) {
+								ApiRequest apiRequest2 = new ApiRequest();
+								apiRequest2.setRows(1);
+								apiRequest2.setNumFound(1l);
+								apiRequest2.setNumPATCH(0L);
+								apiRequest2.initDeepApiRequest(siteRequest2);
+								siteRequest2.setApiRequest_(apiRequest2);
+								siteRequest2.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest2).toString());
+
+								o2.setPk(pk2);
+								o2.setSiteRequest_(siteRequest2);
+								futures.add(
+									service.patchSchoolAgeFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("SchoolAge %s refreshed. ", pk2));
+										} else {
+											LOGGER.info(String.format("SchoolAge %s failed. ", pk2));
+											eventHandler.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
-				}
 
-				{
-					Long pk = o.getSeasonKey();
-					SearchList<SchoolSeason> searchList2 = new SearchList<SchoolSeason>();
-					if(pk != null) {
+					if("SchoolSeason".equals(classSimpleName2) && pk2 != null) {
+						SearchList<SchoolSeason> searchList2 = new SearchList<SchoolSeason>();
 						searchList2.setStore(true);
 						searchList2.setQuery("*:*");
 						searchList2.setC(SchoolSeason.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
 						searchList2.setRows(1);
 						searchList2.initDeepSearchList(siteRequest2);
-					}
-					SchoolSeason o2 = searchList2.getList().stream().findFirst().orElse(null);
+						SchoolSeason o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-					if(o2 != null) {
-						SchoolSeasonEnUSGenApiServiceImpl service = new SchoolSeasonEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
+						if(o2 != null) {
+							SchoolSeasonEnUSGenApiServiceImpl service = new SchoolSeasonEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 
-						ApiRequest apiRequest = new ApiRequest();
-						apiRequest.setRows(1);
-						apiRequest.setNumFound(1L);
-						apiRequest.setNumPATCH(0L);
-						apiRequest.initDeepApiRequest(siteRequest2);
-						siteRequest2.setApiRequest_(apiRequest);
-						siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1L);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest2).toString());
 
-						if(pk != null) {
-							o2.setPk(pk);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchSchoolSeasonFuture(o2, false, a -> {
-									if(a.succeeded()) {
-										LOGGER.info(String.format("SchoolSeason %s refreshed. ", pk));
-									} else {
-										LOGGER.info(String.format("SchoolSeason %s failed. ", pk));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
+							if(pk2 != null) {
+								o2.setPk(pk2);
+								o2.setSiteRequest_(siteRequest2);
+								futures.add(
+									service.patchSchoolSeasonFuture(o2, false, a -> {
+										if(a.succeeded()) {
+											LOGGER.info(String.format("SchoolSeason %s refreshed. ", pk2));
+										} else {
+											LOGGER.info(String.format("SchoolSeason %s failed. ", pk2));
+											eventHandler.handle(Future.failedFuture(a.cause()));
+										}
+									})
+								);
+							}
 						}
 					}
 				}

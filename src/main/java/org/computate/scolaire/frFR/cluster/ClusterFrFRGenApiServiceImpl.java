@@ -43,7 +43,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -119,7 +118,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								if(c.succeeded()) {
 									Cluster cluster = c.result();
 									requeteApi.setPk(cluster.getPk());
-									requeteApiCluster(cluster);
 									postClusterReponse(cluster, d -> {
 										if(d.succeeded()) {
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
@@ -190,6 +188,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void sqlPOSTCluster(Cluster o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -429,7 +430,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						postClusterFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 								Cluster cluster = a.result();
-								requeteApiCluster(cluster);
 							} else {
 								erreurCluster(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -615,7 +615,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						postClusterFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 								Cluster cluster = a.result();
-								requeteApiCluster(cluster);
 							} else {
 								erreurCluster(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -773,7 +772,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				putcopieClusterFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						Cluster cluster = a.result();
-						requeteApiCluster(cluster);
 					} else {
 						erreurCluster(requeteSite, gestionnaireEvenements, a);
 					}
@@ -848,6 +846,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void sqlPUTCopieCluster(Cluster o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1094,7 +1095,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-												requeteApiCluster(cluster);
 												if(requeteApi.getNumFound() == 1L) {
 													cluster.requeteApiCluster();
 												}
@@ -1127,6 +1127,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void sqlPATCHCluster(Cluster o, Boolean inheritPk, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -1648,15 +1651,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public RequeteApi requeteApiCluster(Cluster o) {
-		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
-		if(requeteApi != null) {
-			List<Long> pks = requeteApi.getPks();
-			List<String> classes = requeteApi.getClasses();
-		}
-		return requeteApi;
-	}
-
 	public void erreurCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2133,6 +2127,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void indexerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
@@ -2146,6 +2143,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite2);
 				List<Future> futures = new ArrayList<>();
+
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classeNomSimple2 = classes.get(i);
+				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {

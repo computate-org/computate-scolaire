@@ -43,7 +43,6 @@ import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
@@ -137,7 +136,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								if(c.succeeded()) {
 									EnrollmentDesign enrollmentDesign = c.result();
 									apiRequest.setPk(enrollmentDesign.getPk());
-									apiRequestEnrollmentDesign(enrollmentDesign);
 									postEnrollmentDesignResponse(enrollmentDesign, d -> {
 										if(d.succeeded()) {
 											eventHandler.handle(Future.succeededFuture(d.result()));
@@ -208,6 +206,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void sqlPOSTEnrollmentDesign(EnrollmentDesign o, Boolean inheritPk, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -473,7 +474,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						postEnrollmentDesignFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 								EnrollmentDesign enrollmentDesign = a.result();
-								apiRequestEnrollmentDesign(enrollmentDesign);
 							} else {
 								errorEnrollmentDesign(siteRequest2, eventHandler, a);
 							}
@@ -677,7 +677,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						postEnrollmentDesignFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 								EnrollmentDesign enrollmentDesign = a.result();
-								apiRequestEnrollmentDesign(enrollmentDesign);
 							} else {
 								errorEnrollmentDesign(siteRequest2, eventHandler, a);
 							}
@@ -853,7 +852,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				putcopyEnrollmentDesignFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 						EnrollmentDesign enrollmentDesign = a.result();
-						apiRequestEnrollmentDesign(enrollmentDesign);
 					} else {
 						errorEnrollmentDesign(siteRequest, eventHandler, a);
 					}
@@ -928,6 +926,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void sqlPUTCopyEnrollmentDesign(EnrollmentDesign o, JsonObject jsonObject, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1200,7 +1201,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-												apiRequestEnrollmentDesign(enrollmentDesign);
 												if(apiRequest.getNumFound() == 1L) {
 													enrollmentDesign.apiRequestEnrollmentDesign();
 												}
@@ -1233,6 +1233,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void sqlPATCHEnrollmentDesign(EnrollmentDesign o, Boolean inheritPk, Handler<AsyncResult<EnrollmentDesign>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -1837,15 +1840,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public ApiRequest apiRequestEnrollmentDesign(EnrollmentDesign o) {
-		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
-		if(apiRequest != null) {
-			List<Long> pks = apiRequest.getPks();
-			List<String> classes = apiRequest.getClasses();
-		}
-		return apiRequest;
-	}
-
 	public void errorEnrollmentDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
@@ -2313,6 +2307,9 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 	public void indexEnrollmentDesign(EnrollmentDesign o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
@@ -2326,6 +2323,11 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest2);
 				List<Future> futures = new ArrayList<>();
+
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
+				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
