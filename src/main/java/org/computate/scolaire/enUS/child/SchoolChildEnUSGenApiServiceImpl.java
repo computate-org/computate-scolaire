@@ -191,8 +191,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -453,7 +453,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -638,7 +638,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -892,8 +892,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1199,8 +1199,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -2460,8 +2460,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {

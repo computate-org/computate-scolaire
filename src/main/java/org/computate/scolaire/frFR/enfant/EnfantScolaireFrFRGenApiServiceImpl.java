@@ -191,8 +191,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -453,7 +453,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -638,7 +638,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -892,8 +892,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1199,8 +1199,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -2460,8 +2460,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
