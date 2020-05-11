@@ -512,8 +512,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						futures.add(
 							patchSessionScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SessionScolaire sessionScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -524,7 +522,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					futures.add(
 						postSessionScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								SessionScolaire sessionScolaire = a.result();
 							} else {
 								erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -714,8 +711,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						futures.add(
 							patchSessionScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SessionScolaire sessionScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -726,7 +721,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					futures.add(
 						postSessionScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								SessionScolaire sessionScolaire = a.result();
 							} else {
 								erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

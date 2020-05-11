@@ -461,8 +461,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						futures.add(
 							patchEnrollmentDesignFuture(o, true, a -> {
 								if(a.succeeded()) {
-									EnrollmentDesign enrollmentDesign = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorEnrollmentDesign(siteRequest2, eventHandler, a);
 								}
@@ -473,7 +471,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					futures.add(
 						postEnrollmentDesignFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								EnrollmentDesign enrollmentDesign = a.result();
 							} else {
 								errorEnrollmentDesign(siteRequest2, eventHandler, a);
 							}
@@ -663,8 +660,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						futures.add(
 							patchEnrollmentDesignFuture(o, false, a -> {
 								if(a.succeeded()) {
-									EnrollmentDesign enrollmentDesign = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorEnrollmentDesign(siteRequest2, eventHandler, a);
 								}
@@ -675,7 +670,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					futures.add(
 						postEnrollmentDesignFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								EnrollmentDesign enrollmentDesign = a.result();
 							} else {
 								errorEnrollmentDesign(siteRequest2, eventHandler, a);
 							}

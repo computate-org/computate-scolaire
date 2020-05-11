@@ -462,8 +462,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						futures.add(
 							patchEnfantScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									EnfantScolaire enfantScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -474,7 +472,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 					futures.add(
 						postEnfantScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								EnfantScolaire enfantScolaire = a.result();
 							} else {
 								erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -646,8 +643,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						futures.add(
 							patchEnfantScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									EnfantScolaire enfantScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -658,7 +653,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 					futures.add(
 						postEnfantScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								EnfantScolaire enfantScolaire = a.result();
 							} else {
 								erreurEnfantScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

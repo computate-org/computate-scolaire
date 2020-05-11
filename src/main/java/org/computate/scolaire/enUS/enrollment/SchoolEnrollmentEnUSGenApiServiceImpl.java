@@ -777,8 +777,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						futures.add(
 							patchSchoolEnrollmentFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolEnrollment schoolEnrollment = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolEnrollment(siteRequest2, eventHandler, a);
 								}
@@ -789,7 +787,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					futures.add(
 						postSchoolEnrollmentFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolEnrollment schoolEnrollment = a.result();
 							} else {
 								errorSchoolEnrollment(siteRequest2, eventHandler, a);
 							}
@@ -961,8 +958,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						futures.add(
 							patchSchoolEnrollmentFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolEnrollment schoolEnrollment = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolEnrollment(siteRequest2, eventHandler, a);
 								}
@@ -973,7 +968,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					futures.add(
 						postSchoolEnrollmentFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolEnrollment schoolEnrollment = a.result();
 							} else {
 								errorSchoolEnrollment(siteRequest2, eventHandler, a);
 							}

@@ -580,8 +580,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						futures.add(
 							patchPartHtmlFuture(o, true, a -> {
 								if(a.succeeded()) {
-									PartHtml partHtml = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -592,7 +590,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					futures.add(
 						postPartHtmlFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								PartHtml partHtml = a.result();
 							} else {
 								erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -782,8 +779,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						futures.add(
 							patchPartHtmlFuture(o, false, a -> {
 								if(a.succeeded()) {
-									PartHtml partHtml = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -794,7 +789,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					futures.add(
 						postPartHtmlFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								PartHtml partHtml = a.result();
 							} else {
 								erreurPartHtml(requeteSite2, gestionnaireEvenements, a);
 							}

@@ -512,8 +512,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						futures.add(
 							patchSchoolAgeFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolAge schoolAge = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolAge(siteRequest2, eventHandler, a);
 								}
@@ -524,7 +522,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					futures.add(
 						postSchoolAgeFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolAge schoolAge = a.result();
 							} else {
 								errorSchoolAge(siteRequest2, eventHandler, a);
 							}
@@ -714,8 +711,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						futures.add(
 							patchSchoolAgeFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolAge schoolAge = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolAge(siteRequest2, eventHandler, a);
 								}
@@ -726,7 +721,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					futures.add(
 						postSchoolAgeFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolAge schoolAge = a.result();
 							} else {
 								errorSchoolAge(siteRequest2, eventHandler, a);
 							}

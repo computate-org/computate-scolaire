@@ -486,8 +486,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						futures.add(
 							patchMereScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									MereScolaire mereScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -498,7 +496,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 					futures.add(
 						postMereScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								MereScolaire mereScolaire = a.result();
 							} else {
 								erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -670,8 +667,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						futures.add(
 							patchMereScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									MereScolaire mereScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -682,7 +677,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 					futures.add(
 						postMereScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								MereScolaire mereScolaire = a.result();
 							} else {
 								erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

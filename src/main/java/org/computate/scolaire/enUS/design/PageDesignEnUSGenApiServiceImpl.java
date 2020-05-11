@@ -530,8 +530,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						futures.add(
 							patchPageDesignFuture(o, true, a -> {
 								if(a.succeeded()) {
-									PageDesign pageDesign = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorPageDesign(siteRequest2, eventHandler, a);
 								}
@@ -542,7 +540,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					futures.add(
 						postPageDesignFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								PageDesign pageDesign = a.result();
 							} else {
 								errorPageDesign(siteRequest2, eventHandler, a);
 							}
@@ -732,8 +729,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						futures.add(
 							patchPageDesignFuture(o, false, a -> {
 								if(a.succeeded()) {
-									PageDesign pageDesign = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorPageDesign(siteRequest2, eventHandler, a);
 								}
@@ -744,7 +739,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					futures.add(
 						postPageDesignFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								PageDesign pageDesign = a.result();
 							} else {
 								errorPageDesign(siteRequest2, eventHandler, a);
 							}

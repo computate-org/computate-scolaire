@@ -512,8 +512,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						futures.add(
 							patchSchoolYearFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolYear schoolYear = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolYear(siteRequest2, eventHandler, a);
 								}
@@ -524,7 +522,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					futures.add(
 						postSchoolYearFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolYear schoolYear = a.result();
 							} else {
 								errorSchoolYear(siteRequest2, eventHandler, a);
 							}
@@ -714,8 +711,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						futures.add(
 							patchSchoolYearFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolYear schoolYear = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolYear(siteRequest2, eventHandler, a);
 								}
@@ -726,7 +721,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					futures.add(
 						postSchoolYearFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolYear schoolYear = a.result();
 							} else {
 								errorSchoolYear(siteRequest2, eventHandler, a);
 							}

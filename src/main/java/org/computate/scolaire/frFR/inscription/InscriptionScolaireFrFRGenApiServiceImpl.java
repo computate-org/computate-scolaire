@@ -777,8 +777,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						futures.add(
 							patchInscriptionScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									InscriptionScolaire inscriptionScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -789,7 +787,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					futures.add(
 						postInscriptionScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								InscriptionScolaire inscriptionScolaire = a.result();
 							} else {
 								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -961,8 +958,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						futures.add(
 							patchInscriptionScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									InscriptionScolaire inscriptionScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -973,7 +968,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					futures.add(
 						postInscriptionScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								InscriptionScolaire inscriptionScolaire = a.result();
 							} else {
 								erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

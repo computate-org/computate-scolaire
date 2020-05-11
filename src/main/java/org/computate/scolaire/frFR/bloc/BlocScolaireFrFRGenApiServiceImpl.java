@@ -536,8 +536,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						futures.add(
 							patchBlocScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									BlocScolaire blocScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -548,7 +546,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					futures.add(
 						postBlocScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								BlocScolaire blocScolaire = a.result();
 							} else {
 								erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -738,8 +735,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						futures.add(
 							patchBlocScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									BlocScolaire blocScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -750,7 +745,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					futures.add(
 						postBlocScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								BlocScolaire blocScolaire = a.result();
 							} else {
 								erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

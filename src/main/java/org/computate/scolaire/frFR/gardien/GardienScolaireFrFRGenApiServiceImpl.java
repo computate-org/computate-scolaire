@@ -474,8 +474,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						futures.add(
 							patchGardienScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									GardienScolaire gardienScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -486,7 +484,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 					futures.add(
 						postGardienScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								GardienScolaire gardienScolaire = a.result();
 							} else {
 								erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -658,8 +655,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						futures.add(
 							patchGardienScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									GardienScolaire gardienScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -670,7 +665,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 					futures.add(
 						postGardienScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								GardienScolaire gardienScolaire = a.result();
 							} else {
 								erreurGardienScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

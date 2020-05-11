@@ -1275,8 +1275,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						futures.add(
 							patchSchoolFuture(o, true, a -> {
 								if(a.succeeded()) {
-									School school = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchool(siteRequest2, eventHandler, a);
 								}
@@ -1287,7 +1285,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					futures.add(
 						postSchoolFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								School school = a.result();
 							} else {
 								errorSchool(siteRequest2, eventHandler, a);
 							}
@@ -1477,8 +1474,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						futures.add(
 							patchSchoolFuture(o, false, a -> {
 								if(a.succeeded()) {
-									School school = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchool(siteRequest2, eventHandler, a);
 								}
@@ -1489,7 +1484,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					futures.add(
 						postSchoolFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								School school = a.result();
 							} else {
 								errorSchool(siteRequest2, eventHandler, a);
 							}

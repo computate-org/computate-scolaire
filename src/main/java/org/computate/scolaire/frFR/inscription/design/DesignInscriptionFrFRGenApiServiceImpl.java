@@ -467,8 +467,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						futures.add(
 							patchDesignInscriptionFuture(o, true, a -> {
 								if(a.succeeded()) {
-									DesignInscription designInscription = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -479,7 +477,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 					futures.add(
 						postDesignInscriptionFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								DesignInscription designInscription = a.result();
 							} else {
 								erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -669,8 +666,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						futures.add(
 							patchDesignInscriptionFuture(o, false, a -> {
 								if(a.succeeded()) {
-									DesignInscription designInscription = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -681,7 +676,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 					futures.add(
 						postDesignInscriptionFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								DesignInscription designInscription = a.result();
 							} else {
 								erreurDesignInscription(requeteSite2, gestionnaireEvenements, a);
 							}

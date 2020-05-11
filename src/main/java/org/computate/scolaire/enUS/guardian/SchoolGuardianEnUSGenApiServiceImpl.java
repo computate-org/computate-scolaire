@@ -474,8 +474,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						futures.add(
 							patchSchoolGuardianFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolGuardian schoolGuardian = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolGuardian(siteRequest2, eventHandler, a);
 								}
@@ -486,7 +484,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					futures.add(
 						postSchoolGuardianFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolGuardian schoolGuardian = a.result();
 							} else {
 								errorSchoolGuardian(siteRequest2, eventHandler, a);
 							}
@@ -658,8 +655,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						futures.add(
 							patchSchoolGuardianFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolGuardian schoolGuardian = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolGuardian(siteRequest2, eventHandler, a);
 								}
@@ -670,7 +665,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					futures.add(
 						postSchoolGuardianFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolGuardian schoolGuardian = a.result();
 							} else {
 								errorSchoolGuardian(siteRequest2, eventHandler, a);
 							}

@@ -486,8 +486,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						futures.add(
 							patchPereScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									PereScolaire pereScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurPereScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -498,7 +496,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					futures.add(
 						postPereScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								PereScolaire pereScolaire = a.result();
 							} else {
 								erreurPereScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -670,8 +667,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						futures.add(
 							patchPereScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									PereScolaire pereScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurPereScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -682,7 +677,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					futures.add(
 						postPereScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								PereScolaire pereScolaire = a.result();
 							} else {
 								erreurPereScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

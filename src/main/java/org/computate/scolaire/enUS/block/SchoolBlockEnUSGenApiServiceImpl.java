@@ -536,8 +536,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						futures.add(
 							patchSchoolBlockFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolBlock schoolBlock = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolBlock(siteRequest2, eventHandler, a);
 								}
@@ -548,7 +546,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					futures.add(
 						postSchoolBlockFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolBlock schoolBlock = a.result();
 							} else {
 								errorSchoolBlock(siteRequest2, eventHandler, a);
 							}
@@ -738,8 +735,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						futures.add(
 							patchSchoolBlockFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolBlock schoolBlock = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolBlock(siteRequest2, eventHandler, a);
 								}
@@ -750,7 +745,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					futures.add(
 						postSchoolBlockFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolBlock schoolBlock = a.result();
 							} else {
 								errorSchoolBlock(siteRequest2, eventHandler, a);
 							}

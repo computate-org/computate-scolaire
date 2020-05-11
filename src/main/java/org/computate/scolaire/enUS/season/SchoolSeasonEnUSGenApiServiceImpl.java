@@ -516,8 +516,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						futures.add(
 							patchSchoolSeasonFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolSeason schoolSeason = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolSeason(siteRequest2, eventHandler, a);
 								}
@@ -528,7 +526,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					futures.add(
 						postSchoolSeasonFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolSeason schoolSeason = a.result();
 							} else {
 								errorSchoolSeason(siteRequest2, eventHandler, a);
 							}
@@ -718,8 +715,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						futures.add(
 							patchSchoolSeasonFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolSeason schoolSeason = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolSeason(siteRequest2, eventHandler, a);
 								}
@@ -730,7 +725,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					futures.add(
 						postSchoolSeasonFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolSeason schoolSeason = a.result();
 							} else {
 								errorSchoolSeason(siteRequest2, eventHandler, a);
 							}

@@ -1275,8 +1275,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						futures.add(
 							patchEcoleFuture(o, true, a -> {
 								if(a.succeeded()) {
-									Ecole ecole = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurEcole(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -1287,7 +1285,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					futures.add(
 						postEcoleFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								Ecole ecole = a.result();
 							} else {
 								erreurEcole(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -1477,8 +1474,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						futures.add(
 							patchEcoleFuture(o, false, a -> {
 								if(a.succeeded()) {
-									Ecole ecole = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurEcole(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -1489,7 +1484,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					futures.add(
 						postEcoleFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								Ecole ecole = a.result();
 							} else {
 								erreurEcole(requeteSite2, gestionnaireEvenements, a);
 							}

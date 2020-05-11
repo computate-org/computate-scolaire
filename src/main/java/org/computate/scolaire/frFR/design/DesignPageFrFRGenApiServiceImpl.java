@@ -530,8 +530,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						futures.add(
 							patchDesignPageFuture(o, true, a -> {
 								if(a.succeeded()) {
-									DesignPage designPage = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -542,7 +540,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					futures.add(
 						postDesignPageFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								DesignPage designPage = a.result();
 							} else {
 								erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -732,8 +729,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						futures.add(
 							patchDesignPageFuture(o, false, a -> {
 								if(a.succeeded()) {
-									DesignPage designPage = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -744,7 +739,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					futures.add(
 						postDesignPageFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								DesignPage designPage = a.result();
 							} else {
 								erreurDesignPage(requeteSite2, gestionnaireEvenements, a);
 							}

@@ -462,8 +462,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						futures.add(
 							patchSchoolChildFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolChild schoolChild = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolChild(siteRequest2, eventHandler, a);
 								}
@@ -474,7 +472,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					futures.add(
 						postSchoolChildFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolChild schoolChild = a.result();
 							} else {
 								errorSchoolChild(siteRequest2, eventHandler, a);
 							}
@@ -646,8 +643,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						futures.add(
 							patchSchoolChildFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolChild schoolChild = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolChild(siteRequest2, eventHandler, a);
 								}
@@ -658,7 +653,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					futures.add(
 						postSchoolChildFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolChild schoolChild = a.result();
 							} else {
 								errorSchoolChild(siteRequest2, eventHandler, a);
 							}

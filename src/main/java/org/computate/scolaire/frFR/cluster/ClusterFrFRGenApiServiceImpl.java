@@ -417,8 +417,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						futures.add(
 							patchClusterFuture(o, true, a -> {
 								if(a.succeeded()) {
-									Cluster cluster = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurCluster(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -429,7 +427,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					futures.add(
 						postClusterFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								Cluster cluster = a.result();
 							} else {
 								erreurCluster(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -601,8 +598,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						futures.add(
 							patchClusterFuture(o, false, a -> {
 								if(a.succeeded()) {
-									Cluster cluster = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurCluster(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -613,7 +608,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					futures.add(
 						postClusterFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								Cluster cluster = a.result();
 							} else {
 								erreurCluster(requeteSite2, gestionnaireEvenements, a);
 							}

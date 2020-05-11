@@ -512,8 +512,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						futures.add(
 							patchAnneeScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									AnneeScolaire anneeScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -524,7 +522,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					futures.add(
 						postAnneeScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								AnneeScolaire anneeScolaire = a.result();
 							} else {
 								erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -714,8 +711,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						futures.add(
 							patchAnneeScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									AnneeScolaire anneeScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -726,7 +721,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					futures.add(
 						postAnneeScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								AnneeScolaire anneeScolaire = a.result();
 							} else {
 								erreurAnneeScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

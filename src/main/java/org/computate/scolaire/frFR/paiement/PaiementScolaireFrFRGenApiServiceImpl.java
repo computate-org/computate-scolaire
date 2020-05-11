@@ -547,8 +547,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						futures.add(
 							patchPaiementScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									PaiementScolaire paiementScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -559,7 +557,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					futures.add(
 						postPaiementScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								PaiementScolaire paiementScolaire = a.result();
 							} else {
 								erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -731,8 +728,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						futures.add(
 							patchPaiementScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									PaiementScolaire paiementScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -743,7 +738,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					futures.add(
 						postPaiementScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								PaiementScolaire paiementScolaire = a.result();
 							} else {
 								erreurPaiementScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

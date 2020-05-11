@@ -486,8 +486,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						futures.add(
 							patchSchoolDadFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolDad schoolDad = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolDad(siteRequest2, eventHandler, a);
 								}
@@ -498,7 +496,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 					futures.add(
 						postSchoolDadFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolDad schoolDad = a.result();
 							} else {
 								errorSchoolDad(siteRequest2, eventHandler, a);
 							}
@@ -670,8 +667,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						futures.add(
 							patchSchoolDadFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolDad schoolDad = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolDad(siteRequest2, eventHandler, a);
 								}
@@ -682,7 +677,6 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 					futures.add(
 						postSchoolDadFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolDad schoolDad = a.result();
 							} else {
 								errorSchoolDad(siteRequest2, eventHandler, a);
 							}

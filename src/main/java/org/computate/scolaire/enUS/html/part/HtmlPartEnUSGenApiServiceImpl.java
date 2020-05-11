@@ -580,8 +580,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						futures.add(
 							patchHtmlPartFuture(o, true, a -> {
 								if(a.succeeded()) {
-									HtmlPart htmlPart = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorHtmlPart(siteRequest2, eventHandler, a);
 								}
@@ -592,7 +590,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					futures.add(
 						postHtmlPartFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								HtmlPart htmlPart = a.result();
 							} else {
 								errorHtmlPart(siteRequest2, eventHandler, a);
 							}
@@ -782,8 +779,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						futures.add(
 							patchHtmlPartFuture(o, false, a -> {
 								if(a.succeeded()) {
-									HtmlPart htmlPart = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorHtmlPart(siteRequest2, eventHandler, a);
 								}
@@ -794,7 +789,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					futures.add(
 						postHtmlPartFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								HtmlPart htmlPart = a.result();
 							} else {
 								errorHtmlPart(siteRequest2, eventHandler, a);
 							}

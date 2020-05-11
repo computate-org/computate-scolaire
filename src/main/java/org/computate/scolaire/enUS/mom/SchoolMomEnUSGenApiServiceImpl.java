@@ -486,8 +486,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 						futures.add(
 							patchSchoolMomFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolMom schoolMom = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolMom(siteRequest2, eventHandler, a);
 								}
@@ -498,7 +496,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					futures.add(
 						postSchoolMomFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolMom schoolMom = a.result();
 							} else {
 								errorSchoolMom(siteRequest2, eventHandler, a);
 							}
@@ -670,8 +667,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 						futures.add(
 							patchSchoolMomFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolMom schoolMom = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolMom(siteRequest2, eventHandler, a);
 								}
@@ -682,7 +677,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					futures.add(
 						postSchoolMomFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolMom schoolMom = a.result();
 							} else {
 								errorSchoolMom(siteRequest2, eventHandler, a);
 							}

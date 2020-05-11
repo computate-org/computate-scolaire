@@ -547,8 +547,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						futures.add(
 							patchSchoolPaymentFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolPayment schoolPayment = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolPayment(siteRequest2, eventHandler, a);
 								}
@@ -559,7 +557,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					futures.add(
 						postSchoolPaymentFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolPayment schoolPayment = a.result();
 							} else {
 								errorSchoolPayment(siteRequest2, eventHandler, a);
 							}
@@ -731,8 +728,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						futures.add(
 							patchSchoolPaymentFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolPayment schoolPayment = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolPayment(siteRequest2, eventHandler, a);
 								}
@@ -743,7 +738,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					futures.add(
 						postSchoolPaymentFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolPayment schoolPayment = a.result();
 							} else {
 								errorSchoolPayment(siteRequest2, eventHandler, a);
 							}

@@ -417,8 +417,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						futures.add(
 							patchClusterFuture(o, true, a -> {
 								if(a.succeeded()) {
-									Cluster cluster = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorCluster(siteRequest2, eventHandler, a);
 								}
@@ -429,7 +427,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					futures.add(
 						postClusterFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								Cluster cluster = a.result();
 							} else {
 								errorCluster(siteRequest2, eventHandler, a);
 							}
@@ -601,8 +598,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						futures.add(
 							patchClusterFuture(o, false, a -> {
 								if(a.succeeded()) {
-									Cluster cluster = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorCluster(siteRequest2, eventHandler, a);
 								}
@@ -613,7 +608,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					futures.add(
 						postClusterFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								Cluster cluster = a.result();
 							} else {
 								errorCluster(siteRequest2, eventHandler, a);
 							}

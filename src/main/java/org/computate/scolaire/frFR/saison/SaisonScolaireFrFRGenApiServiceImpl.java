@@ -516,8 +516,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						futures.add(
 							patchSaisonScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SaisonScolaire saisonScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -528,7 +526,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					futures.add(
 						postSaisonScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
-								SaisonScolaire saisonScolaire = a.result();
 							} else {
 								erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
@@ -718,8 +715,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						futures.add(
 							patchSaisonScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SaisonScolaire saisonScolaire = a.result();
-									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 								} else {
 									erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -730,7 +725,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					futures.add(
 						postSaisonScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
-								SaisonScolaire saisonScolaire = a.result();
 							} else {
 								erreurSaisonScolaire(requeteSite2, gestionnaireEvenements, a);
 							}

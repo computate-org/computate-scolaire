@@ -512,8 +512,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						futures.add(
 							patchSchoolSessionFuture(o, true, a -> {
 								if(a.succeeded()) {
-									SchoolSession schoolSession = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolSession(siteRequest2, eventHandler, a);
 								}
@@ -524,7 +522,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					futures.add(
 						postSchoolSessionFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
-								SchoolSession schoolSession = a.result();
 							} else {
 								errorSchoolSession(siteRequest2, eventHandler, a);
 							}
@@ -714,8 +711,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						futures.add(
 							patchSchoolSessionFuture(o, false, a -> {
 								if(a.succeeded()) {
-									SchoolSession schoolSession = a.result();
-									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 								} else {
 									errorSchoolSession(siteRequest2, eventHandler, a);
 								}
@@ -726,7 +721,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					futures.add(
 						postSchoolSessionFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
-								SchoolSession schoolSession = a.result();
 							} else {
 								errorSchoolSession(siteRequest2, eventHandler, a);
 							}
