@@ -189,8 +189,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -393,6 +393,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourCluster(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.setRequeteApi_(requeteApi);
 
 				ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();
 				listeRecherche.setStocker(true);
@@ -408,7 +409,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -418,7 +419,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								if(a.succeeded()) {
 									Cluster cluster = a.result();
 									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-									requeteSite2.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 								} else {
 									erreurCluster(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -439,8 +439,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportCluster(requeteSite, gestionnaireEvenements);
 				} else {
 					erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -578,6 +577,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourCluster(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.setRequeteApi_(requeteApi);
 
 				ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();
 				listeRecherche.setStocker(true);
@@ -593,7 +593,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -603,7 +603,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								if(a.succeeded()) {
 									Cluster cluster = a.result();
 									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-									requeteSite2.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 								} else {
 									erreurCluster(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -624,8 +623,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionCluster(requeteSite, gestionnaireEvenements);
 				} else {
 					erreurCluster(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -781,7 +779,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeCluster.size());
-				requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
 				if(listeCluster.next()) {
 					listePUTCopieCluster(requeteApi, listeCluster, gestionnaireEvenements);
 				} else {
@@ -815,6 +812,14 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 										if(d.succeeded()) {
 											indexerCluster(cluster, e -> {
 												if(e.succeeded()) {
+													RequeteApi requeteApi = requeteSite.getRequeteApi_();
+													if(requeteApi != null) {
+														requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+														if(requeteApi.getNumFound() == 1L) {
+															cluster.requeteApiCluster();
+														}
+														requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+													}
 													gestionnaireEvenements.handle(Future.succeededFuture(cluster));
 													promise.complete(cluster);
 												} else {
@@ -847,8 +852,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1128,8 +1133,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -2128,8 +2133,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {

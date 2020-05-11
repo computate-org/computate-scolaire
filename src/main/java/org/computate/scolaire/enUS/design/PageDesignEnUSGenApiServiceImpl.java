@@ -213,8 +213,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -506,6 +506,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 				searchList.setStore(true);
@@ -521,7 +522,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -531,7 +532,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								if(a.succeeded()) {
 									PageDesign pageDesign = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorPageDesign(siteRequest2, eventHandler, a);
 								}
@@ -552,8 +552,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportPageDesign(siteRequest, eventHandler);
 				} else {
 					errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -709,6 +708,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 				searchList.setStore(true);
@@ -724,7 +724,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -734,7 +734,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								if(a.succeeded()) {
 									PageDesign pageDesign = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorPageDesign(siteRequest2, eventHandler, a);
 								}
@@ -755,8 +754,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergePageDesign(siteRequest, eventHandler);
 				} else {
 					errorPageDesign(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -930,7 +928,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listPageDesign.size());
-				siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 				if(listPageDesign.next()) {
 					listPUTCopyPageDesign(apiRequest, listPageDesign, eventHandler);
 				} else {
@@ -964,6 +961,14 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 										if(d.succeeded()) {
 											indexPageDesign(pageDesign, e -> {
 												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														if(apiRequest.getNumFound() == 1L) {
+															pageDesign.apiRequestPageDesign();
+														}
+														siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+													}
 													eventHandler.handle(Future.succeededFuture(pageDesign));
 													promise.complete(pageDesign);
 												} else {
@@ -996,8 +1001,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1333,8 +1338,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -3086,7 +3091,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				}
 			});
 			if(searchList.getSorts().size() == 0) {
-				searchList.addSort("created_indexed_date", ORDER.desc);
+				searchList.addSort("pageDesignCompleteName_indexed_string", ORDER.asc);
 			}
 			searchList.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(searchList));
@@ -3164,8 +3169,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {

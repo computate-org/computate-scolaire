@@ -191,8 +191,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -462,6 +462,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourMereScolaire(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.setRequeteApi_(requeteApi);
 
 				ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
 				listeRecherche.setStocker(true);
@@ -477,7 +478,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -487,7 +488,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								if(a.succeeded()) {
 									MereScolaire mereScolaire = a.result();
 									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-									requeteSite2.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 								} else {
 									erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -508,8 +508,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportMereScolaire(requeteSite, gestionnaireEvenements);
 				} else {
 					erreurMereScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -647,6 +646,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourMereScolaire(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.setRequeteApi_(requeteApi);
 
 				ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
 				listeRecherche.setStocker(true);
@@ -662,7 +662,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -672,7 +672,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								if(a.succeeded()) {
 									MereScolaire mereScolaire = a.result();
 									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-									requeteSite2.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 								} else {
 									erreurMereScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -693,8 +692,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionMereScolaire(requeteSite, gestionnaireEvenements);
 				} else {
 					erreurMereScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -850,7 +848,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeMereScolaire.size());
-				requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 				if(listeMereScolaire.next()) {
 					listePUTCopieMereScolaire(requeteApi, listeMereScolaire, gestionnaireEvenements);
 				} else {
@@ -884,6 +881,14 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 										if(d.succeeded()) {
 											indexerMereScolaire(mereScolaire, e -> {
 												if(e.succeeded()) {
+													RequeteApi requeteApi = requeteSite.getRequeteApi_();
+													if(requeteApi != null) {
+														requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+														if(requeteApi.getNumFound() == 1L) {
+															mereScolaire.requeteApiMereScolaire();
+														}
+														requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+													}
 													gestionnaireEvenements.handle(Future.succeededFuture(mereScolaire));
 													promise.complete(mereScolaire);
 												} else {
@@ -916,8 +921,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1247,8 +1252,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -2568,8 +2573,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {

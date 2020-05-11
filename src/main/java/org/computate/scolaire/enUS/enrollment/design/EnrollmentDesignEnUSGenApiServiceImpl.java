@@ -207,8 +207,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -437,6 +437,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<EnrollmentDesign> searchList = new SearchList<EnrollmentDesign>();
 				searchList.setStore(true);
@@ -452,7 +453,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -462,7 +463,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								if(a.succeeded()) {
 									EnrollmentDesign enrollmentDesign = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorEnrollmentDesign(siteRequest2, eventHandler, a);
 								}
@@ -483,8 +483,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportEnrollmentDesign(siteRequest, eventHandler);
 				} else {
 					errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -640,6 +639,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<EnrollmentDesign> searchList = new SearchList<EnrollmentDesign>();
 				searchList.setStore(true);
@@ -655,7 +655,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -665,7 +665,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								if(a.succeeded()) {
 									EnrollmentDesign enrollmentDesign = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorEnrollmentDesign(siteRequest2, eventHandler, a);
 								}
@@ -686,8 +685,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeEnrollmentDesign(siteRequest, eventHandler);
 				} else {
 					errorEnrollmentDesign(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -861,7 +859,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listEnrollmentDesign.size());
-				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 				if(listEnrollmentDesign.next()) {
 					listPUTCopyEnrollmentDesign(apiRequest, listEnrollmentDesign, eventHandler);
 				} else {
@@ -895,6 +892,14 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										if(d.succeeded()) {
 											indexEnrollmentDesign(enrollmentDesign, e -> {
 												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														if(apiRequest.getNumFound() == 1L) {
+															enrollmentDesign.apiRequestEnrollmentDesign();
+														}
+														siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+													}
 													eventHandler.handle(Future.succeededFuture(enrollmentDesign));
 													promise.complete(enrollmentDesign);
 												} else {
@@ -927,8 +932,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1234,8 +1239,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -2308,8 +2313,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {

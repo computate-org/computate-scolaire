@@ -189,8 +189,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -393,6 +393,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForCluster(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<Cluster> searchList = new SearchList<Cluster>();
 				searchList.setStore(true);
@@ -408,7 +409,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -418,7 +419,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								if(a.succeeded()) {
 									Cluster cluster = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorCluster(siteRequest2, eventHandler, a);
 								}
@@ -439,8 +439,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportCluster(siteRequest, eventHandler);
 				} else {
 					errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -578,6 +577,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForCluster(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<Cluster> searchList = new SearchList<Cluster>();
 				searchList.setStore(true);
@@ -593,7 +593,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSaves()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -603,7 +603,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								if(a.succeeded()) {
 									Cluster cluster = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorCluster(siteRequest2, eventHandler, a);
 								}
@@ -624,8 +623,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeCluster(siteRequest, eventHandler);
 				} else {
 					errorCluster(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -781,7 +779,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listCluster.size());
-				siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 				if(listCluster.next()) {
 					listPUTCopyCluster(apiRequest, listCluster, eventHandler);
 				} else {
@@ -815,6 +812,14 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 										if(d.succeeded()) {
 											indexCluster(cluster, e -> {
 												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														if(apiRequest.getNumFound() == 1L) {
+															cluster.apiRequestCluster();
+														}
+														siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
+													}
 													eventHandler.handle(Future.succeededFuture(cluster));
 													promise.complete(cluster);
 												} else {
@@ -847,8 +852,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1128,8 +1133,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
@@ -2128,8 +2133,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {

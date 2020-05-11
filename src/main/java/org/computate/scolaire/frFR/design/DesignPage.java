@@ -108,8 +108,10 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.enUS: SiteAdmin
  * PublicLire: true
  * 
+ * Tri.asc: designPageNomComplet
+ * 
  * Lignes: 100
-*/    
+*/  
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
@@ -125,22 +127,6 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	protected void _designPageCle(Couverture<Long> c) {
 		c.o(pk);
 	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: yearKey
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * Attribuer: AnneeScolaire.designPageCle
-//	 * NomAffichage.frFR: année
-//	 * NomAffichage.enUS: year
-//	 * r: AnneeCle
-//	 * r.enUS: YearKey
-//	 * r: annee
-//	 * r.enUS: year
-//	*/        
-//	protected void _anneeCle(Couverture<Long> c) {
-//	}
 
 	/**
 	 * {@inheritDoc}
@@ -180,49 +166,6 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * NomAffichage.enUS: parts
 	 */           
 	protected void _partHtmlCles(List<Long> o) {}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: enrollmentKeys
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * Attribuer: InscriptionScolaire.designPageCle
-//	 * NomAffichage.frFR: inscriptions
-//	 * NomAffichage.enUS: enrollments
-//	 */              
-//	protected void _inscriptionCles(List<Long> o) {}
-//
-//	/**
-//	 * Var.enUS: yearSearch
-//	 * r: anneeCles
-//	 * r.enUS: yearKeys
-//	 * r: AnneeScolaire
-//	 * r.enUS: SchoolYear
-//	 * r: setStocker
-//	 * r.enUS: setStore
-//	 * Ignorer: true
-//	 * r: designPageCle
-//	 * r.enUS: pageDesignKey
-//	 */
-//	protected void _anneeRecherche(ListeRecherche<AnneeScolaire> l) {
-//		l.setQuery("*:*");
-//		l.addFilterQuery("designPageCle_indexed_long:" + pk);
-//		l.setC(AnneeScolaire.class);
-//		l.setStocker(true);
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: year_
-//	 * r: anneeRecherche
-//	 * r.enUS: yearSearch
-//	 * Ignorer: true
-//	 */           
-//	protected void _annee_(Couverture<AnneeScolaire> c) {
-//		if(anneeRecherche.size() > 0) {
-//			c.o(anneeRecherche.get(0));
-//		}
-//	}
 
 	/**
 	 * Var.enUS: htmlPartSearch
@@ -251,125 +194,6 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	protected void _partHtmlListe_(Couverture<List<PartHtml>> c) {
 		c.o(partHtmlRecherche.getList());
 	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: schoolKey
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * Description.frFR: La clé primaire de l'école dans la base de données. 
-//	 * Description.enUS: The primary key of the school in the database. 
-//	 * NomAffichage.frFR: école
-//	 * NomAffichage.enUS: school
-//	 * r: EcoleCle
-//	 * r.enUS: SchoolKey
-//	 * r: annee
-//	 * r.enUS: year
-//	 */             
-//	protected void _ecoleCle(Couverture<Long> c) {
-//		if(annee_ != null)
-//			c.o(annee_.getEcoleCle());
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: schoolCompleteName
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * Description.frFR: 
-//	 * Description.enUS: 
-//	 * NomAffichage.frFR: 
-//	 * NomAffichage.enUS: 
-//	 * r: EcoleNomComplet
-//	 * r.enUS: SchoolCompleteName
-//	 * r: annee
-//	 * r.enUS: year
-//	 */   
-//	protected void _ecoleNomComplet(Couverture<String> c) {
-//		if(annee_ != null)
-//			c.o(annee_.getEcoleNomComplet());
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: schoolLocation
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * NomAffichage.enUS: location
-//	 * NomAffichage.frFR: l'emplacement
-//	 * r: EcoleEmplacement
-//	 * r.enUS: SchoolLocation
-//	 * r: annee
-//	 * r.enUS: year
-//	 */               
-//	protected void _ecoleEmplacement(Couverture<String> c) {
-//		if(annee_ != null)
-//			c.o((String)annee_.getEcoleEmplacement());
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: yearStart
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * NomAffichage.frFR: début de l'année
-//	 * NomAffichage.enUS: start of year
-//	 * r: AnneeDebut
-//	 * r.enUS: YearStart
-//	 * r: annee
-//	 * r.enUS: year
-//	 */                   
-//	protected void _anneeDebut(Couverture<Integer> c) {
-//		if(annee_ != null)
-//			c.o(annee_.getAnneeDebut());
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: yearEnd
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * NomAffichage.frFR: le fin de l'année
-//	 * NomAffichage.enUS: end of year
-//	 * r: AnneeFin
-//	 * r.enUS: YearStart
-//	 * r: annee
-//	 * r.enUS: year
-//	 */                    
-//	protected void _anneeFin(Couverture<Integer> c) {
-//		if(annee_ != null)
-//			c.o(annee_.getAnneeFin());
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: yearShortName
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * r: AnneeNomCourt
-//	 * r.enUS: YearShortName
-//	 * r: annee
-//	 * r.enUS: year
-//	 */                    
-//	protected void _anneeNomCourt(Couverture<String> c) {
-//		if(annee_ != null)
-//			c.o(annee_.getAnneeNomCourt());
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: yearCompleteName
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * r: AnneeNomComplet
-//	 * r.enUS: YearCompleteName
-//	 * r: annee
-//	 * r.enUS: year
-//	 */                  
-//	protected void _anneeNomComplet(Couverture<String> c) {
-//		if(annee_ != null)
-//			c.o(annee_.getAnneeNomComplet());
-//	}
 
 	/**    
 	 * {@inheritDoc}

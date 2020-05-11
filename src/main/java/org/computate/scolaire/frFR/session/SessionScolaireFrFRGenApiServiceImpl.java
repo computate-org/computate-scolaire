@@ -211,8 +211,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -488,6 +488,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.setRequeteApi_(requeteApi);
 
 				ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
 				listeRecherche.setStocker(true);
@@ -503,7 +504,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -513,7 +514,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								if(a.succeeded()) {
 									SessionScolaire sessionScolaire = a.result();
 									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-									requeteSite2.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 								} else {
 									erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -534,8 +534,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportSessionScolaire(requeteSite, gestionnaireEvenements);
 				} else {
 					erreurSessionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -691,6 +690,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+				requeteSite2.setRequeteApi_(requeteApi);
 
 				ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
 				listeRecherche.setStocker(true);
@@ -706,7 +706,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						json2.put("set" + StringUtils.capitalize(f), json.getValue(f));
 					}
 					if(o != null) {
-						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(Arrays.asList())) {
+						for(String f : Optional.ofNullable(o.getSauvegardes()).orElse(new ArrayList<>())) {
 							if(!json.fieldNames().contains(f))
 								json2.putNull("set" + StringUtils.capitalize(f));
 						}
@@ -716,7 +716,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								if(a.succeeded()) {
 									SessionScolaire sessionScolaire = a.result();
 									requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-									requeteSite2.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 								} else {
 									erreurSessionScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
@@ -737,8 +736,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-								requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionSessionScolaire(requeteSite, gestionnaireEvenements);
 				} else {
 					erreurSessionScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
@@ -912,7 +910,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeSessionScolaire.size());
-				requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 				if(listeSessionScolaire.next()) {
 					listePUTCopieSessionScolaire(requeteApi, listeSessionScolaire, gestionnaireEvenements);
 				} else {
@@ -946,6 +943,14 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 										if(d.succeeded()) {
 											indexerSessionScolaire(sessionScolaire, e -> {
 												if(e.succeeded()) {
+													RequeteApi requeteApi = requeteSite.getRequeteApi_();
+													if(requeteApi != null) {
+														requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+														if(requeteApi.getNumFound() == 1L) {
+															sessionScolaire.requeteApiSessionScolaire();
+														}
+														requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
+													}
 													gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
 													promise.complete(sessionScolaire);
 												} else {
@@ -978,8 +983,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			StringBuilder putSql = new StringBuilder();
@@ -1306,8 +1311,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -2528,8 +2533,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
-			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(Arrays.asList());
-			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(Arrays.asList());
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {

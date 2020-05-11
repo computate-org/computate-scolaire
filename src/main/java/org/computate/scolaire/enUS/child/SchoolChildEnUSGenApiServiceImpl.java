@@ -438,6 +438,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
 				searchList.setStore(true);
@@ -463,7 +464,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								if(a.succeeded()) {
 									SchoolChild schoolChild = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorSchoolChild(siteRequest2, eventHandler, a);
 								}
@@ -484,8 +484,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportSchoolChild(siteRequest, eventHandler);
 				} else {
 					errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -623,6 +622,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolChild(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setApiRequest_(apiRequest);
 
 				SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
 				searchList.setStore(true);
@@ -648,7 +648,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								if(a.succeeded()) {
 									SchoolChild schoolChild = a.result();
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-									siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
 								} else {
 									errorSchoolChild(siteRequest2, eventHandler, a);
 								}
@@ -669,8 +668,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			});
 			CompositeFuture.all(futures).setHandler( a -> {
 				if(a.succeeded()) {
-								apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-								siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeSchoolChild(siteRequest, eventHandler);
 				} else {
 					errorSchoolChild(apiRequest.getSiteRequest_(), eventHandler, a);
@@ -826,7 +824,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolChild.size());
-				siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
 				if(listSchoolChild.next()) {
 					listPUTCopySchoolChild(apiRequest, listSchoolChild, eventHandler);
 				} else {
@@ -860,6 +857,14 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 										if(d.succeeded()) {
 											indexSchoolChild(schoolChild, e -> {
 												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														if(apiRequest.getNumFound() == 1L) {
+															schoolChild.apiRequestSchoolChild();
+														}
+														siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+													}
 													eventHandler.handle(Future.succeededFuture(schoolChild));
 													promise.complete(schoolChild);
 												} else {
