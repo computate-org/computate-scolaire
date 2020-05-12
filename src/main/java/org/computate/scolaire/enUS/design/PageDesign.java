@@ -21,17 +21,6 @@ public class PageDesign extends PageDesignGen<Cluster> {
 
 	protected void _htmlPartKeys(List<Long> o) {}
 
-	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("pageDesignKeys_indexed_longs:" + pk);
-		l.setC(HtmlPart.class);
-		l.setStore(true);
-	}
-
-	protected void _htmlPartList(Wrap<List<HtmlPart>> c) {
-		c.o(htmlPartSearch.getList());
-	}
-
 	protected void _pageDesignCompleteName(Wrap<String> c) {
 		String o;
 //		if(yearCompleteName == null)

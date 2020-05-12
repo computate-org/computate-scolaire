@@ -1,10 +1,8 @@
 package org.computate.scolaire.frFR.design;
 
 import java.util.Arrays;
-import org.computate.scolaire.frFR.html.part.PartHtml;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
-import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
@@ -552,94 +550,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////
-	// partHtmlRecherche //
-	///////////////////////
-
-	/**	L'entité « partHtmlRecherche »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<PartHtml>(). 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected ListeRecherche<PartHtml> partHtmlRecherche = new ListeRecherche<PartHtml>();
-	@JsonIgnore
-	public Couverture<ListeRecherche<PartHtml>> partHtmlRechercheCouverture = new Couverture<ListeRecherche<PartHtml>>().p(this).c(ListeRecherche.class).var("partHtmlRecherche").o(partHtmlRecherche);
-
-	/**	<br/>L'entité « partHtmlRecherche »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<PartHtml>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partHtmlRecherche">Trouver l'entité partHtmlRecherche dans Solr</a>
-	 * <br/>
-	 * @param partHtmlRecherche est l'entité déjà construit. 
-	 **/
-	protected abstract void _partHtmlRecherche(ListeRecherche<PartHtml> l);
-
-	public ListeRecherche<PartHtml> getPartHtmlRecherche() {
-		return partHtmlRecherche;
-	}
-
-	public void setPartHtmlRecherche(ListeRecherche<PartHtml> partHtmlRecherche) {
-		this.partHtmlRecherche = partHtmlRecherche;
-		this.partHtmlRechercheCouverture.dejaInitialise = true;
-	}
-	protected DesignPage partHtmlRechercheInit() {
-		if(!partHtmlRechercheCouverture.dejaInitialise) {
-			_partHtmlRecherche(partHtmlRecherche);
-		}
-		partHtmlRecherche.initLoinPourClasse(requeteSite_);
-		partHtmlRechercheCouverture.dejaInitialise(true);
-		return (DesignPage)this;
-	}
-
-	////////////////////
-	// partHtmlListe_ //
-	////////////////////
-
-	/**	L'entité « partHtmlListe_ »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected List<PartHtml> partHtmlListe_;
-	@JsonIgnore
-	public Couverture<List<PartHtml>> partHtmlListe_Couverture = new Couverture<List<PartHtml>>().p(this).c(List.class).var("partHtmlListe_").o(partHtmlListe_);
-
-	/**	<br/>L'entité « partHtmlListe_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partHtmlListe_">Trouver l'entité partHtmlListe_ dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _partHtmlListe_(Couverture<List<PartHtml>> c);
-
-	public List<PartHtml> getPartHtmlListe_() {
-		return partHtmlListe_;
-	}
-
-	public void setPartHtmlListe_(List<PartHtml> partHtmlListe_) {
-		this.partHtmlListe_ = partHtmlListe_;
-		this.partHtmlListe_Couverture.dejaInitialise = true;
-	}
-	public DesignPage addPartHtmlListe_(PartHtml...objets) {
-		for(PartHtml o : objets) {
-			addPartHtmlListe_(o);
-		}
-		return (DesignPage)this;
-	}
-	public DesignPage addPartHtmlListe_(PartHtml o) {
-		if(o != null && !partHtmlListe_.contains(o))
-			this.partHtmlListe_.add(o);
-		return (DesignPage)this;
-	}
-	protected DesignPage partHtmlListe_Init() {
-		if(!partHtmlListe_Couverture.dejaInitialise) {
-			_partHtmlListe_(partHtmlListe_Couverture);
-			if(partHtmlListe_ == null)
-				setPartHtmlListe_(partHtmlListe_Couverture.o);
-		}
-		partHtmlListe_Couverture.dejaInitialise(true);
-		return (DesignPage)this;
-	}
-
 	//////////////////////////
 	// designPageNomComplet //
 	//////////////////////////
@@ -923,8 +833,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		designEnfantClesInit();
 		designParentClesInit();
 		partHtmlClesInit();
-		partHtmlRechercheInit();
-		partHtmlListe_Init();
 		designPageNomCompletInit();
 		designCacheInit();
 	}
@@ -939,8 +847,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public void requeteSiteDesignPage(RequeteSiteFrFR requeteSite_) {
 			super.requeteSiteCluster(requeteSite_);
-		if(partHtmlRecherche != null)
-			partHtmlRecherche.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -975,10 +881,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				return oDesignPage.designParentCles;
 			case "partHtmlCles":
 				return oDesignPage.partHtmlCles;
-			case "partHtmlRecherche":
-				return oDesignPage.partHtmlRecherche;
-			case "partHtmlListe_":
-				return oDesignPage.partHtmlListe_;
 			case "designPageNomComplet":
 				return oDesignPage.designPageNomComplet;
 			case "designCache":

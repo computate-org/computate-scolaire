@@ -1,10 +1,8 @@
 package org.computate.scolaire.enUS.design;
 
 import java.util.Arrays;
-import org.computate.scolaire.enUS.html.part.HtmlPart;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
-import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
@@ -551,94 +549,6 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	////////////////////
-	// htmlPartSearch //
-	////////////////////
-
-	/**	L'entité « htmlPartSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<HtmlPart> htmlPartSearch = new SearchList<HtmlPart>();
-	@JsonIgnore
-	public Wrap<SearchList<HtmlPart>> htmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("htmlPartSearch").o(htmlPartSearch);
-
-	/**	<br/>L'entité « htmlPartSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartSearch">Trouver l'entité htmlPartSearch dans Solr</a>
-	 * <br/>
-	 * @param htmlPartSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _htmlPartSearch(SearchList<HtmlPart> l);
-
-	public SearchList<HtmlPart> getHtmlPartSearch() {
-		return htmlPartSearch;
-	}
-
-	public void setHtmlPartSearch(SearchList<HtmlPart> htmlPartSearch) {
-		this.htmlPartSearch = htmlPartSearch;
-		this.htmlPartSearchWrap.alreadyInitialized = true;
-	}
-	protected PageDesign htmlPartSearchInit() {
-		if(!htmlPartSearchWrap.alreadyInitialized) {
-			_htmlPartSearch(htmlPartSearch);
-		}
-		htmlPartSearch.initDeepForClass(siteRequest_);
-		htmlPartSearchWrap.alreadyInitialized(true);
-		return (PageDesign)this;
-	}
-
-	//////////////////
-	// htmlPartList //
-	//////////////////
-
-	/**	L'entité « htmlPartList »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected List<HtmlPart> htmlPartList;
-	@JsonIgnore
-	public Wrap<List<HtmlPart>> htmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("htmlPartList").o(htmlPartList);
-
-	/**	<br/>L'entité « htmlPartList »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartList">Trouver l'entité htmlPartList dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _htmlPartList(Wrap<List<HtmlPart>> c);
-
-	public List<HtmlPart> getHtmlPartList() {
-		return htmlPartList;
-	}
-
-	public void setHtmlPartList(List<HtmlPart> htmlPartList) {
-		this.htmlPartList = htmlPartList;
-		this.htmlPartListWrap.alreadyInitialized = true;
-	}
-	public PageDesign addHtmlPartList(HtmlPart...objets) {
-		for(HtmlPart o : objets) {
-			addHtmlPartList(o);
-		}
-		return (PageDesign)this;
-	}
-	public PageDesign addHtmlPartList(HtmlPart o) {
-		if(o != null && !htmlPartList.contains(o))
-			this.htmlPartList.add(o);
-		return (PageDesign)this;
-	}
-	protected PageDesign htmlPartListInit() {
-		if(!htmlPartListWrap.alreadyInitialized) {
-			_htmlPartList(htmlPartListWrap);
-			if(htmlPartList == null)
-				setHtmlPartList(htmlPartListWrap.o);
-		}
-		htmlPartListWrap.alreadyInitialized(true);
-		return (PageDesign)this;
-	}
-
 	////////////////////////////
 	// pageDesignCompleteName //
 	////////////////////////////
@@ -922,8 +832,6 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		childDesignKeysInit();
 		parentDesignKeysInit();
 		htmlPartKeysInit();
-		htmlPartSearchInit();
-		htmlPartListInit();
 		pageDesignCompleteNameInit();
 		designHiddenInit();
 	}
@@ -938,8 +846,6 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 	public void siteRequestPageDesign(SiteRequestEnUS siteRequest_) {
 			super.siteRequestCluster(siteRequest_);
-		if(htmlPartSearch != null)
-			htmlPartSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -974,10 +880,6 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return oPageDesign.parentDesignKeys;
 			case "htmlPartKeys":
 				return oPageDesign.htmlPartKeys;
-			case "htmlPartSearch":
-				return oPageDesign.htmlPartSearch;
-			case "htmlPartList":
-				return oPageDesign.htmlPartList;
 			case "pageDesignCompleteName":
 				return oPageDesign.pageDesignCompleteName;
 			case "designHidden":

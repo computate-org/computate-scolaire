@@ -83,32 +83,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	protected void _partHtmlCle(Couverture<Long> c) {
 		c.o(pk);
 	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: enrollmentDesignKeys
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * Attribuer: DesignInscription.partHtmlCles
-//	 * NomAffichage.frFR: designs d'inscription
-//	 * NomAffichage.enUS: enrollment designs
-//	*/          
-//	protected void _designInscriptionCles(Couverture<Long> c) {
-//	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: pageDesignKey
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * Attribuer: DesignPage.partHtmlCles
-//	 * HtmlLigne: 3
-//	 * HtmlCelulle: 1
-//	 * NomAffichage.frFR: design de page
-//	 * NomAffichage.enUS: page design
-//	*/    
-//	protected void _designPageCle(Couverture<Long> c) {
-//	}
 
 	/**
 	 * {@inheritDoc}
@@ -136,24 +110,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * r.enUS: pageDesignKeys
 	*/                                      
 	protected void _designPageCles(List<Long> l) {
-		if(designPageCles.size() > 0) {
-			ListeRecherche<DesignPage> r = new ListeRecherche<>();
-			StringBuilder fq = new StringBuilder();
-			for(Long c : designPageCles) {
-				if(fq.length() > 0)
-					fq.append(" OR ");
-				fq.append("designParentCles_indexed_longs:").append(c);
-			}
-			if(fq.length() > 0) {
-				r.setQuery("*:*");
-				r.setRows(100);
-				r.setC(DesignPage.class);
-				r.setStocker(true);
-				r.addFilterQuery(fq.toString());
-				r.initLoinListeRecherche(requeteSite_);
-				l.addAll(r.getList().stream().map(o -> o.getPk()).collect(Collectors.toList()));
-			}
-		}
 	}
 
 	/**

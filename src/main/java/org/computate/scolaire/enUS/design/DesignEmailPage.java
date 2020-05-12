@@ -100,7 +100,13 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _pageHtmlPartSearch(SearchList<HtmlPart> l) {
 		if(pageDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("pageDesignKeys_indexed_longs:" + pageDesign.getPk());
+
+			StringBuilder fq = new StringBuilder();
+			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign.getPk());
+			for(Long k : pageDesign.getParentDesignKeys())
+				fq.append(" OR pageDesignKeys_indexed_longs:").append(k);
+
+			l.addFilterQuery(fq.toString());
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);
@@ -178,7 +184,13 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _emailHtmlPartSearch(SearchList<HtmlPart> l) {
 		if(emailDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("pageDesignKeys_indexed_longs:" + emailDesign.getPk());
+
+			StringBuilder fq = new StringBuilder();
+			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign.getPk());
+			for(Long k : pageDesign.getParentDesignKeys())
+				fq.append(" OR pageDesignKeys_indexed_longs:").append(k);
+
+			l.addFilterQuery(fq.toString());
 			l.setC(HtmlPart.class);
 			l.setStore(true);
 			l.addSort("sort1_indexed_double", ORDER.asc);
@@ -254,7 +266,13 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _attachmentHtmlPartSearch(SearchList<HtmlPart> l) {
 		if(attachmentDesign != null) {
 			l.setQuery("*:*");
-			l.addFilterQuery("pageDesignKeys_indexed_longs:" + attachmentDesign.getPk());
+
+			StringBuilder fq = new StringBuilder();
+			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign.getPk());
+			for(Long k : pageDesign.getParentDesignKeys())
+				fq.append(" OR pageDesignKeys_indexed_longs:").append(k);
+
+			l.addFilterQuery(fq.toString());
 			l.addFilterQuery("pdfExclude_indexed_boolean:false");
 			l.setC(HtmlPart.class);
 			l.setStore(true);

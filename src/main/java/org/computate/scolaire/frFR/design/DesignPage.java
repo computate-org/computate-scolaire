@@ -167,34 +167,6 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 */           
 	protected void _partHtmlCles(List<Long> o) {}
 
-	/**
-	 * Var.enUS: htmlPartSearch
-	 * r: designPageCle
-	 * r.enUS: pageDesignKey
-	 * r: PartHtml
-	 * r.enUS: HtmlPart
-	 * r: setStocker
-	 * r.enUS: setStore
-	 * Ignorer: true
-	 */
-	protected void _partHtmlRecherche(ListeRecherche<PartHtml> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("designPageCles_indexed_longs:" + pk);
-		l.setC(PartHtml.class);
-		l.setStocker(true);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: htmlPartList
-	 * r: partHtmlRecherche
-	 * r.enUS: htmlPartSearch
-	 * Ignorer: true
-	 */          
-	protected void _partHtmlListe_(Couverture<List<PartHtml>> c) {
-		c.o(partHtmlRecherche.getList());
-	}
-
 	/**    
 	 * {@inheritDoc}
 	 * Var.enUS: pageDesignCompleteName
