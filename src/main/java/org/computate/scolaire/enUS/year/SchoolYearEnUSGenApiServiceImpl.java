@@ -1476,22 +1476,24 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "addAllSeasonKeys":
 						JsonArray addAllSeasonKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllSeasonKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllSeasonKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolSeason.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllSeasonKeysValues != null) {
+							for(Integer i = 0; i <  addAllSeasonKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllSeasonKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolSeason");
+									SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolSeason.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolSeason");
+										}
 									}
 								}
 							}
@@ -1501,22 +1503,24 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						JsonArray setSeasonKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey"));
-						for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
-							Long l = Long.parseLong(setSeasonKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolSeason.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setSeasonKeysValues != null) {
+							for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
+								Long l = Long.parseLong(setSeasonKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolSeason");
+									SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolSeason.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolSeason");
+										}
 									}
 								}
 							}

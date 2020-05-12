@@ -1430,22 +1430,24 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						break;
 					case "addAllAgeCles":
 						JsonArray addAllAgeClesValeurs = jsonObject.getJsonArray(methodeNom);
-						for(Integer i = 0; i <  addAllAgeClesValeurs.size(); i++) {
-							Long l = Long.parseLong(addAllAgeClesValeurs.getString(i));
-							if(l != null) {
-								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(AgeScolaire.class);
-								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllAgeClesValeurs != null) {
+							for(Integer i = 0; i <  addAllAgeClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllAgeClesValeurs.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("AgeScolaire");
+									ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(AgeScolaire.class);
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("AgeScolaire");
+										}
 									}
 								}
 							}
@@ -1455,22 +1457,24 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						JsonArray setAgeClesValeurs = jsonObject.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle"));
-						for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
-							Long l = Long.parseLong(setAgeClesValeurs.getString(i));
-							if(l != null) {
-								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(AgeScolaire.class);
-								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setAgeClesValeurs != null) {
+							for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setAgeClesValeurs.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("AgeScolaire");
+									ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(AgeScolaire.class);
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("AgeScolaire");
+										}
 									}
 								}
 							}

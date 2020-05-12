@@ -1583,22 +1583,24 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "addAllPageDesignKeys":
 						JsonArray addAllPageDesignKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllPageDesignKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllPageDesignKeysValues.getString(i));
-							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllPageDesignKeysValues != null) {
+							for(Integer i = 0; i <  addAllPageDesignKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllPageDesignKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("PageDesign");
+									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(PageDesign.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("PageDesign");
+										}
 									}
 								}
 							}
@@ -1608,22 +1610,24 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						JsonArray setPageDesignKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("htmlPartKeys", "pageDesignKeys", pk));
-						for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
-							Long l = Long.parseLong(setPageDesignKeysValues.getString(i));
-							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setPageDesignKeysValues != null) {
+							for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
+								Long l = Long.parseLong(setPageDesignKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("PageDesign");
+									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(PageDesign.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("htmlPartKeys", l, "pageDesignKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("PageDesign");
+										}
 									}
 								}
 							}

@@ -1430,22 +1430,24 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "addAllAgeKeys":
 						JsonArray addAllAgeKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllAgeKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllAgeKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolAge.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllAgeKeysValues != null) {
+							for(Integer i = 0; i <  addAllAgeKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllAgeKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolAge");
+									SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolAge.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolAge");
+										}
 									}
 								}
 							}
@@ -1455,22 +1457,24 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						JsonArray setAgeKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey"));
-						for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
-							Long l = Long.parseLong(setAgeKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolAge.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setAgeKeysValues != null) {
+							for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
+								Long l = Long.parseLong(setAgeKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolAge");
+									SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolAge.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolAge");
+										}
 									}
 								}
 							}

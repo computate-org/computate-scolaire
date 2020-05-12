@@ -1478,22 +1478,24 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						break;
 					case "addAllEnrollmentKeys":
 						JsonArray addAllEnrollmentKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllEnrollmentKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllEnrollmentKeysValues != null) {
+							for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllEnrollmentKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolEnrollment");
+									SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolEnrollment.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolEnrollment");
+										}
 									}
 								}
 							}
@@ -1503,22 +1505,24 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						JsonArray setEnrollmentKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("blockKeys", "enrollmentKeys", pk));
-						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
-							Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setEnrollmentKeysValues != null) {
+							for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
+								Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolEnrollment");
+									SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolEnrollment.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("blockKeys", l, "enrollmentKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolEnrollment");
+										}
 									}
 								}
 							}

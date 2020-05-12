@@ -1484,22 +1484,24 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						break;
 					case "addAllSessionKeys":
 						JsonArray addAllSessionKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllSessionKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllSessionKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolSession.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllSessionKeysValues != null) {
+							for(Integer i = 0; i <  addAllSessionKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllSessionKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolSession");
+									SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolSession.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolSession");
+										}
 									}
 								}
 							}
@@ -1509,22 +1511,24 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						JsonArray setSessionKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("seasonKey", "sessionKeys", pk));
-						for(Integer i = 0; i <  setSessionKeysValues.size(); i++) {
-							Long l = Long.parseLong(setSessionKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolSession.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setSessionKeysValues != null) {
+							for(Integer i = 0; i <  setSessionKeysValues.size(); i++) {
+								Long l = Long.parseLong(setSessionKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolSession");
+									SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolSession.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolSession");
+										}
 									}
 								}
 							}

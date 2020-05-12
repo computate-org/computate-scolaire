@@ -1484,22 +1484,24 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "addAllSessionCles":
 						JsonArray addAllSessionClesValeurs = jsonObject.getJsonArray(methodeNom);
-						for(Integer i = 0; i <  addAllSessionClesValeurs.size(); i++) {
-							Long l = Long.parseLong(addAllSessionClesValeurs.getString(i));
-							if(l != null) {
-								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(SessionScolaire.class);
-								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllSessionClesValeurs != null) {
+							for(Integer i = 0; i <  addAllSessionClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllSessionClesValeurs.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContexteFrFR.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SessionScolaire");
+									ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(SessionScolaire.class);
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContexteFrFR.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SessionScolaire");
+										}
 									}
 								}
 							}
@@ -1509,22 +1511,24 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						JsonArray setSessionClesValeurs = jsonObject.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("saisonCle", "sessionCles", pk));
-						for(Integer i = 0; i <  setSessionClesValeurs.size(); i++) {
-							Long l = Long.parseLong(setSessionClesValeurs.getString(i));
-							if(l != null) {
-								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(SessionScolaire.class);
-								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setSessionClesValeurs != null) {
+							for(Integer i = 0; i <  setSessionClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setSessionClesValeurs.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContexteFrFR.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SessionScolaire");
+									ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(SessionScolaire.class);
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContexteFrFR.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SessionScolaire");
+										}
 									}
 								}
 							}

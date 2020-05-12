@@ -1476,22 +1476,24 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "addAllSaisonCles":
 						JsonArray addAllSaisonClesValeurs = jsonObject.getJsonArray(methodeNom);
-						for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
-							Long l = Long.parseLong(addAllSaisonClesValeurs.getString(i));
-							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
-								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllSaisonClesValeurs != null) {
+							for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllSaisonClesValeurs.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContexteFrFR.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("anneeCle", l, "saisonCles", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SaisonScolaire");
+									ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(SaisonScolaire.class);
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContexteFrFR.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("anneeCle", l, "saisonCles", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SaisonScolaire");
+										}
 									}
 								}
 							}
@@ -1501,22 +1503,24 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						JsonArray setSaisonClesValeurs = jsonObject.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("anneeCle", "saisonCles", pk));
-						for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
-							Long l = Long.parseLong(setSaisonClesValeurs.getString(i));
-							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
-								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setSaisonClesValeurs != null) {
+							for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setSaisonClesValeurs.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContexteFrFR.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("anneeCle", l, "saisonCles", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SaisonScolaire");
+									ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(SaisonScolaire.class);
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContexteFrFR.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("anneeCle", l, "saisonCles", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SaisonScolaire");
+										}
 									}
 								}
 							}

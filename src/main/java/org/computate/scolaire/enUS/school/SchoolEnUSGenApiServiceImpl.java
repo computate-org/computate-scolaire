@@ -697,22 +697,24 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						break;
 					case "addAllYearKeys":
 						JsonArray addAllYearKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllYearKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllYearKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllYearKeysValues != null) {
+							for(Integer i = 0; i <  addAllYearKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllYearKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolYear");
+									SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolYear.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolYear");
+										}
 									}
 								}
 							}
@@ -722,22 +724,24 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						JsonArray setYearKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", "yearKeys", pk));
-						for(Integer i = 0; i <  setYearKeysValues.size(); i++) {
-							Long l = Long.parseLong(setYearKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setYearKeysValues != null) {
+							for(Integer i = 0; i <  setYearKeysValues.size(); i++) {
+								Long l = Long.parseLong(setYearKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_setA2);
-									patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolYear");
+									SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolYear.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_setA2);
+										patchSqlParams.addAll(Arrays.asList("schoolKey", l, "yearKeys", pk));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolYear");
+										}
 									}
 								}
 							}

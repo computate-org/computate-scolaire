@@ -5016,6 +5016,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmountDue(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
+		sx(htmChargeAmountDue());
 	}
 
 	public void htmChargeAmountDue(String classApiMethodMethod) {
@@ -5121,6 +5122,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmountFuture(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
+		sx(htmChargeAmountFuture());
 	}
 
 	public void htmChargeAmountFuture(String classApiMethodMethod) {

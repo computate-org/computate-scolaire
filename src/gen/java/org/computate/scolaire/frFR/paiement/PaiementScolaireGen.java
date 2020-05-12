@@ -5030,6 +5030,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMontantDu(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
+		sx(htmFraisMontantDu());
 	}
 
 	public void htmFraisMontantDu(String classeApiMethodeMethode) {
@@ -5135,6 +5136,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMontantFuture(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
+		sx(htmFraisMontantFuture());
 	}
 
 	public void htmFraisMontantFuture(String classeApiMethodeMethode) {

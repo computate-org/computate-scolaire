@@ -536,22 +536,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						break;
 					case "addAllEnrollmentKeys":
 						JsonArray addAllEnrollmentKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllEnrollmentKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllEnrollmentKeysValues != null) {
+							for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllEnrollmentKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolEnrollment");
+									SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolEnrollment.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolEnrollment");
+										}
 									}
 								}
 							}
@@ -561,22 +563,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						JsonArray setEnrollmentKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys"));
-						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
-							Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setEnrollmentKeysValues != null) {
+							for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
+								Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolEnrollment");
+									SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolEnrollment.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "userKeys", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolEnrollment");
+										}
 									}
 								}
 							}
@@ -628,22 +632,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						break;
 					case "addAllPaymentKeys":
 						JsonArray addAllPaymentKeysValues = jsonObject.getJsonArray(methodName);
-						for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
-							Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(addAllPaymentKeysValues != null) {
+							for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolPayment");
+									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolPayment.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolPayment");
+										}
 									}
 								}
 							}
@@ -653,22 +659,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 						JsonArray setPaymentKeysValues = jsonObject.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
 						patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys"));
-						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
-							Long l = Long.parseLong(setPaymentKeysValues.getString(i));
-							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+						if(setPaymentKeysValues != null) {
+							for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
+								Long l = Long.parseLong(setPaymentKeysValues.getString(i));
 								if(l != null) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
-										classes.add("SchoolPayment");
+									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolPayment.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l != null) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList("paymentKeys", pk, "userKeys", l));
+										if(!pks.contains(l)) {
+											pks.add(l);
+											classes.add("SchoolPayment");
+										}
 									}
 								}
 							}
