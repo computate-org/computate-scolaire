@@ -2672,15 +2672,18 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	public Object defineSchoolSession(String var, String val) {
 		switch(var) {
 			case "schoolAddress":
-				setSchoolAddress(val);
+				if(val != null)
+					setSchoolAddress(val);
 				savesSchoolSession.add(var);
 				return val;
 			case "sessionStartDate":
-				setSessionStartDate(val);
+				if(val != null)
+					setSessionStartDate(val);
 				savesSchoolSession.add(var);
 				return val;
 			case "sessionEndDate":
-				setSessionEndDate(val);
+				if(val != null)
+					setSessionEndDate(val);
 				savesSchoolSession.add(var);
 				return val;
 			default:

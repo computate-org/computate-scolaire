@@ -3696,107 +3696,133 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public Object defineHtmlPart(String var, String val) {
 		switch(var) {
 			case "htmlLink":
-				setHtmlLink(val);
+				if(val != null)
+					setHtmlLink(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlElement":
-				setHtmlElement(val);
+				if(val != null)
+					setHtmlElement(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlId":
-				setHtmlId(val);
+				if(val != null)
+					setHtmlId(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlClasses":
-				setHtmlClasses(val);
+				if(val != null)
+					setHtmlClasses(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlStyle":
-				setHtmlStyle(val);
+				if(val != null)
+					setHtmlStyle(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlBefore":
-				setHtmlBefore(val);
+				if(val != null)
+					setHtmlBefore(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlAfter":
-				setHtmlAfter(val);
+				if(val != null)
+					setHtmlAfter(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlText":
-				setHtmlText(val);
+				if(val != null)
+					setHtmlText(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlVar":
-				setHtmlVar(val);
+				if(val != null)
+					setHtmlVar(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlVarSpan":
-				setHtmlVarSpan(val);
+				if(val != null)
+					setHtmlVarSpan(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlVarForm":
-				setHtmlVarForm(val);
+				if(val != null)
+					setHtmlVarForm(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlVarInput":
-				setHtmlVarInput(val);
+				if(val != null)
+					setHtmlVarInput(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlVarForEach":
-				setHtmlVarForEach(val);
+				if(val != null)
+					setHtmlVarForEach(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlExclude":
-				setHtmlExclude(val);
+				if(val != null)
+					setHtmlExclude(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "pdfExclude":
-				setPdfExclude(val);
+				if(val != null)
+					setPdfExclude(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "loginLogout":
-				setLoginLogout(val);
+				if(val != null)
+					setLoginLogout(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort1":
-				setSort1(val);
+				if(val != null)
+					setSort1(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort2":
-				setSort2(val);
+				if(val != null)
+					setSort2(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort3":
-				setSort3(val);
+				if(val != null)
+					setSort3(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort4":
-				setSort4(val);
+				if(val != null)
+					setSort4(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort5":
-				setSort5(val);
+				if(val != null)
+					setSort5(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort6":
-				setSort6(val);
+				if(val != null)
+					setSort6(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort7":
-				setSort7(val);
+				if(val != null)
+					setSort7(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort8":
-				setSort8(val);
+				if(val != null)
+					setSort8(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort9":
-				setSort9(val);
+				if(val != null)
+					setSort9(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort10":
-				setSort10(val);
+				if(val != null)
+					setSort10(val);
 				savesHtmlPart.add(var);
 				return val;
 			default:

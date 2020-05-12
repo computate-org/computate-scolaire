@@ -6196,103 +6196,128 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public Object definirPaiementScolaire(String var, String val) {
 		switch(var) {
 			case "enfantNomCompletPrefere":
-				setEnfantNomCompletPrefere(val);
+				if(val != null)
+					setEnfantNomCompletPrefere(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "enfantDateNaissance":
-				setEnfantDateNaissance(val);
+				if(val != null)
+					setEnfantDateNaissance(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "mereNomCompletPrefere":
-				setMereNomCompletPrefere(val);
+				if(val != null)
+					setMereNomCompletPrefere(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "pereNomCompletPrefere":
-				setPereNomCompletPrefere(val);
+				if(val != null)
+					setPereNomCompletPrefere(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "inscriptionPaimentChaqueMois":
-				setInscriptionPaimentChaqueMois(val);
+				if(val != null)
+					setInscriptionPaimentChaqueMois(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "inscriptionPaimentComplet":
-				setInscriptionPaimentComplet(val);
+				if(val != null)
+					setInscriptionPaimentComplet(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementDescription":
-				setPaiementDescription(val);
+				if(val != null)
+					setPaiementDescription(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementDate":
-				setPaiementDate(val);
+				if(val != null)
+					setPaiementDate(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementMontant":
-				setPaiementMontant(val);
+				if(val != null)
+					setPaiementMontant(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementEspeces":
-				setPaiementEspeces(val);
+				if(val != null)
+					setPaiementEspeces(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementCheque":
-				setPaiementCheque(val);
+				if(val != null)
+					setPaiementCheque(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementSysteme":
-				setPaiementSysteme(val);
+				if(val != null)
+					setPaiementSysteme(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementPar":
-				setPaiementPar(val);
+				if(val != null)
+					setPaiementPar(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "transactionId":
-				setTransactionId(val);
+				if(val != null)
+					setTransactionId(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "customerProfileId":
-				setCustomerProfileId(val);
+				if(val != null)
+					setCustomerProfileId(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "transactionStatus":
-				setTransactionStatus(val);
+				if(val != null)
+					setTransactionStatus(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementRecu":
-				setPaiementRecu(val);
+				if(val != null)
+					setPaiementRecu(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisMontant":
-				setFraisMontant(val);
+				if(val != null)
+					setFraisMontant(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisMontantDu":
-				setFraisMontantDu(val);
+				if(val != null)
+					setFraisMontantDu(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisMontantFuture":
-				setFraisMontantFuture(val);
+				if(val != null)
+					setFraisMontantFuture(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisPremierDernier":
-				setFraisPremierDernier(val);
+				if(val != null)
+					setFraisPremierDernier(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisInscription":
-				setFraisInscription(val);
+				if(val != null)
+					setFraisInscription(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisMois":
-				setFraisMois(val);
+				if(val != null)
+					setFraisMois(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "fraisRetard":
-				setFraisRetard(val);
+				if(val != null)
+					setFraisRetard(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			case "paiementNomCourt":
-				setPaiementNomCourt(val);
+				if(val != null)
+					setPaiementNomCourt(val);
 				sauvegardesPaiementScolaire.add(var);
 				return val;
 			default:

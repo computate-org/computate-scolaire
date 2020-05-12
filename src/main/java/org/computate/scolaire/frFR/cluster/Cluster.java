@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.cluster;             
 
 import java.text.Normalizer;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -147,8 +148,13 @@ public class Cluster extends ClusterGen<Object> {
 	 * Description.enUS: The date and time modified. 
 	 * NomAffichage.frFR: modifié
 	 * NomAffichage.enUS: modified
-	 */
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 */  
 	protected void _modifie(Couverture<ZonedDateTime> c) {
+		c.o(ZonedDateTime.now(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())));
 	}
 	
 	/**

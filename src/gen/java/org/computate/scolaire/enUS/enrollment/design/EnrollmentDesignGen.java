@@ -1449,11 +1449,13 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	public Object defineEnrollmentDesign(String var, String val) {
 		switch(var) {
 			case "enrollmentDesignCompleteName":
-				setEnrollmentDesignCompleteName(val);
+				if(val != null)
+					setEnrollmentDesignCompleteName(val);
 				savesEnrollmentDesign.add(var);
 				return val;
 			case "designHidden":
-				setDesignHidden(val);
+				if(val != null)
+					setDesignHidden(val);
 				savesEnrollmentDesign.add(var);
 				return val;
 			default:

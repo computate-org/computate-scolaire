@@ -2118,19 +2118,23 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public Object definirEnfantScolaire(String var, String val) {
 		switch(var) {
 			case "personnePrenom":
-				setPersonnePrenom(val);
+				if(val != null)
+					setPersonnePrenom(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			case "personnePrenomPrefere":
-				setPersonnePrenomPrefere(val);
+				if(val != null)
+					setPersonnePrenomPrefere(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			case "familleNom":
-				setFamilleNom(val);
+				if(val != null)
+					setFamilleNom(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			case "personneDateNaissance":
-				setPersonneDateNaissance(val);
+				if(val != null)
+					setPersonneDateNaissance(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			default:

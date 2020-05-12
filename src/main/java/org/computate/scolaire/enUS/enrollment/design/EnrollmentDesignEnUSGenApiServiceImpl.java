@@ -1252,8 +1252,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				patchSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
 			}
 
-			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
@@ -2245,7 +2243,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			Long pk = o.getPk();
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {

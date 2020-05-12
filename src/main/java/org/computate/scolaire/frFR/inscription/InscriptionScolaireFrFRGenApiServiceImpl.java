@@ -1754,8 +1754,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					jsonObject.put("addUtilisateurCles", new JsonArray().add(requeteSite.getUtilisateurCle().toString()));
 			}
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.InscriptionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
@@ -3496,8 +3494,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					jsonObject.put("addUtilisateurCles", new JsonArray().add(requeteSite.getUtilisateurCle().toString()));
 			}
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.InscriptionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
@@ -5272,7 +5268,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {

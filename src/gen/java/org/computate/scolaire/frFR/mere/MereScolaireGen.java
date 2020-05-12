@@ -2886,43 +2886,53 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public Object definirMereScolaire(String var, String val) {
 		switch(var) {
 			case "personnePrenom":
-				setPersonnePrenom(val);
+				if(val != null)
+					setPersonnePrenom(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personnePrenomPrefere":
-				setPersonnePrenomPrefere(val);
+				if(val != null)
+					setPersonnePrenomPrefere(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "familleNom":
-				setFamilleNom(val);
+				if(val != null)
+					setFamilleNom(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneOccupation":
-				setPersonneOccupation(val);
+				if(val != null)
+					setPersonneOccupation(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneNumeroTelephone":
-				setPersonneNumeroTelephone(val);
+				if(val != null)
+					setPersonneNumeroTelephone(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneMail":
-				setPersonneMail(val);
+				if(val != null)
+					setPersonneMail(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneSms":
-				setPersonneSms(val);
+				if(val != null)
+					setPersonneSms(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneRecevoirMail":
-				setPersonneRecevoirMail(val);
+				if(val != null)
+					setPersonneRecevoirMail(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneContactUrgence":
-				setPersonneContactUrgence(val);
+				if(val != null)
+					setPersonneContactUrgence(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			case "personneChercher":
-				setPersonneChercher(val);
+				if(val != null)
+					setPersonneChercher(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			default:

@@ -1247,8 +1247,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 					jsonObject.put("addUtilisateurCles", new JsonArray().add(requeteSite.getUtilisateurCle().toString()));
 			}
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.gardien.GardienScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
@@ -2451,7 +2449,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {

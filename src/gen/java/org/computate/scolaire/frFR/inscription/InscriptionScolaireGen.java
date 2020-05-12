@@ -13056,171 +13056,213 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public Object definirInscriptionScolaire(String var, String val) {
 		switch(var) {
 			case "enfantNomComplet":
-				setEnfantNomComplet(val);
+				if(val != null)
+					setEnfantNomComplet(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantNomCompletPrefere":
-				setEnfantNomCompletPrefere(val);
+				if(val != null)
+					setEnfantNomCompletPrefere(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantDateNaissance":
-				setEnfantDateNaissance(val);
+				if(val != null)
+					setEnfantDateNaissance(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "ecoleAddresse":
-				setEcoleAddresse(val);
+				if(val != null)
+					setEcoleAddresse(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionApprouve":
-				setInscriptionApprouve(val);
+				if(val != null)
+					setInscriptionApprouve(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionImmunisations":
-				setInscriptionImmunisations(val);
+				if(val != null)
+					setInscriptionImmunisations(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "familleMarie":
-				setFamilleMarie(val);
+				if(val != null)
+					setFamilleMarie(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "familleSepare":
-				setFamilleSepare(val);
+				if(val != null)
+					setFamilleSepare(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "familleDivorce":
-				setFamilleDivorce(val);
+				if(val != null)
+					setFamilleDivorce(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "familleAddresse":
-				setFamilleAddresse(val);
+				if(val != null)
+					setFamilleAddresse(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "familleCommentVousConnaissezEcole":
-				setFamilleCommentVousConnaissezEcole(val);
+				if(val != null)
+					setFamilleCommentVousConnaissezEcole(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionConsiderationsSpeciales":
-				setInscriptionConsiderationsSpeciales(val);
+				if(val != null)
+					setInscriptionConsiderationsSpeciales(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantConditionsMedicales":
-				setEnfantConditionsMedicales(val);
+				if(val != null)
+					setEnfantConditionsMedicales(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantEcolesPrecedemmentFrequentees":
-				setEnfantEcolesPrecedemmentFrequentees(val);
+				if(val != null)
+					setEnfantEcolesPrecedemmentFrequentees(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantDescription":
-				setEnfantDescription(val);
+				if(val != null)
+					setEnfantDescription(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantObjectifs":
-				setEnfantObjectifs(val);
+				if(val != null)
+					setEnfantObjectifs(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "enfantPropre":
-				setEnfantPropre(val);
+				if(val != null)
+					setEnfantPropre(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionNomGroupe":
-				setInscriptionNomGroupe(val);
+				if(val != null)
+					setInscriptionNomGroupe(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionPaimentChaqueMois":
-				setInscriptionPaimentChaqueMois(val);
+				if(val != null)
+					setInscriptionPaimentChaqueMois(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionPaimentComplet":
-				setInscriptionPaimentComplet(val);
+				if(val != null)
+					setInscriptionPaimentComplet(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "customerProfileId":
-				setCustomerProfileId(val);
+				if(val != null)
+					setCustomerProfileId(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDateFrais":
-				setInscriptionDateFrais(val);
+				if(val != null)
+					setInscriptionDateFrais(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature1":
-				setInscriptionSignature1(val);
+				if(val != null)
+					setInscriptionSignature1(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature2":
-				setInscriptionSignature2(val);
+				if(val != null)
+					setInscriptionSignature2(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature3":
-				setInscriptionSignature3(val);
+				if(val != null)
+					setInscriptionSignature3(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature4":
-				setInscriptionSignature4(val);
+				if(val != null)
+					setInscriptionSignature4(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature5":
-				setInscriptionSignature5(val);
+				if(val != null)
+					setInscriptionSignature5(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature6":
-				setInscriptionSignature6(val);
+				if(val != null)
+					setInscriptionSignature6(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature7":
-				setInscriptionSignature7(val);
+				if(val != null)
+					setInscriptionSignature7(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature8":
-				setInscriptionSignature8(val);
+				if(val != null)
+					setInscriptionSignature8(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature9":
-				setInscriptionSignature9(val);
+				if(val != null)
+					setInscriptionSignature9(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionSignature10":
-				setInscriptionSignature10(val);
+				if(val != null)
+					setInscriptionSignature10(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate1":
-				setInscriptionDate1(val);
+				if(val != null)
+					setInscriptionDate1(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate2":
-				setInscriptionDate2(val);
+				if(val != null)
+					setInscriptionDate2(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate3":
-				setInscriptionDate3(val);
+				if(val != null)
+					setInscriptionDate3(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate4":
-				setInscriptionDate4(val);
+				if(val != null)
+					setInscriptionDate4(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate5":
-				setInscriptionDate5(val);
+				if(val != null)
+					setInscriptionDate5(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate6":
-				setInscriptionDate6(val);
+				if(val != null)
+					setInscriptionDate6(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate7":
-				setInscriptionDate7(val);
+				if(val != null)
+					setInscriptionDate7(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate8":
-				setInscriptionDate8(val);
+				if(val != null)
+					setInscriptionDate8(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate9":
-				setInscriptionDate9(val);
+				if(val != null)
+					setInscriptionDate9(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionDate10":
-				setInscriptionDate10(val);
+				if(val != null)
+					setInscriptionDate10(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			default:

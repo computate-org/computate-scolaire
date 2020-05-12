@@ -3697,107 +3697,133 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public Object definirPartHtml(String var, String val) {
 		switch(var) {
 			case "htmlLien":
-				setHtmlLien(val);
+				if(val != null)
+					setHtmlLien(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlElement":
-				setHtmlElement(val);
+				if(val != null)
+					setHtmlElement(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlId":
-				setHtmlId(val);
+				if(val != null)
+					setHtmlId(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlClasses":
-				setHtmlClasses(val);
+				if(val != null)
+					setHtmlClasses(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlStyle":
-				setHtmlStyle(val);
+				if(val != null)
+					setHtmlStyle(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlAvant":
-				setHtmlAvant(val);
+				if(val != null)
+					setHtmlAvant(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlApres":
-				setHtmlApres(val);
+				if(val != null)
+					setHtmlApres(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlTexte":
-				setHtmlTexte(val);
+				if(val != null)
+					setHtmlTexte(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlVar":
-				setHtmlVar(val);
+				if(val != null)
+					setHtmlVar(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlVarSpan":
-				setHtmlVarSpan(val);
+				if(val != null)
+					setHtmlVarSpan(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlVarForm":
-				setHtmlVarForm(val);
+				if(val != null)
+					setHtmlVarForm(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlVarInput":
-				setHtmlVarInput(val);
+				if(val != null)
+					setHtmlVarInput(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlVarForEach":
-				setHtmlVarForEach(val);
+				if(val != null)
+					setHtmlVarForEach(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "htmlExclure":
-				setHtmlExclure(val);
+				if(val != null)
+					setHtmlExclure(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "pdfExclure":
-				setPdfExclure(val);
+				if(val != null)
+					setPdfExclure(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "connecterDeconnecter":
-				setConnecterDeconnecter(val);
+				if(val != null)
+					setConnecterDeconnecter(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri1":
-				setTri1(val);
+				if(val != null)
+					setTri1(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri2":
-				setTri2(val);
+				if(val != null)
+					setTri2(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri3":
-				setTri3(val);
+				if(val != null)
+					setTri3(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri4":
-				setTri4(val);
+				if(val != null)
+					setTri4(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri5":
-				setTri5(val);
+				if(val != null)
+					setTri5(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri6":
-				setTri6(val);
+				if(val != null)
+					setTri6(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri7":
-				setTri7(val);
+				if(val != null)
+					setTri7(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri8":
-				setTri8(val);
+				if(val != null)
+					setTri8(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri9":
-				setTri9(val);
+				if(val != null)
+					setTri9(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri10":
-				setTri10(val);
+				if(val != null)
+					setTri10(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			default:

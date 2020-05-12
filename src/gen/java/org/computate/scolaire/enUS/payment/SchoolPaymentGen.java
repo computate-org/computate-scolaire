@@ -6181,103 +6181,128 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public Object defineSchoolPayment(String var, String val) {
 		switch(var) {
 			case "childCompleteNamePreferred":
-				setChildCompleteNamePreferred(val);
+				if(val != null)
+					setChildCompleteNamePreferred(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "childBirthDate":
-				setChildBirthDate(val);
+				if(val != null)
+					setChildBirthDate(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "momCompleteNamePreferred":
-				setMomCompleteNamePreferred(val);
+				if(val != null)
+					setMomCompleteNamePreferred(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "dadCompleteNamePreferred":
-				setDadCompleteNamePreferred(val);
+				if(val != null)
+					setDadCompleteNamePreferred(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "enrollmentPaymentEachMonth":
-				setEnrollmentPaymentEachMonth(val);
+				if(val != null)
+					setEnrollmentPaymentEachMonth(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "enrollmentPaymentComplete":
-				setEnrollmentPaymentComplete(val);
+				if(val != null)
+					setEnrollmentPaymentComplete(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentDescription":
-				setPaymentDescription(val);
+				if(val != null)
+					setPaymentDescription(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentDate":
-				setPaymentDate(val);
+				if(val != null)
+					setPaymentDate(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentAmount":
-				setPaymentAmount(val);
+				if(val != null)
+					setPaymentAmount(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentCash":
-				setPaymentCash(val);
+				if(val != null)
+					setPaymentCash(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentCheck":
-				setPaymentCheck(val);
+				if(val != null)
+					setPaymentCheck(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentSystem":
-				setPaymentSystem(val);
+				if(val != null)
+					setPaymentSystem(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentBy":
-				setPaymentBy(val);
+				if(val != null)
+					setPaymentBy(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "transactionId":
-				setTransactionId(val);
+				if(val != null)
+					setTransactionId(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "customerProfileId":
-				setCustomerProfileId(val);
+				if(val != null)
+					setCustomerProfileId(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "transactionStatus":
-				setTransactionStatus(val);
+				if(val != null)
+					setTransactionStatus(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentRecieved":
-				setPaymentRecieved(val);
+				if(val != null)
+					setPaymentRecieved(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeAmount":
-				setChargeAmount(val);
+				if(val != null)
+					setChargeAmount(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeAmountDue":
-				setChargeAmountDue(val);
+				if(val != null)
+					setChargeAmountDue(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeAmountFuture":
-				setChargeAmountFuture(val);
+				if(val != null)
+					setChargeAmountFuture(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeFirstLast":
-				setChargeFirstLast(val);
+				if(val != null)
+					setChargeFirstLast(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeEnrollment":
-				setChargeEnrollment(val);
+				if(val != null)
+					setChargeEnrollment(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeMonth":
-				setChargeMonth(val);
+				if(val != null)
+					setChargeMonth(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "chargeLateFee":
-				setChargeLateFee(val);
+				if(val != null)
+					setChargeLateFee(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentShortName":
-				setPaymentShortName(val);
+				if(val != null)
+					setPaymentShortName(val);
 				savesSchoolPayment.add(var);
 				return val;
 			default:

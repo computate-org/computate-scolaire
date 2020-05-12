@@ -952,11 +952,13 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public Object definirDesignPage(String var, String val) {
 		switch(var) {
 			case "designPageNomComplet":
-				setDesignPageNomComplet(val);
+				if(val != null)
+					setDesignPageNomComplet(val);
 				sauvegardesDesignPage.add(var);
 				return val;
 			case "designCache":
-				setDesignCache(val);
+				if(val != null)
+					setDesignCache(val);
 				sauvegardesDesignPage.add(var);
 				return val;
 			default:

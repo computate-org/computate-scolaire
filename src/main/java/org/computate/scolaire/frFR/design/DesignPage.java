@@ -111,7 +111,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.asc: designPageNomComplet
  * 
  * Lignes: 100
-*/  
+*/   
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**

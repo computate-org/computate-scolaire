@@ -1258,8 +1258,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
 			}
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.design.DesignInscription"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
@@ -2251,7 +2249,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {

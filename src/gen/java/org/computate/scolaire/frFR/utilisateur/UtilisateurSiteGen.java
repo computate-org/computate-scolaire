@@ -1699,27 +1699,33 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public Object definirUtilisateurSite(String var, String val) {
 		switch(var) {
 			case "utilisateurNom":
-				setUtilisateurNom(val);
+				if(val != null)
+					setUtilisateurNom(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "utilisateurMail":
-				setUtilisateurMail(val);
+				if(val != null)
+					setUtilisateurMail(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "customerProfileId":
-				setCustomerProfileId(val);
+				if(val != null)
+					setCustomerProfileId(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "utilisateurRecevoirCourriels":
-				setUtilisateurRecevoirCourriels(val);
+				if(val != null)
+					setUtilisateurRecevoirCourriels(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "voirArchive":
-				setVoirArchive(val);
+				if(val != null)
+					setVoirArchive(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			case "voirSupprime":
-				setVoirSupprime(val);
+				if(val != null)
+					setVoirSupprime(val);
 				sauvegardesUtilisateurSite.add(var);
 				return val;
 			default:

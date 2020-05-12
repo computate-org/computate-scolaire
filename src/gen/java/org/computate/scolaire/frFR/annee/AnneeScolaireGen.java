@@ -2001,15 +2001,18 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	public Object definirAnneeScolaire(String var, String val) {
 		switch(var) {
 			case "anneeDebut":
-				setAnneeDebut(val);
+				if(val != null)
+					setAnneeDebut(val);
 				sauvegardesAnneeScolaire.add(var);
 				return val;
 			case "anneeFin":
-				setAnneeFin(val);
+				if(val != null)
+					setAnneeFin(val);
 				sauvegardesAnneeScolaire.add(var);
 				return val;
 			case "anneeFraisInscription":
-				setAnneeFraisInscription(val);
+				if(val != null)
+					setAnneeFraisInscription(val);
 				sauvegardesAnneeScolaire.add(var);
 				return val;
 			default:

@@ -1332,8 +1332,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				patchSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
 			}
 
-			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.season.SchoolSeason"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
@@ -2483,7 +2481,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			Long pk = o.getPk();
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {

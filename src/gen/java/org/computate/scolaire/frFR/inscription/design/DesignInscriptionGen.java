@@ -1450,11 +1450,13 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	public Object definirDesignInscription(String var, String val) {
 		switch(var) {
 			case "designInscriptionNomComplet":
-				setDesignInscriptionNomComplet(val);
+				if(val != null)
+					setDesignInscriptionNomComplet(val);
 				sauvegardesDesignInscription.add(var);
 				return val;
 			case "designCache":
-				setDesignCache(val);
+				if(val != null)
+					setDesignCache(val);
 				sauvegardesDesignInscription.add(var);
 				return val;
 			default:

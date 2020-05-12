@@ -2686,31 +2686,38 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	public Object definirGardienScolaire(String var, String val) {
 		switch(var) {
 			case "personnePrenom":
-				setPersonnePrenom(val);
+				if(val != null)
+					setPersonnePrenom(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			case "personnePrenomPrefere":
-				setPersonnePrenomPrefere(val);
+				if(val != null)
+					setPersonnePrenomPrefere(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			case "familleNom":
-				setFamilleNom(val);
+				if(val != null)
+					setFamilleNom(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			case "personneNumeroTelephone":
-				setPersonneNumeroTelephone(val);
+				if(val != null)
+					setPersonneNumeroTelephone(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			case "personneRelation":
-				setPersonneRelation(val);
+				if(val != null)
+					setPersonneRelation(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			case "personneContactUrgence":
-				setPersonneContactUrgence(val);
+				if(val != null)
+					setPersonneContactUrgence(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			case "personneChercher":
-				setPersonneChercher(val);
+				if(val != null)
+					setPersonneChercher(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			default:

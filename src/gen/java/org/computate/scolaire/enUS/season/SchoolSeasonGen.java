@@ -2369,19 +2369,23 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public Object defineSchoolSeason(String var, String val) {
 		switch(var) {
 			case "seasonStartDate":
-				setSeasonStartDate(val);
+				if(val != null)
+					setSeasonStartDate(val);
 				savesSchoolSeason.add(var);
 				return val;
 			case "seasonSummer":
-				setSeasonSummer(val);
+				if(val != null)
+					setSeasonSummer(val);
 				savesSchoolSeason.add(var);
 				return val;
 			case "seasonWinter":
-				setSeasonWinter(val);
+				if(val != null)
+					setSeasonWinter(val);
 				savesSchoolSeason.add(var);
 				return val;
 			case "seasonFuture":
-				setSeasonFuture(val);
+				if(val != null)
+					setSeasonFuture(val);
 				savesSchoolSeason.add(var);
 				return val;
 			default:

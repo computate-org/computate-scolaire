@@ -1372,8 +1372,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
 			}
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.bloc.BlocScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
@@ -2573,7 +2571,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {

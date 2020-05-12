@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.cluster;
 
 import java.text.Normalizer;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +37,7 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _created(Wrap<ZonedDateTime> c) {}
 
 	protected void _modified(Wrap<ZonedDateTime> c) {
+		c.o(ZonedDateTime.now(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())));
 	}
 
 	protected void _archived(Wrap<Boolean> c) {

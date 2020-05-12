@@ -2000,31 +2000,38 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public Object defineSchool(String var, String val) {
 		switch(var) {
 			case "schoolName":
-				setSchoolName(val);
+				if(val != null)
+					setSchoolName(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolPhoneNumber":
-				setSchoolPhoneNumber(val);
+				if(val != null)
+					setSchoolPhoneNumber(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolAdministratorName":
-				setSchoolAdministratorName(val);
+				if(val != null)
+					setSchoolAdministratorName(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolEmailFrom":
-				setSchoolEmailFrom(val);
+				if(val != null)
+					setSchoolEmailFrom(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolEmailTo":
-				setSchoolEmailTo(val);
+				if(val != null)
+					setSchoolEmailTo(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolLocation":
-				setSchoolLocation(val);
+				if(val != null)
+					setSchoolLocation(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolAddress":
-				setSchoolAddress(val);
+				if(val != null)
+					setSchoolAddress(val);
 				savesSchool.add(var);
 				return val;
 			default:

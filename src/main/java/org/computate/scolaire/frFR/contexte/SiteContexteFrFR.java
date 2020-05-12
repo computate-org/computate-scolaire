@@ -32,12 +32,10 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: canonical_name
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 * r: id_utilisateur
 	 * r.enUS: user_id
 	 */
-	public static final String SQL_selectC = "select pk, ajour, nom_canonique, cree, modifie, id_utilisateur from c where nom_canonique=? and id_utilisateur=?;\n";
+	public static final String SQL_selectC = "select pk, ajour, nom_canonique, cree, id_utilisateur from c where nom_canonique=? and id_utilisateur=?;\n";
 	/**
 	 * Var.enUS: SQL_exists
 	 * r: nom_canonique
@@ -54,20 +52,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: user_id
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_creer = "insert into c(nom_canonique, id_utilisateur, cree, modifie) values(?, ?, now(), now()) returning pk;\n";
-	/**
-	 * Var.enUS: SQL_modify
-	 * r: nom_canonique
-	 * r.enUS: canonical_name
-	 * r: cree
-	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
-	 */
-	public static final String SQL_modifier = "update c set modifie=now() where pk=? and nom_canonique=? returning cree;\n";
+	public static final String SQL_creer = "insert into c(nom_canonique, id_utilisateur, cree) values(?, ?, now()) returning pk;\n";
 
 	/**
 	 * r: chemin
@@ -78,10 +64,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_setD = "with d1 as (insert into d(chemin, valeur, actuel, pk_c, cree, modifie) values(?, ?, true, ?, now(), now()) returning pk, chemin, pk_c) update d set actuel=false, modifie=now() where d.pk_c=(select pk_c from d1) and d.chemin=(select chemin from d1) and d.actuel=true and d.pk != (select pk from d1);\n";
+	public static final String SQL_setD = "with d1 as (insert into d(chemin, valeur, actuel, pk_c, cree) values(?, ?, true, ?, now()) returning pk, chemin, pk_c) update d set actuel=false where d.pk_c=(select pk_c from d1) and d.chemin=(select chemin from d1) and d.actuel=true and d.pk != (select pk from d1);\n";
 
 	/**
 	 * r: chemin
@@ -92,10 +76,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_removeD = "update d set actuel=false, modifie=now() where d.pk_c=? and d.chemin=? and d.actuel=true;\n";
+	public static final String SQL_removeD = "with d1 as (insert into d(pk_c, chemin, valeur, actuel, cree) values(?, ?, null, true, now()) returning pk, chemin, pk_c) update d set actuel=false where d.pk_c=(select pk_c from d1) and d.chemin=(select chemin from d1) and d.actuel=true and d.pk != (select pk from d1);\n";
 	/**
 	 * Var.enUS: SQL_define
 	 * r: chemin
@@ -106,10 +88,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_definir = "select chemin, valeur from d where d.pk_c=? and d.actuel union select 'cree', to_char(cree, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=? union select 'modifie', to_char(modifie, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=?;\n";
+	public static final String SQL_definir = "select chemin, valeur from d where d.pk_c=? and d.actuel union select 'cree', to_char(cree, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=?;\n";
 	/**
 	 * Var.enUS: SQL_attribute
 	 * r: entite
@@ -118,8 +98,6 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
 	public static final String SQL_attribuer = "select pk1, pk2, entite1, entite2 from a where (a.pk1=? or a.pk2=?) and a.actuel=true;\n";
 
@@ -130,10 +108,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_setA1 = "with a1 as (insert into a(entite1, pk1, entite2, pk2, actuel, cree, modifie) values(?, ?, ?, ?, true, now(), now()) returning pk, entite1, pk1, entite2, pk2) update a set actuel=false, modifie=now() where a.entite1=(select entite1 from a1) and a.pk1=(select pk1 from a1) and a.entite2=(select entite2 from a1) and a.actuel=true and a.pk != (select pk from a1);\n";
+	public static final String SQL_setA1 = "with a1 as (insert into a(entite1, pk1, entite2, pk2, actuel, cree) values(?, ?, ?, ?, true, now()) returning pk, entite1, pk1, entite2, pk2) update a set actuel=false, where a.entite1=(select entite1 from a1) and a.pk1=(select pk1 from a1) and a.entite2=(select entite2 from a1) and a.actuel=true and a.pk != (select pk from a1);\n";
 
 	/**
 	 * r: entite
@@ -142,10 +118,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_setA2 = "with a1 as (insert into a(entite1, pk1, entite2, pk2, actuel, cree, modifie) values(?, ?, ?, ?, true, now(), now()) returning pk, entite1, pk1, entite2, pk2) update a set actuel=false, modifie=now() where a.entite1=(select entite1 from a1) and a.entite2=(select entite2 from a1) and a.pk2=(select pk2 from a1) and a.actuel=true and a.pk != (select pk from a1);\n";
+	public static final String SQL_setA2 = "with a1 as (insert into a(entite1, pk1, entite2, pk2, actuel, cree) values(?, ?, ?, ?, true, now()) returning pk, entite1, pk1, entite2, pk2) update a set actuel=false where a.entite1=(select entite1 from a1) and a.entite2=(select entite2 from a1) and a.pk2=(select pk2 from a1) and a.actuel=true and a.pk != (select pk from a1);\n";
 
 	/**
 	 * r: entite
@@ -154,10 +128,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_addA = "with a1 as (insert into a(entite1, pk1, entite2, pk2, actuel, cree, modifie) values(?, ?, ?, ?, true, now(), now()) returning pk, entite1, pk1, entite2, pk2) update a set actuel=false, modifie=now() where a.entite1=(select entite1 from a1) and a.pk1=(select pk1 from a1) and a.entite2=(select entite2 from a1) and a.pk2=(select pk2 from a1) and a.actuel=true and a.pk != (select pk from a1);\n";
+	public static final String SQL_addA = "with a1 as (insert into a(entite1, pk1, entite2, pk2, actuel, cree) values(?, ?, ?, ?, true, now()) returning pk, entite1, pk1, entite2, pk2) update a set actuel=false where a.entite1=(select entite1 from a1) and a.pk1=(select pk1 from a1) and a.entite2=(select entite2 from a1) and a.pk2=(select pk2 from a1) and a.actuel=true and a.pk != (select pk from a1);\n";
 
 	/**
 	 * r: entite
@@ -166,10 +138,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_clearA1 = "update a set actuel=false, modifie=now() where a.entite1=? and a.pk1=? and a.entite2=? and a.actuel=true;\n";
+	public static final String SQL_clearA1 = "update a set actuel=false where a.entite1=? and a.pk1=? and a.entite2=? and a.actuel=true;\n";
 
 	/**
 	 * r: entite
@@ -178,10 +148,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_clearA2 = "update a set actuel=false, modifie=now() where a.entite1=? and a.entite2=? and a.pk2=? and a.actuel=true;\n";
+	public static final String SQL_clearA2 = "update a set actuel=false where a.entite1=? and a.entite2=? and a.pk2=? and a.actuel=true;\n";
 
 	/**
 	 * r: entite
@@ -190,10 +158,8 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: current
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 */
-	public static final String SQL_removeA = "update a set actuel=false, modifie=now() where a.entite1=? and a.pk1=? and a.entite2=? and a.pk2=? and a.actuel=true;\n";
+	public static final String SQL_removeA = "update a set actuel=false where a.entite1=? and a.pk1=? and a.entite2=? and a.pk2=? and a.actuel=true;\n";
 	/**
 	 * Var.enUS: SQL_clear
 	 * r.enUS: current
@@ -201,12 +167,10 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: canonical_name
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 * r: id_utilisateur
 	 * r.enUS: user_id
 	 */
-	public static final String SQL_vider = "update c set modifie=now() where objet.pk=? and objet.nom_canonique=? returning cree;\nupdate a set actuel=false, modifie=now() where a.pk1=? or a.pk2=? and a.actuel=true;\nupdate p set actuel=false, modifie=now() where p.pk_c=? and p.actuel=true;\n";
+	public static final String SQL_vider = "update a set actuel=false where a.pk1=? or a.pk2=? and a.actuel=true;\nupdate d set actuel=false where d.pk_c=? and d.actuel=true;\n";
 	/**
 	 * Var.enUS: SQL_delete
 	 * r.enUS: current
@@ -214,12 +178,10 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r.enUS: canonical_name
 	 * r: cree
 	 * r.enUS: created
-	 * r: modifie
-	 * r.enUS: modified
 	 * r: id_utilisateur
 	 * r.enUS: user_id
 	 */
-	public static final String SQL_supprimer = "update c set modifie=now() where objet.pk=? and objet.nom_canonique=? returning cree;\nupdate a set actuel=false, modifie=now() where a.pk1=? or a.pk2=? and a.actuel=true;\nupdate p set actuel=false, modifie=now() where p.pk_c=? and p.actuel=true;\nwith p1 as (insert into p(chemin, valeur, actuel, pk_c, cree, modifie) values('supprime', true, true, ?, now(), now()) returning pk, chemin, pk_c) update p set actuel=false, modifie=now() where p.pk_c=(select pk_c from p1) and p.chemin=(select chemin from p1) and p.actuel=true and p.pk != (select pk from p1);\n";
+	public static final String SQL_supprimer = "update a set actuel=false where a.pk1=? or a.pk2=? and a.actuel=true;\nupdate d set actuel=false where d.pk_c=? and d.actuel=true;\nwith d1 as (insert into d(chemin, valeur, actuel, pk_c, cree) values('supprime', true, true, ?, now()) returning pk, chemin, pk_c) update d set actuel=false where d.pk_c=(select pk_c from d1) and d.chemin=(select chemin from d1) and d.actuel=true and d.pk != (select pk from d1);\n";
 
 	protected void _vertx(Couverture<Vertx> c) {
 	}

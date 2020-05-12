@@ -1693,27 +1693,33 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public Object defineSiteUser(String var, String val) {
 		switch(var) {
 			case "userName":
-				setUserName(val);
+				if(val != null)
+					setUserName(val);
 				savesSiteUser.add(var);
 				return val;
 			case "userEmail":
-				setUserEmail(val);
+				if(val != null)
+					setUserEmail(val);
 				savesSiteUser.add(var);
 				return val;
 			case "customerProfileId":
-				setCustomerProfileId(val);
+				if(val != null)
+					setCustomerProfileId(val);
 				savesSiteUser.add(var);
 				return val;
 			case "userReceiveEmails":
-				setUserReceiveEmails(val);
+				if(val != null)
+					setUserReceiveEmails(val);
 				savesSiteUser.add(var);
 				return val;
 			case "seeArchived":
-				setSeeArchived(val);
+				if(val != null)
+					setSeeArchived(val);
 				savesSiteUser.add(var);
 				return val;
 			case "seeDeleted":
-				setSeeDeleted(val);
+				if(val != null)
+					setSeeDeleted(val);
 				savesSiteUser.add(var);
 				return val;
 			default:

@@ -244,6 +244,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputPk(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
+		s.sx(htmPk());
 	}
 
 	public void htmPk(String classApiMethodMethod) {
@@ -549,6 +550,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputCreated(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
+		s.sx(htmCreated());
 	}
 
 	public void htmCreated(String classApiMethodMethod) {
@@ -563,7 +565,7 @@ public abstract class ClusterGen<DEV> extends Object {
 						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
 								inputCreated(classApiMethodMethod);
-									} s.g("div");
+							} s.g("div");
 						} s.g("div");
 					} s.g("div");
 				} s.g("div");
@@ -652,6 +654,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputModified(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
+		s.sx(htmModified());
 	}
 
 	public void htmModified(String classApiMethodMethod) {
@@ -666,7 +669,7 @@ public abstract class ClusterGen<DEV> extends Object {
 						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
 								inputModified(classApiMethodMethod);
-									} s.g("div");
+							} s.g("div");
 						} s.g("div");
 					} s.g("div");
 				} s.g("div");
@@ -1215,6 +1218,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputSessionId(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
+		s.sx(htmSessionId());
 	}
 
 	public void htmSessionId(String classApiMethodMethod) {
@@ -1299,6 +1303,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputUserId(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
+		s.sx(htmUserId());
 	}
 
 	public void htmUserId(String classApiMethodMethod) {
@@ -1390,6 +1395,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputUserKey(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
+		s.sx(htmUserKey());
 	}
 
 	public void htmUserKey(String classApiMethodMethod) {
@@ -2282,35 +2288,43 @@ public abstract class ClusterGen<DEV> extends Object {
 	public Object defineCluster(String var, String val) {
 		switch(var) {
 			case "inheritPk":
-				setInheritPk(val);
+				if(val != null)
+					setInheritPk(val);
 				savesCluster.add(var);
 				return val;
 			case "created":
-				setCreated(val);
+				if(val != null)
+					setCreated(val);
 				savesCluster.add(var);
 				return val;
 			case "modified":
-				setModified(val);
+				if(val != null)
+					setModified(val);
 				savesCluster.add(var);
 				return val;
 			case "archived":
-				setArchived(val);
+				if(val != null)
+					setArchived(val);
 				savesCluster.add(var);
 				return val;
 			case "deleted":
-				setDeleted(val);
+				if(val != null)
+					setDeleted(val);
 				savesCluster.add(var);
 				return val;
 			case "sessionId":
-				setSessionId(val);
+				if(val != null)
+					setSessionId(val);
 				savesCluster.add(var);
 				return val;
 			case "userId":
-				setUserId(val);
+				if(val != null)
+					setUserId(val);
 				savesCluster.add(var);
 				return val;
 			case "userKey":
-				setUserKey(val);
+				if(val != null)
+					setUserKey(val);
 				savesCluster.add(var);
 				return val;
 			default:

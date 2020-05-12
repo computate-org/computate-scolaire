@@ -1995,15 +1995,18 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public Object defineSchoolYear(String var, String val) {
 		switch(var) {
 			case "yearStart":
-				setYearStart(val);
+				if(val != null)
+					setYearStart(val);
 				savesSchoolYear.add(var);
 				return val;
 			case "yearEnd":
-				setYearEnd(val);
+				if(val != null)
+					setYearEnd(val);
 				savesSchoolYear.add(var);
 				return val;
 			case "yearEnrollmentFee":
-				setYearEnrollmentFee(val);
+				if(val != null)
+					setYearEnrollmentFee(val);
 				savesSchoolYear.add(var);
 				return val;
 			default:

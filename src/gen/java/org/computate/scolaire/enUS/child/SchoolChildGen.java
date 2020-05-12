@@ -2117,19 +2117,23 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public Object defineSchoolChild(String var, String val) {
 		switch(var) {
 			case "personFirstName":
-				setPersonFirstName(val);
+				if(val != null)
+					setPersonFirstName(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "personFirstNamePreferred":
-				setPersonFirstNamePreferred(val);
+				if(val != null)
+					setPersonFirstNamePreferred(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "familyName":
-				setFamilyName(val);
+				if(val != null)
+					setFamilyName(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "personBirthDate":
-				setPersonBirthDate(val);
+				if(val != null)
+					setPersonBirthDate(val);
 				savesSchoolChild.add(var);
 				return val;
 			default:

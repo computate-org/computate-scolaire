@@ -1223,8 +1223,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					jsonObject.put("addUserKeys", new JsonArray().add(siteRequest.getUserKey().toString()));
 			}
 
-			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.child.SchoolChild"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
@@ -2397,7 +2395,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			Long pk = o.getPk();
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {

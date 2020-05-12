@@ -951,11 +951,13 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	public Object definePageDesign(String var, String val) {
 		switch(var) {
 			case "pageDesignCompleteName":
-				setPageDesignCompleteName(val);
+				if(val != null)
+					setPageDesignCompleteName(val);
 				savesPageDesign.add(var);
 				return val;
 			case "designHidden":
-				setDesignHidden(val);
+				if(val != null)
+					setDesignHidden(val);
 				savesPageDesign.add(var);
 				return val;
 			default:

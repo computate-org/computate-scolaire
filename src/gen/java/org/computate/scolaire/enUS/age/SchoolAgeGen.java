@@ -2971,15 +2971,18 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public Object defineSchoolAge(String var, String val) {
 		switch(var) {
 			case "schoolAddress":
-				setSchoolAddress(val);
+				if(val != null)
+					setSchoolAddress(val);
 				savesSchoolAge.add(var);
 				return val;
 			case "ageStart":
-				setAgeStart(val);
+				if(val != null)
+					setAgeStart(val);
 				savesSchoolAge.add(var);
 				return val;
 			case "ageEnd":
-				setAgeEnd(val);
+				if(val != null)
+					setAgeEnd(val);
 				savesSchoolAge.add(var);
 				return val;
 			default:

@@ -2885,43 +2885,53 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	public Object defineSchoolMom(String var, String val) {
 		switch(var) {
 			case "personFirstName":
-				setPersonFirstName(val);
+				if(val != null)
+					setPersonFirstName(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personFirstNamePreferred":
-				setPersonFirstNamePreferred(val);
+				if(val != null)
+					setPersonFirstNamePreferred(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "familyName":
-				setFamilyName(val);
+				if(val != null)
+					setFamilyName(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personOccupation":
-				setPersonOccupation(val);
+				if(val != null)
+					setPersonOccupation(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personPhoneNumber":
-				setPersonPhoneNumber(val);
+				if(val != null)
+					setPersonPhoneNumber(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personEmail":
-				setPersonEmail(val);
+				if(val != null)
+					setPersonEmail(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personSms":
-				setPersonSms(val);
+				if(val != null)
+					setPersonSms(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personReceiveEmail":
-				setPersonReceiveEmail(val);
+				if(val != null)
+					setPersonReceiveEmail(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personEmergencyContact":
-				setPersonEmergencyContact(val);
+				if(val != null)
+					setPersonEmergencyContact(val);
 				savesSchoolMom.add(var);
 				return val;
 			case "personPickup":
-				setPersonPickup(val);
+				if(val != null)
+					setPersonPickup(val);
 				savesSchoolMom.add(var);
 				return val;
 			default:

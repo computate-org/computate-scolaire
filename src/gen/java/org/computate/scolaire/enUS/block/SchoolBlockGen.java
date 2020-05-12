@@ -4655,39 +4655,48 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public Object defineSchoolBlock(String var, String val) {
 		switch(var) {
 			case "schoolAddress":
-				setSchoolAddress(val);
+				if(val != null)
+					setSchoolAddress(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockStartTime":
-				setBlockStartTime(val);
+				if(val != null)
+					setBlockStartTime(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockEndTime":
-				setBlockEndTime(val);
+				if(val != null)
+					setBlockEndTime(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockPricePerMonth":
-				setBlockPricePerMonth(val);
+				if(val != null)
+					setBlockPricePerMonth(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockMonday":
-				setBlockMonday(val);
+				if(val != null)
+					setBlockMonday(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockTuesday":
-				setBlockTuesday(val);
+				if(val != null)
+					setBlockTuesday(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockWednesday":
-				setBlockWednesday(val);
+				if(val != null)
+					setBlockWednesday(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockThursday":
-				setBlockThursday(val);
+				if(val != null)
+					setBlockThursday(val);
 				savesSchoolBlock.add(var);
 				return val;
 			case "blockFriday":
-				setBlockFriday(val);
+				if(val != null)
+					setBlockFriday(val);
 				savesSchoolBlock.add(var);
 				return val;
 			default:

@@ -7,20 +7,24 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.WorkerExecutor;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import io.vertx.core.logging.Logger;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -31,12 +35,15 @@ import java.lang.Object;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.sql.SQLClient;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class SiteContextEnUSGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteContextEnUS.class);
 
 	///////////
 	// vertx //

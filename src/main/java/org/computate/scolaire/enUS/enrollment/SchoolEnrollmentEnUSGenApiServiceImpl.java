@@ -1754,8 +1754,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					jsonObject.put("addUserKeys", new JsonArray().add(siteRequest.getUserKey().toString()));
 			}
 
-			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.SchoolEnrollment"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
@@ -3496,8 +3494,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					jsonObject.put("addUserKeys", new JsonArray().add(siteRequest.getUserKey().toString()));
 			}
 
-			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.SchoolEnrollment"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
@@ -5378,7 +5374,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			Long pk = o.getPk();
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, pk))
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {

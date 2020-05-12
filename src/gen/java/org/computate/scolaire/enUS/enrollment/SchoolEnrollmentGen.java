@@ -13024,171 +13024,213 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	public Object defineSchoolEnrollment(String var, String val) {
 		switch(var) {
 			case "childCompleteName":
-				setChildCompleteName(val);
+				if(val != null)
+					setChildCompleteName(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childCompleteNamePreferred":
-				setChildCompleteNamePreferred(val);
+				if(val != null)
+					setChildCompleteNamePreferred(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childBirthDate":
-				setChildBirthDate(val);
+				if(val != null)
+					setChildBirthDate(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "schoolAddress":
-				setSchoolAddress(val);
+				if(val != null)
+					setSchoolAddress(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentApproved":
-				setEnrollmentApproved(val);
+				if(val != null)
+					setEnrollmentApproved(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentImmunizations":
-				setEnrollmentImmunizations(val);
+				if(val != null)
+					setEnrollmentImmunizations(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "familyMarried":
-				setFamilyMarried(val);
+				if(val != null)
+					setFamilyMarried(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "familySeparated":
-				setFamilySeparated(val);
+				if(val != null)
+					setFamilySeparated(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "familyDivorced":
-				setFamilyDivorced(val);
+				if(val != null)
+					setFamilyDivorced(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "familyAddress":
-				setFamilyAddress(val);
+				if(val != null)
+					setFamilyAddress(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "familyHowDoYouKnowTheSchool":
-				setFamilyHowDoYouKnowTheSchool(val);
+				if(val != null)
+					setFamilyHowDoYouKnowTheSchool(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSpecialConsiderations":
-				setEnrollmentSpecialConsiderations(val);
+				if(val != null)
+					setEnrollmentSpecialConsiderations(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childMedicalConditions":
-				setChildMedicalConditions(val);
+				if(val != null)
+					setChildMedicalConditions(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childPreviousSchoolsAttended":
-				setChildPreviousSchoolsAttended(val);
+				if(val != null)
+					setChildPreviousSchoolsAttended(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childDescription":
-				setChildDescription(val);
+				if(val != null)
+					setChildDescription(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childObjectives":
-				setChildObjectives(val);
+				if(val != null)
+					setChildObjectives(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "childPottyTrained":
-				setChildPottyTrained(val);
+				if(val != null)
+					setChildPottyTrained(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentGroupName":
-				setEnrollmentGroupName(val);
+				if(val != null)
+					setEnrollmentGroupName(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentPaymentEachMonth":
-				setEnrollmentPaymentEachMonth(val);
+				if(val != null)
+					setEnrollmentPaymentEachMonth(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentPaymentComplete":
-				setEnrollmentPaymentComplete(val);
+				if(val != null)
+					setEnrollmentPaymentComplete(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "customerProfileId":
-				setCustomerProfileId(val);
+				if(val != null)
+					setCustomerProfileId(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentChargeDate":
-				setEnrollmentChargeDate(val);
+				if(val != null)
+					setEnrollmentChargeDate(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature1":
-				setEnrollmentSignature1(val);
+				if(val != null)
+					setEnrollmentSignature1(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature2":
-				setEnrollmentSignature2(val);
+				if(val != null)
+					setEnrollmentSignature2(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature3":
-				setEnrollmentSignature3(val);
+				if(val != null)
+					setEnrollmentSignature3(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature4":
-				setEnrollmentSignature4(val);
+				if(val != null)
+					setEnrollmentSignature4(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature5":
-				setEnrollmentSignature5(val);
+				if(val != null)
+					setEnrollmentSignature5(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature6":
-				setEnrollmentSignature6(val);
+				if(val != null)
+					setEnrollmentSignature6(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature7":
-				setEnrollmentSignature7(val);
+				if(val != null)
+					setEnrollmentSignature7(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature8":
-				setEnrollmentSignature8(val);
+				if(val != null)
+					setEnrollmentSignature8(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature9":
-				setEnrollmentSignature9(val);
+				if(val != null)
+					setEnrollmentSignature9(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentSignature10":
-				setEnrollmentSignature10(val);
+				if(val != null)
+					setEnrollmentSignature10(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate1":
-				setEnrollmentDate1(val);
+				if(val != null)
+					setEnrollmentDate1(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate2":
-				setEnrollmentDate2(val);
+				if(val != null)
+					setEnrollmentDate2(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate3":
-				setEnrollmentDate3(val);
+				if(val != null)
+					setEnrollmentDate3(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate4":
-				setEnrollmentDate4(val);
+				if(val != null)
+					setEnrollmentDate4(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate5":
-				setEnrollmentDate5(val);
+				if(val != null)
+					setEnrollmentDate5(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate6":
-				setEnrollmentDate6(val);
+				if(val != null)
+					setEnrollmentDate6(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate7":
-				setEnrollmentDate7(val);
+				if(val != null)
+					setEnrollmentDate7(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate8":
-				setEnrollmentDate8(val);
+				if(val != null)
+					setEnrollmentDate8(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate9":
-				setEnrollmentDate9(val);
+				if(val != null)
+					setEnrollmentDate9(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentDate10":
-				setEnrollmentDate10(val);
+				if(val != null)
+					setEnrollmentDate10(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			default:

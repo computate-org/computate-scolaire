@@ -4660,39 +4660,48 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public Object definirBlocScolaire(String var, String val) {
 		switch(var) {
 			case "ecoleAddresse":
-				setEcoleAddresse(val);
+				if(val != null)
+					setEcoleAddresse(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocHeureDebut":
-				setBlocHeureDebut(val);
+				if(val != null)
+					setBlocHeureDebut(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocHeureFin":
-				setBlocHeureFin(val);
+				if(val != null)
+					setBlocHeureFin(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocPrixParMois":
-				setBlocPrixParMois(val);
+				if(val != null)
+					setBlocPrixParMois(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocLundi":
-				setBlocLundi(val);
+				if(val != null)
+					setBlocLundi(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocMardi":
-				setBlocMardi(val);
+				if(val != null)
+					setBlocMardi(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocMercredi":
-				setBlocMercredi(val);
+				if(val != null)
+					setBlocMercredi(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocJeudi":
-				setBlocJeudi(val);
+				if(val != null)
+					setBlocJeudi(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			case "blocVendredi":
-				setBlocVendredi(val);
+				if(val != null)
+					setBlocVendredi(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			default:
