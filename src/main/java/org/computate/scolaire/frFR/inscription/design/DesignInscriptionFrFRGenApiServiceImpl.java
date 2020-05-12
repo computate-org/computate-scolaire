@@ -189,8 +189,15 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 										designInscription.requeteApiDesignInscription();
 										requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 									}
-									gestionnaireEvenements.handle(Future.succeededFuture(designInscription));
-									promise.complete(designInscription);
+									SQLConnection connexionSql = requeteSite.getConnexionSql();
+									connexionSql.commit(d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(designInscription));
+											promise.complete(designInscription);
+										} else {
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
@@ -900,8 +907,15 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 														}
 														requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 													}
-													gestionnaireEvenements.handle(Future.succeededFuture(designInscription));
-													promise.complete(designInscription);
+													SQLConnection connexionSql = requeteSite.getConnexionSql();
+													connexionSql.commit(f -> {
+														if(f.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture(designInscription));
+															promise.complete(designInscription);
+														} else {
+															gestionnaireEvenements.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
 												}
@@ -1211,8 +1225,15 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 												}
 												requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 											}
-											gestionnaireEvenements.handle(Future.succeededFuture(designInscription));
-											promise.complete(designInscription);
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													gestionnaireEvenements.handle(Future.succeededFuture(designInscription));
+													promise.complete(designInscription);
+												} else {
+													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}

@@ -167,8 +167,15 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 										schoolPayment.apiRequestSchoolPayment();
 										siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(schoolPayment));
-									promise.complete(schoolPayment);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(schoolPayment));
+											promise.complete(schoolPayment);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -944,8 +951,15 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(schoolPayment));
-													promise.complete(schoolPayment);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(schoolPayment));
+															promise.complete(schoolPayment);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1336,8 +1350,15 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(schoolPayment));
-											promise.complete(schoolPayment);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolPayment));
+													promise.complete(schoolPayment);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

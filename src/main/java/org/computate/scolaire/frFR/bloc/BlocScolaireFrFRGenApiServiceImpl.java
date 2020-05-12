@@ -187,8 +187,15 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 										blocScolaire.requeteApiBlocScolaire();
 										requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 									}
-									gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-									promise.complete(blocScolaire);
+									SQLConnection connexionSql = requeteSite.getConnexionSql();
+									connexionSql.commit(d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+											promise.complete(blocScolaire);
+										} else {
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
@@ -969,8 +976,15 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 														}
 														requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 													}
-													gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-													promise.complete(blocScolaire);
+													SQLConnection connexionSql = requeteSite.getConnexionSql();
+													connexionSql.commit(f -> {
+														if(f.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+															promise.complete(blocScolaire);
+														} else {
+															gestionnaireEvenements.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
 												}
@@ -1325,8 +1339,15 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 												}
 												requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 											}
-											gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-											promise.complete(blocScolaire);
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+													promise.complete(blocScolaire);
+												} else {
+													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}

@@ -181,8 +181,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										schoolEnrollment.apiRequestSchoolEnrollment();
 										siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-									promise.complete(schoolEnrollment);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+											promise.complete(schoolEnrollment);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -1174,8 +1181,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-													promise.complete(schoolEnrollment);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+															promise.complete(schoolEnrollment);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1701,8 +1715,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-											promise.complete(schoolEnrollment);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+													promise.complete(schoolEnrollment);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -3465,8 +3486,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-											promise.complete(schoolEnrollment);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+													promise.complete(schoolEnrollment);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

@@ -377,8 +377,15 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(siteUser));
-											promise.complete(siteUser);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(siteUser));
+													promise.complete(siteUser);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
@@ -890,8 +897,15 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 										siteUser.apiRequestSiteUser();
 										siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(siteUser));
-									promise.complete(siteUser);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(siteUser));
+											promise.complete(siteUser);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}

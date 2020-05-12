@@ -167,8 +167,15 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 										schoolGuardian.apiRequestSchoolGuardian();
 										siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(schoolGuardian));
-									promise.complete(schoolGuardian);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(schoolGuardian));
+											promise.complete(schoolGuardian);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -871,8 +878,15 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(schoolGuardian));
-													promise.complete(schoolGuardian);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(schoolGuardian));
+															promise.complete(schoolGuardian);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1194,8 +1208,15 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(schoolGuardian));
-											promise.complete(schoolGuardian);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolGuardian));
+													promise.complete(schoolGuardian);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

@@ -183,8 +183,15 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 										enrollmentDesign.apiRequestEnrollmentDesign();
 										siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(enrollmentDesign));
-									promise.complete(enrollmentDesign);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(enrollmentDesign));
+											promise.complete(enrollmentDesign);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -894,8 +901,15 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 														}
 														siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(enrollmentDesign));
-													promise.complete(enrollmentDesign);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(enrollmentDesign));
+															promise.complete(enrollmentDesign);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1205,8 +1219,15 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 												}
 												siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(enrollmentDesign));
-											promise.complete(enrollmentDesign);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(enrollmentDesign));
+													promise.complete(enrollmentDesign);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

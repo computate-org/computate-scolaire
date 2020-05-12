@@ -165,8 +165,15 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 										cluster.apiRequestCluster();
 										siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(cluster));
-									promise.complete(cluster);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(cluster));
+											promise.complete(cluster);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -814,8 +821,15 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 														}
 														siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(cluster));
-													promise.complete(cluster);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(cluster));
+															promise.complete(cluster);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1099,8 +1113,15 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 												}
 												siteRequest.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(cluster));
-											promise.complete(cluster);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(cluster));
+													promise.complete(cluster);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

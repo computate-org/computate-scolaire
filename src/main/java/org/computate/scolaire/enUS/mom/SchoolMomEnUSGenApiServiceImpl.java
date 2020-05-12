@@ -167,8 +167,15 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 										schoolMom.apiRequestSchoolMom();
 										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(schoolMom));
-									promise.complete(schoolMom);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(schoolMom));
+											promise.complete(schoolMom);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -883,8 +890,15 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(schoolMom));
-													promise.complete(schoolMom);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(schoolMom));
+															promise.complete(schoolMom);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1218,8 +1232,15 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(schoolMom));
-											promise.complete(schoolMom);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolMom));
+													promise.complete(schoolMom);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

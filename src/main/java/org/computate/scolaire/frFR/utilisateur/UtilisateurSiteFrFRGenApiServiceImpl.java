@@ -377,8 +377,15 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 												}
 												requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
 											}
-											gestionnaireEvenements.handle(Future.succeededFuture(utilisateurSite));
-											promise.complete(utilisateurSite);
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													gestionnaireEvenements.handle(Future.succeededFuture(utilisateurSite));
+													promise.complete(utilisateurSite);
+												} else {
+													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
@@ -890,8 +897,15 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										utilisateurSite.requeteApiUtilisateurSite();
 										requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
 									}
-									gestionnaireEvenements.handle(Future.succeededFuture(utilisateurSite));
-									promise.complete(utilisateurSite);
+									SQLConnection connexionSql = requeteSite.getConnexionSql();
+									connexionSql.commit(d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(utilisateurSite));
+											promise.complete(utilisateurSite);
+										} else {
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}

@@ -189,8 +189,15 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 										pageDesign.apiRequestPageDesign();
 										siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(pageDesign));
-									promise.complete(pageDesign);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(pageDesign));
+											promise.complete(pageDesign);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -963,8 +970,15 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 														}
 														siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(pageDesign));
-													promise.complete(pageDesign);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(pageDesign));
+															promise.complete(pageDesign);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1304,8 +1318,15 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 												}
 												siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(pageDesign));
-											promise.complete(pageDesign);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(pageDesign));
+													promise.complete(pageDesign);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

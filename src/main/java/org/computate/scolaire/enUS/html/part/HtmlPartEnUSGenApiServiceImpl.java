@@ -185,8 +185,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 										htmlPart.apiRequestHtmlPart();
 										siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(htmlPart));
-									promise.complete(htmlPart);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(htmlPart));
+											promise.complete(htmlPart);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -1013,8 +1020,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 														}
 														siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(htmlPart));
-													promise.complete(htmlPart);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(htmlPart));
+															promise.complete(htmlPart);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1430,8 +1444,15 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 												}
 												siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(htmlPart));
-											promise.complete(htmlPart);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(htmlPart));
+													promise.complete(htmlPart);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}

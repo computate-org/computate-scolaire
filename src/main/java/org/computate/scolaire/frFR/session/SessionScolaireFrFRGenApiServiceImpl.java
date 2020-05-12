@@ -187,8 +187,15 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 										sessionScolaire.requeteApiSessionScolaire();
 										requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 									}
-									gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
-									promise.complete(sessionScolaire);
+									SQLConnection connexionSql = requeteSite.getConnexionSql();
+									connexionSql.commit(d -> {
+										if(d.succeeded()) {
+											gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
+											promise.complete(sessionScolaire);
+										} else {
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
@@ -945,8 +952,15 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 														}
 														requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 													}
-													gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
-													promise.complete(sessionScolaire);
+													SQLConnection connexionSql = requeteSite.getConnexionSql();
+													connexionSql.commit(f -> {
+														if(f.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
+															promise.complete(sessionScolaire);
+														} else {
+															gestionnaireEvenements.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
 												}
@@ -1277,8 +1291,15 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 												}
 												requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi).toString());
 											}
-											gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
-											promise.complete(sessionScolaire);
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													gestionnaireEvenements.handle(Future.succeededFuture(sessionScolaire));
+													promise.complete(sessionScolaire);
+												} else {
+													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}

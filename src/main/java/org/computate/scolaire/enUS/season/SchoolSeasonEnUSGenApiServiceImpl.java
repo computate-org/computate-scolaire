@@ -187,8 +187,15 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 										schoolSeason.apiRequestSchoolSeason();
 										siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 									}
-									eventHandler.handle(Future.succeededFuture(schoolSeason));
-									promise.complete(schoolSeason);
+									SQLConnection sqlConnection = siteRequest.getSqlConnection();
+									sqlConnection.commit(d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(schoolSeason));
+											promise.complete(schoolSeason);
+										} else {
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
 								} else {
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
@@ -949,8 +956,15 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 													}
-													eventHandler.handle(Future.succeededFuture(schoolSeason));
-													promise.complete(schoolSeason);
+													SQLConnection sqlConnection = siteRequest.getSqlConnection();
+													sqlConnection.commit(f -> {
+														if(f.succeeded()) {
+															eventHandler.handle(Future.succeededFuture(schoolSeason));
+															promise.complete(schoolSeason);
+														} else {
+															eventHandler.handle(Future.failedFuture(f.cause()));
+														}
+													});
 												} else {
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
@@ -1285,8 +1299,15 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 											}
-											eventHandler.handle(Future.succeededFuture(schoolSeason));
-											promise.complete(schoolSeason);
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											sqlConnection.commit(e -> {
+												if(e.succeeded()) {
+													eventHandler.handle(Future.succeededFuture(schoolSeason));
+													promise.complete(schoolSeason);
+												} else {
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
