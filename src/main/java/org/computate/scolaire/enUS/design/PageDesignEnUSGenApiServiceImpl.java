@@ -523,8 +523,11 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					}
 					if(o != null) {
 						for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
-							if(!json.fieldNames().contains(f))
+							if(!json.fieldNames().contains(f)) {
+								LOGGER.info("o: " + o.toString());
+								LOGGER.info("json: " + json.encodePrettily());
 								json2.putNull("set" + StringUtils.capitalize(f));
+							}
 						}
 						siteRequest2.setJsonObject(json2);
 						futures.add(
