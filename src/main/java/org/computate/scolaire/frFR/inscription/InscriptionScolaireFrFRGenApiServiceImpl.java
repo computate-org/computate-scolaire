@@ -288,7 +288,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "anneeCle", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("AnneeScolaire");
@@ -331,7 +331,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "enfantCle", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("EnfantScolaire");

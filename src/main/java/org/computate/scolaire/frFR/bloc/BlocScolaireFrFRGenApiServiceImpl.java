@@ -309,7 +309,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "ageCle", l, "blocCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("AgeScolaire");

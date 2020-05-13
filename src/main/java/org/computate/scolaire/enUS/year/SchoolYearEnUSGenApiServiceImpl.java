@@ -288,7 +288,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", l));
+									postSqlParams.addAll(Arrays.asList(pk, "schoolKey", l, "yearKeys"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("School");

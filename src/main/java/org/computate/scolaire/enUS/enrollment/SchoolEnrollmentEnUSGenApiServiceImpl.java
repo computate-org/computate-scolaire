@@ -331,7 +331,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
+									postSqlParams.addAll(Arrays.asList(pk, "childKey", l, "enrollmentKeys"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("SchoolChild");

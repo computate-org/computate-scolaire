@@ -309,7 +309,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", l));
+									postSqlParams.addAll(Arrays.asList(pk, "ageKey", l, "blockKeys"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("SchoolAge");

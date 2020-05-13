@@ -274,7 +274,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("inscriptionCle", pk, "paiementCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "inscriptionCle", l, "paiementCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("InscriptionScolaire");
