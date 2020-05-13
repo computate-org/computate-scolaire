@@ -141,14 +141,24 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, entity1 text, pk2 bigint, entity2 text, current boolean, created timestamp with time zone, constraint a_constraint unique (pk1, entity1, pk2, entity2)); ";
 
 	/**	
+	 *	A SQL query for creating an index on the "a" table based on fields for faster lookup. 
+	 **/
+	public static final String SQL_uniqueIndexA = "create index if not exists a_index on a(pk1, pk2, current); ";
+
+	/**	
 	 *	A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
 	 **/
 	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, pk_c bigint, path text, value text, current boolean, created timestamp with time zone, constraint d_constraint unique (pk_c, path)); ";
 
 	/**	
+	 *	A SQL query for creating an index on the "d" table based on fields for faster lookup. 
+	 **/
+	public static final String SQL_uniqueIndexD = "create index if not exists d_index on d(pk_c, current); ";
+
+	/**	
 	 *	Concatenate all of the SQL together to execute when the server starts. 
 	 **/
-	public static final String SQL_initAll = SQL_createTableC + SQL_uniqueIndexC + SQL_createTableA + SQL_createTableD;
+	public static final String SQL_initAll = SQL_createTableC + SQL_uniqueIndexC + SQL_createTableA + SQL_uniqueIndexA + SQL_createTableD + SQL_uniqueIndexD;
 
 	/**	
 	 *	A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 

@@ -174,6 +174,17 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, entite1 text, pk2 bigint, entite2 text, actuel boolean, cree timestamp with time zone, constraint a_constraint unique (pk1, entite1, pk2, entite2)); ";
 
 	/**
+	 * enUS: A SQL query for creating an index on the "a" table based on fields for faster lookup. 
+	 * r: entite
+	 * r.enUS: entity
+	 * r: actuel
+	 * r.enUS: current
+	 * r: cree
+	 * r.enUS: created
+	 */
+	public static final String SQL_uniqueIndexA = "create index if not exists a_index on a(pk1, pk2, current); ";
+
+	/**
 	 * enUS: A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
 	 * r: actuel
 	 * r.enUS: current
@@ -187,10 +198,23 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, pk_c bigint, chemin text, valeur text, actuel boolean, cree timestamp with time zone, constraint d_constraint unique (pk_c, chemin)); ";
 
 	/**
+	 * enUS: A SQL query for creating an index on the "d" table based on fields for faster lookup. 
+	 * r: actuel
+	 * r.enUS: current
+	 * r: cree
+	 * r.enUS: created
+	 * r: valeur
+	 * r.enUS: value
+	 * r: chemin
+	 * r.enUS: path
+	 */
+	public static final String SQL_uniqueIndexD = "create index if not exists d_index on d(pk_c, current); ";
+
+	/**
 	 * enUS: Concatenate all of the SQL together to execute when the server starts. 
 	 * Var.enUS: SQL_initAll
 	 */
-	public static final String SQL_initTout = SQL_createTableC + SQL_uniqueIndexC + SQL_createTableA + SQL_createTableD;
+	public static final String SQL_initTout = SQL_createTableC + SQL_uniqueIndexC + SQL_createTableA + SQL_uniqueIndexA + SQL_createTableD + SQL_uniqueIndexD;
 
 	/**
 	 * enUS: A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
