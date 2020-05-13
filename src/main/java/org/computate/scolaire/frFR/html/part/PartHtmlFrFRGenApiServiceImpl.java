@@ -226,15 +226,15 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 			if(requeteSite.getSessionId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("sessionId", requeteSite.getSessionId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "sessionId", requeteSite.getSessionId()));
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 			}
 
 			if(jsonObject != null) {
@@ -243,35 +243,35 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					switch(entiteVar) {
 					case "inheritPk":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "designPageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -285,7 +285,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "designPageCles", l, "partHtmlCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -296,107 +296,107 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlLien":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlLien", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlLien", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlElement":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlElement", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlElement", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlId", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlClasses":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlClasses", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlClasses", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlStyle":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlStyle", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlStyle", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlAvant":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlAvant", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlAvant", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlApres":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlApres", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlApres", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlTexte":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlTexte", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlTexte", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVar":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlVar", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarSpan":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVarSpan", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlVarSpan", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarForm":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlVarForm", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarInput":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlVarInput", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarForEach":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlExclure":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlExclure", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "htmlExclure", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "pdfExclure":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "pdfExclure", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "connecterDeconnecter":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("connecterDeconnecter", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "connecterDeconnecter", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "tri1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri1", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri1", jsonObject.getString(entiteVar)));
 						break;
 					case "tri2":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri2", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri2", jsonObject.getString(entiteVar)));
 						break;
 					case "tri3":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri3", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri3", jsonObject.getString(entiteVar)));
 						break;
 					case "tri4":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri4", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri4", jsonObject.getString(entiteVar)));
 						break;
 					case "tri5":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri5", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri5", jsonObject.getString(entiteVar)));
 						break;
 					case "tri6":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri6", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri6", jsonObject.getString(entiteVar)));
 						break;
 					case "tri7":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri7", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri7", jsonObject.getString(entiteVar)));
 						break;
 					case "tri8":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri8", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri8", jsonObject.getString(entiteVar)));
 						break;
 					case "tri9":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri9", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri9", jsonObject.getString(entiteVar)));
 						break;
 					case "tri10":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("tri10", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "tri10", jsonObject.getString(entiteVar)));
 						break;
 					}
 				}
@@ -1073,40 +1073,40 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					switch(entiteVar) {
 					case "inheritPk":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "designPageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+							putSqlParams.addAll(Arrays.asList(pk, "designPageCles", l, "partHtmlCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("DesignPage");
@@ -1115,107 +1115,107 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlLien":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlLien", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlLien", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlElement":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlElement", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlElement", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlId", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlClasses":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlClasses", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlClasses", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlStyle":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlStyle", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlStyle", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlAvant":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlAvant", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlAvant", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlApres":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlApres", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlApres", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlTexte":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlTexte", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlTexte", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVar":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlVar", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarSpan":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarSpan", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlVarSpan", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarForm":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlVarForm", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarInput":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlVarInput", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlVarForEach":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach", jsonObject.getString(entiteVar)));
 						break;
 					case "htmlExclure":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("htmlExclure", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "htmlExclure", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "pdfExclure":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "pdfExclure", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "connecterDeconnecter":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("connecterDeconnecter", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "connecterDeconnecter", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "tri1":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri1", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri1", jsonObject.getString(entiteVar)));
 						break;
 					case "tri2":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri2", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri2", jsonObject.getString(entiteVar)));
 						break;
 					case "tri3":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri3", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri3", jsonObject.getString(entiteVar)));
 						break;
 					case "tri4":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri4", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri4", jsonObject.getString(entiteVar)));
 						break;
 					case "tri5":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri5", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri5", jsonObject.getString(entiteVar)));
 						break;
 					case "tri6":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri6", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri6", jsonObject.getString(entiteVar)));
 						break;
 					case "tri7":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri7", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri7", jsonObject.getString(entiteVar)));
 						break;
 					case "tri8":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri8", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri8", jsonObject.getString(entiteVar)));
 						break;
 					case "tri9":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri9", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri9", jsonObject.getString(entiteVar)));
 						break;
 					case "tri10":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("tri10", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "tri10", jsonObject.getString(entiteVar)));
 						break;
 					}
 				}
@@ -1491,11 +1491,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 			}
 
 			for(String methodeNom : methodeNoms) {
@@ -1507,7 +1507,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
 						}
 						break;
 					case "setCree":
@@ -1517,7 +1517,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "cree", o2.jsonCree()));
 						}
 						break;
 					case "setModifie":
@@ -1527,7 +1527,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie", o2.jsonModifie()));
 						}
 						break;
 					case "setArchive":
@@ -1537,7 +1537,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "archive", o2.jsonArchive()));
 						}
 						break;
 					case "setSupprime":
@@ -1547,7 +1547,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime", o2.jsonSupprime()));
 						}
 						break;
 					case "setSessionId":
@@ -1557,7 +1557,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
 						}
 						break;
 					case "setUtilisateurId":
@@ -1567,7 +1567,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setUtilisateurId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", o2.jsonUtilisateurId()));
 						}
 						break;
 					case "setUtilisateurCle":
@@ -1577,7 +1577,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", o2.jsonUtilisateurCle()));
 						}
 						break;
 					case "addDesignPageCles":
@@ -1591,9 +1591,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getDesignPageCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "designPageCles", l, "partHtmlCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -1615,9 +1615,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getDesignPageCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "designPageCles", l, "partHtmlCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("DesignPage");
@@ -1629,8 +1629,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "setDesignPageCles":
 						JsonArray setDesignPageClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles"));
 						if(setDesignPageClesValeurs != null) {
 							for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignPageClesValeurs.getString(i));
@@ -1642,14 +1640,22 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getDesignPageCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "designPageCles", l, "partHtmlCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("DesignPage");
 										}
 									}
+								}
+							}
+						}
+						if(o.getDesignPageCles() != null) {
+							for(Long l :  o.getDesignPageCles()) {
+								if(l != null && (setDesignPageClesValeurs == null || !setDesignPageClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "designPageCles", l, "partHtmlCles"));
 								}
 							}
 						}
@@ -1665,9 +1671,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getDesignPageCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("designPageCles", pk, "partHtmlCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "designPageCles", "partHtmlCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -1683,7 +1689,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlLien(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlLien", o2.jsonHtmlLien(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlLien", o2.jsonHtmlLien()));
 						}
 						break;
 					case "setHtmlElement":
@@ -1693,7 +1699,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlElement(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlElement", o2.jsonHtmlElement(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlElement", o2.jsonHtmlElement()));
 						}
 						break;
 					case "setHtmlId":
@@ -1703,7 +1709,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlId", o2.jsonHtmlId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlId", o2.jsonHtmlId()));
 						}
 						break;
 					case "setHtmlClasses":
@@ -1713,7 +1719,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlClasses(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlClasses", o2.jsonHtmlClasses(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlClasses", o2.jsonHtmlClasses()));
 						}
 						break;
 					case "setHtmlStyle":
@@ -1723,7 +1729,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlStyle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlStyle", o2.jsonHtmlStyle(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlStyle", o2.jsonHtmlStyle()));
 						}
 						break;
 					case "setHtmlAvant":
@@ -1733,7 +1739,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlAvant(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlAvant", o2.jsonHtmlAvant(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlAvant", o2.jsonHtmlAvant()));
 						}
 						break;
 					case "setHtmlApres":
@@ -1743,7 +1749,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlApres(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlApres", o2.jsonHtmlApres(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlApres", o2.jsonHtmlApres()));
 						}
 						break;
 					case "setHtmlTexte":
@@ -1753,7 +1759,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlTexte(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlTexte", o2.jsonHtmlTexte(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlTexte", o2.jsonHtmlTexte()));
 						}
 						break;
 					case "setHtmlVar":
@@ -1763,7 +1769,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVar(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar", o2.jsonHtmlVar()));
 						}
 						break;
 					case "setHtmlVarSpan":
@@ -1773,7 +1779,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarSpan(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVarSpan", o2.jsonHtmlVarSpan(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarSpan", o2.jsonHtmlVarSpan()));
 						}
 						break;
 					case "setHtmlVarForm":
@@ -1783,7 +1789,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarForm(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVarForm", o2.jsonHtmlVarForm(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForm", o2.jsonHtmlVarForm()));
 						}
 						break;
 					case "setHtmlVarInput":
@@ -1793,7 +1799,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarInput(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarInput", o2.jsonHtmlVarInput()));
 						}
 						break;
 					case "setHtmlVarForEach":
@@ -1803,7 +1809,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarForEach(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVarForEach", o2.jsonHtmlVarForEach(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach", o2.jsonHtmlVarForEach()));
 						}
 						break;
 					case "setHtmlExclure":
@@ -1813,7 +1819,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlExclure(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlExclure", o2.jsonHtmlExclure(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlExclure", o2.jsonHtmlExclure()));
 						}
 						break;
 					case "setPdfExclure":
@@ -1823,7 +1829,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setPdfExclure(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("pdfExclure", o2.jsonPdfExclure(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "pdfExclure", o2.jsonPdfExclure()));
 						}
 						break;
 					case "setConnecterDeconnecter":
@@ -1833,7 +1839,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setConnecterDeconnecter(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("connecterDeconnecter", o2.jsonConnecterDeconnecter(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "connecterDeconnecter", o2.jsonConnecterDeconnecter()));
 						}
 						break;
 					case "setTri1":
@@ -1843,7 +1849,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri1(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri1", o2.jsonTri1(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri1", o2.jsonTri1()));
 						}
 						break;
 					case "setTri2":
@@ -1853,7 +1859,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri2(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri2", o2.jsonTri2(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri2", o2.jsonTri2()));
 						}
 						break;
 					case "setTri3":
@@ -1863,7 +1869,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri3(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri3", o2.jsonTri3(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri3", o2.jsonTri3()));
 						}
 						break;
 					case "setTri4":
@@ -1873,7 +1879,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri4(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri4", o2.jsonTri4(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri4", o2.jsonTri4()));
 						}
 						break;
 					case "setTri5":
@@ -1883,7 +1889,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri5(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri5", o2.jsonTri5(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri5", o2.jsonTri5()));
 						}
 						break;
 					case "setTri6":
@@ -1893,7 +1899,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri6(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri6", o2.jsonTri6(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri6", o2.jsonTri6()));
 						}
 						break;
 					case "setTri7":
@@ -1903,7 +1909,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri7(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri7", o2.jsonTri7(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri7", o2.jsonTri7()));
 						}
 						break;
 					case "setTri8":
@@ -1913,7 +1919,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri8(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri8", o2.jsonTri8(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri8", o2.jsonTri8()));
 						}
 						break;
 					case "setTri9":
@@ -1923,7 +1929,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri9(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri9", o2.jsonTri9(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri9", o2.jsonTri9()));
 						}
 						break;
 					case "setTri10":
@@ -1933,7 +1939,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri10(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("tri10", o2.jsonTri10(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "tri10", o2.jsonTri10()));
 						}
 						break;
 				}

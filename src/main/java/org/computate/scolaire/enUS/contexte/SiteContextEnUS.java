@@ -25,29 +25,17 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 
 	public static final String SQL_create = "insert into c(canonical_name, user_id, created) values(?, ?, now()) returning pk;\n";
 
-	public static final String SQL_setD = "with d1 as (insert into d(path, value, current, pk_c, created) values(?, ?, true, ?, now()) returning pk, path, pk_c) update d set current=false where d.pk_c=(select pk_c from d1) and d.path=(select path from d1) and d.current=true and d.pk != (select pk from d1);\n";
+	public static final String SQL_setD = "insert into d(pk_c, path, value, current, created) values(?, ?, ?, true, now()) on conflict on constraint d_constraint do update set current=true, value=d.value returning pk, path, pk_c;\n";
 
-	public static final String SQL_removeD = "with d1 as (insert into d(pk_c, path, value, current, created) values(?, ?, null, true, now()) returning pk, path, pk_c) update d set current=false where d.pk_c=(select pk_c from d1) and d.path=(select path from d1) and d.current=true and d.pk != (select pk from d1);\n";
+	public static final String SQL_removeD = "insert into d(pk_c, path, value, current, created) values(?, ?, null, true, now()) on conflict on constraint d_constraint do update set current=false, value=null returning pk, path, pk_c;\n";
 
 	public static final String SQL_define = "select path, value from d where d.pk_c=? and d.current union select 'created', to_char(created, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=?;\n";
 
 	public static final String SQL_attribute = "select pk1, pk2, entity1, entity2 from a where (a.pk1=? or a.pk2=?) and a.current=true;\n";
 
-	public static final String SQL_setA1 = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created) values(?, ?, ?, ?, true, now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false, where a.entity1=(select entity1 from a1) and a.pk1=(select pk1 from a1) and a.entity2=(select entity2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
+	public static final String SQL_addA = "insert into a(pk1, entity1, pk2, entity2, current, created) values(?, ?, ?, ?, true, now()) on conflict on constraint a_constraint do update set current=true;\n";
 
-	public static final String SQL_setA2 = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created) values(?, ?, ?, ?, true, now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false where a.entity1=(select entity1 from a1) and a.entity2=(select entity2 from a1) and a.pk2=(select pk2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
-
-	public static final String SQL_addA = "with a1 as (insert into a(entity1, pk1, entity2, pk2, current, created) values(?, ?, ?, ?, true, now()) returning pk, entity1, pk1, entity2, pk2) update a set current=false where a.entity1=(select entity1 from a1) and a.pk1=(select pk1 from a1) and a.entity2=(select entity2 from a1) and a.pk2=(select pk2 from a1) and a.current=true and a.pk != (select pk from a1);\n";
-
-	public static final String SQL_clearA1 = "update a set current=false where a.entity1=? and a.pk1=? and a.entity2=? and a.current=true;\n";
-
-	public static final String SQL_clearA2 = "update a set current=false where a.entity1=? and a.entity2=? and a.pk2=? and a.current=true;\n";
-
-	public static final String SQL_removeA = "update a set current=false where a.entity1=? and a.pk1=? and a.entity2=? and a.pk2=? and a.current=true;\n";
-
-	public static final String SQL_clear = "update a set actuel=false where a.pk1=? or a.pk2=? and a.actuel=true;\nupdate d set actuel=false where d.pk_c=? and d.actuel=true;\n";
-
-	public static final String SQL_delete = "update a set actuel=false where a.pk1=? or a.pk2=? and a.actuel=true;\nupdate d set actuel=false where d.pk_c=? and d.actuel=true;\nwith d1 as (insert into d(chemin, valeur, actuel, pk_c, created) values('supprime', true, true, ?, now()) returning pk, chemin, pk_c) update d set actuel=false where d.pk_c=(select pk_c from d1) and d.chemin=(select chemin from d1) and d.actuel=true and d.pk != (select pk from d1);\n";
+	public static final String SQL_removeA = "insert into a(pk1, entity1, pk2, entity2, current, created) values(?, ?, ?, ?, false, now()) on conflict on constraint a_constraint do update set current=false;\n";
 
 	protected void _vertx(Wrap<Vertx> c) {
 	}

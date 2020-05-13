@@ -222,15 +222,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			if(requeteSite.getSessionId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("sessionId", requeteSite.getSessionId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "sessionId", requeteSite.getSessionId()));
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 
 				JsonArray utilisateurCles = Optional.ofNullable(jsonObject.getJsonArray("utilisateurCles")).orElse(null);
 				if(utilisateurCles != null && !utilisateurCles.contains(requeteSite.getUtilisateurCle()))
@@ -245,35 +245,35 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					switch(entiteVar) {
 					case "inheritPk":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "anneeCle":
 						{
@@ -309,7 +309,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("BlocScolaire");
@@ -352,7 +352,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									postSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("MereScolaire");
@@ -373,7 +373,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									postSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PereScolaire");
@@ -394,7 +394,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("GardienScolaire");
@@ -415,7 +415,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									postSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PaiementScolaire");
@@ -436,7 +436,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									postSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("UtilisateurSite");
@@ -447,171 +447,171 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "enfantNomComplet":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantNomComplet", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantNomComplet", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantNomCompletPrefere":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantNomCompletPrefere", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantDateNaissance":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "ecoleAddresse":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionApprouve":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionApprouve", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionApprouve", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "inscriptionImmunisations":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionImmunisations", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionImmunisations", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleMarie":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familleMarie", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "familleMarie", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleSepare":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familleSepare", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "familleSepare", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleDivorce":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familleDivorce", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "familleDivorce", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleAddresse":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familleAddresse", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "familleAddresse", jsonObject.getString(entiteVar)));
 						break;
 					case "familleCommentVousConnaissezEcole":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familleCommentVousConnaissezEcole", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "familleCommentVousConnaissezEcole", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionConsiderationsSpeciales":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionConsiderationsSpeciales", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionConsiderationsSpeciales", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantConditionsMedicales":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantConditionsMedicales", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantEcolesPrecedemmentFrequentees":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantEcolesPrecedemmentFrequentees", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantDescription":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantDescription", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantDescription", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantObjectifs":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantObjectifs", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantObjectifs", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantPropre":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantPropre", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "enfantPropre", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "inscriptionNomGroupe":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionNomGroupe", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionNomGroupe", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionPaimentChaqueMois":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "inscriptionPaimentComplet":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "customerProfileId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "customerProfileId", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionDateFrais":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDateFrais", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDateFrais", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionSignature1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature1", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature1", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature2":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature2", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature2", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature3":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature3", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature3", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature4":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature4", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature4", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature5":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature5", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature5", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature6":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature6", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature6", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature7":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature7", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature7", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature8":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature8", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature8", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature9":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature9", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature9", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature10":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignature10", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature10", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionDate1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate2":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate3":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate4":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate5":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate6":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate7":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate8":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate9":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate10":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inscriptionDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					}
 				}
@@ -1234,47 +1234,47 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					switch(entiteVar) {
 					case "inheritPk":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "anneeCle":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						putSql.append(SiteContexteFrFR.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+						putSqlParams.addAll(Arrays.asList(pk, "anneeCle", l, "inscriptionCles"));
 						}
 						break;
 					case "blocCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+							putSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("BlocScolaire");
@@ -1285,13 +1285,13 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							{
 						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						putSql.append(SiteContexteFrFR.SQL_addA);
-						putSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantCle", l, "inscriptionCles"));
 						}
 						break;
 					case "mereCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+							putSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("MereScolaire");
@@ -1301,7 +1301,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "pereCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+							putSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("PereScolaire");
@@ -1311,7 +1311,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "gardienCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+							putSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("GardienScolaire");
@@ -1321,7 +1321,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "paiementCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+							putSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("PaiementScolaire");
@@ -1331,7 +1331,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "utilisateurCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+							putSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("UtilisateurSite");
@@ -1340,171 +1340,171 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "enfantNomComplet":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantNomComplet", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantNomComplet", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantNomCompletPrefere":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantNomCompletPrefere", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantDateNaissance":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantDateNaissance", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "ecoleAddresse":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionApprouve":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionApprouve", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionApprouve", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "inscriptionImmunisations":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionImmunisations", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionImmunisations", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleMarie":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("familleMarie", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "familleMarie", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleSepare":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("familleSepare", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "familleSepare", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleDivorce":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("familleDivorce", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "familleDivorce", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "familleAddresse":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("familleAddresse", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "familleAddresse", jsonObject.getString(entiteVar)));
 						break;
 					case "familleCommentVousConnaissezEcole":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("familleCommentVousConnaissezEcole", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "familleCommentVousConnaissezEcole", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionConsiderationsSpeciales":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionConsiderationsSpeciales", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionConsiderationsSpeciales", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantConditionsMedicales":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantConditionsMedicales", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantEcolesPrecedemmentFrequentees":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantEcolesPrecedemmentFrequentees", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantDescription":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantDescription", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantDescription", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantObjectifs":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantObjectifs", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantObjectifs", jsonObject.getString(entiteVar)));
 						break;
 					case "enfantPropre":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("enfantPropre", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "enfantPropre", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "inscriptionNomGroupe":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionNomGroupe", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionNomGroupe", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionPaimentChaqueMois":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "inscriptionPaimentComplet":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "customerProfileId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "customerProfileId", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionDateFrais":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDateFrais", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDateFrais", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionSignature1":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature1", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature1", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature2":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature2", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature2", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature3":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature3", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature3", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature4":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature4", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature4", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature5":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature5", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature5", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature6":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature6", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature6", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature7":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature7", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature7", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature8":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature8", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature8", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature9":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature9", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature9", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionSignature10":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionSignature10", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature10", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionDate1":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate2":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate3":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate4":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate5":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate6":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate7":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate8":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate9":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					case "inscriptionDate10":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inscriptionDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inscriptionDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entiteVar)))));
 						break;
 					}
 				}
@@ -1762,11 +1762,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 
 				JsonArray utilisateurCles = Optional.ofNullable(jsonObject.getJsonArray("addUtilisateurCles")).orElse(null);
 				if(utilisateurCles != null && !utilisateurCles.contains(requeteSite.getUtilisateurCle()))
@@ -1784,7 +1784,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
 						}
 						break;
 					case "setCree":
@@ -1794,7 +1794,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "cree", o2.jsonCree()));
 						}
 						break;
 					case "setModifie":
@@ -1804,7 +1804,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie", o2.jsonModifie()));
 						}
 						break;
 					case "setArchive":
@@ -1814,7 +1814,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "archive", o2.jsonArchive()));
 						}
 						break;
 					case "setSupprime":
@@ -1824,7 +1824,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime", o2.jsonSupprime()));
 						}
 						break;
 					case "setSessionId":
@@ -1834,7 +1834,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
 						}
 						break;
 					case "setUtilisateurId":
@@ -1844,7 +1844,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setUtilisateurId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", o2.jsonUtilisateurId()));
 						}
 						break;
 					case "setUtilisateurCle":
@@ -1854,7 +1854,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", o2.jsonUtilisateurCle()));
 						}
 						break;
 					case "setAnneeCle":
@@ -1868,10 +1868,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !l.equals(o.getAnneeCle())) {
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
-									patchSql.append(SiteContexteFrFR.SQL_setA1);
-									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList(pk, "anneeCle", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("AnneeScolaire");
@@ -1891,7 +1891,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && l.equals(o.getAnneeCle())) {
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
@@ -1914,9 +1914,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getBlocCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("BlocScolaire");
@@ -1938,9 +1938,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getBlocCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("BlocScolaire");
@@ -1952,8 +1952,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setBlocCles":
 						JsonArray setBlocClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles"));
 						if(setBlocClesValeurs != null) {
 							for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setBlocClesValeurs.getString(i));
@@ -1965,14 +1963,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getBlocCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("BlocScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getBlocCles() != null) {
+							for(Long l :  o.getBlocCles()) {
+								if(l != null && (setBlocClesValeurs == null || !setBlocClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 								}
 							}
 						}
@@ -1988,9 +1994,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getBlocCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "blocCles", "inscriptionCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("BlocScolaire");
@@ -2010,10 +2016,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !l.equals(o.getEnfantCle())) {
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
-									patchSql.append(SiteContexteFrFR.SQL_setA1);
-									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList(pk, "enfantCle", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("EnfantScolaire");
@@ -2033,7 +2039,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && l.equals(o.getEnfantCle())) {
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
@@ -2056,9 +2062,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getMereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("MereScolaire");
@@ -2080,9 +2086,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(l != null && !o.getMereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("MereScolaire");
@@ -2094,8 +2100,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setMereCles":
 						JsonArray setMereClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "mereCles", pk));
 						if(setMereClesValeurs != null) {
 							for(Integer i = 0; i <  setMereClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setMereClesValeurs.getString(i));
@@ -2107,14 +2111,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(l != null && !o.getMereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("MereScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getMereCles() != null) {
+							for(Long l :  o.getMereCles()) {
+								if(l != null && (setMereClesValeurs == null || !setMereClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 								}
 							}
 						}
@@ -2130,7 +2142,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getMereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
 									if(!pks.contains(l)) {
@@ -2152,9 +2164,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getPereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PereScolaire");
@@ -2176,9 +2188,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(l != null && !o.getPereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PereScolaire");
@@ -2190,8 +2202,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setPereCles":
 						JsonArray setPereClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "pereCles", pk));
 						if(setPereClesValeurs != null) {
 							for(Integer i = 0; i <  setPereClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPereClesValeurs.getString(i));
@@ -2203,14 +2213,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(l != null && !o.getPereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PereScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getPereCles() != null) {
+							for(Long l :  o.getPereCles()) {
+								if(l != null && (setPereClesValeurs == null || !setPereClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 								}
 							}
 						}
@@ -2226,7 +2244,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getPereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
 									if(!pks.contains(l)) {
@@ -2248,9 +2266,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getGardienCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("GardienScolaire");
@@ -2272,9 +2290,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getGardienCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("GardienScolaire");
@@ -2286,8 +2304,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setGardienCles":
 						JsonArray setGardienClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles"));
 						if(setGardienClesValeurs != null) {
 							for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setGardienClesValeurs.getString(i));
@@ -2299,14 +2315,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getGardienCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("GardienScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getGardienCles() != null) {
+							for(Long l :  o.getGardienCles()) {
+								if(l != null && (setGardienClesValeurs == null || !setGardienClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 								}
 							}
 						}
@@ -2322,9 +2346,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getGardienCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", "inscriptionCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("GardienScolaire");
@@ -2344,9 +2368,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getPaiementCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PaiementScolaire");
@@ -2368,9 +2392,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(l != null && !o.getPaiementCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PaiementScolaire");
@@ -2382,8 +2406,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCle", "paiementCles", pk));
 						if(setPaiementClesValeurs != null) {
 							for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
@@ -2395,14 +2417,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(l != null && !o.getPaiementCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PaiementScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getPaiementCles() != null) {
+							for(Long l :  o.getPaiementCles()) {
+								if(l != null && (setPaiementClesValeurs == null || !setPaiementClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 								}
 							}
 						}
@@ -2418,7 +2448,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getPaiementCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
 									if(!pks.contains(l)) {
@@ -2440,9 +2470,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getUtilisateurCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("UtilisateurSite");
@@ -2464,9 +2494,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(l != null && !o.getUtilisateurCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("UtilisateurSite");
@@ -2478,8 +2508,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setUtilisateurCles":
 						JsonArray setUtilisateurClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "utilisateurCles", pk));
 						if(setUtilisateurClesValeurs != null) {
 							for(Integer i = 0; i <  setUtilisateurClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setUtilisateurClesValeurs.getString(i));
@@ -2491,14 +2519,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(l != null && !o.getUtilisateurCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("UtilisateurSite");
 										}
 									}
+								}
+							}
+						}
+						if(o.getUtilisateurCles() != null) {
+							for(Long l :  o.getUtilisateurCles()) {
+								if(l != null && (setUtilisateurClesValeurs == null || !setUtilisateurClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 								}
 							}
 						}
@@ -2514,7 +2550,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getUtilisateurCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
 									if(!pks.contains(l)) {
@@ -2532,7 +2568,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantNomComplet(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantNomComplet", o2.jsonEnfantNomComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomComplet", o2.jsonEnfantNomComplet()));
 						}
 						break;
 					case "setEnfantNomCompletPrefere":
@@ -2542,7 +2578,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantNomCompletPrefere(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere()));
 						}
 						break;
 					case "setEnfantDateNaissance":
@@ -2552,7 +2588,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantDateNaissance(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantDateNaissance", o2.jsonEnfantDateNaissance(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDateNaissance", o2.jsonEnfantDateNaissance()));
 						}
 						break;
 					case "setEcoleAddresse":
@@ -2562,7 +2598,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEcoleAddresse(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.jsonEcoleAddresse(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", o2.jsonEcoleAddresse()));
 						}
 						break;
 					case "setInscriptionApprouve":
@@ -2572,7 +2608,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionApprouve(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionApprouve", o2.jsonInscriptionApprouve(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionApprouve", o2.jsonInscriptionApprouve()));
 						}
 						break;
 					case "setInscriptionImmunisations":
@@ -2582,7 +2618,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionImmunisations(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionImmunisations", o2.jsonInscriptionImmunisations(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionImmunisations", o2.jsonInscriptionImmunisations()));
 						}
 						break;
 					case "setFamilleMarie":
@@ -2592,7 +2628,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleMarie(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleMarie", o2.jsonFamilleMarie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleMarie", o2.jsonFamilleMarie()));
 						}
 						break;
 					case "setFamilleSepare":
@@ -2602,7 +2638,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleSepare(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleSepare", o2.jsonFamilleSepare(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleSepare", o2.jsonFamilleSepare()));
 						}
 						break;
 					case "setFamilleDivorce":
@@ -2612,7 +2648,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleDivorce(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleDivorce", o2.jsonFamilleDivorce(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleDivorce", o2.jsonFamilleDivorce()));
 						}
 						break;
 					case "setFamilleAddresse":
@@ -2622,7 +2658,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleAddresse(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleAddresse", o2.jsonFamilleAddresse(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleAddresse", o2.jsonFamilleAddresse()));
 						}
 						break;
 					case "setFamilleCommentVousConnaissezEcole":
@@ -2632,7 +2668,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleCommentVousConnaissezEcole(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleCommentVousConnaissezEcole", o2.jsonFamilleCommentVousConnaissezEcole(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleCommentVousConnaissezEcole", o2.jsonFamilleCommentVousConnaissezEcole()));
 						}
 						break;
 					case "setInscriptionConsiderationsSpeciales":
@@ -2642,7 +2678,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionConsiderationsSpeciales(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionConsiderationsSpeciales", o2.jsonInscriptionConsiderationsSpeciales(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionConsiderationsSpeciales", o2.jsonInscriptionConsiderationsSpeciales()));
 						}
 						break;
 					case "setEnfantConditionsMedicales":
@@ -2652,7 +2688,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantConditionsMedicales(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales()));
 						}
 						break;
 					case "setEnfantEcolesPrecedemmentFrequentees":
@@ -2662,7 +2698,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantEcolesPrecedemmentFrequentees(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees()));
 						}
 						break;
 					case "setEnfantDescription":
@@ -2672,7 +2708,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantDescription(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantDescription", o2.jsonEnfantDescription(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDescription", o2.jsonEnfantDescription()));
 						}
 						break;
 					case "setEnfantObjectifs":
@@ -2682,7 +2718,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantObjectifs(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantObjectifs", o2.jsonEnfantObjectifs(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantObjectifs", o2.jsonEnfantObjectifs()));
 						}
 						break;
 					case "setEnfantPropre":
@@ -2692,7 +2728,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantPropre(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantPropre", o2.jsonEnfantPropre(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantPropre", o2.jsonEnfantPropre()));
 						}
 						break;
 					case "setInscriptionNomGroupe":
@@ -2702,7 +2738,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionNomGroupe(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionNomGroupe", o2.jsonInscriptionNomGroupe(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionNomGroupe", o2.jsonInscriptionNomGroupe()));
 						}
 						break;
 					case "setInscriptionPaimentChaqueMois":
@@ -2712,7 +2748,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionPaimentChaqueMois(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois()));
 						}
 						break;
 					case "setInscriptionPaimentComplet":
@@ -2722,7 +2758,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionPaimentComplet(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet()));
 						}
 						break;
 					case "setCustomerProfileId":
@@ -2732,7 +2768,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId", o2.jsonCustomerProfileId()));
 						}
 						break;
 					case "setInscriptionDateFrais":
@@ -2742,7 +2778,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDateFrais(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDateFrais", o2.jsonInscriptionDateFrais(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDateFrais", o2.jsonInscriptionDateFrais()));
 						}
 						break;
 					case "setInscriptionSignature1":
@@ -2752,7 +2788,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature1(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature1", o2.jsonInscriptionSignature1(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature1", o2.jsonInscriptionSignature1()));
 						}
 						break;
 					case "setInscriptionSignature2":
@@ -2762,7 +2798,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature2(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature2", o2.jsonInscriptionSignature2(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature2", o2.jsonInscriptionSignature2()));
 						}
 						break;
 					case "setInscriptionSignature3":
@@ -2772,7 +2808,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature3(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature3", o2.jsonInscriptionSignature3(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature3", o2.jsonInscriptionSignature3()));
 						}
 						break;
 					case "setInscriptionSignature4":
@@ -2782,7 +2818,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature4(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature4", o2.jsonInscriptionSignature4(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature4", o2.jsonInscriptionSignature4()));
 						}
 						break;
 					case "setInscriptionSignature5":
@@ -2792,7 +2828,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature5(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature5", o2.jsonInscriptionSignature5(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature5", o2.jsonInscriptionSignature5()));
 						}
 						break;
 					case "setInscriptionSignature6":
@@ -2802,7 +2838,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature6(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature6", o2.jsonInscriptionSignature6(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature6", o2.jsonInscriptionSignature6()));
 						}
 						break;
 					case "setInscriptionSignature7":
@@ -2812,7 +2848,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature7(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature7", o2.jsonInscriptionSignature7(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature7", o2.jsonInscriptionSignature7()));
 						}
 						break;
 					case "setInscriptionSignature8":
@@ -2822,7 +2858,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature8(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature8", o2.jsonInscriptionSignature8(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature8", o2.jsonInscriptionSignature8()));
 						}
 						break;
 					case "setInscriptionSignature9":
@@ -2832,7 +2868,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature9(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature9", o2.jsonInscriptionSignature9(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature9", o2.jsonInscriptionSignature9()));
 						}
 						break;
 					case "setInscriptionSignature10":
@@ -2842,7 +2878,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature10(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature10", o2.jsonInscriptionSignature10(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature10", o2.jsonInscriptionSignature10()));
 						}
 						break;
 					case "setInscriptionDate1":
@@ -2852,7 +2888,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate1(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate1", o2.jsonInscriptionDate1(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate1", o2.jsonInscriptionDate1()));
 						}
 						break;
 					case "setInscriptionDate2":
@@ -2862,7 +2898,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate2(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate2", o2.jsonInscriptionDate2(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate2", o2.jsonInscriptionDate2()));
 						}
 						break;
 					case "setInscriptionDate3":
@@ -2872,7 +2908,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate3(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate3", o2.jsonInscriptionDate3(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate3", o2.jsonInscriptionDate3()));
 						}
 						break;
 					case "setInscriptionDate4":
@@ -2882,7 +2918,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate4(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate4", o2.jsonInscriptionDate4(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate4", o2.jsonInscriptionDate4()));
 						}
 						break;
 					case "setInscriptionDate5":
@@ -2892,7 +2928,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate5(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate5", o2.jsonInscriptionDate5(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate5", o2.jsonInscriptionDate5()));
 						}
 						break;
 					case "setInscriptionDate6":
@@ -2902,7 +2938,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate6(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate6", o2.jsonInscriptionDate6(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate6", o2.jsonInscriptionDate6()));
 						}
 						break;
 					case "setInscriptionDate7":
@@ -2912,7 +2948,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate7(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate7", o2.jsonInscriptionDate7(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate7", o2.jsonInscriptionDate7()));
 						}
 						break;
 					case "setInscriptionDate8":
@@ -2922,7 +2958,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate8(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate8", o2.jsonInscriptionDate8(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate8", o2.jsonInscriptionDate8()));
 						}
 						break;
 					case "setInscriptionDate9":
@@ -2932,7 +2968,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate9(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate9", o2.jsonInscriptionDate9(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate9", o2.jsonInscriptionDate9()));
 						}
 						break;
 					case "setInscriptionDate10":
@@ -2942,7 +2978,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate10(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate10", o2.jsonInscriptionDate10(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate10", o2.jsonInscriptionDate10()));
 						}
 						break;
 				}
@@ -3533,11 +3569,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 
 				JsonArray utilisateurCles = Optional.ofNullable(jsonObject.getJsonArray("addUtilisateurCles")).orElse(null);
 				if(utilisateurCles != null && !utilisateurCles.contains(requeteSite.getUtilisateurCle()))
@@ -3555,7 +3591,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
 						}
 						break;
 					case "setCree":
@@ -3565,7 +3601,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "cree", o2.jsonCree()));
 						}
 						break;
 					case "setModifie":
@@ -3575,7 +3611,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie", o2.jsonModifie()));
 						}
 						break;
 					case "setArchive":
@@ -3585,7 +3621,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "archive", o2.jsonArchive()));
 						}
 						break;
 					case "setSupprime":
@@ -3595,7 +3631,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime", o2.jsonSupprime()));
 						}
 						break;
 					case "setSessionId":
@@ -3605,7 +3641,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
 						}
 						break;
 					case "setUtilisateurId":
@@ -3615,7 +3651,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setUtilisateurId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", o2.jsonUtilisateurId()));
 						}
 						break;
 					case "setUtilisateurCle":
@@ -3625,7 +3661,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", o2.jsonUtilisateurCle()));
 						}
 						break;
 					case "setAnneeCle":
@@ -3639,10 +3675,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !l.equals(o.getAnneeCle())) {
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
-									patchSql.append(SiteContexteFrFR.SQL_setA1);
-									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList(pk, "anneeCle", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("AnneeScolaire");
@@ -3662,7 +3698,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && l.equals(o.getAnneeCle())) {
 									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", l));
@@ -3685,9 +3721,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getBlocCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("BlocScolaire");
@@ -3709,9 +3745,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getBlocCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("BlocScolaire");
@@ -3723,8 +3759,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setBlocCles":
 						JsonArray setBlocClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles"));
 						if(setBlocClesValeurs != null) {
 							for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setBlocClesValeurs.getString(i));
@@ -3736,14 +3770,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getBlocCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("BlocScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getBlocCles() != null) {
+							for(Long l :  o.getBlocCles()) {
+								if(l != null && (setBlocClesValeurs == null || !setBlocClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "blocCles", l, "inscriptionCles"));
 								}
 							}
 						}
@@ -3759,9 +3801,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getBlocCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "blocCles", "inscriptionCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("BlocScolaire");
@@ -3781,10 +3823,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !l.equals(o.getEnfantCle())) {
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
-									patchSql.append(SiteContexteFrFR.SQL_setA1);
-									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
+									patchSql.append(SiteContexteFrFR.SQL_addA);
+									patchSqlParams.addAll(Arrays.asList(pk, "enfantCle", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("EnfantScolaire");
@@ -3804,7 +3846,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && l.equals(o.getEnfantCle())) {
 									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", l));
@@ -3827,9 +3869,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getMereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("MereScolaire");
@@ -3851,9 +3893,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(l != null && !o.getMereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("MereScolaire");
@@ -3865,8 +3907,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setMereCles":
 						JsonArray setMereClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "mereCles", pk));
 						if(setMereClesValeurs != null) {
 							for(Integer i = 0; i <  setMereClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setMereClesValeurs.getString(i));
@@ -3878,14 +3918,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+									if(l != null && !o.getMereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("MereScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getMereCles() != null) {
+							for(Long l :  o.getMereCles()) {
+								if(l != null && (setMereClesValeurs == null || !setMereClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "mereCles"));
 								}
 							}
 						}
@@ -3901,7 +3949,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getMereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
 									if(!pks.contains(l)) {
@@ -3923,9 +3971,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getPereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PereScolaire");
@@ -3947,9 +3995,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(l != null && !o.getPereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PereScolaire");
@@ -3961,8 +4009,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setPereCles":
 						JsonArray setPereClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "pereCles", pk));
 						if(setPereClesValeurs != null) {
 							for(Integer i = 0; i <  setPereClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPereClesValeurs.getString(i));
@@ -3974,14 +4020,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+									if(l != null && !o.getPereCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PereScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getPereCles() != null) {
+							for(Long l :  o.getPereCles()) {
+								if(l != null && (setPereClesValeurs == null || !setPereClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "pereCles"));
 								}
 							}
 						}
@@ -3997,7 +4051,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getPereCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
 									if(!pks.contains(l)) {
@@ -4019,9 +4073,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getGardienCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("GardienScolaire");
@@ -4043,9 +4097,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getGardienCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("GardienScolaire");
@@ -4057,8 +4111,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setGardienCles":
 						JsonArray setGardienClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles"));
 						if(setGardienClesValeurs != null) {
 							for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setGardienClesValeurs.getString(i));
@@ -4070,14 +4122,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getGardienCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("GardienScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getGardienCles() != null) {
+							for(Long l :  o.getGardienCles()) {
+								if(l != null && (setGardienClesValeurs == null || !setGardienClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", l, "inscriptionCles"));
 								}
 							}
 						}
@@ -4093,9 +4153,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getGardienCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "gardienCles", "inscriptionCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("GardienScolaire");
@@ -4115,9 +4175,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getPaiementCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PaiementScolaire");
@@ -4139,9 +4199,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(l != null && !o.getPaiementCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PaiementScolaire");
@@ -4153,8 +4213,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCle", "paiementCles", pk));
 						if(setPaiementClesValeurs != null) {
 							for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
@@ -4166,14 +4224,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
+									if(l != null && !o.getPaiementCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PaiementScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getPaiementCles() != null) {
+							for(Long l :  o.getPaiementCles()) {
+								if(l != null && (setPaiementClesValeurs == null || !setPaiementClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCle", pk, "paiementCles"));
 								}
 							}
 						}
@@ -4189,7 +4255,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getPaiementCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCle", l, "paiementCles", pk));
 									if(!pks.contains(l)) {
@@ -4211,9 +4277,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getUtilisateurCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("UtilisateurSite");
@@ -4235,9 +4301,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(l != null && !o.getUtilisateurCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("UtilisateurSite");
@@ -4249,8 +4315,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setUtilisateurCles":
 						JsonArray setUtilisateurClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", "utilisateurCles", pk));
 						if(setUtilisateurClesValeurs != null) {
 							for(Integer i = 0; i <  setUtilisateurClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setUtilisateurClesValeurs.getString(i));
@@ -4262,14 +4326,22 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
+									if(l != null && !o.getUtilisateurCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("UtilisateurSite");
 										}
 									}
+								}
+							}
+						}
+						if(o.getUtilisateurCles() != null) {
+							for(Long l :  o.getUtilisateurCles()) {
+								if(l != null && (setUtilisateurClesValeurs == null || !setUtilisateurClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "inscriptionCles", pk, "utilisateurCles"));
 								}
 							}
 						}
@@ -4285,7 +4357,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getUtilisateurCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("inscriptionCles", l, "utilisateurCles", pk));
 									if(!pks.contains(l)) {
@@ -4303,7 +4375,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantNomComplet(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantNomComplet", o2.jsonEnfantNomComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomComplet", o2.jsonEnfantNomComplet()));
 						}
 						break;
 					case "setEnfantNomCompletPrefere":
@@ -4313,7 +4385,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantNomCompletPrefere(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere()));
 						}
 						break;
 					case "setEnfantDateNaissance":
@@ -4323,7 +4395,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantDateNaissance(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantDateNaissance", o2.jsonEnfantDateNaissance(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDateNaissance", o2.jsonEnfantDateNaissance()));
 						}
 						break;
 					case "setEcoleAddresse":
@@ -4333,7 +4405,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEcoleAddresse(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.jsonEcoleAddresse(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", o2.jsonEcoleAddresse()));
 						}
 						break;
 					case "setInscriptionApprouve":
@@ -4343,7 +4415,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionApprouve(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionApprouve", o2.jsonInscriptionApprouve(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionApprouve", o2.jsonInscriptionApprouve()));
 						}
 						break;
 					case "setInscriptionImmunisations":
@@ -4353,7 +4425,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionImmunisations(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionImmunisations", o2.jsonInscriptionImmunisations(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionImmunisations", o2.jsonInscriptionImmunisations()));
 						}
 						break;
 					case "setFamilleMarie":
@@ -4363,7 +4435,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleMarie(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleMarie", o2.jsonFamilleMarie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleMarie", o2.jsonFamilleMarie()));
 						}
 						break;
 					case "setFamilleSepare":
@@ -4373,7 +4445,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleSepare(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleSepare", o2.jsonFamilleSepare(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleSepare", o2.jsonFamilleSepare()));
 						}
 						break;
 					case "setFamilleDivorce":
@@ -4383,7 +4455,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleDivorce(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleDivorce", o2.jsonFamilleDivorce(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleDivorce", o2.jsonFamilleDivorce()));
 						}
 						break;
 					case "setFamilleAddresse":
@@ -4393,7 +4465,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleAddresse(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleAddresse", o2.jsonFamilleAddresse(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleAddresse", o2.jsonFamilleAddresse()));
 						}
 						break;
 					case "setFamilleCommentVousConnaissezEcole":
@@ -4403,7 +4475,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setFamilleCommentVousConnaissezEcole(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familleCommentVousConnaissezEcole", o2.jsonFamilleCommentVousConnaissezEcole(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleCommentVousConnaissezEcole", o2.jsonFamilleCommentVousConnaissezEcole()));
 						}
 						break;
 					case "setInscriptionConsiderationsSpeciales":
@@ -4413,7 +4485,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionConsiderationsSpeciales(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionConsiderationsSpeciales", o2.jsonInscriptionConsiderationsSpeciales(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionConsiderationsSpeciales", o2.jsonInscriptionConsiderationsSpeciales()));
 						}
 						break;
 					case "setEnfantConditionsMedicales":
@@ -4423,7 +4495,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantConditionsMedicales(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales()));
 						}
 						break;
 					case "setEnfantEcolesPrecedemmentFrequentees":
@@ -4433,7 +4505,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantEcolesPrecedemmentFrequentees(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees()));
 						}
 						break;
 					case "setEnfantDescription":
@@ -4443,7 +4515,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantDescription(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantDescription", o2.jsonEnfantDescription(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDescription", o2.jsonEnfantDescription()));
 						}
 						break;
 					case "setEnfantObjectifs":
@@ -4453,7 +4525,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantObjectifs(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantObjectifs", o2.jsonEnfantObjectifs(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantObjectifs", o2.jsonEnfantObjectifs()));
 						}
 						break;
 					case "setEnfantPropre":
@@ -4463,7 +4535,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setEnfantPropre(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantPropre", o2.jsonEnfantPropre(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantPropre", o2.jsonEnfantPropre()));
 						}
 						break;
 					case "setInscriptionNomGroupe":
@@ -4473,7 +4545,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionNomGroupe(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionNomGroupe", o2.jsonInscriptionNomGroupe(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionNomGroupe", o2.jsonInscriptionNomGroupe()));
 						}
 						break;
 					case "setInscriptionPaimentChaqueMois":
@@ -4483,7 +4555,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionPaimentChaqueMois(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois()));
 						}
 						break;
 					case "setInscriptionPaimentComplet":
@@ -4493,7 +4565,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionPaimentComplet(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet()));
 						}
 						break;
 					case "setCustomerProfileId":
@@ -4503,7 +4575,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId", o2.jsonCustomerProfileId()));
 						}
 						break;
 					case "setInscriptionDateFrais":
@@ -4513,7 +4585,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDateFrais(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDateFrais", o2.jsonInscriptionDateFrais(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDateFrais", o2.jsonInscriptionDateFrais()));
 						}
 						break;
 					case "setInscriptionSignature1":
@@ -4523,7 +4595,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature1(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature1", o2.jsonInscriptionSignature1(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature1", o2.jsonInscriptionSignature1()));
 						}
 						break;
 					case "setInscriptionSignature2":
@@ -4533,7 +4605,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature2(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature2", o2.jsonInscriptionSignature2(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature2", o2.jsonInscriptionSignature2()));
 						}
 						break;
 					case "setInscriptionSignature3":
@@ -4543,7 +4615,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature3(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature3", o2.jsonInscriptionSignature3(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature3", o2.jsonInscriptionSignature3()));
 						}
 						break;
 					case "setInscriptionSignature4":
@@ -4553,7 +4625,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature4(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature4", o2.jsonInscriptionSignature4(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature4", o2.jsonInscriptionSignature4()));
 						}
 						break;
 					case "setInscriptionSignature5":
@@ -4563,7 +4635,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature5(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature5", o2.jsonInscriptionSignature5(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature5", o2.jsonInscriptionSignature5()));
 						}
 						break;
 					case "setInscriptionSignature6":
@@ -4573,7 +4645,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature6(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature6", o2.jsonInscriptionSignature6(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature6", o2.jsonInscriptionSignature6()));
 						}
 						break;
 					case "setInscriptionSignature7":
@@ -4583,7 +4655,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature7(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature7", o2.jsonInscriptionSignature7(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature7", o2.jsonInscriptionSignature7()));
 						}
 						break;
 					case "setInscriptionSignature8":
@@ -4593,7 +4665,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature8(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature8", o2.jsonInscriptionSignature8(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature8", o2.jsonInscriptionSignature8()));
 						}
 						break;
 					case "setInscriptionSignature9":
@@ -4603,7 +4675,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature9(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature9", o2.jsonInscriptionSignature9(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature9", o2.jsonInscriptionSignature9()));
 						}
 						break;
 					case "setInscriptionSignature10":
@@ -4613,7 +4685,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionSignature10(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignature10", o2.jsonInscriptionSignature10(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature10", o2.jsonInscriptionSignature10()));
 						}
 						break;
 					case "setInscriptionDate1":
@@ -4623,7 +4695,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate1(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate1", o2.jsonInscriptionDate1(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate1", o2.jsonInscriptionDate1()));
 						}
 						break;
 					case "setInscriptionDate2":
@@ -4633,7 +4705,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate2(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate2", o2.jsonInscriptionDate2(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate2", o2.jsonInscriptionDate2()));
 						}
 						break;
 					case "setInscriptionDate3":
@@ -4643,7 +4715,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate3(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate3", o2.jsonInscriptionDate3(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate3", o2.jsonInscriptionDate3()));
 						}
 						break;
 					case "setInscriptionDate4":
@@ -4653,7 +4725,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate4(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate4", o2.jsonInscriptionDate4(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate4", o2.jsonInscriptionDate4()));
 						}
 						break;
 					case "setInscriptionDate5":
@@ -4663,7 +4735,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate5(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate5", o2.jsonInscriptionDate5(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate5", o2.jsonInscriptionDate5()));
 						}
 						break;
 					case "setInscriptionDate6":
@@ -4673,7 +4745,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate6(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate6", o2.jsonInscriptionDate6(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate6", o2.jsonInscriptionDate6()));
 						}
 						break;
 					case "setInscriptionDate7":
@@ -4683,7 +4755,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate7(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate7", o2.jsonInscriptionDate7(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate7", o2.jsonInscriptionDate7()));
 						}
 						break;
 					case "setInscriptionDate8":
@@ -4693,7 +4765,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate8(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate8", o2.jsonInscriptionDate8(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate8", o2.jsonInscriptionDate8()));
 						}
 						break;
 					case "setInscriptionDate9":
@@ -4703,7 +4775,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate9(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate9", o2.jsonInscriptionDate9(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate9", o2.jsonInscriptionDate9()));
 						}
 						break;
 					case "setInscriptionDate10":
@@ -4713,7 +4785,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							o2.setInscriptionDate10(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDate10", o2.jsonInscriptionDate10(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate10", o2.jsonInscriptionDate10()));
 						}
 						break;
 				}

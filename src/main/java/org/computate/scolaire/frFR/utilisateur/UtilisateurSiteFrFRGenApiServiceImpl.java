@@ -424,11 +424,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 
 				JsonArray utilisateurCles = Optional.ofNullable(jsonObject.getJsonArray("addUtilisateurCles")).orElse(null);
 				if(utilisateurCles != null && !utilisateurCles.contains(requeteSite.getUtilisateurCle()))
@@ -446,7 +446,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
 						}
 						break;
 					case "setCree":
@@ -456,7 +456,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "cree", o2.jsonCree()));
 						}
 						break;
 					case "setModifie":
@@ -466,7 +466,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie", o2.jsonModifie()));
 						}
 						break;
 					case "setArchive":
@@ -476,7 +476,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "archive", o2.jsonArchive()));
 						}
 						break;
 					case "setSupprime":
@@ -486,7 +486,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime", o2.jsonSupprime()));
 						}
 						break;
 					case "setSessionId":
@@ -496,7 +496,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
 						}
 						break;
 					case "setUtilisateurId":
@@ -506,7 +506,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", o2.jsonUtilisateurId()));
 						}
 						break;
 					case "setUtilisateurCle":
@@ -516,7 +516,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", o2.jsonUtilisateurCle()));
 						}
 						break;
 					case "addInscriptionCles":
@@ -530,9 +530,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getInscriptionCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "inscriptionCles", l, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("InscriptionScolaire");
@@ -554,9 +554,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getInscriptionCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "inscriptionCles", l, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("InscriptionScolaire");
@@ -568,8 +568,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "setInscriptionCles":
 						JsonArray setInscriptionClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles"));
 						if(setInscriptionClesValeurs != null) {
 							for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setInscriptionClesValeurs.getString(i));
@@ -581,14 +579,22 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getInscriptionCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "inscriptionCles", l, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("InscriptionScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getInscriptionCles() != null) {
+							for(Long l :  o.getInscriptionCles()) {
+								if(l != null && (setInscriptionClesValeurs == null || !setInscriptionClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "inscriptionCles", l, "utilisateurCles"));
 								}
 							}
 						}
@@ -604,9 +610,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getInscriptionCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "inscriptionCles", "utilisateurCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("InscriptionScolaire");
@@ -626,9 +632,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getPaiementCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "paiementCles", l, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PaiementScolaire");
@@ -650,9 +656,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getPaiementCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "paiementCles", l, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PaiementScolaire");
@@ -664,8 +670,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles"));
 						if(setPaiementClesValeurs != null) {
 							for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
@@ -677,14 +681,22 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getPaiementCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "paiementCles", l, "utilisateurCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PaiementScolaire");
 										}
 									}
+								}
+							}
+						}
+						if(o.getPaiementCles() != null) {
+							for(Long l :  o.getPaiementCles()) {
+								if(l != null && (setPaiementClesValeurs == null || !setPaiementClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "paiementCles", l, "utilisateurCles"));
 								}
 							}
 						}
@@ -700,9 +712,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getPaiementCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "paiementCles", "utilisateurCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PaiementScolaire");
@@ -718,7 +730,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurNom(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurNom", o2.jsonUtilisateurNom(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurNom", o2.jsonUtilisateurNom()));
 						}
 						break;
 					case "setUtilisateurMail":
@@ -728,7 +740,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurMail(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurMail", o2.jsonUtilisateurMail(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurMail", o2.jsonUtilisateurMail()));
 						}
 						break;
 					case "setCustomerProfileId":
@@ -738,7 +750,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("customerProfileId", o2.jsonCustomerProfileId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId", o2.jsonCustomerProfileId()));
 						}
 						break;
 					case "setUtilisateurRecevoirCourriels":
@@ -748,7 +760,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurRecevoirCourriels(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurRecevoirCourriels", o2.jsonUtilisateurRecevoirCourriels(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurRecevoirCourriels", o2.jsonUtilisateurRecevoirCourriels()));
 						}
 						break;
 					case "setVoirArchive":
@@ -758,7 +770,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setVoirArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("voirArchive", o2.jsonVoirArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "voirArchive", o2.jsonVoirArchive()));
 						}
 						break;
 					case "setVoirSupprime":
@@ -768,7 +780,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setVoirSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("voirSupprime", o2.jsonVoirSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "voirSupprime", o2.jsonVoirSupprime()));
 						}
 						break;
 				}
@@ -938,15 +950,15 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 			if(requeteSite.getSessionId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("sessionId", requeteSite.getSessionId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "sessionId", requeteSite.getSessionId()));
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 
 				JsonArray utilisateurCles = Optional.ofNullable(jsonObject.getJsonArray("utilisateurCles")).orElse(null);
 				if(utilisateurCles != null && !utilisateurCles.contains(requeteSite.getUtilisateurCle()))
@@ -961,35 +973,35 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					switch(entiteVar) {
 					case "inheritPk":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "inscriptionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -1003,7 +1015,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "utilisateurCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "inscriptionCles", l, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("InscriptionScolaire");
@@ -1024,7 +1036,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("paiementCles", pk, "utilisateurCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "paiementCles", l, "utilisateurCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PaiementScolaire");
@@ -1035,27 +1047,27 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "utilisateurNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurNom", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurNom", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurMail":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurMail", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurMail", jsonObject.getString(entiteVar)));
 						break;
 					case "customerProfileId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("customerProfileId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "customerProfileId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurRecevoirCourriels":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurRecevoirCourriels", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurRecevoirCourriels", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "voirArchive":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("voirArchive", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "voirArchive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "voirSupprime":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("voirSupprime", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "voirSupprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					}
 				}

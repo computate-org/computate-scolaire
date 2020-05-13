@@ -208,15 +208,15 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 
 			if(siteRequest.getSessionId() != null) {
 				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("sessionId", siteRequest.getSessionId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "sessionId", siteRequest.getSessionId()));
 			}
 			if(siteRequest.getUserId() != null) {
 				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("userId", siteRequest.getUserId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
 			}
 			if(siteRequest.getUserKey() != null) {
 				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
 
 				JsonArray userKeys = Optional.ofNullable(jsonObject.getJsonArray("userKeys")).orElse(null);
 				if(userKeys != null && !userKeys.contains(siteRequest.getUserKey()))
@@ -231,35 +231,35 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					switch(entityVar) {
 					case "inheritPk":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entityVar)));
 						break;
 					case "created":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "created", jsonObject.getString(entityVar)));
 						break;
 					case "modified":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "modified", jsonObject.getString(entityVar)));
 						break;
 					case "archived":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "archived", jsonObject.getBoolean(entityVar)));
 						break;
 					case "deleted":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "deleted", jsonObject.getBoolean(entityVar)));
 						break;
 					case "sessionId":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entityVar)));
 						break;
 					case "userId":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("userId", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "userId", jsonObject.getString(entityVar)));
 						break;
 					case "userKey":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "userKey", jsonObject.getString(entityVar)));
 						break;
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -273,7 +273,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+									postSqlParams.addAll(Arrays.asList(l, "childKey", pk, "enrollmentKeys"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("SchoolEnrollment");
@@ -284,19 +284,19 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						break;
 					case "personFirstName":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "personFirstName", jsonObject.getString(entityVar)));
 						break;
 					case "personFirstNamePreferred":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "personFirstNamePreferred", jsonObject.getString(entityVar)));
 						break;
 					case "familyName":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "familyName", jsonObject.getString(entityVar)));
 						break;
 					case "personBirthDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "personBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
 						break;
 					}
 				}
@@ -919,40 +919,40 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					switch(entityVar) {
 					case "inheritPk":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entityVar)));
 						break;
 					case "created":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "created", jsonObject.getString(entityVar)));
 						break;
 					case "modified":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "modified", jsonObject.getString(entityVar)));
 						break;
 					case "archived":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "archived", jsonObject.getBoolean(entityVar)));
 						break;
 					case "deleted":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "deleted", jsonObject.getBoolean(entityVar)));
 						break;
 					case "sessionId":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entityVar)));
 						break;
 					case "userId":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("userId", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "userId", jsonObject.getString(entityVar)));
 						break;
 					case "userKey":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("userKey", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "userKey", jsonObject.getString(entityVar)));
 						break;
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+							putSqlParams.addAll(Arrays.asList(l, "childKey", pk, "enrollmentKeys"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolEnrollment");
@@ -961,19 +961,19 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						break;
 					case "personFirstName":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "personFirstName", jsonObject.getString(entityVar)));
 						break;
 					case "personFirstNamePreferred":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "personFirstNamePreferred", jsonObject.getString(entityVar)));
 						break;
 					case "familyName":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "familyName", jsonObject.getString(entityVar)));
 						break;
 					case "personBirthDate":
 						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("personBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar))), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "personBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
 						break;
 					}
 				}
@@ -1231,11 +1231,11 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("userId", siteRequest.getUserId(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("userKey", siteRequest.getUserKey(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
 
 				JsonArray userKeys = Optional.ofNullable(jsonObject.getJsonArray("addUserKeys")).orElse(null);
 				if(userKeys != null && !userKeys.contains(siteRequest.getUserKey()))
@@ -1253,7 +1253,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
 						}
 						break;
 					case "setCreated":
@@ -1263,7 +1263,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setCreated(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "created", o2.jsonCreated()));
 						}
 						break;
 					case "setModified":
@@ -1273,7 +1273,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setModified(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "modified", o2.jsonModified()));
 						}
 						break;
 					case "setArchived":
@@ -1283,7 +1283,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "archived", o2.jsonArchived()));
 						}
 						break;
 					case "setDeleted":
@@ -1293,7 +1293,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "deleted", o2.jsonDeleted()));
 						}
 						break;
 					case "setSessionId":
@@ -1303,7 +1303,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setSessionId(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
 						}
 						break;
 					case "setUserId":
@@ -1313,7 +1313,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setUserId(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("userId", o2.jsonUserId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "userId", o2.jsonUserId()));
 						}
 						break;
 					case "setUserKey":
@@ -1323,7 +1323,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setUserKey(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("userKey", o2.jsonUserKey(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "userKey", o2.jsonUserKey()));
 						}
 						break;
 					case "addEnrollmentKeys":
@@ -1337,9 +1337,9 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getEnrollmentKeys().contains(l)) {
 									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "childKey", pk, "enrollmentKeys"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("SchoolEnrollment");
@@ -1361,9 +1361,9 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
 									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContextEnUS.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+									if(l != null && !o.getEnrollmentKeys().contains(l)) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "childKey", pk, "enrollmentKeys"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("SchoolEnrollment");
@@ -1375,8 +1375,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						break;
 					case "setEnrollmentKeys":
 						JsonArray setEnrollmentKeysValues = jsonObject.getJsonArray(methodName);
-						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("childKey", "enrollmentKeys", pk));
 						if(setEnrollmentKeysValues != null) {
 							for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
 								Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
@@ -1388,14 +1386,22 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
 									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContextEnUS.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+									if(l != null && !o.getEnrollmentKeys().contains(l)) {
+										patchSql.append(SiteContextEnUS.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "childKey", pk, "enrollmentKeys"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("SchoolEnrollment");
 										}
 									}
+								}
+							}
+						}
+						if(o.getEnrollmentKeys() != null) {
+							for(Long l :  o.getEnrollmentKeys()) {
+								if(l != null && (setEnrollmentKeysValues == null || !setEnrollmentKeysValues.contains(l))) {
+									patchSql.append(SiteContextEnUS.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "childKey", pk, "enrollmentKeys"));
 								}
 							}
 						}
@@ -1411,7 +1417,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getEnrollmentKeys().contains(l)) {
 									patchSql.append(SiteContextEnUS.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
 									if(!pks.contains(l)) {
@@ -1429,7 +1435,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setPersonFirstName(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personFirstName", o2.jsonPersonFirstName(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "personFirstName", o2.jsonPersonFirstName()));
 						}
 						break;
 					case "setPersonFirstNamePreferred":
@@ -1439,7 +1445,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setPersonFirstNamePreferred(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personFirstNamePreferred", o2.jsonPersonFirstNamePreferred(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "personFirstNamePreferred", o2.jsonPersonFirstNamePreferred()));
 						}
 						break;
 					case "setFamilyName":
@@ -1449,7 +1455,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setFamilyName(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "familyName", o2.jsonFamilyName()));
 						}
 						break;
 					case "setPersonBirthDate":
@@ -1459,7 +1465,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							o2.setPersonBirthDate(jsonObject.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personBirthDate", o2.jsonPersonBirthDate(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "personBirthDate", o2.jsonPersonBirthDate()));
 						}
 						break;
 				}

@@ -230,15 +230,15 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 			if(requeteSite.getSessionId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("sessionId", requeteSite.getSessionId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "sessionId", requeteSite.getSessionId()));
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 			}
 
 			if(jsonObject != null) {
@@ -247,35 +247,35 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					switch(entiteVar) {
 					case "inheritPk":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "designEnfantCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -289,7 +289,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles", l));
+									postSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", l, "designParentCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -310,7 +310,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("designEnfantCles", l, "designParentCles", pk));
+									postSqlParams.addAll(Arrays.asList(l, "designEnfantCles", pk, "designParentCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -331,7 +331,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l != null) {
 									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
+									postSqlParams.addAll(Arrays.asList(l, "designPageCles", pk, "partHtmlCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PartHtml");
@@ -342,11 +342,11 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designPageNomComplet":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("designPageNomComplet", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "designPageNomComplet", jsonObject.getString(entiteVar)));
 						break;
 					case "designCache":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("designCache", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList(pk, "designCache", jsonObject.getBoolean(entiteVar)));
 						break;
 					}
 				}
@@ -1023,40 +1023,40 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					switch(entiteVar) {
 					case "inheritPk":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("inheritPk", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
 						break;
 					case "cree":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
 						break;
 					case "modifie":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
 						break;
 					case "archive":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "supprime":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
 						break;
 					case "sessionId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("sessionId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurId":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
 						break;
 					case "utilisateurCle":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("utilisateurCle", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
 						break;
 					case "designEnfantCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles", l));
+							putSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", l, "designParentCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("DesignPage");
@@ -1066,7 +1066,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "designParentCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("designEnfantCles", l, "designParentCles", pk));
+							putSqlParams.addAll(Arrays.asList(l, "designEnfantCles", pk, "designParentCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("DesignPage");
@@ -1076,7 +1076,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "partHtmlCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
+							putSqlParams.addAll(Arrays.asList(l, "designPageCles", pk, "partHtmlCles"));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("PartHtml");
@@ -1085,11 +1085,11 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designPageNomComplet":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("designPageNomComplet", jsonObject.getString(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "designPageNomComplet", jsonObject.getString(entiteVar)));
 						break;
 					case "designCache":
 						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList("designCache", jsonObject.getBoolean(entiteVar), pk));
+						putSqlParams.addAll(Arrays.asList(pk, "designCache", jsonObject.getBoolean(entiteVar)));
 						break;
 					}
 				}
@@ -1365,11 +1365,11 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteSite.getUtilisateurId(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList("utilisateurCle", requeteSite.getUtilisateurCle(), pk));
+				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
 			}
 
 			for(String methodeNom : methodeNoms) {
@@ -1381,7 +1381,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inheritPk", o2.jsonInheritPk(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
 						}
 						break;
 					case "setCree":
@@ -1391,7 +1391,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setCree(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "cree", o2.jsonCree()));
 						}
 						break;
 					case "setModifie":
@@ -1401,7 +1401,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setModifie(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie", o2.jsonModifie()));
 						}
 						break;
 					case "setArchive":
@@ -1411,7 +1411,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "archive", o2.jsonArchive()));
 						}
 						break;
 					case "setSupprime":
@@ -1421,7 +1421,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime", o2.jsonSupprime()));
 						}
 						break;
 					case "setSessionId":
@@ -1431,7 +1431,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setSessionId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionId", o2.jsonSessionId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
 						}
 						break;
 					case "setUtilisateurId":
@@ -1441,7 +1441,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setUtilisateurId(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.jsonUtilisateurId(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", o2.jsonUtilisateurId()));
 						}
 						break;
 					case "setUtilisateurCle":
@@ -1451,7 +1451,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("utilisateurCle", o2.jsonUtilisateurCle(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", o2.jsonUtilisateurCle()));
 						}
 						break;
 					case "addDesignEnfantCles":
@@ -1465,9 +1465,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getDesignEnfantCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", l, "designParentCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -1489,9 +1489,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getDesignEnfantCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", l, "designParentCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("DesignPage");
@@ -1503,8 +1503,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "setDesignEnfantCles":
 						JsonArray setDesignEnfantClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles"));
 						if(setDesignEnfantClesValeurs != null) {
 							for(Integer i = 0; i <  setDesignEnfantClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignEnfantClesValeurs.getString(i));
@@ -1516,14 +1514,22 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
+									if(l != null && !o.getDesignEnfantCles().contains(l)) {
 										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles", l));
+										patchSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", l, "designParentCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("DesignPage");
 										}
 									}
+								}
+							}
+						}
+						if(o.getDesignEnfantCles() != null) {
+							for(Long l :  o.getDesignEnfantCles()) {
+								if(l != null && (setDesignEnfantClesValeurs == null || !setDesignEnfantClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", l, "designParentCles"));
 								}
 							}
 						}
@@ -1539,9 +1545,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getDesignEnfantCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("designEnfantCles", pk, "designParentCles", l));
+									patchSqlParams.addAll(Arrays.asList(pk, "designEnfantCles", "designParentCles", l));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -1561,9 +1567,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getDesignParentCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("designEnfantCles", l, "designParentCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "designEnfantCles", pk, "designParentCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("DesignPage");
@@ -1585,9 +1591,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("designEnfantCles", l, "designParentCles", pk));
+									if(l != null && !o.getDesignParentCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "designEnfantCles", pk, "designParentCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("DesignPage");
@@ -1599,8 +1605,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "setDesignParentCles":
 						JsonArray setDesignParentClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("designEnfantCles", "designParentCles", pk));
 						if(setDesignParentClesValeurs != null) {
 							for(Integer i = 0; i <  setDesignParentClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignParentClesValeurs.getString(i));
@@ -1612,14 +1616,22 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("designEnfantCles", l, "designParentCles", pk));
+									if(l != null && !o.getDesignParentCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "designEnfantCles", pk, "designParentCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("DesignPage");
 										}
 									}
+								}
+							}
+						}
+						if(o.getDesignParentCles() != null) {
+							for(Long l :  o.getDesignParentCles()) {
+								if(l != null && (setDesignParentClesValeurs == null || !setDesignParentClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "designEnfantCles", pk, "designParentCles"));
 								}
 							}
 						}
@@ -1635,7 +1647,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getDesignParentCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("designEnfantCles", l, "designParentCles", pk));
 									if(!pks.contains(l)) {
@@ -1657,9 +1669,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && !o.getPartHtmlCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
+									patchSqlParams.addAll(Arrays.asList(l, "designPageCles", pk, "partHtmlCles"));
 									if(!pks.contains(l)) {
 										pks.add(l);
 										classes.add("PartHtml");
@@ -1681,9 +1693,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
+									if(l != null && !o.getPartHtmlCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "designPageCles", pk, "partHtmlCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PartHtml");
@@ -1695,8 +1707,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "setPartHtmlCles":
 						JsonArray setPartHtmlClesValeurs = jsonObject.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("designPageCles", "partHtmlCles", pk));
 						if(setPartHtmlClesValeurs != null) {
 							for(Integer i = 0; i <  setPartHtmlClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPartHtmlClesValeurs.getString(i));
@@ -1708,14 +1718,22 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null) {
-										patchSql.append(SiteContexteFrFR.SQL_setA2);
-										patchSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
+									if(l != null && !o.getPartHtmlCles().contains(l)) {
+										patchSql.append(SiteContexteFrFR.SQL_addA);
+										patchSqlParams.addAll(Arrays.asList(l, "designPageCles", pk, "partHtmlCles"));
 										if(!pks.contains(l)) {
 											pks.add(l);
 											classes.add("PartHtml");
 										}
 									}
+								}
+							}
+						}
+						if(o.getPartHtmlCles() != null) {
+							for(Long l :  o.getPartHtmlCles()) {
+								if(l != null && (setPartHtmlClesValeurs == null || !setPartHtmlClesValeurs.contains(l))) {
+									patchSql.append(SiteContexteFrFR.SQL_removeA);
+									patchSqlParams.addAll(Arrays.asList(l, "designPageCles", pk, "partHtmlCles"));
 								}
 							}
 						}
@@ -1731,7 +1749,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								if(l != null && o.getPartHtmlCles().contains(l)) {
 									patchSql.append(SiteContexteFrFR.SQL_removeA);
 									patchSqlParams.addAll(Arrays.asList("designPageCles", l, "partHtmlCles", pk));
 									if(!pks.contains(l)) {
@@ -1749,7 +1767,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignPageNomComplet(jsonObject.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("designPageNomComplet", o2.jsonDesignPageNomComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "designPageNomComplet", o2.jsonDesignPageNomComplet()));
 						}
 						break;
 					case "setDesignCache":
@@ -1759,7 +1777,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignCache(jsonObject.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("designCache", o2.jsonDesignCache(), pk));
+							patchSqlParams.addAll(Arrays.asList(pk, "designCache", o2.jsonDesignCache()));
 						}
 						break;
 				}

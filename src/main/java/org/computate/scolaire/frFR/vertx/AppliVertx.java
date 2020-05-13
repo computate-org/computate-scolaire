@@ -171,7 +171,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, pk2 bigint, entite1 text, entite2 text, actuel boolean, cree timestamp with time zone); ";
+	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, entite1 text, pk2 bigint, entite2 text, actuel boolean, cree timestamp with time zone, constraint a_constraint unique (pk1, entite1, pk2, entite2)); ";
 
 	/**
 	 * enUS: A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
@@ -184,7 +184,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: chemin
 	 * r.enUS: path
 	 */
-	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, chemin text, valeur text, actuel boolean, cree timestamp with time zone, pk_c bigint); ";
+	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, pk_c bigint, chemin text, valeur text, actuel boolean, cree timestamp with time zone, constraint d_constraint unique (pk_c, chemin)); ";
 
 	/**
 	 * enUS: Concatenate all of the SQL together to execute when the server starts. 
